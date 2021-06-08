@@ -72,11 +72,12 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGet()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
         ];
-        $_SERVER['argc']           = 2;
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -89,12 +90,13 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetNew()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             'new',
         ];
-        $_SERVER['argc']           = 3;
+        $_SERVER['argc'] = 3;
+
         $_SERVER['REQUEST_URI']    = '/work/new';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -107,13 +109,14 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetEdit()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             '1',
             'edit',
         ];
-        $_SERVER['argc']           = 4;
+        $_SERVER['argc'] = 4;
+
         $_SERVER['REQUEST_URI']    = '/work/1/edit';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -126,12 +129,13 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceGetOne()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             '1',
         ];
-        $_SERVER['argc']           = 3;
+        $_SERVER['argc'] = 3;
+
         $_SERVER['REQUEST_URI']    = '/work/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -144,11 +148,12 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePost()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
         ];
-        $_SERVER['argc']           = 2;
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -161,12 +166,13 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePatch()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             '123',
         ];
-        $_SERVER['argc']           = 3;
+        $_SERVER['argc'] = 3;
+
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'PATCH';
 
@@ -179,12 +185,13 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourcePut()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             '123',
         ];
-        $_SERVER['argc']           = 3;
+        $_SERVER['argc'] = 3;
+
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
@@ -197,12 +204,13 @@ class ResourceControllerTest extends CIUnitTestCase
 
     public function testResourceDelete()
     {
-        $_SERVER['argv']           = [
+        $_SERVER['argv'] = [
             'index.php',
             'work',
             '123',
         ];
-        $_SERVER['argc']           = 3;
+        $_SERVER['argc'] = 3;
+
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'DELETE';
 

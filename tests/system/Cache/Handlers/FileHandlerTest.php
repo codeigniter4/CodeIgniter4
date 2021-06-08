@@ -35,7 +35,7 @@ final class FileHandlerTest extends CIUnitTestCase
         }
 
         // Initialize path
-        $this->config                     = new Cache();
+        $this->config = new Cache();
         $this->config->file['storePath'] .= self::$directory;
 
         if (! is_dir($this->config->file['storePath'])) {
@@ -322,7 +322,7 @@ final class BaseTestFileHandler extends FileHandler
 
     public function __construct()
     {
-        $this->config                     = new Cache();
+        $this->config = new Cache();
         $this->config->file['storePath'] .= self::$directory;
 
         parent::__construct($this->config);

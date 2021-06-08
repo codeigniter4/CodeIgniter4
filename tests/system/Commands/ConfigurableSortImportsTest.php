@@ -44,7 +44,7 @@ class ConfigurableSortImportsTest extends CIUnitTestCase
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         is_file($file) && unlink($file);
-        $dir    = dirname($file);
+        $dir = dirname($file);
         is_dir($dir) && rmdir($dir);
     }
 
@@ -57,7 +57,7 @@ class ConfigurableSortImportsTest extends CIUnitTestCase
         $this->assertFileExists($file);
         $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         is_file($file) && unlink($file);
-        $dir    = dirname($file);
+        $dir = dirname($file);
         is_dir($dir) && rmdir($dir);
     }
 }

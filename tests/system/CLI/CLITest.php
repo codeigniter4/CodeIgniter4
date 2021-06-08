@@ -382,11 +382,11 @@ final class CLITest extends CIUnitTestCase
 
     public function tableProvider()
     {
-        $head     = [
+        $head = [
             'ID',
             'Title',
         ];
-        $oneRow   = [
+        $oneRow = [
             [
                 'id'  => 1,
                 'foo' => 'bar',

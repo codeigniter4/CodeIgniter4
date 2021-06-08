@@ -220,7 +220,7 @@ class MessageTest extends CIUnitTestCase
                     'xml',
                 ],
             ],
-            'existing for next append'     => [
+            'existing for next append' => [
                 [
                     'json',
                     'html',

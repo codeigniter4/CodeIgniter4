@@ -97,7 +97,7 @@ class LikeTest extends CIUnitTestCase
 
         $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" LIKE '%ian%' ESCAPE '!'";
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 '%veloper%',
                 true,
             ],
@@ -137,7 +137,7 @@ class LikeTest extends CIUnitTestCase
 
         $expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE '%veloper%' ESCAPE '!' OR  \"name\" NOT LIKE '%ian%' ESCAPE '!'";
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 '%veloper%',
                 true,
             ],

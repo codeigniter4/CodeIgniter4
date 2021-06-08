@@ -287,7 +287,7 @@ class PagerTest extends CIUnitTestCase
 
     public function testGetPreviousURIWithQueryStringUsesCurrentURI()
     {
-        $_GET     = [
+        $_GET = [
             'page_foo' => 1,
             'status'   => 1,
         ];
@@ -301,7 +301,7 @@ class PagerTest extends CIUnitTestCase
 
     public function testGetOnlyQueries()
     {
-        $_GET        = [
+        $_GET = [
             'page'     => 2,
             'search'   => 'foo',
             'order'    => 'asc',

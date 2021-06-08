@@ -123,8 +123,8 @@ class ControllerTest extends CIUnitTestCase
 
     public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
     {
-        $validation                = config('Validation');
-        $validation->signup        = [
+        $validation         = config('Validation');
+        $validation->signup = [
             'username' => 'required',
         ];
         $validation->signup_errors = [

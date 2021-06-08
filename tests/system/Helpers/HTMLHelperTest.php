@@ -266,7 +266,7 @@ EOH;
 
     public function testLinkTagArray()
     {
-        $parms    = [
+        $parms = [
             'href'      => 'css/mystyles.css',
             'indexPage' => true,
         ];
@@ -485,7 +485,7 @@ EOH;
 </av>
 
 EOH;
-        $sources  = [
+        $sources = [
             source('sound.ogg', 'audio/ogg'),
             source('sound.mpeg', 'audio/mpeg'),
         ];
@@ -547,8 +547,8 @@ EOH;
 
 EOH;
 
-        $type   = 'application/x-shockwave-flash';
-        $parms  = [
+        $type  = 'application/x-shockwave-flash';
+        $parms = [
             param('foo', 'bar', 'ref', 'class="test"'),
             param('hello', 'world', 'ref', 'class="test"'),
         ];

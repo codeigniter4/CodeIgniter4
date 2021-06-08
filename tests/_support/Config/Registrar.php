@@ -16,7 +16,7 @@ class Registrar
      * @var array
      */
     protected static $dbConfig = [
-        'MySQLi'  => [
+        'MySQLi' => [
             'DSN'      => '',
             'hostname' => '127.0.0.1',
             'username' => 'root',
@@ -73,7 +73,7 @@ class Registrar
             'failover' => [],
             'port'     => 3306,
         ],
-        'SQLSRV'  => [
+        'SQLSRV' => [
             'DSN'      => '',
             'hostname' => 'localhost',
             'username' => 'sa',

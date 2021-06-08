@@ -30,7 +30,7 @@ class InsertTest extends CIUnitTestCase
 
         $expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
         $expectedBinds = [
-            'id'   => [
+            'id' => [
                 1,
                 true,
             ],

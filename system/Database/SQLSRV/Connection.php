@@ -310,7 +310,7 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj                      = new stdClass();
+            $obj = new stdClass();
 
             $obj->constraint_name     = $row->constraint_name;
             $obj->table_name          = $row->table_name;
@@ -318,7 +318,7 @@ class Connection extends BaseConnection
             $obj->foreign_table_name  = $row->foreign_table_name;
             $obj->foreign_column_name = $row->foreign_column_name;
 
-            $retVal[]                 = $obj;
+            $retVal[] = $obj;
         }
 
         return $retVal;
@@ -367,11 +367,11 @@ class Connection extends BaseConnection
         $retVal = [];
 
         for ($i = 0, $c = count($query); $i < $c; $i++) {
-            $retVal[$i]             = new stdClass();
+            $retVal[$i] = new stdClass();
 
-            $retVal[$i]->name       = $query[$i]->COLUMN_NAME;
-            $retVal[$i]->type       = $query[$i]->DATA_TYPE;
-            $retVal[$i]->default    = $query[$i]->COLUMN_DEFAULT;
+            $retVal[$i]->name    = $query[$i]->COLUMN_NAME;
+            $retVal[$i]->type    = $query[$i]->DATA_TYPE;
+            $retVal[$i]->default = $query[$i]->COLUMN_DEFAULT;
 
             $retVal[$i]->max_length = $query[$i]->CHARACTER_MAXIMUM_LENGTH > 0
                 ? $query[$i]->CHARACTER_MAXIMUM_LENGTH

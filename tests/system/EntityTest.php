@@ -541,7 +541,7 @@ class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getCastEntity();
 
-        $data             = [
+        $data = [
             'Sun',
             'Mon',
             'Tue',

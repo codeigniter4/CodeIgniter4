@@ -43,7 +43,7 @@ class FiltersTest extends CIUnitTestCase
 
     public function testProcessMethodDetectsCLI()
     {
-        $config  = [
+        $config = [
             'aliases' => ['foo' => ''],
             'methods' => [
                 'cli' => ['foo'],
@@ -63,7 +63,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => ['foo' => ''],
             'methods' => [
                 'get' => ['foo'],
@@ -83,7 +83,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -107,7 +107,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'DELETE';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -142,7 +142,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['bar'], // not excluded
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'baz'
                 ],
             ],
@@ -155,7 +155,7 @@ class FiltersTest extends CIUnitTestCase
                 'foo',
                 'bar',
             ],
-            'after'  => ['baz'],
+            'after' => ['baz'],
         ];
 
         $this->assertEquals($expected, $filters->initialize()->getFilters());
@@ -180,7 +180,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -191,7 +191,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => $except],
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'baz'
                 ],
             ],
@@ -203,7 +203,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar'
             ],
-            'after'  => ['baz'],
+            'after' => ['baz'],
         ];
 
         $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
@@ -213,7 +213,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -241,7 +241,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -271,7 +271,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foog' => '',
                 'barg' => '',
@@ -285,7 +285,7 @@ class FiltersTest extends CIUnitTestCase
                     'foog' => ['except' => ['admin/*']],
                     'barg'
                 ],
-                'after'  => [
+                'after' => [
                     'bazg'
                 ],
             ],
@@ -309,7 +309,7 @@ class FiltersTest extends CIUnitTestCase
                 'bar',
                 'foof',
             ],
-            'after'  => ['bazg'],
+            'after' => ['bazg'],
         ];
 
         $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
@@ -319,7 +319,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'toolbar' => '',
                 'bazg'    => '',
@@ -490,7 +490,7 @@ class FiltersTest extends CIUnitTestCase
                     'nowhere',
                     'banana',
                 ],
-                'after'  => [],
+                'after' => [],
             ],
         ];
 
@@ -506,7 +506,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -517,7 +517,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin/*'],
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'baz'
                 ],
             ],
@@ -529,7 +529,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar'
             ],
-            'after'  => ['baz'],
+            'after' => ['baz'],
         ];
 
         $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
@@ -539,7 +539,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -550,7 +550,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'george/*'],
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'baz'
                 ],
             ],
@@ -563,7 +563,7 @@ class FiltersTest extends CIUnitTestCase
                 'foo',
                 'bar',
             ],
-            'after'  => ['baz'],
+            'after' => ['baz'],
         ];
 
         $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
@@ -573,7 +573,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -583,7 +583,7 @@ class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'admin/*'],
                     'baz'
                 ],
@@ -596,7 +596,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar'
             ],
-            'after'  => ['baz'],
+            'after' => ['baz'],
         ];
 
         $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
@@ -606,7 +606,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo' => '',
                 'bar' => '',
@@ -616,7 +616,7 @@ class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'george/*'],
                     'baz'
                 ],
@@ -629,7 +629,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar'
             ],
-            'after'  => [
+            'after' => [
                 'foo',
                 'baz',
             ],
@@ -671,7 +671,7 @@ class FiltersTest extends CIUnitTestCase
 
         $filters = $filters->addFilter('Some\OtherClass', 'another', 'before', 'globals')
                 ->initialize('admin/foo/bar');
-        $list    = $filters->getFilters();
+        $list = $filters->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));
     }
@@ -687,7 +687,7 @@ class FiltersTest extends CIUnitTestCase
         $filters = $filters->addFilter('Some\OtherClass', 'another', 'before', 'globals')
                 ->initialize('admin/foo/bar')
                 ->initialize();
-        $list    = $filters->getFilters();
+        $list = $filters->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));
     }
@@ -804,7 +804,7 @@ class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [
+        $config = [
             'aliases' => [
                 'foo'  => '',
                 'bar'  => '',
@@ -816,7 +816,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'Admin/*'],
                     'bar'
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'Admin/*'],
                     'baz'
                 ],
@@ -836,7 +836,7 @@ class FiltersTest extends CIUnitTestCase
                 'bar',
                 'frak',
             ],
-            'after'  => [
+            'after' => [
                 'baz',
                 'frak',
             ],
@@ -873,7 +873,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'frak',
             ],
-            'after'  => [],
+            'after' => [],
         ];
 
         $actual = $filters->initialize($uri)->getFilters();
@@ -898,7 +898,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin*'],
                     'one',
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'admin/*'],
                     'two',
                 ],
@@ -912,7 +912,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'one'
             ],
-            'after'  => [
+            'after' => [
                 'foo',
                 'two',
             ],
@@ -941,7 +941,7 @@ class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin*'],
                     'one',
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'admin/*'],
                     'two',
                 ],
@@ -962,7 +962,7 @@ class FiltersTest extends CIUnitTestCase
                 'one',
                 'frak',
             ],
-            'after'  => [
+            'after' => [
                 'foo',
                 'two',
             ],
@@ -988,7 +988,7 @@ class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'foo' => ['except' => 'admin*'],
                 ],
-                'after'  => [
+                'after' => [
                     'foo' => ['except' => 'admin/*'],
                 ],
             ],
@@ -1007,7 +1007,7 @@ class FiltersTest extends CIUnitTestCase
             'before' => [
                 'frak',
             ],
-            'after'  => [
+            'after' => [
                 'frak',
             ],
         ];
@@ -1020,7 +1020,7 @@ class FiltersTest extends CIUnitTestCase
      */
     public function testFilterAlitasMultiple()
     {
-        $config  = [
+        $config = [
             'aliases' => [
                 'multipeTest' => [
                     'CodeIgniter\Filters\fixtures\Multiple1',
@@ -1043,7 +1043,7 @@ class FiltersTest extends CIUnitTestCase
 
     public function testFilterClass()
     {
-        $config  = [
+        $config = [
             'aliases' => [
                 'multipleTest' => [
                     'CodeIgniter\Filters\fixtures\Multiple1',
@@ -1060,7 +1060,7 @@ class FiltersTest extends CIUnitTestCase
 
         $filters->run('admin/foo/bar', 'before');
         $expected = [
-            'after'  => [
+            'after' => [
                 'CodeIgniter\Filters\fixtures\Multiple1',
                 'CodeIgniter\Filters\fixtures\Multiple2',
             ],

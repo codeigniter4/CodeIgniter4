@@ -82,7 +82,7 @@ class WhereTest extends CIUnitTestCase
 
         $expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 AND "name" != \'Accountant\'';
         $expectedBinds = [
-            'id'   => [
+            'id' => [
                 2,
                 true,
             ],
@@ -135,7 +135,7 @@ class WhereTest extends CIUnitTestCase
                 'Accountant',
                 true,
             ],
-            'id'   => [
+            'id' => [
                 3,
                 true,
             ],
@@ -154,7 +154,7 @@ class WhereTest extends CIUnitTestCase
 
         $expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = \'Accountant\' OR "name" = \'foobar\'';
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 'Accountant',
                 true,
             ],
@@ -283,7 +283,7 @@ class WhereTest extends CIUnitTestCase
 
         $expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" IN (\'Politician\',\'Accountant\')';
         $expectedBinds = [
-            'id'   => [
+            'id' => [
                 2,
                 true,
             ],
@@ -321,7 +321,7 @@ class WhereTest extends CIUnitTestCase
 
         $expectedSQL   = 'SELECT * FROM "jobs" WHERE "id" = 2 OR "name" NOT IN (\'Politician\',\'Accountant\')';
         $expectedBinds = [
-            'id'   => [
+            'id' => [
                 2,
                 true,
             ],

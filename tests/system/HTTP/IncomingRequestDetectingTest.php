@@ -20,8 +20,10 @@ class IncomingRequestDetectingTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_POST         = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
-        $origin        = 'http://www.example.com/index.php/woot?code=good#pos';
+        $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+
+        $origin = 'http://www.example.com/index.php/woot?code=good#pos';
+
         $this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
     }
 

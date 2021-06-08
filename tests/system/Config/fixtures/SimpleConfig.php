@@ -13,7 +13,7 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
     public $default = [
         'name' => null,
     ];
-    public $simple  = [
+    public $simple = [
         'name' => null,
     ];
     // properties for environment over-ride testing

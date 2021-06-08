@@ -201,7 +201,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'Hello_From_CodeIgniter_4',
             'Hello From CodeIgniter 4',
         ];
-        $dashed      = [
+        $dashed = [
             'hello-world',
             'Hello World',
         ];

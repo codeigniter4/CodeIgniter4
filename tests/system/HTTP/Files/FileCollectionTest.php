@@ -53,15 +53,15 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'fileA.txt',
                     'fileB.txt',
                 ],
-                'type'     => [
+                'type' => [
                     'text/plain',
                     'text/csv',
                 ],
-                'size'     => [
+                'size' => [
                     '124',
                     '248',
                 ],
@@ -69,7 +69,7 @@ class FileCollectionTest extends CIUnitTestCase
                     '/tmp/fileA.txt',
                     '/tmp/fileB.txt',
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 
@@ -225,17 +225,17 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'foo' => [
                         'bar' => 'fileA.txt',
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'foo' => [
                         'bar' => 'text/plain',
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'foo' => [
                         'bar' => 124,
                     ],
@@ -245,7 +245,7 @@ class FileCollectionTest extends CIUnitTestCase
                         'bar' => '/tmp/fileA.txt',
                     ],
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 
@@ -322,17 +322,17 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'foo' => [
                         'bar' => 'fileA.txt',
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'foo' => [
                         'bar' => 'text/plain',
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'foo' => [
                         'bar' => 124,
                     ],
@@ -342,7 +342,7 @@ class FileCollectionTest extends CIUnitTestCase
                         'bar' => '/tmp/fileA.txt',
                     ],
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 
@@ -516,15 +516,15 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'fileA.txt',
                     'fileB.txt',
                 ],
-                'type'     => [
+                'type' => [
                     'text/plain',
                     'text/csv',
                 ],
-                'size'     => [
+                'size' => [
                     '124',
                     '248',
                 ],
@@ -532,7 +532,7 @@ class FileCollectionTest extends CIUnitTestCase
                     '/tmp/fileA.txt',
                     '/tmp/fileB.txt',
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 
@@ -561,7 +561,7 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'my-form' => [
-                'name'     => [
+                'name' => [
                     'details' => [
                         'avatars' => [
                             'fileA.txt',
@@ -569,7 +569,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'details' => [
                         'avatars' => [
                             'text/plain',
@@ -577,7 +577,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'details' => [
                         'avatars' => [
                             125,
@@ -593,7 +593,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'error'    => [
+                'error' => [
                     'details' => [
                         'avatars' => [
                             0,
@@ -629,7 +629,7 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'my-form' => [
-                'name'     => [
+                'name' => [
                     'details' => [
                         'avatars' => [
                             'fileA.txt',
@@ -637,7 +637,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'details' => [
                         'avatars' => [
                             'text/plain',
@@ -645,7 +645,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'details' => [
                         'avatars' => [
                             125,
@@ -661,7 +661,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'error'    => [
+                'error' => [
                     'details' => [
                         'avatars' => [
                             0,
@@ -684,15 +684,15 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'fileA.txt',
                     'fileB.txt',
                 ],
-                'type'     => [
+                'type' => [
                     'text/plain',
                     'text/csv',
                 ],
-                'size'     => [
+                'size' => [
                     '124',
                     '248',
                 ],
@@ -700,7 +700,7 @@ class FileCollectionTest extends CIUnitTestCase
                     '/tmp/fileA.txt',
                     '/tmp/fileB.txt',
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 
@@ -717,7 +717,7 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'my-form' => [
-                'name'     => [
+                'name' => [
                     'details' => [
                         'avatars' => [
                             'fileA.txt',
@@ -725,7 +725,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'details' => [
                         'avatars' => [
                             'text/plain',
@@ -733,7 +733,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'details' => [
                         'avatars' => [
                             125,
@@ -749,7 +749,7 @@ class FileCollectionTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'error'    => [
+                'error' => [
                     'details' => [
                         'avatars' => [
                             0,
@@ -787,17 +787,17 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'my-form' => [
-                'name'     => [
+                'name' => [
                     'details' => [
                         'avatars' => 'fileA.txt',
                     ],
                 ],
-                'type'     => [
+                'type' => [
                     'details' => [
                         'avatars' => 'text/plain',
                     ],
                 ],
-                'size'     => [
+                'size' => [
                     'details' => [
                         'avatars' => 243,
                     ],
@@ -807,7 +807,7 @@ class FileCollectionTest extends CIUnitTestCase
                         'avatars' => '/tmp/fileA.txt',
                     ],
                 ],
-                'error'    => [
+                'error' => [
                     'details' => [
                         'avatars' => 0,
                     ],
@@ -827,15 +827,15 @@ class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'fileA.txt',
                     'fileB.txt',
                 ],
-                'type'     => [
+                'type' => [
                     'text/plain',
                     'text/csv',
                 ],
-                'size'     => [
+                'size' => [
                     '124',
                     '248',
                 ],
@@ -843,7 +843,7 @@ class FileCollectionTest extends CIUnitTestCase
                     '/tmp/fileA.txt',
                     '/tmp/fileB.txt',
                 ],
-                'error'    => 0,
+                'error' => 0,
             ],
         ];
 

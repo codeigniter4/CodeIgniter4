@@ -253,7 +253,7 @@ class CellTest extends CIUnitTestCase
 
     public function testParametersMatch()
     {
-        $params   = [
+        $params = [
             'p1' => 'one',
             'p2' => 'two',
             'p4' => 'three',

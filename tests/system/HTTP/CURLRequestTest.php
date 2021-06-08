@@ -876,8 +876,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     public function testPostFormMultipart()
     {
         $params = [
-            'foo'   => 'bar',
-            'baz'   => [
+            'foo' => 'bar',
+            'baz' => [
                 'hi',
                 'there',
             ],

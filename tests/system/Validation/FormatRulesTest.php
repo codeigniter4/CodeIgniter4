@@ -16,14 +16,14 @@ class FormatRulesTest extends CIUnitTestCase
      */
     protected $validation;
     protected $config = [
-        'ruleSets'      => [
+        'ruleSets' => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA'        => [
+        'groupA' => [
             'foo' => 'required|min_length[5]',
         ],
         'groupA_errors' => [

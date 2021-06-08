@@ -71,7 +71,7 @@ class MetadataTest extends CIUnitTestCase
 
         // Create a table with the new prefix
         $fields = [
-            'name'       => [
+            'name' => [
                 'type'       => 'varchar',
                 'constraint' => 31,
             ],

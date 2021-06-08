@@ -704,9 +704,9 @@ class Email
             'name'        => $namesAttached,
             'disposition' => empty($disposition) ? 'attachment' : $disposition,
             // Can also be 'inline'  Not sure if it matters
-            'type'        => $mime,
-            'content'     => chunk_split(base64_encode($fileContent)),
-            'multipart'   => 'mixed',
+            'type'      => $mime,
+            'content'   => chunk_split(base64_encode($fileContent)),
+            'multipart' => 'mixed',
         ];
 
         return $this;
@@ -1113,7 +1113,7 @@ class Email
 
                 // Trim the word down
                 $temp .= static::substr($line, 0, $charlim - 1);
-                $line  = static::substr($line, $charlim - 1);
+                $line = static::substr($line, $charlim - 1);
             } while (static::strlen($line) > $charlim);
 
             // If $temp contains data it means we had to split up an over-length
@@ -1197,7 +1197,7 @@ class Email
 
                 if ($this->getProtocol() === 'mail') {
                     $this->headerStr .= $hdr;
-                    $this->finalBody  = $this->body;
+                    $this->finalBody = $this->body;
                 } else {
                     $this->finalBody = $hdr . $this->newline . $this->newline . $this->body;
                 }
@@ -1261,7 +1261,7 @@ class Email
                 $lastBoundary = null;
 
                 if ($this->attachmentsHaveMultipart('mixed')) {
-                    $atcBoundary  = uniqid('B_ATC_', true);
+                    $atcBoundary = uniqid('B_ATC_', true);
                     $hdr .= 'Content-Type: multipart/mixed; boundary="' . $atcBoundary . '"';
                     $lastBoundary = $atcBoundary;
                 }
@@ -1345,7 +1345,8 @@ class Email
             if (isset($multipart) && $attachment['multipart'] !== $multipart) {
                 continue;
             }
-            $name  = $attachment['name'][1] ?? basename($attachment['name'][0]);
+
+            $name = $attachment['name'][1] ?? basename($attachment['name'][0]);
             $body .= '--' . $boundary . $this->newline
                 . 'Content-Type: ' . $attachment['type'] . '; name="' . $name . '"' . $this->newline
                 . 'Content-Disposition: ' . $attachment['disposition'] . ';' . $this->newline
@@ -1512,7 +1513,7 @@ class Email
                 // reset our temp variable, and keep on chuggin'
                 if ((static::strlen($temp) + static::strlen($char)) >= 76) {
                     $output .= $temp . $escape . $this->CRLF;
-                    $temp    = '';
+                    $temp = '';
                 }
 
                 // Add the character to our temporary line
@@ -1670,7 +1671,7 @@ class Email
             if ($i === $float) {
                 $chunk[] = static::substr($set, 1);
                 $float += $this->BCCBatchSize;
-                $set     = '';
+                $set = '';
             }
 
             if ($i === $c - 1) {

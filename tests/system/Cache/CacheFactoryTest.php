@@ -19,7 +19,7 @@ class CacheFactoryTest extends CIUnitTestCase
         $this->cacheFactory = new CacheFactory();
 
         //Initialize path
-        $this->config             = new Cache();
+        $this->config = new Cache();
         $this->config->storePath .= self::$directory;
     }
 
@@ -87,7 +87,7 @@ class CacheFactoryTest extends CIUnitTestCase
         $this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config));
 
         //Initialize path
-        $this->config             = new Cache();
+        $this->config = new Cache();
         $this->config->storePath .= self::$directory;
     }
 
@@ -106,7 +106,7 @@ class CacheFactoryTest extends CIUnitTestCase
         }
 
         //Initialize path
-        $this->config             = new Cache();
+        $this->config = new Cache();
         $this->config->storePath .= self::$directory;
     }
 }

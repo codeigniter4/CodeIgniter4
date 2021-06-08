@@ -358,9 +358,9 @@ class ParserTest extends CIUnitTestCase
     public function escValueTypes()
     {
         return [
-            'scalar'      => [42],
-            'string'      => ['George'],
-            'scalarlist'  => [
+            'scalar'     => [42],
+            'string'     => ['George'],
+            'scalarlist' => [
                 [
                     1,
                     2,
@@ -368,7 +368,7 @@ class ParserTest extends CIUnitTestCase
                     -4,
                 ],
             ],
-            'stringlist'  => [
+            'stringlist' => [
                 [
                     'George',
                     'Paul',
@@ -382,7 +382,7 @@ class ParserTest extends CIUnitTestCase
                     'role' => 'guitar',
                 ],
             ],
-            'compound'    => [
+            'compound' => [
                 [
                     'name'    => 'George',
                     'address' => [
@@ -391,7 +391,7 @@ class ParserTest extends CIUnitTestCase
                     ],
                 ],
             ],
-            'pseudo'      => [
+            'pseudo' => [
                 [
                     'name'   => 'George',
                     'emails' => [
@@ -777,7 +777,7 @@ class ParserTest extends CIUnitTestCase
     public function testParserPluginParams()
     {
         $this->parser->addPlugin('growth', static function ($str, array $params) {
-            $step  = $params['step'] ?? 1;
+            $step = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
             $out = '';
