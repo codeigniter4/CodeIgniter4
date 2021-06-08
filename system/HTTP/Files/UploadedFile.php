@@ -154,6 +154,7 @@ class UploadedFile extends File implements UploadedFileInterface
         {
             $error   = error_get_last();
             $message = isset($error['message']) ? strip_tags($error['message']) : '';
+
             throw HTTPException::forMoveFailed(basename($this->path), $targetPath, $message);
         }
 
@@ -187,6 +188,7 @@ class UploadedFile extends File implements UploadedFileInterface
                 fclose($file);
             }
         }
+
         return $path;
     }
 

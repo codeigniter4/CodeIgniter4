@@ -708,6 +708,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // query is not write-type, so it must be read-type query; return QueryResult
         $resultClass = str_replace('Connection', 'Result', static::class);
+
         return new $resultClass($this->connID, $this->resultID);
     }
 
@@ -852,6 +853,7 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->transDepth > 0)
         {
             $this->transDepth ++;
+
             return true;
         }
 
@@ -868,6 +870,7 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->_transBegin())
         {
             $this->transDepth ++;
+
             return true;
         }
 
@@ -892,6 +895,7 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->transDepth > 1 || $this->_transCommit())
         {
             $this->transDepth --;
+
             return true;
         }
 
@@ -916,6 +920,7 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->transDepth > 1 || $this->_transRollback())
         {
             $this->transDepth --;
+
             return true;
         }
 
@@ -1113,6 +1118,7 @@ abstract class BaseConnection implements ConnectionInterface
         if (is_array($item))
         {
             $escapedArray = [];
+
             foreach ($item as $k => $v)
             {
                 $escapedArray[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle, $protectIdentifiers, $fieldExists);
@@ -1536,6 +1542,7 @@ abstract class BaseConnection implements ConnectionInterface
             {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
+
             return false;
         }
 
@@ -1615,6 +1622,7 @@ abstract class BaseConnection implements ConnectionInterface
             {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
+
             return false;
         }
 

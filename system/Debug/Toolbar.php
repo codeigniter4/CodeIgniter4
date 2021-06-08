@@ -66,6 +66,7 @@ class Toolbar
             {
                 log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
                         'please check $collectors in the Config\Toolbar.php file.');
+
                 continue;
             }
 
@@ -393,6 +394,7 @@ class Toolbar
             if (strpos($response->getBody(), '<head>') !== false)
             {
                 $response->setBody(preg_replace('/<head>/', '<head>' . $script, $response->getBody(), 1));
+
                 return;
             }
 
@@ -450,11 +452,13 @@ class Toolbar
             if (is_file($filename))
             {
                 $contents = $this->format(file_get_contents($filename), $format);
+
                 exit($contents);
             }
 
             // File was not written or do not exists
             http_response_code(404);
+
             exit; // Exit here is needed to avoid load the index page
         }
         // @codeCoverageIgnoreEnd
@@ -495,10 +499,12 @@ class Toolbar
                 include($this->config->viewsPath . 'toolbar.tpl.php');
                 $output = ob_get_clean();
                 break;
+
             case 'json':
                 $formatter = new JSONFormatter();
                 $output    = $formatter->format($data);
                 break;
+
             case 'xml':
                 $formatter = new XMLFormatter;
                 $output    = $formatter->format($data);

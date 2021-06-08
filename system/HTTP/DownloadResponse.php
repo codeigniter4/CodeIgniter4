@@ -126,6 +126,7 @@ class DownloadResponse extends Response
     public function setFileName(string $filename)
     {
         $this->filename = $filename;
+
         return $this;
     }
 

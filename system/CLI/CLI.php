@@ -417,6 +417,7 @@ class CLI
         if ($countdown === true)
         {
             $time = $seconds;
+
             while ($time > 0)
             {
                 static::fwrite(STDOUT, $time . '... ');
@@ -1082,6 +1083,7 @@ class CLI
         for ($row = 0; $row < $totalRows; $row ++)
         {
             $column = 0; // Current column index
+
             foreach ($tableRows[$row] as $col)
             {
                 // Sets the size of this column in the current row
@@ -1105,6 +1107,7 @@ class CLI
         for ($row = 0; $row < $totalRows; $row ++)
         {
             $column = 0;
+
             foreach ($tableRows[$row] as $col)
             {
                 $diff = $maxColsLengths[$column] - static::strlen($col);
@@ -1125,6 +1128,7 @@ class CLI
             if ($row === 0)
             {
                 $cols = '+';
+
                 foreach ($tableRows[$row] as $col)
                 {
                     $cols .= str_repeat('-', static::strlen($col) + 2) . '+';
@@ -1166,6 +1170,7 @@ class CLI
         {
             // @codeCoverageIgnoreStart
             echo $string;
+
             return;
             // @codeCoverageIgnoreEnd
         }

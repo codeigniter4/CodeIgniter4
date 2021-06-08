@@ -134,6 +134,7 @@ class DatabaseHandler extends BaseHandler
         if ($this->lockSession($sessionID) === false)
         {
             $this->fingerprint = md5('');
+
             return '';
         }
 
@@ -318,6 +319,7 @@ class DatabaseHandler extends BaseHandler
     public function gc($maxlifetime): bool
     {
         $interval = implode(" '"[(int)($this->platform === 'postgre')], ['', "{$maxlifetime} second", '']);
+
         return ($this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}")) ? true : $this->fail();
     }
 
@@ -337,6 +339,7 @@ class DatabaseHandler extends BaseHandler
             if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
             {
                 $this->lock = $arg;
+
                 return true;
             }
 
@@ -349,6 +352,7 @@ class DatabaseHandler extends BaseHandler
             if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
             {
                 $this->lock = $arg;
+
                 return true;
             }
 
@@ -378,6 +382,7 @@ class DatabaseHandler extends BaseHandler
             if ($this->db->query("SELECT RELEASE_LOCK('{$this->lock}') AS ci_session_lock")->getRow()->ci_session_lock)
             {
                 $this->lock = false;
+
                 return true;
             }
 
@@ -389,6 +394,7 @@ class DatabaseHandler extends BaseHandler
             if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})"))
             {
                 $this->lock = false;
+
                 return true;
             }
 

@@ -360,6 +360,7 @@ class Autoloader
         }
 
         $newPaths = [];
+
         foreach ($paths as $key => $value)
         {
             // Composer stores namespaces with trailing slash. We don't.

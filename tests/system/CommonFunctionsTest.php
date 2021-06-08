@@ -368,6 +368,7 @@ class CommonFunctionsTest extends CIUnitTestCase
         ];
 
         $appConfig = new App();
+
         foreach ($defaults as $key => $config)
         {
             $appConfig->$key = $config;

@@ -292,6 +292,7 @@ class Builder extends BaseBuilder
         }
 
         $this->QBOrderBy = [];
+
         return parent::_update($table, $values);
     }
 
@@ -312,6 +313,7 @@ class Builder extends BaseBuilder
     {
         $ids   = [];
         $final = [];
+
         foreach ($values as $val)
         {
             $ids[] = $val[$index];
@@ -328,6 +330,7 @@ class Builder extends BaseBuilder
         }
 
         $cases = '';
+
         foreach ($final as $k => $v)
         {
             $cases .= "{$k} = (CASE {$index}\n"
@@ -354,6 +357,7 @@ class Builder extends BaseBuilder
     protected function _delete(string $table): string
     {
         $this->QBLimit = false;
+
         return parent::_delete($table);
     }
 

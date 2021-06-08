@@ -89,6 +89,7 @@ if (! function_exists('character_limiter'))
                 break;
             }
         }
+
         return (mb_strlen($out) === mb_strlen($str)) ? $out : $out . $endChar;
     }
 }
@@ -472,6 +473,7 @@ if (! function_exists('word_wrap'))
             if (mb_strlen($line) <= $charlim)
             {
                 $output .= $line . "\n";
+
                 continue;
             }
 
@@ -579,6 +581,7 @@ if (! function_exists('strip_slashes'))
         {
             return stripslashes($str);
         }
+
         foreach ($str as $key => $val)
         {
             $str[$key] = strip_slashes($val);
@@ -708,12 +711,15 @@ if (! function_exists('random_string'))
                     case 'alpha':
                         $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         break;
+
                     case 'alnum':
                         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         break;
+
                     case 'numeric':
                         $pool = '0123456789';
                         break;
+
                     case 'nozero':
                         $pool = '123456789';
                         break;
@@ -721,10 +727,13 @@ if (! function_exists('random_string'))
 
                 // @phpstan-ignore-next-line
                 return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
+
             case 'md5':
                 return md5(uniqid((string) mt_rand(), true));
+
             case 'sha1':
                 return sha1(uniqid((string) mt_rand(), true));
+
             case 'crypto':
                 return bin2hex(random_bytes($len / 2));
         }

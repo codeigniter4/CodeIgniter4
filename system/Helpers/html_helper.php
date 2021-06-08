@@ -225,6 +225,7 @@ if (! function_exists('doctype'))
     {
         $config   = new DocTypes();
         $doctypes = $config->list;
+
         return $doctypes[$type] ?? false;
     }
 }

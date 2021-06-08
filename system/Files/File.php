@@ -83,8 +83,10 @@ class File extends SplFileInfo
         {
             case 'kb':
                 return number_format($this->getSize() / 1024, 3);
+
             case 'mb':
                 return number_format(($this->getSize() / 1024) / 1024, 3);
+
             default:
                 return $this->getSize();
         }
@@ -124,6 +126,7 @@ class File extends SplFileInfo
         $finfo    = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $this->getRealPath() ?: $this->__toString());
         finfo_close($finfo);
+
         return $mimeType;
     }
 
@@ -139,6 +142,7 @@ class File extends SplFileInfo
     {
         $extension = $this->getExtension();
         $extension = empty($extension) ? '' : '.' . $extension;
+
         return time() . '_' . bin2hex(random_bytes(10)) . $extension;
     }
 
@@ -164,6 +168,7 @@ class File extends SplFileInfo
         if (! @rename($oldName, $destination))
         {
             $error = error_get_last();
+
             throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
         }
 
@@ -213,6 +218,7 @@ class File extends SplFileInfo
                 $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
             }
         }
+
         return $destination;
     }
 

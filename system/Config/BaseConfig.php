@@ -119,6 +119,7 @@ class BaseConfig
             }
             $property = is_bool($value) ? $value : trim($value, '\'"');
         }
+
         return $property;
     }
 
@@ -139,12 +140,16 @@ class BaseConfig
         {
             case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
                 return $_ENV["{$shortPrefix}.{$property}"];
+
             case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
                 return $_SERVER["{$shortPrefix}.{$property}"];
+
             case array_key_exists("{$prefix}.{$property}", $_ENV):
                 return $_ENV["{$prefix}.{$property}"];
+
             case array_key_exists("{$prefix}.{$property}", $_SERVER):
                 return $_SERVER["{$prefix}.{$property}"];
+
             default:
                 $value = getenv("{$shortPrefix}.{$property}");
                 $value = $value === false ? getenv("{$prefix}.{$property}") : $value;

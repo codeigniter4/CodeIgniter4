@@ -127,6 +127,7 @@ class Logger implements LoggerInterface
         if ($this->loggableLevels)
         {
             $temp = [];
+
             foreach ($this->loggableLevels as $level)
             {
                 $temp[] = array_search((int) $level, $this->logLevels, true);
@@ -474,6 +475,7 @@ class Logger implements LoggerInterface
             {
                 $file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
                 $line = $frame['line'] ?? 'unknown';
+
                 return [
                     $file,
                     $line,

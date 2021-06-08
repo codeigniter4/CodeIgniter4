@@ -402,6 +402,7 @@ if (! function_exists('form_dropdown'))
         $extra    = stringify_attributes($extra);
         $multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
         $form     = '<select ' . rtrim(parse_form_attributes($data, $defaults)) . $extra . $multiple . ">\n";
+
         foreach ($options as $key => $val)
         {
             $key = (string) $key;
@@ -412,6 +413,7 @@ if (! function_exists('form_dropdown'))
                     continue;
                 }
                 $form .= '<optgroup label="' . $key . "\">\n";
+
                 foreach ($val as $optgroupKey => $optgroupVal)
                 {
                     $sel   = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
@@ -898,6 +900,7 @@ if (! function_exists('set_radio'))
         {
             $result = ($default === true) ? ' checked="checked"' : '';
         }
+
         return $result;
     }
 }

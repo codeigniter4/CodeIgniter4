@@ -91,6 +91,7 @@ class Forge extends BaseForge
 
         $sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
         $sqls = [];
+
         foreach ($field as $data)
         {
             if ($data['_literal'] !== false)
@@ -176,13 +177,16 @@ class Forge extends BaseForge
                 $attributes['TYPE']     = 'SMALLINT';
                 $attributes['UNSIGNED'] = false;
                 break;
+
             case 'MEDIUMINT':
                 $attributes['TYPE']     = 'INTEGER';
                 $attributes['UNSIGNED'] = false;
                 break;
+
             case 'DATETIME':
                 $attributes['TYPE'] = 'TIMESTAMP';
                 break;
+
             default:
                 break;
         }

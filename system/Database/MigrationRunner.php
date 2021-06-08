@@ -204,6 +204,7 @@ class MigrationRunner
                 if ($this->groupSkip === true)
                 {
                     $this->groupSkip = false;
+
                     continue;
                 }
 
@@ -219,6 +220,7 @@ class MigrationRunner
                 if ($this->silent)
                 {
                     $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                     return false;
                 }
 
@@ -286,6 +288,7 @@ class MigrationRunner
             if ($this->silent)
             {
                 $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                 return false;
             }
 
@@ -324,6 +327,7 @@ class MigrationRunner
                     if ($this->silent)
                     {
                         $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                         return false;
                     }
 
@@ -352,6 +356,7 @@ class MigrationRunner
                 if ($this->silent)
                 {
                     $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                     return false;
                 }
 
@@ -405,14 +410,17 @@ class MigrationRunner
             if ($this->silent)
             {
                 $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                 return false;
             }
+
             throw new RuntimeException($message);
         }
 
         // Check the history for a match
         $method = 'up';
         $this->setNamespace($migration->namespace);
+
         foreach ($this->getHistory($this->group) as $history)
         {
             if ($this->getObjectUid($history) === $migration->uid)
@@ -432,6 +440,7 @@ class MigrationRunner
             if ($this->migrate('up', $migration) && $this->groupSkip === false)
             {
                 $this->addHistory($migration, $batch);
+
                 return true;
             }
 
@@ -442,6 +451,7 @@ class MigrationRunner
         elseif ($this->migrate('down', $migration))
         {
             $this->removeHistory($migration->history);
+
             return true;
         }
 
@@ -451,8 +461,10 @@ class MigrationRunner
         if ($this->silent)
         {
             $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
             return false;
         }
+
         throw new RuntimeException($message);
     }
 
@@ -470,6 +482,7 @@ class MigrationRunner
 
         // Collect the migrations to run by their sortable UID
         $migrations = [];
+
         foreach ($namespaces as $namespace)
         {
             foreach ($this->findNamespaceMigrations($namespace) as $migration)
@@ -1023,8 +1036,10 @@ class MigrationRunner
             if ($this->silent)
             {
                 $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                 return false;
             }
+
             throw new RuntimeException($message);
         }
 
@@ -1038,6 +1053,7 @@ class MigrationRunner
         {
             // @codeCoverageIgnoreStart
             $this->groupSkip = true;
+
             return true;
             // @codeCoverageIgnoreEnd
         }
@@ -1046,6 +1062,7 @@ class MigrationRunner
         if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group)
         {
             $this->groupSkip = true;
+
             return true;
         }
 
@@ -1058,8 +1075,10 @@ class MigrationRunner
             if ($this->silent)
             {
                 $this->cliMessages[] = "\t" . CLI::color($message, 'red');
+
                 return false;
             }
+
             throw new RuntimeException($message);
         }
 

@@ -69,6 +69,7 @@ class Rules
     public function exact_length(string $str = null, string $val): bool
     {
         $val = explode(',', $val);
+
         foreach ($val as $tmp)
         {
             if (is_numeric($tmp) && (int) $tmp === mb_strlen($str))
@@ -163,6 +164,7 @@ class Rules
     public function in_list(string $value = null, string $list): bool
     {
         $list = array_map('trim', explode(',', $list));
+
         return in_array($value, $list, true);
     }
 

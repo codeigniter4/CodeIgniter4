@@ -213,6 +213,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         is_null($this->rowData) || $this->dataSeek();
+
         while ($row = $this->fetchAssoc())
         {
             $this->resultArray[] = $row;
@@ -256,6 +257,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         is_null($this->rowData) || $this->dataSeek();
+
         while ($row = $this->fetchObject())
         {
             if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal'))

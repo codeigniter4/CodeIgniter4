@@ -54,6 +54,7 @@ class CookieStore implements Countable, IteratorAggregate
             catch (CookieException $e)
             {
                 log_message('error', $e->getMessage());
+
                 return false;
             }
         }, $headers));

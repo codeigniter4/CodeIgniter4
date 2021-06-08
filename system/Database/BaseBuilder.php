@@ -696,6 +696,7 @@ class BaseBuilder
             }
 
             $cond = ' ON ';
+
             foreach ($conditions as $i => $condition)
             {
                 $operator = $this->getOperator($condition);
@@ -1666,6 +1667,7 @@ class BaseBuilder
         else
         {
             $qbOrderBy = [];
+
             foreach (explode(',', $orderBy) as $field)
             {
                 $qbOrderBy[] = ($direction === '' && preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE))
@@ -2107,6 +2109,7 @@ class BaseBuilder
 
         // Batch this baby
         $affectedRows = 0;
+
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
         {
             $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
@@ -2612,6 +2615,7 @@ class BaseBuilder
         $affectedRows = 0;
         $savedSQL     = [];
         $savedQBWhere = $this->QBWhere;
+
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
         {
             $sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
@@ -2667,6 +2671,7 @@ class BaseBuilder
         }
 
         $cases = '';
+
         foreach ($final as $k => $v)
         {
             $cases .= $k . " = CASE \n"
@@ -2709,6 +2714,7 @@ class BaseBuilder
         {
             $indexSet = false;
             $clean    = [];
+
             foreach ($v as $k2 => $v2)
             {
                 if ($k2 === $index)
@@ -2954,6 +2960,7 @@ class BaseBuilder
             {
                 $this->trackAliases($t);
             }
+
             return;
         }
 
@@ -3099,6 +3106,7 @@ class BaseBuilder
                 if ($qbkey['escape'] === false)
                 {
                     $qbkey = $qbkey['condition'];
+
                     continue;
                 }
 
@@ -3247,6 +3255,7 @@ class BaseBuilder
         }
 
         $array = [];
+
         foreach (get_object_vars($object) as $key => $val)
         {
             // There are some built in keys we need to ignore for this conversion
@@ -3287,6 +3296,7 @@ class BaseBuilder
             if ($val !== '_parent_name')
             {
                 $i = 0;
+
                 foreach ($out[$val] as $data)
                 {
                     $array[$i++][$val] = $data;

@@ -93,6 +93,7 @@
                                             $mirror = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) : new \ReflectionFunction($row['function']);
                                             $params = $mirror->getParameters();
                                         }
+
                                         foreach ($row['args'] as $key => $value) : ?>
 											<tr>
 												<td><code><?= esc(isset($params[$key]) ? '$' . $params[$key]->name : "#$key") ?></code></td>

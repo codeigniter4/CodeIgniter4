@@ -398,6 +398,7 @@ abstract class CIUnitTestCase extends TestCase
         }
 
         $this->assertTrue($found);
+
         return $found;
     }
 

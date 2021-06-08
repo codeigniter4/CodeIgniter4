@@ -249,11 +249,13 @@ class Table
 
         // Handle any modified columns.
         $fields = [];
+
         foreach ($this->fields as $name => $field)
         {
             if (isset($field['new_name']))
             {
                 $fields[$field['new_name']] = $field;
+
                 continue;
             }
 
@@ -272,9 +274,11 @@ class Table
                     case 'primary':
                         $this->forge->addPrimaryKey($key['fields']);
                         break;
+
                     case 'unique':
                         $this->forge->addUniqueKey($key['fields']);
                         break;
+
                     case 'index':
                         $this->forge->addKey($key['fields']);
                         break;

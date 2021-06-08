@@ -393,14 +393,13 @@ class MigrationRunnerTest extends CIUnitTestCase
 
     protected function resetTables()
     {
-        $db    = db_connect();
-        $forge = Config::forge();
-
+        $db     = db_connect();
+        $forge  = Config::forge();
         $tables = $db->listTables();
+
         foreach ($tables as $table)
         {
             $table = str_replace('db_', '', $table);
-
             $forge->dropTable($table, true);
         }
     }

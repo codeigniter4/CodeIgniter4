@@ -51,6 +51,7 @@ trait FeatureTestTrait
         if ($routes)
         {
             $collection->resetRoutes();
+
             foreach ($routes as $route)
             {
                 $collection->{$route[0]}($route[1], $route[2]);
@@ -206,6 +207,7 @@ trait FeatureTestTrait
         {
             \ob_end_clean();
         }
+
         while (\ob_get_level() < $buffer)
         {
             \ob_start();
@@ -405,6 +407,7 @@ trait FeatureTestTrait
         if (isset($this->requestBody) && $this->requestBody !== '')
         {
             $request->setBody($this->requestBody);
+
             return $request;
         }
 

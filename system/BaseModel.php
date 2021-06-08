@@ -691,6 +691,7 @@ abstract class BaseModel
                 $response = true;
             }
         }
+
         return $response;
     }
 
@@ -1228,6 +1229,7 @@ abstract class BaseModel
     protected function setDate(?int $userData = null)
     {
         $currentDate = $userData ?? time();
+
         return $this->intToDate($currentDate);
     }
 
@@ -1254,10 +1256,13 @@ abstract class BaseModel
         {
             case 'int':
                 return $value;
+
             case 'datetime':
                 return date('Y-m-d H:i:s', $value);
+
             case 'date':
                 return date('Y-m-d', $value);
+
             default:
                 throw ModelException::forNoDateFormat(static::class);
         }
@@ -1281,10 +1286,13 @@ abstract class BaseModel
         {
             case 'datetime':
                 return $value->format('Y-m-d H:i:s');
+
             case 'date':
                 return $value->format('Y-m-d');
+
             case 'int':
                 return $value->getTimestamp();
+
             default:
                 return (string) $value;
         }
@@ -1599,6 +1607,7 @@ abstract class BaseModel
                 {
                     return $this->timeToDate($value);
                 }
+
                 return $value;
             }, $properties);
         }
@@ -1723,6 +1732,7 @@ abstract class BaseModel
         {
             return true;
         }
+
         return isset($this->db->$name);
     }
 

@@ -118,6 +118,7 @@ class MemcachedHandler extends BaseHandler
             if (in_array($match[1] . ':' . $match[2], $serverList, true))
             {
                 $this->logger->debug('Session: Memcached server pool already has ' . $match[1] . ':' . $match[2]);
+
                 continue;
             }
 
@@ -319,6 +320,7 @@ class MemcachedHandler extends BaseHandler
             if ($this->memcached->get($lockKey))
             {
                 sleep(1);
+
                 continue;
             }
 

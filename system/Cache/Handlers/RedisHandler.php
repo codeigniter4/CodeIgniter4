@@ -93,18 +93,21 @@ class RedisHandler extends BaseHandler
             {
                 // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
                 log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+
                 throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
             }
 
             if (isset($config['password']) && ! $this->redis->auth($config['password']))
             {
                 log_message('error', 'Cache: Redis authentication failed.');
+
                 throw new CriticalError('Cache: Redis authentication failed.');
             }
 
             if (isset($config['database']) && ! $this->redis->select($config['database']))
             {
                 log_message('error', 'Cache: Redis select database failed.');
+
                 throw new CriticalError('Cache: Redis select database failed.');
             }
         }
@@ -140,12 +143,14 @@ class RedisHandler extends BaseHandler
             case 'array':
             case 'object':
                 return unserialize($data['__ci_value']);
+
             case 'boolean':
             case 'integer':
             case 'double': // Yes, 'double' is returned and NOT 'float'
             case 'string':
             case 'NULL':
                 return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
+
             case 'resource':
             default:
                 return null;
@@ -173,12 +178,14 @@ class RedisHandler extends BaseHandler
             case 'object':
                 $value = serialize($value);
                 break;
+
             case 'boolean':
             case 'integer':
             case 'double': // Yes, 'double' is returned and NOT 'float'
             case 'string':
             case 'NULL':
                 break;
+
             case 'resource':
             default:
                 return false;

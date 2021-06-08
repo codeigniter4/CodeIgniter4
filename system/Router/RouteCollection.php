@@ -518,6 +518,7 @@ class RouteCollection implements RouteCollectionInterface
                 $extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);
                 $collection = array_merge($this->routes[$verb], $extraRules);
             }
+
             foreach ($collection as $r)
             {
                 $key          = key($r['route']);
@@ -822,6 +823,7 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($options['except']))
         {
             $options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+
             foreach ($methods as $i => $method)
             {
                 if (in_array($method, $options['except'], true))
@@ -930,6 +932,7 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($options['except']))
         {
             $options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+
             foreach ($methods as $i => $method)
             {
                 if (in_array($method, $options['except'], true))
@@ -1197,6 +1200,7 @@ class RouteCollection implements RouteCollectionInterface
             if (array_key_exists($search, $collection))
             {
                 $route = $this->fillRouteParams(key($collection[$search]['route']), $params);
+
                 return $this->localizeRoute($route);
             }
         }
@@ -1236,6 +1240,7 @@ class RouteCollection implements RouteCollectionInterface
                 }
 
                 $route = $this->fillRouteParams($from, $params);
+
                 return $this->localizeRoute($route);
             }
         }
@@ -1563,6 +1568,7 @@ class RouteCollection implements RouteCollectionInterface
     public function resetRoutes()
     {
         $this->routes = ['*' => []];
+
         foreach ($this->defaultHTTPMethods as $verb)
         {
             $this->routes[$verb] = [];

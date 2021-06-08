@@ -228,6 +228,7 @@ class View implements RendererInterface
             extract($this->tempData);
             ob_start();
             include $this->renderVars['file'];
+
             return ob_get_clean() ?: '';
         })();
 
@@ -309,6 +310,7 @@ class View implements RendererInterface
             extract($this->tempData);
             ob_start();
             eval('?>' . $view);
+
             return ob_get_clean() ?: '';
         })($view);
 

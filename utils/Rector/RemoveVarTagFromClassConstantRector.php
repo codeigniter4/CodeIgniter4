@@ -55,6 +55,7 @@ final class RemoveVarTagFromClassConstantRector extends AbstractRector
         }
 
         $phpDocInfo->removeByType(VarTagValueNode::class);
+
         return $node;
     }
 }

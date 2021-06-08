@@ -41,6 +41,7 @@ class Result extends BaseResult
     {
         $fieldNames = [];
         $this->resultID->field_seek(0);
+
         while ($field = $this->resultID->fetch_field())
         {
             $fieldNames[] = $field->name;
@@ -171,6 +172,7 @@ class Result extends BaseResult
         {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
         }
+
         return $this->resultID->fetch_object($className);
     }
 

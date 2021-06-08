@@ -174,6 +174,7 @@ trait ControllerTester
                 ->setResponse($this->response);
 
         $response = null;
+
         try
         {
             ob_start();

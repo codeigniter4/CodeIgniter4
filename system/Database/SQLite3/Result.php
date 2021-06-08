@@ -42,6 +42,7 @@ class Result extends BaseResult
     public function getFieldNames(): array
     {
         $fieldNames = [];
+
         for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++)
         {
             $fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
@@ -172,10 +173,12 @@ class Result extends BaseResult
             $this->$key = $value;
         }, $classObj, $className
         );
+
         foreach (array_keys($row) as $key)
         {
             $classSet($key, $row[$key]);
         }
+
         return $classObj;
     }
 

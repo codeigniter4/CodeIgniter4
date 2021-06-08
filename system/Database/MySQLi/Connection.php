@@ -324,6 +324,7 @@ class Connection extends BaseConnection
                 $res->free();
             }
         }
+
         try
         {
             return $this->connID->query($this->prepQuery($sql));
@@ -337,6 +338,7 @@ class Connection extends BaseConnection
                 throw $e;
             }
         }
+
         return false;
     }
 
@@ -487,6 +489,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         for ($i = 0, $c = count($query); $i < $c; $i++)
         {
             $retVal[$i]       = new stdClass();
@@ -596,6 +599,7 @@ class Connection extends BaseConnection
         $query = $query->getResultObject();
 
         $retVal = [];
+
         foreach ($query as $row)
         {
             $obj                      = new stdClass();

@@ -227,9 +227,11 @@ class IncomingRequest extends Request
             case 'REQUEST_URI':
                 $this->path = $this->parseRequestURI();
                 break;
+
             case 'QUERY_STRING':
                 $this->path = $this->parseQueryString();
                 break;
+
             case 'PATH_INFO':
             default:
                 $this->path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
@@ -266,6 +268,7 @@ class IncomingRequest extends Request
         {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $uri);
+
             foreach (explode('/', $_SERVER['SCRIPT_NAME']) as $i => $segment)
             {
                 // If these segments are not the same then we're done
@@ -359,10 +362,13 @@ class IncomingRequest extends Request
         {
             case 'media':
                 return $this->negotiator->media($supported, $strictMatch);
+
             case 'charset':
                 return $this->negotiator->charset($supported);
+
             case 'encoding':
                 return $this->negotiator->encoding($supported);
+
             case 'language':
                 return $this->negotiator->language($supported);
         }
@@ -409,6 +415,7 @@ class IncomingRequest extends Request
         {
             return true;
         }
+
         return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
     }
 
@@ -549,15 +556,18 @@ class IncomingRequest extends Request
             if (is_array($index))
             {
                 $output = [];
+
                 foreach ($index as $key)
                 {
                     $output[$key] = $this->getJsonVar($key, false, $filter, $flags);
                 }
+
                 return $output;
             }
 
             return $this->getJsonVar($index, false, $filter, $flags);
         }
+
         return $this->fetchGlobal('request', $index, $filter, $flags);
     }
 

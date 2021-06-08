@@ -46,6 +46,7 @@ class SessionTest extends CIUnitTestCase
 
         $config    = array_merge($defaults, $options);
         $appConfig = new AppConfig();
+
         foreach ($config as $key => $c)
         {
             $appConfig->$key = $c;

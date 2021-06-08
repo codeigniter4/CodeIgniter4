@@ -142,6 +142,7 @@ class CreateDatabase extends BaseCommand
                     // @codeCoverageIgnoreStart
                     CLI::error('Database creation failed.', 'light_gray', 'red');
                     CLI::newLine();
+
                     return;
                     // @codeCoverageIgnoreEnd
                 }
@@ -151,6 +152,7 @@ class CreateDatabase extends BaseCommand
                 // @codeCoverageIgnoreStart
                 CLI::error('Database creation failed.', 'light_gray', 'red');
                 CLI::newLine();
+
                 return;
                 // @codeCoverageIgnoreEnd
             }

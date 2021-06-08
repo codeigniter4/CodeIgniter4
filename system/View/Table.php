@@ -112,6 +112,7 @@ class Table
         }
 
         $this->template = $template;
+
         return true;
     }
 
@@ -125,6 +126,7 @@ class Table
     public function setHeading()
     {
         $this->heading = $this->_prepArgs(func_get_args());
+
         return $this;
     }
 
@@ -138,6 +140,7 @@ class Table
     public function setFooting()
     {
         $this->footing = $this->_prepArgs(func_get_args());
+
         return $this;
     }
 
@@ -168,6 +171,7 @@ class Table
         }
 
         $new = [];
+
         do
         {
             $temp = array_splice($array, 0, $columnLimit);
@@ -199,6 +203,7 @@ class Table
     public function setEmpty($value)
     {
         $this->emptyCells = $value;
+
         return $this;
     }
 
@@ -212,6 +217,7 @@ class Table
     public function addRow()
     {
         $this->rows[] = $this->_prepArgs(func_get_args());
+
         return $this;
     }
 
@@ -253,6 +259,7 @@ class Table
     public function setCaption($caption)
     {
         $this->caption = $caption;
+
         return $this;
     }
 
@@ -421,6 +428,7 @@ class Table
         $this->footing     = [];
         $this->autoHeading = true;
         $this->caption     = null;
+
         return $this;
     }
 
@@ -474,6 +482,7 @@ class Table
         if ($this->template === null)
         {
             $this->template = $this->_defaultTemplate();
+
             return;
         }
 

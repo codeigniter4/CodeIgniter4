@@ -107,6 +107,7 @@ class Parser extends View
         if (isset($options['cache']) && ($output = cache($cacheName)))
         {
             $this->logPerformance($start, microtime(true), $view);
+
             return $output;
         }
 
@@ -143,6 +144,7 @@ class Parser extends View
             cache()->save($cacheName, $output, (int) $options['cache']);
         }
         $this->tempData = null;
+
         return $output;
     }
 
@@ -340,6 +342,7 @@ class Parser extends View
             // Loop over each piece of $data, replacing
             // it's contents so that we know what to replace in parse()
             $str = '';  // holds the new contents for this tag pair.
+
             foreach ($data as $row)
             {
                 // Objects that have a `toArray()` method should be
@@ -357,6 +360,7 @@ class Parser extends View
                 $temp  = [];
                 $pairs = [];
                 $out   = $match[1];
+
                 foreach ($row as $key => $val)
                 {
                     // For nested data, send us back through this method...
@@ -529,6 +533,7 @@ class Parser extends View
         catch (ParseError $e)
         {
             ob_end_clean();
+
             throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
         }
 
@@ -547,6 +552,7 @@ class Parser extends View
     {
         $this->leftDelimiter  = $leftDelimiter;
         $this->rightDelimiter = $rightDelimiter;
+
         return $this;
     }
 

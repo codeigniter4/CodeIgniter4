@@ -77,6 +77,7 @@ class DOMParser
             // unclear how we would get here, given that we are trapping libxml errors
             // @codeCoverageIgnoreStart
             libxml_clear_errors();
+
             throw new BadMethodCallException('Invalid HTML');
             // @codeCoverageIgnoreEnd
         }
@@ -121,6 +122,7 @@ class DOMParser
         if (is_null($element))
         {
             $content = $this->dom->saveHTML($this->dom->documentElement);
+
             return mb_strpos($content, $search) !== false;
         }
 

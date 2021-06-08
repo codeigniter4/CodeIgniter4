@@ -129,12 +129,14 @@ final class ComposerScripts
         if (! is_dir($originDir))
         {
             echo sprintf('The origin directory "%s" was not found.', $originDir);
+
             exit(1);
         }
 
         if (is_dir($targetDir))
         {
             echo sprintf('The target directory "%s" is existing. Run %s::recursiveDelete(\'%s\') first.', $targetDir, self::class, $targetDir);
+
             exit(1);
         }
 

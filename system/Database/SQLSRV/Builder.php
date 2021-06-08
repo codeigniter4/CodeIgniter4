@@ -73,6 +73,7 @@ class Builder extends BaseBuilder
     protected function _fromTables(): string
     {
         $from = [];
+
         foreach ($this->QBFrom as $value)
         {
             $from[] = $this->getFullName($value);
@@ -168,6 +169,7 @@ class Builder extends BaseBuilder
             }
 
             $cond = ' ON ';
+
             foreach ($conditions as $i => $condition)
             {
                 $operator = $this->getOperator($condition);

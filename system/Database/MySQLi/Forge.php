@@ -153,6 +153,7 @@ class Forge extends BaseForge
         }
 
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+
         foreach ($field as $i => $data)
         {
             if ($data['_literal'] !== false)
@@ -227,6 +228,7 @@ class Forge extends BaseForge
                     if (! isset($this->fields[$this->keys[$i][$i2]]))
                     {
                         unset($this->keys[$i][$i2]);
+
                         continue;
                     }
                 }
@@ -234,6 +236,7 @@ class Forge extends BaseForge
             elseif (! isset($this->fields[$this->keys[$i]]))
             {
                 unset($this->keys[$i]);
+
                 continue;
             }
 

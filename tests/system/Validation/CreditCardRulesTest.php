@@ -1242,6 +1242,7 @@ class CreditCardRulesTest extends CIUnitTestCase
 
         // Calculate the Luhn checksum of the current values.
         $lenOffset = ($length + 1) % 2;
+
         for ($pos = 0; $pos < $length - 1; $pos ++)
         {
             if (($pos + $lenOffset) % 2)
