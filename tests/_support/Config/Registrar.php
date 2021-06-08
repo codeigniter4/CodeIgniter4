@@ -121,4 +121,18 @@ class Registrar
 
         return $config;
     }
+
+    /**
+     * Demonstrates Publisher security.
+     *
+     * @see PublisherRestrictionsTest::testRegistrarsNotAllowed()
+     *
+     * @return array
+     */
+    public static function Publisher()
+    {
+        return [
+            'restrictions' => [SUPPORTPATH => '*'],
+        ];
+    }
 }
