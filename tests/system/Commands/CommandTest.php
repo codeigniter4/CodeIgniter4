@@ -9,7 +9,6 @@ use Tests\Support\Commands\ParamsReveal;
 
 class CommandTest extends CIUnitTestCase
 {
-
     private $streamFilter;
     protected $logger;
     protected $commands;

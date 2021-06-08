@@ -9,8 +9,8 @@ namespace Tests\Support\View;
  * during tests to make sure that things work as expected.
  */
 
-class SampleClass {
-
+class SampleClass
+{
     public function index()
     {
         return 'Hello World';
@@ -25,8 +25,7 @@ class SampleClass {
 
     public function echobox($params)
     {
-        if (is_array($params))
-        {
+        if (is_array($params)) {
             $params = implode(',', $params);
         }
 
@@ -37,8 +36,7 @@ class SampleClass {
 
     public static function staticEcho($params)
     {
-        if (is_array($params))
-        {
+        if (is_array($params)) {
             $params = implode(',', $params);
         }
 

@@ -103,32 +103,24 @@ class ControllerGenerator extends BaseCommand
         $extends      = 'BaseController';
 
         // Gets the appropriate parent class to extend.
-        if ($bare || $rest)
-        {
-            if ($bare)
-            {
+        if ($bare || $rest) {
+            if ($bare) {
                 $useStatement = 'CodeIgniter\Controller';
                 $extends      = 'Controller';
-            }
-            elseif ($rest)
-            {
+            } elseif ($rest) {
                 $rest = is_string($rest) ? $rest : 'controller';
 
-                if (! in_array($rest, ['controller', 'presenter'], true))
-                {
+                if (! in_array($rest, ['controller', 'presenter'], true)) {
                     // @codeCoverageIgnoreStart
                     $rest = CLI::prompt(lang('CLI.generator.parentClass'), ['controller', 'presenter'], 'required');
                     CLI::newLine();
                     // @codeCoverageIgnoreEnd
                 }
 
-                if ($rest === 'controller')
-                {
+                if ($rest === 'controller') {
                     $useStatement = 'CodeIgniter\RESTful\ResourceController';
                     $extends      = 'ResourceController';
-                }
-                elseif ($rest === 'presenter')
-                {
+                } elseif ($rest === 'presenter') {
                     $useStatement = 'CodeIgniter\RESTful\ResourcePresenter';
                     $extends      = 'ResourcePresenter';
                 }

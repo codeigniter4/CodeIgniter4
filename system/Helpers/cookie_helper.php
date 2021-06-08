@@ -16,8 +16,7 @@ use Config\Services;
 // CodeIgniter Cookie Helpers
 //=============================================================================
 
-if (! function_exists('set_cookie'))
-{
+if (! function_exists('set_cookie')) {
     /**
      * Set cookie
      *
@@ -46,15 +45,13 @@ if (! function_exists('set_cookie'))
         bool $secure = false,
         bool $httpOnly = false,
         string $sameSite = null
-    )
-    {
+    ) {
         $response = Services::response();
         $response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
     }
 }
 
-if (! function_exists('get_cookie'))
-{
+if (! function_exists('get_cookie')) {
     /**
      * Fetch an item from the $_COOKIE array
      *
@@ -75,8 +72,7 @@ if (! function_exists('get_cookie'))
     }
 }
 
-if (! function_exists('delete_cookie'))
-{
+if (! function_exists('delete_cookie')) {
     /**
      * Delete a cookie
      *
@@ -95,8 +91,7 @@ if (! function_exists('delete_cookie'))
     }
 }
 
-if (! function_exists('has_cookie'))
-{
+if (! function_exists('has_cookie')) {
     /**
      * Checks if a cookie exists by name.
      *

@@ -11,7 +11,6 @@ use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 class FilesystemHelperTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -499,8 +498,7 @@ class FilesystemHelperTest extends CIUnitTestCase
             0140655 => 'srw-r-xr-x',
         ];
 
-        foreach ($expected as $perm => $value)
-        {
+        foreach ($expected as $perm => $value) {
             $this->assertEquals($value, symbolic_permissions($perm));
         }
     }
@@ -523,5 +521,4 @@ class FilesystemHelperTest extends CIUnitTestCase
     {
         $this->assertEquals(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
     }
-
 }

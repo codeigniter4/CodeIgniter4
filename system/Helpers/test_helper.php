@@ -17,8 +17,7 @@ use CodeIgniter\Test\Fabricator;
  */
 //--------------------------------------------------------------------
 
-if (! function_exists('fake'))
-{
+if (! function_exists('fake')) {
     /**
      * Creates a single item using Fabricator.
      *
@@ -33,13 +32,11 @@ if (! function_exists('fake'))
         $fabricator = new Fabricator($model);
 
         // Set overriding data, if necessary
-        if ($overrides)
-        {
+        if ($overrides) {
             $fabricator->setOverrides($overrides);
         }
 
-        if ($persist)
-        {
+        if ($persist) {
             return $fabricator->create();
         }
 

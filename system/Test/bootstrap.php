@@ -53,16 +53,14 @@ defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
-if (file_exists(APPPATH . 'Common.php'))
-{
+if (file_exists(APPPATH . 'Common.php')) {
     require_once APPPATH . 'Common.php';
 }
 
 require_once SYSTEMPATH . 'Common.php';
 
 // Set environment values that would otherwise stop the framework from functioning during tests.
-if (! isset($_SERVER['app.baseURL']))
-{
+if (! isset($_SERVER['app.baseURL'])) {
     $_SERVER['app.baseURL'] = 'http://example.com/';
 }
 
@@ -79,8 +77,7 @@ require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
-if (! class_exists('CodeIgniter\Services', false))
-{
+if (! class_exists('CodeIgniter\Services', false)) {
     class_alias('Config\Services', 'CodeIgniter\Services');
 }
 
@@ -88,15 +85,13 @@ if (! class_exists('CodeIgniter\Services', false))
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
 // Now load Composer's if it's available
-if (is_file(COMPOSER_PATH))
-{
+if (is_file(COMPOSER_PATH)) {
     /*
      * The path to the vendor directory.
      *
      * We do not want to enforce this, so set the constant if Composer was used.
      */
-    if (! defined('VENDORPATH'))
-    {
+    if (! defined('VENDORPATH')) {
         define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
     }
 

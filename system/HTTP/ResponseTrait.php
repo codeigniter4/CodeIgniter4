@@ -145,14 +145,12 @@ trait ResponseTrait
     public function setStatusCode(int $code, string $reason = '')
     {
         // Valid range?
-        if ($code < 100 || $code > 599)
-        {
+        if ($code < 100 || $code > 599) {
             throw HTTPException::forInvalidStatusCode($code);
         }
 
         // Unknown and no message?
-        if (! array_key_exists($code, static::$statusCodes) && empty($reason))
-        {
+        if (! array_key_exists($code, static::$statusCodes) && empty($reason)) {
             throw HTTPException::forUnkownStatusCode($code);
         }
 
@@ -198,19 +196,16 @@ trait ResponseTrait
     {
         $links = '';
 
-        if ($previous = $pager->getPreviousPageURI())
-        {
+        if ($previous = $pager->getPreviousPageURI()) {
             $links .= '<' . $pager->getPageURI($pager->getFirstPage()) . '>; rel="first",';
             $links .= '<' . $previous . '>; rel="prev"';
         }
 
-        if (($next = $pager->getNextPageURI()) && $previous)
-        {
+        if (($next = $pager->getNextPageURI()) && $previous) {
             $links .= ',';
         }
 
-        if ($next)
-        {
+        if ($next) {
             $links .= '<' . $next . '>; rel="next",';
             $links .= '<' . $pager->getPageURI($pager->getLastPage()) . '>; rel="last"';
         }
@@ -232,8 +227,7 @@ trait ResponseTrait
     public function setContentType(string $mime, string $charset = 'UTF-8')
     {
         // add charset attribute if not already there and provided as parm
-        if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
-        {
+        if ((strpos($mime, 'charset=') < 1) && ! empty($charset)) {
             $mime .= '; charset=' . $charset;
         }
 
@@ -269,8 +263,7 @@ trait ResponseTrait
     {
         $body = $this->body;
 
-        if ($this->bodyFormat !== 'json')
-        {
+        if ($this->bodyFormat !== 'json') {
             $body = Services::format()->getFormatter('application/json')->format($body);
         }
 
@@ -301,8 +294,7 @@ trait ResponseTrait
     {
         $body = $this->body;
 
-        if ($this->bodyFormat !== 'xml')
-        {
+        if ($this->bodyFormat !== 'xml') {
             $body = Services::format()->getFormatter('application/xml')->format($body);
         }
 
@@ -326,8 +318,7 @@ trait ResponseTrait
         $this->setContentType($mime);
 
         // Nothing much to do for a string...
-        if (! is_string($body) || $format === 'json-unencoded')
-        {
+        if (! is_string($body) || $format === 'json-unencoded') {
             $body = Services::format()->getFormatter($mime)->format($body);
         }
 
@@ -388,8 +379,7 @@ trait ResponseTrait
      */
     public function setCache(array $options = [])
     {
-        if (empty($options))
-        {
+        if (empty($options)) {
             return $this;
         }
 
@@ -397,15 +387,13 @@ trait ResponseTrait
         $this->removeHeader('ETag');
 
         // ETag
-        if (isset($options['etag']))
-        {
+        if (isset($options['etag'])) {
             $this->setHeader('ETag', $options['etag']);
             unset($options['etag']);
         }
 
         // Last Modified
-        if (isset($options['last-modified']))
-        {
+        if (isset($options['last-modified'])) {
             $this->setLastModified($options['last-modified']);
 
             unset($options['last-modified']);
@@ -428,13 +416,10 @@ trait ResponseTrait
      */
     public function setLastModified($date)
     {
-        if ($date instanceof DateTime)
-        {
+        if ($date instanceof DateTime) {
             $date->setTimezone(new DateTimeZone('UTC'));
             $this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
-        }
-        elseif (is_string($date))
-        {
+        } elseif (is_string($date)) {
             $this->setHeader('Last-Modified', $date);
         }
 
@@ -454,12 +439,9 @@ trait ResponseTrait
     {
         // If we're enforcing a Content Security Policy,
         // we need to give it a chance to build out it's headers.
-        if ($this->CSPEnabled === true)
-        {
+        if ($this->CSPEnabled === true) {
             $this->CSP->finalize($this);
-        }
-        else
-        {
+        } else {
             $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body);
         }
 
@@ -478,15 +460,13 @@ trait ResponseTrait
     public function sendHeaders()
     {
         // Have the headers already been sent?
-        if ($this->pretend || headers_sent())
-        {
+        if ($this->pretend || headers_sent()) {
             return $this;
         }
 
         // Per spec, MUST be sent with each request, if possible.
         // http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-        if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server')
-        {
+        if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server') {
             $this->setDate(DateTime::createFromFormat('U', (string) time()));
         }
 
@@ -494,8 +474,7 @@ trait ResponseTrait
         header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true, $this->getStatusCode());
 
         // Send all of our headers
-        foreach (array_keys($this->getHeaders()) as $name)
-        {
+        foreach (array_keys($this->getHeaders()) as $name) {
             header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
         }
 
@@ -527,26 +506,22 @@ trait ResponseTrait
     public function redirect(string $uri, string $method = 'auto', int $code = null)
     {
         // Assume 302 status code response; override if needed
-        if (empty($code))
-        {
+        if (empty($code)) {
             $code = 302;
         }
 
         // IIS environment likely? Use 'refresh' for better compatibility
-        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
-        {
+        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) {
             $method = 'refresh';
         }
 
         // override status code for HTTP/1.1 & higher
         // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-        if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1 && $method !== 'refresh')
-        {
+        if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1 && $method !== 'refresh') {
             $code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
         }
 
-        switch ($method)
-        {
+        switch ($method) {
             case 'refresh':
                 $this->setHeader('Refresh', '0;url=' . $uri);
                 break;
@@ -589,22 +564,17 @@ trait ResponseTrait
         $secure = false,
         $httponly = false,
         $samesite = null
-    )
-    {
-        if (is_array($name))
-        {
+    ) {
+        if (is_array($name)) {
             // always leave 'name' in last place, as the loop will break otherwise, due to $$item
-            foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
-            {
-                if (isset($name[$item]))
-                {
+            foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item) {
+                if (isset($name[$item])) {
                     $$item = $name[$item];
                 }
             }
         }
 
-        if (is_numeric($expire))
-        {
+        if (is_numeric($expire)) {
             $expire = $expire > 0 ? time() + $expire : 0;
         }
 
@@ -659,19 +629,15 @@ trait ResponseTrait
      */
     public function getCookie(string $name = null, string $prefix = '')
     {
-        if ((string) $name === '')
-        {
+        if ((string) $name === '') {
             return $this->cookieStore->display();
         }
 
-        try
-        {
+        try {
             $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
 
             return $this->cookieStore->get($name, $prefix);
-        }
-        catch (CookieException $e)
-        {
+        } catch (CookieException $e) {
             log_message('error', $e->getMessage());
 
             return null;
@@ -690,8 +656,7 @@ trait ResponseTrait
      */
     public function deleteCookie(string $name = '', string $domain = '', string $path = '/', string $prefix = '')
     {
-        if ($name === '')
-        {
+        if ($name === '') {
             return $this;
         }
 
@@ -701,17 +666,13 @@ trait ResponseTrait
         $store    = $this->cookieStore;
         $found    = false;
 
-        foreach ($store as $cookie)
-        {
-            if ($cookie->getPrefixedName() === $prefixed)
-            {
-                if ($domain !== $cookie->getDomain())
-                {
+        foreach ($store as $cookie) {
+            if ($cookie->getPrefixedName() === $prefixed) {
+                if ($domain !== $cookie->getDomain()) {
                     continue;
                 }
 
-                if ($path !== $cookie->getPath())
-                {
+                if ($path !== $cookie->getPath()) {
                     continue;
                 }
 
@@ -723,8 +684,7 @@ trait ResponseTrait
             }
         }
 
-        if (! $found)
-        {
+        if (! $found) {
             $this->setCookie($name, '', '', $domain, $path, $prefix);
         }
 
@@ -746,8 +706,7 @@ trait ResponseTrait
      */
     protected function sendCookies()
     {
-        if ($this->pretend)
-        {
+        if ($this->pretend) {
             return;
         }
 
@@ -768,14 +727,12 @@ trait ResponseTrait
      */
     public function download(string $filename = '', $data = '', bool $setMime = false)
     {
-        if ($filename === '' || $data === '')
-        {
+        if ($filename === '' || $data === '') {
             return null;
         }
 
         $filepath = '';
-        if ($data === null)
-        {
+        if ($data === null) {
             $filepath = $filename;
             $filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
             $filename = end($filename);
@@ -783,12 +740,9 @@ trait ResponseTrait
 
         $response = new DownloadResponse($filename, $setMime);
 
-        if ($filepath !== '')
-        {
+        if ($filepath !== '') {
             $response->setFilePath($filepath);
-        }
-        elseif ($data !== null)
-        {
+        } elseif ($data !== null) {
             $response->setBinary($data);
         }
 

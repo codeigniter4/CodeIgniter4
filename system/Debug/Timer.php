@@ -67,8 +67,7 @@ class Timer
     {
         $name = strtolower($name);
 
-        if (empty($this->timers[$name]))
-        {
+        if (empty($this->timers[$name])) {
             throw new RuntimeException('Cannot stop timer: invalid name given.');
         }
 
@@ -93,15 +92,13 @@ class Timer
     {
         $name = strtolower($name);
 
-        if (empty($this->timers[$name]))
-        {
+        if (empty($this->timers[$name])) {
             return null;
         }
 
         $timer = $this->timers[$name];
 
-        if (empty($timer['end']))
-        {
+        if (empty($timer['end'])) {
             $timer['end'] = microtime(true);
         }
 
@@ -121,10 +118,8 @@ class Timer
     {
         $timers = $this->timers;
 
-        foreach ($timers as &$timer)
-        {
-            if (empty($timer['end']))
-            {
+        foreach ($timers as &$timer) {
+            if (empty($timer['end'])) {
                 $timer['end'] = microtime(true);
             }
 

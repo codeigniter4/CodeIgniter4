@@ -106,5 +106,4 @@ class GetTest extends CIUnitTestCase
 
         $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
     }
-
 }

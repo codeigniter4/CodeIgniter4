@@ -224,12 +224,9 @@ class TestResponseTest extends CIUnitTestCase
     {
         $this->getTestResponse('<h1>Hello World</h1>', ['statusCode' => $code]);
 
-        if ($isOk)
-        {
+        if ($isOk) {
             $this->testResponse->assertOK();
-        }
-        else
-        {
+        } else {
             $this->testResponse->assertNotOK();
         }
     }
@@ -415,18 +412,15 @@ class TestResponseTest extends CIUnitTestCase
         $this->response = new Response(new App());
         $this->response->setBody($body);
 
-        foreach ($responseOptions as $key => $value)
-        {
+        foreach ($responseOptions as $key => $value) {
             $method = 'set' . ucfirst($key);
 
-            if (method_exists($this->response, $method))
-            {
+            if (method_exists($this->response, $method)) {
                 $this->response = $this->response->$method($value);
             }
         }
 
-        foreach ($headers as $key => $value)
-        {
+        foreach ($headers as $key => $value) {
             $this->response = $this->response->setHeader($key, $value);
         }
 

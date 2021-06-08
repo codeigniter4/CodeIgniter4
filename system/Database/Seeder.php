@@ -81,15 +81,13 @@ class Seeder
     {
         $this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 
-        if (empty($this->seedPath))
-        {
+        if (empty($this->seedPath)) {
             throw new InvalidArgumentException('Invalid filesPath set in the Config\Database.');
         }
 
         $this->seedPath = rtrim($this->seedPath, '\\/') . '/Seeds/';
 
-        if (! is_dir($this->seedPath))
-        {
+        if (! is_dir($this->seedPath)) {
             throw new InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
         }
 
@@ -108,8 +106,7 @@ class Seeder
      */
     public static function faker(): ?Generator
     {
-        if (self::$faker === null && class_exists(Factory::class))
-        {
+        if (self::$faker === null && class_exists(Factory::class)) {
             self::$faker = Factory::create();
         }
 
@@ -129,17 +126,14 @@ class Seeder
     {
         $class = trim($class);
 
-        if ($class === '')
-        {
+        if ($class === '') {
             throw new InvalidArgumentException('No seeder was specified.');
         }
 
-        if (strpos($class, '\\') === false)
-        {
+        if (strpos($class, '\\') === false) {
             $path = $this->seedPath . str_replace('.php', '', $class) . '.php';
 
-            if (! is_file($path))
-            {
+            if (! is_file($path)) {
                 throw new InvalidArgumentException('The specified seeder is not a valid file: ' . $path);
             }
 
@@ -147,8 +141,7 @@ class Seeder
             // @codeCoverageIgnoreStart
             $class = APP_NAMESPACE . '\Database\Seeds\\' . $class;
 
-            if (! class_exists($class, false))
-            {
+            if (! class_exists($class, false)) {
                 require_once $path;
             }
             // @codeCoverageIgnoreEnd
@@ -162,8 +155,7 @@ class Seeder
 
         unset($seeder);
 
-        if (is_cli() && ! $this->silent)
-        {
+        if (is_cli() && ! $this->silent) {
             CLI::write("Seeded: {$class}", 'green');
         }
     }

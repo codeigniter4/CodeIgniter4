@@ -147,8 +147,7 @@ class CLI
      */
     public static function init()
     {
-        if (is_cli())
-        {
+        if (is_cli()) {
             // Readline is an extension for PHP that makes interactivity with PHP
             // much more bash-like.
             // http://www.php.net/manual/en/readline.installation.php
@@ -164,9 +163,7 @@ class CLI
             static::parseCommandLine();
 
             static::$initialized = true;
-        }
-        else
-        {
+        } else {
             // If the command is being called from a controller
             // we need to define STDOUT ourselves
             // @codeCoverageIgnoreStart
@@ -190,8 +187,7 @@ class CLI
      */
     public static function input(string $prefix = null): string
     {
-        if (static::$readline_support)
-        {
+        if (static::$readline_support) {
             return readline($prefix);
         }
 
@@ -232,35 +228,28 @@ class CLI
         $extraOutput = '';
         $default     = '';
 
-        if ($validation && ! is_array($validation) && ! is_string($validation))
-        {
+        if ($validation && ! is_array($validation) && ! is_string($validation)) {
             throw new InvalidArgumentException('$rules can only be of type string|array');
         }
 
-        if (! is_array($validation))
-        {
+        if (! is_array($validation)) {
             $validation = $validation ? explode('|', $validation) : [];
         }
 
-        if (is_string($options))
-        {
+        if (is_string($options)) {
             $extraOutput = ' [' . static::color($options, 'white') . ']';
             $default     = $options;
         }
 
-        if (is_array($options) && $options)
-        {
+        if (is_array($options) && $options) {
             $opts               = $options;
             $extraOutputDefault = static::color($opts[0], 'white');
 
             unset($opts[0]);
 
-            if (empty($opts))
-            {
+            if (empty($opts)) {
                 $extraOutput = $extraOutputDefault;
-            }
-            else
-            {
+            } else {
                 $extraOutput  = ' [' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
                 $validation[] = 'in_list[' . implode(',', $options) . ']';
             }
@@ -273,10 +262,8 @@ class CLI
         // Read the input from keyboard.
         $input = trim(static::input()) ?: $default;
 
-        if ($validation)
-        {
-            while (! static::validate($field, $input, $validation))
-            {
+        if ($validation) {
+            while (! static::validate($field, $input, $validation)) {
                 $input = static::prompt($field, $options, $validation);
             }
         }
@@ -310,8 +297,7 @@ class CLI
         ]);
         $validation->run([$field => $value]);
 
-        if ($validation->hasError($field))
-        {
+        if ($validation->hasError($field)) {
             static::error($validation->getError($field));
 
             return false;
@@ -332,8 +318,7 @@ class CLI
      */
     public static function print(string $text = '', string $foreground = null, string $background = null)
     {
-        if ($foreground || $background)
-        {
+        if ($foreground || $background) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -351,13 +336,11 @@ class CLI
      */
     public static function write(string $text = '', string $foreground = null, string $background = null)
     {
-        if ($foreground || $background)
-        {
+        if ($foreground || $background) {
             $text = static::color($text, $foreground, $background);
         }
 
-        if (static::$lastWrite !== 'write')
-        {
+        if (static::$lastWrite !== 'write') {
             $text              = PHP_EOL . $text;
             static::$lastWrite = 'write';
         }
@@ -380,8 +363,7 @@ class CLI
         $stdout            = static::$isColored;
         static::$isColored = static::hasColorSupport(STDERR);
 
-        if ($foreground || $background)
-        {
+        if ($foreground || $background) {
             $text = static::color($text, $foreground, $background);
         }
 
@@ -414,24 +396,19 @@ class CLI
      */
     public static function wait(int $seconds, bool $countdown = false)
     {
-        if ($countdown === true)
-        {
+        if ($countdown === true) {
             $time = $seconds;
 
-            while ($time > 0)
-            {
+            while ($time > 0) {
                 static::fwrite(STDOUT, $time . '... ');
                 sleep(1);
                 $time --;
             }
+
             static::write();
-        }
-        elseif ($seconds > 0)
-        {
+        } elseif ($seconds > 0) {
             sleep($seconds);
-        }
-        else
-        {
+        } else {
             // this chunk cannot be tested because of keyboard input
             // @codeCoverageIgnoreStart
             static::write(static::$wait_msg);
@@ -464,8 +441,7 @@ class CLI
     public static function newLine(int $num = 1)
     {
         // Do it once or more, write with empty string gives us a new line
-        for ($i = 0; $i < $num; $i ++)
-        {
+        for ($i = 0; $i < $num; $i ++) {
             static::write();
         }
     }
@@ -503,58 +479,47 @@ class CLI
      */
     public static function color(string $text, string $foreground, string $background = null, string $format = null): string
     {
-        if (! static::$isColored)
-        {
+        if (! static::$isColored) {
             return $text;
         }
 
-        if (! array_key_exists($foreground, static::$foreground_colors))
-        {
+        if (! array_key_exists($foreground, static::$foreground_colors)) {
             throw CLIException::forInvalidColor('foreground', $foreground);
         }
 
-        if ($background !== null && ! array_key_exists($background, static::$background_colors))
-        {
+        if ($background !== null && ! array_key_exists($background, static::$background_colors)) {
             throw CLIException::forInvalidColor('background', $background);
         }
 
         $string = "\033[" . static::$foreground_colors[$foreground] . 'm';
 
-        if ($background !== null)
-        {
+        if ($background !== null) {
             $string .= "\033[" . static::$background_colors[$background] . 'm';
         }
 
-        if ($format === 'underline')
-        {
+        if ($format === 'underline') {
             $string .= "\033[4m";
         }
 
         // Detect if color method was already in use with this text
-        if (strpos($text, "\033[0m") !== false)
-        {
+        if (strpos($text, "\033[0m") !== false) {
             // Split the text into parts so that we can see
             // if any part missing the color definition
             $chunks = mb_split("\\033\[0m", $text);
             // Reset text
             $text = '';
 
-            foreach ($chunks as $chunk)
-            {
-                if ($chunk === '')
-                {
+            foreach ($chunks as $chunk) {
+                if ($chunk === '') {
                     continue;
                 }
 
                 // If chunk doesn't have colors defined we need to add them
-                if (strpos($chunk, "\033[") === false)
-                {
+                if (strpos($chunk, "\033[") === false) {
                     $chunk = static::color($chunk, $foreground, $background, $format);
                     // Add color reset before chunk and clear end of the string
                     $text .= rtrim("\033[0m" . $chunk, "\033[0m");
-                }
-                else
-                {
+                } else {
                     $text .= $chunk;
                 }
             }
@@ -575,18 +540,15 @@ class CLI
      */
     public static function strlen(?string $string): int
     {
-        if (is_null($string))
-        {
+        if (is_null($string)) {
             return 0;
         }
 
-        foreach (static::$foreground_colors as $color)
-        {
+        foreach (static::$foreground_colors as $color) {
             $string = strtr($string, ["\033[" . $color . 'm' => '']);
         }
 
-        foreach (static::$background_colors as $color)
-        {
+        foreach (static::$background_colors as $color) {
             $string = strtr($string, ["\033[" . $color . 'm' => '']);
         }
 
@@ -608,8 +570,7 @@ class CLI
      */
     public static function streamSupports(string $function, $resource): bool
     {
-        if (ENVIRONMENT === 'testing')
-        {
+        if (ENVIRONMENT === 'testing') {
             // In the current setup of the tests we cannot fully check
             // if the stream supports the function since we are using
             // filtered streams.
@@ -638,18 +599,15 @@ class CLI
     public static function hasColorSupport($resource): bool
     {
         // Follow https://no-color.org/
-        if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false)
-        {
+        if (isset($_SERVER['NO_COLOR']) || getenv('NO_COLOR') !== false) {
             return false;
         }
 
-        if (getenv('TERM_PROGRAM') === 'Hyper')
-        {
+        if (getenv('TERM_PROGRAM') === 'Hyper') {
             return true;
         }
 
-        if (static::isWindows())
-        {
+        if (static::isWindows()) {
             // @codeCoverageIgnoreStart
             return static::streamSupports('sapi_windows_vt100_support', $resource)
                 || isset($_SERVER['ANSICON'])
@@ -673,8 +631,7 @@ class CLI
      */
     public static function getWidth(int $default = 80): int
     {
-        if (\is_null(static::$width))
-        {
+        if (\is_null(static::$width)) {
             static::generateDimensions();
         }
 
@@ -692,8 +649,7 @@ class CLI
      */
     public static function getHeight(int $default = 32): int
     {
-        if (\is_null(static::$height))
-        {
+        if (\is_null(static::$height)) {
             static::generateDimensions();
         }
 
@@ -709,41 +665,31 @@ class CLI
      */
     public static function generateDimensions()
     {
-        try
-        {
-            if (static::isWindows())
-            {
+        try {
+            if (static::isWindows()) {
                 // Shells such as `Cygwin` and `Git bash` returns incorrect values
                 // when executing `mode CON`, so we use `tput` instead
                 // @codeCoverageIgnoreStart
-                if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell)))
-                {
+                if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell))) {
                     static::$height = (int) exec('tput lines');
                     static::$width  = (int) exec('tput cols');
-                }
-                else
-                {
+                } else {
                     $return = -1;
                     $output = [];
                     exec('mode CON', $output, $return);
 
                     // Look for the next lines ending in ": <number>"
                     // Searching for "Columns:" or "Lines:" will fail on non-English locales
-                    if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches))
-                    {
+                    if ($return === 0 && $output && preg_match('/:\s*(\d+)\n[^:]+:\s*(\d+)\n/', implode("\n", $output), $matches)) {
                         static::$height = (int) $matches[1];
                         static::$width  = (int) $matches[2];
                     }
                 }
                 // @codeCoverageIgnoreEnd
-            }
-            elseif (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches))
-            {
+            } elseif (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches)) {
                 static::$height = (int) $matches[1];
                 static::$width  = (int) $matches[2];
-            }
-            else
-            {
+            } else {
                 // @codeCoverageIgnoreStart
                 static::$height = (int) exec('tput lines');
                 static::$width  = (int) exec('tput cols');
@@ -751,8 +697,7 @@ class CLI
             }
         }
         // @codeCoverageIgnoreStart
-        catch (Throwable $e)
-        {
+        catch (Throwable $e) {
             // Reset the dimensions so that the default values will be returned later.
             // Then let the developer know of the error.
             static::$height = null;
@@ -776,14 +721,12 @@ class CLI
         static $inProgress = false;
 
         // restore cursor position when progress is continuing.
-        if ($inProgress !== false && $inProgress <= $thisStep)
-        {
+        if ($inProgress !== false && $inProgress <= $thisStep) {
             static::fwrite(STDOUT, "\033[1A");
         }
         $inProgress = $thisStep;
 
-        if ($thisStep !== false)
-        {
+        if ($thisStep !== false) {
             // Don't allow div by zero or negative numbers....
             $thisStep   = abs($thisStep);
             $totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
@@ -795,9 +738,7 @@ class CLI
             static::fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
             // Textual representation...
             static::fwrite(STDOUT, sprintf(' %3d%% Complete', $percent) . PHP_EOL);
-        }
-        else
-        {
+        } else {
             static::fwrite(STDOUT, "\007");
         }
     }
@@ -821,18 +762,15 @@ class CLI
      */
     public static function wrap(string $string = null, int $max = 0, int $padLeft = 0): string
     {
-        if (empty($string))
-        {
+        if (empty($string)) {
             return '';
         }
 
-        if ($max === 0)
-        {
+        if ($max === 0) {
             $max = CLI::getWidth();
         }
 
-        if (CLI::getWidth() < $max)
-        {
+        if (CLI::getWidth() < $max) {
             $max = CLI::getWidth();
         }
 
@@ -840,19 +778,15 @@ class CLI
 
         $lines = wordwrap($string, $max, PHP_EOL);
 
-        if ($padLeft > 0)
-        {
+        if ($padLeft > 0) {
             $lines = explode(PHP_EOL, $lines);
 
             $first = true;
 
             array_walk($lines, static function (&$line) use ($padLeft, &$first) {
-                if (! $first)
-                {
+                if (! $first) {
                     $line = str_repeat(' ', $padLeft) . $line;
-                }
-                else
-                {
+                } else {
                     $first = false;
                 }
             });
@@ -878,20 +812,15 @@ class CLI
         array_shift($args); // scrap invoking program
         $optionValue = false;
 
-        foreach ($args as $i => $arg)
-        {
+        foreach ($args as $i => $arg) {
             // If there's no "-" at the beginning, then
             // this is probably an argument or an option value
-            if (mb_strpos($arg, '-') !== 0)
-            {
-                if ($optionValue)
-                {
+            if (mb_strpos($arg, '-') !== 0) {
+                if ($optionValue) {
                     // We have already included this in the previous
                     // iteration, so reset this flag
                     $optionValue = false;
-                }
-                else
-                {
+                } else {
                     // Yup, it's a segment
                     static::$segments[] = $arg;
                 }
@@ -902,8 +831,7 @@ class CLI
             $arg   = ltrim($arg, '-');
             $value = null;
 
-            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
-            {
+            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
                 $value       = $args[$i + 1];
                 $optionValue = true;
             }
@@ -972,8 +900,7 @@ class CLI
      */
     public static function getOption(string $name)
     {
-        if (! array_key_exists($name, static::$options))
-        {
+        if (! array_key_exists($name, static::$options)) {
             return null;
         }
 
@@ -1009,32 +936,24 @@ class CLI
      */
     public static function getOptionString(bool $useLongOpts = false, bool $trim = false): string
     {
-        if (empty(static::$options))
-        {
+        if (empty(static::$options)) {
             return '';
         }
 
         $out = '';
 
-        foreach (static::$options as $name => $value)
-        {
-            if ($useLongOpts && mb_strlen($name) > 1)
-            {
+        foreach (static::$options as $name => $value) {
+            if ($useLongOpts && mb_strlen($name) > 1) {
                 $out .= "--{$name} ";
-            }
-            else
-            {
+            } else {
                 $out .= "-{$name} ";
             }
 
             // If there's a space, we need to group
             // so it will pass correctly.
-            if (mb_strpos($value, ' ') !== false)
-            {
+            if (mb_strpos($value, ' ') !== false) {
                 $out .= '"' . $value . '" ';
-            }
-            elseif ($value !== null)
-            {
+            } elseif ($value !== null) {
                 $out .= "{$value} ";
             }
         }
@@ -1058,13 +977,11 @@ class CLI
         $tableRows = [];
 
         // We need only indexes and not keys
-        if (! empty($thead))
-        {
+        if (! empty($thead)) {
             $tableRows[] = array_values($thead);
         }
 
-        foreach ($tbody as $tr)
-        {
+        foreach ($tbody as $tr) {
             $tableRows[] = array_values($tr);
         }
 
@@ -1080,20 +997,17 @@ class CLI
         $maxColsLengths = [];
 
         // Read row by row and define the longest columns
-        for ($row = 0; $row < $totalRows; $row ++)
-        {
+        for ($row = 0; $row < $totalRows; $row ++) {
             $column = 0; // Current column index
 
-            foreach ($tableRows[$row] as $col)
-            {
+            foreach ($tableRows[$row] as $col) {
                 // Sets the size of this column in the current row
                 $allColsLengths[$row][$column] = static::strlen($col);
 
                 // If the current column does not have a value among the larger ones
                 // or the value of this is greater than the existing one
                 // then, now, this assumes the maximum length
-                if (! isset($maxColsLengths[$column]) || $allColsLengths[$row][$column] > $maxColsLengths[$column])
-                {
+                if (! isset($maxColsLengths[$column]) || $allColsLengths[$row][$column] > $maxColsLengths[$column]) {
                     $maxColsLengths[$column] = $allColsLengths[$row][$column];
                 }
 
@@ -1104,17 +1018,16 @@ class CLI
 
         // Read row by row and add spaces at the end of the columns
         // to match the exact column length
-        for ($row = 0; $row < $totalRows; $row ++)
-        {
+        for ($row = 0; $row < $totalRows; $row ++) {
             $column = 0;
 
-            foreach ($tableRows[$row] as $col)
-            {
+            foreach ($tableRows[$row] as $col) {
                 $diff = $maxColsLengths[$column] - static::strlen($col);
-                if ($diff)
-                {
+
+                if ($diff) {
                     $tableRows[$row][$column] = $tableRows[$row][$column] . str_repeat(' ', $diff);
                 }
+
                 $column ++;
             }
         }
@@ -1122,15 +1035,12 @@ class CLI
         $table = '';
 
         // Joins columns and append the well formatted rows to the table
-        for ($row = 0; $row < $totalRows; $row ++)
-        {
+        for ($row = 0; $row < $totalRows; $row ++) {
             // Set the table border-top
-            if ($row === 0)
-            {
+            if ($row === 0) {
                 $cols = '+';
 
-                foreach ($tableRows[$row] as $col)
-                {
+                foreach ($tableRows[$row] as $col) {
                     $cols .= str_repeat('-', static::strlen($col) + 2) . '+';
                 }
                 $table .= $cols . PHP_EOL;
@@ -1140,8 +1050,7 @@ class CLI
             $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
 
             // Set the thead and table borders-bottom
-            if (isset($cols) && (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows)))
-            {
+            if (isset($cols) && (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows))) {
                 $table .= $cols . PHP_EOL;
             }
         }
@@ -1166,8 +1075,7 @@ class CLI
      */
     protected static function fwrite($handle, string $string)
     {
-        if (! is_cli())
-        {
+        if (! is_cli()) {
             // @codeCoverageIgnoreStart
             echo $string;
 

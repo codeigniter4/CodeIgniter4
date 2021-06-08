@@ -93,8 +93,7 @@ class Connection extends BaseConnection
         parent::__construct($params);
 
         // This is only supported as of SQLSRV 3.0
-        if ($this->scrollable === null)
-        {
+        if ($this->scrollable === null) {
             $this->scrollable = defined('SQLSRV_CURSOR_CLIENT_BUFFERED') ? SQLSRV_CURSOR_CLIENT_BUFFERED : false;
         }
     }
@@ -124,16 +123,14 @@ class Connection extends BaseConnection
 
         // If the username and password are both empty, assume this is a
         // 'Windows Authentication Mode' connection.
-        if (empty($connection['UID']) && empty($connection['PWD']))
-        {
+        if (empty($connection['UID']) && empty($connection['PWD'])) {
             unset($connection['UID'], $connection['PWD']);
         }
 
         sqlsrv_configure('WarningsReturnAsErrors', 0);
         $this->connID = sqlsrv_connect($this->hostname, $connection);
 
-        if ($this->connID !== false)
-        {
+        if ($this->connID !== false) {
             // Determine how identifiers are escaped
             $query = $this->query('SELECT CASE WHEN (@@OPTIONS | 256) = @@OPTIONS THEN 1 ELSE 0 END AS qi');
             $query = $query->getResultObject();
@@ -146,8 +143,7 @@ class Connection extends BaseConnection
 
         $errors = [];
 
-        foreach (sqlsrv_errors(SQLSRV_ERR_ERRORS) as $error)
-        {
+        foreach (sqlsrv_errors(SQLSRV_ERR_ERRORS) as $error) {
             $errors[] = preg_replace('/(\[.+\]\[.+\](?:\[.+\])?)(.+)/', '$2', $error['message']);
         }
 
@@ -211,8 +207,7 @@ class Connection extends BaseConnection
                 . ' WHERE '
                 . " [TABLE_SCHEMA] = '" . $this->schema . "'    ";
 
-        if ($prefixLimit === true && $this->DBPrefix !== '')
-        {
+        if ($prefixLimit === true && $this->DBPrefix !== '') {
             $sql .= " AND [TABLE_NAME] LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%' "
                     . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }
@@ -246,16 +241,14 @@ class Connection extends BaseConnection
     {
         $sql = 'EXEC sp_helpindex ' . $this->escape($table);
 
-        if (($query = $this->query($sql)) === false)
-        {
+        if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
         $query = $query->getResultObject();
 
         $retVal = [];
 
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $obj       = new stdClass();
             $obj->name = $row->index_name;
 
@@ -264,12 +257,9 @@ class Connection extends BaseConnection
                 return trim($v);
             }, $_fields);
 
-            if (strpos($row->index_description, 'primary key located on') !== false)
-            {
+            if (strpos($row->index_description, 'primary key located on') !== false) {
                 $obj->type = 'PRIMARY';
-            }
-            else
-            {
+            } else {
                 $obj->type = (strpos($row->index_description, 'nonclustered, unique') !== false) ? 'UNIQUE' : 'INDEX';
             }
 
@@ -306,22 +296,22 @@ class Connection extends BaseConnection
                 . 'WHERE  '
                 . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
 
-        if (($query = $this->query($sql)) === false)
-        {
+        if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
         $query = $query->getResultObject();
 
         $retVal = [];
 
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $obj                      = new stdClass();
+
             $obj->constraint_name     = $row->constraint_name;
             $obj->table_name          = $row->table_name;
             $obj->column_name         = $row->column_name;
             $obj->foreign_table_name  = $row->foreign_table_name;
             $obj->foreign_column_name = $row->foreign_column_name;
+
             $retVal[]                 = $obj;
         }
 
@@ -361,21 +351,23 @@ class Connection extends BaseConnection
 			FROM INFORMATION_SCHEMA.COLUMNS
 			WHERE TABLE_NAME= ' . $this->escape(($table));
 
-        if (($query = $this->query($sql)) === false)
-        {
+        if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
         }
-        $query = $query->getResultObject();
 
+        $query  = $query->getResultObject();
         $retVal = [];
 
-        for ($i = 0, $c = count($query); $i < $c; $i++)
-        {
+        for ($i = 0, $c = count($query); $i < $c; $i++) {
             $retVal[$i]             = new stdClass();
+
             $retVal[$i]->name       = $query[$i]->COLUMN_NAME;
             $retVal[$i]->type       = $query[$i]->DATA_TYPE;
             $retVal[$i]->default    = $query[$i]->COLUMN_DEFAULT;
-            $retVal[$i]->max_length = $query[$i]->CHARACTER_MAXIMUM_LENGTH > 0 ? $query[$i]->CHARACTER_MAXIMUM_LENGTH : $query[$i]->NUMERIC_PRECISION;
+
+            $retVal[$i]->max_length = $query[$i]->CHARACTER_MAXIMUM_LENGTH > 0
+                ? $query[$i]->CHARACTER_MAXIMUM_LENGTH
+                : $query[$i]->NUMERIC_PRECISION;
         }
 
         return $retVal;
@@ -427,23 +419,18 @@ class Connection extends BaseConnection
 
         $sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
-        if (! is_array($sqlsrvErrors))
-        {
+        if (! is_array($sqlsrvErrors)) {
             return $error;
         }
 
         $sqlsrvError = array_shift($sqlsrvErrors);
-        if (isset($sqlsrvError['SQLSTATE']))
-        {
+        if (isset($sqlsrvError['SQLSTATE'])) {
             $error['code'] = isset($sqlsrvError['code']) ? $sqlsrvError['SQLSTATE'] . '/' . $sqlsrvError['code'] : $sqlsrvError['SQLSTATE'];
-        }
-        elseif (isset($sqlsrvError['code']))
-        {
+        } elseif (isset($sqlsrvError['code'])) {
             $error['code'] = $sqlsrvError['code'];
         }
 
-        if (isset($sqlsrvError['message']))
-        {
+        if (isset($sqlsrvError['message'])) {
             $error['message'] = $sqlsrvError['message'];
         }
 
@@ -469,18 +456,15 @@ class Connection extends BaseConnection
      */
     public function setDatabase(string $databaseName = null)
     {
-        if (empty($databaseName))
-        {
+        if (empty($databaseName)) {
             $databaseName = $this->database;
         }
 
-        if (empty($this->connID))
-        {
+        if (empty($this->connID)) {
             $this->initialize();
         }
 
-        if ($this->execute('USE ' . $this->_escapeString($databaseName)))
-        {
+        if ($this->execute('USE ' . $this->_escapeString($databaseName))) {
             $this->database  = $databaseName;
             $this->dataCache = [];
 
@@ -503,13 +487,11 @@ class Connection extends BaseConnection
             sqlsrv_query($this->connID, $sql) :
             sqlsrv_query($this->connID, $sql, [], ['Scrollable' => $this->scrollable]);
 
-        if ($stmt === false)
-        {
+        if ($stmt === false) {
             $error = $this->error();
 
             log_message('error', $error['message']);
-            if ($this->DBDebug)
-            {
+            if ($this->DBDebug) {
                 throw new Exception($error['message']);
             }
         }
@@ -531,23 +513,18 @@ class Connection extends BaseConnection
 
         $sqlsrvErrors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
 
-        if (! is_array($sqlsrvErrors))
-        {
+        if (! is_array($sqlsrvErrors)) {
             return $error;
         }
 
         $sqlsrvError = array_shift($sqlsrvErrors);
-        if (isset($sqlsrvError['SQLSTATE']))
-        {
+        if (isset($sqlsrvError['SQLSTATE'])) {
             $error['code'] = isset($sqlsrvError['code']) ? $sqlsrvError['SQLSTATE'] . '/' . $sqlsrvError['code'] : $sqlsrvError['SQLSTATE'];
-        }
-        elseif (isset($sqlsrvError['code']))
-        {
+        } elseif (isset($sqlsrvError['code'])) {
             $error['code'] = $sqlsrvError['code'];
         }
 
-        if (isset($sqlsrvError['message']))
-        {
+        if (isset($sqlsrvError['message'])) {
             $error['message'] = $sqlsrvError['message'];
         }
 
@@ -571,13 +548,11 @@ class Connection extends BaseConnection
      */
     public function getVersion(): string
     {
-        if (isset($this->dataCache['version']))
-        {
+        if (isset($this->dataCache['version'])) {
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || empty($info = sqlsrv_server_info($this->connID)))
-        {
+        if (! $this->connID || empty($info = sqlsrv_server_info($this->connID))) {
             $this->initialize();
         }
 
@@ -596,8 +571,7 @@ class Connection extends BaseConnection
      */
     public function isWriteType($sql): bool
     {
-        if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql))
-        {
+        if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql)) {
             return true;
         }
 
@@ -605,5 +579,4 @@ class Connection extends BaseConnection
     }
 
     // --------------------------------------------------------------------
-
 }

@@ -13,7 +13,6 @@ use Config\App;
  */
 class URITest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();

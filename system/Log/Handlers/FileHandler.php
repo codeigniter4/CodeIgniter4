@@ -79,32 +79,26 @@ class FileHandler extends BaseHandler
 
         $msg = '';
 
-        if (! is_file($filepath))
-        {
+        if (! is_file($filepath)) {
             $newfile = true;
 
             // Only add protection to php files
-            if ($this->fileExtension === 'php')
-            {
+            if ($this->fileExtension === 'php') {
                 $msg .= "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\n";
             }
         }
 
-        if (! $fp = @fopen($filepath, 'ab'))
-        {
+        if (! $fp = @fopen($filepath, 'ab')) {
             return false;
         }
 
         // Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
-        if (strpos($this->dateFormat, 'u') !== false)
-        {
+        if (strpos($this->dateFormat, 'u') !== false) {
             $microtimeFull  = microtime(true);
             $microtimeShort = sprintf('%06d', ($microtimeFull - floor($microtimeFull)) * 1000000);
             $date           = new DateTime(date('Y-m-d H:i:s.' . $microtimeShort, (int) $microtimeFull));
             $date           = $date->format($this->dateFormat);
-        }
-        else
-        {
+        } else {
             $date = date($this->dateFormat);
         }
 
@@ -114,10 +108,8 @@ class FileHandler extends BaseHandler
 
         $result = null;
 
-        for ($written = 0, $length = strlen($msg); $written < $length; $written += $result)
-        {
-            if (($result = fwrite($fp, substr($msg, $written))) === false)
-            {
+        for ($written = 0, $length = strlen($msg); $written < $length; $written += $result) {
+            if (($result = fwrite($fp, substr($msg, $written))) === false) {
                 // if we get this far, we'll never see this during travis-ci
                 // @codeCoverageIgnoreStart
                 break;
@@ -128,8 +120,7 @@ class FileHandler extends BaseHandler
         flock($fp, LOCK_UN);
         fclose($fp);
 
-        if (isset($newfile) && $newfile === true)
-        {
+        if (isset($newfile) && $newfile === true) {
             chmod($filepath, $this->filePermissions);
         }
 

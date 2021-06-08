@@ -10,7 +10,6 @@ namespace Tests\Support\Config;
 
 class TestRegistrar
 {
-
     public static function RegistrarConfig()
     {
         return [
@@ -25,5 +24,4 @@ class TestRegistrar
             ],
         ];
     }
-
 }

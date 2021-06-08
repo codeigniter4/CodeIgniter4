@@ -16,8 +16,7 @@ use Config\ForeignCharacters;
  */
 //--------------------------------------------------------------------
 
-if (! function_exists('word_limiter'))
-{
+if (! function_exists('word_limiter')) {
     /**
      * Word Limiter
      *
@@ -31,15 +30,13 @@ if (! function_exists('word_limiter'))
      */
     function word_limiter(string $str, int $limit = 100, string $endChar = '&#8230;'): string
     {
-        if (trim($str) === '')
-        {
+        if (trim($str) === '') {
             return $str;
         }
 
         preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/', $str, $matches);
 
-        if (strlen($str) === strlen($matches[0]))
-        {
+        if (strlen($str) === strlen($matches[0])) {
             $endChar = '';
         }
 
@@ -49,8 +46,7 @@ if (! function_exists('word_limiter'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('character_limiter'))
-{
+if (! function_exists('character_limiter')) {
     /**
      * Character Limiter
      *
@@ -65,26 +61,22 @@ if (! function_exists('character_limiter'))
      */
     function character_limiter(string $str, int $n = 500, string $endChar = '&#8230;'): string
     {
-        if (mb_strlen($str) < $n)
-        {
+        if (mb_strlen($str) < $n) {
             return $str;
         }
 
         // a bit complicated, but faster than preg_replace with \s+
         $str = preg_replace('/ {2,}/', ' ', str_replace(["\r", "\n", "\t", "\x0B", "\x0C"], ' ', $str));
 
-        if (mb_strlen($str) <= $n)
-        {
+        if (mb_strlen($str) <= $n) {
             return $str;
         }
 
         $out = '';
 
-        foreach (explode(' ', trim($str)) as $val)
-        {
+        foreach (explode(' ', trim($str)) as $val) {
             $out .= $val . ' ';
-            if (mb_strlen($out) >= $n)
-            {
+            if (mb_strlen($out) >= $n) {
                 $out = trim($out);
                 break;
             }
@@ -96,8 +88,7 @@ if (! function_exists('character_limiter'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('ascii_to_entities'))
-{
+if (! function_exists('ascii_to_entities')) {
     /**
      * High ASCII to Entities
      *
@@ -111,43 +102,35 @@ if (! function_exists('ascii_to_entities'))
     {
         $out = '';
 
-        for ($i = 0, $s = strlen($str) - 1, $count = 1, $temp = []; $i <= $s; $i ++)
-        {
+        for ($i = 0, $s = strlen($str) - 1, $count = 1, $temp = []; $i <= $s; $i ++) {
             $ordinal = ord($str[$i]);
 
-            if ($ordinal < 128)
-            {
+            if ($ordinal < 128) {
                 /*
                   If the $temp array has a value but we have moved on, then it seems only
                   fair that we output that entity and restart $temp before continuing.
                  */
-                if (count($temp) === 1)
-                {
+                if (count($temp) === 1) {
                     $out .= '&#' . array_shift($temp) . ';';
                     $count = 1;
                 }
 
                 $out .= $str[$i];
-            }
-            else
-            {
-                if (empty($temp))
-                {
+            } else {
+                if (empty($temp)) {
                     $count = ($ordinal < 224) ? 2 : 3;
                 }
 
                 $temp[] = $ordinal;
 
-                if (count($temp) === $count)
-                {
+                if (count($temp) === $count) {
                     $number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
                     $out .= '&#' . $number . ';';
                     $count  = 1;
                     $temp   = [];
                 }
                 // If this is the last iteration, just output whatever we have
-                elseif ($i === $s)
-                {
+                elseif ($i === $s) {
                     $out .= '&#' . implode(';', $temp) . ';';
                 }
             }
@@ -159,8 +142,7 @@ if (! function_exists('ascii_to_entities'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('entities_to_ascii'))
-{
+if (! function_exists('entities_to_ascii')) {
     /**
      * Entities to ASCII
      *
@@ -173,22 +155,15 @@ if (! function_exists('entities_to_ascii'))
      */
     function entities_to_ascii(string $str, bool $all = true): string
     {
-        if (preg_match_all('/\&#(\d+)\;/', $str, $matches))
-        {
-            for ($i = 0, $s = count($matches[0]); $i < $s; $i ++)
-            {
+        if (preg_match_all('/\&#(\d+)\;/', $str, $matches)) {
+            for ($i = 0, $s = count($matches[0]); $i < $s; $i ++) {
                 $digits = $matches[1][$i];
                 $out    = '';
-                if ($digits < 128)
-                {
+                if ($digits < 128) {
                     $out .= chr($digits);
-                }
-                elseif ($digits < 2048)
-                {
+                } elseif ($digits < 2048) {
                     $out .= chr(192 + (($digits - ($digits % 64)) / 64)) . chr(128 + ($digits % 64));
-                }
-                else
-                {
+                } else {
                     $out .= chr(224 + (($digits - ($digits % 4096)) / 4096))
                             . chr(128 + ((($digits % 4096) - ($digits % 64)) / 64))
                             . chr(128 + ($digits % 64));
@@ -197,8 +172,7 @@ if (! function_exists('entities_to_ascii'))
             }
         }
 
-        if ($all)
-        {
+        if ($all) {
             return str_replace([
                 '&amp;',
                 '&lt;',
@@ -223,8 +197,7 @@ if (! function_exists('entities_to_ascii'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('word_censor'))
-{
+if (! function_exists('word_censor')) {
     /**
      * Word Censoring Function
      *
@@ -240,8 +213,7 @@ if (! function_exists('word_censor'))
      */
     function word_censor(string $str, array $censored, string $replacement = ''): string
     {
-        if (empty($censored))
-        {
+        if (empty($censored)) {
             return $str;
         }
 
@@ -253,22 +225,17 @@ if (! function_exists('word_censor'))
         // a bad word will be bookended by any of these characters.
         $delim = '[-_\'\"`(){}<>\[\]|!?@#%&,.:;^~*+=\/ 0-9\n\r\t]';
 
-        foreach ($censored as $badword)
-        {
+        foreach ($censored as $badword) {
             $badword = str_replace('\*', '\w*?', preg_quote($badword, '/'));
 
-            if ($replacement !== '')
-            {
+            if ($replacement !== '') {
                 $str = preg_replace(
                         "/({$delim})(" . $badword . ")({$delim})/i", "\\1{$replacement}\\3", $str
                 );
-            }
-            elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE))
-            {
+            } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE)) {
                 $matches = $matches[1];
 
-                for ($i = count($matches) - 1; $i >= 0; $i --)
-                {
+                for ($i = count($matches) - 1; $i >= 0; $i --) {
                     $length = strlen($matches[$i][0]);
                     $str    = substr_replace(
                             $str, str_repeat('#', $length), $matches[$i][1], $length
@@ -283,8 +250,7 @@ if (! function_exists('word_censor'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('highlight_code'))
-{
+if (! function_exists('highlight_code')) {
     /**
      * Code Highlighter
      *
@@ -362,8 +328,7 @@ if (! function_exists('highlight_code'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('highlight_phrase'))
-{
+if (! function_exists('highlight_phrase')) {
     /**
      * Phrase Highlighter
      *
@@ -384,8 +349,7 @@ if (! function_exists('highlight_phrase'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('convert_accented_characters'))
-{
+if (! function_exists('convert_accented_characters')) {
     /**
      * Convert Accented Foreign Characters to ASCII
      *
@@ -397,12 +361,10 @@ if (! function_exists('convert_accented_characters'))
     {
         static $arrayFrom, $arrayTo;
 
-        if (! is_array($arrayFrom))
-        {
+        if (! is_array($arrayFrom)) {
             $config = new ForeignCharacters();
 
-            if (empty($config->characterList) || ! is_array($config->characterList))
-            {
+            if (empty($config->characterList) || ! is_array($config->characterList)) {
                 $arrayFrom = [];
                 $arrayTo   = [];
 
@@ -420,8 +382,7 @@ if (! function_exists('convert_accented_characters'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('word_wrap'))
-{
+if (! function_exists('word_wrap')) {
     /**
      * Word Wrap
      *
@@ -440,8 +401,7 @@ if (! function_exists('word_wrap'))
         $str = preg_replace('| +|', ' ', $str);
 
         // Standardize newlines
-        if (strpos($str, "\r") !== false)
-        {
+        if (strpos($str, "\r") !== false) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
 
@@ -449,10 +409,8 @@ if (! function_exists('word_wrap'))
         // strip the entire chunk and replace it with a marker.
         $unwrap = [];
 
-        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches))
-        {
-            for ($i = 0, $c = count($matches[0]); $i < $c; $i ++)
-            {
+        if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
+            for ($i = 0, $c = count($matches[0]); $i < $c; $i ++) {
                 $unwrap[] = $matches[1][$i];
                 $str      = str_replace($matches[0][$i], '{{unwrapped' . $i . '}}', $str);
             }
@@ -466,12 +424,10 @@ if (! function_exists('word_wrap'))
         // Split the string into individual lines of text and cycle through them
         $output = '';
 
-        foreach (explode("\n", $str) as $line)
-        {
+        foreach (explode("\n", $str) as $line) {
             // Is the line within the allowed character count?
             // If so we'll join it to the output and continue
-            if (mb_strlen($line) <= $charlim)
-            {
+            if (mb_strlen($line) <= $charlim) {
                 $output .= $line . "\n";
 
                 continue;
@@ -479,11 +435,9 @@ if (! function_exists('word_wrap'))
 
             $temp = '';
 
-            while (mb_strlen($line) > $charlim)
-            {
+            while (mb_strlen($line) > $charlim) {
                 // If the over-length word is a URL we won't wrap it
-                if (preg_match('!\[url.+\]|://|www\.!', $line))
-                {
+                if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
                 }
                 // Trim the word down
@@ -493,21 +447,16 @@ if (! function_exists('word_wrap'))
 
             // If $temp contains data it means we had to split up an over-length
             // word into smaller chunks so we'll add it back to our current line
-            if ($temp !== '')
-            {
+            if ($temp !== '') {
                 $output .= $temp . "\n" . $line . "\n";
-            }
-            else
-            {
+            } else {
                 $output .= $line . "\n";
             }
         }
 
         // Put our markers back
-        if (! empty($unwrap))
-        {
-            foreach ($unwrap as $key => $val)
-            {
+        if (! empty($unwrap)) {
+            foreach ($unwrap as $key => $val) {
                 $output = str_replace('{{unwrapped' . $key . '}}', $val, $output);
             }
         }
@@ -521,8 +470,7 @@ if (! function_exists('word_wrap'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('ellipsize'))
-{
+if (! function_exists('ellipsize')) {
     /**
      * Ellipsize String
      *
@@ -541,20 +489,16 @@ if (! function_exists('ellipsize'))
         $str = trim(strip_tags($str));
 
         // Is the string long enough to ellipsize?
-        if (mb_strlen($str) <= $maxLength)
-        {
+        if (mb_strlen($str) <= $maxLength) {
             return $str;
         }
 
         $beg      = mb_substr($str, 0, (int) floor($maxLength * $position));
         $position = ($position > 1) ? 1 : $position;
 
-        if ($position === 1)
-        {
+        if ($position === 1) {
             $end = mb_substr($str, 0, -($maxLength - mb_strlen($beg)));
-        }
-        else
-        {
+        } else {
             $end = mb_substr($str, -($maxLength - mb_strlen($beg)));
         }
 
@@ -564,8 +508,7 @@ if (! function_exists('ellipsize'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('strip_slashes'))
-{
+if (! function_exists('strip_slashes')) {
     /**
      * Strip Slashes
      *
@@ -577,13 +520,11 @@ if (! function_exists('strip_slashes'))
      */
     function strip_slashes($str)
     {
-        if (! is_array($str))
-        {
+        if (! is_array($str)) {
             return stripslashes($str);
         }
 
-        foreach ($str as $key => $val)
-        {
+        foreach ($str as $key => $val) {
             $str[$key] = strip_slashes($val);
         }
 
@@ -593,8 +534,7 @@ if (! function_exists('strip_slashes'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('strip_quotes'))
-{
+if (! function_exists('strip_quotes')) {
     /**
      * Strip Quotes
      *
@@ -612,8 +552,7 @@ if (! function_exists('strip_quotes'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('quotes_to_entities'))
-{
+if (! function_exists('quotes_to_entities')) {
     /**
      * Quotes to Entities
      *
@@ -631,8 +570,7 @@ if (! function_exists('quotes_to_entities'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('reduce_double_slashes'))
-{
+if (! function_exists('reduce_double_slashes')) {
     /**
      * Reduce Double Slashes
      *
@@ -657,8 +595,7 @@ if (! function_exists('reduce_double_slashes'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('reduce_multiples'))
-{
+if (! function_exists('reduce_multiples')) {
     /**
      * Reduce Multiples
      *
@@ -686,8 +623,7 @@ if (! function_exists('reduce_multiples'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('random_string'))
-{
+if (! function_exists('random_string')) {
     /**
      * Create a Random String
      *
@@ -700,14 +636,12 @@ if (! function_exists('random_string'))
      */
     function random_string(string $type = 'alnum', int $len = 8): string
     {
-        switch ($type)
-        {
+        switch ($type) {
             case 'alnum':
             case 'numeric':
             case 'nozero':
             case 'alpha':
-                switch ($type)
-                {
+                switch ($type) {
                     case 'alpha':
                         $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         break;
@@ -744,8 +678,7 @@ if (! function_exists('random_string'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('increment_string'))
-{
+if (! function_exists('increment_string')) {
     /**
      * Add's _1 to a string or increment the ending number to allow _2, _3, etc
      *
@@ -765,8 +698,7 @@ if (! function_exists('increment_string'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('alternator'))
-{
+if (! function_exists('alternator')) {
     /**
      * Alternator
      *
@@ -781,8 +713,7 @@ if (! function_exists('alternator'))
     {
         static $i;
 
-        if (func_num_args() === 0)
-        {
+        if (func_num_args() === 0) {
             $i = 0;
 
             return '';
@@ -796,8 +727,7 @@ if (! function_exists('alternator'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('excerpt'))
-{
+if (! function_exists('excerpt')) {
     /**
      * Excerpt.
      *
@@ -815,13 +745,10 @@ if (! function_exists('excerpt'))
      */
     function excerpt(string $text, string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
     {
-        if (isset($phrase))
-        {
+        if (isset($phrase)) {
             $phrasePos = stripos($text, $phrase);
             $phraseLen = strlen($phrase);
-        }
-        else
-        {
+        } else {
             $phrasePos = $radius / 2;
             $phraseLen = 1;
         }
@@ -833,10 +760,8 @@ if (! function_exists('excerpt'))
         $post  = ' ';
         $count = 0;
 
-        foreach (array_reverse($pre) as $e)
-        {
-            if ((strlen($e) + $count + 1) < $radius)
-            {
+        foreach (array_reverse($pre) as $e) {
+            if ((strlen($e) + $count + 1) < $radius) {
                 $prev = ' ' . $e . $prev;
             }
             $count = ++ $count + strlen($e);
@@ -844,10 +769,8 @@ if (! function_exists('excerpt'))
 
         $count = 0;
 
-        foreach ($pos as $s)
-        {
-            if ((strlen($s) + $count + 1) < $radius)
-            {
+        foreach ($pos as $s) {
+            if ((strlen($s) + $count + 1) < $radius) {
                 $post .= $s . ' ';
             }
             $count = ++ $count + strlen($s);

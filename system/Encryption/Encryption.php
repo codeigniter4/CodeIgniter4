@@ -100,8 +100,7 @@ class Encryption
         ];
 
         // If requested driver is not active, bail
-        if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver]))
-        {
+        if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver])) {
             // this should never happen in travis-ci
             throw EncryptionException::forNoHandlerAvailable($this->driver);
         }
@@ -119,27 +118,23 @@ class Encryption
     public function initialize(EncryptionConfig $config = null)
     {
         // override config?
-        if ($config)
-        {
+        if ($config) {
             $this->key    = $config->key;
             $this->driver = $config->driver;
             $this->digest = $config->digest ?? 'SHA512';
         }
 
         // Insist on a driver
-        if (empty($this->driver))
-        {
+        if (empty($this->driver)) {
             throw EncryptionException::forNoDriverRequested();
         }
 
         // Check for an unknown driver
-        if (! in_array($this->driver, $this->drivers, true))
-        {
+        if (! in_array($this->driver, $this->drivers, true)) {
             throw EncryptionException::forUnKnownHandler($this->driver);
         }
 
-        if (empty($this->key))
-        {
+        if (empty($this->key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -173,8 +168,7 @@ class Encryption
      */
     public function __get($key)
     {
-        if ($this->__isset($key))
-        {
+        if ($this->__isset($key)) {
             return $this->{$key};
         }
 

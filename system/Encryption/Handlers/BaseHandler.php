@@ -37,10 +37,8 @@ abstract class BaseHandler implements EncrypterInterface
         $config = $config ?? config('Encryption');
 
         // make the parameters conveniently accessible
-        foreach (get_object_vars($config) as $key => $value)
-        {
-            if (property_exists($this, $key))
-            {
+        foreach (get_object_vars($config) as $key => $value) {
+            if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
         }
@@ -68,8 +66,7 @@ abstract class BaseHandler implements EncrypterInterface
      */
     public function __get($key)
     {
-        if ($this->__isset($key))
-        {
+        if ($this->__isset($key)) {
             return $this->{$key};
         }
 

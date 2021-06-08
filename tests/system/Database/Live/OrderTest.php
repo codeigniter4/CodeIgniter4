@@ -74,12 +74,9 @@ class OrderTest extends CIUnitTestCase
         $key   = 'RANDOM()';
         $table = $this->db->protectIdentifiers('job', true);
 
-        if ($this->db->DBDriver === 'MySQLi')
-        {
+        if ($this->db->DBDriver === 'MySQLi') {
             $key = 'RAND()';
-        }
-        elseif ($this->db->DBDriver === 'SQLSRV')
-        {
+        } elseif ($this->db->DBDriver === 'SQLSRV') {
             $key   = 'NEWID()';
             $table = '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '".' . $table;
         }

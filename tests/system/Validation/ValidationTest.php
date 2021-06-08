@@ -682,8 +682,7 @@ final class ValidationTest extends CIUnitTestCase
         $errors = $this->validation->getErrors();
 
         // if "Username" doesn't exist in errors
-        if (! isset($errors['Username']))
-        {
+        if (! isset($errors['Username'])) {
             $this->fail('Unable to find "Username"');
         }
 
@@ -938,8 +937,7 @@ final class ValidationTest extends CIUnitTestCase
         $errors = $this->validation->getErrors();
 
         // if "Username" doesn't exist in errors
-        if (! isset($errors['Username']))
-        {
+        if (! isset($errors['Username'])) {
             $this->fail('Unable to find "Username"');
         }
 

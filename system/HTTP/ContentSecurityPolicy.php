@@ -201,10 +201,8 @@ class ContentSecurityPolicy
      */
     public function __construct(ContentSecurityPolicyConfig $config)
     {
-        foreach (get_object_vars($config) as $setting => $value)
-        {
-            if (property_exists($this, $setting))
-            {
+        foreach (get_object_vars($config) as $setting => $value) {
+            if (property_exists($this, $setting)) {
                 $this->{$setting} = $value;
             }
         }
@@ -594,20 +592,15 @@ class ContentSecurityPolicy
     protected function addOption($options, string $target, bool $explicitReporting = null)
     {
         // Ensure we have an array to work with...
-        if (is_string($this->{$target}))
-        {
+        if (is_string($this->{$target})) {
             $this->{$target} = [$this->{$target}];
         }
 
-        if (is_array($options))
-        {
-            foreach ($options as $opt)
-            {
+        if (is_array($options)) {
+            foreach ($options as $opt) {
                 $this->{$target}[$opt] = $explicitReporting ?? $this->reportOnly;
             }
-        }
-        else
-        {
+        } else {
             $this->{$target}[$options] = $explicitReporting ?? $this->reportOnly;
         }
     }
@@ -625,18 +618,15 @@ class ContentSecurityPolicy
     {
         $body = $response->getBody();
 
-        if (empty($body))
-        {
+        if (empty($body)) {
             return;
         }
 
-        if (! is_array($this->styleSrc))
-        {
+        if (! is_array($this->styleSrc)) {
             $this->styleSrc = [$this->styleSrc];
         }
 
-        if (! is_array($this->scriptSrc))
-        {
+        if (! is_array($this->scriptSrc)) {
             $this->scriptSrc = [$this->scriptSrc];
         }
 
@@ -701,20 +691,16 @@ class ContentSecurityPolicy
         ];
 
         // inject default base & default URIs if needed
-        if (empty($this->baseURI))
-        {
+        if (empty($this->baseURI)) {
             $this->baseURI = 'self';
         }
 
-        if (empty($this->defaultSrc))
-        {
+        if (empty($this->defaultSrc)) {
             $this->defaultSrc = 'self';
         }
 
-        foreach ($directives as $name => $property)
-        {
-            if (! empty($this->{$property}))
-            {
+        foreach ($directives as $name => $property) {
+            if (! empty($this->{$property})) {
                 $this->addToHeader($name, $this->{$property});
             }
         }
@@ -722,30 +708,25 @@ class ContentSecurityPolicy
         // Compile our own header strings here since if we just
         // append it to the response, it will be joined with
         // commas, not semi-colons as we need.
-        if (! empty($this->tempHeaders))
-        {
+        if (! empty($this->tempHeaders)) {
             $header = '';
 
-            foreach ($this->tempHeaders as $name => $value)
-            {
+            foreach ($this->tempHeaders as $name => $value) {
                 $header .= " {$name} {$value};";
             }
 
             // add token only if needed
-            if ($this->upgradeInsecureRequests)
-            {
+            if ($this->upgradeInsecureRequests) {
                 $header .= ' upgrade-insecure-requests;';
             }
 
             $response->appendHeader('Content-Security-Policy', $header);
         }
 
-        if (! empty($this->reportOnlyHeaders))
-        {
+        if (! empty($this->reportOnlyHeaders)) {
             $header = '';
 
-            foreach ($this->reportOnlyHeaders as $name => $value)
-            {
+            foreach ($this->reportOnlyHeaders as $name => $value) {
                 $header .= " {$name} {$value};";
             }
 
@@ -768,43 +749,33 @@ class ContentSecurityPolicy
      */
     protected function addToHeader(string $name, $values = null)
     {
-        if (is_string($values))
-        {
+        if (is_string($values)) {
             $values = [$values => 0];
         }
 
         $sources       = [];
         $reportSources = [];
 
-        foreach ($values as $value => $reportOnly)
-        {
-            if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly))
-            {
+        foreach ($values as $value => $reportOnly) {
+            if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly)) {
                 $value      = $reportOnly;
                 $reportOnly = 0;
             }
 
-            if ($reportOnly === true)
-            {
+            if ($reportOnly === true) {
                 $reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
-            }
-            elseif (strpos($value, 'nonce-') === 0)
-            {
+            } elseif (strpos($value, 'nonce-') === 0) {
                 $sources[] = "'{$value}'";
-            }
-            else
-                {
-                    $sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
+            } else {
+                $sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
             }
         }
 
-        if (! empty($sources))
-        {
+        if (! empty($sources)) {
             $this->tempHeaders[$name] = implode(' ', $sources);
         }
 
-        if (! empty($reportSources))
-        {
+        if (! empty($reportSources)) {
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }

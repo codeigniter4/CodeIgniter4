@@ -168,8 +168,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
 
         $config->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
 
-        if (! in_array(strtolower($config->cookieSameSite ?: Cookie::SAMESITE_LAX), Cookie::ALLOWED_SAMESITE_VALUES, true))
-        {
+        if (! in_array(strtolower($config->cookieSameSite ?: Cookie::SAMESITE_LAX), Cookie::ALLOWED_SAMESITE_VALUES, true)) {
             throw CookieException::forInvalidSameSite($config->cookieSameSite);
         }
 
@@ -214,8 +213,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
      */
     public function getStatusCode(): int
     {
-        if (empty($this->statusCode))
-        {
+        if (empty($this->statusCode)) {
             throw HTTPException::forMissingResponseStatus();
         }
 
@@ -255,8 +253,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
      */
     public function getReasonPhrase()
     {
-        if ($this->reason === '')
-        {
+        if ($this->reason === '') {
             return ! empty($this->statusCode) ? static::$statusCodes[$this->statusCode] : '';
         }
 

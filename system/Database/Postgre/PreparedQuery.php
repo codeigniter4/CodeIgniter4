@@ -60,8 +60,7 @@ class PreparedQuery extends BasePreparedQuery
         // than what was put in.
         $this->query->setQuery($sql);
 
-        if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
-        {
+        if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql)) {
             $this->errorCode   = 0;
             $this->errorString = pg_last_error($this->db->connID);
         }
@@ -79,8 +78,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
-        if (! isset($this->statement))
-        {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 

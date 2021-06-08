@@ -74,17 +74,13 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($config->sessionSavePath))
-        {
+        if (! empty($config->sessionSavePath)) {
             $this->savePath = rtrim($config->sessionSavePath, '/\\');
             ini_set('session.save_path', $config->sessionSavePath);
-        }
-        else
-        {
+        } else {
             $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 
-            if (! $sessionPath)
-            {
+            if (! $sessionPath) {
                 $sessionPath = WRITEPATH . 'session';
             }
 
@@ -111,15 +107,11 @@ class FileHandler extends BaseHandler
      */
     public function open($savePath, $name): bool
     {
-        if (! is_dir($savePath))
-        {
-            if (! mkdir($savePath, 0700, true))
-            {
+        if (! is_dir($savePath)) {
+            if (! mkdir($savePath, 0700, true)) {
                 throw SessionException::forInvalidSavePath($this->savePath);
             }
-        }
-        elseif (! is_writable($savePath))
-        {
+        } elseif (! is_writable($savePath)) {
             throw SessionException::forWriteProtectedSavePath($this->savePath);
         }
 
@@ -146,19 +138,16 @@ class FileHandler extends BaseHandler
     {
         // This might seem weird, but PHP 5.6 introduced session_reset(),
         // which re-reads session data
-        if ($this->fileHandle === null)
-        {
+        if ($this->fileHandle === null) {
             $this->fileNew = ! is_file($this->filePath . $sessionID);
 
-            if (($this->fileHandle = fopen($this->filePath . $sessionID, 'c+b')) === false)
-            {
+            if (($this->fileHandle = fopen($this->filePath . $sessionID, 'c+b')) === false) {
                 $this->logger->error("Session: Unable to open file '" . $this->filePath . $sessionID . "'.");
 
                 return false;
             }
 
-            if (flock($this->fileHandle, LOCK_EX) === false)
-            {
+            if (flock($this->fileHandle, LOCK_EX) === false) {
                 $this->logger->error("Session: Unable to obtain lock for file '" . $this->filePath . $sessionID . "'.");
                 fclose($this->fileHandle);
                 $this->fileHandle = null;
@@ -167,31 +156,25 @@ class FileHandler extends BaseHandler
             }
 
             // Needed by write() to detect session_regenerate_id() calls
-            if (is_null($this->sessionID)) // @phpstan-ignore-line
-            {
+            if (is_null($this->sessionID)) { // @phpstan-ignore-line
                 $this->sessionID = $sessionID;
             }
 
-            if ($this->fileNew)
-            {
+            if ($this->fileNew) {
                 chmod($this->filePath . $sessionID, 0600);
                 $this->fingerprint = md5('');
 
                 return '';
             }
-        }
-        else
-        {
+        } else {
             rewind($this->fileHandle);
         }
 
         $sessionData = '';
         clearstatcache();    // Address https://github.com/codeigniter4/CodeIgniter4/issues/2056
 
-        for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
-        {
-            if (($buffer = fread($this->fileHandle, $length - $read)) === false)
-            {
+        for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer)) {
+            if (($buffer = fread($this->fileHandle, $length - $read)) === false) {
                 break;
             }
 
@@ -218,41 +201,33 @@ class FileHandler extends BaseHandler
     public function write($sessionID, $sessionData): bool
     {
         // If the two IDs don't match, we have a session_regenerate_id() call
-        if ($sessionID !== $this->sessionID)
-        {
+        if ($sessionID !== $this->sessionID) {
             $this->sessionID = $sessionID;
         }
 
-        if (! is_resource($this->fileHandle))
-        {
+        if (! is_resource($this->fileHandle)) {
             return false;
         }
 
-        if ($this->fingerprint === md5($sessionData))
-        {
+        if ($this->fingerprint === md5($sessionData)) {
             return ($this->fileNew) ? true : touch($this->filePath . $sessionID);
         }
 
-        if (! $this->fileNew)
-        {
+        if (! $this->fileNew) {
             ftruncate($this->fileHandle, 0);
             rewind($this->fileHandle);
         }
 
-        if (($length = strlen($sessionData)) > 0)
-        {
+        if (($length = strlen($sessionData)) > 0) {
             $result = null;
 
-            for ($written = 0; $written < $length; $written += $result)
-            {
-                if (($result = fwrite($this->fileHandle, substr($sessionData, $written))) === false)
-                {
+            for ($written = 0; $written < $length; $written += $result) {
+                if (($result = fwrite($this->fileHandle, substr($sessionData, $written))) === false) {
                     break;
                 }
             }
 
-            if (! is_int($result))
-            {
+            if (! is_int($result)) {
                 $this->fingerprint = md5(substr($sessionData, 0, $written));
                 $this->logger->error('Session: Unable to write data.');
 
@@ -276,8 +251,7 @@ class FileHandler extends BaseHandler
      */
     public function close(): bool
     {
-        if (is_resource($this->fileHandle))
-        {
+        if (is_resource($this->fileHandle)) {
             flock($this->fileHandle, LOCK_UN);
             fclose($this->fileHandle);
 
@@ -303,14 +277,12 @@ class FileHandler extends BaseHandler
      */
     public function destroy($sessionId): bool
     {
-        if ($this->close())
-        {
+        if ($this->close()) {
             return is_file($this->filePath . $sessionId)
                 ? (unlink($this->filePath . $sessionId) && $this->destroyCookie()) : true;
         }
 
-        if ($this->filePath !== null)
-        {
+        if ($this->filePath !== null) {
             clearstatcache();
 
             return is_file($this->filePath . $sessionId)
@@ -333,8 +305,7 @@ class FileHandler extends BaseHandler
      */
     public function gc($maxlifetime): bool
     {
-        if (! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false)
-        {
+        if (! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false) {
             $this->logger->debug("Session: Garbage collector couldn't list files under directory '" . $this->savePath . "'.");
 
             return false;
@@ -351,15 +322,13 @@ class FileHandler extends BaseHandler
             preg_quote($this->cookieName, '#')
         );
 
-        while (($file = readdir($directory)) !== false)
-        {
+        while (($file = readdir($directory)) !== false) {
             // If the filename doesn't match this pattern, it's either not a session file or is not ours
             if (! preg_match($pattern, $file)
                 || ! is_file($this->savePath . DIRECTORY_SEPARATOR . $file)
                 || ($mtime = filemtime($this->savePath . DIRECTORY_SEPARATOR . $file)) === false
                 || $mtime > $ts
-            )
-            {
+            ) {
                 continue;
             }
 
@@ -381,16 +350,14 @@ class FileHandler extends BaseHandler
         $bitsPerCharacter = (int) ini_get('session.sid_bits_per_character');
         $SIDLength        = (int) ini_get('session.sid_length');
 
-        if (($bits = $SIDLength * $bitsPerCharacter) < 160)
-        {
+        if (($bits = $SIDLength * $bitsPerCharacter) < 160) {
             // Add as many more characters as necessary to reach at least 160 bits
             $SIDLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
             ini_set('session.sid_length', (string) $SIDLength);
         }
 
         // Yes, 4,5,6 are the only known possible values as of 2016-10-27
-        switch ($bitsPerCharacter)
-        {
+        switch ($bitsPerCharacter) {
             case 4:
                 $this->sessionIDRegex = '[0-9a-f]';
                 break;

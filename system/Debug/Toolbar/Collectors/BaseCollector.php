@@ -68,8 +68,7 @@ class BaseCollector
      */
     public function getTitle(bool $safe = false): string
     {
-        if ($safe)
-        {
+        if ($safe) {
             return str_replace(' ', '-', strtolower($this->title));
         }
 
@@ -134,8 +133,7 @@ class BaseCollector
      */
     public function timelineData(): array
     {
-        if (! $this->hasTimeline)
-        {
+        if (! $this->hasTimeline) {
             return [];
         }
 

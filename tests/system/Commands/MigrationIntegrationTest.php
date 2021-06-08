@@ -20,13 +20,11 @@ final class MigrationIntegrationTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        if (! is_file($this->migrationFileFrom))
-        {
+        if (! is_file($this->migrationFileFrom)) {
             $this->fail(clean_path($this->migrationFileFrom) . ' is not found.');
         }
 
-        if (is_file($this->migrationFileTo))
-        {
+        if (is_file($this->migrationFileTo)) {
             @unlink($this->migrationFileTo);
         }
 
@@ -46,8 +44,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (is_file($this->migrationFileTo))
-        {
+        if (is_file($this->migrationFileTo)) {
             @unlink($this->migrationFileTo);
         }
 

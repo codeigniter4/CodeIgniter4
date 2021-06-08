@@ -120,29 +120,24 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-        if ($alterType === 'ADD')
-        {
+        if ($alterType === 'ADD') {
             return parent::_alterTable($alterType, $table, $field);
         }
 
         // Handle DROP here
-        if ($alterType === 'DROP')
-        {
+        if ($alterType === 'DROP') {
             // check if fields are part of any indexes
             $indexData = $this->db->getIndexData($table);
 
-            foreach ($indexData as $index)
-            {
-                if (is_string($field))
-                {
+            foreach ($indexData as $index) {
+                if (is_string($field)) {
                     $field = explode(',', $field);
                 }
 
                 $fld = array_intersect($field, $index->fields);
 
                 // Drop index if field is part of an index
-                if (! empty($fld))
-                {
+                if (! empty($fld)) {
                     $this->_dropIndex($table, $index);
                 }
             }
@@ -160,33 +155,27 @@ class Forge extends BaseForge
 
         $sqls = [];
 
-        foreach ($field as $data)
-        {
-            if ($data['_literal'] !== false)
-            {
+        foreach ($field as $data) {
+            if ($data['_literal'] !== false) {
                 return false;
             }
 
-            if (isset($data['type']))
-            {
+            if (isset($data['type'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
                         . " {$data['type']}{$data['length']}";
             }
 
-            if (! empty($data['default']))
-            {
+            if (! empty($data['default'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($data['name']) . '_def'
                         . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
             }
 
-            if (isset($data['null']))
-            {
+            if (isset($data['null'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
                         . ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
             }
 
-            if (! empty($data['comment']))
-            {
+            if (! empty($data['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
                         . "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
                         . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
@@ -194,8 +183,7 @@ class Forge extends BaseForge
                         . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
             }
 
-            if (! empty($data['new_name']))
-            {
+            if (! empty($data['new_name'])) {
                 // EXEC sp_rename '[dbo].[db_misc].[value]', 'valueasdasd', 'COLUMN';
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
             }
@@ -216,12 +204,9 @@ class Forge extends BaseForge
      */
     protected function _dropIndex(string $table, object $indexData)
     {
-        if ($indexData->type === 'PRIMARY')
-        {
+        if ($indexData->type === 'PRIMARY') {
             $sql = 'ALTER TABLE [' . $this->db->schema . '].[' . $table . '] DROP [' . $indexData->name . ']';
-        }
-        else
-        {
+        } else {
             $sql = 'DROP INDEX [' . $indexData->name . '] ON [' . $this->db->schema . '].[' . $table . ']';
         }
 
@@ -265,23 +250,19 @@ class Forge extends BaseForge
             'SET DEFAULT',
         ];
 
-        if ($this->foreignKeys !== [])
-        {
-            foreach ($this->foreignKeys as $field => $fkey)
-            {
+        if ($this->foreignKeys !== []) {
+            foreach ($this->foreignKeys as $field => $fkey) {
                 $nameIndex = $table . '_' . $field . '_foreign';
 
                 $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
                         . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
                         . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))
-                {
+                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
                 }
 
-                if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true))
-                {
+                if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
                     $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
                 }
             }
@@ -299,16 +280,13 @@ class Forge extends BaseForge
      */
     protected function _processPrimaryKeys(string $table): string
     {
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++)
-        {
-            if (! isset($this->fields[$this->primaryKeys[$i]]))
-            {
+        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
+            if (! isset($this->fields[$this->primaryKeys[$i]])) {
                 unset($this->primaryKeys[$i]);
             }
         }
 
-        if ($this->primaryKeys !== [])
-        {
+        if ($this->primaryKeys !== []) {
             $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
                     . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
         }
@@ -328,13 +306,11 @@ class Forge extends BaseForge
     protected function _attributeType(array &$attributes)
     {
         // Reset field lengths for data types that don't support it
-        if (isset($attributes['CONSTRAINT']) && stripos($attributes['TYPE'], 'int') !== false)
-        {
+        if (isset($attributes['CONSTRAINT']) && stripos($attributes['TYPE'], 'int') !== false) {
             $attributes['CONSTRAINT'] = null;
         }
 
-        switch (strtoupper($attributes['TYPE']))
-        {
+        switch (strtoupper($attributes['TYPE'])) {
             case 'MEDIUMINT':
                 $attributes['TYPE']     = 'INTEGER';
                 $attributes['UNSIGNED'] = false;
@@ -372,8 +348,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false)
-        {
+        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false) {
             $field['auto_increment'] = ' IDENTITY(1,1)';
         }
     }
@@ -395,8 +370,7 @@ class Forge extends BaseForge
     {
         $sql = 'DROP TABLE';
 
-        if ($ifExists)
-        {
+        if ($ifExists) {
             $sql .= ' IF EXISTS ';
         }
 
@@ -404,8 +378,7 @@ class Forge extends BaseForge
 
         $sql .= $table;
 
-        if ($cascade)
-        {
+        if ($cascade) {
             $sql .= '';
         }
 

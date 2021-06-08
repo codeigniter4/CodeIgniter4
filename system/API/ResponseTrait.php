@@ -96,33 +96,26 @@ trait ResponseTrait
     public function respond($data = null, int $status = null, string $message = '')
     {
         // If data is null and status code not provided, exit and bail
-        if ($data === null && $status === null)
-        {
+        if ($data === null && $status === null) {
             $status = 404;
 
             // Create the output var here in case of $this->response([]);
             $output = null;
         }
         // If data is null but status provided, keep the output empty.
-        elseif ($data === null && is_numeric($status))
-        {
+        elseif ($data === null && is_numeric($status)) {
             $output = null;
-        }
-        else
-        {
+        } else {
             $status = empty($status) ? 200 : $status;
             $output = $this->format($data);
         }
 
-        if (! is_null($output))
-        {
-            if ($this->format === 'json')
-            {
+        if (! is_null($output)) {
+            if ($this->format === 'json') {
                 return $this->response->setJSON($output)->setStatusCode($status, $message);
             }
 
-            if ($this->format === 'xml')
-            {
+            if ($this->format === 'xml') {
                 return $this->response->setXML($output)->setStatusCode($status, $message);
             }
         }
@@ -144,8 +137,7 @@ trait ResponseTrait
      */
     public function fail($messages, int $status = 400, string $code = null, string $customMessage = '')
     {
-        if (! is_array($messages))
-        {
+        if (! is_array($messages)) {
             $messages = ['error' => $messages];
         }
 
@@ -383,8 +375,7 @@ trait ResponseTrait
     protected function format($data = null)
     {
         // If the data is a string, there's not much we can do to it...
-        if (is_string($data))
-        {
+        if (is_string($data)) {
             // The content type should be text/... and not application/...
             $contentType = $this->response->getHeaderLine('Content-Type');
             $contentType = str_replace('application/json', 'text/html', $contentType);
@@ -399,22 +390,19 @@ trait ResponseTrait
         $mime   = "application/{$this->format}";
 
         // Determine correct response type through content negotiation if not explicitly declared
-        if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
-        {
+        if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true)) {
             $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
         }
 
         $this->response->setContentType($mime);
 
         // if we don't have a formatter, make one
-        if (! isset($this->formatter))
-        {
+        if (! isset($this->formatter)) {
             // if no formatter, use the default
             $this->formatter = $format->getFormatter($mime);
         }
 
-        if ($mime !== 'application/json')
-        {
+        if ($mime !== 'application/json') {
             // Recursively convert objects into associative arrays
             // Conversion not required for JSONFormatter
             $data = json_decode(json_encode($data), true);

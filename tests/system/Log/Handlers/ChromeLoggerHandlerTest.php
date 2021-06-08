@@ -11,7 +11,6 @@ use stdClass;
 
 class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
-
     public function testCanHandleLogLevel()
     {
         $config = new LoggerConfig();
@@ -79,5 +78,4 @@ class ChromeLoggerHandlerTest extends CIUnitTestCase
 
         $this->assertTrue($response->hasHeader('x-chromelogger-data'));
     }
-
 }

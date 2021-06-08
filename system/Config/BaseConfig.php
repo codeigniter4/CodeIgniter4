@@ -68,20 +68,16 @@ class BaseConfig
         $slashAt     = strrpos($prefix, '\\');
         $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
-        foreach ($properties as $property)
-        {
+        foreach ($properties as $property) {
             $this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
 
-            if ($this instanceof Encryption && $property === 'key')
-            {
+            if ($this instanceof Encryption && $property === 'key') {
                 // Handle hex2bin prefix
-                if (strpos($this->$property, 'hex2bin:') === 0)
-                {
+                if (strpos($this->$property, 'hex2bin:') === 0) {
                     $this->$property = hex2bin(substr($this->$property, 8));
                 }
                 // Handle base64 prefix
-                elseif (strpos($this->$property, 'base64:') === 0)
-                {
+                elseif (strpos($this->$property, 'base64:') === 0) {
                     $this->$property = base64_decode(substr($this->$property, 7), true);
                 }
             }
@@ -100,21 +96,14 @@ class BaseConfig
      */
     protected function initEnvValue(&$property, string $name, string $prefix, string $shortPrefix)
     {
-        if (is_array($property))
-        {
-            foreach (array_keys($property) as $key)
-            {
+        if (is_array($property)) {
+            foreach (array_keys($property) as $key) {
                 $this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
             }
-        }
-        elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value))
-        {
-            if ($value === 'false')
-            {
+        } elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value)) {
+            if ($value === 'false') {
                 $value = false;
-            }
-            elseif ($value === 'true')
-            {
+            } elseif ($value === 'true') {
                 $value = true;
             }
             $property = is_bool($value) ? $value : trim($value, '\'"');
@@ -136,8 +125,7 @@ class BaseConfig
     {
         $shortPrefix = ltrim($shortPrefix, '\\');
 
-        switch (true)
-        {
+        switch (true) {
             case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
                 return $_ENV["{$shortPrefix}.{$property}"];
 
@@ -166,18 +154,15 @@ class BaseConfig
      */
     protected function registerProperties()
     {
-        if (! static::$moduleConfig->shouldDiscover('registrars'))
-        {
+        if (! static::$moduleConfig->shouldDiscover('registrars')) {
             return;
         }
 
-        if (! static::$didDiscovery)
-        {
+        if (! static::$didDiscovery) {
             $locator         = Services::locator();
             $registrarsFiles = $locator->search('Config/Registrar.php');
 
-            foreach ($registrarsFiles as $file)
-            {
+            foreach ($registrarsFiles as $file) {
                 $className            = $locator->getClassname($file);
                 static::$registrars[] = new $className();
             }
@@ -188,11 +173,9 @@ class BaseConfig
         $shortName = (new ReflectionClass($this))->getShortName();
 
         // Check the registrar class for a method named after this class' shortName
-        foreach (static::$registrars as $callable)
-        {
+        foreach (static::$registrars as $callable) {
             // ignore non-applicable registrars
-            if (! method_exists($callable, $shortName))
-            {
+            if (! method_exists($callable, $shortName)) {
                 // @codeCoverageIgnoreStart
                 continue;
                 // @codeCoverageIgnoreEnd
@@ -200,19 +183,14 @@ class BaseConfig
 
             $properties = $callable::$shortName();
 
-            if (! is_array($properties))
-            {
+            if (! is_array($properties)) {
                 throw new RuntimeException('Registrars must return an array of properties and their values.');
             }
 
-            foreach ($properties as $property => $value)
-            {
-                if (isset($this->$property) && is_array($this->$property) && is_array($value))
-                {
+            foreach ($properties as $property => $value) {
+                if (isset($this->$property) && is_array($this->$property) && is_array($value)) {
                     $this->$property = array_merge($this->$property, $value);
-                }
-                else
-                {
+                } else {
                     $this->$property = $value;
                 }
             }

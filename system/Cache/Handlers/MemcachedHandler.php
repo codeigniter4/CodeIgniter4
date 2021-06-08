@@ -52,8 +52,7 @@ class MemcachedHandler extends BaseHandler
     {
         $this->prefix = $config->prefix;
 
-        if (! empty($config))
-        {
+        if (! empty($config)) {
             $this->config = array_merge($this->config, $config->memcached);
         }
     }
@@ -65,12 +64,9 @@ class MemcachedHandler extends BaseHandler
      */
     public function __destruct()
     {
-        if ($this->memcached instanceof Memcached)
-        {
+        if ($this->memcached instanceof Memcached) {
             $this->memcached->quit();
-        }
-        elseif ($this->memcached instanceof Memcache)
-        {
+        } elseif ($this->memcached instanceof Memcache) {
             $this->memcached->close();
         }
     }
@@ -84,14 +80,11 @@ class MemcachedHandler extends BaseHandler
     {
         // Try to connect to Memcache or Memcached, if an issue occurs throw a CriticalError exception,
         // so that the CacheFactory can attempt to initiate the next cache handler.
-        try
-        {
-            if (class_exists(Memcached::class))
-            {
+        try {
+            if (class_exists(Memcached::class)) {
                 // Create new instance of Memcached
                 $this->memcached = new Memcached();
-                if ($this->config['raw'])
-                {
+                if ($this->config['raw']) {
                     $this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
                 }
 
@@ -105,13 +98,10 @@ class MemcachedHandler extends BaseHandler
 
                 // $stats should be an associate array with a key in the format of host:port.
                 // If it doesn't have the key, we know the server is not working as expected.
-                if (! isset($stats[$this->config['host'] . ':' . $this->config['port']]))
-                {
+                if (! isset($stats[$this->config['host'] . ':' . $this->config['port']])) {
                     throw new CriticalError('Cache: Memcached connection failed.');
                 }
-            }
-            elseif (class_exists(Memcache::class))
-            {
+            } elseif (class_exists(Memcache::class)) {
                 // Create new instance of Memcache
                 $this->memcached = new Memcache();
 
@@ -121,8 +111,7 @@ class MemcachedHandler extends BaseHandler
                 );
 
                 // If we can't connect, throw a CriticalError exception
-                if ($canConnect === false)
-                {
+                if ($canConnect === false) {
                     throw new CriticalError('Cache: Memcache connection failed.');
                 }
 
@@ -130,19 +119,13 @@ class MemcachedHandler extends BaseHandler
                 $this->memcached->addServer(
                     $this->config['host'], $this->config['port'], true, $this->config['weight']
                 );
-            }
-            else
-            {
+            } else {
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');
             }
-        }
-        catch (CriticalError $e)
-        {
+        } catch (CriticalError $e) {
             // If a CriticalError exception occurs, throw it up.
             throw $e;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             // If an \Exception occurs, convert it into a CriticalError exception and throw it.
             throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
         }
@@ -161,24 +144,19 @@ class MemcachedHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        if ($this->memcached instanceof Memcached)
-        {
+        if ($this->memcached instanceof Memcached) {
             $data = $this->memcached->get($key);
 
             // check for unmatched key
-            if ($this->memcached->getResultCode() === Memcached::RES_NOTFOUND)
-            {
+            if ($this->memcached->getResultCode() === Memcached::RES_NOTFOUND) {
                 return null;
             }
-        }
-        elseif ($this->memcached instanceof Memcache)
-        {
+        } elseif ($this->memcached instanceof Memcache) {
             $flags = false;
             $data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
 
             // check for unmatched key (i.e. $flags is untouched)
-            if ($flags === false)
-            {
+            if ($flags === false) {
                 return null;
             }
         }
@@ -201,8 +179,7 @@ class MemcachedHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        if (! $this->config['raw'])
-        {
+        if (! $this->config['raw']) {
             $value = [
                 $value,
                 time(),
@@ -210,13 +187,11 @@ class MemcachedHandler extends BaseHandler
             ];
         }
 
-        if ($this->memcached instanceof Memcached)
-        {
+        if ($this->memcached instanceof Memcached) {
             return $this->memcached->set($key, $value, $ttl);
         }
 
-        if ($this->memcached instanceof Memcache)
-        {
+        if ($this->memcached instanceof Memcache) {
             return $this->memcached->set($key, $value, 0, $ttl);
         }
 
@@ -266,8 +241,7 @@ class MemcachedHandler extends BaseHandler
      */
     public function increment(string $key, int $offset = 1)
     {
-        if (! $this->config['raw'])
-        {
+        if (! $this->config['raw']) {
             return false;
         }
 
@@ -289,8 +263,7 @@ class MemcachedHandler extends BaseHandler
      */
     public function decrement(string $key, int $offset = 1)
     {
-        if (! $this->config['raw'])
-        {
+        if (! $this->config['raw']) {
             return false;
         }
 
@@ -346,8 +319,7 @@ class MemcachedHandler extends BaseHandler
         $stored = $this->memcached->get($key);
 
         // if not an array, don't try to count for PHP7.2
-        if (! is_array($stored) || count($stored) !== 3)
-        {
+        if (! is_array($stored) || count($stored) !== 3) {
             return false; // This will return null in a future release
         }
 

@@ -28,8 +28,7 @@ class ModelGeneratorTest extends CIUnitTestCase
 
     protected function getFileContent(string $filepath): string
     {
-        if (! is_file($filepath))
-        {
+        if (! is_file($filepath)) {
             return '';
         }
 

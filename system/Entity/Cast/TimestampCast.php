@@ -25,8 +25,7 @@ class TimestampCast extends BaseCast
     {
         $value = strtotime($value);
 
-        if ($value === false)
-        {
+        if ($value === false) {
             throw CastException::forInvalidTimestamp();
         }
 

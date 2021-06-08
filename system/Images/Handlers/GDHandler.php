@@ -31,8 +31,7 @@ class GDHandler extends BaseHandler
 
         // We should never see this, so can't test it
         // @codeCoverageIgnoreStart
-        if (! extension_loaded('gd'))
-        {
+        if (! extension_loaded('gd')) {
             throw ImageException::forMissingExtension('GD');
         }
         // @codeCoverageIgnoreEnd
@@ -86,13 +85,10 @@ class GDHandler extends BaseHandler
     {
         $srcImg = $this->createImage();
 
-        if (function_exists('imagecreatetruecolor'))
-        {
+        if (function_exists('imagecreatetruecolor')) {
             $create = 'imagecreatetruecolor';
             $copy   = 'imagecopyresampled';
-        }
-        else
-        {
+        } else {
             $create = 'imagecreate';
             $copy   = 'imagecopyresized';
         }
@@ -142,8 +138,7 @@ class GDHandler extends BaseHandler
      */
     public function getVersion()
     {
-        if (function_exists('gd_info'))
-        {
+        if (function_exists('gd_info')) {
             $gdVersion = @gd_info();
 
             return preg_replace('/\D/', '', $gdVersion['GD Version']);
@@ -190,8 +185,7 @@ class GDHandler extends BaseHandler
         $origWidth  = $this->image()->origWidth;
         $origHeight = $this->image()->origHeight;
 
-        if ($action === 'crop')
-        {
+        if ($action === 'crop') {
             // Reassign the source width/height if cropping
             $origWidth  = $this->width;
             $origHeight = $this->height;
@@ -206,13 +200,10 @@ class GDHandler extends BaseHandler
         // Create the image handle
         $src = $this->createImage();
 
-        if (function_exists('imagecreatetruecolor'))
-        {
+        if (function_exists('imagecreatetruecolor')) {
             $create = 'imagecreatetruecolor';
             $copy   = 'imagecopyresampled';
-        }
-        else
-        {
+        } else {
             $create = 'imagecreate';
             $copy   = 'imagecopyresized';
         }
@@ -220,8 +211,7 @@ class GDHandler extends BaseHandler
         $dest = $create($this->width, $this->height);
 
         // for png and webp we can actually preserve transparency
-        if (in_array($this->image()->imageType, $this->supportTransparency, true))
-        {
+        if (in_array($this->image()->imageType, $this->supportTransparency, true)) {
             imagealphablending($dest, false);
             imagesavealpha($dest, true);
         }
@@ -257,10 +247,8 @@ class GDHandler extends BaseHandler
 
         // If no new resource has been created, then we're
         // simply copy the existing one.
-        if (empty($this->resource) && $quality === 100)
-        {
-            if ($original === null)
-            {
+        if (empty($this->resource) && $quality === 100) {
+            if ($original === null) {
                 return true;
             }
 
@@ -272,52 +260,43 @@ class GDHandler extends BaseHandler
 
         $this->ensureResource();
 
-        switch ($this->image()->imageType)
-        {
+        switch ($this->image()->imageType) {
             case IMAGETYPE_GIF:
-                if (! function_exists('imagegif'))
-                {
+                if (! function_exists('imagegif')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
                 }
 
-                if (! @imagegif($this->resource, $target))
-                {
+                if (! @imagegif($this->resource, $target)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
 
             case IMAGETYPE_JPEG:
-                if (! function_exists('imagejpeg'))
-                {
+                if (! function_exists('imagejpeg')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
                 }
 
-                if (! @imagejpeg($this->resource, $target, $quality))
-                {
+                if (! @imagejpeg($this->resource, $target, $quality)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
 
             case IMAGETYPE_PNG:
-                if (! function_exists('imagepng'))
-                {
+                if (! function_exists('imagepng')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
                 }
 
-                if (! @imagepng($this->resource, $target))
-                {
+                if (! @imagepng($this->resource, $target)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
 
             case IMAGETYPE_WEBP:
-                if (! function_exists('imagewebp'))
-                {
+                if (! function_exists('imagewebp')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
                 }
 
-                if (! @imagewebp($this->resource, $target))
-                {
+                if (! @imagewebp($this->resource, $target)) {
                     throw ImageException::forSaveFailed();
                 }
                 break;
@@ -348,18 +327,15 @@ class GDHandler extends BaseHandler
      */
     protected function createImage(string $path = '', string $imageType = '')
     {
-        if ($this->resource !== null)
-        {
+        if ($this->resource !== null) {
             return $this->resource;
         }
 
-        if ($path === '')
-        {
+        if ($path === '') {
             $path = $this->image()->getPathname();
         }
 
-        if ($imageType === '')
-        {
+        if ($imageType === '') {
             $imageType = $this->image()->imageType;
         }
 
@@ -373,8 +349,7 @@ class GDHandler extends BaseHandler
      */
     protected function ensureResource()
     {
-        if ($this->resource === null)
-        {
+        if ($this->resource === null) {
             // if valid image type, make corresponding image resource
             $this->resource = $this->getImageResource(
                 $this->image()->getPathname(), $this->image()->imageType
@@ -395,35 +370,30 @@ class GDHandler extends BaseHandler
      */
     protected function getImageResource(string $path, int $imageType)
     {
-        switch ($imageType)
-        {
+        switch ($imageType) {
             case IMAGETYPE_GIF:
-                if (! function_exists('imagecreatefromgif'))
-                {
+                if (! function_exists('imagecreatefromgif')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
                 }
 
                 return imagecreatefromgif($path);
 
             case IMAGETYPE_JPEG:
-                if (! function_exists('imagecreatefromjpeg'))
-                {
+                if (! function_exists('imagecreatefromjpeg')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
                 }
 
                 return imagecreatefromjpeg($path);
 
             case IMAGETYPE_PNG:
-                if (! function_exists('imagecreatefrompng'))
-                {
+                if (! function_exists('imagecreatefrompng')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
                 }
 
                 return imagecreatefrompng($path);
 
             case IMAGETYPE_WEBP:
-                if (! function_exists('imagecreatefromwebp'))
-                {
+                if (! function_exists('imagecreatefromwebp')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
                 }
 
@@ -453,37 +423,29 @@ class GDHandler extends BaseHandler
         // invert the offset. Note: The horizontal
         // offset flips itself automatically
 
-        if ($options['vAlign'] === 'bottom')
-        {
+        if ($options['vAlign'] === 'bottom') {
             $options['vOffset'] = $options['vOffset'] * -1;
         }
 
-        if ($options['hAlign'] === 'right')
-        {
+        if ($options['hAlign'] === 'right') {
             $options['hOffset'] = $options['hOffset'] * -1;
         }
 
         // Set font width and height
         // These are calculated differently depending on
         // whether we are using the true type font or not
-        if (! empty($options['fontPath']))
-        {
-            if (function_exists('imagettfbbox'))
-            {
+        if (! empty($options['fontPath'])) {
+            if (function_exists('imagettfbbox')) {
                 $temp = imagettfbbox($options['fontSize'], 0, $options['fontPath'], $text);
                 $temp = $temp[2] - $temp[0];
 
                 $fontwidth = $temp / strlen($text);
-            }
-            else
-            {
+            } else {
                 $fontwidth = $options['fontSize'] - ($options['fontSize'] / 4);
             }
 
             $fontheight = $options['fontSize'];
-        }
-        else
-        {
+        } else {
             $fontwidth  = imagefontwidth($options['fontSize']);
             $fontheight = imagefontheight($options['fontSize']);
         }
@@ -496,31 +458,24 @@ class GDHandler extends BaseHandler
         $yAxis = $options['vOffset'] + $options['padding'];
 
         // Set vertical alignment
-        if ($options['vAlign'] === 'middle')
-        {
+        if ($options['vAlign'] === 'middle') {
             // Don't apply padding when you're in the middle of the image.
             $yAxis += ($this->image()->origHeight / 2) + ($fontheight / 2) - $options['padding'] - $fontheight - $options['shadowOffset'];
-        }
-        elseif ($options['vAlign'] === 'bottom')
-        {
+        } elseif ($options['vAlign'] === 'bottom') {
             $yAxis = ($this->image()->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2)) - $yAxis;
         }
 
         // Set horizontal alignment
-        if ($options['hAlign'] === 'right')
-        {
+        if ($options['hAlign'] === 'right') {
             $xAxis += ($this->image()->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
-        }
-        elseif ($options['hAlign'] === 'center')
-        {
+        } elseif ($options['hAlign'] === 'center') {
             $xAxis += floor(($this->image()->origWidth - ($fontwidth * strlen($text))) / 2);
         }
 
         $options['xAxis'] = $xAxis;
         $options['yAxis'] = $yAxis;
 
-        if ($options['withShadow'])
-        {
+        if ($options['withShadow']) {
             // Offset from text
             $options['xShadow'] = $xAxis + $options['shadowOffset'];
             $options['yShadow'] = $yAxis + $options['shadowOffset'];
@@ -559,8 +514,7 @@ class GDHandler extends BaseHandler
         $color = $isShadow ? $options['shadowColor'] : $options['color'];
 
         // shorthand hex, #f00
-        if (strlen($color) === 3)
-        {
+        if (strlen($color) === 3) {
             $color = implode('', array_map('str_repeat', str_split($color), [2, 2, 2]));
         }
 
@@ -571,13 +525,10 @@ class GDHandler extends BaseHandler
         $yAxis = $isShadow ? $options['yShadow'] : $options['yAxis'];
 
         // Add the shadow to the source image
-        if (! empty($options['fontPath']))
-        {
+        if (! empty($options['fontPath'])) {
             // We have to add fontheight because imagettftext locates the bottom left corner, not top-left corner.
             imagettftext($src, $options['fontSize'], 0, $xAxis, $yAxis + $options['fontheight'], $color, $options['fontPath'], $text);
-        }
-        else
-        {
+        } else {
             imagestring($src, $options['fontSize'], $xAxis, $yAxis, $text, $color);
         }
 

@@ -57,10 +57,8 @@ class Timers extends BaseCollector
         $benchmark = Services::timer(true);
         $rows      = $benchmark->getTimers(6);
 
-        foreach ($rows as $name => $info)
-        {
-            if ($name === 'total_execution')
-            {
+        foreach ($rows as $name => $info) {
+            if ($name === 'total_execution') {
                 continue;
             }
 

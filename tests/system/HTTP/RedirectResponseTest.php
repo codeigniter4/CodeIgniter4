@@ -256,8 +256,7 @@ class RedirectResponseTest extends CIUnitTestCase
 
         $response = $response->withHeaders();
 
-        foreach ($baseResponse->headers() as $name => $header)
-        {
+        foreach ($baseResponse->headers() as $name => $header) {
             $this->assertTrue($response->hasHeader($name));
             $this->assertEquals($header->getValue(), $response->header($name)->getValue());
         }
@@ -269,8 +268,7 @@ class RedirectResponseTest extends CIUnitTestCase
 
         $baseResponse = service('response');
 
-        foreach (array_keys($baseResponse->headers()) as $key)
-        {
+        foreach (array_keys($baseResponse->headers()) as $key) {
             $baseResponse->removeHeader($key);
         }
 

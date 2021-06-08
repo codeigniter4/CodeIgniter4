@@ -30,8 +30,7 @@ final class FileHandlerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        if (! function_exists('octal_permissions'))
-        {
+        if (! function_exists('octal_permissions')) {
             helper('filesystem');
         }
 
@@ -39,8 +38,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->config                     = new Cache();
         $this->config->file['storePath'] .= self::$directory;
 
-        if (! is_dir($this->config->file['storePath']))
-        {
+        if (! is_dir($this->config->file['storePath'])) {
             mkdir($this->config->file['storePath'], 0777, true);
         }
 
@@ -52,14 +50,11 @@ final class FileHandlerTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (is_dir($this->config->file['storePath']))
-        {
+        if (is_dir($this->config->file['storePath'])) {
             chmod($this->config->file['storePath'], 0777);
 
-            foreach (self::getKeyArray() as $key)
-            {
-                if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key))
-                {
+            foreach (self::getKeyArray() as $key) {
+                if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key)) {
                     chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key, 0777);
                     unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key);
                 }
@@ -160,8 +155,7 @@ final class FileHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingPrefix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->fileHandler->save('key_' . $i, 'value' . $i);
         }
 
@@ -182,8 +176,7 @@ final class FileHandlerTest extends CIUnitTestCase
     public function testDeleteMatchingSuffix()
     {
         // Save 101 items to match on
-        for ($i = 1; $i <= 101; $i++)
-        {
+        for ($i = 1; $i <= 101; $i++) {
             $this->fileHandler->save('key_' . $i, 'value' . $i);
         }
 
@@ -320,7 +313,6 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertArrayHasKey('executable', $actual);
         $this->assertArrayHasKey('fileperms', $actual);
     }
-
 }
 
 final class BaseTestFileHandler extends FileHandler

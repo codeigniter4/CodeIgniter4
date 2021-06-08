@@ -40,17 +40,14 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 
     public static function forMissingExtension(string $extension)
     {
-        if (strpos($extension, 'intl') !== false)
-        {
+        if (strpos($extension, 'intl') !== false) {
             // @codeCoverageIgnoreStart
             $message = sprintf(
                 'The framework needs the following extension(s) installed and loaded: %s.',
                 $extension
             );
-            // @codeCoverageIgnoreEnd
-        }
-        else
-        {
+        // @codeCoverageIgnoreEnd
+        } else {
             $message = lang('Core.missingExtension', [$extension]);
         }
 

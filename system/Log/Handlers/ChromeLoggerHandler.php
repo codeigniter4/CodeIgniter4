@@ -111,16 +111,14 @@ class ChromeLoggerHandler extends BaseHandler
         $backtrace = end($backtrace);
 
         $backtraceMessage = 'unknown';
-        if (isset($backtrace['file']) && isset($backtrace['line']))
-        {
+        if (isset($backtrace['file']) && isset($backtrace['line'])) {
             $backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
         }
 
         // Default to 'log' type.
         $type = '';
 
-        if (array_key_exists($level, $this->levels))
-        {
+        if (array_key_exists($level, $this->levels)) {
             $type = $this->levels[$level];
         }
 
@@ -146,8 +144,7 @@ class ChromeLoggerHandler extends BaseHandler
      */
     protected function format($object)
     {
-        if (! is_object($object))
-        {
+        if (! is_object($object)) {
             return $object;
         }
 
@@ -168,8 +165,7 @@ class ChromeLoggerHandler extends BaseHandler
      */
     public function sendLogs(ResponseInterface &$response = null)
     {
-        if (is_null($response))
-        {
+        if (is_null($response)) {
             $response = Services::response(null, true);
         }
 

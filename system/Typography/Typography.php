@@ -76,30 +76,25 @@ class Typography
      */
     public function autoTypography(string $str, bool $reduceLinebreaks = false): string
     {
-        if ($str === '')
-        {
+        if ($str === '') {
             return '';
         }
 
         // Standardize Newlines to make matching easier
-        if (strpos($str, "\r") !== false)
-        {
+        if (strpos($str, "\r") !== false) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
 
         // Reduce line breaks.  If there are more than two consecutive linebreaks
         // we'll compress them down to a maximum of two since there's no benefit to more.
-        if ($reduceLinebreaks === false)
-        {
+        if ($reduceLinebreaks === false) {
             $str = preg_replace("/\n\n+/", "\n\n", $str);
         }
 
         // HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
         $htmlComments = [];
-        if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
-        {
-            for ($i = 0, $total = count($matches[0]); $i < $total; $i ++)
-            {
+        if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches)) {
+            for ($i = 0, $total = count($matches[0]); $i < $total; $i ++) {
                 $htmlComments[] = $matches[0][$i];
                 $str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
             }
@@ -107,8 +102,7 @@ class Typography
 
         // match and yank <pre> tags if they exist.  It's cheaper to do this separately since most content will
         // not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
-        if (strpos($str, '<pre') !== false)
-        {
+        if (strpos($str, '<pre') !== false) {
             $str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
         }
 
@@ -116,8 +110,7 @@ class Typography
         $str = preg_replace_callback('#<.+?>#si', [$this, 'protectCharacters'], $str);
 
         // Do the same with braces if necessary
-        if ($this->protectBracedQuotes === false)
-        {
+        if ($this->protectBracedQuotes === false) {
             $str = preg_replace_callback('#\{.+?\}#si', [$this, 'protectCharacters'], $str);
         }
 
@@ -142,19 +135,15 @@ class Typography
         $str     = '';
         $process = true;
 
-        for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i ++)
-        {
+        for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i ++) {
             // Are we dealing with a tag? If so, we'll skip the processing for this cycle.
             // Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
-            if (preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match))
-            {
-                if (preg_match('#' . $this->skipElements . '#', $match[2]))
-                {
+            if (preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match)) {
+                if (preg_match('#' . $this->skipElements . '#', $match[2])) {
                     $process = ($match[1] === '/');
                 }
 
-                if ($match[1] === '')
-                {
+                if ($match[1] === '') {
                     $this->lastBlockElement = $match[2];
                 }
 
@@ -163,16 +152,14 @@ class Typography
                 continue;
             }
 
-            if ($process === false)
-            {
+            if ($process === false) {
                 $str .= $chunks[$i];
 
                 continue;
             }
 
             //  Force a newline to make sure end tags get processed by _format_newlines()
-            if ($i === $c)
-            {
+            if ($i === $c) {
                 $chunks[$i] .= "\n";
             }
 
@@ -181,16 +168,14 @@ class Typography
         }
 
         // No opening block level tag? Add it if needed.
-        if (! preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str))
-        {
+        if (! preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str)) {
             $str = preg_replace('/^(.*?)<(' . $this->blockElements . ')/i', '<p>$1</p><$2', $str);
         }
 
         // Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
         $str = $this->formatCharacters($str);
 
-        foreach ($htmlComments as $i => $htmlComment)
-        {
+        foreach ($htmlComments as $i => $htmlComment) {
             // remove surrounding paragraph tags, but only if there's an opening paragraph tag
             // otherwise HTML comments at the ends of paragraphs will have the closing tag removed
             // if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
@@ -226,12 +211,9 @@ class Typography
         ];
 
         // Do we need to reduce empty lines?
-        if ($reduceLinebreaks === true)
-        {
+        if ($reduceLinebreaks === true) {
             $table['#<p>\n*</p>#'] = '';
-        }
-        else
-        {
+        } else {
             // If we have empty paragraph tags we add a non-breaking space
             // otherwise most browsers won't treat them as true paragraphs
             $table['#<p></p>#'] = '<p>&nbsp;</p>';
@@ -256,8 +238,7 @@ class Typography
     {
         static $table;
 
-        if (! isset($table))
-        {
+        if (! isset($table)) {
             $table = [
                 // nested smart quotes, opening and closing
                 // note that rules for grammar (English) allow only for two levels deep
@@ -311,8 +292,7 @@ class Typography
      */
     protected function formatNewLines(string $str): string
     {
-        if ($str === '' || (strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true)))
-        {
+        if ($str === '' || (strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true))) {
             return $str;
         }
 
@@ -323,8 +303,7 @@ class Typography
         $str = preg_replace("/([^\n])(\n)([^\n])/", '\\1<br />\\2\\3', $str);
 
         // Wrap the whole enchilada in enclosing paragraphs
-        if ($str !== "\n")
-        {
+        if ($str !== "\n") {
             // We trim off the right-side new line so that the closing </p> tag
             // will be positioned immediately following the string, matching
             // the behavior of the opening <p> tag
@@ -366,11 +345,10 @@ class Typography
     {
         $newstr = '';
 
-        for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i ++)
-        {
+        for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i ++) {
             $newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];
-            if ($ct - 1 !== $i)
-            {
+
+            if ($ct - 1 !== $i) {
                 $newstr .= 'pre>';
             }
         }

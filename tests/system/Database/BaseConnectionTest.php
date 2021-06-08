@@ -69,13 +69,10 @@ class BaseConnectionTest extends CIUnitTestCase
 
     public function testConnectionThrowExceptionWhenCannotConnect()
     {
-        try
-        {
+        try {
             $db = new MockConnection($this->options);
             $db->shouldReturn('connect', false)->initialize();
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             $this->assertInstanceOf(DatabaseException::class, $e);
             $this->assertStringContainsString('Unable to connect to the database.', $e->getMessage());
         }

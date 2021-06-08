@@ -55,15 +55,11 @@ class DeleteTest extends CIUnitTestCase
     {
         $this->seeNumRecords(2, 'user', ['country' => 'US']);
 
-        try
-        {
+        try {
             $this->db->table('user')
                      ->delete(['country' => 'US'], 1);
-        }
-        catch (DatabaseException $e)
-        {
-            if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
-            {
+        } catch (DatabaseException $e) {
+            if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false) {
                 return;
             }
         }
@@ -72,5 +68,4 @@ class DeleteTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
-
 }

@@ -68,16 +68,14 @@ class Iterator
      */
     public function run(int $iterations = 1000, bool $output = true)
     {
-        foreach ($this->tests as $name => $test)
-        {
+        foreach ($this->tests as $name => $test) {
             // clear memory before start
             gc_collect_cycles();
 
             $start    = microtime(true);
             $startMem = $maxMemory = memory_get_usage(true);
 
-            for ($i = 0; $i < $iterations; $i ++)
-            {
+            for ($i = 0; $i < $iterations; $i ++) {
                 $result = $test();
 
                 $maxMemory = max($maxMemory, memory_get_usage(true));
@@ -92,8 +90,7 @@ class Iterator
             ];
         }
 
-        if ($output)
-        {
+        if ($output) {
             return $this->getReport();
         }
 
@@ -109,8 +106,7 @@ class Iterator
      */
     public function getReport(): string
     {
-        if (empty($this->results))
-        {
+        if (empty($this->results)) {
             return 'No results to display.';
         }
 
@@ -132,8 +128,7 @@ class Iterator
 
         $rows = '';
 
-        foreach ($this->results as $name => $result)
-        {
+        foreach ($this->results as $name => $result) {
             $memory = number_to_size($result['memory'], 4);
 
             $rows .= "<tr>
@@ -149,5 +144,4 @@ class Iterator
     }
 
     //--------------------------------------------------------------------
-
 }

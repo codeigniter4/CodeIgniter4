@@ -85,21 +85,18 @@ class Cell
             ? $cacheName
             : str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
 
-        if (! empty($this->cache) && $output = $this->cache->get($cacheName))
-        {
+        if (! empty($this->cache) && $output = $this->cache->get($cacheName)) {
             return $output;
         }
 
         // Not cached - so grab it...
         $instance = new $class();
 
-        if (method_exists($instance, 'initController'))
-        {
+        if (method_exists($instance, 'initController')) {
             $instance->initController(Services::request(), Services::response(), Services::logger());
         }
 
-        if (! method_exists($instance, $method))
-        {
+        if (! method_exists($instance, $method)) {
             throw ViewException::forInvalidCellMethod($class, $method);
         }
 
@@ -110,41 +107,31 @@ class Cell
         $paramCount = $refMethod->getNumberOfParameters();
         $refParams  = $refMethod->getParameters();
 
-        if ($paramCount === 0)
-        {
-            if (! empty($paramArray))
-            {
+        if ($paramCount === 0) {
+            if (! empty($paramArray)) {
                 throw ViewException::forMissingCellParameters($class, $method);
             }
 
             $output = $instance->{$method}();
-        }
-        elseif (($paramCount === 1)
+        } elseif (($paramCount === 1)
             && ((! array_key_exists($refParams[0]->name, $paramArray))
             || (array_key_exists($refParams[0]->name, $paramArray)
             && count($paramArray) !== 1))
-        )
-        {
+        ) {
             $output = $instance->{$method}($paramArray);
-        }
-        else
-        {
+        } else {
             $fireArgs     = [];
             $methodParams = [];
 
-            foreach ($refParams as $arg)
-            {
+            foreach ($refParams as $arg) {
                 $methodParams[$arg->name] = true;
-                if (array_key_exists($arg->name, $paramArray))
-                {
+                if (array_key_exists($arg->name, $paramArray)) {
                     $fireArgs[$arg->name] = $paramArray[$arg->name];
                 }
             }
 
-            foreach (array_keys($paramArray) as $key)
-            {
-                if (! isset($methodParams[$key]))
-                {
+            foreach (array_keys($paramArray) as $key) {
+                if (! isset($methodParams[$key])) {
                     throw ViewException::forInvalidCellParameter($key);
                 }
             }
@@ -152,8 +139,7 @@ class Cell
             $output = $instance->$method(...array_values($fireArgs));
         }
         // Can we cache it?
-        if (! empty($this->cache) && $ttl !== 0)
-        {
+        if (! empty($this->cache) && $ttl !== 0) {
             $this->cache->save($cacheName, $output, $ttl);
         }
 
@@ -173,28 +159,23 @@ class Cell
      */
     public function prepareParams($params)
     {
-        if (empty($params) || (! is_string($params) && ! is_array($params)))
-        {
+        if (empty($params) || (! is_string($params) && ! is_array($params))) {
             return [];
         }
 
-        if (is_string($params))
-        {
+        if (is_string($params)) {
             $newParams = [];
             $separator = ' ';
 
-            if (strpos($params, ',') !== false)
-            {
+            if (strpos($params, ',') !== false) {
                 $separator = ',';
             }
 
             $params = explode($separator, $params);
             unset($separator);
 
-            foreach ($params as $p)
-            {
-                if (! empty($p))
-                {
+            foreach ($params as $p) {
+                if (! empty($p)) {
                     [$key, $val] = explode('=', $p);
 
                     $newParams[trim($key)] = trim($val, ', ');
@@ -205,8 +186,7 @@ class Cell
             unset($newParams);
         }
 
-        if (is_array($params) && empty($params))
-        {
+        if (is_array($params) && empty($params)) {
             return [];
         }
 
@@ -231,18 +211,15 @@ class Cell
 
         [$class, $method] = explode(':', $library);
 
-        if (empty($class))
-        {
+        if (empty($class)) {
             throw ViewException::forNoCellClass();
         }
 
-        if (! class_exists($class, true))
-        {
+        if (! class_exists($class, true)) {
             throw ViewException::forInvalidCellClass($class);
         }
 
-        if (empty($method))
-        {
+        if (empty($method)) {
             $method = 'index';
         }
 

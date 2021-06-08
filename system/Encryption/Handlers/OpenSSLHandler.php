@@ -45,13 +45,11 @@ class OpenSSLHandler extends BaseHandler
     public function encrypt($data, $params = null)
     {
         // Allow key override
-        if ($params)
-        {
+        if ($params) {
             $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
         }
 
-        if (empty($this->key))
-        {
+        if (empty($this->key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -63,8 +61,7 @@ class OpenSSLHandler extends BaseHandler
 
         $data = \openssl_encrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
 
-        if ($data === false)
-        {
+        if ($data === false) {
             throw EncryptionException::forEncryptionFailed();
         }
 
@@ -81,13 +78,11 @@ class OpenSSLHandler extends BaseHandler
     public function decrypt($data, $params = null)
     {
         // Allow key override
-        if ($params)
-        {
+        if ($params) {
             $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
         }
 
-        if (empty($this->key))
-        {
+        if (empty($this->key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -99,18 +94,14 @@ class OpenSSLHandler extends BaseHandler
         $data       = self::substr($data, $hmacLength);
         $hmacCalc   = \hash_hmac($this->digest, $data, $secret, true);
 
-        if (! hash_equals($hmacKey, $hmacCalc))
-        {
+        if (! hash_equals($hmacKey, $hmacCalc)) {
             throw EncryptionException::forAuthenticationFailed();
         }
 
-        if ($ivSize = \openssl_cipher_iv_length($this->cipher))
-        {
+        if ($ivSize = \openssl_cipher_iv_length($this->cipher)) {
             $iv   = self::substr($data, 0, $ivSize);
             $data = self::substr($data, $ivSize);
-        }
-        else
-        {
+        } else {
             $iv = null;
         }
 

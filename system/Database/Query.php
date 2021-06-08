@@ -107,15 +107,12 @@ class Query implements QueryInterface
     {
         $this->originalQueryString = $sql;
 
-        if (! is_null($binds))
-        {
-            if (! is_array($binds))
-            {
+        if (! is_null($binds)) {
+            if (! is_array($binds)) {
                 $binds = [$binds];
             }
 
-            if ($setEscape)
-            {
+            if ($setEscape) {
                 array_walk($binds, static function (&$item) {
                     $item = [
                         $item,
@@ -139,8 +136,7 @@ class Query implements QueryInterface
      */
     public function setBinds(array $binds, bool $setEscape = true)
     {
-        if ($setEscape)
-        {
+        if ($setEscape) {
             array_walk($binds, static function (&$item) {
                 $item = [
                     $item,
@@ -162,8 +158,7 @@ class Query implements QueryInterface
      */
     public function getQuery(): string
     {
-        if (empty($this->finalQueryString))
-        {
+        if (empty($this->finalQueryString)) {
             $this->finalQueryString = $this->originalQueryString;
         }
 
@@ -186,8 +181,7 @@ class Query implements QueryInterface
     {
         $this->startTime = $start;
 
-        if (is_null($end))
-        {
+        if (is_null($end)) {
             $end = microtime(true);
         }
 
@@ -206,8 +200,7 @@ class Query implements QueryInterface
      */
     public function getStartTime(bool $returnRaw = false, int $decimals = 6)
     {
-        if ($returnRaw)
-        {
+        if ($returnRaw) {
             return $this->startTime;
         }
 
@@ -326,26 +319,21 @@ class Query implements QueryInterface
         if (empty($this->binds)
             || empty($this->bindMarker)
             || (! $hasNamedBinds && strpos($sql, $this->bindMarker) === false)
-        )
-        {
+        ) {
             return;
         }
 
-        if (! is_array($this->binds))
-        {
+        if (! is_array($this->binds)) {
             $binds     = [$this->binds];
             $bindCount = 1;
-        }
-        else
-        {
+        } else {
             $binds     = $this->binds;
             $bindCount = count($binds);
         }
 
         // Reverse the binds so that duplicate named binds
         // will be processed prior to the original binds.
-        if (! is_numeric(key(array_slice($binds, 0, 1))))
-        {
+        if (! is_numeric(key(array_slice($binds, 0, 1)))) {
             $binds = array_reverse($binds);
         }
 
@@ -368,16 +356,14 @@ class Query implements QueryInterface
     {
         $replacers = [];
 
-        foreach ($binds as $placeholder => $value)
-        {
+        foreach ($binds as $placeholder => $value) {
             // $value[1] contains the boolean whether should be escaped or not
             $escapedValue = $value[1] ? $this->db->escape($value[0]) : $value[0];
 
             // In order to correctly handle backlashes in saved strings
             // we will need to preg_quote, so remove the wrapping escape characters
             // otherwise it will get escaped.
-            if (is_array($value[0]))
-            {
+            if (is_array($value[0])) {
                 $escapedValue = '(' . implode(',', $escapedValue) . ')';
             }
 
@@ -399,33 +385,27 @@ class Query implements QueryInterface
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
     {
         // Make sure not to replace a chunk inside a string that happens to match the bind marker
-        if ($c = preg_match_all("/'[^']*'/", $sql, $matches))
-        {
+        if ($c = preg_match_all("/'[^']*'/", $sql, $matches)) {
             $c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
 
             // Bind values' count must match the count of markers in the query
-            if ($bindCount !== $c)
-            {
+            if ($bindCount !== $c) {
                 return $sql;
             }
         }
         // Number of binds must match bindMarkers in the string.
-        elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
-        {
+        elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount) {
             return $sql;
         }
 
-        do
-        {
+        do {
             $c--;
             $escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
-            if (is_array($escapedValue))
-            {
+            if (is_array($escapedValue)) {
                 $escapedValue = '(' . implode(',', $escapedValue) . ')';
             }
             $sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
-        }
-        while ($c !== 0);
+        } while ($c !== 0);
 
         return $sql;
     }
@@ -472,15 +452,13 @@ class Query implements QueryInterface
             ')',
         ];
 
-        if (empty($this->finalQueryString))
-        {
+        if (empty($this->finalQueryString)) {
             $this->compileBinds(); // @codeCoverageIgnore
         }
 
         $sql = $this->finalQueryString;
 
-        foreach ($highlight as $term)
-        {
+        foreach ($highlight as $term) {
             $sql = str_replace($term, '<strong>' . $term . '</strong>', $sql);
         }
 

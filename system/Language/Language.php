@@ -59,8 +59,7 @@ class Language
     {
         $this->locale = $locale;
 
-        if (class_exists('MessageFormatter'))
-        {
+        if (class_exists('MessageFormatter')) {
             $this->intlSupport = true;
         }
     }
@@ -76,8 +75,7 @@ class Language
      */
     public function setLocale(string $locale = null)
     {
-        if (! is_null($locale))
-        {
+        if (! is_null($locale)) {
             $this->locale = $locale;
         }
 
@@ -108,8 +106,7 @@ class Language
     public function getLine(string $line, array $args = [])
     {
         // if no file is given, just parse the line
-        if (strpos($line, '.') === false)
-        {
+        if (strpos($line, '.') === false) {
             return $this->formatMessage($line, $args);
         }
 
@@ -119,8 +116,7 @@ class Language
 
         $output = $this->getTranslationOutput($this->locale, $file, $parsedLine);
 
-        if ($output === null && strpos($this->locale, '-'))
-        {
+        if ($output === null && strpos($this->locale, '-')) {
             [$locale] = explode('-', $this->locale, 2);
 
             [$file, $parsedLine] = $this->parseLine($line, $locale);
@@ -129,8 +125,7 @@ class Language
         }
 
         // if still not found, try English
-        if ($output === null)
-        {
+        if ($output === null) {
             [$file, $parsedLine] = $this->parseLine($line, 'en');
 
             $output = $this->getTranslationOutput('en', $file, $parsedLine);
@@ -149,27 +144,22 @@ class Language
     protected function getTranslationOutput(string $locale, string $file, string $parsedLine)
     {
         $output = $this->language[$locale][$file][$parsedLine] ?? null;
-        if ($output !== null)
-        {
+        if ($output !== null) {
             return $output;
         }
 
-        foreach (explode('.', $parsedLine) as $row)
-        {
-            if (! isset($current))
-            {
+        foreach (explode('.', $parsedLine) as $row) {
+            if (! isset($current)) {
                 $current = $this->language[$locale][$file] ?? null;
             }
 
             $output = $current[$row] ?? null;
-            if (is_array($output))
-            {
+            if (is_array($output)) {
                 $current = $output;
             }
         }
 
-        if ($output !== null)
-        {
+        if ($output !== null) {
             return $output;
         }
 
@@ -193,8 +183,7 @@ class Language
         $file = substr($line, 0, strpos($line, '.'));
         $line = substr($line, strlen($file) + 1);
 
-        if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file]))
-        {
+        if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file])) {
             $this->load($file, $locale);
         }
 
@@ -216,15 +205,12 @@ class Language
      */
     protected function formatMessage($message, array $args = [])
     {
-        if (! $this->intlSupport || $args === [])
-        {
+        if (! $this->intlSupport || $args === []) {
             return $message;
         }
 
-        if (is_array($message))
-        {
-            foreach ($message as $index => $value)
-            {
+        if (is_array($message)) {
+            foreach ($message as $index => $value) {
                 $message[$index] = $this->formatMessage($value, $args);
             }
 
@@ -249,24 +235,20 @@ class Language
      */
     protected function load(string $file, string $locale, bool $return = false)
     {
-        if (! array_key_exists($locale, $this->loadedFiles))
-        {
+        if (! array_key_exists($locale, $this->loadedFiles)) {
             $this->loadedFiles[$locale] = [];
         }
 
-        if (in_array($file, $this->loadedFiles[$locale], true))
-        {
+        if (in_array($file, $this->loadedFiles[$locale], true)) {
             // Don't load it more than once.
             return [];
         }
 
-        if (! array_key_exists($locale, $this->language))
-        {
+        if (! array_key_exists($locale, $this->language)) {
             $this->language[$locale] = [];
         }
 
-        if (! array_key_exists($file, $this->language[$locale]))
-        {
+        if (! array_key_exists($file, $this->language[$locale])) {
             $this->language[$locale][$file] = [];
         }
 
@@ -274,8 +256,7 @@ class Language
 
         $lang = $this->requireFile($path);
 
-        if ($return)
-        {
+        if ($return) {
             return $lang;
         }
 
@@ -300,24 +281,19 @@ class Language
         $files   = Services::locator()->search($path, 'php', false);
         $strings = [];
 
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             // On some OS's we were seeing failures
             // on this command returning boolean instead
             // of array during testing, so we've removed
             // the require_once for now.
-            if (is_file($file))
-            {
+            if (is_file($file)) {
                 $strings[] = require $file;
             }
         }
 
-        if (isset($strings[1]))
-        {
+        if (isset($strings[1])) {
             $strings = array_replace_recursive(...$strings);
-        }
-        elseif (isset($strings[0]))
-        {
+        } elseif (isset($strings[0])) {
             $strings = $strings[0];
         }
 

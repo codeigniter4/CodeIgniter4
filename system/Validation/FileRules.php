@@ -36,8 +36,7 @@ class FileRules
      */
     public function __construct(RequestInterface $request = null)
     {
-        if (is_null($request))
-        {
+        if (is_null($request)) {
             $request = Services::request();
         }
 
@@ -56,31 +55,23 @@ class FileRules
      */
     public function uploaded(?string $blank, string $name): bool
     {
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if (ENVIRONMENT === 'testing')
-            {
-                if ($file->getError() !== 0)
-                {
+            if (ENVIRONMENT === 'testing') {
+                if ($file->getError() !== 0) {
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 // Note: cannot unit test this; no way to over-ride ENVIRONMENT?
                 // @codeCoverageIgnoreStart
-                if (! $file->isValid())
-                {
+                if (! $file->isValid()) {
                     return false;
                 }
                 // @codeCoverageIgnoreEnd
@@ -107,30 +98,24 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if ($file->getError() === UPLOAD_ERR_NO_FILE)
-            {
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
                 return true;
             }
 
-            if ($file->getError() === UPLOAD_ERR_INI_SIZE)
-            {
+            if ($file->getError() === UPLOAD_ERR_INI_SIZE) {
                 return false;
             }
 
-            if ($file->getSize() / 1024 > $params[0])
-            {
+            if ($file->getSize() / 1024 > $params[0]) {
                 return false;
             }
         }
@@ -156,20 +141,16 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if ($file->getError() === UPLOAD_ERR_NO_FILE)
-            {
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
                 return true;
             }
 
@@ -177,8 +158,7 @@ class FileRules
             // start with `image` even when then are multiple accepted types.
             $type = Mimes::guessTypeFromExtension($file->getExtension());
 
-            if (mb_strpos($type, 'image') !== 0)
-            {
+            if (mb_strpos($type, 'image') !== 0) {
                 return false;
             }
         }
@@ -203,25 +183,20 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if ($file->getError() === UPLOAD_ERR_NO_FILE)
-            {
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
                 return true;
             }
 
-            if (! in_array($file->getMimeType(), $params, true))
-            {
+            if (! in_array($file->getMimeType(), $params, true)) {
                 return false;
             }
         }
@@ -246,25 +221,20 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if ($file->getError() === UPLOAD_ERR_NO_FILE)
-            {
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
                 return true;
             }
 
-            if (! in_array($file->guessExtension(), $params, true))
-            {
+            if (! in_array($file->guessExtension(), $params, true)) {
                 return false;
             }
         }
@@ -290,20 +260,16 @@ class FileRules
         $params = explode(',', $params);
         $name   = array_shift($params);
 
-        if (! ($files = $this->request->getFileMultiple($name)))
-        {
+        if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
         }
 
-        foreach ($files as $file)
-        {
-            if (is_null($file))
-            {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 return false;
             }
 
-            if ($file->getError() === UPLOAD_ERR_NO_FILE)
-            {
+            if ($file->getError() === UPLOAD_ERR_NO_FILE) {
                 return true;
             }
 
@@ -316,8 +282,7 @@ class FileRules
             $fileWidth  = $info[0];
             $fileHeight = $info[1];
 
-            if ($fileWidth > $allowedWidth || $fileHeight > $allowedHeight)
-            {
+            if ($fileWidth > $allowedWidth || $fileHeight > $allowedHeight) {
                 return false;
             }
         }

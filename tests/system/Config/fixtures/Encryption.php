@@ -11,12 +11,9 @@ class Encryption extends EncryptionConfig
 
     public function __construct(string $prefix = 'hex2bin')
     {
-        if ($prefix === 'base64')
-        {
+        if ($prefix === 'base64') {
             $this->key = self::BASE64;
-        }
-        else
-        {
+        } else {
             $this->key = self::HEX2BIN;
         }
 

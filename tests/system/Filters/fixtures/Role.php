@@ -8,19 +8,13 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Role implements FilterInterface
 {
-
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (is_array($arguments))
-        {
+        if (is_array($arguments)) {
             $response->setBody(implode(';', $arguments));
-        }
-        elseif (is_null($arguments))
-        {
+        } elseif (is_null($arguments)) {
             $response->setBody('Is null');
-        }
-        else
-        {
+        } else {
             $response->setBody('Something else');
         }
 
@@ -29,16 +23,13 @@ class Role implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (is_array($arguments))
-        {
+        if (is_array($arguments)) {
             return implode(';', $arguments);
         }
-        if (is_null($arguments))
-        {
+        if (is_null($arguments)) {
             return 'Is null';
         }
 
         return 'Something else';
     }
-
 }

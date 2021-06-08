@@ -82,8 +82,7 @@ class Events extends BaseCollector
 
         $rows = $this->viewer->getPerformanceData(); // @phpstan-ignore-line
 
-        foreach ($rows as $info)
-        {
+        foreach ($rows as $info) {
             $data[] = [
                 'name'      => 'View: ' . $info['view'],
                 'component' => 'Views',
@@ -108,12 +107,10 @@ class Events extends BaseCollector
             'events' => [],
         ];
 
-        foreach (\CodeIgniter\Events\Events::getPerformanceLogs() as $row)
-        {
+        foreach (\CodeIgniter\Events\Events::getPerformanceLogs() as $row) {
             $key = $row['event'];
 
-            if (! array_key_exists($key, $data['events']))
-            {
+            if (! array_key_exists($key, $data['events'])) {
                 $data['events'][$key] = [
                     'event'    => $key,
                     'duration' => ($row['end'] - $row['start']) * 1000,
@@ -127,8 +124,7 @@ class Events extends BaseCollector
             $data['events'][$key]['count']++;
         }
 
-        foreach ($data['events'] as &$row)
-        {
+        foreach ($data['events'] as &$row) {
             $row['duration'] = number_format($row['duration'], 2);
         }
 

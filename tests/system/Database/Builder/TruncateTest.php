@@ -31,5 +31,4 @@ class TruncateTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
-
 }

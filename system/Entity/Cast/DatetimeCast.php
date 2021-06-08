@@ -27,23 +27,19 @@ class DatetimeCast extends BaseCast
      */
     public static function get($value, array $params = [])
     {
-        if ($value instanceof Time)
-        {
+        if ($value instanceof Time) {
             return $value;
         }
 
-        if ($value instanceof DateTime)
-        {
+        if ($value instanceof DateTime) {
             return Time::instance($value);
         }
 
-        if (is_numeric($value))
-        {
+        if (is_numeric($value)) {
             return Time::createFromTimestamp($value);
         }
 
-        if (is_string($value))
-        {
+        if (is_string($value)) {
             return Time::parse($value);
         }
 

@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class FileTest extends CIUnitTestCase
 {
-
     public function testNewGoodChecked()
     {
         $path = SYSTEMPATH . 'Common.php';
@@ -78,5 +77,4 @@ class FileTest extends CIUnitTestCase
 
         $file = new File(SYSTEMPATH . 'Commoner.php', true);
     }
-
 }

@@ -77,8 +77,7 @@ final class Environment extends BaseCommand
      */
     public function run(array $params)
     {
-        if ($params === [])
-        {
+        if ($params === []) {
             CLI::write(sprintf('Your environment is currently set as %s.', CLI::color($_SERVER['CI_ENVIRONMENT'] ?? ENVIRONMENT, 'green')));
             CLI::newLine();
 
@@ -87,8 +86,7 @@ final class Environment extends BaseCommand
 
         $env = strtolower(array_shift($params));
 
-        if ($env === 'testing')
-        {
+        if ($env === 'testing') {
             CLI::error('The "testing" environment is reserved for PHPUnit testing.', 'light_gray', 'red');
             CLI::error('You will not be able to run spark under a "testing" environment.', 'light_gray', 'red');
             CLI::newLine();
@@ -96,16 +94,14 @@ final class Environment extends BaseCommand
             return;
         }
 
-        if (! in_array($env, self::$knownTypes, true))
-        {
+        if (! in_array($env, self::$knownTypes, true)) {
             CLI::error(sprintf('Invalid environment type "%s". Expected one of "%s".', $env, implode('" and "', self::$knownTypes)), 'light_gray', 'red');
             CLI::newLine();
 
             return;
         }
 
-        if (! $this->writeNewEnvironmentToEnvFile($env))
-        {
+        if (! $this->writeNewEnvironmentToEnvFile($env)) {
             CLI::error('Error in writing new environment to .env file.', 'light_gray', 'red');
             CLI::newLine();
 
@@ -135,10 +131,8 @@ final class Environment extends BaseCommand
         $baseEnv = ROOTPATH . 'env';
         $envFile = ROOTPATH . '.env';
 
-        if (! is_file($envFile))
-        {
-            if (! is_file($baseEnv))
-            {
+        if (! is_file($envFile)) {
+            if (! is_file($baseEnv)) {
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('It is impossible to write the new environment type.', 'yellow');
                 CLI::newLine();

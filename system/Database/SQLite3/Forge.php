@@ -47,8 +47,7 @@ class Forge extends BaseForge
     {
         parent::__construct($db);
 
-        if (version_compare($this->db->getVersion(), '3.3', '<'))
-        {
+        if (version_compare($this->db->getVersion(), '3.3', '<')) {
             $this->createTableIfStr = false;
             $this->dropTableIfStr   = false;
         }
@@ -84,10 +83,8 @@ class Forge extends BaseForge
     public function dropDatabase(string $dbName): bool
     {
         // In SQLite, a database is dropped when we delete a file
-        if (! is_file($dbName))
-        {
-            if ($this->db->DBDebug)
-            {
+        if (! is_file($dbName)) {
+            if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to drop the specified database.');
             }
 
@@ -96,21 +93,17 @@ class Forge extends BaseForge
 
         // We need to close the pseudo-connection first
         $this->db->close();
-        if (! @unlink($dbName))
-        {
-            if ($this->db->DBDebug)
-            {
+        if (! @unlink($dbName)) {
+            if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to drop the specified database.');
             }
 
             return false;
         }
 
-        if (! empty($this->db->dataCache['db_names']))
-        {
+        if (! empty($this->db->dataCache['db_names'])) {
             $key = array_search(strtolower($dbName), array_map('strtolower', $this->db->dataCache['db_names']), true);
-            if ($key !== false)
-            {
+            if ($key !== false) {
                 unset($this->db->dataCache['db_names'][$key]);
             }
         }
@@ -131,8 +124,7 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-        switch ($alterType)
-        {
+        switch ($alterType) {
             case 'DROP':
                 $sqlTable = new Table($this->db, $this);
 
@@ -167,8 +159,7 @@ class Forge extends BaseForge
      */
     protected function _processColumn(array $field): string
     {
-        if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0)
-        {
+        if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0) {
             $field['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
                 . ' IN ' . $field['length'] . ')';
         }
@@ -194,24 +185,19 @@ class Forge extends BaseForge
     {
         $sqls = [];
 
-        for ($i = 0, $c = count($this->keys); $i < $c; $i++)
-        {
+        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
             $this->keys[$i] = (array) $this->keys[$i];
 
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
-            {
-                if (! isset($this->fields[$this->keys[$i][$i2]]))
-                {
+            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
+                if (! isset($this->fields[$this->keys[$i][$i2]])) {
                     unset($this->keys[$i][$i2]);
                 }
             }
-            if (count($this->keys[$i]) <= 0)
-            {
+            if (count($this->keys[$i]) <= 0) {
                 continue;
             }
 
-            if (in_array($i, $this->uniqueKeys, true))
-            {
+            if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                           . ' ON ' . $this->db->escapeIdentifiers($table)
                           . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
@@ -240,8 +226,7 @@ class Forge extends BaseForge
      */
     protected function _attributeType(array &$attributes)
     {
-        switch (strtoupper($attributes['TYPE']))
-        {
+        switch (strtoupper($attributes['TYPE'])) {
             case 'ENUM':
             case 'SET':
                 $attributes['TYPE'] = 'TEXT';
@@ -265,8 +250,7 @@ class Forge extends BaseForge
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
-            && stripos($field['type'], 'int') !== false)
-        {
+            && stripos($field['type'], 'int') !== false) {
             $field['type']           = 'INTEGER PRIMARY KEY';
             $field['default']        = '';
             $field['null']           = '';
@@ -291,8 +275,7 @@ class Forge extends BaseForge
     public function dropForeignKey(string $table, string $foreignName): bool
     {
         // If this version of SQLite doesn't support it, we're done here
-        if ($this->db->supportsForeignKeys() !== true)
-        {
+        if ($this->db->supportsForeignKeys() !== true) {
             return true;
         }
 

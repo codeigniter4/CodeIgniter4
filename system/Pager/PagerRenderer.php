@@ -140,19 +140,15 @@ class PagerRenderer
      */
     public function getPrevious()
     {
-        if (! $this->hasPrevious())
-        {
+        if (! $this->hasPrevious()) {
             return null;
         }
 
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->first - 1);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->first - 1);
         }
 
@@ -184,19 +180,15 @@ class PagerRenderer
      */
     public function getNext()
     {
-        if (! $this->hasNext())
-        {
+        if (! $this->hasNext()) {
             return null;
         }
 
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->last + 1);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->last + 1);
         }
 
@@ -214,12 +206,9 @@ class PagerRenderer
     {
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, 1);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, 1);
         }
 
@@ -237,12 +226,9 @@ class PagerRenderer
     {
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->pageCount);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->pageCount);
         }
 
@@ -260,12 +246,9 @@ class PagerRenderer
     {
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->current);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->current);
         }
 
@@ -288,8 +271,7 @@ class PagerRenderer
 
         $uri = clone $this->uri;
 
-        for ($i = $this->first; $i <= $this->last; $i ++)
-        {
+        for ($i = $this->first; $i <= $this->last; $i ++) {
             $uri     = $this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i);
             $links[] = [
                 'uri'    => URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment()),
@@ -312,8 +294,7 @@ class PagerRenderer
      */
     protected function updatePages(int $count = null)
     {
-        if (is_null($count))
-        {
+        if (is_null($count)) {
             return;
         }
 
@@ -344,19 +325,15 @@ class PagerRenderer
      */
     public function getPreviousPage()
     {
-        if (! $this->hasPreviousPage())
-        {
+        if (! $this->hasPreviousPage()) {
             return null;
         }
 
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->current - 1);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->current - 1);
         }
 
@@ -386,19 +363,15 @@ class PagerRenderer
      */
     public function getNextPage()
     {
-        if (! $this->hasNextPage())
-        {
+        if (! $this->hasNextPage()) {
             return null;
         }
 
         $uri = clone $this->uri;
 
-        if ($this->segment === 0)
-        {
+        if ($this->segment === 0) {
             $uri->addQuery($this->pageSelector, $this->current + 1);
-        }
-        else
-        {
+        } else {
             $uri->setSegment($this->segment, $this->current + 1);
         }
 

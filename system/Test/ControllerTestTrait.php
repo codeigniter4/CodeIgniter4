@@ -95,18 +95,15 @@ trait ControllerTestTrait
         // The URL helper is always loaded by the system so ensure it is available.
         helper('url');
 
-        if (empty($this->appConfig))
-        {
+        if (empty($this->appConfig)) {
             $this->appConfig = config('App');
         }
 
-        if (! $this->uri instanceof URI)
-        {
+        if (! $this->uri instanceof URI) {
             $this->uri = Services::uri($this->appConfig->baseURL ?? 'http://example.com/', false);
         }
 
-        if (empty($this->request))
-        {
+        if (empty($this->request)) {
             // Do some acrobatics so we can use the Request service with our own URI
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
@@ -117,13 +114,11 @@ trait ControllerTestTrait
             Services::injectMock('uri', $tempUri);
         }
 
-        if (empty($this->response))
-        {
+        if (empty($this->response)) {
             $this->response = Services::response($this->appConfig, false);
         }
 
-        if (empty($this->logger))
-        {
+        if (empty($this->logger)) {
             $this->logger = Services::logger();
         }
     }
@@ -137,8 +132,7 @@ trait ControllerTestTrait
      */
     public function controller(string $name)
     {
-        if (! class_exists($name))
-        {
+        if (! class_exists($name)) {
             throw new InvalidArgumentException('Invalid Controller: ' . $name);
         }
 
@@ -160,74 +154,56 @@ trait ControllerTestTrait
      */
     public function execute(string $method, ...$params)
     {
-        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
-        {
+        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method])) {
             throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
         }
 
         $response = null;
 
-        try
-        {
+        try {
             ob_start();
             $response = $this->controller->{$method}(...$params);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             $code = $e->getCode();
 
             // If code is not a valid HTTP status then assume there is an error
-            if ($code < 100 || $code >= 600)
-            {
+            if ($code < 100 || $code >= 600) {
                 throw $e;
             }
-        }
-        finally
-        {
+        } finally {
             $output = ob_get_clean();
         }
 
         // If the controller returned a view then add it to the output
-        if (is_string($response))
-        {
+        if (is_string($response)) {
             $output = is_string($output) ? $output . $response : $response;
         }
 
         // If the controller did not return a response then start one
-        if (! $response instanceof Response)
-        {
+        if (! $response instanceof Response) {
             $response = $this->response;
         }
 
         // Check for output to set or prepend
         // @see \CodeIgniter\CodeIgniter::gatherOutput()
-        if (is_string($output))
-        {
-            if (is_string($response->getBody()))
-            {
+        if (is_string($output)) {
+            if (is_string($response->getBody())) {
                 $response->setBody($output . $response->getBody());
-            }
-            else
-            {
+            } else {
                 $response->setBody($output);
             }
         }
 
         // Check for an overriding code from exceptions
-        if (isset($code))
-        {
+        if (isset($code)) {
             $response->setStatusCode($code);
         }
         // Otherwise ensure there is a status code
-        else
-        {
+        else {
             // getStatusCode() throws for empty codes
-            try
-            {
+            try {
                 $response->getStatusCode();
-            }
-            catch (HTTPException $e)
-            {
+            } catch (HTTPException $e) {
                 // If no code has been set then assume success
                 $response->setStatusCode(200);
             }

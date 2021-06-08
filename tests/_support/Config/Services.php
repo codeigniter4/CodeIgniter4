@@ -25,13 +25,11 @@ class Services extends BaseServices
     public static function uri(string $uri = null, bool $getShared = true)
     {
         // Intercept our test case
-        if ($uri === 'testCanReplaceFrameworkServices')
-        {
+        if ($uri === 'testCanReplaceFrameworkServices') {
             throw new RuntimeException('Service originated from ' . static::class);
         }
 
-        if ($getShared)
-        {
+        if ($getShared) {
             return static::getSharedInstance('uri', $uri);
         }
 

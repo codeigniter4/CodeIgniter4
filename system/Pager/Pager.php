@@ -147,8 +147,7 @@ class Pager implements PagerInterface
      */
     protected function displayLinks(string $group, string $template): string
     {
-        if (! array_key_exists($template, $this->config->templates))
-        {
+        if (! array_key_exists($template, $this->config->templates)) {
             throw PagerException::forInvalidTemplate($template);
         }
         $pager = new PagerRenderer($this->getDetails($group));
@@ -173,15 +172,13 @@ class Pager implements PagerInterface
      */
     public function store(string $group, int $page, ?int $perPage, int $total, int $segment = 0)
     {
-        if ($segment)
-        {
+        if ($segment) {
             $this->setSegment($segment, $group);
         }
 
         $this->ensureGroup($group, $perPage);
 
-        if ($segment > 0 && $this->groups[$group]['currentPage'] > 0)
-        {
+        if ($segment > 0 && $this->groups[$group]['currentPage'] > 0) {
             $page = $this->groups[$group]['currentPage'];
         }
 
@@ -309,8 +306,7 @@ class Pager implements PagerInterface
     {
         $this->ensureGroup($group);
 
-        if (! is_numeric($this->groups[$group]['total']) || ! is_numeric($this->groups[$group]['perPage']))
-        {
+        if (! is_numeric($this->groups[$group]['total']) || ! is_numeric($this->groups[$group]['perPage'])) {
             return null;
         }
 
@@ -355,21 +351,16 @@ class Pager implements PagerInterface
 
         $segment = $this->segment[$group] ?? 0;
 
-        if ($segment)
-        {
+        if ($segment) {
             $uri->setSegment($segment, $page);
-        }
-        else
-        {
+        } else {
             $uri->addQuery($this->groups[$group]['pageSelector'], $page);
         }
 
-        if ($this->only)
-        {
+        if ($this->only) {
             $query = array_intersect_key($_GET, array_flip($this->only));
 
-            if (! $segment)
-            {
+            if (! $segment) {
                 $query[$this->groups[$group]['pageSelector']] = $page;
             }
 
@@ -397,13 +388,11 @@ class Pager implements PagerInterface
         $curr = $this->getCurrentPage($group);
         $page = null;
 
-        if (! empty($last) && ! empty($curr) && $last === $curr)
-        {
+        if (! empty($last) && ! empty($curr) && $last === $curr) {
             return null;
         }
 
-        if ($last > $curr)
-        {
+        if ($last > $curr) {
             $page = $curr + 1;
         }
 
@@ -428,13 +417,11 @@ class Pager implements PagerInterface
         $curr  = $this->getCurrentPage($group);
         $page  = null;
 
-        if (! empty($first) && ! empty($curr) && $first === $curr)
-        {
+        if (! empty($first) && ! empty($curr) && $first === $curr) {
             return null;
         }
 
-        if ($first < $curr)
-        {
+        if ($first < $curr) {
             $page = $curr - 1;
         }
 
@@ -471,8 +458,7 @@ class Pager implements PagerInterface
      */
     public function getDetails(string $group = 'default'): array
     {
-        if (! array_key_exists($group, $this->groups))
-        {
+        if (! array_key_exists($group, $this->groups)) {
             throw PagerException::forInvalidPaginationGroup($group);
         }
 
@@ -511,8 +497,7 @@ class Pager implements PagerInterface
      */
     protected function ensureGroup(string $group, int $perPage = null)
     {
-        if (array_key_exists($group, $this->groups))
-        {
+        if (array_key_exists($group, $this->groups)) {
             return;
         }
 
@@ -527,8 +512,7 @@ class Pager implements PagerInterface
 
         $this->calculateCurrentPage($group);
 
-        if ($_GET)
-        {
+        if ($_GET) {
             $this->groups[$group]['uri'] = $this->groups[$group]['uri']->setQueryArray($_GET);
         }
     }
@@ -542,19 +526,13 @@ class Pager implements PagerInterface
      */
     protected function calculateCurrentPage(string $group)
     {
-        if (array_key_exists($group, $this->segment))
-        {
-            try
-            {
+        if (array_key_exists($group, $this->segment)) {
+            try {
                 $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
-            }
-            catch (HTTPException $e)
-            {
+            } catch (HTTPException $e) {
                 $this->groups[$group]['currentPage'] = 1;
             }
-        }
-        else
-        {
+        } else {
             $pageSelector = $this->groups[$group]['pageSelector'];
 
             $page = (int) ($_GET[$pageSelector] ?? 1);

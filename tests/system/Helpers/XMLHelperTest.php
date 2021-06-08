@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class XMLHelperTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,5 +29,4 @@ class XMLHelperTest extends CIUnitTestCase
         $expected = '&lt;p&gt;Here is a so&so; paragraph &amp; an entity (&#123;).&lt;/p&gt;';
         $this->assertEquals($expected, xml_convert($original, true));
     }
-
 }

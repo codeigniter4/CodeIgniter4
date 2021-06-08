@@ -47,8 +47,7 @@ trait RequestTrait
      */
     public function getIPAddress(): string
     {
-        if ($this->ipAddress)
-        {
+        if ($this->ipAddress) {
             return $this->ipAddress;
         }
 
@@ -61,46 +60,35 @@ trait RequestTrait
          * @deprecated $this->proxyIPs property will be removed in the future
          */
         $proxyIPs = $this->proxyIPs ?? config('App')->proxyIPs;
-        if (! empty($proxyIPs) && ! is_array($proxyIPs))
-        {
+        if (! empty($proxyIPs) && ! is_array($proxyIPs)) {
             $proxyIPs = explode(',', str_replace(' ', '', $proxyIPs));
         }
 
         $this->ipAddress = $this->getServer('REMOTE_ADDR');
 
-        if ($proxyIPs)
-        {
-            foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header)
-            {
-                if (($spoof = $this->getServer($header)) !== null)
-                {
+        if ($proxyIPs) {
+            foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header) {
+                if (($spoof = $this->getServer($header)) !== null) {
                     // Some proxies typically list the whole chain of IP
                     // addresses through which the client has reached us.
                     // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
                     sscanf($spoof, '%[^,]', $spoof);
 
-                    if (! $ipValidator($spoof))
-                    {
+                    if (! $ipValidator($spoof)) {
                         $spoof = null;
-                    }
-                    else
-                    {
+                    } else {
                         break;
                     }
                 }
             }
 
-            if ($spoof)
-            {
-                foreach ($proxyIPs as $proxyIP)
-                {
+            if ($spoof) {
+                foreach ($proxyIPs as $proxyIP) {
                     // Check if we have an IP address or a subnet
-                    if (strpos($proxyIP, '/') === false)
-                    {
+                    if (strpos($proxyIP, '/') === false) {
                         // An IP address (and not a subnet) is specified.
                         // We can compare right away.
-                        if ($proxyIP === $this->ipAddress)
-                        {
+                        if ($proxyIP === $this->ipAddress) {
                             $this->ipAddress = $spoof;
                             break;
                         }
@@ -109,34 +97,27 @@ trait RequestTrait
                     }
 
                     // We have a subnet ... now the heavy lifting begins
-                    if (! isset($separator))
-                    {
+                    if (! isset($separator)) {
                         $separator = $ipValidator($this->ipAddress, 'ipv6') ? ':' : '.';
                     }
 
                     // If the proxy entry doesn't match the IP protocol - skip it
-                    if (strpos($proxyIP, $separator) === false)
-                    {
+                    if (strpos($proxyIP, $separator) === false) {
                         continue;
                     }
 
                     // Convert the REMOTE_ADDR IP address to binary, if needed
-                    if (! isset($ip, $sprintf))
-                    {
-                        if ($separator === ':')
-                        {
+                    if (! isset($ip, $sprintf)) {
+                        if ($separator === ':') {
                             // Make sure we're have the "full" IPv6 format
                             $ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
 
-                            for ($j = 0; $j < 8; $j ++)
-                            {
+                            for ($j = 0; $j < 8; $j ++) {
                                 $ip[$j] = intval($ip[$j], 16);
                             }
 
                             $sprintf = '%016b%016b%016b%016b%016b%016b%016b%016b';
-                        }
-                        else
-                        {
+                        } else {
                             $ip      = explode('.', $this->ipAddress);
                             $sprintf = '%08b%08b%08b%08b';
                         }
@@ -148,23 +129,18 @@ trait RequestTrait
                     sscanf($proxyIP, '%[^/]/%d', $netaddr, $masklen);
 
                     // Again, an IPv6 address is most likely in a compressed form
-                    if ($separator === ':')
-                    {
+                    if ($separator === ':') {
                         $netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
 
-                        for ($i = 0; $i < 8; $i++)
-                        {
+                        for ($i = 0; $i < 8; $i++) {
                             $netaddr[$i] = intval($netaddr[$i], 16);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $netaddr = explode('.', $netaddr);
                     }
 
                     // Convert to binary and finally compare
-                    if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0)
-                    {
+                    if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0) {
                         $this->ipAddress = $spoof;
                         break;
                     }
@@ -172,8 +148,7 @@ trait RequestTrait
             }
         }
 
-        if (! $ipValidator($this->ipAddress))
-        {
+        if (! $ipValidator($this->ipAddress)) {
             return $this->ipAddress = '0.0.0.0';
         }
 
@@ -252,8 +227,7 @@ trait RequestTrait
     {
         $method = strtolower($method);
 
-        if (! isset($this->globals[$method]))
-        {
+        if (! isset($this->globals[$method])) {
             $this->populateGlobals($method);
         }
 
@@ -262,12 +236,10 @@ trait RequestTrait
         $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
-        if (is_null($index))
-        {
+        if (is_null($index)) {
             $values = [];
 
-            foreach ($this->globals[$method] as $key => $value)
-            {
+            foreach ($this->globals[$method] as $key => $value) {
                 $values[$key] = is_array($value)
                     ? $this->fetchGlobal($method, $key, $filter, $flags)
                     : filter_var($value, $filter, $flags);
@@ -277,12 +249,10 @@ trait RequestTrait
         }
 
         // allow fetching multiple keys at once
-        if (is_array($index))
-        {
+        if (is_array($index)) {
             $output = [];
 
-            foreach ($index as $key)
-            {
+            foreach ($index as $key) {
                 $output[$key] = $this->fetchGlobal($method, $key, $filter, $flags);
             }
 
@@ -290,32 +260,25 @@ trait RequestTrait
         }
 
         // Does the index contain array notation?
-        if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
-        {
+        if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) {
             $value = $this->globals[$method];
 
-            for ($i = 0; $i < $count; $i++)
-            {
+            for ($i = 0; $i < $count; $i++) {
                 $key = trim($matches[0][$i], '[]');
 
-                if ($key === '') // Empty notation will return the value as array
-                {
+                if ($key === '') { // Empty notation will return the value as array
                     break;
                 }
 
-                if (isset($value[$key]))
-                {
+                if (isset($value[$key])) {
                     $value = $value[$key];
-                }
-                else
-                {
+                } else {
                     return null;
                 }
             }
         }
 
-        if (! isset($value))
-        {
+        if (! isset($value)) {
             $value = $this->globals[$method][$index] ?? null;
         }
 
@@ -326,8 +289,7 @@ trait RequestTrait
                     || is_array($flags) && count($flags) > 0
                 )
             )
-        )
-        {
+        ) {
             // Iterate over array and append filter and flags
             array_walk_recursive($value, static function (&$val) use ($filter, $flags) {
                 $val = filter_var($val, $filter, $flags);
@@ -337,8 +299,7 @@ trait RequestTrait
         }
 
         // Cannot filter these types of data automatically...
-        if (is_array($value) || is_object($value) || is_null($value))
-        {
+        if (is_array($value) || is_object($value) || is_null($value)) {
             return $value;
         }
 
@@ -355,15 +316,13 @@ trait RequestTrait
      */
     protected function populateGlobals(string $method)
     {
-        if (! isset($this->globals[$method]))
-        {
+        if (! isset($this->globals[$method])) {
             $this->globals[$method] = [];
         }
 
         // Don't populate ENV as it might contain
         // sensitive data that we don't want to get logged.
-        switch($method)
-        {
+        switch ($method) {
             case 'get':
                 $this->globals['get'] = $_GET;
                 break;

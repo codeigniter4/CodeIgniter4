@@ -39,8 +39,7 @@ class CITestStreamFilter extends php_user_filter
      */
     public function filter($in, $out, &$consumed, $closing)
     {
-        while ($bucket = stream_bucket_make_writeable($in))
-        {
+        while ($bucket = stream_bucket_make_writeable($in)) {
             static::$buffer .= $bucket->data;
 
             $consumed += $bucket->datalen;

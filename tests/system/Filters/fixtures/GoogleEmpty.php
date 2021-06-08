@@ -8,7 +8,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class GoogleEmpty implements FilterInterface
 {
-
     public function before(RequestInterface $request, $arguments = null)
     {
         return '';
@@ -17,5 +16,4 @@ class GoogleEmpty implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
     }
-
 }

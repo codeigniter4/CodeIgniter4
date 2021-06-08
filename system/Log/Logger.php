@@ -124,12 +124,10 @@ class Logger implements LoggerInterface
 
         // Now convert loggable levels to strings.
         // We only use numbers to make the threshold setting convenient for users.
-        if ($this->loggableLevels)
-        {
+        if ($this->loggableLevels) {
             $temp = [];
 
-            foreach ($this->loggableLevels as $level)
-            {
+            foreach ($this->loggableLevels as $level) {
                 $temp[] = array_search((int) $level, $this->logLevels, true);
             }
 
@@ -139,8 +137,7 @@ class Logger implements LoggerInterface
 
         $this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-        if (! is_array($config->handlers) || empty($config->handlers))
-        {
+        if (! is_array($config->handlers) || empty($config->handlers)) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 
@@ -149,8 +146,7 @@ class Logger implements LoggerInterface
         $this->handlerConfig = $config->handlers;
 
         $this->cacheLogs = $debug;
-        if ($this->cacheLogs)
-        {
+        if ($this->cacheLogs) {
             $this->logCache = [];
         }
     }
@@ -299,43 +295,36 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = []): bool
     {
-        if (is_numeric($level))
-        {
+        if (is_numeric($level)) {
             $level = array_search((int) $level, $this->logLevels, true);
         }
 
         // Is the level a valid level?
-        if (! array_key_exists($level, $this->logLevels))
-        {
+        if (! array_key_exists($level, $this->logLevels)) {
             throw LogException::forInvalidLogLevel($level);
         }
 
         // Does the app want to log this right now?
-        if (! in_array($level, $this->loggableLevels, true))
-        {
+        if (! in_array($level, $this->loggableLevels, true)) {
             return false;
         }
 
         // Parse our placeholders
         $message = $this->interpolate($message, $context);
 
-        if (! is_string($message))
-        {
+        if (! is_string($message)) {
             $message = print_r($message, true);
         }
 
-        if ($this->cacheLogs)
-        {
+        if ($this->cacheLogs) {
             $this->logCache[] = [
                 'level' => $level,
                 'msg'   => $message,
             ];
         }
 
-        foreach ($this->handlerConfig as $className => $config)
-        {
-            if (! array_key_exists($className, $this->handlers))
-            {
+        foreach ($this->handlerConfig as $className => $config) {
+            if (! array_key_exists($className, $this->handlers)) {
                 $this->handlers[$className] = new $className($config);
             }
 
@@ -344,15 +333,13 @@ class Logger implements LoggerInterface
              */
             $handler = $this->handlers[$className];
 
-            if (! $handler->canHandle($level))
-            {
+            if (! $handler->canHandle($level)) {
                 continue;
             }
 
             // If the handler returns false, then we
             // don't execute any other handlers.
-            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
-            {
+            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {
                 break;
             }
         }
@@ -381,20 +368,17 @@ class Logger implements LoggerInterface
      */
     protected function interpolate($message, array $context = [])
     {
-        if (! is_string($message))
-        {
+        if (! is_string($message)) {
             return $message;
         }
 
         // build a replacement array with braces around the context keys
         $replace = [];
 
-        foreach ($context as $key => $val)
-        {
+        foreach ($context as $key => $val) {
             // Verify that the 'exception' key is actually an exception
             // or error, both of which implement the 'Throwable' interface.
-            if ($key === 'exception' && $val instanceof Throwable)
-            {
+            if ($key === 'exception' && $val instanceof Throwable) {
                 $val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
             }
 
@@ -408,8 +392,7 @@ class Logger implements LoggerInterface
         $replace['{env}']       = ENVIRONMENT;
 
         // Allow us to log the file/line that we are logging from
-        if (strpos($message, '{file}') !== false)
-        {
+        if (strpos($message, '{file}') !== false) {
             [$file, $line] = $this->determineFile();
 
             $replace['{file}'] = $file;
@@ -417,22 +400,18 @@ class Logger implements LoggerInterface
         }
 
         // Match up environment variables in {env:foo} tags.
-        if (strpos($message, 'env:') !== false)
-        {
+        if (strpos($message, 'env:') !== false) {
             preg_match('/env:[^}]+/', $message, $matches);
 
-            if ($matches)
-            {
-                foreach ($matches as $str)
-                {
+            if ($matches) {
+                foreach ($matches as $str) {
                     $key                 = str_replace('env:', '', $str);
                     $replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
                 }
             }
         }
 
-        if (isset($_SESSION))
-        {
+        if (isset($_SESSION)) {
             $replace['{session_vars}'] = '$_SESSION: ' . print_r($_SESSION, true);
         }
 
@@ -469,10 +448,8 @@ class Logger implements LoggerInterface
         $stackFrames = \array_reverse($trace);
 
         // Find the first reference to a Logger class method
-        foreach ($stackFrames as $frame)
-        {
-            if (\in_array($frame['function'], $logFunctions, true))
-            {
+        foreach ($stackFrames as $frame) {
+            if (\in_array($frame['function'], $logFunctions, true)) {
                 $file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
                 $line = $frame['line'] ?? 'unknown';
 

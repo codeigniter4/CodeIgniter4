@@ -73,18 +73,15 @@ class Image extends File
 
         $targetName = is_null($targetName) ? $this->getFilename() : $targetName;
 
-        if (empty($targetName))
-        {
+        if (empty($targetName)) {
             throw ImageException::forInvalidFile($targetName);
         }
 
-        if (! is_dir($targetPath))
-        {
+        if (! is_dir($targetPath)) {
             mkdir($targetPath, 0755, true);
         }
 
-        if (! copy($this->getPathname(), "{$targetPath}{$targetName}"))
-        {
+        if (! copy($this->getPathname(), "{$targetPath}{$targetName}")) {
             throw ImageException::forCopyError($targetPath);
         }
 
@@ -108,8 +105,7 @@ class Image extends File
     {
         $path = $this->getPathname();
 
-        if (! $vals = getimagesize($path))
-        {
+        if (! $vals = getimagesize($path)) {
             throw ImageException::forFileNotSupported();
         }
 
@@ -122,8 +118,7 @@ class Image extends File
 
         $mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
-        if ($return === true)
-        {
+        if ($return === true) {
             return [
                 'width'      => $vals[0],
                 'height'     => $vals[1],

@@ -147,8 +147,7 @@ class CodeIgniter
      */
     public function __construct(App $config)
     {
-        if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<'))
-        {
+        if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<')) {
             // @codeCoverageIgnoreStart
             $message = extension_loaded('intl')
                 ? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
@@ -175,8 +174,7 @@ class CodeIgniter
         Services::exceptions()->initialize();
 
         // Run this check for manual installations
-        if (! is_file(COMPOSER_PATH))
-        {
+        if (! is_file(COMPOSER_PATH)) {
             $this->resolvePlatformExtensions(); // @codeCoverageIgnore
         }
 
@@ -188,8 +186,7 @@ class CodeIgniter
 
         $this->initializeKint();
 
-        if (! CI_DEBUG)
-        {
+        if (! CI_DEBUG) {
             Kint::$enabled_mode = false; // @codeCoverageIgnore
         }
     }
@@ -215,16 +212,13 @@ class CodeIgniter
 
         $missingExtensions = [];
 
-        foreach ($requiredExtensions as $extension)
-        {
-            if (! extension_loaded($extension))
-            {
+        foreach ($requiredExtensions as $extension) {
+            if (! extension_loaded($extension)) {
                 $missingExtensions[] = $extension;
             }
         }
 
-        if ($missingExtensions !== [])
-        {
+        if ($missingExtensions !== []) {
             throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
         }
     }
@@ -235,13 +229,11 @@ class CodeIgniter
     protected function initializeKint()
     {
         // If we have KINT_DIR it means it's already loaded via composer
-        if (! defined('KINT_DIR'))
-        {
+        if (! defined('KINT_DIR')) {
             spl_autoload_register(function ($class) {
                 $class = explode('\\', $class);
 
-                if (array_shift($class) !== 'Kint')
-                {
+                if (array_shift($class) !== 'Kint') {
                     return;
                 }
 
@@ -262,20 +254,17 @@ class CodeIgniter
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
 
-        if (! empty($config->plugins) && is_array($config->plugins))
-        {
+        if (! empty($config->plugins) && is_array($config->plugins)) {
             Kint::$plugins = $config->plugins;
         }
 
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
         RichRenderer::$sort   = $config->richSort;
-        if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins))
-        {
+        if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
             RichRenderer::$object_plugins = $config->richObjectPlugins;
         }
-        if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins))
-        {
+        if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins)) {
             RichRenderer::$tab_plugins = $config->richTabPlugins;
         }
 
@@ -319,10 +308,8 @@ class CodeIgniter
         // if the page has been cached.
         $cacheConfig = new Cache();
         $response    = $this->displayCache($cacheConfig);
-        if ($response instanceof ResponseInterface)
-        {
-            if ($returnResponse)
-            {
+        if ($response instanceof ResponseInterface) {
+            if ($returnResponse) {
                 return $response;
             }
 
@@ -332,12 +319,9 @@ class CodeIgniter
             return;
         }
 
-        try
-        {
+        try {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
-        }
-        catch (RedirectException $e)
-        {
+        } catch (RedirectException $e) {
             $logger = Services::logger();
             $logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
 
@@ -349,9 +333,7 @@ class CodeIgniter
             $this->callExit(EXIT_SUCCESS);
 
             return;
-        }
-        catch (PageNotFoundException $e)
-        {
+        } catch (PageNotFoundException $e) {
             $this->display404errors($e);
         }
     }
@@ -395,8 +377,7 @@ class CodeIgniter
 
         // If any filters were specified within the routes file,
         // we need to ensure it's active for the current request
-        if (! is_null($routeFilter))
-        {
+        if (! is_null($routeFilter)) {
             $filters->enableFilter($routeFilter, 'before');
             $filters->enableFilter($routeFilter, 'after');
         }
@@ -404,18 +385,15 @@ class CodeIgniter
         $uri = $this->determinePath();
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED'))
-        {
+        if (! defined('SPARKED')) {
             $possibleResponse = $filters->run($uri, 'before');
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
-            if ($possibleResponse instanceof ResponseInterface)
-            {
+            if ($possibleResponse instanceof ResponseInterface) {
                 return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
             }
 
-            if ($possibleResponse instanceof Request)
-            {
+            if ($possibleResponse instanceof Request) {
                 $this->request = $possibleResponse;
             }
         }
@@ -423,12 +401,10 @@ class CodeIgniter
         $returned = $this->startController();
 
         // Closure controller has run in startController().
-        if (! is_callable($this->controller))
-        {
+        if (! is_callable($this->controller)) {
             $controller = $this->createController();
 
-            if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false))
-            {
+            if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
                 throw PageNotFoundException::forMethodNotFound($this->method);
             }
 
@@ -436,9 +412,7 @@ class CodeIgniter
             Events::trigger('post_controller_constructor');
 
             $returned = $this->runController($controller);
-        }
-        else
-        {
+        } else {
             $this->benchmark->stop('controller_constructor');
             $this->benchmark->stop('controller');
         }
@@ -449,25 +423,20 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED'))
-        {
+        if (! defined('SPARKED')) {
             $filters->setResponse($this->response);
             // Run "after" filters
             $response = $filters->run($uri, 'after');
-        }
-        else
-        {
+        } else {
             $response = $this->response;
 
             // Set response code for CLI command failures
-            if (is_numeric($returned) || $returned === false)
-            {
+            if (is_numeric($returned) || $returned === false) {
                 $response->setStatusCode(400);
             }
         }
 
-        if ($response instanceof ResponseInterface)
-        {
+        if ($response instanceof ResponseInterface) {
             $this->response = $response;
         }
 
@@ -477,8 +446,7 @@ class CodeIgniter
 
         unset($uri);
 
-        if (! $returnResponse)
-        {
+        if (! $returnResponse) {
             $this->sendResponse();
         }
 
@@ -519,12 +487,9 @@ class CodeIgniter
      */
     protected function bootstrapEnvironment()
     {
-        if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
-        {
+        if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
             require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
-        }
-        else
-        {
+        } else {
             // @codeCoverageIgnoreStart
             header('HTTP/1.1 503 Service Unavailable.', true, 503);
             echo 'The application environment is not set correctly.';
@@ -577,20 +542,16 @@ class CodeIgniter
      */
     protected function getRequestObject()
     {
-        if ($this->request instanceof Request)
-        {
+        if ($this->request instanceof Request) {
             return;
         }
 
         // @phpstan-ignore-next-line
-        if (is_cli() && ENVIRONMENT !== 'testing')
-        {
+        if (is_cli() && ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
             $this->request = Services::clirequest($this->config);
-            // @codeCoverageIgnoreEnd
-        }
-        else
-        {
+        // @codeCoverageIgnoreEnd
+        } else {
             $this->request = Services::request($this->config);
             // guess at protocol if needed
             $this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
@@ -607,8 +568,7 @@ class CodeIgniter
     {
         $this->response = Services::response($this->config);
 
-        if (! is_cli() || ENVIRONMENT === 'testing')
-        {
+        if (! is_cli() || ENVIRONMENT === 'testing') {
             $this->response->setProtocolVersion($this->request->getProtocolVersion());
         }
 
@@ -630,8 +590,7 @@ class CodeIgniter
      */
     protected function forceSecureAccess($duration = 31536000)
     {
-        if ($this->config->forceGlobalSecureRequests !== true)
-        {
+        if ($this->config->forceGlobalSecureRequests !== true) {
             return;
         }
 
@@ -651,11 +610,9 @@ class CodeIgniter
      */
     public function displayCache(Cache $config)
     {
-        if ($cachedResponse = cache()->get($this->generateCacheName($config)))
-        {
+        if ($cachedResponse = cache()->get($this->generateCacheName($config))) {
             $cachedResponse = unserialize($cachedResponse);
-            if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
-            {
+            if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers'])) {
                 throw new Exception('Error unserializing page cache');
             }
 
@@ -663,14 +620,12 @@ class CodeIgniter
             $output  = $cachedResponse['output'];
 
             // Clear all default headers
-            foreach (array_keys($this->response->headers()) as $key)
-            {
+            foreach (array_keys($this->response->headers()) as $key) {
                 $this->response->removeHeader($key);
             }
 
             // Set cached headers
-            foreach ($headers as $name => $value)
-            {
+            foreach ($headers as $name => $value) {
                 $this->response->setHeader($name, $value);
             }
 
@@ -711,8 +666,7 @@ class CodeIgniter
     {
         $headers = [];
 
-        foreach ($this->response->headers() as $header)
-        {
+        foreach ($this->response->headers() as $header) {
             $headers[$header->getName()] = $header->getValueLine();
         }
 
@@ -745,19 +699,15 @@ class CodeIgniter
      */
     protected function generateCacheName(Cache $config): string
     {
-        if ($this->request instanceof CLIRequest)
-        {
+        if ($this->request instanceof CLIRequest) {
             return md5($this->request->getPath());
         }
 
         $uri = $this->request->getUri();
 
-        if ($config->cacheQueryString)
-        {
+        if ($config->cacheQueryString) {
             $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
-        }
-        else
-        {
+        } else {
             $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
         }
 
@@ -795,8 +745,7 @@ class CodeIgniter
      */
     protected function tryToRouteIt(RouteCollectionInterface $routes = null)
     {
-        if ($routes === null)
-        {
+        if ($routes === null) {
             require APPPATH . 'Config/Routes.php';
         }
 
@@ -815,8 +764,7 @@ class CodeIgniter
 
         // If a {locale} segment was matched in the final route,
         // then we need to set the correct locale on our Request.
-        if ($this->router->hasLocale())
-        {
+        if ($this->router->hasLocale()) {
             $this->request->setLocale($this->router->getLocale()); // @phpstan-ignore-line
         }
 
@@ -833,8 +781,7 @@ class CodeIgniter
      */
     protected function determinePath()
     {
-        if (! empty($this->path))
-        {
+        if (! empty($this->path)) {
             return $this->path;
         }
 
@@ -873,22 +820,19 @@ class CodeIgniter
         $this->benchmark->start('controller_constructor');
 
         // Is it routed to a Closure?
-        if (is_object($this->controller) && (get_class($this->controller) === 'Closure'))
-        {
+        if (is_object($this->controller) && (get_class($this->controller) === 'Closure')) {
             $controller = $this->controller;
 
             return $controller(...$this->router->params());
         }
 
         // No controller specified - we don't know what to do now.
-        if (empty($this->controller))
-        {
+        if (empty($this->controller)) {
             throw PageNotFoundException::forEmptyController();
         }
 
         // Try to autoload the class
-        if (! class_exists($this->controller, true) || $this->method[0] === '_')
-        {
+        if (! class_exists($this->controller, true) || $this->method[0] === '_') {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
     }
@@ -924,12 +868,9 @@ class CodeIgniter
         // If this is a console request then use the input segments as parameters
         $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
 
-        if (method_exists($class, '_remap'))
-        {
+        if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
-        }
-        else
-        {
+        } else {
             $output = $class->{$this->method}(...$params);
         }
 
@@ -949,14 +890,10 @@ class CodeIgniter
     protected function display404errors(PageNotFoundException $e)
     {
         // Is there a 404 Override available?
-        if ($override = $this->router->get404Override())
-        {
-            if ($override instanceof Closure)
-            {
+        if ($override = $this->router->get404Override()) {
+            if ($override instanceof Closure) {
                 echo $override($e->getMessage());
-            }
-            elseif (is_array($override))
-            {
+            } elseif (is_array($override)) {
                 $this->benchmark->start('controller');
                 $this->benchmark->start('controller_constructor');
 
@@ -979,18 +916,15 @@ class CodeIgniter
         // Display 404 Errors
         $this->response->setStatusCode($e->getCode());
 
-        if (ENVIRONMENT !== 'testing')
-        {
+        if (ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
-            if (ob_get_level() > 0)
-            {
+            if (ob_get_level() > 0) {
                 ob_end_flush();
             }
             // @codeCoverageIgnoreEnd
         }
         // When testing, one is for phpunit, another is for test case.
-        elseif (ob_get_level() > 2)
-        {
+        elseif (ob_get_level() > 2) {
             ob_end_flush(); // @codeCoverageIgnore
         }
 
@@ -1011,13 +945,11 @@ class CodeIgniter
         $this->output = ob_get_contents();
         // If buffering is not null.
         // Clean (erase) the output buffer and turn off output buffering
-        if (ob_get_length())
-        {
+        if (ob_get_length()) {
             ob_end_clean();
         }
 
-        if ($returned instanceof DownloadResponse)
-        {
+        if ($returned instanceof DownloadResponse) {
             $this->response = $returned;
 
             return;
@@ -1028,21 +960,18 @@ class CodeIgniter
         // echoed already.
         // We also need to save the instance locally
         // so that any status code changes, etc, take place.
-        if ($returned instanceof ResponseInterface)
-        {
+        if ($returned instanceof ResponseInterface) {
             $this->response = $returned;
             $returned       = $returned->getBody();
         }
 
-        if (is_string($returned))
-        {
+        if (is_string($returned)) {
             $this->output .= $returned;
         }
 
         // Cache it without the performance metrics replaced
         // so that we can have live speed updates along the way.
-        if (static::$cacheTTL > 0)
-        {
+        if (static::$cacheTTL > 0) {
             $this->cachePage($cacheConfig);
         }
 
@@ -1065,24 +994,20 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli())
-        {
+        if (is_cli()) {
             return;
         }
         // Ignore AJAX requests
-        if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX())
-        {
+        if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
             return;
         }
 
         // This is mainly needed during testing...
-        if (is_string($uri))
-        {
+        if (is_string($uri)) {
             $uri = new URI($uri);
         }
 
-        if (isset($_SESSION))
-        {
+        if (isset($_SESSION)) {
             $_SESSION['_ci_previous_url'] = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
         }
     }
@@ -1096,15 +1021,13 @@ class CodeIgniter
     public function spoofRequestMethod()
     {
         // Only works with POSTED forms
-        if ($this->request->getMethod() !== 'post')
-        {
+        if ($this->request->getMethod() !== 'post') {
             return;
         }
 
         $method = $this->request->getPost('_method'); // @phpstan-ignore-line
 
-        if (empty($method))
-        {
+        if (empty($method)) {
             return;
         }
 

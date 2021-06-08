@@ -83,8 +83,7 @@ class MigrationRunnerTest extends CIUnitTestCase
             'batch'     => 1,
         ];
 
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
         }
 
@@ -92,8 +91,7 @@ class MigrationRunnerTest extends CIUnitTestCase
 
         $this->assertEquals($history, (array) $runner->getHistory()[0]);
 
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
 
             $db = $this->getPrivateProperty($runner, 'db');
@@ -393,12 +391,9 @@ class MigrationRunnerTest extends CIUnitTestCase
 
     protected function resetTables()
     {
-        $db     = db_connect();
-        $forge  = Config::forge();
-        $tables = $db->listTables();
+        $forge = Config::forge();
 
-        foreach ($tables as $table)
-        {
+        foreach (db_connect()->listTables() as $table) {
             $table = str_replace('db_', '', $table);
             $forge->dropTable($table, true);
         }

@@ -15,8 +15,7 @@ use Config\Services;
  * CodeIgniter Security Helpers
  */
 
-if (! function_exists('sanitize_filename'))
-{
+if (! function_exists('sanitize_filename')) {
     /**
      * Sanitize a filename to use in a URI.
      *
@@ -32,8 +31,7 @@ if (! function_exists('sanitize_filename'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('strip_image_tags'))
-{
+if (! function_exists('strip_image_tags')) {
     /**
      * Strip Image Tags
      *
@@ -53,8 +51,7 @@ if (! function_exists('strip_image_tags'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('encode_php_tags'))
-{
+if (! function_exists('encode_php_tags')) {
     /**
      * Convert PHP tags to entities
      *

@@ -56,17 +56,14 @@ class Services
         $name = strtolower($name);
 
         // Returns mock if exists
-        if (isset(static::$mocks[$name]))
-        {
+        if (isset(static::$mocks[$name])) {
             return static::$mocks[$name];
         }
 
-        if (method_exists(ConfigServices::class, $name))
-        {
+        if (method_exists(ConfigServices::class, $name)) {
             return ConfigServices::$name(...$arguments);
         }
     }
 
     //--------------------------------------------------------------------
-
 }

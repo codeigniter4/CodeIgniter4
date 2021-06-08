@@ -8,7 +8,6 @@ use Tests\Support\Validation\TestRules;
 
 class FormatRulesTest extends CIUnitTestCase
 {
-
     const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
     const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
@@ -1293,5 +1292,4 @@ class FormatRulesTest extends CIUnitTestCase
             ],
         ];
     }
-
 }

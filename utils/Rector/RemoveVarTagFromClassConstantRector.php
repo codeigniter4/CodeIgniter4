@@ -49,8 +49,7 @@ final class RemoveVarTagFromClassConstantRector extends AbstractRector
     {
         $phpDocInfo      = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
         $varTagValueNode = $phpDocInfo->getVarTagValueNode();
-        if (! $varTagValueNode instanceof VarTagValueNode)
-        {
+        if (! $varTagValueNode instanceof VarTagValueNode) {
             return null;
         }
 

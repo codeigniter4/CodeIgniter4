@@ -57,22 +57,19 @@ class Format
      */
     public function getFormatter(string $mime): FormatterInterface
     {
-        if (! array_key_exists($mime, $this->config->formatters))
-        {
+        if (! array_key_exists($mime, $this->config->formatters)) {
             throw FormatException::forInvalidMime($mime);
         }
 
         $className = $this->config->formatters[$mime];
 
-        if (! class_exists($className))
-        {
+        if (! class_exists($className)) {
             throw FormatException::forInvalidFormatter($className);
         }
 
         $class = new $className();
 
-        if (! $class instanceof FormatterInterface)
-        {
+        if (! $class instanceof FormatterInterface) {
             throw FormatException::forInvalidFormatter($className);
         }
 

@@ -43,8 +43,7 @@ class Filters
      */
     public static function date($value, string $format): string
     {
-        if (is_string($value) && ! is_numeric($value))
-        {
+        if (is_string($value) && ! is_numeric($value)) {
             $value = strtotime($value);
         }
 
@@ -294,14 +293,12 @@ class Filters
      */
     public static function round(string $value, $precision = 2, string $type = 'common')
     {
-        if (! is_numeric($precision))
-        {
+        if (! is_numeric($precision)) {
             $type      = $precision;
             $precision = 2;
         }
 
-        switch ($type)
-        {
+        switch ($type) {
             case 'common':
                 return round((float) $value, $precision);
 
@@ -331,5 +328,4 @@ class Filters
     }
 
     //--------------------------------------------------------------------
-
 }

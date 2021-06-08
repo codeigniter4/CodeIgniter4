@@ -88,8 +88,7 @@ class TestResponse extends TestCase
         $this->domParser = new DOMParser();
 
         $body = $response->getBody();
-        if (is_string($body) && $body !== '')
-        {
+        if (is_string($body) && $body !== '') {
             $this->domParser->withString($body);
         }
 
@@ -132,8 +131,7 @@ class TestResponse extends TestCase
 
         // Only 200 and 300 range status codes
         // are considered valid.
-        if ($status >= 400 || $status < 200)
-        {
+        if ($status >= 400 || $status < 200) {
             return false;
         }
         // Empty bodies are not considered valid, unless in redirects
@@ -237,18 +235,15 @@ class TestResponse extends TestCase
      */
     public function getRedirectUrl(): ?string
     {
-        if (! $this->isRedirect())
-        {
+        if (! $this->isRedirect()) {
             return null;
         }
 
-        if ($this->response->hasHeader('Location'))
-        {
+        if ($this->response->hasHeader('Location')) {
             return $this->response->getHeaderLine('Location');
         }
 
-        if ($this->response->hasHeader('Refresh'))
-        {
+        if ($this->response->hasHeader('Refresh')) {
             return str_replace('0;url=', '', $this->response->getHeaderLine('Refresh'));
         }
 
@@ -271,17 +266,13 @@ class TestResponse extends TestCase
     {
         $this->assertTrue(array_key_exists($key, $_SESSION), "'{$key}' is not in the current \$_SESSION");
 
-        if (is_null($value))
-        {
+        if (is_null($value)) {
             return;
         }
 
-        if (is_scalar($value))
-        {
+        if (is_scalar($value)) {
             $this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
-        }
-        else
-        {
+        } else {
             $this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' does not match expected value.");
         }
     }
@@ -314,8 +305,7 @@ class TestResponse extends TestCase
     {
         $this->assertTrue($this->response->hasHeader($key), "'{$key}' is not a valid Response header.");
 
-        if ($value !== null)
-        {
+        if ($value !== null) {
             $this->assertEquals($value, $this->response->getHeaderLine($key), "The value of '{$key}' header ({$this->response->getHeaderLine($key)}) does not match expected value.");
         }
     }
@@ -387,8 +377,7 @@ class TestResponse extends TestCase
     {
         $response = $this->response->getJSON();
 
-        if (is_null($response))
-        {
+        if (is_null($response)) {
             return false;
         }
 
@@ -409,12 +398,9 @@ class TestResponse extends TestCase
         $this->assertIsArray($json, 'Response does not have valid json');
         $patched = array_replace_recursive($json, $fragment);
 
-        if ($strict)
-        {
+        if ($strict) {
             $this->assertSame($json, $patched, 'Response does not contain a matching JSON fragment.');
-        }
-        else
-        {
+        } else {
             $this->assertEquals($json, $patched, 'Response does not contain a matching JSON fragment.');
         }
     }
@@ -431,13 +417,11 @@ class TestResponse extends TestCase
     {
         $json = $this->getJSON();
 
-        if (is_object($test))
-        {
+        if (is_object($test)) {
             $test = method_exists($test, 'toArray') ? $test->toArray() : (array) $test;
         }
 
-        if (is_array($test))
-        {
+        if (is_array($test)) {
             $test = Services::format()->getFormatter('application/json')->format($test);
         }
 
@@ -547,8 +531,7 @@ class TestResponse extends TestCase
      */
     public function __call($function, $params)
     {
-        if (method_exists($this->domParser, $function))
-        {
+        if (method_exists($this->domParser, $function)) {
             return $this->domParser->{$function}(...$params);
         }
     }

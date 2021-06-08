@@ -105,8 +105,7 @@ class GetTest extends CIUnitTestCase
                               ->get()
                               ->getFieldData();
 
-        if ($this->db->DBDriver === 'SQLite3')
-        {
+        if ($this->db->DBDriver === 'SQLite3') {
             $this->assertEquals('integer', $typeTest[0]->type_name); //INTEGER AUTO INC
             $this->assertEquals('text', $typeTest[1]->type_name);  //VARCHAR
             $this->assertEquals('text', $typeTest[2]->type_name);  //CHAR
@@ -128,8 +127,7 @@ class GetTest extends CIUnitTestCase
             $this->assertEquals('float', $typeTest[18]->type_name);  //DECIMAL
             $this->assertEquals('text', $typeTest[19]->type_name);  //BLOB
         }
-        if ($this->db->DBDriver === 'MySQLi')
-        {
+        if ($this->db->DBDriver === 'MySQLi') {
             $this->assertEquals('long', $typeTest[0]->type_name); //INTEGER AUTOINC
             $this->assertEquals('var_string', $typeTest[1]->type_name);  //VARCHAR
             $this->assertEquals('string', $typeTest[2]->type_name);  //CHAR
@@ -151,8 +149,7 @@ class GetTest extends CIUnitTestCase
             $this->assertEquals('newdecimal', $typeTest[18]->type_name);  //DECIMAL
             $this->assertEquals('blob', $typeTest[19]->type_name);  //BLOB
         }
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $this->assertEquals('int4', $typeTest[0]->type_name); //INTEGER AUTOINC
             $this->assertEquals('varchar', $typeTest[1]->type_name);  //VARCHAR
             $this->assertEquals('bpchar', $typeTest[2]->type_name);  //CHAR
@@ -167,8 +164,7 @@ class GetTest extends CIUnitTestCase
             $this->assertEquals('timestamp', $typeTest[11]->type_name);  //TIMESTAMP
             $this->assertEquals('int8', $typeTest[12]->type_name); //BIGINT
         }
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $this->assertEquals('int', $typeTest[0]->type_name); //INTEGER AUTOINC
             $this->assertEquals('varchar', $typeTest[1]->type_name);  //VARCHAR
             $this->assertEquals('char', $typeTest[2]->type_name);  //CHAR
@@ -193,8 +189,7 @@ class GetTest extends CIUnitTestCase
         $data = $this->db->table('job')
                          ->get();
 
-        if ($this->db->DBDriver === 'SQLite3')
-        {
+        if ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
         }

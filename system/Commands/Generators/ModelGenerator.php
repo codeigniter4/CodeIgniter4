@@ -108,24 +108,20 @@ class ModelGenerator extends BaseCommand
         $DBGroup = is_string($DBGroup) ? $DBGroup : 'default';
         $return  = is_string($return) ? $return : 'array';
 
-        if (! in_array($return, ['array', 'object', 'entity'], true))
-        {
+        if (! in_array($return, ['array', 'object', 'entity'], true)) {
             // @codeCoverageIgnoreStart
             $return = CLI::prompt(lang('CLI.generator.returnType'), ['array', 'object', 'entity'], 'required');
             CLI::newLine();
             // @codeCoverageIgnoreEnd
         }
 
-        if ($return === 'entity')
-        {
+        if ($return === 'entity') {
             $return = str_replace('Models', 'Entities', $class);
 
-            if ($pos = strpos($return, 'Model'))
-            {
+            if ($pos = strpos($return, 'Model')) {
                 $return = substr($return, 0, $pos);
 
-                if ($this->getOption('suffix'))
-                {
+                if ($this->getOption('suffix')) {
                     $return .= 'Entity';
                 }
             }

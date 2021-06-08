@@ -179,13 +179,11 @@ class BaseService
         $key = strtolower($key);
 
         // Returns mock if exists
-        if (isset(static::$mocks[$key]))
-        {
+        if (isset(static::$mocks[$key])) {
             return static::$mocks[$key];
         }
 
-        if (! isset(static::$instances[$key]))
-        {
+        if (! isset(static::$instances[$key])) {
             // Make sure $getShared is false
             $params[] = false;
 
@@ -205,10 +203,8 @@ class BaseService
      */
     public static function autoloader(bool $getShared = true)
     {
-        if ($getShared)
-        {
-            if (empty(static::$instances['autoloader']))
-            {
+        if ($getShared) {
+            if (empty(static::$instances['autoloader'])) {
                 static::$instances['autoloader'] = new Autoloader();
             }
 
@@ -229,10 +225,8 @@ class BaseService
      */
     public static function locator(bool $getShared = true)
     {
-        if ($getShared)
-        {
-            if (empty(static::$instances['locator']))
-            {
+        if ($getShared) {
+            if (empty(static::$instances['locator'])) {
                 static::$instances['locator'] = new FileLocator(static::autoloader());
             }
 
@@ -255,8 +249,7 @@ class BaseService
     {
         $service = static::serviceExists($name);
 
-        if ($service === null)
-        {
+        if ($service === null) {
             return null;
         }
 
@@ -277,10 +270,8 @@ class BaseService
         $services = array_merge(self::$serviceNames, [Services::class]);
         $name     = strtolower($name);
 
-        foreach ($services as $service)
-        {
-            if (method_exists($service, $name))
-            {
+        foreach ($services as $service) {
+            if (method_exists($service, $name)) {
                 return $service;
             }
         }
@@ -298,8 +289,7 @@ class BaseService
         static::$mocks     = [];
         static::$instances = [];
 
-        if ($initAutoloader)
-        {
+        if ($initAutoloader) {
             static::autoloader()->initialize(new Autoload(), new Modules());
         }
     }
@@ -342,28 +332,23 @@ class BaseService
      */
     protected static function discoverServices(string $name, array $arguments)
     {
-        if (! static::$discovered)
-        {
+        if (! static::$discovered) {
             $config = config('Modules');
 
-            if ($config->shouldDiscover('services'))
-            {
+            if ($config->shouldDiscover('services')) {
                 $locator = static::locator();
                 $files   = $locator->search('Config/Services');
 
-                if (empty($files))
-                {
+                if (empty($files)) {
                     // no files at all found - this would be really, really bad
                     return null;
                 }
 
                 // Get instances of all service classes and cache them locally.
-                foreach ($files as $file)
-                {
+                foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true))
-                    {
+                    if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true)) {
                         static::$services[] = new $classname();
                     }
                 }
@@ -372,17 +357,14 @@ class BaseService
             static::$discovered = true;
         }
 
-        if (! static::$services)
-        {
+        if (! static::$services) {
             // we found stuff, but no services - this would be really bad
             return null;
         }
 
         // Try to find the desired service method
-        foreach (static::$services as $class)
-        {
-            if (method_exists($class, $name))
-            {
+        foreach (static::$services as $class) {
+            if (method_exists($class, $name)) {
                 return $class::$name(...$arguments);
             }
         }
@@ -392,22 +374,18 @@ class BaseService
 
     protected static function buildServicesCache(): void
     {
-        if (! static::$discovered)
-        {
+        if (! static::$discovered) {
             $config = config('Modules');
 
-            if ($config->shouldDiscover('services'))
-            {
+            if ($config->shouldDiscover('services')) {
                 $locator = static::locator();
                 $files   = $locator->search('Config/Services');
 
                 // Get instances of all service classes and cache them locally.
-                foreach ($files as $file)
-                {
+                foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if ($classname !== 'CodeIgniter\\Config\\Services')
-                    {
+                    if ($classname !== 'CodeIgniter\\Config\\Services') {
                         self::$serviceNames[] = $classname;
                         static::$services[]   = new $classname();
                     }

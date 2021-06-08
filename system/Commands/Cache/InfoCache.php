@@ -59,8 +59,7 @@ class InfoCache extends BaseCommand
         $config = config('Cache');
         helper('number');
 
-        if ($config->handler !== 'file')
-        {
+        if ($config->handler !== 'file') {
             CLI::error('This command only supports the file cache handler.');
 
             return;
@@ -70,8 +69,7 @@ class InfoCache extends BaseCommand
         $caches = $cache->getCacheInfo();
         $tbody  = [];
 
-        foreach ($caches as $key => $field)
-        {
+        foreach ($caches as $key => $field) {
             $tbody[] = [
                 $key,
                 clean_path($field['server_path']),

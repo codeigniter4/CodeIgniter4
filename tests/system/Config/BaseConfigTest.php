@@ -18,18 +18,15 @@ class BaseConfigTest extends CIUnitTestCase
 
         $this->fixturesFolder = __DIR__ . '/fixtures';
 
-        if (! class_exists('SimpleConfig', false))
-        {
+        if (! class_exists('SimpleConfig', false)) {
             require $this->fixturesFolder . '/SimpleConfig.php';
         }
 
-        if (! class_exists('RegistrarConfig', false))
-        {
+        if (! class_exists('RegistrarConfig', false)) {
             require $this->fixturesFolder . '/RegistrarConfig.php';
         }
 
-        if (! class_exists('Encryption', false))
-        {
+        if (! class_exists('Encryption', false)) {
             require $this->fixturesFolder . '/Encryption.php';
         }
     }
@@ -259,5 +256,4 @@ class BaseConfigTest extends CIUnitTestCase
 
         $this->assertSame(true, $this->getPrivateProperty($config, 'didDiscovery'));
     }
-
 }

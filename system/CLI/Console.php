@@ -70,8 +70,7 @@ class Console
      */
     public function showHeader(bool $suppress = false)
     {
-        if ($suppress)
-        {
+        if ($suppress) {
             return;
         }
 

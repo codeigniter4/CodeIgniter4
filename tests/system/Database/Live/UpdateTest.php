@@ -34,8 +34,7 @@ class UpdateTest extends CIUnitTestCase
 
     public function testUpdateSetsAllWithoutWhereAndLimit()
     {
-        try
-        {
+        try {
             $this->db->table('user')
                      ->update(['name' => 'Bobby'], null, 1);
 
@@ -48,9 +47,7 @@ class UpdateTest extends CIUnitTestCase
             $this->assertEquals('Ahmadinejad', $result[1]->name);
             $this->assertEquals('Richard A Causey', $result[2]->name);
             $this->assertEquals('Chris Martin', $result[3]->name);
-        }
-        catch (DatabaseException $e)
-        {
+        } catch (DatabaseException $e) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);
@@ -70,10 +67,8 @@ class UpdateTest extends CIUnitTestCase
 
         $rows = [];
 
-        foreach ($result as $row)
-        {
-            if ($row['name'] === 'Bobby')
-            {
+        foreach ($result as $row) {
+            if ($row['name'] === 'Bobby') {
                 $rows[] = $row;
             }
         }
@@ -85,8 +80,7 @@ class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithWhereAndLimit()
     {
-        try
-        {
+        try {
             $this->db->table('user')
                      ->update(['name' => 'Bobby'], ['country' => 'US'], 1);
 
@@ -98,9 +92,7 @@ class UpdateTest extends CIUnitTestCase
             $this->assertEquals('Ahmadinejad', $result[1]->name);
             $this->assertEquals('Richard A Causey', $result[2]->name);
             $this->assertEquals('Chris Martin', $result[3]->name);
-        }
-        catch (DatabaseException $e)
-        {
+        } catch (DatabaseException $e) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
             $this->assertTrue(true);
@@ -148,10 +140,8 @@ class UpdateTest extends CIUnitTestCase
 
         $rows = [];
 
-        foreach ($result as $row)
-        {
-            if ($row['country'] === 'CA')
-            {
+        foreach ($result as $row) {
+            if ($row['country'] === 'CA') {
                 $rows[] = $row;
             }
         }
@@ -173,10 +163,8 @@ class UpdateTest extends CIUnitTestCase
 
         $rows = [];
 
-        foreach ($result as $row)
-        {
-            if ($row['country'] === 'CA')
-            {
+        foreach ($result as $row) {
+            if ($row['country'] === 'CA') {
                 $rows[] = $row;
             }
         }
@@ -197,10 +185,8 @@ class UpdateTest extends CIUnitTestCase
 
         $rows = [];
 
-        foreach ($result as $row)
-        {
-            if ($row['country'] === 'CA')
-            {
+        foreach ($result as $row) {
+            if ($row['country'] === 'CA') {
                 $rows[] = $row;
             }
         }
@@ -243,5 +229,4 @@ class UpdateTest extends CIUnitTestCase
             'description' => 'Developer',
         ]);
     }
-
 }

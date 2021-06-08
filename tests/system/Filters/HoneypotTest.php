@@ -12,7 +12,6 @@ use Config\Honeypot;
  */
 class HoneypotTest extends CIUnitTestCase
 {
-
     protected $config;
     protected $honey;
     protected $request;
@@ -115,5 +114,4 @@ class HoneypotTest extends CIUnitTestCase
         $this->response = $filters->run($uri, 'after');
         $this->assertStringNotContainsString($this->honey->name, $this->response->getBody());
     }
-
 }

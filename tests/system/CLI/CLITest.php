@@ -8,7 +8,6 @@ use ReflectionProperty;
 
 final class CLITest extends CIUnitTestCase
 {
-
     private $stream_filter;
 
     protected function setUp(): void

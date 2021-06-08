@@ -8,7 +8,6 @@ use Config\Cache;
 
 class CacheFactoryTest extends CIUnitTestCase
 {
-
     private static $directory = 'CacheFactory';
     private $cacheFactory;
     private $config;
@@ -26,8 +25,7 @@ class CacheFactoryTest extends CIUnitTestCase
 
     public function tearDown(): void
     {
-        if (is_dir($this->config->storePath))
-        {
+        if (is_dir($this->config->storePath)) {
             chmod($this->config->storePath, 0777);
             rmdir($this->config->storePath);
         }
@@ -80,8 +78,7 @@ class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetDummyHandler()
     {
-        if (! is_dir($this->config->storePath))
-        {
+        if (! is_dir($this->config->storePath)) {
             mkdir($this->config->storePath, 0555, true);
         }
 
@@ -96,19 +93,15 @@ class CacheFactoryTest extends CIUnitTestCase
 
     public function testHandlesBadHandler()
     {
-        if (! is_dir($this->config->storePath))
-        {
+        if (! is_dir($this->config->storePath)) {
             mkdir($this->config->storePath, 0555, true);
         }
 
         $this->config->handler = 'dummy';
 
-        if (stripos('win', php_uname()) === 0)
-        {
+        if (stripos('win', php_uname()) === 0) {
             $this->assertTrue(true); // can't test properly if we are on Windows
-        }
-        else
-        {
+        } else {
             $this->assertInstanceOf(DummyHandler::class, $this->cacheFactory->getHandler($this->config, 'wincache', 'wincache'));
         }
 
@@ -116,5 +109,4 @@ class CacheFactoryTest extends CIUnitTestCase
         $this->config             = new Cache();
         $this->config->storePath .= self::$directory;
     }
-
 }

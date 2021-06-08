@@ -39,8 +39,7 @@ class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->isWriteType($sql));
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $sql = "INSERT INTO my_table (col1, col2) VALUES ('Joe', 'Cool') RETURNING id;";
 
             $this->assertFalse($this->db->isWriteType($sql));
@@ -57,8 +56,7 @@ class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->isWriteType($sql));
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $sql = "UPDATE my_table SET col1 = 'foo' WHERE id = 2 RETURNING *;";
 
             $this->assertFalse($this->db->isWriteType($sql));
@@ -79,13 +77,10 @@ class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testReplace()
     {
-        if (in_array($this->db->DBDriver, ['Postgre', 'SQLSRV'], true))
-        {
+        if (in_array($this->db->DBDriver, ['Postgre', 'SQLSRV'], true)) {
             // these two were complaining about the builder stuff so i just cooked up this
             $sql = 'REPLACE INTO `db_jobs` (`title`, `name`, `date`) VALUES (:title:, :name:, :date:)';
-        }
-        else
-        {
+        } else {
             $builder = $this->db->table('jobs');
             $data    = [
                 'title' => 'My title',
@@ -157,8 +152,7 @@ class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testRename()
     {
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $sql = 'EXEC sp_rename table1 , table2 ;';
 
             $this->assertTrue($this->db->isWriteType($sql));
@@ -223,5 +217,4 @@ class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertFalse($this->db->isWriteType($sql));
     }
-
 }

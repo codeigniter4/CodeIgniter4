@@ -11,7 +11,6 @@ use Config\Filters as FilterConfig;
  */
 class DebugToolbarTest extends CIUnitTestCase
 {
-
     protected $request;
     protected $response;
 
@@ -48,5 +47,4 @@ class DebugToolbarTest extends CIUnitTestCase
         $filter->after($this->request, $this->response);
         $this->assertEquals($expectedAfter, $this->response);
     }
-
 }

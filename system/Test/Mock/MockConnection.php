@@ -60,8 +60,7 @@ class MockConnection extends BaseConnection
 
         $query->setQuery($sql, $binds, $setEscapeFlags);
 
-        if (! empty($this->swapPre) && ! empty($this->DBPrefix))
-        {
+        if (! empty($this->swapPre) && ! empty($this->DBPrefix)) {
             $query->swapPrefix($this->DBPrefix, $this->swapPre);
         }
 
@@ -70,8 +69,7 @@ class MockConnection extends BaseConnection
         $this->lastQuery = $query;
 
         // Run the query
-        if (false === ($this->resultID = $this->simpleQuery($query->getQuery())))
-        {
+        if (false === ($this->resultID = $this->simpleQuery($query->getQuery()))) {
             $query->setDuration($startTime, $startTime);
 
             // @todo deal with errors
@@ -82,8 +80,7 @@ class MockConnection extends BaseConnection
         $query->setDuration($startTime);
 
         // resultID is not false, so it must be successful
-        if ($query->isWriteType())
-        {
+        if ($query->isWriteType()) {
             return true;
         }
 
@@ -106,8 +103,7 @@ class MockConnection extends BaseConnection
     {
         $return = $this->returnValues['connect'] ?? true;
 
-        if (is_array($return))
-        {
+        if (is_array($return)) {
             // By removing the top item here, we can
             // get a different value for, say, testing failover connections.
             $return = array_shift($this->returnValues['connect']);

@@ -208,26 +208,19 @@ class Security implements SecurityInterface
     public function verify(RequestInterface $request)
     {
         // If it's not a POST request we will set the CSRF cookie.
-        if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
-        {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
             return $this->sendCookie($request);
         }
 
         // Does the token exist in POST, HEADER or optionally php:://input - json data.
-        if ($request->hasHeader($this->headerName) && ! empty($request->getHeader($this->headerName)->getValue()))
-        {
+        if ($request->hasHeader($this->headerName) && ! empty($request->getHeader($this->headerName)->getValue())) {
             $tokenName = $request->getHeader($this->headerName)->getValue();
-        }
-        else
-        {
+        } else {
             $json = json_decode($request->getBody());
 
-            if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE)
-            {
+            if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
                 $tokenName = $json->{$this->tokenName} ?? null;
-            }
-            else
-            {
+            } else {
                 $tokenName = null;
             }
         }
@@ -235,26 +228,21 @@ class Security implements SecurityInterface
         $token = $_POST[$this->tokenName] ?? $tokenName;
 
         // Does the tokens exist in both the POST/POSTed JSON and COOKIE arrays and match?
-        if (! isset($token, $_COOKIE[$this->cookieName]) || ! hash_equals($token, $_COOKIE[$this->cookieName]))
-        {
+        if (! isset($token, $_COOKIE[$this->cookieName]) || ! hash_equals($token, $_COOKIE[$this->cookieName])) {
             throw SecurityException::forDisallowedAction();
         }
 
-        if (isset($_POST[$this->tokenName]))
-        {
+        if (isset($_POST[$this->tokenName])) {
             // We kill this since we're done and we don't want to pollute the POST array.
             unset($_POST[$this->tokenName]);
             $request->setGlobal('post', $_POST);
-        }
-        elseif (isset($json->{$this->tokenName}))
-        {
+        } elseif (isset($json->{$this->tokenName})) {
             // We kill this since we're done and we don't want to pollute the JSON data.
             unset($json->{$this->tokenName});
             $request->setBody(json_encode($json));
         }
 
-        if ($this->regenerate)
-        {
+        if ($this->regenerate) {
             $this->hash = null;
             unset($_COOKIE[$this->cookieName]);
         }
@@ -383,20 +371,17 @@ class Security implements SecurityInterface
             '%3d',
         ];
 
-        if (! $relativePath)
-        {
+        if (! $relativePath) {
             $bad[] = './';
             $bad[] = '/';
         }
 
         $str = remove_invisible_characters($str, false);
 
-        do
-        {
+        do {
             $old = $str;
             $str = str_replace($bad, '', $str);
-        }
-        while ($old !== $str);
+        } while ($old !== $str);
 
         return stripslashes($str);
     }
@@ -408,8 +393,7 @@ class Security implements SecurityInterface
      */
     protected function generateHash(): string
     {
-        if (is_null($this->hash))
-        {
+        if (is_null($this->hash)) {
             // If the cookie exists we will use its value.
             // We don't necessarily want to regenerate it with
             // each page load since a page could contain embedded
@@ -417,8 +401,7 @@ class Security implements SecurityInterface
             if (isset($_COOKIE[$this->cookieName])
                 && is_string($_COOKIE[$this->cookieName])
                 && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
-            )
-            {
+            ) {
                 return $this->hash = $_COOKIE[$this->cookieName];
             }
 
@@ -437,8 +420,7 @@ class Security implements SecurityInterface
      */
     protected function sendCookie(RequestInterface $request)
     {
-        if ($this->cookie->isSecure() && ! $request->isSecure())
-        {
+        if ($this->cookie->isSecure() && ! $request->isSecure()) {
             return false;
         }
 

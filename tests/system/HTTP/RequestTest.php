@@ -678,5 +678,4 @@ class RequestTest extends CIUnitTestCase
         $this->assertEquals('get', $this->request->getMethod());
         $this->assertEquals('GET', $this->request->getMethod(true));
     }
-
 }

@@ -38,8 +38,7 @@ class PreparedQuery extends BasePreparedQuery
         // with terminating semicolons.
         $sql = rtrim($sql, ';');
 
-        if (! $this->statement = $this->db->mysqli->prepare($sql))
-        {
+        if (! $this->statement = $this->db->mysqli->prepare($sql)) {
             $this->errorCode   = $this->db->mysqli->errno;
             $this->errorString = $this->db->mysqli->error;
         }
@@ -57,8 +56,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
-        if (! isset($this->statement))
-        {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
@@ -66,18 +64,12 @@ class PreparedQuery extends BasePreparedQuery
         $bindTypes = '';
 
         // Determine the type string
-        foreach ($data as $item)
-        {
-            if (is_int($item))
-            {
+        foreach ($data as $item) {
+            if (is_int($item)) {
                 $bindTypes .= 'i';
-            }
-            elseif (is_numeric($item))
-            {
+            } elseif (is_numeric($item)) {
                 $bindTypes .= 'd';
-            }
-            else
-            {
+            } else {
                 $bindTypes .= 's';
             }
         }

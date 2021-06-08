@@ -157,5 +157,4 @@ class IncomingRequestDetectingTest extends CIUnitTestCase
         $expected = 'silliness';
         $this->assertEquals($expected, $this->request->detectPath('PATH_INFO'));
     }
-
 }

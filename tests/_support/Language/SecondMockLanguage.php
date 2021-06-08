@@ -25,5 +25,4 @@ class SecondMockLanguage extends Language
     {
         return $this->loadedFiles[$locale];
     }
-
 }

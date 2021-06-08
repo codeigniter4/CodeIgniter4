@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class InflectorHelperTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -47,8 +46,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'countries' => 'country',
         ];
 
-        foreach ($strings as $pluralizedString => $singularizedString)
-        {
+        foreach ($strings as $pluralizedString => $singularizedString) {
             $singular = singular($pluralizedString);
             $this->assertEquals($singular, $singularizedString);
         }
@@ -86,8 +84,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'countries' => 'country',
         ];
 
-        foreach ($strings as $pluralizedString => $singularizedString)
-        {
+        foreach ($strings as $pluralizedString => $singularizedString) {
             $plural = plural($singularizedString);
             $this->assertEquals($plural, $pluralizedString);
         }
@@ -145,8 +142,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             ],
         ];
 
-        foreach ($triplets as $triplet)
-        {
+        foreach ($triplets as $triplet) {
             $result = counted($triplet[0], $triplet[1]);
             $this->assertEquals($triplet[2], $result);
         }
@@ -161,8 +157,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'hello_world'              => 'helloWorld',
         ];
 
-        foreach ($strings as $lowerCasedString => $camelizedString)
-        {
+        foreach ($strings as $lowerCasedString => $camelizedString) {
             $camelized = camelize($lowerCasedString);
             $this->assertEquals($camelized, $camelizedString);
         }
@@ -177,8 +172,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'hello_world'              => 'HelloWorld',
         ];
 
-        foreach ($strings as $lowerCasedString => $pascalizedString)
-        {
+        foreach ($strings as $lowerCasedString => $pascalizedString) {
             $pascalized = pascalize($lowerCasedString);
             $this->assertEquals($pascalized, $pascalizedString);
         }
@@ -193,8 +187,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'hello world'              => 'hello_world',
         ];
 
-        foreach ($strings as $spaced => $underscore)
-        {
+        foreach ($strings as $spaced => $underscore) {
             $underscored = underscore($spaced);
             $this->assertEquals($underscored, $underscore);
         }
@@ -233,8 +226,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'letter'     => 'spelling',
         ];
 
-        foreach ($words as $countable => $unCountable)
-        {
+        foreach ($words as $countable => $unCountable) {
             $this->assertTrue(is_pluralizable($countable));
             $this->assertFalse(is_pluralizable($unCountable));
         }
@@ -249,8 +241,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4',
         ];
 
-        foreach ($strings as $underscored => $dashed)
-        {
+        foreach ($strings as $underscored => $dashed) {
             $dasherized = dasherize($underscored);
             $this->assertEquals($dasherized, $dashed);
         }
@@ -273,8 +264,7 @@ final class InflectorHelperTest extends CIUnitTestCase
             'th' => 24,
         ];
 
-        foreach ($suffixes as $suffix => $number)
-        {
+        foreach ($suffixes as $suffix => $number) {
             $ordinal = ordinal($number);
             $this->assertEquals($suffix, $ordinal);
         }
@@ -297,11 +287,9 @@ final class InflectorHelperTest extends CIUnitTestCase
             '24th' => 24,
         ];
 
-        foreach ($suffixedNumbers as $suffixed => $number)
-        {
+        foreach ($suffixedNumbers as $suffixed => $number) {
             $ordinalized = ordinalize($number);
             $this->assertEquals($suffixed, $ordinalized);
         }
     }
-
 }

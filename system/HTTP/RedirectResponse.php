@@ -34,8 +34,7 @@ class RedirectResponse extends Response
     {
         // If it appears to be a relative URL, then convert to full URL
         // for better security.
-        if (strpos($uri, 'http') !== 0)
-        {
+        if (strpos($uri, 'http') !== 0) {
             $uri = site_url($uri);
         }
 
@@ -59,8 +58,7 @@ class RedirectResponse extends Response
     {
         $route = Services::routes()->reverseRoute($route, ...$params);
 
-        if (! $route)
-        {
+        if (! $route) {
             throw HTTPException::forInvalidRedirectRoute($route);
         }
 
@@ -107,8 +105,7 @@ class RedirectResponse extends Response
         // within a method different than displaying the form.
         $validation = Services::validation();
 
-        if ($validation->getErrors())
-        {
+        if ($validation->getErrors()) {
             $session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
         }
 
@@ -155,8 +152,7 @@ class RedirectResponse extends Response
      */
     public function withHeaders()
     {
-        foreach (Services::response()->headers() as $name => $header)
-        {
+        foreach (Services::response()->headers() as $name => $header) {
             $this->setHeader($name, $header->getValue());
         }
 

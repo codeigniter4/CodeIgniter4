@@ -7,7 +7,6 @@ use CodeIgniter\Test\Mock\MockCache;
 
 class ThrottleTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -122,8 +121,7 @@ class ThrottleTest extends CIUnitTestCase
         $cost = 1;
 
         // Blow through the bucket in a natural way., with 1 second "grace"
-        for ($i = 0; $i <= $rate; $i++)
-        {
+        for ($i = 0; $i <= $rate; $i++) {
             $throttler->check('127.0.0.1', $rate, MINUTE, $cost);
         }
 

@@ -119,8 +119,7 @@ class Message implements MessageInterface
     {
         $origName = $this->getHeaderName($name);
 
-        if (! array_key_exists($origName, $this->headers))
-        {
+        if (! array_key_exists($origName, $this->headers)) {
             return '';
         }
 

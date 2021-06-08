@@ -102,22 +102,19 @@ class Fabricator
      */
     public function __construct($model, array $formatters = null, string $locale = null)
     {
-        if (is_string($model))
-        {
+        if (is_string($model)) {
             // Create a new model instance
             $model = model($model, false);
         }
 
-        if (! is_object($model))
-        {
+        if (! is_object($model)) {
             throw new InvalidArgumentException(lang('Fabricator.invalidModel'));
         }
 
         $this->model = $model;
 
         // If no locale was specified then use the App default
-        if (is_null($locale))
-        {
+        if (is_null($locale)) {
             $locale = config('App')->defaultLocale;
         }
 
@@ -128,10 +125,8 @@ class Fabricator
         $this->faker = Factory::create($this->locale);
 
         // Determine eligible date fields
-        foreach (['createdField', 'updatedField', 'deletedField'] as $field)
-        {
-            if (! empty($this->model->$field))
-            {
+        foreach (['createdField', 'updatedField', 'deletedField'] as $field) {
+            if (! empty($this->model->$field)) {
                 $this->dateFields[] = $this->model->$field;
             }
         }
@@ -259,8 +254,7 @@ class Fabricator
      */
     public function setOverrides(array $overrides = [], $persist = true): self
     {
-        if ($persist)
-        {
+        if ($persist) {
             $this->overrides = $overrides;
         }
 
@@ -290,16 +284,11 @@ class Fabricator
      */
     public function setFormatters(array $formatters = null): self
     {
-        if (! is_null($formatters))
-        {
+        if (! is_null($formatters)) {
             $this->formatters = $formatters;
-        }
-        elseif (method_exists($this->model, 'fake'))
-        {
+        } elseif (method_exists($this->model, 'fake')) {
             $this->formatters = null;
-        }
-        else
-        {
+        } else {
             $this->detectFormatters();
         }
 
@@ -315,10 +304,8 @@ class Fabricator
     {
         $this->formatters = [];
 
-        if (! empty($this->model->allowedFields))
-        {
-            foreach ($this->model->allowedFields as $field)
-            {
+        if (! empty($this->model->allowedFields)) {
+            foreach ($this->model->allowedFields as $field) {
                 $this->formatters[$field] = $this->guessFormatter($field);
             }
         }
@@ -336,22 +323,17 @@ class Fabricator
     protected function guessFormatter($field): string
     {
         // First check for a Faker formatter of the same name - covers things like "email"
-        try
-        {
+        try {
             $this->faker->getFormatter($field);
 
             return $field;
-        }
-        catch (InvalidArgumentException $e)
-        {
+        } catch (InvalidArgumentException $e) {
             // No match, keep going
         }
 
         // Next look for known model fields
-        if (in_array($field, $this->dateFields, true))
-        {
-            switch ($this->model->dateFormat)
-            {
+        if (in_array($field, $this->dateFields, true)) {
+            switch ($this->model->dateFormat) {
                 case 'datetime':
                 case 'date':
                     return 'date';
@@ -359,23 +341,18 @@ class Fabricator
                 case 'int':
                     return 'unixTime';
             }
-        }
-        elseif ($field === $this->model->primaryKey)
-        {
+        } elseif ($field === $this->model->primaryKey) {
             return 'numberBetween';
         }
 
         // Check some common partials
-        foreach (['email', 'name', 'title', 'text', 'date', 'url'] as $term)
-        {
-            if (stripos($field, $term) !== false)
-            {
+        foreach (['email', 'name', 'title', 'text', 'date', 'url'] as $term) {
+            if (stripos($field, $term) !== false) {
                 return $term;
             }
         }
 
-        if (stripos($field, 'phone') !== false)
-        {
+        if (stripos($field, 'phone') !== false) {
             return 'phoneNumber';
         }
 
@@ -395,8 +372,7 @@ class Fabricator
     public function make(int $count = null)
     {
         // If a singleton was requested then go straight to it
-        if (is_null($count))
-        {
+        if (is_null($count)) {
             return $this->model->returnType === 'array'
                 ? $this->makeArray()
                 : $this->makeObject();
@@ -404,8 +380,7 @@ class Fabricator
 
         $return = [];
 
-        for ($i = 0; $i < $count; $i++)
-        {
+        for ($i = 0; $i < $count; $i++) {
             $return[] = $this->model->returnType === 'array'
                 ? $this->makeArray()
                 : $this->makeObject();
@@ -423,18 +398,15 @@ class Fabricator
      */
     public function makeArray()
     {
-        if (! is_null($this->formatters))
-        {
+        if (! is_null($this->formatters)) {
             $result = [];
 
-            foreach ($this->formatters as $field => $formatter)
-            {
+            foreach ($this->formatters as $field => $formatter) {
                 $result[$field] = $this->faker->{$formatter};
             }
         }
         // If no formatters were defined then look for a model fake() method
-        elseif (method_exists($this->model, 'fake'))
-        {
+        elseif (method_exists($this->model, 'fake')) {
             $result = $this->model->fake($this->faker);
 
             $result = is_object($result) && method_exists($result, 'toArray')
@@ -444,8 +416,7 @@ class Fabricator
                 : (array) $result;
         }
         // Nothing left to do but give up
-        else
-        {
+        else {
             throw new RuntimeException(lang('Fabricator.missingFormatters'));
         }
 
@@ -464,28 +435,21 @@ class Fabricator
      */
     public function makeObject(string $className = null): object
     {
-        if (is_null($className))
-        {
-            if ($this->model->returnType === 'object' || $this->model->returnType === 'array')
-            {
+        if (is_null($className)) {
+            if ($this->model->returnType === 'object' || $this->model->returnType === 'array') {
                 $className = 'stdClass';
-            }
-            else
-            {
+            } else {
                 $className = $this->model->returnType;
             }
         }
 
         // If using the model's fake() method then check it for the correct return type
-        if (is_null($this->formatters) && method_exists($this->model, 'fake'))
-        {
+        if (is_null($this->formatters) && method_exists($this->model, 'fake')) {
             $result = $this->model->fake($this->faker);
 
-            if ($result instanceof $className)
-            {
+            if ($result instanceof $className) {
                 // Set overrides manually
-                foreach ($this->getOverrides() as $key => $value)
-                {
+                foreach ($this->getOverrides() as $key => $value) {
                     $result->{$key} = $value;
                 }
 
@@ -498,14 +462,10 @@ class Fabricator
         $object = new $className();
 
         // Check for the entity method
-        if (method_exists($object, 'fill'))
-        {
+        if (method_exists($object, 'fill')) {
             $object->fill($array);
-        }
-        else
-        {
-            foreach ($array as $key => $value)
-            {
+        } else {
+            foreach ($array as $key => $value) {
                 $object->{$key} = $value;
             }
         }
@@ -528,18 +488,15 @@ class Fabricator
     public function create(int $count = null, bool $mock = false)
     {
         // Intercept mock requests
-        if ($mock)
-        {
+        if ($mock) {
             return $this->createMock($count);
         }
 
         $ids = [];
 
         // Iterate over new entities and insert each one, storing insert IDs
-        foreach ($this->make($count ?? 1) as $result)
-        {
-            if ($id = $this->model->insert($result, true))
-            {
+        foreach ($this->make($count ?? 1) as $result) {
+            if ($id = $this->model->insert($result, true)) {
                 $ids[] = $id;
                 self::upCount($this->model->table);
 
@@ -550,8 +507,7 @@ class Fabricator
         }
 
         // If the model defines a "withDeleted" method for handling soft deletes then use it
-        if (method_exists($this->model, 'withDeleted'))
-        {
+        if (method_exists($this->model, 'withDeleted')) {
             $this->model->withDeleted();
         }
 
@@ -567,8 +523,7 @@ class Fabricator
      */
     protected function createMock(int $count = null)
     {
-        switch ($this->model->dateFormat)
-        {
+        switch ($this->model->dateFormat) {
             case 'datetime':
                 $datetime = date('Y-m-d H:i:s');
                 break;
@@ -584,34 +539,27 @@ class Fabricator
         // Determine which fields we will need
         $fields = [];
 
-        if (! empty($this->model->useTimestamps))
-        {
+        if (! empty($this->model->useTimestamps)) {
             $fields[$this->model->createdField] = $datetime; // @phpstan-ignore-line
             $fields[$this->model->updatedField] = $datetime; // @phpstan-ignore-line
         }
 
-        if (! empty($this->model->useSoftDeletes))
-        {
+        if (! empty($this->model->useSoftDeletes)) {
             $fields[$this->model->deletedField] = null; // @phpstan-ignore-line
         }
 
         // Iterate over new entities and add the necessary fields
         $return = [];
 
-        foreach ($this->make($count ?? 1) as $i => $result)
-        {
+        foreach ($this->make($count ?? 1) as $i => $result) {
             // Set the ID
             $fields[$this->model->primaryKey] = $i;
 
             // Merge fields
-            if (is_array($result))
-            {
+            if (is_array($result)) {
                 $result = array_merge($result, $fields);
-            }
-            else
-            {
-                foreach ($fields as $key => $value)
-                {
+            } else {
+                foreach ($fields as $key => $value) {
                     $result->{$key} = $value;
                 }
             }

@@ -101,13 +101,11 @@ class Table
         // Remove the prefix, if any, since it's
         // already been added by the time we get here...
         $prefix = $this->db->DBPrefix; // @phpstan-ignore-line
-        if (! empty($prefix) && strpos($table, $prefix) === 0)
-        {
+        if (! empty($prefix) && strpos($table, $prefix) === 0) {
             $table = substr($table, strlen($prefix));
         }
 
-        if (! $this->db->tableExists($this->prefixedTableName))
-        {
+        if (! $this->db->tableExists($this->prefixedTableName)) {
             throw DataException::forTableNotFound($this->prefixedTableName);
         }
 
@@ -166,16 +164,13 @@ class Table
     {
         //unset($this->fields[$column]);
 
-        if (is_string($columns))
-        {
+        if (is_string($columns)) {
             $columns = explode(',', $columns);
         }
 
-        foreach ($columns as $column)
-        {
+        foreach ($columns as $column) {
             $column = trim($column);
-            if (isset($this->fields[$column]))
-            {
+            if (isset($this->fields[$column])) {
                 unset($this->fields[$column]);
             }
         }
@@ -213,21 +208,17 @@ class Table
      */
     public function dropForeignKey(string $column)
     {
-        if (empty($this->foreignKeys))
-        {
+        if (empty($this->foreignKeys)) {
             return $this;
         }
 
-        for ($i = 0; $i < count($this->foreignKeys); $i++)
-        {
-            if ($this->foreignKeys[$i]->table_name !== $this->tableName)
-            {
+        for ($i = 0; $i < count($this->foreignKeys); $i++) {
+            if ($this->foreignKeys[$i]->table_name !== $this->tableName) {
                 continue;
             }
 
             // The column name should be the first thing in the constraint name
-            if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0)
-            {
+            if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0) {
                 continue;
             }
 
@@ -250,10 +241,8 @@ class Table
         // Handle any modified columns.
         $fields = [];
 
-        foreach ($this->fields as $name => $field)
-        {
-            if (isset($field['new_name']))
-            {
+        foreach ($this->fields as $name => $field) {
+            if (isset($field['new_name'])) {
                 $fields[$field['new_name']] = $field;
 
                 continue;
@@ -265,12 +254,9 @@ class Table
         $this->forge->addField($fields);
 
         // Unique/Index keys
-        if (is_array($this->keys))
-        {
-            foreach ($this->keys as $key)
-            {
-                switch ($key['type'])
-                {
+        if (is_array($this->keys)) {
+            foreach ($this->keys as $key) {
+                switch ($key['type']) {
                     case 'primary':
                         $this->forge->addPrimaryKey($key['fields']);
                         break;
@@ -303,8 +289,7 @@ class Table
         $exFields  = [];
         $newFields = [];
 
-        foreach ($this->fields as $name => $details)
-        {
+        foreach ($this->fields as $name => $details) {
             $newFields[] = $details['new_name'] ?? $name;
             $exFields[]  = $name;
         }
@@ -326,23 +311,20 @@ class Table
      */
     protected function formatFields($fields)
     {
-        if (! is_array($fields))
-        {
+        if (! is_array($fields)) {
             return $fields;
         }
 
         $return = [];
 
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field) {
             $return[$field->name] = [
                 'type'    => $field->type,
                 'default' => $field->default,
                 'null'    => $field->nullable,
             ];
 
-            if ($field->primary_key)
-            {
+            if ($field->primary_key) {
                 $this->keys[$field->name] = [
                     'fields' => [$field->name],
                     'type'   => 'primary',
@@ -363,15 +345,13 @@ class Table
      */
     protected function formatKeys($keys)
     {
-        if (! is_array($keys))
-        {
+        if (! is_array($keys)) {
             return $keys;
         }
 
         $return = [];
 
-        foreach ($keys as $name => $key)
-        {
+        foreach ($keys as $name => $key) {
             $return[$name] = [
                 'fields' => $key->fields,
                 'type'   => 'index',
@@ -389,15 +369,12 @@ class Table
      */
     protected function dropIndexes()
     {
-        if (! is_array($this->keys) || $this->keys === [])
-        {
+        if (! is_array($this->keys) || $this->keys === []) {
             return;
         }
 
-        foreach ($this->keys as $name => $key)
-        {
-            if ($key['type'] === 'primary' || $key['type'] === 'unique')
-            {
+        foreach ($this->keys as $name => $key) {
+            if ($key['type'] === 'primary' || $key['type'] === 'unique') {
                 continue;
             }
 

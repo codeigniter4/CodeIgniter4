@@ -64,14 +64,12 @@ class DotEnv
     public function parse(): ?array
     {
         // We don't want to enforce the presence of a .env file, they should be optional.
-        if (! is_file($this->path))
-        {
+        if (! is_file($this->path)) {
             return null;
         }
 
         // Ensure the file is readable
-        if (! is_readable($this->path))
-        {
+        if (! is_readable($this->path)) {
             throw new InvalidArgumentException("The .env file is not readable: {$this->path}");
         }
 
@@ -79,17 +77,14 @@ class DotEnv
 
         $lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-        foreach ($lines as $line)
-        {
+        foreach ($lines as $line) {
             // Is it a comment?
-            if (strpos(trim($line), '#') === 0)
-            {
+            if (strpos(trim($line), '#') === 0) {
                 continue;
             }
 
             // If there is an equal sign, then we know we are assigning a variable.
-            if (strpos($line, '=') !== false)
-            {
+            if (strpos($line, '=') !== false) {
                 [$name, $value] = $this->normaliseVariable($line);
                 $vars[$name]    = $value;
                 $this->setVariable($name, $value);
@@ -111,18 +106,15 @@ class DotEnv
      */
     protected function setVariable(string $name, string $value = '')
     {
-        if (! getenv($name, true))
-        {
+        if (! getenv($name, true)) {
             putenv("$name=$value");
         }
 
-        if (empty($_ENV[$name]))
-        {
+        if (empty($_ENV[$name])) {
             $_ENV[$name] = $value;
         }
 
-        if (empty($_SERVER[$name]))
-        {
+        if (empty($_SERVER[$name])) {
             $_SERVER[$name] = $value;
         }
     }
@@ -141,8 +133,7 @@ class DotEnv
     public function normaliseVariable(string $name, string $value = ''): array
     {
         // Split our compound string into its parts.
-        if (strpos($name, '=') !== false)
-        {
+        if (strpos($name, '=') !== false) {
             [$name, $value] = explode('=', $name, 2);
         }
 
@@ -174,14 +165,12 @@ class DotEnv
      */
     protected function sanitizeValue(string $value): string
     {
-        if (! $value)
-        {
+        if (! $value) {
             return $value;
         }
 
         // Does it begin with a quote?
-        if (strpbrk($value[0], '"\'') !== false)
-        {
+        if (strpbrk($value[0], '"\'') !== false) {
             // value starts with a quote
             $quote = $value[0];
 
@@ -203,15 +192,12 @@ class DotEnv
             $value = preg_replace($regexPattern, '$1', $value);
             $value = str_replace("\\$quote", $quote, $value);
             $value = str_replace('\\\\', '\\', $value);
-        }
-        else
-        {
+        } else {
             $parts = explode(' #', $value, 2);
             $value = trim($parts[0]);
 
             // Unquoted values cannot contain whitespace
-            if (preg_match('/\s+/', $value) > 0)
-            {
+            if (preg_match('/\s+/', $value) > 0) {
                 throw new InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
             }
         }
@@ -236,15 +222,13 @@ class DotEnv
      */
     protected function resolveNestedVariables(string $value): string
     {
-        if (strpos($value, '$') !== false)
-        {
+        if (strpos($value, '$') !== false) {
             $value = preg_replace_callback(
                 '/\${([a-zA-Z0-9_\.]+)}/',
                 function ($matchedPatterns) {
                     $nestedVariable = $this->getVariable($matchedPatterns[1]);
 
-                    if (is_null($nestedVariable))
-                    {
+                    if (is_null($nestedVariable)) {
                         return $matchedPatterns[0];
                     }
 
@@ -271,8 +255,7 @@ class DotEnv
      */
     protected function getVariable(string $name)
     {
-        switch (true)
-        {
+        switch (true) {
             case array_key_exists($name, $_ENV):
                 return $_ENV[$name];
 

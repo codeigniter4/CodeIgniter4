@@ -6,13 +6,11 @@ use InvalidArgumentException;
 
 class DOMParserTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        if (! extension_loaded('DOM'))
-        {
+        if (! extension_loaded('DOM')) {
             $this->markTestSkipped('DOM extension not loaded.');
         }
     }
@@ -401,5 +399,4 @@ class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see(null, '*[ name = user ]'));
         $this->assertFalse($dom->see(null, '*[ name = notthere ]'));
     }
-
 }

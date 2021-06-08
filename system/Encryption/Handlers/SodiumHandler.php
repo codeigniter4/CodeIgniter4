@@ -41,8 +41,7 @@ class SodiumHandler extends BaseHandler
     {
         $this->parseParams($params);
 
-        if (empty($this->key))
-        {
+        if (empty($this->key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
@@ -50,8 +49,7 @@ class SodiumHandler extends BaseHandler
         $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES); // 24 bytes
 
         // add padding before we encrypt the data
-        if ($this->blockSize <= 0)
-        {
+        if ($this->blockSize <= 0) {
             throw EncryptionException::forEncryptionFailed();
         }
 
@@ -74,13 +72,11 @@ class SodiumHandler extends BaseHandler
     {
         $this->parseParams($params);
 
-        if (empty($this->key))
-        {
+        if (empty($this->key)) {
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES))
-        {
+        if (mb_strlen($data, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES)) {
             // message was truncated
             throw EncryptionException::forAuthenticationFailed();
         }
@@ -92,15 +88,13 @@ class SodiumHandler extends BaseHandler
         // decrypt data
         $data = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
 
-        if ($data === false)
-        {
+        if ($data === false) {
             // message was tampered in transit
             throw EncryptionException::forAuthenticationFailed(); // @codeCoverageIgnore
         }
 
         // remove extra padding during encryption
-        if ($this->blockSize <= 0)
-        {
+        if ($this->blockSize <= 0) {
             throw EncryptionException::forAuthenticationFailed();
         }
 
@@ -124,20 +118,16 @@ class SodiumHandler extends BaseHandler
      */
     protected function parseParams($params)
     {
-        if ($params === null)
-        {
+        if ($params === null) {
             return;
         }
 
-        if (is_array($params))
-        {
-            if (isset($params['key']))
-            {
+        if (is_array($params)) {
+            if (isset($params['key'])) {
                 $this->key = $params['key'];
             }
 
-            if (isset($params['blockSize']))
-            {
+            if (isset($params['blockSize'])) {
                 $this->blockSize = $params['blockSize'];
             }
 

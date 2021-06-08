@@ -119,8 +119,7 @@ class Serve extends BaseCommand
         // to ensure our environment is set and it simulates basic mod_rewrite.
         passthru($php . ' -S ' . $host . ':' . $port . ' -t ' . $docroot . ' ' . $rewrite, $status);
 
-        if ($status && $this->portOffset < $this->tries)
-        {
+        if ($status && $this->portOffset < $this->tries) {
             $this->portOffset++;
 
             $this->run($params);

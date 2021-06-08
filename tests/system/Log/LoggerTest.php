@@ -13,7 +13,6 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 class LoggerTest extends CIUnitTestCase
 {
-
     public function testThrowsExceptionWithBadHandlerSettings()
     {
         $config           = new LoggerConfig();
@@ -227,12 +226,9 @@ class LoggerTest extends CIUnitTestCase
 
         $expected = 'ERROR - ' . date('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
 
-        try
-        {
+        try {
             throw new Exception('These are not the droids you are looking for');
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
         }
 

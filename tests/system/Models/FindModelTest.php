@@ -149,8 +149,7 @@ final class FindModelTest extends LiveModelTestCase
     {
         $this->createModel(UserModel::class);
 
-        if ($groupBy)
-        {
+        if ($groupBy) {
             $this->model->groupBy('id');
         }
 
@@ -177,26 +176,21 @@ final class FindModelTest extends LiveModelTestCase
 
         $this->createModel(UserModel::class);
 
-        if ($aggregate)
-        {
+        if ($aggregate) {
             $this->model->select('SUM(id) as id');
         }
 
-        if ($groupBy)
-        {
+        if ($groupBy) {
             $this->model->groupBy('id');
         }
 
         $user = $this->model->first();
 
-        if (! $aggregate || $groupBy)
-        {
+        if (! $aggregate || $groupBy) {
             $count = is_object($user) ? 1 : 0;
             $this->assertSame(1, $count);
             $this->assertSame(2, (int) $user->id);
-        }
-        else
-        {
+        } else {
             $this->assertSame(9, (int) $user->id);
         }
 
@@ -212,13 +206,11 @@ final class FindModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
         $this->model->delete(1);
 
-        if ($aggregate)
-        {
+        if ($aggregate) {
             $this->model->select('sum(id) as id');
         }
 
-        if ($groupBy)
-        {
+        if ($groupBy) {
             $this->model->groupBy('id');
         }
 

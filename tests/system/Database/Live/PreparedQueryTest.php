@@ -35,18 +35,14 @@ class PreparedQueryTest extends CIUnitTestCase
 
         $placeholders = '?, ?';
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $placeholders = '$1, $2';
         }
 
-        if ($this->db->DBDriver === 'SQLSRV')
-        {
+        if ($this->db->DBDriver === 'SQLSRV') {
             $database = $this->db->getDatabase();
             $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
-        }
-        else
-        {
+        } else {
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
         $this->assertEquals($expected, $query->getQueryString());
@@ -68,8 +64,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
         $placeholders = '?, ?, ?';
 
-        if ($this->db->DBDriver === 'Postgre')
-        {
+        if ($this->db->DBDriver === 'Postgre') {
             $placeholders = '$1, $2, $3';
         }
 

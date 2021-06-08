@@ -28,8 +28,7 @@ class ControllerGeneratorTest extends CIUnitTestCase
 
     protected function getFileContents(string $filepath): string
     {
-        if (! file_exists($filepath))
-        {
+        if (! file_exists($filepath)) {
             return '';
         }
 
@@ -52,7 +51,6 @@ class ControllerGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Controllers/Blog.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends Controller', $this->getFileContents($file));
-
     }
 
     public function testGenerateControllerWithOptionRestful()

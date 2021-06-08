@@ -13,8 +13,7 @@
  * CodeIgniter Date Helpers
  */
 
-if (! function_exists('now'))
-{
+if (! function_exists('now')) {
     /**
      * Get "now" time
      *
@@ -30,8 +29,7 @@ if (! function_exists('now'))
     {
         $timezone = empty($timezone) ? app_timezone() : $timezone;
 
-        if ($timezone === 'local' || $timezone === date_default_timezone_get())
-        {
+        if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
             return time();
         }
 
@@ -42,8 +40,7 @@ if (! function_exists('now'))
     }
 }
 
-if (! function_exists('timezone_select'))
-{
+if (! function_exists('timezone_select')) {
     /**
      * Generates a select field of all available timezones
      *
@@ -63,8 +60,7 @@ if (! function_exists('timezone_select'))
 
         $buffer = "<select name='timezone' class='{$class}'>" . PHP_EOL;
 
-        foreach ($timezones as $timezone)
-        {
+        foreach ($timezones as $timezone) {
             $selected = ($timezone === $default) ? 'selected' : '';
             $buffer .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
         }

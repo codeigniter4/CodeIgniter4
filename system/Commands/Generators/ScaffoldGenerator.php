@@ -86,29 +86,23 @@ class ScaffoldGenerator extends BaseCommand
 
         $options = [];
 
-        if ($this->getOption('namespace'))
-        {
+        if ($this->getOption('namespace')) {
             $options['namespace'] = $this->getOption('namespace');
         }
 
-        if ($this->getOption('suffix'))
-        {
+        if ($this->getOption('suffix')) {
             $options['suffix'] = null;
         }
 
-        if ($this->getOption('force'))
-        {
+        if ($this->getOption('force')) {
             $options['force'] = null;
         }
 
         $controllerOpts = [];
 
-        if ($this->getOption('bare'))
-        {
+        if ($this->getOption('bare')) {
             $controllerOpts['bare'] = null;
-        }
-        elseif ($this->getOption('restful'))
-        {
+        } elseif ($this->getOption('restful')) {
             $controllerOpts['restful'] = $this->getOption('restful');
         }
 

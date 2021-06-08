@@ -14,7 +14,6 @@ use stdClass;
 
 class ResponseTraitTest extends CIUnitTestCase
 {
-
     protected $request;
     protected $response;
 
@@ -48,13 +47,11 @@ class ResponseTraitTest extends CIUnitTestCase
             'cookieHTTPOnly'   => false,
             'proxyIPs'         => [],
             'cookieSameSite'   => 'Lax',
-        ] as $key => $value)
-        {
+        ] as $key => $value) {
             $config->$key = $value;
         }
 
-        if (is_null($this->request))
-        {
+        if (is_null($this->request)) {
             $this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
             $this->response = new MockResponse((object) $config);
         }
@@ -65,19 +62,15 @@ class ResponseTraitTest extends CIUnitTestCase
         ];
         $headers = array_merge($headers, $userHeaders);
 
-        foreach ($headers as $key => $value)
-        {
+        foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);
-            if (($key === 'Accept') && ! is_array($value))
-            {
+            if (($key === 'Accept') && ! is_array($value)) {
                 $this->response->setContentType($value);
             }
         }
 
         // Create the controller class finally.
-        $controller = new class($this->request, $this->response, $this->formatter)
-        {
-
+        $controller = new class($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
             protected $request;
@@ -445,8 +438,7 @@ EOH;
             'application/xml',
         ];
 
-        foreach ($goodMimes as $goodMime)
-        {
+        foreach ($goodMimes as $goodMime) {
             $this->tryValidContentType($goodMime, $goodMime . $chars);
         }
     }
@@ -474,8 +466,7 @@ EOH;
             'application/xml',
         ];
 
-        foreach ($goodMimes as $goodMime)
-        {
+        foreach ($goodMimes as $goodMime) {
             $this->tryValidContentType($goodMime, $goodMime . $chars);
         }
     }
@@ -514,16 +505,14 @@ EOH;
             'cookieHTTPOnly'   => false,
             'proxyIPs'         => [],
             'cookieSameSite'   => 'Lax',
-        ] as $key => $value)
-        {
+        ] as $key => $value) {
             $config->$key = $value;
         }
 
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
         $response = new MockResponse($config);
 
-        $controller = new class($request, $response)
-        {
+        $controller = new class($request, $response) {
             use ResponseTrait;
 
             protected $request;

@@ -75,14 +75,11 @@ class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
-        {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
             $databases = $util->listDatabases();
 
             $this->assertTrue(in_array($this->db->getDatabase(), $databases, true));
-        }
-        elseif ($this->db->DBDriver === 'SQLite3')
-        {
+        } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
@@ -96,14 +93,11 @@ class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true))
-        {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
             $exist = $util->databaseExists($this->db->getDatabase());
 
             $this->assertTrue($exist);
-        }
-        elseif ($this->db->DBDriver === 'SQLite3')
-        {
+        } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 

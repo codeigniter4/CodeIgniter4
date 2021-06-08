@@ -88,8 +88,7 @@ class Database extends BaseCollector
         // Provide default in case it's not set
         $max = $config->maxQueries ?: 100;
 
-        if (count(static::$queries) < $max)
-        {
+        if (count(static::$queries) < $max) {
             static::$queries[] = $query;
         }
     }
@@ -105,8 +104,7 @@ class Database extends BaseCollector
     {
         $data = [];
 
-        foreach ($this->connections as $alias => $connection)
-        {
+        foreach ($this->connections as $alias => $connection) {
             // Connection Time
             $data[] = [
                 'name'      => 'Connecting to Database: "' . $alias . '"',
@@ -116,8 +114,7 @@ class Database extends BaseCollector
             ];
         }
 
-        foreach (static::$queries as $query)
-        {
+        foreach (static::$queries as $query) {
             $data[] = [
                 'name'      => 'Query',
                 'component' => 'Database',

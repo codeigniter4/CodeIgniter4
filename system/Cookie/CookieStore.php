@@ -47,12 +47,9 @@ class CookieStore implements Countable, IteratorAggregate
          * @var Cookie[] $cookies
          */
         $cookies = array_filter(array_map(static function (string $header) use ($raw) {
-            try
-            {
+            try {
                 return Cookie::fromHeaderString($header, $raw);
-            }
-            catch (CookieException $e)
-            {
+            } catch (CookieException $e) {
                 log_message('error', $e->getMessage());
 
                 return false;
@@ -71,8 +68,7 @@ class CookieStore implements Countable, IteratorAggregate
     {
         $this->validateCookies($cookies);
 
-        foreach ($cookies as $cookie)
-        {
+        foreach ($cookies as $cookie) {
             $this->cookies[$cookie->getId()] = $cookie;
         }
     }
@@ -91,15 +87,12 @@ class CookieStore implements Countable, IteratorAggregate
     {
         $name = $prefix . $name;
 
-        foreach ($this->cookies as $cookie)
-        {
-            if ($cookie->getPrefixedName() !== $name)
-            {
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getPrefixedName() !== $name) {
                 continue;
             }
 
-            if ($value === null)
-            {
+            if ($value === null) {
                 return true; // for BC
             }
 
@@ -124,10 +117,8 @@ class CookieStore implements Countable, IteratorAggregate
     {
         $name = $prefix . $name;
 
-        foreach ($this->cookies as $cookie)
-        {
-            if ($cookie->getPrefixedName() === $name)
-            {
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getPrefixedName() === $name) {
                 return $cookie;
             }
         }
@@ -173,10 +164,8 @@ class CookieStore implements Countable, IteratorAggregate
 
         $store = clone $this;
 
-        foreach (array_keys($store->cookies) as $index)
-        {
-            if ($index === $id)
-            {
+        foreach (array_keys($store->cookies) as $index) {
+            if ($index === $id) {
                 unset($store->cookies[$index]);
             }
         }
@@ -191,18 +180,14 @@ class CookieStore implements Countable, IteratorAggregate
      */
     public function dispatch(): void
     {
-        foreach ($this->cookies as $cookie)
-        {
+        foreach ($this->cookies as $cookie) {
             $name    = $cookie->getPrefixedName();
             $value   = $cookie->getValue();
             $options = $cookie->getOptions();
 
-            if ($cookie->isRaw())
-            {
+            if ($cookie->isRaw()) {
                 $this->setRawCookie($name, $value, $options);
-            }
-            else
-            {
+            } else {
                 $this->setCookie($name, $value, $options);
             }
         }
@@ -261,12 +246,10 @@ class CookieStore implements Countable, IteratorAggregate
      */
     protected function validateCookies(array $cookies): void
     {
-        foreach ($cookies as $index => $cookie)
-        {
+        foreach ($cookies as $index => $cookie) {
             $type = is_object($cookie) ? get_class($cookie) : gettype($cookie);
 
-            if (! $cookie instanceof Cookie)
-            {
+            if (! $cookie instanceof Cookie) {
                 throw CookieException::forInvalidCookieInstance([static::class, Cookie::class, $type, $index]);
             }
         }

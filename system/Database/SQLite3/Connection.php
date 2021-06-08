@@ -49,24 +49,19 @@ class Connection extends BaseConnection
      */
     public function connect(bool $persistent = false)
     {
-        if ($persistent && $this->DBDebug)
-        {
+        if ($persistent && $this->DBDebug) {
             throw new DatabaseException('SQLite3 doesn\'t support persistent connections.');
         }
 
-        try
-        {
-            if ($this->database !== ':memory:' && strpos($this->database, DIRECTORY_SEPARATOR) === false)
-            {
+        try {
+            if ($this->database !== ':memory:' && strpos($this->database, DIRECTORY_SEPARATOR) === false) {
                 $this->database = WRITEPATH . $this->database;
             }
 
             return (! $this->password)
                 ? new SQLite3($this->database)
                 : new SQLite3($this->database, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->password);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
         }
     }
@@ -120,8 +115,7 @@ class Connection extends BaseConnection
      */
     public function getVersion(): string
     {
-        if (isset($this->dataCache['version']))
-        {
+        if (isset($this->dataCache['version'])) {
             return $this->dataCache['version'];
         }
 
@@ -141,17 +135,13 @@ class Connection extends BaseConnection
      */
     public function execute(string $sql)
     {
-        try
-        {
+        try {
             return $this->isWriteType($sql)
                 ? $this->connID->exec($sql)
                 : $this->connID->query($sql);
-        }
-        catch (ErrorException $e)
-        {
+        } catch (ErrorException $e) {
             log_message('error', $e);
-            if ($this->DBDebug)
-            {
+            if ($this->DBDebug) {
                 throw $e;
             }
         }
@@ -229,13 +219,11 @@ class Connection extends BaseConnection
     public function getFieldNames(string $table)
     {
         // Is there a cached result?
-        if (isset($this->dataCache['field_names'][$table]))
-        {
+        if (isset($this->dataCache['field_names'][$table])) {
             return $this->dataCache['field_names'][$table];
         }
 
-        if (empty($this->connID))
-        {
+        if (empty($this->connID)) {
             $this->initialize();
         }
 
@@ -244,25 +232,16 @@ class Connection extends BaseConnection
         $query                                  = $this->query($sql);
         $this->dataCache['field_names'][$table] = [];
 
-        foreach ($query->getResultArray() as $row)
-        {
+        foreach ($query->getResultArray() as $row) {
             // Do we know from where to get the column's name?
-            if (! isset($key))
-            {
-                if (isset($row['column_name']))
-                {
+            if (! isset($key)) {
+                if (isset($row['column_name'])) {
                     $key = 'column_name';
-                }
-                elseif (isset($row['COLUMN_NAME']))
-                {
+                } elseif (isset($row['COLUMN_NAME'])) {
                     $key = 'COLUMN_NAME';
-                }
-                elseif (isset($row['name']))
-                {
+                } elseif (isset($row['name'])) {
                     $key = 'name';
-                }
-                else
-                {
+                } else {
                     // We have no other choice but to just get the first element's key.
                     $key = key($row);
                 }
@@ -285,22 +264,21 @@ class Connection extends BaseConnection
      */
     public function _fieldData(string $table): array
     {
-        if (($query = $this->query('PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null,
-                    false) . ')')) === false)
-        {
+        if (false === $query = $this->query('PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null, false) . ')')) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
         }
+
         $query = $query->getResultObject();
 
-        if (empty($query))
-        {
+        if (empty($query)) {
             return [];
         }
+
         $retVal = [];
 
-        for ($i = 0, $c = count($query); $i < $c; $i++)
-        {
+        for ($i = 0, $c = count($query); $i < $c; $i++) {
             $retVal[$i]              = new stdClass();
+
             $retVal[$i]->name        = $query[$i]->name;
             $retVal[$i]->type        = $query[$i]->type;
             $retVal[$i]->max_length  = null;
@@ -326,29 +304,28 @@ class Connection extends BaseConnection
         // Get indexes
         // Don't use PRAGMA index_list, so we can preserve index order
         $sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table));
-        if (($query = $this->query($sql)) === false)
-        {
+        if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
         $query = $query->getResultObject();
 
         $retVal = [];
 
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $obj       = new stdClass();
+
             $obj->name = $row->name;
 
             // Get fields for index
             $obj->fields = [];
-            if (($fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ')')) === false)
-            {
+
+            if (false === $fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ')')) {
                 throw new DatabaseException(lang('Database.failGetIndexData'));
             }
+
             $fields = $fields->getResultObject();
 
-            foreach ($fields as $field)
-            {
+            foreach ($fields as $field) {
                 $obj->fields[] = $field->name;
             }
 
@@ -368,26 +345,22 @@ class Connection extends BaseConnection
      */
     public function _foreignKeyData(string $table): array
     {
-        if ($this->supportsForeignKeys() !== true)
-        {
+        if ($this->supportsForeignKeys() !== true) {
             return [];
         }
 
         $tables = $this->listTables();
 
-        if (empty($tables))
-        {
+        if (empty($tables)) {
             return [];
         }
 
         $retVal = [];
 
-        foreach ($tables as $table)
-        {
+        foreach ($tables as $table) {
             $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
 
-            foreach ($query as $row)
-            {
+            foreach ($query as $row) {
                 $obj                     = new stdClass();
                 $obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
                 $obj->table_name         = $table;

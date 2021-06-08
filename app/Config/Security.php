@@ -37,7 +37,7 @@ class Security extends BaseConfig
      *
      * @var string
      */
-     public $cookieName = 'csrf_cookie_name';
+    public $cookieName = 'csrf_cookie_name';
 
     /**
      * --------------------------------------------------------------------------

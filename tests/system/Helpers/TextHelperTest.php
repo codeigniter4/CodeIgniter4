@@ -6,7 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class TextHelperTest extends CIUnitTestCase
 {
-
     private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
 
     protected function setUp(): void
@@ -39,8 +38,7 @@ class TextHelperTest extends CIUnitTestCase
             "it's a winner!" => 'its a winner!',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, strip_quotes($str));
         }
     }
@@ -53,8 +51,7 @@ class TextHelperTest extends CIUnitTestCase
             "it's a winner!" => 'it&#39;s a winner!',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, quotes_to_entities($str));
         }
     }
@@ -68,8 +65,7 @@ class TextHelperTest extends CIUnitTestCase
             '/var/www/html//index.php'    => '/var/www/html/index.php',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, reduce_double_slashes($str));
         }
     }
@@ -82,8 +78,7 @@ class TextHelperTest extends CIUnitTestCase
             'Ringo, John, Paul,,'     => 'Ringo, John, Paul,',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, reduce_multiples($str));
         }
         $strs = [
@@ -91,8 +86,7 @@ class TextHelperTest extends CIUnitTestCase
             'Ringo, John, Paul,,'     => 'Ringo, John, Paul',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, reduce_multiples($str, ',', true));
         }
     }
@@ -156,8 +150,7 @@ class TextHelperTest extends CIUnitTestCase
             '†¥¨ˆøåß∂ƒ©˙∆˚¬' => '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, ascii_to_entities($str));
         }
     }
@@ -170,8 +163,7 @@ class TextHelperTest extends CIUnitTestCase
             '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;' => '†¥¨ˆøåß∂ƒ©˙∆˚¬',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, entities_to_ascii($str));
         }
     }
@@ -215,8 +207,7 @@ class TextHelperTest extends CIUnitTestCase
             'Jake is really a (boob)'      => 'Jake is really a ($*#)',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, word_censor($str, $censored, '$*#'));
         }
     }
@@ -239,10 +230,10 @@ class TextHelperTest extends CIUnitTestCase
             ''                        => '',
         ];
 
-        foreach ($strs as $str => $expect)
-        {
+        foreach ($strs as $str => $expect) {
             $this->assertEquals($expect, highlight_phrase($str, 'this is'));
         }
+
         $this->assertEquals('<strong>this is</strong> a strong test', highlight_phrase('this is a strong test', 'this is', '<strong>', '</strong>'));
     }
 
@@ -270,10 +261,8 @@ class TextHelperTest extends CIUnitTestCase
             ],
         ];
 
-        foreach ($strs as $pos => $s)
-        {
-            foreach ($s as $str => $expect)
-            {
+        foreach ($strs as $pos => $s) {
+            foreach ($s as $str => $expect) {
                 $this->assertEquals($expect, ellipsize($str, 10, $pos));
             }
         }
@@ -356,8 +345,7 @@ class TextHelperTest extends CIUnitTestCase
         $result = '';
         alternator();
 
-        for ($i = 0; $i < 4; $i ++)
-        {
+        for ($i = 0; $i < 4; $i ++) {
             $result .= alternator('I', 'you', 'we') . $phrase;
         }
         $this->assertEquals('I scream! you scream! we scream! I scream! ', $result);
@@ -368,11 +356,10 @@ class TextHelperTest extends CIUnitTestCase
         $phrase = ' scream! ';
         $result = '';
 
-        for ($i = 0; $i < 4; $i ++)
-        {
+        for ($i = 0; $i < 4; $i ++) {
             $result .= alternator() . $phrase;
         }
+
         $this->assertEquals(' scream!  scream!  scream!  scream! ', $result);
     }
-
 }

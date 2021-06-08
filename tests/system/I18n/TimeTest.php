@@ -11,7 +11,6 @@ use Locale;
 
 class TimeTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();

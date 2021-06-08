@@ -48,38 +48,32 @@ class Config extends BaseConfig
     public static function connect($group = null, bool $getShared = true)
     {
         // If a DB connection is passed in, just pass it back
-        if ($group instanceof BaseConnection)
-        {
+        if ($group instanceof BaseConnection) {
             return $group;
         }
 
-        if (is_array($group))
-        {
+        if (is_array($group)) {
             $config = $group;
             $group  = 'custom-' . md5(json_encode($config));
         }
 
         $config = $config ?? config('Database');
 
-        if (empty($group))
-        {
+        if (empty($group)) {
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
         }
 
-        if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0)
-        {
+        if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0) {
             throw new InvalidArgumentException($group . ' is not a valid database connection group.');
         }
 
-        if ($getShared && isset(static::$instances[$group]))
-        {
+        if ($getShared && isset(static::$instances[$group])) {
             return static::$instances[$group];
         }
 
         static::ensureFactory();
 
-        if (isset($config->$group))
-        {
+        if (isset($config->$group)) {
             $config = $config->$group;
         }
 
@@ -154,8 +148,7 @@ class Config extends BaseConfig
      */
     protected static function ensureFactory()
     {
-        if (static::$factory instanceof Database)
-        {
+        if (static::$factory instanceof Database) {
             return;
         }
 

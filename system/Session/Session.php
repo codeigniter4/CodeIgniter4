@@ -212,8 +212,7 @@ class Session implements SessionInterface
      */
     public function start()
     {
-        if (is_cli() && ENVIRONMENT !== 'testing')
-        {
+        if (is_cli() && ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
             $this->logger->debug('Session: Initialization under CLI aborted.');
 
@@ -221,15 +220,13 @@ class Session implements SessionInterface
             // @codeCoverageIgnoreEnd
         }
 
-        if ((bool) ini_get('session.auto_start'))
-        {
+        if ((bool) ini_get('session.auto_start')) {
             $this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
             return;
         }
 
-        if (session_status() === PHP_SESSION_ACTIVE)
-        {
+        if (session_status() === PHP_SESSION_ACTIVE) {
             $this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
 
             return;
@@ -241,8 +238,7 @@ class Session implements SessionInterface
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
         if (isset($_COOKIE[$this->sessionCookieName])
             && (! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->sessionCookieName]))
-        )
-        {
+        ) {
             unset($_COOKIE[$this->sessionCookieName]);
         }
 
@@ -251,21 +247,16 @@ class Session implements SessionInterface
         // Is session ID auto-regeneration configured? (ignoring ajax requests)
         if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
             && ($regenerateTime = $this->sessionTimeToUpdate) > 0
-        )
-        {
-            if (! isset($_SESSION['__ci_last_regenerate']))
-            {
+        ) {
+            if (! isset($_SESSION['__ci_last_regenerate'])) {
                 $_SESSION['__ci_last_regenerate'] = time();
-            }
-            elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerateTime))
-            {
+            } elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerateTime)) {
                 $this->regenerate((bool) $this->sessionRegenerateDestroy);
             }
         }
         // Another work-around ... PHP doesn't seem to send the session cookie
         // unless it is being currently created or regenerated
-        elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id())
-        {
+        elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id()) {
             $this->setCookie();
         }
 
@@ -304,12 +295,9 @@ class Session implements SessionInterface
      */
     protected function configure()
     {
-        if (empty($this->sessionCookieName))
-        {
+        if (empty($this->sessionCookieName)) {
             $this->sessionCookieName = ini_get('session.name');
-        }
-        else
-        {
+        } else {
             ini_set('session.name', $this->sessionCookieName);
         }
 
@@ -327,17 +315,13 @@ class Session implements SessionInterface
         ini_set('session.cookie_samesite', $sameSite);
         session_set_cookie_params($params);
 
-        if (! isset($this->sessionExpiration))
-        {
+        if (! isset($this->sessionExpiration)) {
             $this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
-        }
-        else
-        {
+        } else {
             ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
         }
 
-        if (! empty($this->sessionSavePath))
-        {
+        if (! empty($this->sessionSavePath)) {
             ini_set('session.save_path', $this->sessionSavePath);
         }
 
@@ -375,8 +359,7 @@ class Session implements SessionInterface
             ? ini_get('session.sid_length')
             : 40);
 
-        if (($sidLength * $bitsPerCharacter) < 160)
-        {
+        if (($sidLength * $bitsPerCharacter) < 160) {
             $bits = ($sidLength * $bitsPerCharacter);
             // Add as many more characters as necessary to reach at least 160 bits
             $sidLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
@@ -384,8 +367,7 @@ class Session implements SessionInterface
         }
 
         // Yes, 4,5,6 are the only known possible values as of 2016-10-27
-        switch ($bitsPerCharacter)
-        {
+        switch ($bitsPerCharacter) {
             case 4:
                 $this->sidRegexp = '[0-9a-f]';
                 break;
@@ -410,28 +392,23 @@ class Session implements SessionInterface
      */
     protected function initVars()
     {
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             return;
         }
 
         $currentTime = time();
 
-        foreach ($_SESSION['__ci_vars'] as $key => &$value)
-        {
-            if ($value === 'new')
-            {
+        foreach ($_SESSION['__ci_vars'] as $key => &$value) {
+            if ($value === 'new') {
                 $_SESSION['__ci_vars'][$key] = 'old';
             }
             // DO NOT move this above the 'new' check!
-            elseif ($value === 'old' || $value < $currentTime)
-            {
+            elseif ($value === 'old' || $value < $currentTime) {
                 unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
             }
         }
 
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             unset($_SESSION['__ci_vars']);
         }
     }
@@ -456,8 +433,7 @@ class Session implements SessionInterface
      */
     public function destroy()
     {
-        if (ENVIRONMENT === 'testing')
-        {
+        if (ENVIRONMENT === 'testing') {
             return;
         }
 
@@ -482,16 +458,11 @@ class Session implements SessionInterface
      */
     public function set($data, $value = null)
     {
-        if (is_array($data))
-        {
-            foreach ($data as $key => &$value)
-            {
-                if (is_int($key))
-                {
+        if (is_array($data)) {
+            foreach ($data as $key => &$value) {
+                if (is_int($key)) {
                     $_SESSION[$value] = null;
-                }
-                else
-                {
+                } else {
                     $_SESSION[$key] = $value;
                 }
             }
@@ -516,18 +487,15 @@ class Session implements SessionInterface
      */
     public function get(string $key = null)
     {
-        if (! empty($key) && (! is_null($value = $_SESSION[$key] ?? null) || ! is_null($value = dot_array_search($key, $_SESSION ?? []))))
-        {
+        if (! empty($key) && (! is_null($value = $_SESSION[$key] ?? null) || ! is_null($value = dot_array_search($key, $_SESSION ?? [])))) {
             return $value;
         }
 
-        if (empty($_SESSION))
-        {
+        if (empty($_SESSION)) {
             return $key === null ? [] : null;
         }
 
-        if (! empty($key))
-        {
+        if (! empty($key)) {
             return null;
         }
 
@@ -536,10 +504,8 @@ class Session implements SessionInterface
 
         $keys = array_keys($_SESSION);
 
-        foreach ($keys as $key)
-        {
-            if (! in_array($key, $_exclude, true))
-            {
+        foreach ($keys as $key) {
+            if (! in_array($key, $_exclude, true)) {
                 $userdata[$key] = $_SESSION[$key];
             }
         }
@@ -569,8 +535,7 @@ class Session implements SessionInterface
      */
     public function push(string $key, array $data)
     {
-        if ($this->has($key) && is_array($value = $this->get($key)))
-        {
+        if ($this->has($key) && is_array($value = $this->get($key))) {
             $this->set($key, array_merge($value, $data));
         }
     }
@@ -586,10 +551,8 @@ class Session implements SessionInterface
      */
     public function remove($key)
     {
-        if (is_array($key))
-        {
-            foreach ($key as $k)
-            {
+        if (is_array($key)) {
+            foreach ($key as $k) {
                 unset($_SESSION[$k]);
             }
 
@@ -623,13 +586,11 @@ class Session implements SessionInterface
     {
         // Note: Keep this order the same, just in case somebody wants to
         //       use 'session_id' as a session data key, for whatever reason
-        if (isset($_SESSION[$key]))
-        {
+        if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }
 
-        if ($key === 'session_id')
-        {
+        if ($key === 'session_id') {
             return session_id();
         }
 
@@ -683,20 +644,16 @@ class Session implements SessionInterface
      */
     public function getFlashdata(string $key = null)
     {
-        if (isset($key))
-        {
+        if (isset($key)) {
             return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key]) &&
                     ! is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
         }
 
         $flashdata = [];
 
-        if (! empty($_SESSION['__ci_vars']))
-        {
-            foreach ($_SESSION['__ci_vars'] as $key => &$value)
-            {
-                if (! is_int($value))
-                {
+        if (! empty($_SESSION['__ci_vars'])) {
+            foreach ($_SESSION['__ci_vars'] as $key => &$value) {
+                if (! is_int($value)) {
                     $flashdata[$key] = $_SESSION[$key];
                 }
             }
@@ -724,12 +681,9 @@ class Session implements SessionInterface
      */
     public function markAsFlashdata($key): bool
     {
-        if (is_array($key))
-        {
-            foreach ($key as $sessionKey)
-            {
-                if (! isset($_SESSION[$sessionKey]))
-                {
+        if (is_array($key)) {
+            foreach ($key as $sessionKey) {
+                if (! isset($_SESSION[$sessionKey])) {
                     return false;
                 }
             }
@@ -741,8 +695,7 @@ class Session implements SessionInterface
             return true;
         }
 
-        if (! isset($_SESSION[$key]))
-        {
+        if (! isset($_SESSION[$key])) {
             return false;
         }
 
@@ -758,26 +711,21 @@ class Session implements SessionInterface
      */
     public function unmarkFlashdata($key)
     {
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             return;
         }
 
-        if (! is_array($key))
-        {
+        if (! is_array($key)) {
             $key = [$key];
         }
 
-        foreach ($key as $k)
-        {
-            if (isset($_SESSION['__ci_vars'][$k]) && ! is_int($_SESSION['__ci_vars'][$k]))
-            {
+        foreach ($key as $k) {
+            if (isset($_SESSION['__ci_vars'][$k]) && ! is_int($_SESSION['__ci_vars'][$k])) {
                 unset($_SESSION['__ci_vars'][$k]);
             }
         }
 
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             unset($_SESSION['__ci_vars']);
         }
     }
@@ -789,17 +737,14 @@ class Session implements SessionInterface
      */
     public function getFlashKeys(): array
     {
-        if (! isset($_SESSION['__ci_vars']))
-        {
+        if (! isset($_SESSION['__ci_vars'])) {
             return [];
         }
 
         $keys = [];
 
-        foreach (array_keys($_SESSION['__ci_vars']) as $key)
-        {
-            if (! is_int($_SESSION['__ci_vars'][$key]))
-            {
+        foreach (array_keys($_SESSION['__ci_vars']) as $key) {
+            if (! is_int($_SESSION['__ci_vars'][$key])) {
                 $keys[] = $key;
             }
         }
@@ -834,20 +779,16 @@ class Session implements SessionInterface
      */
     public function getTempdata(string $key = null)
     {
-        if (isset($key))
-        {
+        if (isset($key)) {
             return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key]) &&
                     is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
         }
 
         $tempdata = [];
 
-        if (! empty($_SESSION['__ci_vars']))
-        {
-            foreach ($_SESSION['__ci_vars'] as $key => &$value)
-            {
-                if (is_int($value))
-                {
+        if (! empty($_SESSION['__ci_vars'])) {
+            foreach ($_SESSION['__ci_vars'] as $key => &$value) {
+                if (is_int($value)) {
                     $tempdata[$key] = $_SESSION[$key];
                 }
             }
@@ -880,29 +821,21 @@ class Session implements SessionInterface
     {
         $ttl += time();
 
-        if (is_array($key))
-        {
+        if (is_array($key)) {
             $temp = [];
 
-            foreach ($key as $k => $v)
-            {
+            foreach ($key as $k => $v) {
                 // Do we have a key => ttl pair, or just a key?
-                if (is_int($k))
-                {
+                if (is_int($k)) {
                     $k = $v;
                     $v = $ttl;
-                }
-                elseif (is_string($v))
-                {
+                } elseif (is_string($v)) {
                     $v = time() + $ttl;
-                }
-                else
-                {
+                } else {
                     $v += time();
                 }
 
-                if (! array_key_exists($k, $_SESSION))
-                {
+                if (! array_key_exists($k, $_SESSION)) {
                     return false;
                 }
 
@@ -914,8 +847,7 @@ class Session implements SessionInterface
             return true;
         }
 
-        if (! isset($_SESSION[$key]))
-        {
+        if (! isset($_SESSION[$key])) {
             return false;
         }
 
@@ -932,26 +864,21 @@ class Session implements SessionInterface
      */
     public function unmarkTempdata($key)
     {
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             return;
         }
 
-        if (! is_array($key))
-        {
+        if (! is_array($key)) {
             $key = [$key];
         }
 
-        foreach ($key as $k)
-        {
-            if (isset($_SESSION['__ci_vars'][$k]) && is_int($_SESSION['__ci_vars'][$k]))
-            {
+        foreach ($key as $k) {
+            if (isset($_SESSION['__ci_vars'][$k]) && is_int($_SESSION['__ci_vars'][$k])) {
                 unset($_SESSION['__ci_vars'][$k]);
             }
         }
 
-        if (empty($_SESSION['__ci_vars']))
-        {
+        if (empty($_SESSION['__ci_vars'])) {
             unset($_SESSION['__ci_vars']);
         }
     }
@@ -963,17 +890,14 @@ class Session implements SessionInterface
      */
     public function getTempKeys(): array
     {
-        if (! isset($_SESSION['__ci_vars']))
-        {
+        if (! isset($_SESSION['__ci_vars'])) {
             return [];
         }
 
         $keys = [];
 
-        foreach (array_keys($_SESSION['__ci_vars']) as $key)
-        {
-            if (is_int($_SESSION['__ci_vars'][$key]))
-            {
+        foreach (array_keys($_SESSION['__ci_vars']) as $key) {
+            if (is_int($_SESSION['__ci_vars'][$key])) {
                 $keys[] = $key;
             }
         }
@@ -996,8 +920,7 @@ class Session implements SessionInterface
      */
     protected function startSession()
     {
-        if (ENVIRONMENT === 'testing')
-        {
+        if (ENVIRONMENT === 'testing') {
             $_SESSION = [];
 
             return;

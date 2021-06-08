@@ -8,7 +8,6 @@ use CodeIgniter\CodeIgniter;
 
 class AppInfo extends BaseCommand
 {
-
     protected $group       = 'demo';
     protected $name        = 'app:info';
     protected $arguments   = ['draft' => 'unused'];
@@ -21,12 +20,9 @@ class AppInfo extends BaseCommand
 
     public function bomb()
     {
-        try
-        {
+        try {
             CLI::color('test', 'white', 'Background');
-        }
-        catch (\RuntimeException $oops)
-        {
+        } catch (\RuntimeException $oops) {
             $this->showError($oops);
         }
     }

@@ -7,7 +7,6 @@ use Locale;
 
 class TimeDifferenceTest extends CIUnitTestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -244,5 +243,4 @@ class TimeDifferenceTest extends CIUnitTestCase
 
         $this->assertFalse(isset($diff->nonsense));
     }
-
 }

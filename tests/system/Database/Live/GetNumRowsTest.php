@@ -43,5 +43,4 @@ class GetNumRowsTest extends CIUnitTestCase
         $query = $this->db->table('job')->get();
         $this->assertEquals(4, $query->getNumRows());
     }
-
 }

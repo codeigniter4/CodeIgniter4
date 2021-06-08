@@ -65,19 +65,15 @@ class Files extends BaseCollector
         $coreFiles = [];
         $userFiles = [];
 
-        foreach ($rawFiles as $file)
-        {
+        foreach ($rawFiles as $file) {
             $path = $this->cleanPath($file);
 
-            if (strpos($path, 'SYSTEMPATH') !== false)
-            {
+            if (strpos($path, 'SYSTEMPATH') !== false) {
                 $coreFiles[] = [
                     'name' => basename($file),
                     'path' => $path,
                 ];
-            }
-            else
-            {
+            } else {
                 $userFiles[] = [
                     'name' => basename($file),
                     'path' => $path,

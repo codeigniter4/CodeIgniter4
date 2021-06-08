@@ -57,8 +57,7 @@ class PreparedQuery extends BasePreparedQuery
         /* Prepare  the query */
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
-        if (! $this->statement)
-        {
+        if (! $this->statement) {
             $info              = $this->db->error();
             $this->errorCode   = $info['code'];
             $this->errorString = $info['message'];
@@ -77,13 +76,11 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
-        if (! isset($this->statement))
-        {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $this->parameters[$key] = $value;
         }
 
@@ -115,8 +112,7 @@ class PreparedQuery extends BasePreparedQuery
 
         $params = [];
 
-        for ($c = 0; $c < $numberOfVariables; $c++)
-        {
+        for ($c = 0; $c < $numberOfVariables; $c++) {
             $this->parameters[$c] = null;
             $params[]             = &$this->parameters[$c];
         }

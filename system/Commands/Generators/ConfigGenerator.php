@@ -95,8 +95,7 @@ class ConfigGenerator extends BaseCommand
     {
         $namespace = $this->getOption('namespace') ?? APP_NAMESPACE;
 
-        if ($namespace === APP_NAMESPACE)
-        {
+        if ($namespace === APP_NAMESPACE) {
             $class = substr($class, strlen($namespace . '\\'));
         }
 

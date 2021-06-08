@@ -41,8 +41,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _prepare(string $sql, array $options = [])
     {
-        if (! ($this->statement = $this->db->connID->prepare($sql)))
-        {
+        if (! ($this->statement = $this->db->connID->prepare($sql))) {
             $this->errorCode   = $this->db->connID->lastErrorCode();
             $this->errorString = $this->db->connID->lastErrorMsg();
         }
@@ -62,24 +61,17 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
-        if (! isset($this->statement))
-        {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
-        foreach ($data as $key => $item)
-        {
+        foreach ($data as $key => $item) {
             // Determine the type string
-            if (is_int($item))
-            {
+            if (is_int($item)) {
                 $bindType = SQLITE3_INTEGER;
-            }
-            elseif (is_float($item))
-            {
+            } elseif (is_float($item)) {
                 $bindType = SQLITE3_FLOAT;
-            }
-            else
-            {
+            } else {
                 $bindType = SQLITE3_TEXT;
             }
 

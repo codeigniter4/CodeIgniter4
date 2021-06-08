@@ -43,5 +43,4 @@ class PrefixTest extends CIUnitTestCase
         $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
-
 }

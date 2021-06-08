@@ -95,18 +95,15 @@ trait ControllerTester
      */
     protected function setUpControllerTester(): void
     {
-        if (empty($this->appConfig))
-        {
+        if (empty($this->appConfig)) {
             $this->appConfig = config('App');
         }
 
-        if (! $this->uri instanceof URI)
-        {
+        if (! $this->uri instanceof URI) {
             $this->uri = Services::uri($this->appConfig->baseURL ?? 'http://example.com/', false);
         }
 
-        if (empty($this->request))
-        {
+        if (empty($this->request)) {
             // Do some acrobatics so we can use the Request service with our own URI
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
@@ -117,13 +114,11 @@ trait ControllerTester
             Services::injectMock('uri', $tempUri);
         }
 
-        if (empty($this->response))
-        {
+        if (empty($this->response)) {
             $this->response = Services::response($this->appConfig, false);
         }
 
-        if (empty($this->logger))
-        {
+        if (empty($this->logger)) {
             $this->logger = Services::logger();
         }
     }
@@ -137,8 +132,7 @@ trait ControllerTester
      */
     public function controller(string $name)
     {
-        if (! class_exists($name))
-        {
+        if (! class_exists($name)) {
             throw new InvalidArgumentException('Invalid Controller: ' . $name);
         }
 
@@ -160,8 +154,7 @@ trait ControllerTester
      */
     public function execute(string $method, ...$params)
     {
-        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
-        {
+        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method])) {
             throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
         }
 
@@ -175,54 +168,41 @@ trait ControllerTester
 
         $response = null;
 
-        try
-        {
+        try {
             ob_start();
 
             $response = $this->controller->{$method}(...$params);
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             $code = $e->getCode();
 
             // If code is not a valid HTTP status then assume there is an error
-            if ($code < 100 || $code >= 600)
-            {
+            if ($code < 100 || $code >= 600) {
                 throw $e;
             }
 
             $result->response()->setStatusCode($code);
-        }
-        finally
-        {
+        } finally {
             $output = ob_get_clean();
 
             // If the controller returned a response, use it
-            if (isset($response) && $response instanceof Response)
-            {
+            if (isset($response) && $response instanceof Response) {
                 $result->setResponse($response);
             }
 
             // check if controller returned a view rather than echoing it
-            if (is_string($response))
-            {
+            if (is_string($response)) {
                 $output = $response;
                 $result->response()->setBody($output);
                 $result->setBody($output);
-            }
-            elseif (! empty($response) && ! empty($response->getBody()))
-            {
+            } elseif (! empty($response) && ! empty($response->getBody())) {
                 $result->setBody($response->getBody());
-            }
-            else
-            {
+            } else {
                 $result->setBody('');
             }
         }
 
         // If not response code has been sent, assume a success
-        if (empty($result->response()->getStatusCode()))
-        {
+        if (empty($result->response()->getStatusCode())) {
             $result->response()->setStatusCode(200);
         }
 

@@ -185,8 +185,7 @@ class WincacheHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        if ($stored = wincache_ucache_info(false, $key))
-        {
+        if ($stored = wincache_ucache_info(false, $key)) {
             $age      = $stored['ucache_entries'][1]['age_seconds'];
             $ttl      = $stored['ucache_entries'][1]['ttl_seconds'];
             $hitcount = $stored['ucache_entries'][1]['hitcount'];
