@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Publisher\Publisher;
@@ -203,6 +203,7 @@ class PublisherSupportTest extends CIUnitTestCase
 		$directory = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6));
 		mkdir($directory, 0700);
 		$this->assertDirectoryExists($directory);
+		config('Publisher')->restrictions[$directory] = ''; // Allow the directory
 
 		$publisher = new Publisher($this->directory, $directory);
 		$publisher->wipe();
