@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Publisher\Publisher;
@@ -68,6 +68,9 @@ class PublisherOutputTest extends CIUnitTestCase
 		];
 
 		$this->root = vfsStream::setup('root', null, $this->structure);
+
+		// Add root to the list of allowed destinations
+		config('Publisher')->restrictions[$this->root->url()] = '*';
 	}
 
 	//--------------------------------------------------------------------

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Pager;
+<?php
 
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use CodeIgniter\Publisher\Publisher;

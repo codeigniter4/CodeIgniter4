@@ -73,6 +73,14 @@ class Publisher
 	private $published = [];
 
 	/**
+	 * List of allowed directories and their allowed files regex.
+	 * Restrictions are intentionally private to prevent overriding.
+	 *
+	 * @var array<string,string>
+	 */
+	private $restrictions;
+
+	/**
 	 * Base path to use for the source.
 	 *
 	 * @var string
@@ -134,6 +142,8 @@ class Publisher
 	 * @param string $directory
 	 *
 	 * @return string
+	 *
+	 * @throws PublisherException
 	 */
 	private static function resolveDirectory(string $directory): string
 	{
@@ -152,6 +162,8 @@ class Publisher
 	 * @param string $file
 	 *
 	 * @return string
+	 *
+	 * @throws PublisherException
 	 */
 	private static function resolveFile(string $file): string
 	{
@@ -191,7 +203,7 @@ class Publisher
 	 *
 	 * @return string[]
 	 */
-	private static function matchFiles(array $files, string $pattern)
+	private static function matchFiles(array $files, string $pattern): array
 	{
 		// Convert pseudo-regex into their true form
 		if (@preg_match($pattern, null) === false) // @phpstan-ignore-line
@@ -236,49 +248,6 @@ class Publisher
 		}
 	}
 
-	/**
-	 * Copies a file with directory creation and identical file awareness.
-	 * Intentionally allows errors.
-	 *
-	 * @param string  $from
-	 * @param string  $to
-	 * @param boolean $replace
-	 *
-	 * @return void
-	 *
-	 * @throws PublisherException For unresolvable collisions
-	 */
-	private static function safeCopyFile(string $from, string $to, bool $replace): void
-	{
-		// Check for an existing file
-		if (file_exists($to))
-		{
-			// If not replacing or if files are identical then consider successful
-			if (! $replace || same_file($from, $to))
-			{
-				return;
-			}
-
-			// If it is a directory then do not try to remove it
-			if (is_dir($to))
-			{
-				throw PublisherException::forCollision($from, $to);
-			}
-
-			// Try to remove anything else
-			unlink($to);
-		}
-
-		// Make sure the directory exists
-		if (! is_dir($directory = pathinfo($to, PATHINFO_DIRNAME)))
-		{
-			mkdir($directory, 0775, true);
-		}
-
-		// Allow copy() to throw errors
-		copy($from, $to);
-	}
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -293,6 +262,20 @@ class Publisher
 
 		$this->source      = self::resolveDirectory($source ?? $this->source);
 		$this->destination = self::resolveDirectory($destination ?? $this->destination);
+
+		// Restrictions are intentionally not injected to prevent overriding
+		$this->restrictions = config('Publisher')->restrictions;
+
+		// Make sure the destination is allowed
+		foreach (array_keys($this->restrictions) as $directory)
+		{
+			if (strpos($this->destination, $directory) === 0)
+			{
+				return;
+			}
+		}
+
+		throw PublisherException::forDestinationNotAllowed($this->destination);
 	}
 
 	/**
@@ -314,6 +297,8 @@ class Publisher
 	 * discovery.
 	 *
 	 * @return boolean
+	 *
+	 * @throws RuntimeException
 	 */
 	public function publish(): bool
 	{
@@ -683,7 +668,7 @@ class Publisher
 
 			try
 			{
-				self::safeCopyFile($file, $to, $replace);
+				$this->safeCopyFile($file, $to, $replace);
 				$this->published[] = $to;
 			}
 			catch (Throwable $e)
@@ -707,7 +692,7 @@ class Publisher
 	{
 		$this->errors = $this->published = [];
 
-		// Get the file from source for special handling
+		// Get the files from source for special handling
 		$sourced = self::filterFiles($this->getFiles(), $this->source);
 
 		// Handle everything else with a flat copy
@@ -722,7 +707,7 @@ class Publisher
 
 			try
 			{
-				self::safeCopyFile($file, $to, $replace);
+				$this->safeCopyFile($file, $to, $replace);
 				$this->published[] = $to;
 			}
 			catch (Throwable $e)
@@ -732,5 +717,57 @@ class Publisher
 		}
 
 		return $this->errors === [];
+	}
+
+	/**
+	 * Copies a file with directory creation and identical file awareness.
+	 * Intentionally allows errors.
+	 *
+	 * @param string  $from
+	 * @param string  $to
+	 * @param boolean $replace
+	 *
+	 * @return void
+	 *
+	 * @throws PublisherException For collisions and restriction violations
+	 */
+	private function safeCopyFile(string $from, string $to, bool $replace): void
+	{
+		// Verify this is an allowed file for its destination
+		foreach ($this->restrictions as $directory => $pattern)
+		{
+			if (strpos($to, $directory) === 0 && self::matchFiles([$to], $pattern) === [])
+			{
+				throw PublisherException::forFileNotAllowed($from, $directory, $pattern);
+			}
+		}
+
+		// Check for an existing file
+		if (file_exists($to))
+		{
+			// If not replacing or if files are identical then consider successful
+			if (! $replace || same_file($from, $to))
+			{
+				return;
+			}
+
+			// If it is a directory then do not try to remove it
+			if (is_dir($to))
+			{
+				throw PublisherException::forCollision($from, $to);
+			}
+
+			// Try to remove anything else
+			unlink($to);
+		}
+
+		// Make sure the directory exists
+		if (! is_dir($directory = pathinfo($to, PATHINFO_DIRNAME)))
+		{
+			mkdir($directory, 0775, true);
+		}
+
+		// Allow copy() to throw errors
+		copy($from, $to);
 	}
 }
