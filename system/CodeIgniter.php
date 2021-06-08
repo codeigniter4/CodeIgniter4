@@ -288,6 +288,7 @@ class CodeIgniter
      * @param bool                          $returnResponse
      *
      * @return bool|RequestInterface|ResponseInterface|mixed
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -366,6 +367,7 @@ class CodeIgniter
      * @param bool                          $returnResponse
      *
      * @return RequestInterface|ResponseInterface|mixed
+     *
      * @throws RedirectException
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
@@ -741,6 +743,7 @@ class CodeIgniter
      *                                              of the config file.
      *
      * @return string|null
+     *
      * @throws RedirectException
      */
     protected function tryToRouteIt(RouteCollectionInterface $routes = null)

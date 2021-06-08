@@ -193,6 +193,7 @@ class Forge
      * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
@@ -247,6 +248,7 @@ class Forge
      * @param string $dbName
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     private function databaseExists(string $dbName): bool
@@ -270,6 +272,7 @@ class Forge
      * @param string $dbName
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function dropDatabase(string $dbName): bool
@@ -405,6 +408,7 @@ class Forge
      * @param string $onDelete
      *
      * @return Forge
+     *
      * @throws DatabaseException
      */
     public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
@@ -430,6 +434,7 @@ class Forge
      * @param string $foreignName Foreign name
      *
      * @return bool|BaseResult|Query|false|mixed
+     *
      * @throws DatabaseException
      */
     public function dropForeignKey(string $table, string $foreignName)
@@ -458,6 +463,7 @@ class Forge
      * @param array  $attributes  Associative array of table attributes
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function createTable(string $table, bool $ifNotExists = false, array $attributes = [])
@@ -587,6 +593,7 @@ class Forge
      * @param bool   $cascade   Whether to add an CASCADE condition
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function dropTable(string $tableName, bool $ifExists = false, bool $cascade = false)
@@ -665,6 +672,7 @@ class Forge
      * @param string $newTableName New table name
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function renameTable(string $tableName, string $newTableName)
@@ -706,6 +714,7 @@ class Forge
      * @param string|array $field Column definition
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function addColumn(string $table, $field): bool
@@ -747,6 +756,7 @@ class Forge
      * @param string|array $columnName Column name Array or comma separated
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function dropColumn(string $table, $columnName)
@@ -772,6 +782,7 @@ class Forge
      * @param string|array $field Column definition
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function modifyColumn(string $table, $field): bool

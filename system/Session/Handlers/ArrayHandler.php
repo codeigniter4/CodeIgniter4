@@ -32,6 +32,7 @@ class ArrayHandler extends BaseHandler
      * @param string $name     Session cookie name
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function open($savePath, $name): bool

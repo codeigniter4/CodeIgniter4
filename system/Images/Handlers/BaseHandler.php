@@ -395,6 +395,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param int $blue
      *
      * @return $this
+     *
      * @internal
      */
     protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);

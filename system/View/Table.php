@@ -86,7 +86,8 @@ class Table
     /**
      * Set the template from the table config file if it exists
      *
-     * @param  array $config (default: array())
+     * @param array $config (default: array())
+     *
      * @return void
      */
     public function __construct($config = [])
@@ -100,7 +101,8 @@ class Table
     /**
      * Set the template
      *
-     * @param  array $template
+     * @param array $template
+     *
      * @return bool
      */
     public function setTemplate($template)
@@ -190,7 +192,8 @@ class Table
      *
      * Can be passed as an array or discreet params
      *
-     * @param  mixed $value
+     * @param mixed $value
+     *
      * @return Table
      */
     public function setEmpty($value)
@@ -219,7 +222,8 @@ class Table
      *
      * Ensures a standard associative array format for all cell data
      *
-     * @param  array $args
+     * @param array $args
+     *
      * @return array
      */
     protected function _prepArgs(array $args)
@@ -243,7 +247,8 @@ class Table
     /**
      * Add a table caption
      *
-     * @param  string $caption
+     * @param string $caption
+     *
      * @return Table
      */
     public function setCaption($caption)
@@ -400,7 +405,8 @@ class Table
     /**
      * Set table data from a database result object
      *
-     * @param  BaseResult $object Database result object
+     * @param BaseResult $object Database result object
+     *
      * @return void
      */
     protected function _setFromDBResult($object)

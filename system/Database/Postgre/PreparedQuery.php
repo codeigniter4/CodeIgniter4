@@ -48,6 +48,7 @@ class PreparedQuery extends BasePreparedQuery
      *                        Unused in the MySQLi driver.
      *
      * @return mixed
+     *
      * @throws Exception
      */
     public function _prepare(string $sql, array $options = [])

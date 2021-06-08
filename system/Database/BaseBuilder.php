@@ -248,9 +248,10 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param  string|array        $tableName
-     * @param  ConnectionInterface $db
-     * @param  array               $options
+     * @param string|array        $tableName
+     * @param ConnectionInterface $db
+     * @param array               $options
+     *
      * @throws DatabaseException
      */
     public function __construct($tableName, ConnectionInterface &$db, array $options = null)
@@ -494,6 +495,7 @@ class BaseBuilder
      * @param string $type
      *
      * @return $this
+     *
      * @throws DataException
      * @throws DatabaseException
      */
@@ -959,12 +961,13 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
-     * @param  string                   $key    The field to search
-     * @param  array|Closure|null       $values The values searched on, or anonymous function with subquery
-     * @param  bool                     $not    If the statement would be IN or NOT IN
-     * @param  string                   $type
-     * @param  bool                     $escape
-     * @param  string                   $clause (Internal use only)
+     * @param string             $key    The field to search
+     * @param array|Closure|null $values The values searched on, or anonymous function with subquery
+     * @param bool               $not    If the statement would be IN or NOT IN
+     * @param string             $type
+     * @param bool               $escape
+     * @param string             $clause (Internal use only)
+     *
      * @throws InvalidArgumentException
      *
      * @return $this
@@ -1957,7 +1960,8 @@ class BaseBuilder
      * @param bool  $escape    Whether to escape values and identifiers
      * @param int   $batchSize Batch size
      *
-     * @return int|false         Number of rows inserted or FALSE on failure
+     * @return int|false Number of rows inserted or FALSE on failure
+     *
      * @throws DatabaseException
      */
     public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
@@ -2161,6 +2165,7 @@ class BaseBuilder
      * has been chosen to be inserted into.
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     protected function validateInsert(): bool
@@ -2203,6 +2208,7 @@ class BaseBuilder
      * @param array $set An associative array of insert values
      *
      * @return BaseResult|Query|string|false
+     *
      * @throws DatabaseException
      */
     public function replace(array $set = null)
@@ -2383,6 +2389,7 @@ class BaseBuilder
      * chosen to be update.
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     protected function validateUpdate(): bool
@@ -2410,7 +2417,8 @@ class BaseBuilder
      * @param string $index     The where key
      * @param int    $batchSize The size of the batch to run
      *
-     * @return mixed             Number of rows affected, SQL string, or FALSE on failure
+     * @return mixed Number of rows affected, SQL string, or FALSE on failure
+     *
      * @throws DatabaseException
      */
     public function updateBatch(array $set = null, string $index = null, int $batchSize = 100)
@@ -2523,6 +2531,7 @@ class BaseBuilder
      * @param bool         $escape
      *
      * @return $this|null
+     *
      * @throws DatabaseException
      */
     public function setUpdateBatch($key, string $index = '', bool $escape = null)
@@ -2661,6 +2670,7 @@ class BaseBuilder
      * @param bool  $resetData
      *
      * @return string|bool
+     *
      * @throws DatabaseException
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)

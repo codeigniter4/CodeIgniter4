@@ -45,6 +45,7 @@ class Connection extends BaseConnection
      * @param bool $persistent
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
@@ -214,6 +215,7 @@ class Connection extends BaseConnection
      * @param string $table Table name
      *
      * @return array|false
+     *
      * @throws DatabaseException
      */
     public function getFieldNames(string $table)

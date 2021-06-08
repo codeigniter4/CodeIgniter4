@@ -421,6 +421,7 @@ if (! function_exists('esc')) {
      * @param string       $encoding
      *
      * @return string|array
+     *
      * @throws InvalidArgumentException
      */
     function esc($data, string $context = 'html', string $encoding = null)
@@ -549,9 +550,11 @@ if (! function_exists('function_usable')) {
      * be just temporary, but would probably be kept for a few years.
      *
      * @link   http://www.hardened-php.net/suhosin/
-     * @param  string $functionName Function to check for
-     * @return bool   TRUE if the function exists and is safe to call,
-     *                             FALSE otherwise.
+     *
+     * @param string $functionName Function to check for
+     *
+     * @return bool TRUE if the function exists and is safe to call,
+     *              FALSE otherwise.
      *
      * @codeCoverageIgnore This is too exotic
      */
@@ -581,7 +584,8 @@ if (! function_exists('helper')) {
      *   2. {namespace}/Helpers
      *   3. system/Helpers
      *
-     * @param  string|array          $filenames
+     * @param string|array $filenames
+     *
      * @throws FileNotFoundException
      */
     function helper($filenames)
@@ -1175,6 +1179,7 @@ if (! function_exists('view_cell')) {
      * @param string|null $cacheName
      *
      * @return string
+     *
      * @throws ReflectionException
      */
     function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string

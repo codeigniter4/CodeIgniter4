@@ -122,6 +122,7 @@ class View implements RendererInterface
      * if any.
      *
      * @var string|null
+     *
      * @deprecated
      */
     protected $currentSection;
@@ -421,6 +422,7 @@ class View implements RendererInterface
      * Captures the last section
      *
      * @return void
+     *
      * @throws RuntimeException
      */
     public function endSection()

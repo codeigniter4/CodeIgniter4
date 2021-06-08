@@ -367,6 +367,7 @@ class GDHandler extends BaseHandler
      * @param int    $imageType Image type
      *
      * @return resource|bool
+     *
      * @throws ImageException
      */
     protected function getImageResource(string $path, int $imageType)

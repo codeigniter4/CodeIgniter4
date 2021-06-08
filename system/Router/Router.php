@@ -126,6 +126,7 @@ class Router implements RouterInterface
      * @param string|null $uri
      *
      * @return mixed|string
+     *
      * @throws RedirectException
      * @throws PageNotFoundException
      */
@@ -652,7 +653,8 @@ class Router implements RouterInterface
      *
      * regex comes from https://www.php.net/manual/en/language.variables.basics.php
      *
-     * @param  string $segment
+     * @param string $segment
+     *
      * @return bool
      */
     private function isValidSegment(string $segment): bool

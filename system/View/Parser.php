@@ -273,8 +273,9 @@ class Parser extends View
     /**
      * Parse a single key/value, extracting it
      *
-     * @param  string $key
-     * @param  string $val
+     * @param string $key
+     * @param string $val
+     *
      * @return array
      */
     protected function parseSingle(string $key, string $val): array
@@ -291,9 +292,10 @@ class Parser extends View
      *
      * Parses tag pairs: {some_tag} string... {/some_tag}
      *
-     * @param  string $variable
-     * @param  array  $data
-     * @param  string $template
+     * @param string $variable
+     * @param array  $data
+     * @param string $template
+     *
      * @return array
      */
     protected function parsePair(string $variable, array $data, string $template): array
@@ -503,8 +505,9 @@ class Parser extends View
     /**
      * Over-ride the substitution field delimiters.
      *
-     * @param  string            $leftDelimiter
-     * @param  string            $rightDelimiter
+     * @param string $leftDelimiter
+     * @param string $rightDelimiter
+     *
      * @return RendererInterface
      */
     public function setDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
@@ -727,8 +730,7 @@ class Parser extends View
      *
      * @param string   $alias
      * @param callable $callback
-     *
-     * @param bool $isPair
+     * @param bool     $isPair
      *
      * @return $this
      */

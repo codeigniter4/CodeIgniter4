@@ -114,6 +114,7 @@ abstract class BaseCommand
      * @param array  $params
      *
      * @return mixed
+     *
      * @throws ReflectionException
      */
     protected function call(string $command, array $params = [])

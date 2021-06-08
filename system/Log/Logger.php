@@ -114,8 +114,9 @@ class Logger implements LoggerInterface
     /**
      * Constructor.
      *
-     * @param  \Config\Logger   $config
-     * @param  bool             $debug
+     * @param \Config\Logger $config
+     * @param bool           $debug
+     *
      * @throws RuntimeException
      */
     public function __construct($config, bool $debug = CI_DEBUG)

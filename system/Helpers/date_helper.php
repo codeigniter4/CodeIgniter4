@@ -23,6 +23,7 @@ if (! function_exists('now')) {
      * @param string $timezone
      *
      * @return int
+     *
      * @throws Exception
      */
     function now(string $timezone = null): int
@@ -52,6 +53,7 @@ if (! function_exists('timezone_select')) {
      * @param string $country A two-letter ISO 3166-1 compatible country code (for listIdentifiers)
      *
      * @return string
+     *
      * @throws Exception
      */
     function timezone_select(string $class = '', string $default = '', int $what = DateTimeZone::ALL, string $country = null): string

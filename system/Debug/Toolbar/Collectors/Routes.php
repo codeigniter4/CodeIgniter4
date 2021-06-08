@@ -51,6 +51,7 @@ class Routes extends BaseCollector
      * Returns the data of this collector to be formatted in the toolbar
      *
      * @return array
+     *
      * @throws ReflectionException
      */
     public function display(): array

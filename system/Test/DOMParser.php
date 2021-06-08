@@ -273,7 +273,8 @@ class DOMParser
     /**
      * Look for the a selector  in the passed text.
      *
-     * @param  string $selector
+     * @param string $selector
+     *
      * @return array
      */
     public function parseSelector(string $selector)

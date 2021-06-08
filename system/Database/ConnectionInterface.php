@@ -196,7 +196,8 @@ interface ConnectionInterface
     /**
      * Determines if the statement is a write-type query or not.
      *
-     * @param  string $sql
+     * @param string $sql
+     *
      * @return bool
      */
     public function isWriteType($sql): bool;

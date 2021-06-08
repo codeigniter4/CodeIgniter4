@@ -296,7 +296,9 @@ class Toolbar
      *
      * @param RequestInterface  $request
      * @param ResponseInterface $response
+     *
      * @global \CodeIgniter\CodeIgniter $app
+     *
      * @return void
      */
     public function prepare(RequestInterface $request = null, ResponseInterface $response = null)

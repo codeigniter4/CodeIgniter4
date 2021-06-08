@@ -92,6 +92,7 @@ interface UploadedFileInterface
      * the file in the $_FILES array.
      *
      * @see    http://php.net/manual/en/features.file-upload.errors.php
+     *
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError(): int;

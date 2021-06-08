@@ -46,6 +46,7 @@ interface FabricatorModel
      * @param bool         $returnID Whether insert ID should be returned or not.
      *
      * @return int|string|bool
+     *
      * @throws ReflectionException
      */
     public function insert($data = null, bool $returnID = true);

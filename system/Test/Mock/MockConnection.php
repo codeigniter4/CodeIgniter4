@@ -239,7 +239,8 @@ class MockConnection extends BaseConnection
     }
 
     /**
-     * @param  string $table
+     * @param string $table
+     *
      * @return array
      */
     protected function _fieldData(string $table): array
@@ -248,7 +249,8 @@ class MockConnection extends BaseConnection
     }
 
     /**
-     * @param  string $table
+     * @param string $table
+     *
      * @return array
      */
     protected function _indexData(string $table): array
@@ -257,7 +259,8 @@ class MockConnection extends BaseConnection
     }
 
     /**
-     * @param  string $table
+     * @param string $table
+     *
      * @return array
      */
     protected function _foreignKeyData(string $table): array

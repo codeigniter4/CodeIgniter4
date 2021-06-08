@@ -43,6 +43,7 @@ class CommandRunner extends Controller
      * @param array  ...$params
      *
      * @return mixed
+     *
      * @throws ReflectionException
      */
     public function _remap($method, ...$params)
@@ -61,6 +62,7 @@ class CommandRunner extends Controller
      * @param array $params
      *
      * @return mixed
+     *
      * @throws ReflectionException
      */
     public function index(array $params)

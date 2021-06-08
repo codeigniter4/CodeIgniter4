@@ -184,6 +184,7 @@ class URI
      * @param string $path
      *
      * @return string
+     *
      * @internal
      */
     public static function removeDotSegments(string $path): string
@@ -321,6 +322,7 @@ class URI
      * added.
      *
      * @see    https://tools.ietf.org/html/rfc3986#section-3.1
+     *
      * @return string The URI scheme.
      */
     public function getScheme(): string
@@ -435,6 +437,7 @@ class URI
      * Section 3.2.2.
      *
      * @see    http://tools.ietf.org/html/rfc3986#section-3.2.2
+     *
      * @return string The URI host.
      */
     public function getHost(): string
@@ -489,6 +492,7 @@ class URI
      *
      * @see    https://tools.ietf.org/html/rfc3986#section-2
      * @see    https://tools.ietf.org/html/rfc3986#section-3.3
+     *
      * @return string The URI path.
      */
     public function getPath(): string

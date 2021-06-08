@@ -160,7 +160,8 @@ if (! function_exists('camelize')) {
      * Takes multiple words separated by spaces or
      * underscores and converts them to camel case.
      *
-     * @param  string $string Input string
+     * @param string $string Input string
+     *
      * @return string
      */
     function camelize(string $string): string

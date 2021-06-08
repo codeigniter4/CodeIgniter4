@@ -85,7 +85,8 @@ class Connection extends BaseConnection
     /**
      * Class constructor
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return void
      */
     public function __construct($params)
@@ -175,7 +176,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -572,7 +574,8 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param  string $sql An SQL query string
+     * @param string $sql An SQL query string
+     *
      * @return bool
      */
     public function isWriteType($sql): bool

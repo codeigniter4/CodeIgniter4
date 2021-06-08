@@ -147,7 +147,9 @@ class Builder extends BaseBuilder
      * @param array $set An associative array of insert values
      *
      * @return mixed
+     *
      * @throws DatabaseException
+     *
      * @internal param true $bool returns the generated SQL, false executes the query.
      */
     public function replace(array $set = null)
@@ -228,7 +230,9 @@ class Builder extends BaseBuilder
      * @param bool  $resetData
      *
      * @return mixed
+     *
      * @throws DatabaseException
+     *
      * @internal param the $mixed where clause
      * @internal param the $mixed limit clause
      * @internal param $bool
@@ -269,7 +273,9 @@ class Builder extends BaseBuilder
      * @param array  $values
      *
      * @return string
+     *
      * @throws DatabaseException
+     *
      * @internal param the $string table name
      * @internal param the $array update data
      */

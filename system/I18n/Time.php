@@ -114,6 +114,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function now($timezone = null, string $locale = null)
@@ -134,6 +135,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function parse(string $datetime, $timezone = null, string $locale = null)
@@ -150,6 +152,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function today($timezone = null, string $locale = null)
@@ -166,6 +169,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function yesterday($timezone = null, string $locale = null)
@@ -182,6 +186,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function tomorrow($timezone = null, string $locale = null)
@@ -202,6 +207,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function createFromDate(int $year = null, int $month = null, int $day = null, $timezone = null, string $locale = null)
@@ -221,6 +227,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function createFromTime(int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
@@ -243,6 +250,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function create(int $year = null, int $month = null, int $day = null, int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
@@ -268,6 +276,7 @@ class Time extends DateTime
      * @param DateTimeZone|string|null $timeZone
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function createFromFormat($format, $datetime, $timeZone = null)
@@ -289,6 +298,7 @@ class Time extends DateTime
      * @param string|null              $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function createFromTimestamp(int $timestamp, $timezone = null, string $locale = null)
@@ -305,6 +315,7 @@ class Time extends DateTime
      * @param string|null       $locale
      *
      * @return Time
+     *
      * @throws Exception
      */
     public static function createFromInstance(DateTimeInterface $dateTime, string $locale = null)
@@ -324,6 +335,7 @@ class Time extends DateTime
      * @param string|null $locale
      *
      * @return Time
+     *
      * @throws Exception
      *
      * @deprecated         Use createFromInstance() instead
@@ -340,6 +352,7 @@ class Time extends DateTime
      * Converts the current instance to a mutable DateTime object.
      *
      * @return DateTime
+     *
      * @throws Exception
      */
     public function toDateTime()
@@ -404,6 +417,7 @@ class Time extends DateTime
      * Returns the localized Year
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getYear(): string
@@ -417,6 +431,7 @@ class Time extends DateTime
      * Returns the localized Month
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getMonth(): string
@@ -430,6 +445,7 @@ class Time extends DateTime
      * Return the localized day of the month.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getDay(): string
@@ -443,6 +459,7 @@ class Time extends DateTime
      * Return the localized hour (in 24-hour format).
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getHour(): string
@@ -456,6 +473,7 @@ class Time extends DateTime
      * Return the localized minutes in the hour.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getMinute(): string
@@ -469,6 +487,7 @@ class Time extends DateTime
      * Return the localized seconds
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getSecond(): string
@@ -482,6 +501,7 @@ class Time extends DateTime
      * Return the index of the day of the week
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getDayOfWeek(): string
@@ -495,6 +515,7 @@ class Time extends DateTime
      * Return the index of the day of the year
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getDayOfYear(): string
@@ -508,6 +529,7 @@ class Time extends DateTime
      * Return the index of the week in the month
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getWeekOfMonth(): string
@@ -521,6 +543,7 @@ class Time extends DateTime
      * Return the index of the week in the year
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getWeekOfYear(): string
@@ -534,6 +557,7 @@ class Time extends DateTime
      * Returns the age in years from the "current" date and 'now'
      *
      * @return int
+     *
      * @throws Exception
      */
     public function getAge()
@@ -551,6 +575,7 @@ class Time extends DateTime
      * Returns the number of the current quarter for the year.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function getQuarter(): string
@@ -631,6 +656,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setYear($value)
@@ -644,6 +670,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setMonth($value)
@@ -665,6 +692,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setDay($value)
@@ -688,6 +716,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setHour($value)
@@ -705,6 +734,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setMinute($value)
@@ -722,6 +752,7 @@ class Time extends DateTime
      * @param int|string $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setSecond($value)
@@ -740,6 +771,7 @@ class Time extends DateTime
      * @param int    $value
      *
      * @return Time
+     *
      * @throws Exception
      */
     protected function setValue(string $name, $value)
@@ -766,6 +798,7 @@ class Time extends DateTime
      * @param string|DateTimeZone $timezone
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setTimezone($timezone)
@@ -781,6 +814,7 @@ class Time extends DateTime
      * @param int $timestamp
      *
      * @return Time
+     *
      * @throws Exception
      */
     public function setTimestamp($timestamp)
@@ -982,6 +1016,7 @@ class Time extends DateTime
      * Returns a localized version of the date in Y-m-d format.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function toDateString()
@@ -997,6 +1032,7 @@ class Time extends DateTime
      *  i.e. Apr 1, 2017
      *
      * @return string
+     *
      * @throws Exception
      */
     public function toFormattedDateString()
@@ -1012,6 +1048,7 @@ class Time extends DateTime
      *  i.e. 13:20:33
      *
      * @return string
+     *
      * @throws Exception
      */
     public function toTimeString()
@@ -1027,6 +1064,7 @@ class Time extends DateTime
      * @param string|null $format
      *
      * @return string|bool
+     *
      * @throws Exception
      */
     public function toLocalizedString(string $format = null)
@@ -1051,6 +1089,7 @@ class Time extends DateTime
      * @param string|null                   $timezone
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function equals($testTime, string $timezone = null): bool
@@ -1073,6 +1112,7 @@ class Time extends DateTime
      * @param string|null                   $timezone
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function sameAs($testTime, string $timezone = null): bool
@@ -1101,6 +1141,7 @@ class Time extends DateTime
      * @param string|null $timezone
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function isBefore($testTime, string $timezone = null): bool
@@ -1121,6 +1162,7 @@ class Time extends DateTime
      * @param string|null $timezone
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function isAfter($testTime, string $timezone = null): bool
@@ -1145,6 +1187,7 @@ class Time extends DateTime
      *  - 6 hours ago
      *
      * @return mixed
+     *
      * @throws Exception
      */
     public function humanize()
@@ -1197,6 +1240,7 @@ class Time extends DateTime
      * @param string|null $timezone
      *
      * @return TimeDifference
+     *
      * @throws Exception
      */
     public function difference($testTime, string $timezone = null)
@@ -1218,6 +1262,7 @@ class Time extends DateTime
      * @param string|null $timezone
      *
      * @return DateTime|static
+     *
      * @throws Exception
      */
     public function getUTCObject($time, string $timezone = null)
@@ -1247,6 +1292,7 @@ class Time extends DateTime
      * but available for public consumption if they need it.
      *
      * @return IntlCalendar
+     *
      * @throws Exception
      */
     public function getCalendar()
@@ -1279,6 +1325,7 @@ class Time extends DateTime
      * Outputs a short format version of the datetime.
      *
      * @return string
+     *
      * @throws Exception
      */
     public function __toString(): string

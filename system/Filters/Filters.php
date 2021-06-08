@@ -159,6 +159,7 @@ class Filters
      * @param string $position
      *
      * @return RequestInterface|ResponseInterface|mixed
+     *
      * @throws FilterException
      */
     public function run(string $uri, string $position = 'before')

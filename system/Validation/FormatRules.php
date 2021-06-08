@@ -157,7 +157,8 @@ class FormatRules
     /**
      * Is a Natural number  (0,1,2,3, etc.)
      *
-     * @param  string|null $str
+     * @param string|null $str
+     *
      * @return bool
      */
     public function is_natural(?string $str = null): bool
@@ -168,7 +169,8 @@ class FormatRules
     /**
      * Is a Natural number, but not a zero  (1,2,3, etc.)
      *
-     * @param  string|null $str
+     * @param string|null $str
+     *
      * @return bool
      */
     public function is_natural_no_zero(?string $str = null): bool
@@ -227,7 +229,8 @@ class FormatRules
      * Tests a string for characters outside of the Base64 alphabet
      * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return bool
      */
     public function valid_base64(string $str = null): bool

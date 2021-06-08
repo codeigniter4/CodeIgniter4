@@ -379,7 +379,8 @@ if (! function_exists('symbolic_permissions')) {
      * Takes a numeric value representing a file's permissions and returns
      * standard symbolic notation representing that value
      *
-     * @param  int    $perms Permissions
+     * @param int $perms Permissions
+     *
      * @return string
      */
     function symbolic_permissions(int $perms): string
@@ -430,7 +431,8 @@ if (! function_exists('octal_permissions')) {
      * Takes a numeric value representing a file's permissions and returns
      * a three character string representing the file's octal permissions
      *
-     * @param  int    $perms Permissions
+     * @param int $perms Permissions
+     *
      * @return string
      */
     function octal_permissions(int $perms): string

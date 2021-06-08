@@ -127,6 +127,7 @@ class Email
      * Number of characters to wrap at.
      *
      * @see Email::$wordWrap
+     *
      * @var int
      */
     public $wrapChars = 76;
@@ -171,6 +172,7 @@ class Email
      * Use "\r\n" to comply with RFC 822.
      *
      * @link http://www.ietf.org/rfc/rfc822.txt
+     *
      * @var string "\r\n" or "\n"
      */
     public $newline = "\n";
@@ -185,6 +187,7 @@ class Email
      * that seems to work for all environments.
      *
      * @link http://www.ietf.org/rfc/rfc822.txt
+     *
      * @var string
      */
     public $CRLF = "\n";
@@ -215,6 +218,7 @@ class Email
      * BCC Batch max number size.
      *
      * @see Email::$BCCBatchMode
+     *
      * @var int|string
      */
     public $BCCBatchSize = 200;
@@ -279,6 +283,7 @@ class Email
      * Debug messages
      *
      * @see Email::printDebugger()
+     *
      * @var array
      */
     protected $debugMessage = [];
@@ -322,6 +327,7 @@ class Email
      * Valid $protocol values
      *
      * @see Email::$protocol
+     *
      * @var array
      */
     protected $protocols = [
@@ -349,6 +355,7 @@ class Email
      * Valid mail encodings
      *
      * @see Email::$encoding
+     *
      * @var array
      */
     protected $bitDepths = [
@@ -1758,6 +1765,7 @@ class Email
      *
      * @see     https://github.com/codeigniter4/CodeIgniter/issues/4963
      * @see     https://gist.github.com/Zenexer/40d02da5e07f151adeaeeaa11af9ab36
+     *
      * @license https://creativecommons.org/publicdomain/zero/1.0/    CC0 1.0, Public Domain
      *
      * Credits for the base concept go to Paul Buonopane <paul@namepros.com>

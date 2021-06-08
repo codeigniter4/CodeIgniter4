@@ -65,6 +65,7 @@ abstract class BaseUtils
      * List databases
      *
      * @return array|bool
+     *
      * @throws DatabaseException
      */
     public function listDatabases()
@@ -101,7 +102,8 @@ abstract class BaseUtils
     /**
      * Determine if a particular database exists
      *
-     * @param  string $databaseName
+     * @param string $databaseName
+     *
      * @return bool
      */
     public function databaseExists(string $databaseName): bool
@@ -141,6 +143,7 @@ abstract class BaseUtils
      * Optimize Database
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function optimizeDatabase()

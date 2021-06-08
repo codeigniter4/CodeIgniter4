@@ -62,8 +62,9 @@ interface RequestInterface
      * Fetch an item from the $_SERVER array.
      * Supplied by RequestTrait.
      *
-     * @param  string $index  Index for item to be fetched from $_SERVER
-     * @param  null   $filter A filter name to be applied
+     * @param string $index  Index for item to be fetched from $_SERVER
+     * @param null   $filter A filter name to be applied
+     *
      * @return mixed
      */
     public function getServer($index = null, $filter = null);

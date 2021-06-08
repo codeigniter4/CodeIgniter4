@@ -199,7 +199,8 @@ class Forge extends BaseForge
     /**
      * Process indexes
      *
-     * @param  string $table (ignored)
+     * @param string $table (ignored)
+     *
      * @return string
      */
     protected function _processIndexes(string $table): string

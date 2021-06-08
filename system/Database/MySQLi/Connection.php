@@ -70,6 +70,7 @@ class Connection extends BaseConnection
      * @param bool $persistent
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
@@ -345,7 +346,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -365,7 +367,8 @@ class Connection extends BaseConnection
      * additional "ESCAPE x" parameter for specifying the escape character
      * in "LIKE" strings, and this handles those directly with a backslash.
      *
-     * @param  string|string[] $str Input string
+     * @param string|string[] $str Input string
+     *
      * @return string|string[]
      */
     public function escapeLikeStringDirect($str)

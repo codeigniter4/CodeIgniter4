@@ -41,6 +41,7 @@ use ReflectionProperty;
  *      - removes the need to use Result object directly in most cases
  *
  * @mixin    BaseBuilder
+ *
  * @property BaseConnection $db
  */
 class Model extends BaseModel
@@ -534,6 +535,7 @@ class Model extends BaseModel
      * @param string|null $table Table name
      *
      * @return BaseBuilder
+     *
      * @throws ModelException
      */
     public function builder(?string $table = null)

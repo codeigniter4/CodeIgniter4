@@ -569,10 +569,11 @@ class IncomingRequest extends Request
     /**
      * Get a specific variable from a JSON input stream
      *
-     * @param  string         $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param  bool           $assoc  If true, return the result as an associative array.
-     * @param  int|null       $filter Filter Constant
-     * @param  array|int|null $flags  Option
+     * @param string         $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param bool           $assoc  If true, return the result as an associative array.
+     * @param int|null       $filter Filter Constant
+     * @param array|int|null $flags  Option
+     *
      * @return mixed
      */
     public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)

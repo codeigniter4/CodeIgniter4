@@ -161,6 +161,7 @@ class DotEnv
      * @param string $value
      *
      * @return string
+     *
      * @throws InvalidArgumentException
      */
     protected function sanitizeValue(string $value): string

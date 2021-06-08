@@ -107,8 +107,9 @@ if (! function_exists('base_url')) {
      * Returns the base URL as defined by the App config.
      * Base URLs are trimmed site URLs without the index page.
      *
-     * @param  mixed  $relativePath URI string or array of URI segments
-     * @param  string $scheme
+     * @param mixed  $relativePath URI string or array of URI segments
+     * @param string $scheme
+     *
      * @return string
      */
     function base_url($relativePath = '', string $scheme = null): string
@@ -205,7 +206,8 @@ if (! function_exists('index_page')) {
      *
      * Returns the "index_page" from your config file
      *
-     * @param  App|null $altConfig Alternate configuration to use
+     * @param App|null $altConfig Alternate configuration to use
+     *
      * @return string
      */
     function index_page(App $altConfig = null): string
@@ -486,8 +488,9 @@ if (! function_exists('prep_url')) {
      * Formerly used URI, but that does not play nicely with URIs missing
      * the scheme.
      *
-     * @param  string $str    the URL
-     * @param  bool   $secure set true if you want to force https://
+     * @param string $str    the URL
+     * @param bool   $secure set true if you want to force https://
+     *
      * @return string
      */
     function prep_url(string $str = '', bool $secure = false): string
@@ -519,9 +522,10 @@ if (! function_exists('url_title')) {
      * human-friendly URL string with a "separator" string
      * as the word separator.
      *
-     * @param  string $str       Input string
-     * @param  string $separator Word separator (usually '-' or '_')
-     * @param  bool   $lowercase Whether to transform the output string to lowercase
+     * @param string $str       Input string
+     * @param string $separator Word separator (usually '-' or '_')
+     * @param bool   $lowercase Whether to transform the output string to lowercase
+     *
      * @return string
      */
     function url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -559,9 +563,10 @@ if (! function_exists('mb_url_title')) {
      * human-friendly URL string with a "separator" string
      * as the word separator.
      *
-     * @param  string $str       Input string
-     * @param  string $separator Word separator (usually '-' or '_')
-     * @param  bool   $lowercase Whether to transform the output string to lowercase
+     * @param string $str       Input string
+     * @param string $separator Word separator (usually '-' or '_')
+     * @param bool   $lowercase Whether to transform the output string to lowercase
+     *
      * @return string
      */
     function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string

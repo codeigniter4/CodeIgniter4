@@ -525,8 +525,9 @@ class TestResponse extends TestCase
     /**
      * Forward any unrecognized method calls to our DOMParser instance.
      *
-     * @param  string $function Method name
-     * @param  mixed  $params   Any method parameters
+     * @param string $function Method name
+     * @param mixed  $params   Any method parameters
+     *
      * @return mixed
      */
     public function __call($function, $params)

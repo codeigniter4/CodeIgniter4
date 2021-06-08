@@ -173,8 +173,9 @@ interface SessionInterface
      * Returns either a single piece of tempdata, or all temp data currently
      * in the session.
      *
-     * @param  string $key Session data key
-     * @return mixed  Session data value or null if not found.
+     * @param string $key Session data key
+     *
+     * @return mixed Session data value or null if not found.
      */
     public function getTempdata(string $key = null);
 

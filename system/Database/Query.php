@@ -348,8 +348,9 @@ class Query implements QueryInterface
     /**
      * Match bindings
      *
-     * @param  string $sql
-     * @param  array  $binds
+     * @param string $sql
+     * @param array  $binds
+     *
      * @return string
      */
     protected function matchNamedBinds(string $sql, array $binds): string
@@ -376,10 +377,11 @@ class Query implements QueryInterface
     /**
      * Match bindings
      *
-     * @param  string $sql
-     * @param  array  $binds
-     * @param  int    $bindCount
-     * @param  int    $ml
+     * @param string $sql
+     * @param array  $binds
+     * @param int    $bindCount
+     * @param int    $ml
+     *
      * @return string
      */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string

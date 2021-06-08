@@ -213,6 +213,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * the file in the $_FILES array.
      *
      * @see    http://php.net/manual/en/features.file-upload.errors.php
+     *
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError(): int
@@ -361,8 +362,9 @@ class UploadedFile extends File implements UploadedFileInterface
      * By default, upload files are saved in writable/uploads directory. The YYYYMMDD folder
      * and random file name will be created.
      *
-     * @param  string $folderName the folder name to writable/uploads directory.
-     * @param  string $fileName   the name to rename the file to.
+     * @param string $folderName the folder name to writable/uploads directory.
+     * @param string $fileName   the name to rename the file to.
+     *
      * @return string file full path
      */
     public function store(string $folderName = null, string $fileName = null): string

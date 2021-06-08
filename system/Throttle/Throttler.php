@@ -100,6 +100,7 @@ class Throttler implements ThrottlerInterface
      * @param int    $cost     The number of tokens this action uses.
      *
      * @return bool
+     *
      * @internal param int $maxRequests
      */
     public function check(string $key, int $capacity, int $seconds, int $cost = 1): bool

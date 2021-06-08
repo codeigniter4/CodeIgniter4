@@ -49,6 +49,7 @@ class DeleteTest extends CIUnitTestCase
     //--------------------------------------------------------------------
     /**
      * @group  single
+     *
      * @throws DatabaseException
      */
     public function testDeleteWithLimit()

@@ -65,6 +65,7 @@ class ImageMagickHandler extends BaseHandler
      * @param bool $maintainRatio
      *
      * @return ImageMagickHandler
+     *
      * @throws Exception
      */
     public function _resize(bool $maintainRatio = false)
@@ -93,6 +94,7 @@ class ImageMagickHandler extends BaseHandler
      * Crops the image.
      *
      * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
+     *
      * @throws Exception
      */
     public function _crop()
@@ -121,6 +123,7 @@ class ImageMagickHandler extends BaseHandler
      * @param int $angle
      *
      * @return $this
+     *
      * @throws Exception
      */
     protected function _rotate(int $angle)
@@ -147,6 +150,7 @@ class ImageMagickHandler extends BaseHandler
      * @param int $blue
      *
      * @return $this
+     *
      * @throws Exception
      */
     public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
@@ -171,6 +175,7 @@ class ImageMagickHandler extends BaseHandler
      * @param string $direction
      *
      * @return $this
+     *
      * @throws Exception
      */
     public function _flip(string $direction)
@@ -212,7 +217,8 @@ class ImageMagickHandler extends BaseHandler
      * @param string $action
      * @param int    $quality
      *
-     * @return array     Lines of output from shell command
+     * @return array Lines of output from shell command
+     *
      * @throws Exception
      */
     protected function process(string $action, int $quality = 100): array
@@ -310,6 +316,7 @@ class ImageMagickHandler extends BaseHandler
      * during the process, we'll use a PNG as the temp file type.
      *
      * @return string
+     *
      * @throws Exception
      */
     protected function getResourcePath()

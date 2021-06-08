@@ -74,6 +74,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Sub-driver
      *
      * @used-by CI_DB_pdo_driver
+     *
      * @var string
      */
     protected $subdriver;
@@ -322,6 +323,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Initializes the database connection/settings.
      *
      * @return mixed|void
+     *
      * @throws DatabaseException
      */
     public function initialize()
@@ -395,7 +397,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param  bool  $persistent
+     * @param bool $persistent
+     *
      * @return mixed
      */
     abstract public function connect(bool $persistent = false);
@@ -745,7 +748,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Start Transaction
      *
-     * @param  bool $testMode = FALSE
+     * @param bool $testMode
+     *
      * @return bool
      */
     public function transStart(bool $testMode = false): bool
@@ -805,7 +809,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Begin Transaction
      *
-     * @param  bool $testMode
+     * @param bool $testMode
+     *
      * @return bool
      */
     public function transBegin(bool $testMode = false): bool
@@ -919,6 +924,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string|array $tableName
      *
      * @return BaseBuilder
+     *
      * @throws DatabaseException
      */
     public function table($tableName)
@@ -1325,8 +1331,9 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param  string|string[] $str  Input string
-     * @param  bool            $like Whether or not the string will be used in a LIKE condition
+     * @param string|string[] $str  Input string
+     * @param bool            $like Whether or not the string will be used in a LIKE condition
+     *
      * @return string|string[]
      */
     public function escapeString($str, bool $like = false)
@@ -1366,7 +1373,8 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param  string|string[] $str
+     * @param string|string[] $str
+     *
      * @return string|string[]
      */
     public function escapeLikeString($str)
@@ -1400,6 +1408,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param array  ...$params
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function callFunction(string $functionName, ...$params): bool
@@ -1430,8 +1439,10 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an array of table names
      *
-     * @param  bool              $constrainByPrefix = FALSE
+     * @param bool $constrainByPrefix = FALSE
+     *
      * @return bool|array
+     *
      * @throws DatabaseException
      */
     public function listTables(bool $constrainByPrefix = false)
@@ -1483,7 +1494,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Determine if a particular table exists
      *
-     * @param  string $tableName
+     * @param string $tableName
+     *
      * @return bool
      */
     public function tableExists(string $tableName): bool
@@ -1499,6 +1511,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string $table Table name
      *
      * @return array|false
+     *
      * @throws DatabaseException
      */
     public function getFieldNames(string $table)
@@ -1547,8 +1560,9 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Determine if a particular field exists
      *
-     * @param  string $fieldName
-     * @param  string $tableName
+     * @param string $fieldName
+     * @param string $tableName
+     *
      * @return bool
      */
     public function fieldExists(string $fieldName, string $tableName): bool
@@ -1561,7 +1575,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @param  string $table the table name
+     * @param string $table the table name
+     *
      * @return array
      */
     public function getFieldData(string $table)
@@ -1574,7 +1589,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with key data
      *
-     * @param  string $table the table name
+     * @param string $table the table name
+     *
      * @return array
      */
     public function getIndexData(string $table)
@@ -1587,7 +1603,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with foreign key data
      *
-     * @param  string $table the table name
+     * @param string $table the table name
+     *
      * @return array
      */
     public function getForeignKeyData(string $table)
@@ -1657,7 +1674,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Determines if the statement is a write-type query or not.
      *
-     * @param  string $sql
+     * @param string $sql
+     *
      * @return bool
      */
     public function isWriteType($sql): bool
@@ -1715,7 +1733,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Platform-specific field data information.
      *
      * @param string $table
+     *
      * @see    getFieldData()
+     *
      * @return array
      */
     abstract protected function _fieldData(string $table): array;
@@ -1726,7 +1746,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Platform-specific index data.
      *
      * @param string $table
+     *
      * @see    getIndexData()
+     *
      * @return array
      */
     abstract protected function _indexData(string $table): array;
@@ -1737,7 +1759,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Platform-specific foreign keys data.
      *
      * @param string $table
+     *
      * @see    getForeignKeyData()
+     *
      * @return array
      */
     abstract protected function _foreignKeyData(string $table): array;

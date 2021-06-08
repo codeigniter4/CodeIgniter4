@@ -180,7 +180,8 @@ class CLI
      * Named options must be in the following formats:
      * php index.php user -v --v -name=John --name=John
      *
-     * @param  string $prefix
+     * @param string $prefix
+     *
      * @return string
      *
      * @codeCoverageIgnore

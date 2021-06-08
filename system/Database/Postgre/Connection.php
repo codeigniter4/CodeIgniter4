@@ -189,7 +189,8 @@ class Connection extends BaseConnection
      *
      * Escapes data based on type
      *
-     * @param  mixed $str
+     * @param mixed $str
+     *
      * @return mixed
      */
     public function escape($str)
@@ -214,7 +215,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -536,7 +538,8 @@ class Connection extends BaseConnection
     /**
      * Set client encoding
      *
-     * @param  string $charset The client encoding to which the data will be converted.
+     * @param string $charset The client encoding to which the data will be converted.
+     *
      * @return bool
      */
     protected function setClientEncoding(string $charset): bool
@@ -587,7 +590,8 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param  string $sql An SQL query string
+     * @param string $sql An SQL query string
+     *
      * @return bool
      */
     public function isWriteType($sql): bool

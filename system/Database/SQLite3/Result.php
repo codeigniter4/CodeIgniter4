@@ -109,6 +109,7 @@ class Result extends BaseResult
      * @param int $n
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function dataSeek(int $n = 0)

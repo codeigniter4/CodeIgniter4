@@ -78,6 +78,7 @@ class Forge extends BaseForge
      * @param string $dbName
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function dropDatabase(string $dbName): bool
@@ -270,6 +271,7 @@ class Forge extends BaseForge
      * @param string $foreignName Foreign name
      *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function dropForeignKey(string $table, string $foreignName): bool

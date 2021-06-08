@@ -30,6 +30,7 @@ trait ReflectionHelper
      * @param string        $method method name
      *
      * @return Closure
+     *
      * @throws ReflectionException
      */
     public static function getPrivateMethodInvoker($obj, $method)
@@ -52,6 +53,7 @@ trait ReflectionHelper
      * @param string        $property
      *
      * @return ReflectionProperty
+     *
      * @throws ReflectionException
      */
     private static function getAccessibleRefProperty($obj, $property)

@@ -49,6 +49,7 @@ class Console
      * @param bool $useSafeOutput
      *
      * @return RequestInterface|Response|ResponseInterface|mixed
+     *
      * @throws Exception
      */
     public function run(bool $useSafeOutput = false)

@@ -552,9 +552,11 @@ class CURLRequest extends Request
     /**
      * Set CURL options
      *
-     * @param  array                    $curlOptions
-     * @param  array                    $config
+     * @param array $curlOptions
+     * @param array $config
+     *
      * @return array
+     *
      * @throws InvalidArgumentException
      */
     protected function setCURLOptions(array $curlOptions = [], array $config = [])

@@ -109,8 +109,9 @@ class RedisHandler extends BaseHandler
      *
      * Sanitizes save_path and initializes connection.
      *
-     * @param  string $savePath Server path
-     * @param  string $name     Session cookie name, unused
+     * @param string $savePath Server path
+     * @param string $name     Session cookie name, unused
+     *
      * @return bool
      */
     public function open($savePath, $name): bool
@@ -279,7 +280,8 @@ class RedisHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param  int  $maxlifetime Maximum lifetime of sessions
+     * @param int $maxlifetime Maximum lifetime of sessions
+     *
      * @return bool
      */
     public function gc($maxlifetime): bool
