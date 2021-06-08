@@ -61,7 +61,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Handles the actual resizing of the image.
      *
-     * @param boolean $maintainRatio
+     * @param bool $maintainRatio
      *
      * @return ImageMagickHandler
      * @throws Exception
@@ -91,7 +91,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Crops the image.
      *
-     * @return boolean|\CodeIgniter\Images\Handlers\ImageMagickHandler
+     * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
      * @throws Exception
      */
     public function _crop()
@@ -117,7 +117,7 @@ class ImageMagickHandler extends BaseHandler
      * Handles the rotation of an image resource.
      * Doesn't save the image, but replaces the current resource.
      *
-     * @param integer $angle
+     * @param int $angle
      *
      * @return $this
      * @throws Exception
@@ -141,9 +141,9 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Flattens transparencies, default white background
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      *
      * @return $this
      * @throws Exception
@@ -209,7 +209,7 @@ class ImageMagickHandler extends BaseHandler
      * Handles all of the grunt work of resizing, etc.
      *
      * @param string  $action
-     * @param integer $quality
+     * @param int $quality
      *
      * @return array  Lines of output from shell command
      * @throws Exception
@@ -259,9 +259,9 @@ class ImageMagickHandler extends BaseHandler
      *          ->save();
      *
      * @param string|null $target
-     * @param integer     $quality
+     * @param int     $quality
      *
-     * @return boolean
+     * @return bool
      */
     public function save(string $target = null, int $quality = 90): bool
     {
@@ -457,7 +457,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Return the width of an image.
      *
-     * @return integer
+     * @return int
      */
     public function _getWidth()
     {
@@ -467,7 +467,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Return the height of an image.
      *
-     * @return integer
+     * @return int
      */
     public function _getHeight()
     {
@@ -482,7 +482,7 @@ class ImageMagickHandler extends BaseHandler
      * with images taken by smartphones who always store the image up-right,
      * but set the orientation flag to display it correctly.
      *
-     * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+     * @param bool $silent If true, will ignore exceptions when PHP doesn't support EXIF.
      *
      * @return $this
      */

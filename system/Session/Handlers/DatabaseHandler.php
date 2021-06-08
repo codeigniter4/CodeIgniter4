@@ -53,7 +53,7 @@ class DatabaseHandler extends BaseHandler
     /**
      * Row exists flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $rowExists = false;
 
@@ -101,7 +101,7 @@ class DatabaseHandler extends BaseHandler
      * @param string $savePath Path to session files' directory
      * @param string $name     Session cookie name
      *
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     public function open($savePath, $name): bool
@@ -179,7 +179,7 @@ class DatabaseHandler extends BaseHandler
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
      *
-     * @return boolean
+     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -241,7 +241,7 @@ class DatabaseHandler extends BaseHandler
      *
      * Releases locks and closes file descriptor.
      *
-     * @return boolean
+     * @return bool
      */
     public function close(): bool
     {
@@ -257,7 +257,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @param string $sessionID
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($sessionID): bool
     {
@@ -289,9 +289,9 @@ class DatabaseHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param integer $maxlifetime Maximum lifetime of sessions
+     * @param int $maxlifetime Maximum lifetime of sessions
      *
-     * @return boolean
+     * @return bool
      */
     public function gc($maxlifetime): bool
     {
@@ -307,7 +307,7 @@ class DatabaseHandler extends BaseHandler
      * Lock the session.
      *
      * @param  string $sessionID
-     * @return boolean
+     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -342,7 +342,7 @@ class DatabaseHandler extends BaseHandler
     /**
      * Releases the lock, if any.
      *
-     * @return boolean
+     * @return bool
      */
     protected function releaseLock(): bool
     {

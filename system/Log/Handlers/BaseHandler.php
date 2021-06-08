@@ -50,7 +50,7 @@ abstract class BaseHandler implements HandlerInterface
      *
      * @param string $level
      *
-     * @return boolean
+     * @return bool
      */
     public function canHandle(string $level): bool
     {
@@ -68,7 +68,7 @@ abstract class BaseHandler implements HandlerInterface
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      */
     abstract public function handle($level, $message): bool;
 

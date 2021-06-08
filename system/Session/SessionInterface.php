@@ -19,7 +19,7 @@ interface SessionInterface
     /**
      * Regenerates the session ID.
      *
-     * @param boolean $destroy Should old session data be destroyed?
+     * @param bool $destroy Should old session data be destroyed?
      */
     public function regenerate(bool $destroy = false);
 
@@ -70,7 +70,7 @@ interface SessionInterface
      *
      * @param string $key Identifier of the session property we are interested in.
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $key): bool;
 
@@ -162,7 +162,7 @@ interface SessionInterface
      *
      * @param string|array $data  Session data key or associative array of items
      * @param mixed        $value Value to store
-     * @param integer      $ttl   Time-to-live in seconds
+     * @param int      $ttl   Time-to-live in seconds
      */
     public function setTempdata($data, $value = null, int $ttl = 300);
 
@@ -193,9 +193,9 @@ interface SessionInterface
      * it has a set lifespan within the session.
      *
      * @param string|array $key Property identifier or array of them
-     * @param integer      $ttl Time to live, in seconds
+     * @param int      $ttl Time to live, in seconds
      *
-     * @return boolean    False if any of the properties were not set
+     * @return bool    False if any of the properties were not set
      */
     public function markAsTempdata($key, int $ttl = 300);
 

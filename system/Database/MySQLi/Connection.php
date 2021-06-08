@@ -38,7 +38,7 @@ class Connection extends BaseConnection
      * of affected rows to be shown. Uses a preg_replace when enabled,
      * adding a bit more processing to all queries.
      *
-     * @var boolean
+     * @var bool
      */
     public $deleteHack = true;
 
@@ -67,7 +67,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @return mixed
      * @throws DatabaseException
@@ -234,7 +234,7 @@ class Connection extends BaseConnection
      *
      * @param string $databaseName
      *
-     * @return boolean
+     * @return bool
      */
     public function setDatabase(string $databaseName): bool
     {
@@ -333,7 +333,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -399,7 +399,7 @@ class Connection extends BaseConnection
      * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -612,7 +612,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -624,7 +624,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -638,7 +638,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -656,7 +656,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {

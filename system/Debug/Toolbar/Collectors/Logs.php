@@ -22,7 +22,7 @@ class Logs extends BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -30,7 +30,7 @@ class Logs extends BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
@@ -68,7 +68,7 @@ class Logs extends BaseCollector
     /**
      * Does this collector actually have any data to display?
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty(): bool
     {

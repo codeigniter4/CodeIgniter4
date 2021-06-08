@@ -30,21 +30,21 @@ abstract class BaseUtils
     /**
      * List databases statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $listDatabases = false;
 
     /**
      * OPTIMIZE TABLE statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $optimizeTable = false;
 
     /**
      * REPAIR TABLE statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $repairTable = false;
 
@@ -64,7 +64,7 @@ abstract class BaseUtils
     /**
      * List databases
      *
-     * @return array|boolean
+     * @return array|bool
      * @throws DatabaseException
      */
     public function listDatabases()
@@ -102,7 +102,7 @@ abstract class BaseUtils
      * Determine if a particular database exists
      *
      * @param  string $databaseName
-     * @return boolean
+     * @return bool
      */
     public function databaseExists(string $databaseName): bool
     {
@@ -115,7 +115,7 @@ abstract class BaseUtils
      * Optimize Table
      *
      * @param  string $tableName
-     * @return boolean
+     * @return bool
      * @throws DatabaseException
      */
     public function optimizeTable(string $tableName)

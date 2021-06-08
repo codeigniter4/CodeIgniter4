@@ -22,7 +22,7 @@ if (! function_exists('now')) {
      *
      * @param string $timezone
      *
-     * @return integer
+     * @return int
      * @throws Exception
      */
     function now(string $timezone = null): int
@@ -48,7 +48,7 @@ if (! function_exists('timezone_select')) {
      *
      * @param string  $class   Optional class to apply to the select field
      * @param string  $default Default value for initial selection
-     * @param integer $what    One of the DateTimeZone class constants (for listIdentifiers)
+     * @param int $what    One of the DateTimeZone class constants (for listIdentifiers)
      * @param string  $country A two-letter ISO 3166-1 compatible country code (for listIdentifiers)
      *
      * @return string

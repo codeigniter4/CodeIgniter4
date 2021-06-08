@@ -20,7 +20,7 @@ class View extends BaseConfig
      * When false, the view method will clear the data between each
      * call.
      *
-     * @var boolean
+     * @var bool
      */
     public $saveData = true;
 

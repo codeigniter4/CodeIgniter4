@@ -45,7 +45,7 @@ class DotEnv
      * so that we end up with all settings in the PHP environment vars
      * (i.e. getenv(), $_ENV, and $_SERVER)
      *
-     * @return boolean
+     * @return bool
      */
     public function load(): bool
     {

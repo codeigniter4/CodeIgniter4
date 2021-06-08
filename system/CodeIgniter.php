@@ -121,7 +121,7 @@ class CodeIgniter
     /**
      * Cache expiration time
      *
-     * @var integer
+     * @var int
      */
     protected static $cacheTTL = 0;
 
@@ -136,7 +136,7 @@ class CodeIgniter
      * Should the Response instance "pretend"
      * to keep from setting headers/cookies/etc
      *
-     * @var boolean
+     * @var bool
      */
     protected $useSafeOutput = false;
 
@@ -285,9 +285,9 @@ class CodeIgniter
      * makes all of the pieces work together.
      *
      * @param RouteCollectionInterface|null $routes
-     * @param boolean                       $returnResponse
+     * @param bool                       $returnResponse
      *
-     * @return boolean|RequestInterface|ResponseInterface|mixed
+     * @return bool|RequestInterface|ResponseInterface|mixed
      * @throws RedirectException
      * @throws Exception
      */
@@ -345,7 +345,7 @@ class CodeIgniter
      * cookies and headers are not actually sent, allowing PHP 7.2+ to
      * not complain when ini_set() function is used.
      *
-     * @param boolean $safe
+     * @param bool $safe
      *
      * @return $this
      */
@@ -363,7 +363,7 @@ class CodeIgniter
      *
      * @param RouteCollectionInterface|null $routes
      * @param Cache                         $cacheConfig
-     * @param boolean                       $returnResponse
+     * @param bool                       $returnResponse
      *
      * @return RequestInterface|ResponseInterface|mixed
      * @throws RedirectException
@@ -585,7 +585,7 @@ class CodeIgniter
      * as set the HTTP Strict Transport Security header for those browsers
      * that support it.
      *
-     * @param integer $duration How long the Strict Transport Security
+     * @param int $duration How long the Strict Transport Security
      *                          should be enforced for this URL.
      */
     protected function forceSecureAccess($duration = 31536000)
@@ -606,7 +606,7 @@ class CodeIgniter
      *
      * @throws Exception
      *
-     * @return boolean|ResponseInterface
+     * @return bool|ResponseInterface
      */
     public function displayCache(Cache $config)
     {
@@ -643,7 +643,7 @@ class CodeIgniter
     /**
      * Tells the app that the final output should be cached.
      *
-     * @param integer $time
+     * @param int $time
      *
      * @return void
      */
@@ -1052,7 +1052,7 @@ class CodeIgniter
      * Made into a separate method so that it can be mocked during testing
      * without actually stopping script execution.
      *
-     * @param integer $code
+     * @param int $code
      */
     protected function callExit($code)
     {

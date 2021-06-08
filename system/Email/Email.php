@@ -91,21 +91,21 @@ class Email
     /**
      * SMTP Server port
      *
-     * @var integer
+     * @var int
      */
     public $SMTPPort = 25;
 
     /**
      * SMTP connection timeout in seconds
      *
-     * @var integer
+     * @var int
      */
     public $SMTPTimeout = 5;
 
     /**
      * SMTP persistent connection
      *
-     * @var boolean
+     * @var bool
      */
     public $SMTPKeepAlive = false;
 
@@ -119,7 +119,7 @@ class Email
     /**
      * Whether to apply word-wrapping to the message body.
      *
-     * @var boolean
+     * @var bool
      */
     public $wordWrap = true;
 
@@ -127,7 +127,7 @@ class Email
      * Number of characters to wrap at.
      *
      * @see Email::$wordWrap
-     * @var integer
+     * @var int
      */
     public $wrapChars = 76;
 
@@ -155,14 +155,14 @@ class Email
     /**
      * Whether to validate e-mail addresses.
      *
-     * @var boolean
+     * @var bool
      */
     public $validate = true;
 
     /**
      * X-Priority header value.
      *
-     * @var integer 1-5
+     * @var int 1-5
      */
     public $priority = 3;
 
@@ -192,7 +192,7 @@ class Email
     /**
      * Whether to use Delivery Status Notification.
      *
-     * @var boolean
+     * @var bool
      */
     public $DSN = false;
 
@@ -200,14 +200,14 @@ class Email
      * Whether to send multipart alternatives.
      * Yahoo! doesn't seem to like these.
      *
-     * @var boolean
+     * @var bool
      */
     public $sendMultipart = true;
 
     /**
      * Whether to send messages to BCC recipients in batches.
      *
-     * @var boolean
+     * @var bool
      */
     public $BCCBatchMode = false;
 
@@ -215,7 +215,7 @@ class Email
      * BCC Batch max number size.
      *
      * @see Email::$BCCBatchMode
-     * @var integer|string
+     * @var int|string
      */
     public $BCCBatchSize = 200;
 
@@ -264,14 +264,14 @@ class Email
     /**
      * Whether to perform SMTP authentication
      *
-     * @var boolean
+     * @var bool
      */
     protected $SMTPAuth = false;
 
     /**
      * Whether to send a Reply-To header
      *
-     * @var boolean
+     * @var bool
      */
     protected $replyToFlag = false;
 
@@ -374,7 +374,7 @@ class Email
     /**
      * mbstring.func_overload flag
      *
-     * @var boolean
+     * @var bool
      */
     protected static $func_overload;
 
@@ -429,7 +429,7 @@ class Email
     /**
      * Initialize the Email Data
      *
-     * @param boolean $clearAttachments
+     * @param bool $clearAttachments
      *
      * @return Email
      */
@@ -661,7 +661,7 @@ class Email
      * @param string|null $newname
      * @param string      $mime
      *
-     * @return Email|boolean
+     * @return Email|bool
      */
     public function attach($file, $disposition = '', $newname = null, $mime = '')
     {
@@ -712,7 +712,7 @@ class Email
      *
      * @param string $filename
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function setAttachmentCID($filename)
     {
@@ -791,7 +791,7 @@ class Email
     /**
      * Set Wordwrap
      *
-     * @param boolean $wordWrap
+     * @param bool $wordWrap
      *
      * @return Email
      */
@@ -819,7 +819,7 @@ class Email
     /**
      * Set Priority
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return Email
      */
@@ -956,7 +956,7 @@ class Email
      *
      * @param string|array $email
      *
-     * @return boolean
+     * @return bool
      */
     public function validateEmail($email)
     {
@@ -982,7 +982,7 @@ class Email
      *
      * @param string $email
      *
-     * @return boolean
+     * @return bool
      */
     public function isValidEmail($email)
     {
@@ -1049,7 +1049,7 @@ class Email
      * Word Wrap
      *
      * @param string       $str
-     * @param integer|null $charlim Line-length limit
+     * @param int|null $charlim Line-length limit
      *
      * @return string
      */
@@ -1310,7 +1310,7 @@ class Email
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function attachmentsHaveMultipart($type)
     {
@@ -1592,9 +1592,9 @@ class Email
     /**
      * Send Email
      *
-     * @param boolean $autoClear
+     * @param bool $autoClear
      *
-     * @return boolean
+     * @return bool
      */
     public function send($autoClear = true)
     {
@@ -1724,7 +1724,7 @@ class Email
     /**
      * Spool mail to the mail server
      *
-     * @return boolean
+     * @return bool
      */
     protected function spoolEmail()
     {
@@ -1764,7 +1764,7 @@ class Email
      *
      * @param string $email
      *
-     * @return boolean
+     * @return bool
      */
     protected function validateEmailForShell(&$email)
     {
@@ -1779,7 +1779,7 @@ class Email
     /**
      * Send using mail()
      *
-     * @return boolean
+     * @return bool
      */
     protected function sendWithMail()
     {
@@ -1801,7 +1801,7 @@ class Email
     /**
      * Send using Sendmail
      *
-     * @return boolean
+     * @return bool
      */
     protected function sendWithSendmail()
     {
@@ -1834,7 +1834,7 @@ class Email
     /**
      * Send using SMTP
      *
-     * @return boolean
+     * @return bool
      */
     protected function sendWithSmtp()
     {
@@ -1913,7 +1913,7 @@ class Email
     /**
      * SMTP Connect
      *
-     * @return string|boolean
+     * @return string|bool
      */
     protected function SMTPConnect()
     {
@@ -1971,7 +1971,7 @@ class Email
      * @param string $cmd
      * @param string $data
      *
-     * @return boolean
+     * @return bool
      */
     protected function sendCommand($cmd, $data = '')
     {
@@ -2044,7 +2044,7 @@ class Email
     /**
      * SMTP Authenticate
      *
-     * @return boolean
+     * @return bool
      */
     protected function SMTPAuthenticate()
     {
@@ -2101,7 +2101,7 @@ class Email
      *
      * @param string $data
      *
-     * @return boolean
+     * @return bool
      */
     protected function sendData($data)
     {
@@ -2255,7 +2255,7 @@ class Email
      *
      * @param string $str
      *
-     * @return integer
+     * @return int
      */
     protected static function strlen($str)
     {
@@ -2266,8 +2266,8 @@ class Email
      * Byte-safe substr()
      *
      * @param string       $str
-     * @param integer      $start
-     * @param integer|null $length
+     * @param int      $start
+     * @param int|null $length
      *
      * @return string
      */

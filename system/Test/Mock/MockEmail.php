@@ -19,7 +19,7 @@ class MockEmail extends Email
     /**
      * Value to return from mocked send().
      *
-     * @var boolean
+     * @var bool
      */
     public $returnValue = true;
 

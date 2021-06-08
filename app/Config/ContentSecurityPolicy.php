@@ -22,7 +22,7 @@ class ContentSecurityPolicy extends BaseConfig
     /**
      * Default CSP report context
      *
-     * @var boolean
+     * @var bool
      */
     public $reportOnly = false;
 
@@ -39,7 +39,7 @@ class ContentSecurityPolicy extends BaseConfig
      * HTTP to HTTPS. This directive is for websites with
      * large numbers of old URLs that need to be rewritten.
      *
-     * @var boolean
+     * @var bool
      */
     public $upgradeInsecureRequests = false;
 

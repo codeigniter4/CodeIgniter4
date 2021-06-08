@@ -23,7 +23,7 @@ if (! function_exists('word_limiter')) {
      * Limits a string to X number of words.
      *
      * @param string  $str
-     * @param integer $limit
+     * @param int $limit
      * @param string  $endChar the end character. Usually an ellipsis
      *
      * @return string
@@ -54,7 +54,7 @@ if (! function_exists('character_limiter')) {
      * so the character count may not be exactly as specified.
      *
      * @param string  $str
-     * @param integer $n
+     * @param int $n
      * @param string  $endChar the end character. Usually an ellipsis
      *
      * @return string
@@ -149,7 +149,7 @@ if (! function_exists('entities_to_ascii')) {
      * Converts character entities back to ASCII
      *
      * @param string  $str
-     * @param boolean $all
+     * @param bool $all
      *
      * @return string
      */
@@ -391,7 +391,7 @@ if (! function_exists('word_wrap')) {
      * will URLs.
      *
      * @param string  $str     the text string
-     * @param integer $charlim = 76    the number of characters to wrap at
+     * @param int $charlim = 76    the number of characters to wrap at
      *
      * @return string
      */
@@ -477,7 +477,7 @@ if (! function_exists('ellipsize')) {
      * This function will strip tags from a string, split it at its max_length and ellipsize
      *
      * @param string  $str       String to ellipsize
-     * @param integer $maxLength Max length of string
+     * @param int $maxLength Max length of string
      * @param mixed   $position  int (1|0) or float, .5, .2, etc for position to split
      * @param string  $ellipsis  ellipsis ; Default '...'
      *
@@ -609,7 +609,7 @@ if (! function_exists('reduce_multiples')) {
      *
      * @param string  $str
      * @param string  $character the character you wish to reduce
-     * @param boolean $trim      TRUE/FALSE - whether to trim the character from the beginning/end
+     * @param bool $trim      TRUE/FALSE - whether to trim the character from the beginning/end
      *
      * @return string
      */
@@ -630,7 +630,7 @@ if (! function_exists('random_string')) {
      * Useful for generating passwords or hashes.
      *
      * @param string  $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
-     * @param integer $len  Number of characters
+     * @param int $len  Number of characters
      *
      * @return string
      */
@@ -684,7 +684,7 @@ if (! function_exists('increment_string')) {
      *
      * @param string  $str       Required
      * @param string  $separator What should the duplicate number be appended with
-     * @param integer $first     Which number should be used for the first dupe increment
+     * @param int $first     Which number should be used for the first dupe increment
      *
      * @return string
      */
@@ -735,7 +735,7 @@ if (! function_exists('excerpt')) {
      *
      * @param string  $text     String to search the phrase
      * @param string  $phrase   Phrase that will be searched for.
-     * @param integer $radius   The amount of characters returned around the phrase.
+     * @param int $radius   The amount of characters returned around the phrase.
      * @param string  $ellipsis Ending that will be appended
      *
      * @return string

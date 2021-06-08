@@ -25,7 +25,7 @@ interface ValidationInterface
      * @param array  $data  The array of data to validate.
      * @param string $group The pre-defined group of rules to apply.
      *
-     * @return boolean
+     * @return bool
      */
     public function run(array $data = null, string $group = null): bool;
 
@@ -39,7 +39,7 @@ interface ValidationInterface
      * @param string   $rule   Rule.
      * @param string[] $errors Errors.
      *
-     * @return boolean True if valid, else false.
+     * @return bool True if valid, else false.
      */
     public function check($value, string $rule, array $errors = []): bool;
 
@@ -76,7 +76,7 @@ interface ValidationInterface
      *
      * @param string $field
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRule(string $field): bool;
 

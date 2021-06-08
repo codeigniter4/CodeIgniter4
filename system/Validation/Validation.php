@@ -106,7 +106,7 @@ class Validation implements ValidationInterface
      * @param string|null $group   The predefined group of rules to apply.
      * @param string|null $dbGroup The database group to use.
      *
-     * @return boolean
+     * @return bool
      */
     public function run(array $data = null, string $group = null, string $dbGroup = null): bool
     {
@@ -166,7 +166,7 @@ class Validation implements ValidationInterface
      * @param string   $rule
      * @param string[] $errors
      *
-     * @return boolean
+     * @return bool
      */
     public function check($value, string $rule, array $errors = []): bool
     {
@@ -187,7 +187,7 @@ class Validation implements ValidationInterface
      * @param array|null   $rules
      * @param array        $data
      *
-     * @return boolean
+     * @return bool
      */
     protected function processRules(string $field, string $label = null, $value, $rules = null, array $data = null): bool
     {
@@ -432,7 +432,7 @@ class Validation implements ValidationInterface
      *
      * @param string $field
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRule(string $field): bool
     {
@@ -630,7 +630,7 @@ class Validation implements ValidationInterface
      *
      * @param string $field
      *
-     * @return boolean
+     * @return bool
      */
     public function hasError(string $field): bool
     {

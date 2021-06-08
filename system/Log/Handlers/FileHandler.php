@@ -36,7 +36,7 @@ class FileHandler extends BaseHandler
     /**
      * Permissions for new log files
      *
-     * @var integer
+     * @var int
      */
     protected $filePermissions;
 
@@ -70,7 +70,7 @@ class FileHandler extends BaseHandler
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     public function handle($level, $message): bool

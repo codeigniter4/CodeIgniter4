@@ -1409,7 +1409,7 @@ class RulesTest extends CIUnitTestCase
      *
      * @param string  $first
      * @param string  $second
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testInList($first, $second, $expected)
     {
@@ -1431,7 +1431,7 @@ class RulesTest extends CIUnitTestCase
      *
      * @param string  $first
      * @param string  $second
-     * @param boolean $expected
+     * @param bool $expected
      */
     public function testNotInList($first, $second, $expected)
     {

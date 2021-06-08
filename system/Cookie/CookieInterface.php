@@ -96,7 +96,7 @@ interface CookieInterface
     /**
      * Gets the time in Unix timestamp the cookie expires.
      *
-     * @return integer
+     * @return int
      */
     public function getExpiresTimestamp(): int;
 
@@ -110,14 +110,14 @@ interface CookieInterface
     /**
      * Checks if the cookie is expired.
      *
-     * @return boolean
+     * @return bool
      */
     public function isExpired(): bool;
 
     /**
      * Gets the "Max-Age" cookie attribute.
      *
-     * @return integer
+     * @return int
      */
     public function getMaxAge(): int;
 
@@ -142,7 +142,7 @@ interface CookieInterface
      * with the `https:` scheme (except on `localhost`), and therefore is more
      * resistent to man-in-the-middle attacks.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecure(): bool;
 
@@ -151,7 +151,7 @@ interface CookieInterface
      *
      * Checks if JavaScript is forbidden from accessing the cookie.
      *
-     * @return boolean
+     * @return bool
      */
     public function isHTTPOnly(): bool;
 
@@ -165,7 +165,7 @@ interface CookieInterface
     /**
      * Checks if the cookie should be sent with no URL encoding.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRaw(): bool;
 

@@ -154,9 +154,9 @@ class RedisHandler extends BaseHandler
      *
      * @param string  $key   Cache item name
      * @param mixed   $value The data to save
-     * @param integer $ttl   Time To Live, in seconds (default 60)
+     * @param int $ttl   Time To Live, in seconds (default 60)
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -198,7 +198,7 @@ class RedisHandler extends BaseHandler
      *
      * @param string $key Cache item name
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function delete(string $key)
     {
@@ -214,7 +214,7 @@ class RedisHandler extends BaseHandler
      *
      * @param string $pattern Cache items glob-style pattern
      *
-     * @return integer The number of deleted items
+     * @return int The number of deleted items
      */
     public function deleteMatching(string $pattern)
     {
@@ -242,9 +242,9 @@ class RedisHandler extends BaseHandler
      * Performs atomic incrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
-     * @return integer
+     * @return int
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -259,9 +259,9 @@ class RedisHandler extends BaseHandler
      * Performs atomic decrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
-     * @return integer
+     * @return int
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -275,7 +275,7 @@ class RedisHandler extends BaseHandler
     /**
      * Will delete all items in the entire cache.
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function clean()
     {
@@ -332,7 +332,7 @@ class RedisHandler extends BaseHandler
     /**
      * Determines if the driver is supported on this system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSupported(): bool
     {

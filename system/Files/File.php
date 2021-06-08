@@ -24,7 +24,7 @@ class File extends SplFileInfo
     /**
      * The files size in bytes
      *
-     * @var integer
+     * @var int
      */
     protected $size;
 
@@ -42,7 +42,7 @@ class File extends SplFileInfo
      * that the path is really a file.
      *
      * @param string  $path
-     * @param boolean $checkFile
+     * @param bool $checkFile
      */
     public function __construct(string $path, bool $checkFile = false)
     {
@@ -62,7 +62,7 @@ class File extends SplFileInfo
      * the file in the $_FILES array if available, as PHP calculates this based
      * on the actual size transmitted.
      *
-     * @return integer The file size in bytes
+     * @return int The file size in bytes
      */
     public function getSize()
     {
@@ -74,7 +74,7 @@ class File extends SplFileInfo
      *
      * @param string $unit
      *
-     * @return integer|string
+     * @return int|string
      */
     public function getSizeByUnit(string $unit = 'b')
     {
@@ -150,7 +150,7 @@ class File extends SplFileInfo
      *
      * @param string      $targetPath
      * @param string|null $name
-     * @param boolean     $overwrite
+     * @param bool     $overwrite
      *
      * @return File
      */
@@ -184,7 +184,7 @@ class File extends SplFileInfo
      *
      * @param string  $destination
      * @param string  $delimiter
-     * @param integer $i
+     * @param int $i
      *
      * @return string
      */

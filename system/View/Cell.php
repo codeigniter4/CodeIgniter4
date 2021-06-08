@@ -70,7 +70,7 @@ class Cell
      *
      * @param string      $library
      * @param null        $params
-     * @param integer     $ttl
+     * @param int     $ttl
      * @param string|null $cacheName
      *
      * @return string

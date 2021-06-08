@@ -161,7 +161,7 @@ trait RequestTrait
      * Fetch an item from the $_SERVER array.
      *
      * @param string|array|null $index  Index for item to be fetched from $_SERVER
-     * @param integer|null      $filter A filter name to be applied
+     * @param int|null      $filter A filter name to be applied
      * @param null              $flags
      *
      * @return mixed
@@ -218,8 +218,8 @@ trait RequestTrait
      *
      * @param string             $method Input filter constant
      * @param string|array|null  $index
-     * @param integer|null       $filter Filter constant
-     * @param array|integer|null $flags  Options
+     * @param int|null       $filter Filter constant
+     * @param array|int|null $flags  Options
      *
      * @return mixed
      */

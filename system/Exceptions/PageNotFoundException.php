@@ -20,7 +20,7 @@ class PageNotFoundException extends OutOfBoundsException implements ExceptionInt
     /**
      * Error code
      *
-     * @var integer
+     * @var int
      */
     protected $code = 404;
 

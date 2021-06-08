@@ -116,11 +116,11 @@ class Pager implements PagerInterface
      * Allows for a simple, manual, form of pagination where all of the data
      * is provided by the user. The URL is the current URI.
      *
-     * @param integer      $page
-     * @param integer|null $perPage
-     * @param integer      $total
+     * @param int      $page
+     * @param int|null $perPage
+     * @param int      $total
      * @param string       $template The output template alias to render.
-     * @param integer      $segment  (whether page number is provided by URI segment)
+     * @param int      $segment  (whether page number is provided by URI segment)
      * @param string|null  $group    optional group (i.e. if we'd like to define custom path)
      *
      * @return string
@@ -163,10 +163,10 @@ class Pager implements PagerInterface
      * by the model to automate the process.
      *
      * @param string       $group
-     * @param integer      $page
-     * @param integer|null $perPage
-     * @param integer      $total
-     * @param integer      $segment
+     * @param int      $page
+     * @param int|null $perPage
+     * @param int      $total
+     * @param int      $segment
      *
      * @return $this
      */
@@ -198,7 +198,7 @@ class Pager implements PagerInterface
     /**
      * Sets segment for a group.
      *
-     * @param integer $number
+     * @param int $number
      * @param string  $group
      *
      * @return mixed
@@ -236,7 +236,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getTotal(string $group = 'default'): int
     {
@@ -252,7 +252,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getPageCount(string $group = 'default'): int
     {
@@ -268,7 +268,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getCurrentPage(string $group = 'default'): int
     {
@@ -284,7 +284,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMore(string $group = 'default'): bool
     {
@@ -300,7 +300,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getLastPage(string $group = 'default')
     {
@@ -320,7 +320,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getFirstPage(string $group = 'default'): int
     {
@@ -334,9 +334,9 @@ class Pager implements PagerInterface
     /**
      * Returns the URI for a specific page for the specified group.
      *
-     * @param integer|null $page
+     * @param int|null $page
      * @param string       $group
-     * @param boolean      $returnObject
+     * @param bool      $returnObject
      *
      * @return string|URI
      */
@@ -376,7 +376,7 @@ class Pager implements PagerInterface
      * Returns the full URI to the next page of results, or null.
      *
      * @param string  $group
-     * @param boolean $returnObject
+     * @param bool $returnObject
      *
      * @return string|null
      */
@@ -405,7 +405,7 @@ class Pager implements PagerInterface
      * Returns the full URL to the previous page of results, or null.
      *
      * @param string  $group
-     * @param boolean $returnObject
+     * @param bool $returnObject
      *
      * @return string|null
      */
@@ -435,7 +435,7 @@ class Pager implements PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getPerPage(string $group = 'default'): int
     {
@@ -493,7 +493,7 @@ class Pager implements PagerInterface
      * Ensures that an array exists for the group specified.
      *
      * @param string  $group
-     * @param integer $perPage
+     * @param int $perPage
      */
     protected function ensureGroup(string $group, int $perPage = null)
     {

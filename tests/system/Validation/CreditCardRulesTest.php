@@ -49,9 +49,9 @@ class CreditCardRulesTest extends CIUnitTestCase
     /**
      * @dataProvider creditCardProvider
      *
-     * @param $type
-     * @param $number
-     * @param boolean $expected
+     * @param string $type
+     * @param string|null $number
+     * @param bool $expected
      */
     public function testValidCCNumber($type, $number, $expected = false)
     {
@@ -1217,8 +1217,8 @@ class CreditCardRulesTest extends CIUnitTestCase
      * Used to generate fake credit card numbers that will still pass the Luhn
      * check used to validate the card so we can be sure the cards are recognized correctly.
      *
-     * @param integer $prefix
-     * @param integer $length
+     * @param int $prefix
+     * @param int $length
      *
      * @return string
      */

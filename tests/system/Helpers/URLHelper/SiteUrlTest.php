@@ -56,7 +56,7 @@ final class SiteUrlTest extends CIUnitTestCase
      * @param string      $baseURL
      * @param string      $indexPage
      * @param string|null $scheme
-     * @param boolean     $secure
+     * @param bool     $secure
      * @param string      $path
      * @param string      $expectedSiteUrl
      *

@@ -25,7 +25,7 @@ interface HandlerInterface
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      */
     public function handle($level, $message): bool;
 
@@ -37,7 +37,7 @@ interface HandlerInterface
      *
      * @param string $level
      *
-     * @return boolean
+     * @return bool
      */
     public function canHandle(string $level): bool;
 

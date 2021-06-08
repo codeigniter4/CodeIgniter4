@@ -23,9 +23,9 @@ if (! function_exists('directory_map')) {
      * directory will be mapped as well.
      *
      * @param string  $sourceDir      Path to source
-     * @param integer $directoryDepth Depth of directories to traverse
+     * @param int $directoryDepth Depth of directories to traverse
      *                                 (0 = fully recursive, 1 = current dir, etc)
-     * @param boolean $hidden         Whether to show hidden files
+     * @param bool $hidden         Whether to show hidden files
      *
      * @return array
      */
@@ -73,7 +73,7 @@ if (! function_exists('directory_mirror')) {
      *
      * @param string  $originDir
      * @param string  $targetDir
-     * @param boolean $overwrite Whether individual files overwrite on collision
+     * @param bool $overwrite Whether individual files overwrite on collision
      *
      * @return void
      *
@@ -123,7 +123,7 @@ if (! function_exists('write_file')) {
      * @param string $data Data to write
      * @param string $mode fopen() mode (default: 'wb')
      *
-     * @return boolean
+     * @return bool
      */
     function write_file(string $path, string $data, string $mode = 'wb'): bool
     {
@@ -160,11 +160,11 @@ if (! function_exists('delete_files')) {
      * within the supplied base directory will be nuked as well.
      *
      * @param string  $path   File path
-     * @param boolean $delDir Whether to delete any directories found in the path
-     * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
-     * @param boolean $hidden Whether to include hidden files (files beginning with a period)
+     * @param bool $delDir Whether to delete any directories found in the path
+     * @param bool $htdocs Whether to skip deleting .htaccess and index page files
+     * @param bool $hidden Whether to include hidden files (files beginning with a period)
      *
-     * @return boolean
+     * @return bool
      */
     function delete_files(string $path, bool $delDir = false, bool $htdocs = false, bool $hidden = false): bool
     {
@@ -211,8 +211,8 @@ if (! function_exists('get_filenames')) {
      * Any sub-folders contained within the specified path are read as well.
      *
      * @param string       $sourceDir   Path to source
-     * @param boolean|null $includePath Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
-     * @param boolean      $hidden      Whether to include hidden files (files beginning with a period)
+     * @param bool|null $includePath Whether to include the path as part of the filename; false for no path, null for a relative path, true for full path
+     * @param bool      $hidden      Whether to include hidden files (files beginning with a period)
      *
      * @return array
      */
@@ -263,8 +263,8 @@ if (! function_exists('get_dir_file_info')) {
      * Any sub-folders contained within the specified path are read as well.
      *
      * @param string  $sourceDir    Path to source
-     * @param boolean $topLevelOnly Look only at the top level directory specified?
-     * @param boolean $recursion    Internal variable to determine recursion status - do not use in calls
+     * @param bool $topLevelOnly Look only at the top level directory specified?
+     * @param bool $recursion    Internal variable to determine recursion status - do not use in calls
      *
      * @return array
      */
@@ -379,7 +379,7 @@ if (! function_exists('symbolic_permissions')) {
      * Takes a numeric value representing a file's permissions and returns
      * standard symbolic notation representing that value
      *
-     * @param  integer $perms Permissions
+     * @param  int $perms Permissions
      * @return string
      */
     function symbolic_permissions(int $perms): string
@@ -430,7 +430,7 @@ if (! function_exists('octal_permissions')) {
      * Takes a numeric value representing a file's permissions and returns
      * a three character string representing the file's octal permissions
      *
-     * @param  integer $perms Permissions
+     * @param  int $perms Permissions
      * @return string
      */
     function octal_permissions(int $perms): string
@@ -448,7 +448,7 @@ if (! function_exists('same_file')) {
      * @param string $file1
      * @param string $file2
      *
-     * @return boolean  Same or not
+     * @return bool  Same or not
      */
     function same_file(string $file1, string $file2): bool
     {
@@ -463,7 +463,7 @@ if (! function_exists('set_realpath')) {
      * Set Realpath
      *
      * @param string  $path
-     * @param boolean $checkExistence Checks to see if the path exists
+     * @param bool $checkExistence Checks to see if the path exists
      *
      * @return string
      */

@@ -22,7 +22,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * The SQLite3Result resource, or false.
      *
-     * @var Result|boolean
+     * @var Result|bool
      */
     protected $result;
 
@@ -57,7 +57,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $data
      *
-     * @return boolean
+     * @return bool
      */
     public function _execute(array $data): bool
     {

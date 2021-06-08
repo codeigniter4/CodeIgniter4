@@ -65,7 +65,7 @@ class Query implements QueryInterface
     /**
      * The error code, if any.
      *
-     * @var integer
+     * @var int
      */
     protected $errorCode;
 
@@ -99,7 +99,7 @@ class Query implements QueryInterface
      *
      * @param string  $sql
      * @param mixed   $binds
-     * @param boolean $setEscape
+     * @param bool $setEscape
      *
      * @return $this
      */
@@ -130,7 +130,7 @@ class Query implements QueryInterface
      * Will store the variables to bind into the query later.
      *
      * @param array   $binds
-     * @param boolean $setEscape
+     * @param bool $setEscape
      *
      * @return $this
      */
@@ -193,8 +193,8 @@ class Query implements QueryInterface
     /**
      * Returns the start time in seconds with microseconds.
      *
-     * @param boolean $returnRaw
-     * @param integer $decimals
+     * @param bool $returnRaw
+     * @param int $decimals
      *
      * @return string|float
      */
@@ -211,7 +211,7 @@ class Query implements QueryInterface
      * Returns the duration of this query during execution, or null if
      * the query has not been executed yet.
      *
-     * @param integer $decimals The accuracy of the returned time.
+     * @param int $decimals The accuracy of the returned time.
      *
      * @return string
      */
@@ -223,7 +223,7 @@ class Query implements QueryInterface
     /**
      * Stores the error description that happened for this query.
      *
-     * @param integer $code
+     * @param int $code
      * @param string  $error
      *
      * @return $this
@@ -239,7 +239,7 @@ class Query implements QueryInterface
     /**
      * Reports whether this statement created an error not.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasError(): bool
     {
@@ -249,7 +249,7 @@ class Query implements QueryInterface
     /**
      * Returns the error code created while executing this statement.
      *
-     * @return integer
+     * @return int
      */
     public function getErrorCode(): int
     {
@@ -269,7 +269,7 @@ class Query implements QueryInterface
     /**
      * Determines if the statement is a write-type query or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isWriteType(): bool
     {
@@ -378,8 +378,8 @@ class Query implements QueryInterface
      *
      * @param  string  $sql
      * @param  array   $binds
-     * @param  integer $bindCount
-     * @param  integer $ml
+     * @param  int $bindCount
+     * @param  int $ml
      * @return string
      */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string

@@ -37,7 +37,7 @@ class DownloadResponse extends Response
     /**
      * mime set flag
      *
-     * @var boolean
+     * @var bool
      */
     private $setMime;
 
@@ -65,7 +65,7 @@ class DownloadResponse extends Response
     /**
      * The current status code for this response.
      *
-     * @var integer
+     * @var int
      */
     protected $statusCode = 200;
 
@@ -73,7 +73,7 @@ class DownloadResponse extends Response
      * Constructor.
      *
      * @param string  $filename
-     * @param boolean $setMime
+     * @param bool $setMime
      */
     public function __construct(string $filename, bool $setMime)
     {
@@ -131,7 +131,7 @@ class DownloadResponse extends Response
     /**
      * get content length.
      *
-     * @return integer
+     * @return int
      */
     public function getContentLength() : int
     {
@@ -224,7 +224,7 @@ class DownloadResponse extends Response
     /**
      * Disallows status changing.
      *
-     * @param integer $code
+     * @param int $code
      * @param string  $reason
      *
      * @throws DownloadException

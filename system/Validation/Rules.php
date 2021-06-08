@@ -28,7 +28,7 @@ class Rules
      * @param string $field
      * @param array  $data  Other field/value pairs
      *
-     * @return boolean
+     * @return bool
      */
     public function differs(string $str = null, string $field, array $data): bool
     {
@@ -47,7 +47,7 @@ class Rules
      * @param string $str
      * @param string $val
      *
-     * @return boolean
+     * @return bool
      */
     public function equals(string $str = null, string $val): bool
     {
@@ -63,7 +63,7 @@ class Rules
      * @param string $str
      * @param string $val
      *
-     * @return boolean
+     * @return bool
      */
     public function exact_length(string $str = null, string $val): bool
     {
@@ -86,7 +86,7 @@ class Rules
      * @param string $str
      * @param string $min
      *
-     * @return boolean
+     * @return bool
      */
     public function greater_than(string $str = null, string $min): bool
     {
@@ -101,7 +101,7 @@ class Rules
      * @param string $str
      * @param string $min
      *
-     * @return boolean
+     * @return bool
      */
     public function greater_than_equal_to(string $str = null, string $min): bool
     {
@@ -123,7 +123,7 @@ class Rules
      * @param string $field
      * @param array  $data
      *
-     * @return boolean
+     * @return bool
      */
     public function is_not_unique(string $str = null, string $field, array $data): bool
     {
@@ -155,7 +155,7 @@ class Rules
      * @param string $value
      * @param string $list
      *
-     * @return boolean
+     * @return bool
      */
     public function in_list(string $value = null, string $list): bool
     {
@@ -179,7 +179,7 @@ class Rules
      * @param string $field
      * @param array  $data
      *
-     * @return boolean
+     * @return bool
      */
     public function is_unique(string $str = null, string $field, array $data): bool
     {
@@ -211,7 +211,7 @@ class Rules
      * @param string $str
      * @param string $max
      *
-     * @return boolean
+     * @return bool
      */
     public function less_than(string $str = null, string $max): bool
     {
@@ -226,7 +226,7 @@ class Rules
      * @param string $str
      * @param string $max
      *
-     * @return boolean
+     * @return bool
      */
     public function less_than_equal_to(string $str = null, string $max): bool
     {
@@ -242,7 +242,7 @@ class Rules
      * @param string $field
      * @param array  $data  Other field/value pairs
      *
-     * @return boolean
+     * @return bool
      */
     public function matches(string $str = null, string $field, array $data): bool
     {
@@ -261,7 +261,7 @@ class Rules
      * @param string $str
      * @param string $val
      *
-     * @return boolean
+     * @return bool
      */
     public function max_length(string $str = null, string $val): bool
     {
@@ -276,7 +276,7 @@ class Rules
      * @param string $str
      * @param string $val
      *
-     * @return boolean
+     * @return bool
      */
     public function min_length(string $str = null, string $val): bool
     {
@@ -291,7 +291,7 @@ class Rules
      * @param string $str
      * @param string $val
      *
-     * @return boolean
+     * @return bool
      */
     public function not_equals(string $str = null, string $val): bool
     {
@@ -306,7 +306,7 @@ class Rules
      * @param string $value
      * @param string $list
      *
-     * @return boolean
+     * @return bool
      */
     public function not_in_list(string $value = null, string $list): bool
     {
@@ -320,7 +320,7 @@ class Rules
      *
      * @param mixed $str Value
      *
-     * @return boolean          True if valid, false if not
+     * @return bool          True if valid, false if not
      */
     public function required($str = null): bool
     {
@@ -345,7 +345,7 @@ class Rules
      * @param string|null $fields List of fields that we should check if present
      * @param array       $data   Complete list of fields from the form
      *
-     * @return boolean
+     * @return bool
      */
     public function required_with($str = null, string $fields = null, array $data = []): bool
     {
@@ -393,7 +393,7 @@ class Rules
      * @param string|null $fields
      * @param array       $data
      *
-     * @return boolean
+     * @return bool
      */
     public function required_without($str = null, string $fields = null, array $data = []): bool
     {

@@ -29,7 +29,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The error code, if any.
      *
-     * @var integer
+     * @var int
      */
     protected $errorCode;
 
@@ -156,7 +156,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      *
      * @param array $data
      *
-     * @return boolean
+     * @return bool
      */
     abstract public function _execute(array $data): bool;
 
@@ -206,7 +206,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * A helper to determine if any error exists.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasError(): bool
     {
@@ -218,7 +218,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * Returns the error code created while executing this statement.
      *
-     * @return integer
+     * @return int
      */
     public function getErrorCode(): int
     {

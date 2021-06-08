@@ -22,7 +22,7 @@ class Builder extends BaseBuilder
      * Default installs of SQLite typically do not
      * support limiting delete clauses.
      *
-     * @var boolean
+     * @var bool
      */
     protected $canLimitDeletes = false;
 
@@ -30,7 +30,7 @@ class Builder extends BaseBuilder
      * Default installs of SQLite do no support
      * limiting update queries in combo with WHERE.
      *
-     * @var boolean
+     * @var bool
      */
     protected $canLimitWhereUpdates = false;
 

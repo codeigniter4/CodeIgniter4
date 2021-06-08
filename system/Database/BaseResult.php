@@ -28,7 +28,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result ID
      *
-     * @var resource|object|boolean
+     * @var resource|object|bool
      */
     public $resultID;
 
@@ -56,14 +56,14 @@ abstract class BaseResult implements ResultInterface
     /**
      * Current Row index
      *
-     * @var integer
+     * @var int
      */
     public $currentRow = 0;
 
     /**
      * The number of records in the query result
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $numRows = null;
 
@@ -296,7 +296,7 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exists, returns null.
      *
-     * @param integer $n
+     * @param int $n
      * @param string  $className
      *
      * @return mixed
@@ -323,7 +323,7 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -348,7 +348,7 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -499,7 +499,7 @@ abstract class BaseResult implements ResultInterface
      * back on counting resultArray or resultObject, finally fetching resultArray
      * if nothing was previously fetched
      *
-     * @return integer
+     * @return int
      */
     public function getNumRows(): int
     {
@@ -519,7 +519,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     abstract public function getFieldCount(): int;
 
@@ -557,7 +557,7 @@ abstract class BaseResult implements ResultInterface
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */

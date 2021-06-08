@@ -25,7 +25,7 @@ class XMLFormatter implements FormatterInterface
      *
      * @param mixed $data
      *
-     * @return string|boolean (XML string | false)
+     * @return string|bool (XML string | false)
      */
     public function format($data)
     {
@@ -76,7 +76,7 @@ class XMLFormatter implements FormatterInterface
      * Normalizes tags into the allowed by W3C.
      * Regex adopted from this StackOverflow answer.
      *
-     * @param string|integer $key
+     * @param string|int $key
      *
      * @return string
      *

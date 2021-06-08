@@ -138,7 +138,7 @@ if (! function_exists('counted')) {
      * Takes a number and a word to return the plural or not
      * E.g. 0 cats, 1 cat, 2 cats, ...
      *
-     * @param integer $count  Number of items
+     * @param int $count  Number of items
      * @param string  $string Input string
      *
      * @return string
@@ -242,7 +242,7 @@ if (! function_exists('is_pluralizable')) {
      *
      * @param string $word Word to check
      *
-     * @return boolean
+     * @return bool
      */
     function is_pluralizable(string $word): bool
     {
@@ -325,7 +325,7 @@ if (! function_exists('ordinal')) {
      * number to denote the position in an ordered
      * sequence such as 1st, 2nd, 3rd, 4th.
      *
-     * @param integer $integer The integer to determine the suffix
+     * @param int $integer The integer to determine the suffix
      *
      * @return string
      */
@@ -356,7 +356,7 @@ if (! function_exists('ordinalize')) {
      * to denote the position in an ordered sequence
      * such as 1st, 2nd, 3rd, 4th.
      *
-     * @param integer $integer The integer to ordinalize
+     * @param int $integer The integer to ordinalize
      *
      * @return string
      */

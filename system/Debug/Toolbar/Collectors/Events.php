@@ -23,7 +23,7 @@ class Events extends BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -31,7 +31,7 @@ class Events extends BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
@@ -39,7 +39,7 @@ class Events extends BaseCollector
      * Whether this collector has data that
      * should be shown in the Vars tab.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasVarData = false;
 
@@ -136,7 +136,7 @@ class Events extends BaseCollector
     /**
      * Gets the "badge" value for the button.
      *
-     * @return integer
+     * @return int
      */
     public function getBadgeValue(): int
     {

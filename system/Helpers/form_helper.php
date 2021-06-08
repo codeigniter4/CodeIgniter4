@@ -117,7 +117,7 @@ if (! function_exists('form_hidden')) {
      *
      * @param string|array $name      Field name or associative array to create multiple fields
      * @param string|array $value     Field value
-     * @param boolean      $recursing
+     * @param bool      $recursing
      *
      * @return string
      */
@@ -389,7 +389,7 @@ if (! function_exists('form_checkbox')) {
      *
      * @param mixed   $data
      * @param string  $value
-     * @param boolean $checked
+     * @param bool $checked
      * @param mixed   $extra
      *
      * @return string
@@ -429,7 +429,7 @@ if (! function_exists('form_radio')) {
      *
      * @param mixed   $data
      * @param string  $value
-     * @param boolean $checked
+     * @param bool $checked
      * @param mixed   $extra
      *
      * @return string
@@ -647,7 +647,7 @@ if (! function_exists('set_value')) {
      *
      * @param string          $field      Field name
      * @param string|string[] $default    Default value
-     * @param boolean         $htmlEscape Whether to escape HTML special characters or not
+     * @param bool         $htmlEscape Whether to escape HTML special characters or not
      *
      * @return string|string[]
      */
@@ -677,7 +677,7 @@ if (! function_exists('set_select')) {
      *
      * @param string  $field
      * @param string  $value
-     * @param boolean $default
+     * @param bool $default
      *
      * @return string
      */
@@ -722,7 +722,7 @@ if (! function_exists('set_checkbox')) {
      *
      * @param string  $field
      * @param string  $value
-     * @param boolean $default
+     * @param bool $default
      *
      * @return string
      */
@@ -768,7 +768,7 @@ if (! function_exists('set_radio')) {
      *
      * @param string  $field
      * @param string  $value
-     * @param boolean $default
+     * @param bool $default
      *
      * @return string
      */

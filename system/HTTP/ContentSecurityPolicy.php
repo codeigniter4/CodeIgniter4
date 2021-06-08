@@ -146,14 +146,14 @@ class ContentSecurityPolicy
     /**
      * Used for security enforcement
      *
-     * @var boolean
+     * @var bool
      */
     protected $upgradeInsecureRequests = false;
 
     /**
      * Used for security enforcement
      *
-     * @var boolean
+     * @var bool
      */
     protected $reportOnly = false;
 
@@ -230,7 +230,7 @@ class ContentSecurityPolicy
      * determine what errors need to be addressed before you turn on
      * all filtering.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return $this
      */
@@ -249,7 +249,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -271,7 +271,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-child-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -292,7 +292,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -313,7 +313,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-default-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -333,7 +333,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-font-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -351,7 +351,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-form-action
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -369,7 +369,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -387,7 +387,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-frame-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -407,7 +407,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-img-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -425,7 +425,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-media-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -443,7 +443,7 @@ class ContentSecurityPolicy
      * @see https://www.w3.org/TR/CSP/#directive-manifest-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -461,7 +461,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-object-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -479,7 +479,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-plugin-types
      *
      * @param string|array $mime              One or more plugin mime types, separate by spaces
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -514,7 +514,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-sandbox
      *
      * @param string|array $flags             An array of sandbox flags that can be added to the directive.
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -532,7 +532,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -550,7 +550,7 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param string|array $uri
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return $this
      */
@@ -565,7 +565,7 @@ class ContentSecurityPolicy
      * Sets whether the user agents should rewrite URL schemes, changing
      * HTTP to HTTPS.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return $this
      */
@@ -585,7 +585,7 @@ class ContentSecurityPolicy
      *
      * @param string|array $options
      * @param string       $target
-     * @param boolean|null $explicitReporting
+     * @param bool|null $explicitReporting
      *
      * @return void
      */

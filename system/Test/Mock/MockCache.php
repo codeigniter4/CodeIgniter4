@@ -62,7 +62,7 @@ class MockCache extends BaseHandler implements CacheInterface
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string  $key      Cache item name
-     * @param integer $ttl      Time to live
+     * @param int $ttl      Time to live
      * @param Closure $callback Callback return value
      *
      * @return mixed
@@ -90,10 +90,10 @@ class MockCache extends BaseHandler implements CacheInterface
      *
      * @param string  $key   Cache item name
      * @param mixed   $value the data to save
-     * @param integer $ttl   Time To Live, in seconds (default 60)
-     * @param boolean $raw   Whether to store the raw value.
+     * @param int $ttl   Time To Live, in seconds (default 60)
+     * @param bool $raw   Whether to store the raw value.
      *
-     * @return boolean
+     * @return bool
      */
     public function save(string $key, $value, int $ttl = 60, bool $raw = false)
     {
@@ -112,7 +112,7 @@ class MockCache extends BaseHandler implements CacheInterface
      *
      * @param string $key Cache item name
      *
-     * @return boolean
+     * @return bool
      */
     public function delete(string $key)
     {
@@ -135,7 +135,7 @@ class MockCache extends BaseHandler implements CacheInterface
      *
      * @param string $pattern Cache items glob-style pattern
      *
-     * @return integer
+     * @return int
      */
     public function deleteMatching(string $pattern)
     {
@@ -158,9 +158,9 @@ class MockCache extends BaseHandler implements CacheInterface
      * Performs atomic incrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
-     * @return boolean
+     * @return bool
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -182,9 +182,9 @@ class MockCache extends BaseHandler implements CacheInterface
      * Performs atomic decrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
-     * @return boolean
+     * @return bool
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -206,7 +206,7 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Will delete all items in the entire cache.
      *
-     * @return boolean
+     * @return bool
      */
     public function clean()
     {
@@ -264,7 +264,7 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Determines if the driver is supported on this system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSupported(): bool
     {

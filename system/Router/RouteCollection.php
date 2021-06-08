@@ -66,7 +66,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * Not used here. Pass-thru value for Router class.
      *
-     * @var boolean
+     * @var bool
      */
     protected $translateURIDashes = false;
 
@@ -76,7 +76,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * Not used here. Pass-thru value for Router class.
      *
-     * @var boolean
+     * @var bool
      */
     protected $autoRoute = true;
 
@@ -178,7 +178,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * A little performance booster.
      *
-     * @var boolean
+     * @var bool
      */
     protected $didDiscover = false;
 
@@ -199,14 +199,14 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Flag for sorting routes by priority.
      *
-     * @var boolean
+     * @var bool
      */
     protected $prioritize = false;
 
     /**
      * Route priority detection flag.
      *
-     * @var boolean
+     * @var bool
      */
     protected $prioritizeDetected = false;
 
@@ -306,7 +306,7 @@ class RouteCollection implements RouteCollectionInterface
      * find words and meaning in the URI for better SEO. But it
      * doesn't work well with PHP method names....
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return RouteCollectionInterface
      */
@@ -326,7 +326,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * If FALSE, will stop searching and do NO automatic routing.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return RouteCollectionInterface
      */
@@ -460,7 +460,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the current value of the translateURIDashes setting.
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldTranslateURIDashes(): bool
     {
@@ -472,7 +472,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the flag that tells whether to autoRoute URI against Controllers.
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldAutoRoute(): bool
     {
@@ -627,7 +627,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string  $from   The pattern to match against
      * @param string  $to     Either a route name or a URI to redirect to
-     * @param integer $status The HTTP status code that should be returned with this redirect
+     * @param int $status The HTTP status code that should be returned with this redirect
      *
      * @return RouteCollection
      */
@@ -652,7 +652,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string $from
      *
-     * @return boolean
+     * @return bool
      */
     public function isRedirect(string $from): bool
     {
@@ -673,7 +673,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string $from
      *
-     * @return integer
+     * @return int
      */
     public function getRedirectCode(string $from): int
     {
@@ -1211,7 +1211,7 @@ class RouteCollection implements RouteCollectionInterface
      * @param string      $search
      * @param string|null $verb
      *
-     * @return boolean
+     * @return bool
      */
     public function isFiltered(string $search, string $verb = null): bool
     {
@@ -1402,7 +1402,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param mixed $subdomains
      *
-     * @return boolean
+     * @return bool
      */
     private function checkSubdomains($subdomains): bool
     {
@@ -1523,7 +1523,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Enable or Disable sorting routes by priority
      *
-     * @param boolean $enabled The value status
+     * @param bool $enabled The value status
      *
      * @return $this
      */

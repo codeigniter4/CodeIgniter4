@@ -25,7 +25,7 @@ class RedirectResponse extends Response
      * If no code is provided it will be automatically determined.
      *
      * @param string       $uri    The URI to redirect to
-     * @param integer|null $code   HTTP status code
+     * @param int|null $code   HTTP status code
      * @param string       $method
      *
      * @return $this
@@ -47,7 +47,7 @@ class RedirectResponse extends Response
      *
      * @param string  $route
      * @param array   $params
-     * @param integer $code
+     * @param int $code
      * @param string  $method
      *
      * @throws HTTPException
@@ -71,7 +71,7 @@ class RedirectResponse extends Response
      * Example:
      *  return redirect()->back();
      *
-     * @param integer|null $code
+     * @param int|null $code
      * @param string       $method
      *
      * @return $this

@@ -41,7 +41,7 @@ class Language
      * Boolean value whether the intl
      * libraries exist on the system.
      *
-     * @var boolean
+     * @var bool
      */
     protected $intlSupport = false;
 
@@ -229,7 +229,7 @@ class Language
      *
      * @param string  $file
      * @param string  $locale
-     * @param boolean $return
+     * @param bool $return
      *
      * @return void|array
      */

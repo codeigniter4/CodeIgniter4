@@ -22,7 +22,7 @@ class BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -30,7 +30,7 @@ class BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = false;
 
@@ -38,7 +38,7 @@ class BaseCollector
      * Whether this collector needs to display
      * a label or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasLabel = false;
 
@@ -46,7 +46,7 @@ class BaseCollector
      * Whether this collector has data that
      * should be shown in the Vars tab.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasVarData = false;
 
@@ -63,7 +63,7 @@ class BaseCollector
     /**
      * Gets the Collector's title.
      *
-     * @param  boolean $safe
+     * @param  bool $safe
      * @return string
      */
     public function getTitle(bool $safe = false): string
@@ -92,7 +92,7 @@ class BaseCollector
     /**
      * Does this collector need it's own tab?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTabContent(): bool
     {
@@ -104,7 +104,7 @@ class BaseCollector
     /**
      * Does this collector have a label?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLabel(): bool
     {
@@ -116,7 +116,7 @@ class BaseCollector
     /**
      * Does this collector have information for the timeline?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTimelineData(): bool
     {
@@ -146,7 +146,7 @@ class BaseCollector
      * Does this Collector have data that should be shown in the
      * 'Vars' tab?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasVarData(): bool
     {
@@ -239,7 +239,7 @@ class BaseCollector
      *
      * If not, then the toolbar button won't get shown.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty(): bool
     {

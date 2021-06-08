@@ -46,7 +46,7 @@ class Console
     /**
      * Runs the current command discovered on the CLI.
      *
-     * @param boolean $useSafeOutput
+     * @param bool $useSafeOutput
      *
      * @return RequestInterface|Response|ResponseInterface|mixed
      * @throws Exception
@@ -66,7 +66,7 @@ class Console
     /**
      * Displays basic information about the Console.
      *
-     * @param boolean $suppress
+     * @param bool $suppress
      */
     public function showHeader(bool $suppress = false)
     {

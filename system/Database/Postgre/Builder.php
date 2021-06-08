@@ -68,7 +68,7 @@ class Builder extends BaseBuilder
      *
      * @param string  $orderBy
      * @param string  $direction ASC, DESC or RANDOM
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return BaseBuilder
      */
@@ -98,7 +98,7 @@ class Builder extends BaseBuilder
      * Increments a numeric column by the specified value.
      *
      * @param string  $column
-     * @param integer $value
+     * @param int $value
      *
      * @throws DatabaseException
      *
@@ -119,7 +119,7 @@ class Builder extends BaseBuilder
      * Decrements a numeric column by the specified value.
      *
      * @param string  $column
-     * @param integer $value
+     * @param int $value
      *
      * @throws DatabaseException
      *
@@ -224,8 +224,8 @@ class Builder extends BaseBuilder
      * Compiles a delete string and runs the query
      *
      * @param mixed   $where
-     * @param integer $limit
-     * @param boolean $resetData
+     * @param int $limit
+     * @param bool $resetData
      *
      * @return   mixed
      * @throws   DatabaseException
@@ -378,7 +378,7 @@ class Builder extends BaseBuilder
      * @param string      $column
      * @param string|null $not
      * @param string      $bind
-     * @param boolean     $insensitiveSearch
+     * @param bool     $insensitiveSearch
      *
      * @return string     $like_statement
      */
@@ -399,7 +399,7 @@ class Builder extends BaseBuilder
      * @param string  $table
      * @param string  $cond   The join condition
      * @param string  $type   The type of join
-     * @param boolean $escape Whether not to try to escape identifiers
+     * @param bool $escape Whether not to try to escape identifiers
      *
      * @return BaseBuilder
      */

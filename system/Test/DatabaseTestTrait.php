@@ -31,14 +31,14 @@ trait DatabaseTestTrait
     /**
      * Is db migration done once or more than once?
      *
-     * @var boolean
+     * @var bool
      */
     private static $doneMigration = false;
 
     /**
      * Is seeding done once or more than once?
      *
-     * @var boolean
+     * @var bool
      */
     private static $doneSeed = false;
 
@@ -260,7 +260,7 @@ trait DatabaseTestTrait
      * @param string $column
      * @param array  $where
      *
-     * @return boolean
+     * @return bool
      * @throws DatabaseException
      */
     public function grabFromDatabase(string $table, string $column, array $where)
@@ -320,7 +320,7 @@ trait DatabaseTestTrait
      * @param string $table
      * @param array  $data
      *
-     * @return boolean
+     * @return bool
      */
     public function hasInDatabase(string $table, array $data)
     {
@@ -337,7 +337,7 @@ trait DatabaseTestTrait
      * Asserts that the number of rows in the database that match $where
      * is equal to $expected.
      *
-     * @param integer $expected
+     * @param int $expected
      * @param string  $table
      * @param array   $where
      *

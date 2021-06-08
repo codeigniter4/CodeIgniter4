@@ -184,9 +184,9 @@ abstract class BaseCommand
      * Pads our string out so that all titles are the same length to nicely line up descriptions.
      *
      * @param string  $item
-     * @param integer $max
-     * @param integer $extra  How many extra spaces to add at the end
-     * @param integer $indent
+     * @param int $max
+     * @param int $extra  How many extra spaces to add at the end
+     * @param int $indent
      *
      * @return string
      */
@@ -201,9 +201,9 @@ abstract class BaseCommand
      * Get pad for $key => $value array output
      *
      * @param array   $array
-     * @param integer $pad
+     * @param int $pad
      *
-     * @return integer
+     * @return int
      *
      * @deprecated Use setPad() instead.
      *
@@ -237,7 +237,7 @@ abstract class BaseCommand
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $key): bool
     {

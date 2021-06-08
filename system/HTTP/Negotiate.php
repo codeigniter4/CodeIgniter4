@@ -70,7 +70,7 @@ class Negotiate
      * type is returned.
      *
      * @param array   $supported
-     * @param boolean $strictMatch If TRUE, will return an empty string when no match found.
+     * @param bool $strictMatch If TRUE, will return an empty string when no match found.
      *                             If FALSE, will return the first supported element.
      *
      * @return string
@@ -160,10 +160,10 @@ class Negotiate
      *
      * @param array   $supported    App-supported values
      * @param string  $header       header string
-     * @param boolean $enforceTypes If TRUE, will compare media types and sub-types.
-     * @param boolean $strictMatch  If TRUE, will return empty string on no match.
+     * @param bool $enforceTypes If TRUE, will compare media types and sub-types.
+     * @param bool $strictMatch  If TRUE, will return empty string on no match.
      *                              If FALSE, will return the first supported element.
-     * @param boolean $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
+     * @param bool $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
      *
      * @return string Best match
      */
@@ -294,10 +294,10 @@ class Negotiate
      *
      * @param array   $acceptable
      * @param string  $supported
-     * @param boolean $enforceTypes
-     * @param boolean $matchLocales
+     * @param bool $enforceTypes
+     * @param bool $matchLocales
      *
-     * @return boolean
+     * @return bool
      */
     protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
     {
@@ -334,7 +334,7 @@ class Negotiate
      * @param array $acceptable
      * @param array $supported
      *
-     * @return boolean
+     * @return bool
      */
     protected function matchParameters(array $acceptable, array $supported): bool
     {
@@ -362,7 +362,7 @@ class Negotiate
      * @param array $acceptable
      * @param array $supported
      *
-     * @return boolean
+     * @return bool
      */
     public function matchTypes(array $acceptable, array $supported): bool
     {
@@ -394,7 +394,7 @@ class Negotiate
      * @param array $acceptable
      * @param array $supported
      *
-     * @return boolean
+     * @return bool
      */
     public function matchLocales(array $acceptable, array $supported): bool
     {

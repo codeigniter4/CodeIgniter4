@@ -142,7 +142,7 @@ class Commands
      * @param string $command
      * @param array  $commands
      *
-     * @return boolean
+     * @return bool
      */
     public function verifyCommand(string $command, array $commands): bool
     {

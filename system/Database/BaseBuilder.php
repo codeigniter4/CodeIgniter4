@@ -28,7 +28,7 @@ class BaseBuilder
     /**
      * Reset DELETE data flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $resetDeleteData = false;
 
@@ -42,7 +42,7 @@ class BaseBuilder
     /**
      * QB DISTINCT flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $QBDistinct = false;
 
@@ -91,14 +91,14 @@ class BaseBuilder
     /**
      * QB LIMIT data
      *
-     * @var integer|boolean
+     * @var int|bool
      */
     protected $QBLimit = false;
 
     /**
      * QB OFFSET data
      *
-     * @var integer|boolean
+     * @var int|bool
      */
     protected $QBOffset = false;
 
@@ -126,14 +126,14 @@ class BaseBuilder
     /**
      * QB WHERE group started flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $QBWhereGroupStarted = false;
 
     /**
      * QB WHERE group count
      *
-     * @var integer
+     * @var int
      */
     protected $QBWhereGroupCount = 0;
 
@@ -142,7 +142,7 @@ class BaseBuilder
      * exceptions, for example in case of
      * duplicate keys.
      *
-     * @var boolean
+     * @var bool
      */
     protected $QBIgnore = false;
 
@@ -203,7 +203,7 @@ class BaseBuilder
      * Some databases, like SQLite, do not by default
      * allow limiting of delete clauses.
      *
-     * @var boolean
+     * @var bool
      */
     protected $canLimitDeletes = true;
 
@@ -211,7 +211,7 @@ class BaseBuilder
      * Some databases do not by default
      * allow limit update queries with WHERE.
      *
-     * @var boolean
+     * @var bool
      */
     protected $canLimitWhereUpdates = true;
 
@@ -226,7 +226,7 @@ class BaseBuilder
     /**
      * Builder testing mode status.
      *
-     * @var boolean
+     * @var bool
      */
     protected $testMode = false;
 
@@ -292,7 +292,7 @@ class BaseBuilder
     /**
      * Sets a test mode status.
      *
-     * @param boolean $mode Mode to set
+     * @param bool $mode Mode to set
      *
      * @return $this
      */
@@ -336,7 +336,7 @@ class BaseBuilder
      * Set ignore Flag for next insert,
      * update or delete query.
      *
-     * @param boolean $ignore
+     * @param bool $ignore
      *
      * @return $this
      */
@@ -355,7 +355,7 @@ class BaseBuilder
      * Generates the SELECT portion of the query
      *
      * @param string|array $select
-     * @param boolean      $escape
+     * @param bool      $escape
      *
      * @return $this
      */
@@ -552,7 +552,7 @@ class BaseBuilder
      *
      * Sets a flag which tells the query string compiler to add DISTINCT
      *
-     * @param boolean $val
+     * @param bool $val
      *
      * @return $this
      */
@@ -571,7 +571,7 @@ class BaseBuilder
      * Generates the FROM portion of the query
      *
      * @param mixed   $from      can be a string or array
-     * @param boolean $overwrite Should we remove the first table existing?
+     * @param bool $overwrite Should we remove the first table existing?
      *
      * @return $this
      */
@@ -614,7 +614,7 @@ class BaseBuilder
      * @param string  $table
      * @param string  $cond   The join condition
      * @param string  $type   The type of join
-     * @param boolean $escape Whether not to try to escape identifiers
+     * @param bool $escape Whether not to try to escape identifiers
      *
      * @return $this
      */
@@ -692,7 +692,7 @@ class BaseBuilder
      *
      * @param mixed   $key
      * @param mixed   $value
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -711,7 +711,7 @@ class BaseBuilder
      *
      * @param mixed   $key
      * @param mixed   $value
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -734,7 +734,7 @@ class BaseBuilder
      * @param mixed   $key
      * @param mixed   $value
      * @param string  $type
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -807,7 +807,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -826,7 +826,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -845,7 +845,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -864,7 +864,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -883,7 +883,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -902,7 +902,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -921,7 +921,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -940,7 +940,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param boolean              $escape
+     * @param bool              $escape
      *
      * @return $this
      */
@@ -961,9 +961,9 @@ class BaseBuilder
      *
      * @param  string             $key    The field to search
      * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
-     * @param  boolean            $not    If the statement would be IN or NOT IN
+     * @param  bool            $not    If the statement would be IN or NOT IN
      * @param  string             $type
-     * @param  boolean            $escape
+     * @param  bool            $escape
      * @param  string             $clause (Internal use only)
      * @throws InvalidArgumentException
      *
@@ -1032,8 +1032,8 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
-     * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+     * @param bool $escape
+     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1053,8 +1053,8 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
-     * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+     * @param bool $escape
+     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1074,8 +1074,8 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
-     * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+     * @param bool $escape
+     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1095,8 +1095,8 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
-     * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+     * @param bool $escape
+     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1116,7 +1116,7 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -1136,7 +1136,7 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -1156,7 +1156,7 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -1176,7 +1176,7 @@ class BaseBuilder
      * @param mixed   $field
      * @param string  $match
      * @param string  $side
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -1204,8 +1204,8 @@ class BaseBuilder
      * @param string  $type
      * @param string  $side
      * @param string  $not
-     * @param boolean $escape
-     * @param boolean $insensitiveSearch IF true, will force a case-insensitive search
+     * @param bool $escape
+     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
      * @param string  $clause            (Internal use only)
      *
      * @return $this
@@ -1263,7 +1263,7 @@ class BaseBuilder
      * @param string      $column
      * @param string|null $not
      * @param string      $bind
-     * @param boolean     $insensitiveSearch
+     * @param bool     $insensitiveSearch
      *
      * @return string     $like_statement
      */
@@ -1476,7 +1476,7 @@ class BaseBuilder
      * GROUP BY
      *
      * @param string|array $by
-     * @param boolean      $escape
+     * @param bool      $escape
      *
      * @return $this
      */
@@ -1515,7 +1515,7 @@ class BaseBuilder
      *
      * @param string|array $key
      * @param mixed        $value
-     * @param boolean      $escape
+     * @param bool      $escape
      *
      * @return $this
      */
@@ -1533,7 +1533,7 @@ class BaseBuilder
      *
      * @param string|array $key
      * @param mixed        $value
-     * @param boolean      $escape
+     * @param bool      $escape
      *
      * @return $this
      */
@@ -1549,7 +1549,7 @@ class BaseBuilder
      *
      * @param string  $orderBy
      * @param string  $direction ASC, DESC or RANDOM
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this
      */
@@ -1608,8 +1608,8 @@ class BaseBuilder
     /**
      * LIMIT
      *
-     * @param integer|null $value  LIMIT value
-     * @param integer|null $offset OFFSET value
+     * @param int|null $value  LIMIT value
+     * @param int|null $offset OFFSET value
      *
      * @return $this
      */
@@ -1631,7 +1631,7 @@ class BaseBuilder
     /**
      * Sets the OFFSET value
      *
-     * @param integer $offset OFFSET value
+     * @param int $offset OFFSET value
      *
      * @return $this
      */
@@ -1669,7 +1669,7 @@ class BaseBuilder
      *
      * @param string|array|object $key    Field name, or an array of field/value pairs
      * @param string              $value  Field value, if $key is a single field
-     * @param boolean             $escape Whether to escape values and identifiers
+     * @param bool             $escape Whether to escape values and identifiers
      *
      * @return $this
      */
@@ -1701,7 +1701,7 @@ class BaseBuilder
      * Returns the previously set() data, alternatively resetting it
      * if needed.
      *
-     * @param boolean $clean
+     * @param bool $clean
      *
      * @return array
      */
@@ -1723,7 +1723,7 @@ class BaseBuilder
      *
      * Compiles a SELECT query string and returns the sql.
      *
-     * @param boolean $reset TRUE: resets QB values; FALSE: leave QB values alone
+     * @param bool $reset TRUE: resets QB values; FALSE: leave QB values alone
      *
      * @return string
      */
@@ -1766,9 +1766,9 @@ class BaseBuilder
      * Compiles the select statement based on the other functions called
      * and runs the query
      *
-     * @param integer $limit  The limit clause
-     * @param integer $offset The offset clause
-     * @param boolean $reset  Are we want to clear query builder values?
+     * @param int $limit  The limit clause
+     * @param int $offset The offset clause
+     * @param bool $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface|false
      */
@@ -1800,9 +1800,9 @@ class BaseBuilder
      * Generates a platform-specific query string that counts all records in
      * the particular table
      *
-     * @param boolean $reset Are we want to clear query builder values?
+     * @param bool $reset Are we want to clear query builder values?
      *
-     * @return integer|string when $test = true
+     * @return int|string when $test = true
      */
     public function countAll(bool $reset = true)
     {
@@ -1837,9 +1837,9 @@ class BaseBuilder
      * Generates a platform-specific query string that counts all records
      * returned by an Query Builder query.
      *
-     * @param boolean $reset
+     * @param bool $reset
      *
-     * @return integer|string when $test = true
+     * @return int|string when $test = true
      */
     public function countAllResults(bool $reset = true)
     {
@@ -1916,9 +1916,9 @@ class BaseBuilder
      * Allows the where clause, limit and offset to be added directly
      *
      * @param string|array $where  Where condition
-     * @param integer      $limit  Limit value
-     * @param integer      $offset Offset value
-     * @param boolean      $reset  Are we want to clear query builder values?
+     * @param int      $limit  Limit value
+     * @param int      $offset Offset value
+     * @param bool      $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface
      */
@@ -1954,10 +1954,10 @@ class BaseBuilder
      * Compiles batch insert strings and runs the queries
      *
      * @param array   $set       An associative array of insert values
-     * @param boolean $escape    Whether to escape values and identifiers
-     * @param integer $batchSize Batch size
+     * @param bool $escape    Whether to escape values and identifiers
+     * @param int $batchSize Batch size
      *
-     * @return integer|false Number of rows inserted or FALSE on failure
+     * @return int|false Number of rows inserted or FALSE on failure
      * @throws DatabaseException
      */
     public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
@@ -2031,7 +2031,7 @@ class BaseBuilder
      *
      * @param mixed   $key
      * @param string  $value
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return $this|null
      */
@@ -2084,11 +2084,11 @@ class BaseBuilder
      *
      * Compiles an insert query and returns the sql
      *
-     * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
+     * @param bool $reset TRUE: reset QB values; FALSE: leave QB values alone
      *
      * @throws DatabaseException
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getCompiledInsert(bool $reset = true)
     {
@@ -2115,11 +2115,11 @@ class BaseBuilder
      * Compiles an insert string and runs the query
      *
      * @param array   $set    An associative array of insert values
-     * @param boolean $escape Whether to escape values and identifiers
+     * @param bool $escape Whether to escape values and identifiers
      *
      * @throws DatabaseException
      *
-     * @return Query|boolean
+     * @return Query|bool
      */
     public function insert(array $set = null, bool $escape = null)
     {
@@ -2160,7 +2160,7 @@ class BaseBuilder
      * validate that the there data is actually being set and that table
      * has been chosen to be inserted into.
      *
-     * @return boolean
+     * @return bool
      * @throws DatabaseException
      */
     protected function validateInsert(): bool
@@ -2271,9 +2271,9 @@ class BaseBuilder
      *
      * Compiles an update query and returns the sql
      *
-     * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
+     * @param bool $reset TRUE: reset QB values; FALSE: leave QB values alone
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getCompiledUpdate(bool $reset = true)
     {
@@ -2299,11 +2299,11 @@ class BaseBuilder
      *
      * @param array   $set   An associative array of update values
      * @param mixed   $where
-     * @param integer $limit
+     * @param int $limit
      *
      * @throws DatabaseException
      *
-     * @return boolean    TRUE on success, FALSE on failure
+     * @return bool    TRUE on success, FALSE on failure
      */
     public function update(array $set = null, $where = null, int $limit = null): bool
     {
@@ -2382,7 +2382,7 @@ class BaseBuilder
      * validate that data is actually being set and that a table has been
      * chosen to be update.
      *
-     * @return boolean
+     * @return bool
      * @throws DatabaseException
      */
     protected function validateUpdate(): bool
@@ -2408,7 +2408,7 @@ class BaseBuilder
      *
      * @param array   $set       An associative array of update values
      * @param string  $index     The where key
-     * @param integer $batchSize The size of the batch to run
+     * @param int $batchSize The size of the batch to run
      *
      * @return mixed    Number of rows affected, SQL string, or FALSE on failure
      * @throws DatabaseException
@@ -2520,7 +2520,7 @@ class BaseBuilder
      *
      * @param array|object $key
      * @param string       $index
-     * @param boolean      $escape
+     * @param bool      $escape
      *
      * @return $this|null
      * @throws DatabaseException
@@ -2568,7 +2568,7 @@ class BaseBuilder
      *
      * Compiles a delete string and runs "DELETE FROM table"
      *
-     * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
+     * @return bool|string    TRUE on success, FALSE on failure, string on testMode
      */
     public function emptyTable()
     {
@@ -2594,7 +2594,7 @@ class BaseBuilder
      * If the database does not support the truncate() command
      * This function maps to "DELETE FROM table"
      *
-     * @return boolean|string    TRUE on success, FALSE on failure, string on testMode
+     * @return bool|string    TRUE on success, FALSE on failure, string on testMode
      */
     public function truncate()
     {
@@ -2637,7 +2637,7 @@ class BaseBuilder
      *
      * Compiles a delete query string and returns the sql
      *
-     * @param boolean $reset TRUE: reset QB values; FALSE: leave QB values alone
+     * @param bool $reset TRUE: reset QB values; FALSE: leave QB values alone
      *
      * @return string
      */
@@ -2657,10 +2657,10 @@ class BaseBuilder
      * Compiles a delete string and runs the query
      *
      * @param mixed   $where     The where clause
-     * @param integer $limit     The limit clause
-     * @param boolean $resetData
+     * @param int $limit     The limit clause
+     * @param bool $resetData
      *
-     * @return string|boolean
+     * @return string|bool
      * @throws DatabaseException
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
@@ -2707,9 +2707,9 @@ class BaseBuilder
      * Increments a numeric column by the specified value.
      *
      * @param string  $column
-     * @param integer $value
+     * @param int $value
      *
-     * @return boolean
+     * @return bool
      */
     public function increment(string $column, int $value = 1)
     {
@@ -2726,9 +2726,9 @@ class BaseBuilder
      * Decrements a numeric column by the specified value.
      *
      * @param string  $column
-     * @param integer $value
+     * @param int $value
      *
-     * @return boolean
+     * @return bool
      */
     public function decrement(string $column, int $value = 1)
     {
@@ -3092,7 +3092,7 @@ class BaseBuilder
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     protected function isLiteral(string $str): bool
     {
@@ -3205,7 +3205,7 @@ class BaseBuilder
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasOperator(string $str): bool
     {
@@ -3218,7 +3218,7 @@ class BaseBuilder
      * Returns the SQL string operator
      *
      * @param string  $str
-     * @param boolean $list
+     * @param bool $list
      *
      * @return mixed
      */
@@ -3257,7 +3257,7 @@ class BaseBuilder
      *
      * @param string  $key
      * @param mixed   $value
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return string
      */

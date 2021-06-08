@@ -25,7 +25,7 @@ class Result extends BaseResult
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     public function getFieldCount(): int
     {
@@ -106,7 +106,7 @@ class Result extends BaseResult
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      * @throws DatabaseException
@@ -143,7 +143,7 @@ class Result extends BaseResult
      *
      * @param string $className
      *
-     * @return object|boolean
+     * @return object|bool
      */
     protected function fetchObject(string $className = 'stdClass')
     {

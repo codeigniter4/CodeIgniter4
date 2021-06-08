@@ -66,7 +66,7 @@ if (! function_exists('_list')) {
      * @param string  $type
      * @param mixed   $list
      * @param mixed   $attributes string, array, object
-     * @param integer $depth
+     * @param int $depth
      *
      * @return string
      */
@@ -109,7 +109,7 @@ if (! function_exists('img')) {
      * Generates an image element
      *
      * @param string|array        $src        Image source URI, or array of attributes and values
-     * @param boolean             $indexPage  Whether to treat $src as a routed URI string
+     * @param bool             $indexPage  Whether to treat $src as a routed URI string
      * @param string|array|object $attributes Additional HTML attributes
      *
      * @return string
@@ -219,7 +219,7 @@ if (! function_exists('script_tag')) {
      * Generates link to a JS file
      *
      * @param mixed   $src       Script source or an array
-     * @param boolean $indexPage Should indexPage be added to the JS path
+     * @param bool $indexPage Should indexPage be added to the JS path
      *
      * @return string
      */
@@ -259,7 +259,7 @@ if (! function_exists('link_tag')) {
      * @param string  $type
      * @param string  $title
      * @param string  $media
-     * @param boolean $indexPage should indexPage be added to the CSS path.
+     * @param bool $indexPage should indexPage be added to the CSS path.
      * @param string  $hreflang
      *
      * @return string
@@ -324,7 +324,7 @@ if (! function_exists('video')) {
      * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser
      * @param string  $attributes         HTML attributes
      * @param array   $tracks
-     * @param boolean $indexPage
+     * @param bool $indexPage
      *
      * @return string
      */
@@ -378,7 +378,7 @@ if (! function_exists('audio')) {
      * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser.
      * @param string  $attributes         HTML attributes
      * @param array   $tracks
-     * @param boolean $indexPage
+     * @param bool $indexPage
      *
      * @return string
      */
@@ -474,7 +474,7 @@ if (! function_exists('source')) {
      * @param string  $src        The path of the media resource
      * @param string  $type       The MIME-type of the resource with optional codecs parameters
      * @param string  $attributes HTML attributes
-     * @param boolean $indexPage
+     * @param bool $indexPage
      *
      * @return string
      */
@@ -535,7 +535,7 @@ if (! function_exists('object')) {
      * @param string  $type       Content-type of the resource
      * @param string  $attributes HTML attributes
      * @param array   $params
-     * @param boolean $indexPage
+     * @param bool $indexPage
      *
      * @return string
      */
@@ -596,7 +596,7 @@ if (! function_exists('embed')) {
      * @param string  $src        The path of the resource to embed
      * @param string  $type       MIME-type
      * @param string  $attributes HTML attributes
-     * @param boolean $indexPage
+     * @param bool $indexPage
      *
      * @return string
      */
@@ -620,7 +620,7 @@ if (! function_exists('_has_protocol')) {
      *
      * @param string $url
      *
-     * @return false|integer
+     * @return false|int
      */
     function _has_protocol(string $url)
     {
@@ -634,7 +634,7 @@ if (! function_exists('_space_indent')) {
     /**
      * Provide space indenting.
      *
-     * @param integer $depth
+     * @param int $depth
      *
      * @return string
      */

@@ -19,9 +19,9 @@ interface ImageHandlerInterface
     /**
      * Resize the image
      *
-     * @param integer $width
-     * @param integer $height
-     * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+     * @param int $width
+     * @param int $height
+     * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
      * @param string  $masterDim
      *
      * @return $this
@@ -35,11 +35,11 @@ interface ImageHandlerInterface
      * is not provided, that value will be set the appropriate value based on offsets and
      * image dimensions.
      *
-     * @param integer|null $width
-     * @param integer|null $height
-     * @param integer|null $x             X-axis coord to start cropping from the left of image
-     * @param integer|null $y             Y-axis coord to start cropping from the top of image
-     * @param boolean      $maintainRatio
+     * @param int|null $width
+     * @param int|null $height
+     * @param int|null $x             X-axis coord to start cropping from the left of image
+     * @param int|null $y             Y-axis coord to start cropping from the top of image
+     * @param bool      $maintainRatio
      * @param string       $masterDim
      *
      * @return $this
@@ -52,7 +52,7 @@ interface ImageHandlerInterface
      * Changes the stored image type to indicate the new file format to use when saving.
      * Does not touch the actual resource.
      *
-     * @param integer $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+     * @param int $imageType A PHP imagetype constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
      *
      * @return $this
      */
@@ -74,9 +74,9 @@ interface ImageHandlerInterface
     /**
      * Flattens transparencies, default white background
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      *
      * @return $this
      */
@@ -131,8 +131,8 @@ interface ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      * @param string  $position
      *
      * @return $this
@@ -173,9 +173,9 @@ interface ImageHandlerInterface
      *          ->save($target);
      *
      * @param string  $target
-     * @param integer $quality
+     * @param int $quality
      *
-     * @return boolean
+     * @return bool
      */
     public function save(string $target = null, int $quality = 90);
 }

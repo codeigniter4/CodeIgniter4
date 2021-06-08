@@ -175,7 +175,7 @@ class CreditCardRules
      * @param string|null $ccNumber
      * @param string      $type
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_cc_number(?string $ccNumber, string $type): bool
     {
@@ -248,7 +248,7 @@ class CreditCardRules
      *
      * @param string $number
      *
-     * @return boolean
+     * @return bool
      */
     protected function isValidLuhn(string $number = null): bool
     {

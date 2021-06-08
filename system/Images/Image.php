@@ -22,14 +22,14 @@ class Image extends File
     /**
      * The original image width in pixels.
      *
-     * @var integer|float
+     * @var int|float
      */
     public $origWidth;
 
     /**
      * The original image height in pixels.
      *
-     * @var integer|float
+     * @var int|float
      */
     public $origHeight;
 
@@ -38,7 +38,7 @@ class Image extends File
      *
      * @see http://php.net/manual/en/image.constants.php
      *
-     * @var integer
+     * @var int
      */
     public $imageType;
 
@@ -63,9 +63,9 @@ class Image extends File
      *
      * @param string      $targetPath The directory to store the file in
      * @param string|null $targetName The new name of the copied file.
-     * @param integer     $perms      File permissions to be applied after copy.
+     * @param int     $perms      File permissions to be applied after copy.
      *
-     * @return boolean
+     * @return bool
      */
     public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
     {
@@ -97,9 +97,9 @@ class Image extends File
      *
      * A helper function that gets info about the file
      *
-     * @param boolean $return
+     * @param bool $return
      *
-     * @return array|boolean
+     * @return array|bool
      */
     public function getProperties(bool $return = false)
     {

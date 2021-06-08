@@ -20,10 +20,10 @@ if (! function_exists('number_to_size')) {
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
      * @param mixed   $num       Will be cast as int
-     * @param integer $precision
+     * @param int $precision
      * @param string  $locale
      *
-     * @return boolean|string
+     * @return bool|string
      */
     function number_to_size($num, int $precision = 1, string $locale = null)
     {
@@ -75,10 +75,10 @@ if (! function_exists('number_to_amount')) {
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
      * @param string      $num
-     * @param integer     $precision
+     * @param int     $precision
      * @param string|null $locale
      *
-     * @return boolean|string
+     * @return bool|string
      */
     function number_to_amount($num, int $precision = 0, string $locale = null)
     {
@@ -125,7 +125,7 @@ if (! function_exists('number_to_currency')) {
      * @param float   $num
      * @param string  $currency
      * @param string  $locale
-     * @param integer $fraction
+     * @param int $fraction
      *
      * @return string
      */
@@ -147,7 +147,7 @@ if (! function_exists('format_number')) {
      * Used by all of the functions of the number_helper.
      *
      * @param float       $num
-     * @param integer     $precision
+     * @param int     $precision
      * @param string|null $locale
      * @param array       $options
      *

@@ -31,7 +31,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Database port
      *
-     * @var integer|string
+     * @var int|string
      */
     protected $port = '';
 
@@ -88,7 +88,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Persistent connection flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $pConnect = false;
 
@@ -97,7 +97,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Whether to display error messages.
      *
-     * @var boolean
+     * @var bool
      */
     protected $DBDebug = false;
 
@@ -132,7 +132,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Compression flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $compress = false;
 
@@ -141,7 +141,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Whether we're running in strict SQL mode.
      *
-     * @var boolean
+     * @var bool
      */
     protected $strictOn;
 
@@ -165,21 +165,21 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var object|resource|boolean
+     * @var object|resource|bool
      */
     public $connID = false;
 
     /**
      * Result ID
      *
-     * @var object|resource|boolean
+     * @var object|resource|bool
      */
     public $resultID = false;
 
     /**
      * Protect identifiers flag
      *
-     * @var boolean
+     * @var bool
      */
     public $protectIdentifiers = true;
 
@@ -239,28 +239,28 @@ abstract class BaseConnection implements ConnectionInterface
      * If true, no queries will actually be
      * ran against the database.
      *
-     * @var boolean
+     * @var bool
      */
     protected $pretend = false;
 
     /**
      * Transaction enabled flag
      *
-     * @var boolean
+     * @var bool
      */
     public $transEnabled = true;
 
     /**
      * Strict transaction mode flag
      *
-     * @var boolean
+     * @var bool
      */
     public $transStrict = true;
 
     /**
      * Transaction depth level
      *
-     * @var integer
+     * @var int
      */
     protected $transDepth = 0;
 
@@ -269,7 +269,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Used with transactions to determine if a rollback should occur.
      *
-     * @var boolean
+     * @var bool
      */
     protected $transStatus = true;
 
@@ -278,7 +278,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Used with transactions to determine if a transaction has failed.
      *
-     * @var boolean
+     * @var bool
      */
     protected $transFailure = false;
 
@@ -395,7 +395,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param  boolean $persistent
+     * @param  bool $persistent
      * @return mixed
      */
     abstract public function connect(bool $persistent = false);
@@ -591,10 +591,10 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string  $sql
      * @param mixed   ...$binds
-     * @param boolean $setEscapeFlags
+     * @param bool $setEscapeFlags
      * @param string  $queryClass
      *
-     * @return BaseResult|Query|boolean
+     * @return BaseResult|Query|bool
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -729,7 +729,7 @@ abstract class BaseConnection implements ConnectionInterface
      * If strict mode is disabled, each group is treated autonomously,
      * meaning a failure of one group will not affect any others
      *
-     * @param boolean $mode = true
+     * @param bool $mode = true
      *
      * @return $this
      */
@@ -745,8 +745,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Start Transaction
      *
-     * @param  boolean $testMode = FALSE
-     * @return boolean
+     * @param  bool $testMode = FALSE
+     * @return bool
      */
     public function transStart(bool $testMode = false): bool
     {
@@ -762,7 +762,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Complete Transaction
      *
-     * @return boolean
+     * @return bool
      */
     public function transComplete(): bool
     {
@@ -793,7 +793,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Lets you retrieve the transaction flag to determine if it has failed
      *
-     * @return boolean
+     * @return bool
      */
     public function transStatus(): bool
     {
@@ -805,8 +805,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Begin Transaction
      *
-     * @param  boolean $testMode
-     * @return boolean
+     * @param  bool $testMode
+     * @return bool
      */
     public function transBegin(bool $testMode = false): bool
     {
@@ -844,7 +844,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     public function transCommit(): bool
     {
@@ -867,7 +867,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     public function transRollback(): bool
     {
@@ -890,7 +890,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     abstract protected function _transBegin(): bool;
 
@@ -899,7 +899,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     abstract protected function _transCommit(): bool;
 
@@ -908,7 +908,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     abstract protected function _transRollback(): bool;
 
@@ -1025,7 +1025,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Used by the Debug Toolbar's timeline.
      *
-     * @param integer $decimals
+     * @param int $decimals
      *
      * @return string
      */
@@ -1057,9 +1057,9 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param string|array $item
-     * @param boolean      $prefixSingle
-     * @param boolean      $protectIdentifiers
-     * @param boolean      $fieldExists
+     * @param bool      $prefixSingle
+     * @param bool      $protectIdentifiers
+     * @param bool      $fieldExists
      *
      * @return string|array
      */
@@ -1283,7 +1283,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     abstract public function affectedRows(): int;
 
@@ -1326,7 +1326,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Escape String
      *
      * @param  string|string[] $str  Input string
-     * @param  boolean         $like Whether or not the string will be used in a LIKE condition
+     * @param  bool         $like Whether or not the string will be used in a LIKE condition
      * @return string|string[]
      */
     public function escapeString($str, bool $like = false)
@@ -1399,7 +1399,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string $functionName
      * @param array  ...$params
      *
-     * @return boolean
+     * @return bool
      * @throws DatabaseException
      */
     public function callFunction(string $functionName, ...$params): bool
@@ -1430,8 +1430,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an array of table names
      *
-     * @param  boolean $constrainByPrefix = FALSE
-     * @return boolean|array
+     * @param  bool $constrainByPrefix = FALSE
+     * @return bool|array
      * @throws DatabaseException
      */
     public function listTables(bool $constrainByPrefix = false)
@@ -1484,7 +1484,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Determine if a particular table exists
      *
      * @param  string $tableName
-     * @return boolean
+     * @return bool
      */
     public function tableExists(string $tableName): bool
     {
@@ -1549,7 +1549,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param  string $fieldName
      * @param  string $tableName
-     * @return boolean
+     * @return bool
      */
     public function fieldExists(string $fieldName, string $tableName): bool
     {
@@ -1627,7 +1627,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * This is primarily used by the prepared query functionality.
      *
-     * @param boolean $pretend
+     * @param bool $pretend
      *
      * @return $this
      */
@@ -1658,7 +1658,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Determines if the statement is a write-type query or not.
      *
      * @param  string $sql
-     * @return boolean
+     * @return bool
      */
     public function isWriteType($sql): bool
     {
@@ -1683,7 +1683,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Insert ID
      *
-     * @return integer|string
+     * @return int|string
      */
     abstract public function insertID();
 
@@ -1692,7 +1692,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $constrainByPrefix
+     * @param bool $constrainByPrefix
      *
      * @return string|false
      */
@@ -1767,7 +1767,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $key): bool
     {

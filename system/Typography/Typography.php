@@ -54,7 +54,7 @@ class Typography
     /**
      * whether or not to protect quotes within { curly braces }
      *
-     * @var boolean
+     * @var bool
      */
     public $protectBracedQuotes = false;
 
@@ -70,7 +70,7 @@ class Typography
      *  - Converts two spaces into entities
      *
      * @param string  $str
-     * @param boolean $reduceLinebreaks whether to reduce more then two consecutive newlines to two
+     * @param bool $reduceLinebreaks whether to reduce more then two consecutive newlines to two
      *
      * @return string
      */

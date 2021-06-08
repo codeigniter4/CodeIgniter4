@@ -33,7 +33,7 @@ class CastException extends FrameworkException
     /**
      * Thrown when the Json format is invalid.
      *
-     * @param integer $error
+     * @param int $error
      *
      * @return static
      */

@@ -23,7 +23,7 @@ class Config
      * a shared instance
      *
      * @param string  $name      Configuration name
-     * @param boolean $getShared Use shared instance
+     * @param bool $getShared Use shared instance
      *
      * @return mixed|null
      */

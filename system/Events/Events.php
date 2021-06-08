@@ -34,7 +34,7 @@ class Events
      * Flag to let us know if we've read from the Config file(s)
      * and have all of the defined events.
      *
-     * @var boolean
+     * @var bool
      */
     protected static $initialized = false;
 
@@ -42,7 +42,7 @@ class Events
      * If true, events will not actually be fired.
      * Useful during testing.
      *
-     * @var boolean
+     * @var bool
      */
     protected static $simulate = false;
 
@@ -112,7 +112,7 @@ class Events
      *
      * @param string   $eventName
      * @param callable $callback
-     * @param integer  $priority
+     * @param int  $priority
      *
      * @return void
      */
@@ -140,7 +140,7 @@ class Events
      * @param string $eventName
      * @param mixed  $arguments
      *
-     * @return boolean
+     * @return bool
      */
     public static function trigger($eventName, ...$arguments): bool
     {
@@ -207,7 +207,7 @@ class Events
      * @param string   $eventName
      * @param callable $listener
      *
-     * @return boolean
+     * @return bool
      */
     public static function removeListener($eventName, callable $listener): bool
     {
@@ -273,7 +273,7 @@ class Events
      * simply logged. Useful during testing when you don't actually want
      * the tests to run.
      *
-     * @param boolean $choice
+     * @param bool $choice
      *
      * @return void
      */

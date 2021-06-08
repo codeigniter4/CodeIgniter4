@@ -45,7 +45,7 @@ class Forge extends BaseForge
      * Whether table keys are created from within the
      * CREATE TABLE statement.
      *
-     * @var boolean
+     * @var bool
      */
     protected $createTableKeys = true;
 

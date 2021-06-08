@@ -26,7 +26,7 @@ class ModelFactory
      * Creates new Model instances or returns a shared instance
      *
      * @param string              $name       Model name, namespace optional
-     * @param boolean             $getShared  Use shared instance
+     * @param bool             $getShared  Use shared instance
      * @param ConnectionInterface $connection
      *
      * @return mixed|null

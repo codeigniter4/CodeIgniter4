@@ -203,7 +203,7 @@ if (! function_exists('config')) {
      * More simple way of getting config instances from Factories
      *
      * @param string  $name
-     * @param boolean $getShared
+     * @param bool $getShared
      *
      * @return mixed
      */
@@ -236,7 +236,7 @@ if (! function_exists('cookies')) {
      * Fetches the global `CookieStore` instance held by `Response`.
      *
      * @param Cookie[] $cookies   If `getGlobal` is false, this is passed to CookieStore's constructor
-     * @param boolean  $getGlobal If false, creates a new instance of CookieStore
+     * @param bool  $getGlobal If false, creates a new instance of CookieStore
      *
      * @return CookieStore
      */
@@ -336,7 +336,7 @@ if (! function_exists('db_connect')) {
      * otherwise it will all calls will return the same instance.
      *
      * @param ConnectionInterface|array|string|null $db
-     * @param boolean                               $getShared
+     * @param bool                               $getShared
      *
      * @return BaseConnection
      */
@@ -472,7 +472,7 @@ if (! function_exists('force_https')) {
      *
      * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
      *
-     * @param integer           $duration How long should the SSL header be set for? (in seconds)
+     * @param int           $duration How long should the SSL header be set for? (in seconds)
      *                                    Defaults to 1 year.
      * @param RequestInterface  $request
      * @param ResponseInterface $response
@@ -550,7 +550,7 @@ if (! function_exists('function_usable')) {
      *
      * @link   http://www.hardened-php.net/suhosin/
      * @param  string $functionName Function to check for
-     * @return boolean    TRUE if the function exists and is safe to call,
+     * @return bool    TRUE if the function exists and is safe to call,
      *             FALSE otherwise.
      *
      * @codeCoverageIgnore This is too exotic
@@ -677,7 +677,7 @@ if (! function_exists('is_cli')) {
     /**
      * Check if PHP was invoked from the command line.
      *
-     * @return boolean
+     * @return bool
      *
      * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
      */
@@ -716,7 +716,7 @@ if (! function_exists('is_really_writable')) {
      *
      * @param string $file
      *
-     * @return boolean
+     * @return bool
      *
      * @throws             Exception
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
@@ -816,7 +816,7 @@ if (! function_exists('model')) {
      * More simple way of getting model instances from Factories
      *
      * @param string                   $name
-     * @param boolean                  $getShared
+     * @param bool                  $getShared
      * @param ConnectionInterface|null $conn
      *
      * @return mixed
@@ -834,7 +834,7 @@ if (! function_exists('old')) {
      *
      * @param string         $key
      * @param null           $default
-     * @param string|boolean $escape
+     * @param string|bool $escape
      *
      * @return mixed|null
      */
@@ -900,7 +900,7 @@ if (! function_exists('remove_invisible_characters')) {
      * between ascii characters, like Java\0script.
      *
      * @param string  $str
-     * @param boolean $urlEncoded
+     * @param bool $urlEncoded
      *
      * @return string
      */
@@ -1066,7 +1066,7 @@ if (! function_exists('stringify_attributes')) {
      * of attributes to a string.
      *
      * @param mixed   $attributes string, array, object
-     * @param boolean $js
+     * @param bool $js
      *
      * @return string
      */
@@ -1171,7 +1171,7 @@ if (! function_exists('view_cell')) {
      *
      * @param string      $library
      * @param null        $params
-     * @param integer     $ttl
+     * @param int     $ttl
      * @param string|null $cacheName
      *
      * @return string

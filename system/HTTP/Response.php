@@ -125,14 +125,14 @@ class Response extends Message implements MessageInterface, ResponseInterface
      * The status code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
      *
-     * @var integer
+     * @var int
      */
     protected $statusCode = 200;
 
     /**
      * If true, will not write output. Useful during testing.
      *
-     * @var boolean
+     * @var bool
      *
      * @internal Used for framework testing, should not be relied on otherwise
      */
@@ -192,7 +192,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
      * Note that this is not a part of the interface so
      * should not be relied on outside of internal testing.
      *
-     * @param boolean $pretend
+     * @param bool $pretend
      *
      * @return $this
      */
@@ -209,7 +209,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
      * The status code is a 3-digit integer result code of the getServer's attempt
      * to understand and satisfy the request.
      *
-     * @return integer Status code.
+     * @return int Status code.
      */
     public function getStatusCode(): int
     {

@@ -55,7 +55,7 @@ class Filters
      * Whether we've done initial processing
      * on the filter lists.
      *
-     * @var boolean
+     * @var bool
      */
     protected $initialized = false;
 
@@ -527,7 +527,7 @@ class Filters
      * @param string $uri   URI to test against
      * @param mixed  $paths The path patterns to test
      *
-     * @return boolean True if any of the paths apply to the URI
+     * @return bool True if any of the paths apply to the URI
      */
     private function pathApplies(string $uri, $paths)
     {

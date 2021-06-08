@@ -69,7 +69,7 @@ class Router implements RouterInterface
      * Whether dashes in URI's should be converted
      * to underscores when determining method names.
      *
-     * @var boolean
+     * @var bool
      */
     protected $translateURIDashes = false;
 
@@ -313,7 +313,7 @@ class Router implements RouterInterface
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
      *
-     * @param boolean|false $val
+     * @param bool|false $val
      *
      * @return $this
      */
@@ -330,7 +330,7 @@ class Router implements RouterInterface
      * Returns true/false based on whether the current route contained
      * a {locale} placeholder.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLocale()
     {
@@ -358,7 +358,7 @@ class Router implements RouterInterface
      *
      * @param string $uri The URI path to compare against the routes
      *
-     * @return boolean Whether the route was matched or not.
+     * @return bool Whether the route was matched or not.
      * @throws RedirectException
      */
     protected function checkRoutes(string $uri): bool
@@ -618,8 +618,8 @@ class Router implements RouterInterface
      * Sets the sub-directory that the controller is in.
      *
      * @param string|null $dir
-     * @param boolean     $append
-     * @param boolean     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
+     * @param bool     $append
+     * @param bool     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      */
     public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
     {
@@ -652,7 +652,7 @@ class Router implements RouterInterface
      * regex comes from https://www.php.net/manual/en/language.variables.basics.php
      *
      * @param  string $segment
-     * @return boolean
+     * @return bool
      */
     private function isValidSegment(string $segment): bool
     {

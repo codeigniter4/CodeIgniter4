@@ -70,7 +70,7 @@ class View implements RendererInterface
     /**
      * Should we store performance info?
      *
-     * @var boolean
+     * @var bool
      */
     protected $debug = false;
 
@@ -90,14 +90,14 @@ class View implements RendererInterface
     /**
      * Whether data should be saved between renders.
      *
-     * @var boolean
+     * @var bool
      */
     protected $saveData;
 
     /**
      * Number of loaded views
      *
-     * @var integer
+     * @var int
      */
     protected $viewsCount = 0;
 
@@ -140,7 +140,7 @@ class View implements RendererInterface
      * @param ViewConfig       $config
      * @param string|null      $viewPath
      * @param FileLocator|null $loader
-     * @param boolean|null     $debug
+     * @param bool|null     $debug
      * @param LoggerInterface  $logger
      */
     public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
@@ -165,7 +165,7 @@ class View implements RendererInterface
      * @param array|null   $options  Reserved for 3rd-party uses since
      *                               it might be needed to pass additional info
      *                               to other template engines.
-     * @param boolean|null $saveData If true, saves data for subsequent calls,
+     * @param bool|null $saveData If true, saves data for subsequent calls,
      *                               if false, cleans the data after displaying,
      *                               if null, uses the config setting.
      *
@@ -280,7 +280,7 @@ class View implements RendererInterface
      * @param array|null   $options  Reserved for 3rd-party uses since
      *                               it might be needed to pass additional info
      *                               to other template engines.
-     * @param boolean|null $saveData If true, saves data for subsequent calls,
+     * @param bool|null $saveData If true, saves data for subsequent calls,
      *                               if false, cleans the data after displaying,
      *                               if null, uses the config setting.
      *
@@ -314,7 +314,7 @@ class View implements RendererInterface
      * Extract first bit of a long string and add ellipsis
      *
      * @param  string  $string
-     * @param  integer $length
+     * @param  int $length
      * @return string
      */
     public function excerpt(string $string, int $length = 20): string
@@ -464,7 +464,7 @@ class View implements RendererInterface
      *
      * @param string     $view
      * @param array|null $options
-     * @param boolean    $saveData
+     * @param bool    $saveData
      *
      * @return string
      */

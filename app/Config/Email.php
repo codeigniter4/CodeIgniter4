@@ -66,21 +66,21 @@ class Email extends BaseConfig
     /**
      * SMTP Port
      *
-     * @var integer
+     * @var int
      */
     public $SMTPPort = 25;
 
     /**
      * SMTP Timeout (in seconds)
      *
-     * @var integer
+     * @var int
      */
     public $SMTPTimeout = 5;
 
     /**
      * Enable persistent SMTP connections
      *
-     * @var boolean
+     * @var bool
      */
     public $SMTPKeepAlive = false;
 
@@ -94,14 +94,14 @@ class Email extends BaseConfig
     /**
      * Enable word-wrap
      *
-     * @var boolean
+     * @var bool
      */
     public $wordWrap = true;
 
     /**
      * Character count to wrap at
      *
-     * @var integer
+     * @var int
      */
     public $wrapChars = 76;
 
@@ -122,14 +122,14 @@ class Email extends BaseConfig
     /**
      * Whether to validate the email address
      *
-     * @var boolean
+     * @var bool
      */
     public $validate = false;
 
     /**
      * Email Priority. 1 = highest. 5 = lowest. 3 = normal
      *
-     * @var integer
+     * @var int
      */
     public $priority = 3;
 
@@ -150,21 +150,21 @@ class Email extends BaseConfig
     /**
      * Enable BCC Batch Mode.
      *
-     * @var boolean
+     * @var bool
      */
     public $BCCBatchMode = false;
 
     /**
      * Number of emails in each BCC batch
      *
-     * @var integer
+     * @var int
      */
     public $BCCBatchSize = 200;
 
     /**
      * Enable notify message from server
      *
-     * @var boolean
+     * @var bool
      */
     public $DSN = false;
 }

@@ -39,42 +39,42 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Whether the image file has been confirmed.
      *
-     * @var boolean
+     * @var bool
      */
     protected $verified = false;
 
     /**
      * Image width.
      *
-     * @var integer
+     * @var int
      */
     protected $width = 0;
 
     /**
      * Image height.
      *
-     * @var integer
+     * @var int
      */
     protected $height = 0;
 
     /**
      * File permission mask.
      *
-     * @var integer
+     * @var int
      */
     protected $filePermissions = 0644;
 
     /**
      * X-axis.
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $xAxis = 0;
 
     /**
      * Y-axis.
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $yAxis = 0;
 
@@ -249,9 +249,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Resize the image
      *
-     * @param integer $width
-     * @param integer $height
-     * @param boolean $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+     * @param int $width
+     * @param int $height
+     * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
      * @param string  $masterDim
      *
      * @return BaseHandler
@@ -281,11 +281,11 @@ abstract class BaseHandler implements ImageHandlerInterface
      * is not provided, that value will be set the appropriate value based on offsets and
      * image dimensions.
      *
-     * @param integer|null $width
-     * @param integer|null $height
-     * @param integer|null $x             X-axis coord to start cropping from the left of image
-     * @param integer|null $y             Y-axis coord to start cropping from the top of image
-     * @param boolean      $maintainRatio
+     * @param int|null $width
+     * @param int|null $height
+     * @param int|null $x             X-axis coord to start cropping from the left of image
+     * @param int|null $y             Y-axis coord to start cropping from the top of image
+     * @param bool      $maintainRatio
      * @param string       $masterDim
      *
      * @return $this
@@ -316,7 +316,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Changes the stored image type to indicate the new file format to use when saving.
      * Does not touch the actual resource.
      *
-     * @param integer $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
+     * @param int $imageType A PHP imageType constant, e.g. https://www.php.net/manual/en/function.image-type-to-mime-type.php
      *
      * @return $this
      */
@@ -370,9 +370,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Flattens transparencies, default white background
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      *
      * @return $this
      */
@@ -389,9 +389,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Handler-specific method to flattening an image's transparencies.
      *
-     * @param integer $red
-     * @param integer $green
-     * @param integer $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      *
      * @return   $this
      * @internal
@@ -403,7 +403,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Handler-specific method to handle rotating an image in 90 degree increments.
      *
-     * @param integer $angle
+     * @param int $angle
      *
      * @return mixed
      */
@@ -489,7 +489,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Handles the actual resizing of the image.
      *
-     * @param boolean $maintainRatio
+     * @param bool $maintainRatio
      *
      * @return $this
      */
@@ -509,7 +509,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Return image width.
      *
-     * @return integer
+     * @return int
      */
     public abstract function _getWidth();
 
@@ -518,7 +518,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Return the height of an image.
      *
-     * @return integer
+     * @return int
      */
     public abstract function _getHeight();
 
@@ -530,7 +530,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * with images taken by smartphones who always store the image up-right,
      * but set the orientation flag to display it correctly.
      *
-     * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+     * @param bool $silent If true, will ignore exceptions when PHP doesn't support EXIF.
      *
      * @return $this
      */
@@ -577,7 +577,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * EXIF data is only supported fr JPEG & TIFF formats.
      *
      * @param string|null $key    If specified, will only return this piece of EXIF data.
-     * @param boolean     $silent If true, will not throw our own exceptions.
+     * @param bool     $silent If true, will not throw our own exceptions.
      *
      * @throws ImageException
      *
@@ -623,8 +623,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      * @param string  $position
      *
      * @return BaseHandler
@@ -651,10 +651,10 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Calculate image aspect ratio.
      *
-     * @param integer|float      $width
-     * @param integer|float|null $height
-     * @param integer|float      $origWidth
-     * @param integer|float      $origHeight
+     * @param int|float      $width
+     * @param int|float|null $height
+     * @param int|float      $origWidth
+     * @param int|float      $origHeight
      *
      * @return array
      */
@@ -697,10 +697,10 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Based on the position, will determine the correct x/y coords to
      * crop the desired portion from the image.
      *
-     * @param integer|float $width
-     * @param integer|float $height
-     * @param integer|float $origWidth
-     * @param integer|float $origHeight
+     * @param int|float $width
+     * @param int|float $height
+     * @param int|float $origWidth
+     * @param int|float $origHeight
      * @param string        $position
      *
      * @return array
@@ -783,9 +783,9 @@ abstract class BaseHandler implements ImageHandlerInterface
      *          ->save($target);
      *
      * @param string|null $target
-     * @param integer     $quality
+     * @param int     $quality
      *
-     * @return boolean
+     * @return bool
      */
     public abstract function save(string $target = null, int $quality = 90);
 
@@ -868,7 +868,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * accessor for testing; not part of interface
      *
-     * @return integer
+     * @return int
      */
     public function getWidth()
     {
@@ -880,7 +880,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * accessor for testing; not part of interface
      *
-     * @return integer
+     * @return int
      */
     public function getHeight()
     {

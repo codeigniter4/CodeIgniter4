@@ -28,11 +28,11 @@ interface ThrottlerInterface
      * }
      *
      * @param string  $key      The name to use as the "bucket" name.
-     * @param integer $capacity The number of requests the "bucket" can hold
-     * @param integer $seconds  The time it takes the "bucket" to completely refill
-     * @param integer $cost     The number of tokens this action uses.
+     * @param int $capacity The number of requests the "bucket" can hold
+     * @param int $seconds  The time it takes the "bucket" to completely refill
+     * @param int $cost     The number of tokens this action uses.
      *
-     * @return boolean
+     * @return bool
      */
     public function check(string $key, int $capacity, int $seconds, int $cost);
 
@@ -42,7 +42,7 @@ interface ThrottlerInterface
      * Returns the number of seconds until the next available token will
      * be released for usage.
      *
-     * @return integer
+     * @return int
      */
     public function getTokenTime(): int;
 }

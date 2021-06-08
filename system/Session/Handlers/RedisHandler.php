@@ -46,14 +46,14 @@ class RedisHandler extends BaseHandler
     /**
      * Key exists flag
      *
-     * @var boolean
+     * @var bool
      */
     protected $keyExists = false;
 
     /**
      * Number of seconds until the session ends.
      *
-     * @var integer
+     * @var int
      */
     protected $sessionExpiration = 7200;
 
@@ -111,7 +111,7 @@ class RedisHandler extends BaseHandler
      *
      * @param  string $savePath Server path
      * @param  string $name     Session cookie name, unused
-     * @return boolean
+     * @return bool
      */
     public function open($savePath, $name): bool
     {
@@ -176,7 +176,7 @@ class RedisHandler extends BaseHandler
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
      *
-     * @return boolean
+     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -221,7 +221,7 @@ class RedisHandler extends BaseHandler
      *
      * Releases locks and closes connection.
      *
-     * @return boolean
+     * @return bool
      */
     public function close(): bool
     {
@@ -257,7 +257,7 @@ class RedisHandler extends BaseHandler
      *
      * @param string $sessionID
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($sessionID): bool
     {
@@ -279,8 +279,8 @@ class RedisHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param  integer $maxlifetime Maximum lifetime of sessions
-     * @return boolean
+     * @param  int $maxlifetime Maximum lifetime of sessions
+     * @return bool
      */
     public function gc($maxlifetime): bool
     {
@@ -297,7 +297,7 @@ class RedisHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return boolean
+     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -351,7 +351,7 @@ class RedisHandler extends BaseHandler
      *
      * Releases a previously acquired lock
      *
-     * @return boolean
+     * @return bool
      */
     protected function releaseLock(): bool
     {

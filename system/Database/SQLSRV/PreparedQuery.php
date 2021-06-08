@@ -30,7 +30,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * The result boolean from a sqlsrv_execute.
      *
-     * @var boolean
+     * @var bool
      */
     protected $result;
 
@@ -72,7 +72,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $data
      *
-     * @return boolean
+     * @return bool
      */
     public function _execute(array $data): bool
     {

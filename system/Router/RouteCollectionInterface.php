@@ -98,7 +98,7 @@ interface RouteCollectionInterface
      * find words and meaning in the URI for better SEO. But it
      * doesn't work well with PHP method names....
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return mixed
      */
@@ -114,7 +114,7 @@ interface RouteCollectionInterface
      *
      * If FALSE, will stop searching and do NO automatic routing.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return RouteCollectionInterface
      */
@@ -177,7 +177,7 @@ interface RouteCollectionInterface
     /**
      * Returns the flag that tells whether to autoRoute URI against Controllers.
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldAutoRoute();
 
@@ -228,7 +228,7 @@ interface RouteCollectionInterface
      *
      * @param string $from
      *
-     * @return boolean
+     * @return bool
      */
     public function isRedirect(string $from): bool;
 
@@ -239,7 +239,7 @@ interface RouteCollectionInterface
      *
      * @param string $from
      *
-     * @return integer
+     * @return int
      */
     public function getRedirectCode(string $from): int;
 

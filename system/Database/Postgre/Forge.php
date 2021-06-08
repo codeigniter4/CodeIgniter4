@@ -80,7 +80,7 @@ class Forge extends BaseForge
      * @param string $table     Table name
      * @param mixed  $field     Column definition
      *
-     * @return string|array|boolean
+     * @return string|array|bool
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
@@ -207,8 +207,8 @@ class Forge extends BaseForge
      * Generates a platform-specific DROP TABLE string
      *
      * @param string  $table    Table name
-     * @param boolean $ifExists Whether to add an IF EXISTS condition
-     * @param boolean $cascade
+     * @param bool $ifExists Whether to add an IF EXISTS condition
+     * @param bool $cascade
      *
      * @return string
      */

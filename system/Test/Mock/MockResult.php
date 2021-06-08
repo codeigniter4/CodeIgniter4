@@ -18,7 +18,7 @@ class MockResult extends BaseResult
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     public function getFieldCount(): int
     {
@@ -67,7 +67,7 @@ class MockResult extends BaseResult
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -109,7 +109,7 @@ class MockResult extends BaseResult
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     public function getNumRows(): int
     {

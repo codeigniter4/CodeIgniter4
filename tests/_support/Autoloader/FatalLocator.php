@@ -48,7 +48,7 @@ class FatalLocator extends FileLocator
      *
      * @param string  $path
      * @param string  $ext
-     * @param boolean $prioritizeApp
+     * @param bool $prioritizeApp
      *
      * @return array
      */

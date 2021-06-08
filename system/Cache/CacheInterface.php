@@ -39,9 +39,9 @@ interface CacheInterface
      *
      * @param string  $key   Cache item name
      * @param mixed   $value The data to save
-     * @param integer $ttl   Time To Live, in seconds (default 60)
+     * @param int $ttl   Time To Live, in seconds (default 60)
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function save(string $key, $value, int $ttl = 60);
 
@@ -52,7 +52,7 @@ interface CacheInterface
      *
      * @param string $key Cache item name
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function delete(string $key);
 
@@ -62,7 +62,7 @@ interface CacheInterface
      * Performs atomic incrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
      * @return mixed
      */
@@ -74,7 +74,7 @@ interface CacheInterface
      * Performs atomic decrementation of a raw stored value.
      *
      * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param int $offset Step/value to increase by
      *
      * @return mixed
      */
@@ -85,7 +85,7 @@ interface CacheInterface
     /**
      * Will delete all items in the entire cache.
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function clean();
 
@@ -120,7 +120,7 @@ interface CacheInterface
     /**
      * Determines if the driver is supported on this system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSupported(): bool;
 

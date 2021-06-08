@@ -105,7 +105,7 @@ class Entity implements JsonSerializable
     /**
      * Holds info whenever properties have to be casted
      *
-     * @var boolean
+     * @var bool
      **/
     private $_cast = true;
 
@@ -148,9 +148,9 @@ class Entity implements JsonSerializable
      * of this entity as an array. All values are accessed through the
      * __get() magic method so will have any casts, etc applied to them.
      *
-     * @param boolean $onlyChanged If true, only return values that have changed since object creation
-     * @param boolean $cast        If true, properties will be casted.
-     * @param boolean $recursive   If true, inner entities will be casted as array as well.
+     * @param bool $onlyChanged If true, only return values that have changed since object creation
+     * @param bool $cast        If true, properties will be casted.
+     * @param bool $recursive   If true, inner entities will be casted as array as well.
      *
      * @return array
      */
@@ -195,8 +195,8 @@ class Entity implements JsonSerializable
     /**
      * Returns the raw values of the current attributes.
      *
-     * @param boolean $onlyChanged If true, only return values that have changed since object creation
-     * @param boolean $recursive   If true, inner entities will be casted as array as well.
+     * @param bool $onlyChanged If true, only return values that have changed since object creation
+     * @param bool $recursive   If true, inner entities will be casted as array as well.
      *
      * @return array
      */
@@ -258,7 +258,7 @@ class Entity implements JsonSerializable
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function hasChanged(string $key = null): bool
     {
@@ -405,7 +405,7 @@ class Entity implements JsonSerializable
      * Cast as JSON
      *
      * @param mixed   $value
-     * @param boolean $asArray
+     * @param bool $asArray
      *
      * @throws CastException
      *
@@ -429,9 +429,9 @@ class Entity implements JsonSerializable
     /**
      * Change the value of the private $_cast property
      *
-     * @param boolean|null $cast
+     * @param bool|null $cast
      *
-     * @return boolean|Entity
+     * @return bool|Entity
      */
     public function cast(bool $cast = null)
     {
@@ -544,7 +544,7 @@ class Entity implements JsonSerializable
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $key): bool
     {

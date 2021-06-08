@@ -150,7 +150,7 @@ class Encryption
     /**
      * Create a random key
      *
-     * @param integer $length Output length
+     * @param int $length Output length
      *
      * @return string
      */
@@ -179,7 +179,7 @@ class Encryption
      * __isset() magic, providing checking for some of our protected properties
      *
      * @param  string $key Property name
-     * @return boolean
+     * @return bool
      */
     public function __isset($key): bool
     {

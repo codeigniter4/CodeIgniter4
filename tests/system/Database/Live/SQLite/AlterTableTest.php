@@ -19,7 +19,7 @@ class AlterTableTest extends CIUnitTestCase
     /**
      * In setUp() db connection is changed. So migration doesn't work
      *
-     * @var boolean
+     * @var bool
      */
     protected $migrate = false;
 

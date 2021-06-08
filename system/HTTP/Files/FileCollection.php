@@ -119,7 +119,7 @@ class FileCollection
      *
      * @param string $fileID The name of the uploaded file (from the input)
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFile(string $fileID): bool
     {

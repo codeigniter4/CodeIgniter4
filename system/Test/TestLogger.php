@@ -27,7 +27,7 @@ class TestLogger extends Logger
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function log($level, $message, array $context = []): bool
     {
@@ -65,7 +65,7 @@ class TestLogger extends Logger
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      */
     public static function didLog(string $level, $message)
     {

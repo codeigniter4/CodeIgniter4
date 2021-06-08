@@ -82,7 +82,7 @@ class Timer
      * Returns the duration of a recorded timer.
      *
      * @param string  $name     The name of the timer.
-     * @param integer $decimals Number of decimal places.
+     * @param int $decimals Number of decimal places.
      *
      * @return null|float       Returns null if timer exists by that name.
      *                          Returns a float representing the number of
@@ -110,7 +110,7 @@ class Timer
     /**
      * Returns the array of timers, with the duration pre-calculated for you.
      *
-     * @param integer $decimals Number of decimal places
+     * @param int $decimals Number of decimal places
      *
      * @return array
      */
@@ -136,7 +136,7 @@ class Timer
      *
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $name): bool
     {

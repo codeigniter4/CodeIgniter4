@@ -45,10 +45,10 @@ class MockConnection extends BaseConnection
      *
      * @param string  $sql
      * @param mixed   ...$binds
-     * @param boolean $setEscapeFlags
+     * @param bool $setEscapeFlags
      * @param string  $queryClass
      *
-     * @return BaseResult|Query|boolean
+     * @return BaseResult|Query|bool
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -95,7 +95,7 @@ class MockConnection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @return mixed
      */
@@ -118,7 +118,7 @@ class MockConnection extends BaseConnection
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
-     * @return boolean
+     * @return bool
      */
     public function reconnect(): bool
     {
@@ -172,7 +172,7 @@ class MockConnection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -203,7 +203,7 @@ class MockConnection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -215,7 +215,7 @@ class MockConnection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $constrainByPrefix
+     * @param bool $constrainByPrefix
      *
      * @return string
      */
@@ -279,7 +279,7 @@ class MockConnection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -291,7 +291,7 @@ class MockConnection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -303,7 +303,7 @@ class MockConnection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {

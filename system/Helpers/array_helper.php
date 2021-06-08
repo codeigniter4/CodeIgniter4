@@ -147,7 +147,7 @@ if (! function_exists('array_sort_by_multiple_keys')) {
      * @param array $sortColumns an associative array of columns to sort
      *                           after and their sorting flags
      *
-     * @return boolean
+     * @return bool
      */
     function array_sort_by_multiple_keys(array &$array, array $sortColumns): bool
     {

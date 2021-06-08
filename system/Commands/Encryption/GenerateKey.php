@@ -114,7 +114,7 @@ class GenerateKey extends BaseCommand
      * Generates a key and encodes it.
      *
      * @param string  $prefix
-     * @param integer $length
+     * @param int $length
      *
      * @return string
      */
@@ -135,7 +135,7 @@ class GenerateKey extends BaseCommand
      * @param string $key
      * @param array  $params
      *
-     * @return boolean
+     * @return bool
      */
     protected function setNewEncryptionKey(string $key, array $params): bool
     {
@@ -156,7 +156,7 @@ class GenerateKey extends BaseCommand
      *
      * @param array $params
      *
-     * @return boolean
+     * @return bool
      */
     protected function confirmOverwrite(array $params): bool
     {
@@ -169,7 +169,7 @@ class GenerateKey extends BaseCommand
      * @param string $oldKey
      * @param string $newKey
      *
-     * @return boolean
+     * @return bool
      */
     protected function writeNewEncryptionKeyToFile(string $oldKey, string $newKey): bool
     {

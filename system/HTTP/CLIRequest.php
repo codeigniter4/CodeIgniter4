@@ -136,7 +136,7 @@ class CLIRequest extends Request
      *
      *      getOptionString() = '-foo bar -baz "queue some stuff"'
      *
-     * @param boolean $useLongOpts
+     * @param bool $useLongOpts
      *
      * @return string
      */
@@ -211,7 +211,7 @@ class CLIRequest extends Request
     /**
      * Determines if this request was made from the command line (CLI).
      *
-     * @return boolean
+     * @return bool
      */
     public function isCLI(): bool
     {

@@ -21,14 +21,14 @@ class Modules
     /**
      * Auto-Discover
      *
-     * @var boolean
+     * @var bool
      */
     public $enabled = true;
 
     /**
      * Auto-Discovery Within Composer Packages
      *
-     * @var boolean
+     * @var bool
      */
     public $discoverInComposer = true;
 
@@ -44,7 +44,7 @@ class Modules
      *
      * @param string $alias
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldDiscover(string $alias): bool
     {

@@ -65,7 +65,7 @@ class Parser extends View
      * @param ViewConfig      $config
      * @param string          $viewPath
      * @param mixed           $loader
-     * @param boolean         $debug
+     * @param bool         $debug
      * @param LoggerInterface $logger
      */
     public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
@@ -86,7 +86,7 @@ class Parser extends View
      *
      * @param string  $view
      * @param array   $options
-     * @param boolean $saveData
+     * @param bool $saveData
      *
      * @return string
      */
@@ -151,7 +151,7 @@ class Parser extends View
      *
      * @param string  $template
      * @param array   $options
-     * @param boolean $saveData
+     * @param bool $saveData
      *
      * @return string
      */
@@ -524,7 +524,7 @@ class Parser extends View
      * @param mixed   $pattern
      * @param string  $content
      * @param string  $template
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return string
      */
@@ -558,7 +558,7 @@ class Parser extends View
      *
      * @param array   $matches
      * @param string  $replace
-     * @param boolean $escape
+     * @param bool $escape
      *
      * @return string
      */
@@ -728,7 +728,7 @@ class Parser extends View
      * @param string   $alias
      * @param callable $callback
      *
-     * @param boolean  $isPair
+     * @param bool  $isPair
      *
      * @return $this
      */

@@ -67,7 +67,7 @@ class Connection extends BaseConnection
      * Whether to use SQL-92 standard quoted identifier
      * (double quotes) or brackets for identifier escaping.
      *
-     * @var boolean
+     * @var bool
      */
     protected $_quoted_identifier = true;
 
@@ -101,7 +101,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @throws DatabaseException
      *
@@ -186,7 +186,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -196,7 +196,7 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -376,7 +376,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -386,7 +386,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -396,7 +396,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -440,7 +440,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -567,7 +567,7 @@ class Connection extends BaseConnection
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
      * @param  string $sql An SQL query string
-     * @return boolean
+     * @return bool
      */
     public function isWriteType($sql): bool
     {

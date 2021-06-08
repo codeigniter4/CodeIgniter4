@@ -128,7 +128,7 @@ class HTTPException extends FrameworkException
     /**
      * For Response
      *
-     * @param integer $code
+     * @param int $code
      *
      * @return HTTPException
      */
@@ -140,7 +140,7 @@ class HTTPException extends FrameworkException
     /**
      * For Response
      *
-     * @param integer $code
+     * @param int $code
      *
      * @return HTTPException
      */
@@ -164,7 +164,7 @@ class HTTPException extends FrameworkException
     /**
      * For URI
      *
-     * @param integer $segment
+     * @param int $segment
      *
      * @return HTTPException
      */
@@ -176,7 +176,7 @@ class HTTPException extends FrameworkException
     /**
      * For URI
      *
-     * @param integer $port
+     * @param int $port
      *
      * @return HTTPException
      */

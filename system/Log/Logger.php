@@ -60,7 +60,7 @@ class Logger implements LoggerInterface
     /**
      * File permissions
      *
-     * @var integer
+     * @var int
      */
     protected $filePermissions = 0644;
 
@@ -105,7 +105,7 @@ class Logger implements LoggerInterface
     /**
      * Should we cache our logged items?
      *
-     * @var boolean
+     * @var bool
      */
     protected $cacheLogs = false;
 
@@ -115,7 +115,7 @@ class Logger implements LoggerInterface
      * Constructor.
      *
      * @param  \Config\Logger $config
-     * @param  boolean        $debug
+     * @param  bool        $debug
      * @throws RuntimeException
      */
     public function __construct($config, bool $debug = CI_DEBUG)
@@ -159,7 +159,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function emergency($message, array $context = []): bool
     {
@@ -177,7 +177,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function alert($message, array $context = []): bool
     {
@@ -194,7 +194,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function critical($message, array $context = []): bool
     {
@@ -210,7 +210,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function error($message, array $context = []): bool
     {
@@ -228,7 +228,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function warning($message, array $context = []): bool
     {
@@ -243,7 +243,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function notice($message, array $context = []): bool
     {
@@ -260,7 +260,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function info($message, array $context = []): bool
     {
@@ -275,7 +275,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function debug($message, array $context = []): bool
     {
@@ -291,7 +291,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @return boolean
+     * @return bool
      */
     public function log($level, $message, array $context = []): bool
     {

@@ -32,10 +32,10 @@ class CITestStreamFilter extends php_user_filter
      *
      * @param resource $in
      * @param resource $out
-     * @param integer  $consumed
-     * @param boolean  $closing
+     * @param int  $consumed
+     * @param bool  $closing
      *
-     * @return integer
+     * @return int
      */
     public function filter($in, $out, &$consumed, $closing)
     {

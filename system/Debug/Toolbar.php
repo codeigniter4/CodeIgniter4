@@ -187,8 +187,8 @@ class Toolbar
      *
      * @param array   $collectors
      * @param float   $startTime
-     * @param integer $segmentCount
-     * @param integer $segmentDuration
+     * @param int $segmentCount
+     * @param int $segmentDuration
      * @param array   $styles
      *
      * @return string
@@ -278,7 +278,7 @@ class Toolbar
      * Rounds a number to the nearest incremental value.
      *
      * @param float   $number
-     * @param integer $increments
+     * @param int $increments
      *
      * @return float
      */

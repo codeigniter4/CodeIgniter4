@@ -127,7 +127,7 @@ if (! function_exists('current_url')) {
      * Returns the current full URL based on the IncomingRequest.
      * String returns ignore query and fragment parts.
      *
-     * @param boolean              $returnObject True to return an object instead of a string
+     * @param bool              $returnObject True to return an object instead of a string
      * @param IncomingRequest|null $request      A request to use when retrieving the path
      *
      * @return string|URI
@@ -160,7 +160,7 @@ if (! function_exists('previous_url')) {
      * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
      * which can be set by the user so is untrusted and not set by certain browsers/servers.
      *
-     * @param boolean $returnObject
+     * @param bool $returnObject
      *
      * @return URI|mixed|string
      */
@@ -185,7 +185,7 @@ if (! function_exists('uri_string')) {
      *
      * Returns the path part of the current URL
      *
-     * @param boolean $relative Whether the resulting path should be relative to baseURL
+     * @param bool $relative Whether the resulting path should be relative to baseURL
      *
      * @return string
      */
@@ -439,7 +439,7 @@ if (! function_exists('auto_link')) {
      *
      * @param string  $str   the string
      * @param string  $type  the type: email, url, or both
-     * @param boolean $popup whether to create pop-up links
+     * @param bool $popup whether to create pop-up links
      *
      * @return string
      */
@@ -487,7 +487,7 @@ if (! function_exists('prep_url')) {
      * the scheme.
      *
      * @param  string  $str    the URL
-     * @param  boolean $secure set true if you want to force https://
+     * @param  bool $secure set true if you want to force https://
      * @return string
      */
     function prep_url(string $str = '', bool $secure = false): string
@@ -521,7 +521,7 @@ if (! function_exists('url_title')) {
      *
      * @param  string  $str       Input string
      * @param  string  $separator Word separator (usually '-' or '_')
-     * @param  boolean $lowercase Whether to transform the output string to lowercase
+     * @param  bool $lowercase Whether to transform the output string to lowercase
      * @return string
      */
     function url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -561,7 +561,7 @@ if (! function_exists('mb_url_title')) {
      *
      * @param  string  $str       Input string
      * @param  string  $separator Word separator (usually '-' or '_')
-     * @param  boolean $lowercase Whether to transform the output string to lowercase
+     * @param  bool $lowercase Whether to transform the output string to lowercase
      * @return string
      */
     function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -613,7 +613,7 @@ if (! function_exists('url_is')) {
      *
      * @param string $path
      *
-     * @return boolean
+     * @return bool
      */
     function url_is(string $path): bool
     {

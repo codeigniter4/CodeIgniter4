@@ -76,7 +76,7 @@ class Security implements SecurityInterface
      *
      * Defaults to two hours (in seconds).
      *
-     * @var integer
+     * @var int
      *
      * @deprecated
      */
@@ -87,7 +87,7 @@ class Security implements SecurityInterface
      *
      * Regenerate CSRF Token on every request.
      *
-     * @var boolean
+     * @var bool
      */
     protected $regenerate = true;
 
@@ -96,7 +96,7 @@ class Security implements SecurityInterface
      *
      * Redirect to previous page with error on failure.
      *
-     * @var boolean
+     * @var bool
      */
     protected $redirect = true;
 
@@ -298,7 +298,7 @@ class Security implements SecurityInterface
     /**
      * Check if CSRF cookie is expired.
      *
-     * @return boolean
+     * @return bool
      *
      * @deprecated
      *
@@ -311,7 +311,7 @@ class Security implements SecurityInterface
     /**
      * Check if request should be redirect on failure.
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldRedirect(): bool
     {
@@ -330,7 +330,7 @@ class Security implements SecurityInterface
      * parameter, $relative_path to TRUE.
      *
      * @param string  $str          Input file name
-     * @param boolean $relativePath Whether to preserve paths
+     * @param bool $relativePath Whether to preserve paths
      *
      * @return string
      */

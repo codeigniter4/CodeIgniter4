@@ -88,7 +88,7 @@ trait ResponseTrait
      * to match the requested format, with proper content-type and status code.
      *
      * @param array|string|null $data
-     * @param integer           $status
+     * @param int           $status
      * @param string            $message
      *
      * @return mixed
@@ -129,7 +129,7 @@ trait ResponseTrait
      * Used for generic failures that no custom methods exist for.
      *
      * @param string|array $messages
-     * @param integer      $status        HTTP status code
+     * @param int      $status        HTTP status code
      * @param string|null  $code          Custom, API-specific, error code
      * @param string       $customMessage
      *

@@ -26,7 +26,7 @@ interface RendererInterface
      * @param array   $options  Reserved for 3rd-party uses since
      *                          it might be needed to pass additional info
      *                          to other template engines.
-     * @param boolean $saveData Whether to save data for subsequent calls
+     * @param bool $saveData Whether to save data for subsequent calls
      *
      * @return string
      */
@@ -42,7 +42,7 @@ interface RendererInterface
      * @param array   $options  Reserved for 3rd-party uses since
      *                          it might be needed to pass additional info
      *                          to other template engines.
-     * @param boolean $saveData Whether to save data for subsequent calls
+     * @param bool $saveData Whether to save data for subsequent calls
      *
      * @return string
      */

@@ -44,7 +44,7 @@ class Table
     /**
      * Whether or not to automatically create the table header
      *
-     * @var boolean
+     * @var bool
      */
     public $autoHeading = true;
 
@@ -101,7 +101,7 @@ class Table
      * Set the template
      *
      * @param  array $template
-     * @return boolean
+     * @return bool
      */
     public function setTemplate($template)
     {
@@ -149,7 +149,7 @@ class Table
      * displayed in a table that has a fixed column count.
      *
      * @param  array   $array
-     * @param  integer $columnLimit
+     * @param  int $columnLimit
      * @return array|false
      */
     public function makeColumns($array = [], $columnLimit = 0)

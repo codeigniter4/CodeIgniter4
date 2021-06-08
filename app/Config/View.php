@@ -14,7 +14,7 @@ class View extends BaseView
      * calls so that it is available to all views. If that is the case,
      * set $saveData to true.
      *
-     * @var boolean
+     * @var bool
      */
     public $saveData = true;
 

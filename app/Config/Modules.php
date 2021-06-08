@@ -15,7 +15,7 @@ class Modules extends BaseModules
      * $aliases below. If false, no auto-discovery will happen at all,
      * giving a slight performance boost.
      *
-     * @var boolean
+     * @var bool
      */
     public $enabled = true;
 
@@ -27,7 +27,7 @@ class Modules extends BaseModules
      * If true, then auto-discovery will happen across all namespaces loaded
      * by Composer, as well as the namespaces configured locally.
      *
-     * @var boolean
+     * @var bool
      */
     public $discoverInComposer = true;
 

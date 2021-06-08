@@ -49,7 +49,7 @@ interface CloneableCookieInterface extends CookieInterface
     /**
      * Creates a new Cookie with a new cookie expires time.
      *
-     * @param DateTimeInterface|integer|string $expires
+     * @param DateTimeInterface|int|string $expires
      *
      * @return static
      */
@@ -90,7 +90,7 @@ interface CloneableCookieInterface extends CookieInterface
     /**
      * Creates a new Cookie with a new "Secure" attribute.
      *
-     * @param boolean $secure
+     * @param bool $secure
      *
      * @return static
      */
@@ -99,7 +99,7 @@ interface CloneableCookieInterface extends CookieInterface
     /**
      * Creates a new Cookie with a new "HttpOnly" attribute
      *
-     * @param boolean $httponly
+     * @param bool $httponly
      *
      * @return static
      */
@@ -117,7 +117,7 @@ interface CloneableCookieInterface extends CookieInterface
     /**
      * Creates a new Cookie with URL encoding option updated.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
      * @return static
      */

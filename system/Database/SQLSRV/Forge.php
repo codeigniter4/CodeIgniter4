@@ -361,8 +361,8 @@ class Forge extends BaseForge
      * @todo Support for cascade
      *
      * @param string  $table    Table name
-     * @param boolean $ifExists Whether to add an IF EXISTS condition
-     * @param boolean $cascade
+     * @param bool $ifExists Whether to add an IF EXISTS condition
+     * @param bool $cascade
      *
      * @return string
      */

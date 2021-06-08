@@ -25,7 +25,7 @@ class Routes extends BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -33,7 +33,7 @@ class Routes extends BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
@@ -143,7 +143,7 @@ class Routes extends BaseCollector
     /**
      * Returns a count of all the routes in the system.
      *
-     * @return integer
+     * @return int
      */
     public function getBadgeValue(): int
     {

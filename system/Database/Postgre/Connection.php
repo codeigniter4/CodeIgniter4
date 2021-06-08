@@ -49,7 +49,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param  boolean $persistent
+     * @param  bool $persistent
      * @return mixed
      */
     public function connect(bool $persistent = false)
@@ -118,7 +118,7 @@ class Connection extends BaseConnection
      *
      * @param string $databaseName
      *
-     * @return boolean
+     * @return bool
      */
     public function setDatabase(string $databaseName): bool
     {
@@ -174,7 +174,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -230,7 +230,7 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -435,7 +435,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer|string
+     * @return int|string
      */
     public function insertID()
     {
@@ -530,7 +530,7 @@ class Connection extends BaseConnection
      * Set client encoding
      *
      * @param  string $charset The client encoding to which the data will be converted.
-     * @return boolean
+     * @return bool
      */
     protected function setClientEncoding(string $charset): bool
     {
@@ -542,7 +542,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -554,7 +554,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -566,7 +566,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -581,7 +581,7 @@ class Connection extends BaseConnection
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
      * @param  string $sql An SQL query string
-     * @return boolean
+     * @return bool
      */
     public function isWriteType($sql): bool
     {
