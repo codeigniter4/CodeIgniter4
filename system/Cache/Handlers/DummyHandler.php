@@ -45,7 +45,7 @@ class DummyHandler extends BaseHandler
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string  $key      Cache item name
-     * @param int $ttl      Time to live
+     * @param int     $ttl      Time to live
      * @param Closure $callback Callback return value
      *
      * @return null
@@ -60,9 +60,9 @@ class DummyHandler extends BaseHandler
     /**
      * Saves an item to the cache store.
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value The data to save
-     * @param int $ttl   Time To Live, in seconds (default 60)
+     * @param string $key   Cache item name
+     * @param mixed  $value The data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
      *
      * @return bool Success or failure
      */
@@ -104,8 +104,8 @@ class DummyHandler extends BaseHandler
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */
@@ -119,8 +119,8 @@ class DummyHandler extends BaseHandler
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */

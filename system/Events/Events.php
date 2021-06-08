@@ -112,7 +112,7 @@ class Events
      *
      * @param string   $eventName
      * @param callable $callback
-     * @param int  $priority
+     * @param int      $priority
      *
      * @return void
      */

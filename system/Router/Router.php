@@ -359,6 +359,7 @@ class Router implements RouterInterface
      * @param string $uri The URI path to compare against the routes
      *
      * @return bool Whether the route was matched or not.
+     *
      * @throws RedirectException
      */
     protected function checkRoutes(string $uri): bool
@@ -618,8 +619,8 @@ class Router implements RouterInterface
      * Sets the sub-directory that the controller is in.
      *
      * @param string|null $dir
-     * @param bool     $append
-     * @param bool     $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
+     * @param bool        $append
+     * @param bool        $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      */
     public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
     {

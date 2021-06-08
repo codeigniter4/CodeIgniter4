@@ -404,8 +404,8 @@ class Entity implements JsonSerializable
     /**
      * Cast as JSON
      *
-     * @param mixed   $value
-     * @param bool $asArray
+     * @param mixed $value
+     * @param bool  $asArray
      *
      * @throws CastException
      *

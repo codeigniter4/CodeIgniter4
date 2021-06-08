@@ -74,7 +74,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Sub-driver
      *
      * @used-by CI_DB_pdo_driver
-     * @var     string
+     * @var string
      */
     protected $subdriver;
 
@@ -395,7 +395,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param  bool $persistent
+     * @param  bool  $persistent
      * @return mixed
      */
     abstract public function connect(bool $persistent = false);
@@ -589,10 +589,10 @@ abstract class BaseConnection implements ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param string  $sql
-     * @param mixed   ...$binds
-     * @param bool $setEscapeFlags
-     * @param string  $queryClass
+     * @param string $sql
+     * @param mixed  ...$binds
+     * @param bool   $setEscapeFlags
+     * @param string $queryClass
      *
      * @return BaseResult|Query|bool
      *
@@ -1057,9 +1057,9 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param string|array $item
-     * @param bool      $prefixSingle
-     * @param bool      $protectIdentifiers
-     * @param bool      $fieldExists
+     * @param bool         $prefixSingle
+     * @param bool         $protectIdentifiers
+     * @param bool         $fieldExists
      *
      * @return string|array
      */
@@ -1326,7 +1326,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Escape String
      *
      * @param  string|string[] $str  Input string
-     * @param  bool         $like Whether or not the string will be used in a LIKE condition
+     * @param  bool            $like Whether or not the string will be used in a LIKE condition
      * @return string|string[]
      */
     public function escapeString($str, bool $like = false)
@@ -1430,7 +1430,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an array of table names
      *
-     * @param  bool $constrainByPrefix = FALSE
+     * @param  bool              $constrainByPrefix = FALSE
      * @return bool|array
      * @throws DatabaseException
      */
@@ -1714,7 +1714,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Platform-specific field data information.
      *
-     * @param  string $table
+     * @param string $table
      * @see    getFieldData()
      * @return array
      */
@@ -1725,7 +1725,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Platform-specific index data.
      *
-     * @param  string $table
+     * @param string $table
      * @see    getIndexData()
      * @return array
      */
@@ -1736,7 +1736,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Platform-specific foreign keys data.
      *
-     * @param  string $table
+     * @param string $table
      * @see    getForeignKeyData()
      * @return array
      */

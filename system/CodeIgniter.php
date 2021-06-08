@@ -285,7 +285,7 @@ class CodeIgniter
      * makes all of the pieces work together.
      *
      * @param RouteCollectionInterface|null $routes
-     * @param bool                       $returnResponse
+     * @param bool                          $returnResponse
      *
      * @return bool|RequestInterface|ResponseInterface|mixed
      * @throws RedirectException
@@ -363,7 +363,7 @@ class CodeIgniter
      *
      * @param RouteCollectionInterface|null $routes
      * @param Cache                         $cacheConfig
-     * @param bool                       $returnResponse
+     * @param bool                          $returnResponse
      *
      * @return RequestInterface|ResponseInterface|mixed
      * @throws RedirectException
@@ -586,7 +586,7 @@ class CodeIgniter
      * that support it.
      *
      * @param int $duration How long the Strict Transport Security
-     *                          should be enforced for this URL.
+     *                      should be enforced for this URL.
      */
     protected function forceSecureAccess($duration = 31536000)
     {
@@ -738,7 +738,7 @@ class CodeIgniter
      * "redirect route", will also handle the redirect.
      *
      * @param RouteCollectionInterface|null $routes An collection interface to use in place
-     *                                         of the config file.
+     *                                              of the config file.
      *
      * @return string|null
      * @throws RedirectException

@@ -113,8 +113,8 @@ class GenerateKey extends BaseCommand
     /**
      * Generates a key and encodes it.
      *
-     * @param string  $prefix
-     * @param int $length
+     * @param string $prefix
+     * @param int    $length
      *
      * @return string
      */

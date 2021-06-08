@@ -100,8 +100,8 @@ class Controller
      * to have modern browsers transform requests automatically.
      *
      * @param int $duration The number of seconds this link should be
-     *                          considered secure for. Only with HSTS header.
-     *                          Default value is 1 year.
+     *                      considered secure for. Only with HSTS header.
+     *                      Default value is 1 year.
      *
      * @throws HTTPException
      */

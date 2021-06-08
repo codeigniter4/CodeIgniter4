@@ -1407,9 +1407,9 @@ class RulesTest extends CIUnitTestCase
     /**
      * @dataProvider inListProvider
      *
-     * @param string  $first
-     * @param string  $second
-     * @param bool $expected
+     * @param string $first
+     * @param string $second
+     * @param bool   $expected
      */
     public function testInList($first, $second, $expected)
     {
@@ -1429,9 +1429,9 @@ class RulesTest extends CIUnitTestCase
     /**
      * @dataProvider inListProvider
      *
-     * @param string  $first
-     * @param string  $second
-     * @param bool $expected
+     * @param string $first
+     * @param string $second
+     * @param bool   $expected
      */
     public function testNotInList($first, $second, $expected)
     {

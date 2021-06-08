@@ -62,7 +62,7 @@ class MockCache extends BaseHandler implements CacheInterface
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string  $key      Cache item name
-     * @param int $ttl      Time to live
+     * @param int     $ttl      Time to live
      * @param Closure $callback Callback return value
      *
      * @return mixed
@@ -88,10 +88,10 @@ class MockCache extends BaseHandler implements CacheInterface
      * The $raw parameter is only utilized by Mamcache in order to
      * allow usage of increment() and decrement().
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value the data to save
-     * @param int $ttl   Time To Live, in seconds (default 60)
-     * @param bool $raw   Whether to store the raw value.
+     * @param string $key   Cache item name
+     * @param mixed  $value the data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
+     * @param bool   $raw   Whether to store the raw value.
      *
      * @return bool
      */
@@ -157,8 +157,8 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */
@@ -181,8 +181,8 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */
@@ -239,8 +239,8 @@ class MockCache extends BaseHandler implements CacheInterface
      * @param string $key Cache item name.
      *
      * @return array|null
-     *   Returns null if the item does not exist, otherwise array<string, mixed>
-     *   with at least the 'expire' key for absolute epoch expiry (or null).
+     *                    Returns null if the item does not exist, otherwise array<string, mixed>
+     *                    with at least the 'expire' key for absolute epoch expiry (or null).
      */
     public function getMetaData(string $key)
     {

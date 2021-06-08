@@ -251,8 +251,8 @@ class CURLRequest extends Request
     /**
      * Set form data to be sent.
      *
-     * @param array   $params
-     * @param bool $multipart Set TRUE if you are sending CURLFiles
+     * @param array $params
+     * @param bool  $multipart Set TRUE if you are sending CURLFiles
      *
      * @return $this
      */
@@ -552,8 +552,8 @@ class CURLRequest extends Request
     /**
      * Set CURL options
      *
-     * @param  array $curlOptions
-     * @param  array $config
+     * @param  array                    $curlOptions
+     * @param  array                    $config
      * @return array
      * @throws InvalidArgumentException
      */

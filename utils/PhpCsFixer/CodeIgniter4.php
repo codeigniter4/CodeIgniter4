@@ -68,6 +68,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_alias_functions'           => [
                 'sets' => ['@all'],
             ],
+            'phpdoc_align'  => true,
             'phpdoc_scalar' => [
                 'types' => [
                     'boolean',

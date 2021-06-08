@@ -86,6 +86,7 @@ trait ReflectionHelper
      * @param string        $property property name
      *
      * @return mixed value
+     *
      * @throws ReflectionException
      */
     public static function getPrivateProperty($obj, $property)

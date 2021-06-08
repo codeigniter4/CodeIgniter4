@@ -183,7 +183,7 @@ class URI
      *
      * @param string $path
      *
-     * @return   string
+     * @return string
      * @internal
      */
     public static function removeDotSegments(string $path): string
@@ -565,11 +565,11 @@ class URI
     /**
      * Returns the value of a specific segment of the URI path.
      *
-     * @param int $number  Segment number
-     * @param string  $default Default value
+     * @param int    $number  Segment number
+     * @param string $default Default value
      *
-     * @return string     The value of the segment. If no segment is found,
-     *                    throws InvalidArgumentError
+     * @return string The value of the segment. If no segment is found,
+     *                throws InvalidArgumentError
      */
     public function getSegment(int $number, string $default = ''): string
     {
@@ -588,8 +588,8 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
-     * @param int $number
-     * @param mixed   $value  (string or int)
+     * @param int   $number
+     * @param mixed $value  (string or int)
      *
      * @return $this
      */

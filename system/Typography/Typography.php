@@ -69,8 +69,8 @@ class Typography
      *     - Converts double dashes into em-dashes.
      *  - Converts two spaces into entities
      *
-     * @param string  $str
-     * @param bool $reduceLinebreaks whether to reduce more then two consecutive newlines to two
+     * @param string $str
+     * @param bool   $reduceLinebreaks whether to reduce more then two consecutive newlines to two
      *
      * @return string
      */
@@ -325,7 +325,7 @@ class Typography
      * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
      * likewise double spaces are converted to {@NBS} to prevent entity conversion
      *
-     * @param  array $match
+     * @param  array  $match
      * @return string
      */
     protected function protectCharacters(array $match): string

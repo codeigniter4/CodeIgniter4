@@ -72,7 +72,7 @@ abstract class BaseHandler implements CacheInterface
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param string  $key      Cache item name
-     * @param int $ttl      Time to live
+     * @param int     $ttl      Time to live
      * @param Closure $callback Callback return value
      *
      * @return mixed

@@ -46,10 +46,10 @@ interface PagerInterface
      * Allows for a simple, manual, form of pagination where all of the data
      * is provided by the user. The URL is the current URI.
      *
-     * @param int $page
-     * @param int $perPage
-     * @param int $total
-     * @param string  $template The output template alias to render.
+     * @param int    $page
+     * @param int    $perPage
+     * @param int    $total
+     * @param string $template The output template alias to render.
      *
      * @return string
      */
@@ -61,10 +61,10 @@ interface PagerInterface
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
      *
-     * @param string  $group
-     * @param int $page
-     * @param int $perPage
-     * @param int $total
+     * @param string $group
+     * @param int    $page
+     * @param int    $perPage
+     * @param int    $total
      *
      * @return mixed
      */
@@ -109,8 +109,8 @@ interface PagerInterface
      * Returns the URI for a specific page for the specified group.
      *
      * @param int|null $page
-     * @param string       $group
-     * @param bool      $returnObject
+     * @param string   $group
+     * @param bool     $returnObject
      *
      * @return string|URI
      */

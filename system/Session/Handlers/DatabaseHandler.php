@@ -122,7 +122,7 @@ class DatabaseHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string    Serialized session data
+     * @return string Serialized session data
      */
     public function read($sessionID): string
     {

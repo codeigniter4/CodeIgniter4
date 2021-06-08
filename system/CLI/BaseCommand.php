@@ -183,10 +183,10 @@ abstract class BaseCommand
     /**
      * Pads our string out so that all titles are the same length to nicely line up descriptions.
      *
-     * @param string  $item
-     * @param int $max
-     * @param int $extra  How many extra spaces to add at the end
-     * @param int $indent
+     * @param string $item
+     * @param int    $max
+     * @param int    $extra  How many extra spaces to add at the end
+     * @param int    $indent
      *
      * @return string
      */
@@ -200,8 +200,8 @@ abstract class BaseCommand
     /**
      * Get pad for $key => $value array output
      *
-     * @param array   $array
-     * @param int $pad
+     * @param array $array
+     * @param int   $pad
      *
      * @return int
      *

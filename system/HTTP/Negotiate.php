@@ -69,9 +69,9 @@ class Negotiate
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
      *
-     * @param array   $supported
-     * @param bool $strictMatch If TRUE, will return an empty string when no match found.
-     *                             If FALSE, will return the first supported element.
+     * @param array $supported
+     * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
+     *                           If FALSE, will return the first supported element.
      *
      * @return string
      */
@@ -158,12 +158,12 @@ class Negotiate
      *
      * Portions of this code base on Aura.Accept library.
      *
-     * @param array   $supported    App-supported values
-     * @param string  $header       header string
-     * @param bool $enforceTypes If TRUE, will compare media types and sub-types.
-     * @param bool $strictMatch  If TRUE, will return empty string on no match.
-     *                              If FALSE, will return the first supported element.
-     * @param bool $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
+     * @param array  $supported    App-supported values
+     * @param string $header       header string
+     * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
+     * @param bool   $strictMatch  If TRUE, will return empty string on no match.
+     *                             If FALSE, will return the first supported element.
+     * @param bool   $matchLocales If TRUE, will match locale sub-types to a broad type (fr-FR = fr)
      *
      * @return string Best match
      */
@@ -292,10 +292,10 @@ class Negotiate
     /**
      * Match-maker
      *
-     * @param array   $acceptable
-     * @param string  $supported
-     * @param bool $enforceTypes
-     * @param bool $matchLocales
+     * @param array  $acceptable
+     * @param string $supported
+     * @param bool   $enforceTypes
+     * @param bool   $matchLocales
      *
      * @return bool
      */

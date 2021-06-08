@@ -19,10 +19,10 @@ interface ImageHandlerInterface
     /**
      * Resize the image
      *
-     * @param int $width
-     * @param int $height
-     * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-     * @param string  $masterDim
+     * @param int    $width
+     * @param int    $height
+     * @param bool   $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+     * @param string $masterDim
      *
      * @return $this
      */
@@ -39,8 +39,8 @@ interface ImageHandlerInterface
      * @param int|null $height
      * @param int|null $x             X-axis coord to start cropping from the left of image
      * @param int|null $y             Y-axis coord to start cropping from the top of image
-     * @param bool      $maintainRatio
-     * @param string       $masterDim
+     * @param bool     $maintainRatio
+     * @param string   $masterDim
      *
      * @return $this
      */
@@ -131,9 +131,9 @@ interface ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param int $width
-     * @param int $height
-     * @param string  $position
+     * @param int    $width
+     * @param int    $height
+     * @param string $position
      *
      * @return $this
      */
@@ -172,8 +172,8 @@ interface ImageHandlerInterface
      *    $image->resize(100, 200, true)
      *          ->save($target);
      *
-     * @param string  $target
-     * @param int $quality
+     * @param string $target
+     * @param int    $quality
      *
      * @return bool
      */

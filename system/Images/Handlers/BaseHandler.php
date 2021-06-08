@@ -182,7 +182,8 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Verifies that a file has been supplied and it is an image.
      *
-     * @return Image  The image instance
+     * @return Image The image instance
+     *
      * @throws ImageException
      */
     protected function image(): Image
@@ -249,10 +250,10 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Resize the image
      *
-     * @param int $width
-     * @param int $height
-     * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-     * @param string  $masterDim
+     * @param int    $width
+     * @param int    $height
+     * @param bool   $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+     * @param string $masterDim
      *
      * @return BaseHandler
      */
@@ -285,8 +286,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param int|null $height
      * @param int|null $x             X-axis coord to start cropping from the left of image
      * @param int|null $y             Y-axis coord to start cropping from the top of image
-     * @param bool      $maintainRatio
-     * @param string       $masterDim
+     * @param bool     $maintainRatio
+     * @param string   $masterDim
      *
      * @return $this
      */
@@ -393,7 +394,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param int $green
      * @param int $blue
      *
-     * @return   $this
+     * @return $this
      * @internal
      */
     protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);
@@ -577,7 +578,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * EXIF data is only supported fr JPEG & TIFF formats.
      *
      * @param string|null $key    If specified, will only return this piece of EXIF data.
-     * @param bool     $silent If true, will not throw our own exceptions.
+     * @param bool        $silent If true, will not throw our own exceptions.
      *
      * @throws ImageException
      *
@@ -623,9 +624,9 @@ abstract class BaseHandler implements ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param int $width
-     * @param int $height
-     * @param string  $position
+     * @param int    $width
+     * @param int    $height
+     * @param string $position
      *
      * @return BaseHandler
      */
@@ -701,7 +702,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param int|float $height
      * @param int|float $origWidth
      * @param int|float $origHeight
-     * @param string        $position
+     * @param string    $position
      *
      * @return array
      */
@@ -783,7 +784,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *          ->save($target);
      *
      * @param string|null $target
-     * @param int     $quality
+     * @param int         $quality
      *
      * @return bool
      */

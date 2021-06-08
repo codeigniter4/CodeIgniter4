@@ -138,8 +138,8 @@ if (! function_exists('counted')) {
      * Takes a number and a word to return the plural or not
      * E.g. 0 cats, 1 cat, 2 cats, ...
      *
-     * @param int $count  Number of items
-     * @param string  $string Input string
+     * @param int    $count  Number of items
+     * @param string $string Input string
      *
      * @return string
      */

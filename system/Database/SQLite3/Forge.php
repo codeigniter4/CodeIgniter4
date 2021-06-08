@@ -58,8 +58,8 @@ class Forge extends BaseForge
     /**
      * Create database
      *
-     * @param string  $dbName
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
+     * @param string $dbName
+     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
      * @return bool
      */

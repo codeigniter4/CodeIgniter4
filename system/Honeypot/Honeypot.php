@@ -33,7 +33,8 @@ class Honeypot
     /**
      * Constructor.
      *
-     * @param  HoneypotConfig $config
+     * @param HoneypotConfig $config
+     *
      * @throws HoneypotException
      */
     public function __construct(HoneypotConfig $config)

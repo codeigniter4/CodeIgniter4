@@ -63,7 +63,7 @@ class Image extends File
      *
      * @param string      $targetPath The directory to store the file in
      * @param string|null $targetName The new name of the copied file.
-     * @param int     $perms      File permissions to be applied after copy.
+     * @param int         $perms      File permissions to be applied after copy.
      *
      * @return bool
      */

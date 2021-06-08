@@ -337,9 +337,9 @@ trait DatabaseTestTrait
      * Asserts that the number of rows in the database that match $where
      * is equal to $expected.
      *
-     * @param int $expected
-     * @param string  $table
-     * @param array   $where
+     * @param int    $expected
+     * @param string $table
+     * @param array  $where
      *
      * @return void
      * @throws DatabaseException

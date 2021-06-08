@@ -114,8 +114,10 @@ abstract class BaseUtils
     /**
      * Optimize Table
      *
-     * @param  string $tableName
+     * @param string $tableName
+     *
      * @return bool
+     *
      * @throws DatabaseException
      */
     public function optimizeTable(string $tableName)
@@ -184,8 +186,10 @@ abstract class BaseUtils
     /**
      * Repair Table
      *
-     * @param  string $tableName
+     * @param string $tableName
+     *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function repairTable(string $tableName)
@@ -292,8 +296,10 @@ abstract class BaseUtils
     /**
      * Database Backup
      *
-     * @param  array|string $params
+     * @param array|string $params
+     *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function backup($params = [])

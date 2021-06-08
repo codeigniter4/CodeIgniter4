@@ -131,7 +131,7 @@ class Connection extends BaseConnection
      *
      * @param string $sql
      *
-     * @return mixed    \SQLite3Result object or bool
+     * @return mixed \SQLite3Result object or bool
      */
     public function execute(string $sql)
     {
@@ -258,8 +258,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -295,8 +297,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -340,7 +344,8 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
      */
     public function _foreignKeyData(string $table): array

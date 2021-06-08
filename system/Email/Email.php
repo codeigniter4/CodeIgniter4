@@ -171,7 +171,7 @@ class Email
      * Use "\r\n" to comply with RFC 822.
      *
      * @link http://www.ietf.org/rfc/rfc822.txt
-     * @var  string "\r\n" or "\n"
+     * @var string "\r\n" or "\n"
      */
     public $newline = "\n";
 
@@ -185,7 +185,7 @@ class Email
      * that seems to work for all environments.
      *
      * @link http://www.ietf.org/rfc/rfc822.txt
-     * @var  string
+     * @var string
      */
     public $CRLF = "\n";
 
@@ -1048,7 +1048,7 @@ class Email
     /**
      * Word Wrap
      *
-     * @param string       $str
+     * @param string   $str
      * @param int|null $charlim Line-length limit
      *
      * @return string
@@ -2265,7 +2265,7 @@ class Email
     /**
      * Byte-safe substr()
      *
-     * @param string       $str
+     * @param string   $str
      * @param int      $start
      * @param int|null $length
      *

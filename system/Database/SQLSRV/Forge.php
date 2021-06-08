@@ -101,7 +101,8 @@ class Forge extends BaseForge
     /**
      * CREATE TABLE attributes
      *
-     * @param  array $attributes Associative array of table attributes
+     * @param array $attributes Associative array of table attributes
+     *
      * @return string
      */
     protected function _createTableAttributes(array $attributes): string
@@ -216,7 +217,8 @@ class Forge extends BaseForge
     /**
      * Process column
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     protected function _processColumn(array $field): string
@@ -360,9 +362,9 @@ class Forge extends BaseForge
      *
      * @todo Support for cascade
      *
-     * @param string  $table    Table name
-     * @param bool $ifExists Whether to add an IF EXISTS condition
-     * @param bool $cascade
+     * @param string $table    Table name
+     * @param bool   $ifExists Whether to add an IF EXISTS condition
+     * @param bool   $cascade
      *
      * @return string
      */

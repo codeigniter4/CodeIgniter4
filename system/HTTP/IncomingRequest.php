@@ -331,9 +331,9 @@ class IncomingRequest extends Request
      * Provides a convenient way to work with the Negotiate class
      * for content negotiation.
      *
-     * @param string  $type
-     * @param array   $supported
-     * @param bool $strictMatch
+     * @param string $type
+     * @param array  $supported
+     * @param bool   $strictMatch
      *
      * @return string
      */
@@ -516,7 +516,7 @@ class IncomingRequest extends Request
      * other get* methods in most cases.
      *
      * @param string|array|null $index
-     * @param int|null      $filter Filter constant
+     * @param int|null          $filter Filter constant
      * @param mixed             $flags
      *
      * @return mixed
@@ -554,8 +554,8 @@ class IncomingRequest extends Request
      * to associative arrays.
      *
      * @param bool $assoc   Whether to return objects as associative arrays
-     * @param int $depth   How many levels deep to decode
-     * @param int $options Bitmask of options
+     * @param int  $depth   How many levels deep to decode
+     * @param int  $options Bitmask of options
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
@@ -569,8 +569,8 @@ class IncomingRequest extends Request
     /**
      * Get a specific variable from a JSON input stream
      *
-     * @param  string             $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param  bool            $assoc  If true, return the result as an associative array.
+     * @param  string         $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param  bool           $assoc  If true, return the result as an associative array.
      * @param  int|null       $filter Filter Constant
      * @param  array|int|null $flags  Option
      * @return mixed
@@ -616,7 +616,7 @@ class IncomingRequest extends Request
      * Fetch an item from GET data.
      *
      * @param string|array|null $index  Index for item to fetch from $_GET.
-     * @param int|null      $filter A filter name to apply.
+     * @param int|null          $filter A filter name to apply.
      * @param mixed|null        $flags
      *
      * @return mixed
@@ -632,7 +632,7 @@ class IncomingRequest extends Request
      * Fetch an item from POST.
      *
      * @param string|array|null $index  Index for item to fetch from $_POST.
-     * @param int|null      $filter A filter name to apply
+     * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
      * @return mixed
@@ -648,7 +648,7 @@ class IncomingRequest extends Request
      * Fetch an item from POST data with fallback to GET.
      *
      * @param string|array|null $index  Index for item to fetch from $_POST or $_GET
-     * @param int|null      $filter A filter name to apply
+     * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
      * @return mixed
@@ -667,7 +667,7 @@ class IncomingRequest extends Request
      * Fetch an item from GET data with fallback to POST.
      *
      * @param string|array|null $index  Index for item to be fetched from $_GET or $_POST
-     * @param int|null      $filter A filter name to apply
+     * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
      * @return mixed
@@ -686,7 +686,7 @@ class IncomingRequest extends Request
      * Fetch an item from the COOKIE array.
      *
      * @param string|array|null $index  Index for item to be fetched from $_COOKIE
-     * @param int|null      $filter A filter name to be applied
+     * @param int|null          $filter A filter name to be applied
      * @param mixed             $flags
      *
      * @return mixed

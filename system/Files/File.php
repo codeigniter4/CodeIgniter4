@@ -41,8 +41,8 @@ class File extends SplFileInfo
      * Run our SplFileInfo constructor with an optional verification
      * that the path is really a file.
      *
-     * @param string  $path
-     * @param bool $checkFile
+     * @param string $path
+     * @param bool   $checkFile
      */
     public function __construct(string $path, bool $checkFile = false)
     {
@@ -150,7 +150,7 @@ class File extends SplFileInfo
      *
      * @param string      $targetPath
      * @param string|null $name
-     * @param bool     $overwrite
+     * @param bool        $overwrite
      *
      * @return File
      */
@@ -182,9 +182,9 @@ class File extends SplFileInfo
      * last element is an integer as there may be cases that the delimiter may be present in the filename.
      * For the all other cases, it appends an integer starting from zero before the file's extension.
      *
-     * @param string  $destination
-     * @param string  $delimiter
-     * @param int $i
+     * @param string $destination
+     * @param string $delimiter
+     * @param int    $i
      *
      * @return string
      */

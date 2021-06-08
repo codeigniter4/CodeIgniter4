@@ -81,12 +81,12 @@ class Timer
     /**
      * Returns the duration of a recorded timer.
      *
-     * @param string  $name     The name of the timer.
-     * @param int $decimals Number of decimal places.
+     * @param string $name     The name of the timer.
+     * @param int    $decimals Number of decimal places.
      *
-     * @return null|float       Returns null if timer exists by that name.
-     *                          Returns a float representing the number of
-     *                          seconds elapsed while that timer was running.
+     * @return null|float Returns null if timer exists by that name.
+     *                    Returns a float representing the number of
+     *                    seconds elapsed while that timer was running.
      */
     public function getElapsedTime(string $name, int $decimals = 4)
     {

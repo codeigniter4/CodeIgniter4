@@ -221,7 +221,7 @@ class Autoloader
      * @param string $class The fully qualified class name.
      *
      * @return string|false The mapped file on success, or boolean false
-     *                          on failure.
+     *                      on failure.
      */
     public function loadClass(string $class)
     {

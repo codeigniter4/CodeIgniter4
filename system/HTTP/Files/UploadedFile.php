@@ -75,11 +75,11 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * Accepts the file information as would be filled in from the $_FILES array.
      *
-     * @param string  $path         The temporary location of the uploaded file.
-     * @param string  $originalName The client-provided filename.
-     * @param string  $mimeType     The type of file as provided by PHP
-     * @param int $size         The size of the file, in bytes
-     * @param int $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+     * @param string $path         The temporary location of the uploaded file.
+     * @param string $originalName The client-provided filename.
+     * @param string $mimeType     The type of file as provided by PHP
+     * @param int    $size         The size of the file, in bytes
+     * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
     public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
     {
@@ -117,16 +117,16 @@ class UploadedFile extends File implements UploadedFileInterface
      * @see http://php.net/is_uploaded_file
      * @see http://php.net/move_uploaded_file
      *
-     * @param string  $targetPath Path to which to move the uploaded file.
-     * @param string  $name       the name to rename the file to.
-     * @param bool $overwrite  State for indicating whether to overwrite the previously generated file with the same
-     *                            name or not.
+     * @param string $targetPath Path to which to move the uploaded file.
+     * @param string $name       the name to rename the file to.
+     * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
+     *                           name or not.
      *
      * @return bool
      *
      * @throws InvalidArgumentException if the $path specified is invalid.
-     * @throws RuntimeException on any error during the move operation.
-     * @throws RuntimeException on the second or subsequent call to the method.
+     * @throws RuntimeException         on any error during the move operation.
+     * @throws RuntimeException         on the second or subsequent call to the method.
      */
     public function move(string $targetPath, string $name = null, bool $overwrite = false)
     {

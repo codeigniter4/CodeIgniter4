@@ -41,7 +41,8 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param  Images $config
+     * @param Images $config
+     *
      * @throws ImageException
      */
     public function __construct($config = null)
@@ -208,10 +209,10 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Handles all of the grunt work of resizing, etc.
      *
-     * @param string  $action
-     * @param int $quality
+     * @param string $action
+     * @param int    $quality
      *
-     * @return array  Lines of output from shell command
+     * @return array     Lines of output from shell command
      * @throws Exception
      */
     protected function process(string $action, int $quality = 100): array
@@ -259,7 +260,7 @@ class ImageMagickHandler extends BaseHandler
      *          ->save();
      *
      * @param string|null $target
-     * @param int     $quality
+     * @param int         $quality
      *
      * @return bool
      */

@@ -320,7 +320,7 @@ abstract class BaseModel
      * Fetches the row of database
      * This methods works only with dbCalls
      *
-     * @param bool                   $singleton Single or multiple results
+     * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
      *
      * @return array|object|null The resulting row of data, or null.
@@ -372,10 +372,10 @@ abstract class BaseModel
      * Compiles batch insert and runs the queries, validating each row prior.
      * This methods works only with dbCalls
      *
-     * @param array|null   $set       An associative array of insert values
-     * @param bool|null $escape    Whether to escape values and identifiers
-     * @param int      $batchSize The size of the batch to run
-     * @param bool      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
      * @return int|bool Number of rows inserted or FALSE on failure
      */
@@ -386,7 +386,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param int|array|string|null $id   ID
-     * @param array|null                $data Data
+     * @param array|null            $data Data
      *
      * @return bool
      */
@@ -398,10 +398,10 @@ abstract class BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param int     $batchSize The size of the batch to run
-     * @param bool     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      */
@@ -412,7 +412,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param int|string|array|null $id    The rows primary key(s)
-     * @param bool                   $purge Allows overriding the soft deletes setting.
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
      * @return string|bool
      *
@@ -443,7 +443,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $data      Data
-     * @param bool    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -498,7 +498,7 @@ abstract class BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * This methods works only with dbCalls
      *
-     * @param int $size     Size
+     * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
      * @return void
@@ -708,7 +708,7 @@ abstract class BaseModel
      * it will attempt to convert it to an array.
      *
      * @param array|object|null $data     Data
-     * @param bool           $returnID Whether insert ID should be returned or not.
+     * @param bool              $returnID Whether insert ID should be returned or not.
      *
      * @return int|string|bool
      *
@@ -779,10 +779,10 @@ abstract class BaseModel
     /**
      * Compiles batch insert runs the queries, validating each row prior.
      *
-     * @param array|null   $set       an associative array of insert values
-     * @param bool|null $escape    Whether to escape values and identifiers
-     * @param int      $batchSize The size of the batch to run
-     * @param bool      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       an associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
      * @return int|bool Number of rows inserted or FALSE on failure
      *
@@ -836,7 +836,7 @@ abstract class BaseModel
      * it will attempt to convert it into an array.
      *
      * @param int|array|string|null $id   ID
-     * @param array|object|null         $data Data
+     * @param array|object|null     $data Data
      *
      * @return bool
      *
@@ -898,10 +898,10 @@ abstract class BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param int     $batchSize The size of the batch to run
-     * @param bool     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      * @throws ReflectionException
@@ -954,7 +954,7 @@ abstract class BaseModel
      * Deletes a single record from the database where $id matches
      *
      * @param int|string|array|null $id    The rows primary key(s)
-     * @param bool                   $purge Allows overriding the soft deletes setting.
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
      * @return BaseResult|bool
      *
@@ -1039,7 +1039,7 @@ abstract class BaseModel
      * Compiles a replace and runs the query
      *
      * @param array|null $data      Data
-     * @param bool    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -1080,7 +1080,7 @@ abstract class BaseModel
      * to display.
      *
      * @param int|null $perPage Items per page
-     * @param string       $group   Will be used by the pagination library to identify a unique pagination set.
+     * @param string   $group   Will be used by the pagination library to identify a unique pagination set.
      * @param int|null $page    Optional page number (useful when the page number is provided in different way)
      * @param int      $segment Optional URI segment number (if page number is provided by URI segment)
      *
@@ -1520,8 +1520,8 @@ abstract class BaseModel
      * to string on all Time instances
      *
      * @param string|object $data        Data
-     * @param bool       $onlyChanged Only Changed Property
-     * @param bool       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array Array
      *
@@ -1550,8 +1550,8 @@ abstract class BaseModel
      * properties as an array with raw values.
      *
      * @param string|object $data        Data
-     * @param bool       $onlyChanged Only Changed Property
-     * @param bool       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array|null Array
      *

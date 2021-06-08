@@ -88,7 +88,7 @@ class Toolbar
     {
         /**
          * @var IncomingRequest $request
-         * @var Response $response
+         * @var Response        $response
          */
 
         // Data items used within the view.
@@ -185,11 +185,11 @@ class Toolbar
     /**
      * Called within the view to display the timeline itself.
      *
-     * @param array   $collectors
-     * @param float   $startTime
-     * @param int $segmentCount
-     * @param int $segmentDuration
-     * @param array   $styles
+     * @param array $collectors
+     * @param float $startTime
+     * @param int   $segmentCount
+     * @param int   $segmentDuration
+     * @param array $styles
      *
      * @return string
      */
@@ -277,8 +277,8 @@ class Toolbar
     /**
      * Rounds a number to the nearest incremental value.
      *
-     * @param float   $number
-     * @param int $increments
+     * @param float $number
+     * @param int   $increments
      *
      * @return float
      */
@@ -294,8 +294,8 @@ class Toolbar
     /**
      * Prepare for debugging..
      *
-     * @param  RequestInterface  $request
-     * @param  ResponseInterface $response
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
      * @global \CodeIgniter\CodeIgniter $app
      * @return void
      */
@@ -303,7 +303,7 @@ class Toolbar
     {
         /**
          * @var IncomingRequest $request
-         * @var Response $response
+         * @var Response        $response
          */
 
         if (CI_DEBUG && ! is_cli()) {

@@ -127,10 +127,10 @@ class Model extends BaseModel
      * matching $id. This methods works only with dbCalls
      * This methods works only with dbCalls
      *
-     * @param bool                   $singleton Single or multiple results
+     * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
      *
-     * @return array|object|null    The resulting row of data, or null.
+     * @return array|object|null The resulting row of data, or null.
      */
     protected function doFind(bool $singleton, $id = null)
     {
@@ -257,10 +257,10 @@ class Model extends BaseModel
      * Compiles batch insert strings and runs the queries, validating each row prior.
      * This methods works only with dbCalls
      *
-     * @param array|null   $set       An associative array of insert values
-     * @param bool|null $escape    Whether to escape values and identifiers
-     * @param int      $batchSize The size of the batch to run
-     * @param bool      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
      * @return int|bool Number of rows inserted or FALSE on failure
      */
@@ -284,7 +284,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param int|array|string|null $id   ID
-     * @param array|null                $data Data
+     * @param array|null            $data Data
      *
      * @return bool
      */
@@ -313,10 +313,10 @@ class Model extends BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param int     $batchSize The size of the batch to run
-     * @param bool     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      */
@@ -331,7 +331,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param int|string|array|null $id    The rows primary key(s)
-     * @param bool                   $purge Allows overriding the soft deletes setting.
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
      * @return string|bool
      *
@@ -399,7 +399,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $data      Data
-     * @param bool    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -468,7 +468,7 @@ class Model extends BaseModel
      * determine the rows to operate on.
      * This methods works only with dbCalls
      *
-     * @param int $size     Size
+     * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
      * @return void
@@ -577,9 +577,9 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param mixed        $key    Field name, or an array of field/value pairs
-     * @param string|null  $value  Field value, if $key is a single field
-     * @param bool|null $escape Whether to escape values and identifiers
+     * @param mixed       $key    Field name, or an array of field/value pairs
+     * @param string|null $value  Field value, if $key is a single field
+     * @param bool|null   $escape Whether to escape values and identifiers
      *
      * @return $this
      */
@@ -620,7 +620,7 @@ class Model extends BaseModel
      * it will attempt to convert it to an array.
      *
      * @param array|object|null $data     Data
-     * @param bool           $returnID Whether insert ID should be returned or not.
+     * @param bool              $returnID Whether insert ID should be returned or not.
      *
      * @return BaseResult|object|int|string|false
      *
@@ -648,7 +648,7 @@ class Model extends BaseModel
      * it will attempt to convert it into an array.
      *
      * @param int|array|string|null $id   ID
-     * @param array|object|null         $data Data
+     * @param array|object|null     $data Data
      *
      * @return bool
      *
@@ -676,8 +676,8 @@ class Model extends BaseModel
      * properties as an array with raw values.
      *
      * @param string|object $data        Data
-     * @param bool       $onlyChanged Only Changed Property
-     * @param bool       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array|null Array
      *
@@ -765,7 +765,7 @@ class Model extends BaseModel
      * @param string|object $data        Data
      * @param string|null   $primaryKey  Primary Key
      * @param string        $dateFormat  Date Format
-     * @param bool       $onlyChanged Only Changed
+     * @param bool          $onlyChanged Only Changed
      *
      * @return array
      *

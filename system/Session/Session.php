@@ -482,8 +482,9 @@ class Session implements SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param  string|null $key Identifier of the session property to retrieve
-     * @return mixed	The property value(s)
+     * @param string|null $key Identifier of the session property to retrieve
+     *
+     * @return mixed The property value(s)
      */
     public function get(string $key = null)
     {
@@ -762,7 +763,7 @@ class Session implements SessionInterface
      *
      * @param string|array $data  Session data key or associative array of items
      * @param null         $value Value to store
-     * @param int      $ttl   Time-to-live in seconds
+     * @param int          $ttl   Time-to-live in seconds
      */
     public function setTempdata($data, $value = null, int $ttl = 300)
     {
@@ -813,7 +814,7 @@ class Session implements SessionInterface
      * it has a set lifespan within the session.
      *
      * @param string|array $key Property identifier or array of them
-     * @param int      $ttl Time to live, in seconds
+     * @param int          $ttl Time to live, in seconds
      *
      * @return bool False if any of the properties were not set
      */
@@ -860,7 +861,7 @@ class Session implements SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param string|array $key	Property identifier or array of them
+     * @param string|array $key Property identifier or array of them
      */
     public function unmarkTempdata($key)
     {

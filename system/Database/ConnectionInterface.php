@@ -28,7 +28,8 @@ interface ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param  bool $persistent
+     * @param bool $persistent
+     *
      * @return mixed
      */
     public function connect(bool $persistent = false);

@@ -199,7 +199,7 @@ class Language
      * Advanced message formatting.
      *
      * @param string|array $message Message.
-     * @param array	       $args    Arguments.
+     * @param array        $args    Arguments.
      *
      * @return string|array Returns formatted message.
      */
@@ -227,9 +227,9 @@ class Language
      * will return the file's contents, otherwise will merge with
      * the existing language lines.
      *
-     * @param string  $file
-     * @param string  $locale
-     * @param bool $return
+     * @param string $file
+     * @param string $locale
+     * @param bool   $return
      *
      * @return void|array
      */

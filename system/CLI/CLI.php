@@ -391,7 +391,7 @@ class CLI
      * Waits a certain number of seconds, optionally showing a wait message and
      * waiting for a key press.
      *
-     * @param int $seconds   Number of seconds
+     * @param int  $seconds   Number of seconds
      * @param bool $countdown Show a countdown or not
      */
     public static function wait(int $seconds, bool $countdown = false)
@@ -475,7 +475,7 @@ class CLI
      * @param string $background The background color
      * @param string $format     Other formatting to apply. Currently only 'underline' is understood
      *
-     * @return string    The color coded string
+     * @return string The color coded string
      */
     public static function color(string $text, string $foreground, string $background = null, string $format = null): string
     {
@@ -714,7 +714,7 @@ class CLI
      * to update it. Set $thisStep = false to erase the progress bar.
      *
      * @param int|bool $thisStep
-     * @param int         $totalSteps
+     * @param int      $totalSteps
      */
     public static function showProgress($thisStep = 1, int $totalSteps = 10)
     {
@@ -754,9 +754,9 @@ class CLI
      * will padded with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
      *
-     * @param string  $string
-     * @param int $max
-     * @param int $padLeft
+     * @param string $string
+     * @param int    $max
+     * @param int    $padLeft
      *
      * @return string
      */

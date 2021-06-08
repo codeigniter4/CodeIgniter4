@@ -625,9 +625,9 @@ class RouteCollection implements RouteCollectionInterface
      * redirecting traffic from old, non-existing routes to the new
      * moved routes.
      *
-     * @param string  $from   The pattern to match against
-     * @param string  $to     Either a route name or a URI to redirect to
-     * @param int $status The HTTP status code that should be returned with this redirect
+     * @param string $from   The pattern to match against
+     * @param string $to     Either a route name or a URI to redirect to
+     * @param int    $status The HTTP status code that should be returned with this redirect
      *
      * @return RouteCollection
      */

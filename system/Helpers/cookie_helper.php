@@ -29,8 +29,8 @@ if (! function_exists('set_cookie')) {
      * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com
      * @param string       $path     The cookie path
      * @param string       $prefix   The cookie prefix
-     * @param bool      $secure   True makes the cookie secure
-     * @param bool      $httpOnly True makes the cookie accessible via http(s) only (no javascript)
+     * @param bool         $secure   True makes the cookie secure
+     * @param bool         $httpOnly True makes the cookie accessible via http(s) only (no javascript)
      * @param string|null  $sameSite The cookie SameSite value
      *
      * @see \CodeIgniter\HTTP\Response::setCookie()
@@ -55,8 +55,8 @@ if (! function_exists('get_cookie')) {
     /**
      * Fetch an item from the $_COOKIE array
      *
-     * @param string  $index
-     * @param bool $xssClean
+     * @param string $index
+     * @param bool   $xssClean
      *
      * @return mixed
      *

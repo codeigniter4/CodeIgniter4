@@ -116,12 +116,12 @@ class Pager implements PagerInterface
      * Allows for a simple, manual, form of pagination where all of the data
      * is provided by the user. The URL is the current URI.
      *
-     * @param int      $page
-     * @param int|null $perPage
-     * @param int      $total
-     * @param string       $template The output template alias to render.
-     * @param int      $segment  (whether page number is provided by URI segment)
-     * @param string|null  $group    optional group (i.e. if we'd like to define custom path)
+     * @param int         $page
+     * @param int|null    $perPage
+     * @param int         $total
+     * @param string      $template The output template alias to render.
+     * @param int         $segment  (whether page number is provided by URI segment)
+     * @param string|null $group    optional group (i.e. if we'd like to define custom path)
      *
      * @return string
      */
@@ -162,7 +162,7 @@ class Pager implements PagerInterface
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
      *
-     * @param string       $group
+     * @param string   $group
      * @param int      $page
      * @param int|null $perPage
      * @param int      $total
@@ -198,8 +198,8 @@ class Pager implements PagerInterface
     /**
      * Sets segment for a group.
      *
-     * @param int $number
-     * @param string  $group
+     * @param int    $number
+     * @param string $group
      *
      * @return mixed
      */
@@ -335,8 +335,8 @@ class Pager implements PagerInterface
      * Returns the URI for a specific page for the specified group.
      *
      * @param int|null $page
-     * @param string       $group
-     * @param bool      $returnObject
+     * @param string   $group
+     * @param bool     $returnObject
      *
      * @return string|URI
      */
@@ -375,8 +375,8 @@ class Pager implements PagerInterface
     /**
      * Returns the full URI to the next page of results, or null.
      *
-     * @param string  $group
-     * @param bool $returnObject
+     * @param string $group
+     * @param bool   $returnObject
      *
      * @return string|null
      */
@@ -404,8 +404,8 @@ class Pager implements PagerInterface
     /**
      * Returns the full URL to the previous page of results, or null.
      *
-     * @param string  $group
-     * @param bool $returnObject
+     * @param string $group
+     * @param bool   $returnObject
      *
      * @return string|null
      */
@@ -492,8 +492,8 @@ class Pager implements PagerInterface
     /**
      * Ensures that an array exists for the group specified.
      *
-     * @param string  $group
-     * @param int $perPage
+     * @param string $group
+     * @param int    $perPage
      */
     protected function ensureGroup(string $group, int $perPage = null)
     {

@@ -62,7 +62,7 @@ class Filters
      * @param string $value
      * @param string $adjustment
      *
-     * @return   int|false
+     * @return int|false
      */
     public static function date_modify($value, string $adjustment)
     {
@@ -108,9 +108,9 @@ class Filters
     /**
      * Returns an excerpt of the given string.
      *
-     * @param string  $value
-     * @param string  $phrase
-     * @param int $radius
+     * @param string $value
+     * @param string $phrase
+     * @param int    $radius
      *
      * @return string
      */
@@ -160,8 +160,8 @@ class Filters
      * Limits the number of characters to $limit, and trails of with an ellipsis.
      * Will break at word break so may be more or less than $limit.
      *
-     * @param string  $value
-     * @param int $limit
+     * @param string $value
+     * @param int    $limit
      *
      * @return string
      */
@@ -177,8 +177,8 @@ class Filters
     /**
      * Limits the number of words to $limit, and trails of with an ellipsis.
      *
-     * @param string  $value
-     * @param int $limit
+     * @param string $value
+     * @param int    $limit
      *
      * @return string
      */
@@ -194,10 +194,10 @@ class Filters
     /**
      * Returns the $value displayed in a localized manner.
      *
-     * @param int|float $value
-     * @param int       $precision
-     * @param string        $type
-     * @param string|null   $locale
+     * @param int|float   $value
+     * @param int         $precision
+     * @param string      $type
+     * @param string|null $locale
      *
      * @return string
      */
@@ -223,10 +223,10 @@ class Filters
     /**
      * Returns the $value displayed as a currency string.
      *
-     * @param int|float $value
-     * @param string        $currency
-     * @param string|null   $locale
-     * @param int       $fraction
+     * @param int|float   $value
+     * @param string      $currency
+     * @param string|null $locale
+     * @param int         $fraction
      *
      * @return string
      */

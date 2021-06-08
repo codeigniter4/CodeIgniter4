@@ -27,10 +27,10 @@ interface ThrottlerInterface
      *      die('You submitted over 60 requests within a minute.');
      * }
      *
-     * @param string  $key      The name to use as the "bucket" name.
-     * @param int $capacity The number of requests the "bucket" can hold
-     * @param int $seconds  The time it takes the "bucket" to completely refill
-     * @param int $cost     The number of tokens this action uses.
+     * @param string $key      The name to use as the "bucket" name.
+     * @param int    $capacity The number of requests the "bucket" can hold
+     * @param int    $seconds  The time it takes the "bucket" to completely refill
+     * @param int    $cost     The number of tokens this action uses.
      *
      * @return bool
      */

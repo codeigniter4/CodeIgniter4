@@ -320,7 +320,7 @@ class Rules
      *
      * @param mixed $str Value
      *
-     * @return bool          True if valid, false if not
+     * @return bool True if valid, false if not
      */
     public function required($str = null): bool
     {

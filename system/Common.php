@@ -202,8 +202,8 @@ if (! function_exists('config')) {
     /**
      * More simple way of getting config instances from Factories
      *
-     * @param string  $name
-     * @param bool $getShared
+     * @param string $name
+     * @param bool   $getShared
      *
      * @return mixed
      */
@@ -236,7 +236,7 @@ if (! function_exists('cookies')) {
      * Fetches the global `CookieStore` instance held by `Response`.
      *
      * @param Cookie[] $cookies   If `getGlobal` is false, this is passed to CookieStore's constructor
-     * @param bool  $getGlobal If false, creates a new instance of CookieStore
+     * @param bool     $getGlobal If false, creates a new instance of CookieStore
      *
      * @return CookieStore
      */
@@ -336,7 +336,7 @@ if (! function_exists('db_connect')) {
      * otherwise it will all calls will return the same instance.
      *
      * @param ConnectionInterface|array|string|null $db
-     * @param bool                               $getShared
+     * @param bool                                  $getShared
      *
      * @return BaseConnection
      */
@@ -472,7 +472,7 @@ if (! function_exists('force_https')) {
      *
      * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
      *
-     * @param int           $duration How long should the SSL header be set for? (in seconds)
+     * @param int               $duration How long should the SSL header be set for? (in seconds)
      *                                    Defaults to 1 year.
      * @param RequestInterface  $request
      * @param ResponseInterface $response
@@ -550,8 +550,8 @@ if (! function_exists('function_usable')) {
      *
      * @link   http://www.hardened-php.net/suhosin/
      * @param  string $functionName Function to check for
-     * @return bool    TRUE if the function exists and is safe to call,
-     *             FALSE otherwise.
+     * @return bool   TRUE if the function exists and is safe to call,
+     *                             FALSE otherwise.
      *
      * @codeCoverageIgnore This is too exotic
      */
@@ -581,7 +581,7 @@ if (! function_exists('helper')) {
      *   2. {namespace}/Helpers
      *   3. system/Helpers
      *
-     * @param  string|array $filenames
+     * @param  string|array          $filenames
      * @throws FileNotFoundException
      */
     function helper($filenames)
@@ -718,7 +718,7 @@ if (! function_exists('is_really_writable')) {
      *
      * @return bool
      *
-     * @throws             Exception
+     * @throws Exception
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
      */
     function is_really_writable(string $file): bool
@@ -816,7 +816,7 @@ if (! function_exists('model')) {
      * More simple way of getting model instances from Factories
      *
      * @param string                   $name
-     * @param bool                  $getShared
+     * @param bool                     $getShared
      * @param ConnectionInterface|null $conn
      *
      * @return mixed
@@ -832,8 +832,8 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param string         $key
-     * @param null           $default
+     * @param string      $key
+     * @param null        $default
      * @param string|bool $escape
      *
      * @return mixed|null
@@ -899,8 +899,8 @@ if (! function_exists('remove_invisible_characters')) {
      * This prevents sandwiching null characters
      * between ascii characters, like Java\0script.
      *
-     * @param string  $str
-     * @param bool $urlEncoded
+     * @param string $str
+     * @param bool   $urlEncoded
      *
      * @return string
      */
@@ -1043,7 +1043,7 @@ if (! function_exists('slash_item')) {
      * @param string $item Config item name
      *
      * @return string|null The configuration item or NULL if
-     * the item doesn't exist
+     *                     the item doesn't exist
      */
     function slash_item(string $item): ?string
     {
@@ -1065,8 +1065,8 @@ if (! function_exists('stringify_attributes')) {
      * Helper function used to convert a string, array, or object
      * of attributes to a string.
      *
-     * @param mixed   $attributes string, array, object
-     * @param bool $js
+     * @param mixed $attributes string, array, object
+     * @param bool  $js
      *
      * @return string
      */
@@ -1171,7 +1171,7 @@ if (! function_exists('view_cell')) {
      *
      * @param string      $library
      * @param null        $params
-     * @param int     $ttl
+     * @param int         $ttl
      * @param string|null $cacheName
      *
      * @return string

@@ -355,7 +355,7 @@ class BaseBuilder
      * Generates the SELECT portion of the query
      *
      * @param string|array $select
-     * @param bool      $escape
+     * @param bool         $escape
      *
      * @return $this
      */
@@ -570,8 +570,8 @@ class BaseBuilder
      *
      * Generates the FROM portion of the query
      *
-     * @param mixed   $from      can be a string or array
-     * @param bool $overwrite Should we remove the first table existing?
+     * @param mixed $from      can be a string or array
+     * @param bool  $overwrite Should we remove the first table existing?
      *
      * @return $this
      */
@@ -611,10 +611,10 @@ class BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string  $table
-     * @param string  $cond   The join condition
-     * @param string  $type   The type of join
-     * @param bool $escape Whether not to try to escape identifiers
+     * @param string $table
+     * @param string $cond   The join condition
+     * @param string $type   The type of join
+     * @param bool   $escape Whether not to try to escape identifiers
      *
      * @return $this
      */
@@ -690,9 +690,9 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed   $key
-     * @param mixed   $value
-     * @param bool $escape
+     * @param mixed $key
+     * @param mixed $value
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -709,9 +709,9 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed   $key
-     * @param mixed   $value
-     * @param bool $escape
+     * @param mixed $key
+     * @param mixed $value
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -730,11 +730,11 @@ class BaseBuilder
      * @used-by having()
      * @used-by orHaving()
      *
-     * @param string  $qbKey  'QBWhere' or 'QBHaving'
-     * @param mixed   $key
-     * @param mixed   $value
-     * @param string  $type
-     * @param bool $escape
+     * @param string $qbKey  'QBWhere' or 'QBHaving'
+     * @param mixed  $key
+     * @param mixed  $value
+     * @param string $type
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -807,7 +807,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -826,7 +826,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -845,7 +845,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -864,7 +864,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -883,7 +883,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -902,7 +902,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -921,7 +921,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -940,7 +940,7 @@ class BaseBuilder
      *
      * @param string               $key    The field to search
      * @param array|string|Closure $values The values searched on, or anonymous function with subquery
-     * @param bool              $escape
+     * @param bool                 $escape
      *
      * @return $this
      */
@@ -959,12 +959,12 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
-     * @param  string             $key    The field to search
-     * @param  array|Closure|null $values The values searched on, or anonymous function with subquery
-     * @param  bool            $not    If the statement would be IN or NOT IN
-     * @param  string             $type
-     * @param  bool            $escape
-     * @param  string             $clause (Internal use only)
+     * @param  string                   $key    The field to search
+     * @param  array|Closure|null       $values The values searched on, or anonymous function with subquery
+     * @param  bool                     $not    If the statement would be IN or NOT IN
+     * @param  string                   $type
+     * @param  bool                     $escape
+     * @param  string                   $clause (Internal use only)
      * @throws InvalidArgumentException
      *
      * @return $this
@@ -1029,11 +1029,11 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
-     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
+     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1050,11 +1050,11 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
-     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
+     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1071,11 +1071,11 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
-     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
+     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1092,11 +1092,11 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
-     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
+     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1113,10 +1113,10 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -1133,10 +1133,10 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -1153,10 +1153,10 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -1173,10 +1173,10 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $side
-     * @param bool $escape
+     * @param mixed  $field
+     * @param string $match
+     * @param string $side
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -1199,14 +1199,14 @@ class BaseBuilder
      * @used-by notHavingLike()
      * @used-by orNotHavingLike()
      *
-     * @param mixed   $field
-     * @param string  $match
-     * @param string  $type
-     * @param string  $side
-     * @param string  $not
-     * @param bool $escape
-     * @param bool $insensitiveSearch IF true, will force a case-insensitive search
-     * @param string  $clause            (Internal use only)
+     * @param mixed  $field
+     * @param string $match
+     * @param string $type
+     * @param string $side
+     * @param string $not
+     * @param bool   $escape
+     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
+     * @param string $clause            (Internal use only)
      *
      * @return $this
      */
@@ -1263,9 +1263,9 @@ class BaseBuilder
      * @param string      $column
      * @param string|null $not
      * @param string      $bind
-     * @param bool     $insensitiveSearch
+     * @param bool        $insensitiveSearch
      *
-     * @return string     $like_statement
+     * @return string $like_statement
      */
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
@@ -1476,7 +1476,7 @@ class BaseBuilder
      * GROUP BY
      *
      * @param string|array $by
-     * @param bool      $escape
+     * @param bool         $escape
      *
      * @return $this
      */
@@ -1515,7 +1515,7 @@ class BaseBuilder
      *
      * @param string|array $key
      * @param mixed        $value
-     * @param bool      $escape
+     * @param bool         $escape
      *
      * @return $this
      */
@@ -1533,7 +1533,7 @@ class BaseBuilder
      *
      * @param string|array $key
      * @param mixed        $value
-     * @param bool      $escape
+     * @param bool         $escape
      *
      * @return $this
      */
@@ -1547,9 +1547,9 @@ class BaseBuilder
     /**
      * ORDER BY
      *
-     * @param string  $orderBy
-     * @param string  $direction ASC, DESC or RANDOM
-     * @param bool $escape
+     * @param string $orderBy
+     * @param string $direction ASC, DESC or RANDOM
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -1669,7 +1669,7 @@ class BaseBuilder
      *
      * @param string|array|object $key    Field name, or an array of field/value pairs
      * @param string              $value  Field value, if $key is a single field
-     * @param bool             $escape Whether to escape values and identifiers
+     * @param bool                $escape Whether to escape values and identifiers
      *
      * @return $this
      */
@@ -1766,8 +1766,8 @@ class BaseBuilder
      * Compiles the select statement based on the other functions called
      * and runs the query
      *
-     * @param int $limit  The limit clause
-     * @param int $offset The offset clause
+     * @param int  $limit  The limit clause
+     * @param int  $offset The offset clause
      * @param bool $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface|false
@@ -1916,9 +1916,9 @@ class BaseBuilder
      * Allows the where clause, limit and offset to be added directly
      *
      * @param string|array $where  Where condition
-     * @param int      $limit  Limit value
-     * @param int      $offset Offset value
-     * @param bool      $reset  Are we want to clear query builder values?
+     * @param int          $limit  Limit value
+     * @param int          $offset Offset value
+     * @param bool         $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface
      */
@@ -1953,11 +1953,11 @@ class BaseBuilder
      *
      * Compiles batch insert strings and runs the queries
      *
-     * @param array   $set       An associative array of insert values
-     * @param bool $escape    Whether to escape values and identifiers
-     * @param int $batchSize Batch size
+     * @param array $set       An associative array of insert values
+     * @param bool  $escape    Whether to escape values and identifiers
+     * @param int   $batchSize Batch size
      *
-     * @return int|false Number of rows inserted or FALSE on failure
+     * @return int|false         Number of rows inserted or FALSE on failure
      * @throws DatabaseException
      */
     public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
@@ -2029,9 +2029,9 @@ class BaseBuilder
     /**
      * The "setInsertBatch" function.  Allows key/value pairs to be set for batch inserts
      *
-     * @param mixed   $key
-     * @param string  $value
-     * @param bool $escape
+     * @param mixed  $key
+     * @param string $value
+     * @param bool   $escape
      *
      * @return $this|null
      */
@@ -2114,8 +2114,8 @@ class BaseBuilder
      *
      * Compiles an insert string and runs the query
      *
-     * @param array   $set    An associative array of insert values
-     * @param bool $escape Whether to escape values and identifiers
+     * @param array $set    An associative array of insert values
+     * @param bool  $escape Whether to escape values and identifiers
      *
      * @throws DatabaseException
      *
@@ -2297,13 +2297,13 @@ class BaseBuilder
      *
      * Compiles an update string and runs the query.
      *
-     * @param array   $set   An associative array of update values
-     * @param mixed   $where
-     * @param int $limit
+     * @param array $set   An associative array of update values
+     * @param mixed $where
+     * @param int   $limit
      *
      * @throws DatabaseException
      *
-     * @return bool    TRUE on success, FALSE on failure
+     * @return bool TRUE on success, FALSE on failure
      */
     public function update(array $set = null, $where = null, int $limit = null): bool
     {
@@ -2406,11 +2406,11 @@ class BaseBuilder
      *
      * Compiles an update string and runs the query
      *
-     * @param array   $set       An associative array of update values
-     * @param string  $index     The where key
-     * @param int $batchSize The size of the batch to run
+     * @param array  $set       An associative array of update values
+     * @param string $index     The where key
+     * @param int    $batchSize The size of the batch to run
      *
-     * @return mixed    Number of rows affected, SQL string, or FALSE on failure
+     * @return mixed             Number of rows affected, SQL string, or FALSE on failure
      * @throws DatabaseException
      */
     public function updateBatch(array $set = null, string $index = null, int $batchSize = 100)
@@ -2520,7 +2520,7 @@ class BaseBuilder
      *
      * @param array|object $key
      * @param string       $index
-     * @param bool      $escape
+     * @param bool         $escape
      *
      * @return $this|null
      * @throws DatabaseException
@@ -2568,7 +2568,7 @@ class BaseBuilder
      *
      * Compiles a delete string and runs "DELETE FROM table"
      *
-     * @return bool|string    TRUE on success, FALSE on failure, string on testMode
+     * @return bool|string TRUE on success, FALSE on failure, string on testMode
      */
     public function emptyTable()
     {
@@ -2594,7 +2594,7 @@ class BaseBuilder
      * If the database does not support the truncate() command
      * This function maps to "DELETE FROM table"
      *
-     * @return bool|string    TRUE on success, FALSE on failure, string on testMode
+     * @return bool|string TRUE on success, FALSE on failure, string on testMode
      */
     public function truncate()
     {
@@ -2656,9 +2656,9 @@ class BaseBuilder
      *
      * Compiles a delete string and runs the query
      *
-     * @param mixed   $where     The where clause
-     * @param int $limit     The limit clause
-     * @param bool $resetData
+     * @param mixed $where     The where clause
+     * @param int   $limit     The limit clause
+     * @param bool  $resetData
      *
      * @return string|bool
      * @throws DatabaseException
@@ -2706,8 +2706,8 @@ class BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param int $value
+     * @param string $column
+     * @param int    $value
      *
      * @return bool
      */
@@ -2725,8 +2725,8 @@ class BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param int $value
+     * @param string $column
+     * @param int    $value
      *
      * @return bool
      */
@@ -2888,7 +2888,7 @@ class BaseBuilder
      *
      * @param string $qbKey 'QBWhere' or 'QBHaving'
      *
-     * @return string    SQL statement
+     * @return string SQL statement
      */
     protected function compileWhereHaving(string $qbKey): string
     {
@@ -2963,7 +2963,7 @@ class BaseBuilder
      * groupBy() is called prior to from(), join() and prefixTable is added
      * only if needed.
      *
-     * @return string    SQL statement
+     * @return string SQL statement
      */
     protected function compileGroupBy(): string
     {
@@ -2996,7 +2996,7 @@ class BaseBuilder
      * orderBy() is called prior to from(), join() and prefixTable is added
      * only if needed.
      *
-     * @return string    SQL statement
+     * @return string SQL statement
      */
     protected function compileOrderBy(): string
     {
@@ -3217,8 +3217,8 @@ class BaseBuilder
     /**
      * Returns the SQL string operator
      *
-     * @param string  $str
-     * @param bool $list
+     * @param string $str
+     * @param bool   $list
      *
      * @return mixed
      */
@@ -3255,9 +3255,9 @@ class BaseBuilder
      * with PHP 7+ we get a huge memory/performance gain with indexed
      * arrays instead, so lets take advantage of that here.
      *
-     * @param string  $key
-     * @param mixed   $value
-     * @param bool $escape
+     * @param string $key
+     * @param mixed  $value
+     * @param bool   $escape
      *
      * @return string
      */

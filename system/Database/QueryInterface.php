@@ -22,9 +22,9 @@ interface QueryInterface
     /**
      * Sets the raw query string to use for this statement.
      *
-     * @param string  $sql
-     * @param mixed   $binds
-     * @param bool $setEscape
+     * @param string $sql
+     * @param mixed  $binds
+     * @param bool   $setEscape
      *
      * @return mixed
      */
@@ -71,8 +71,8 @@ interface QueryInterface
     /**
      * Stores the error description that happened for this query.
      *
-     * @param int $code
-     * @param string  $error
+     * @param int    $code
+     * @param string $error
      */
     public function setError(int $code, string $error);
 

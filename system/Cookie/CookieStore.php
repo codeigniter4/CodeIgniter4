@@ -35,7 +35,7 @@ class CookieStore implements Countable, IteratorAggregate
      * Creates a CookieStore from an array of `Set-Cookie` headers.
      *
      * @param string[] $headers
-     * @param bool  $raw
+     * @param bool     $raw
      *
      * @throws CookieException
      *

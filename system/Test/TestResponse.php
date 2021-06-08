@@ -387,8 +387,8 @@ class TestResponse extends TestCase
     /**
      * Test that the response contains a matching JSON fragment.
      *
-     * @param array   $fragment
-     * @param bool $strict
+     * @param array $fragment
+     * @param bool  $strict
      *
      * @throws Exception
      */

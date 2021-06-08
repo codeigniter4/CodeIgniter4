@@ -189,8 +189,8 @@ class Forge
     /**
      * Create database
      *
-     * @param string  $dbName
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
+     * @param string $dbName
+     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
      * @return bool
      * @throws DatabaseException
@@ -306,8 +306,8 @@ class Forge
      * Add Key
      *
      * @param string|array $key
-     * @param bool      $primary
-     * @param bool      $unique
+     * @param bool         $primary
+     * @param bool         $unique
      *
      * @return Forge
      */
@@ -453,9 +453,9 @@ class Forge
     /**
      * Create Table
      *
-     * @param string  $table       Table name
-     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
-     * @param array   $attributes  Associative array of table attributes
+     * @param string $table       Table name
+     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
+     * @param array  $attributes  Associative array of table attributes
      *
      * @return mixed
      * @throws DatabaseException
@@ -508,9 +508,9 @@ class Forge
     /**
      * Create Table
      *
-     * @param string  $table       Table name
-     * @param bool $ifNotExists Whether to add 'IF NOT EXISTS' condition
-     * @param array   $attributes  Associative array of table attributes
+     * @param string $table       Table name
+     * @param bool   $ifNotExists Whether to add 'IF NOT EXISTS' condition
+     * @param array  $attributes  Associative array of table attributes
      *
      * @return mixed
      */
@@ -582,9 +582,9 @@ class Forge
     /**
      * Drop Table
      *
-     * @param string  $tableName Table name
-     * @param bool $ifExists  Whether to add an IF EXISTS condition
-     * @param bool $cascade   Whether to add an CASCADE condition
+     * @param string $tableName Table name
+     * @param bool   $ifExists  Whether to add an IF EXISTS condition
+     * @param bool   $cascade   Whether to add an CASCADE condition
      *
      * @return mixed
      * @throws DatabaseException
@@ -633,9 +633,9 @@ class Forge
      *
      * Generates a platform-specific DROP TABLE string
      *
-     * @param string  $table    Table name
-     * @param bool $ifExists Whether to add an IF EXISTS condition
-     * @param bool $cascade  Whether to add an CASCADE condition
+     * @param string $table    Table name
+     * @param bool   $ifExists Whether to add an IF EXISTS condition
+     * @param bool   $cascade  Whether to add an CASCADE condition
      *
      * @return string|bool
      */

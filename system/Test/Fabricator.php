@@ -160,10 +160,10 @@ class Fabricator
     /**
      * Set the count for a specific table
      *
-     * @param string  $table Name of the target table
-     * @param int $count Count value
+     * @param string $table Name of the target table
+     * @param int    $count Count value
      *
-     * @return int  The new count value
+     * @return int The new count value
      */
     public static function setCount(string $table, int $count): int
     {
@@ -177,7 +177,7 @@ class Fabricator
      *
      * @param string $table Name of the target table
      *
-     * @return int  The new count value
+     * @return int The new count value
      */
     public static function upCount(string $table): int
     {
@@ -189,7 +189,7 @@ class Fabricator
      *
      * @param string $table Name of the target table
      *
-     * @return int  The new count value
+     * @return int The new count value
      */
     public static function downCount(string $table): int
     {
@@ -201,7 +201,7 @@ class Fabricator
     /**
      * Returns the model instance
      *
-     * @return object  Framework or compatible model
+     * @return object Framework or compatible model
      */
     public function getModel()
     {
@@ -247,8 +247,8 @@ class Fabricator
     /**
      * Set the overrides, once or persistent
      *
-     * @param array   $overrides Array of [field => value]
-     * @param bool $persist   Whether these overrides should persist through the next operation
+     * @param array $overrides Array of [field => value]
+     * @param bool  $persist   Whether these overrides should persist through the next operation
      *
      * @return $this
      */
@@ -318,7 +318,7 @@ class Fabricator
      *
      * @param string $field Name of the field
      *
-     * @return string  Name of the formatter
+     * @return string Name of the formatter
      */
     protected function guessFormatter($field): string
     {
@@ -367,7 +367,7 @@ class Fabricator
      *
      * @param int|null $count Optional number to create a collection
      *
-     * @return array|object  An array or object (based on returnType), or an array of returnTypes
+     * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
     public function make(int $count = null)
     {
@@ -392,7 +392,7 @@ class Fabricator
     /**
      * Generate an array of faked data
      *
-     * @return array  An array of faked data
+     * @return array An array of faked data
      *
      * @throws RuntimeException
      */
@@ -429,7 +429,7 @@ class Fabricator
      *
      * @param string|null $className Class name of the object to create; null to use model default
      *
-     * @return object  An instance of the class with faked data
+     * @return object An instance of the class with faked data
      *
      * @throws RuntimeException
      */
@@ -479,9 +479,9 @@ class Fabricator
      * Generate new entities from the database
      *
      * @param int|null $count Optional number to create a collection
-     * @param bool      $mock  Whether to execute or mock the insertion
+     * @param bool     $mock  Whether to execute or mock the insertion
      *
-     * @return array|object  An array or object (based on returnType), or an array of returnTypes
+     * @return array|object An array or object (based on returnType), or an array of returnTypes
      *
      * @throws FrameworkException
      */
@@ -519,7 +519,7 @@ class Fabricator
      *
      * @param int|null $count Optional number to create a collection
      *
-     * @return array|object  An array or object (based on returnType), or an array of returnTypes
+     * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
     protected function createMock(int $count = null)
     {

@@ -492,7 +492,8 @@ class Filters
     /**
      * Maps filter aliases to the equivalent filter classes
      *
-     * @param  string $position
+     * @param string $position
+     *
      * @throws FilterException
      *
      * @return void

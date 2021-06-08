@@ -66,9 +66,9 @@ class CSRF implements FilterInterface
     /**
      * We don't have anything to do here.
      *
-     * @param RequestInterface|IncomingRequest             $request
-     * @param ResponseInterface|Response $response
-     * @param array|null                                   $arguments
+     * @param RequestInterface|IncomingRequest $request
+     * @param ResponseInterface|Response       $response
+     * @param array|null                       $arguments
      *
      * @return mixed
      */

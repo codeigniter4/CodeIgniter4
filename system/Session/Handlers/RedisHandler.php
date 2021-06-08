@@ -145,7 +145,7 @@ class RedisHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string	Serialized session data
+     * @return string Serialized session data
      */
     public function read($sessionID): string
     {
@@ -279,7 +279,7 @@ class RedisHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param  int $maxlifetime Maximum lifetime of sessions
+     * @param  int  $maxlifetime Maximum lifetime of sessions
      * @return bool
      */
     public function gc($maxlifetime): bool

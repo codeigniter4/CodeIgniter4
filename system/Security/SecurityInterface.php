@@ -85,8 +85,8 @@ interface SecurityInterface
      * e.g. file/in/some/approved/folder.txt, you can set the second optional
      * parameter, $relative_path to TRUE.
      *
-     * @param string  $str          Input file name
-     * @param bool $relativePath Whether to preserve paths
+     * @param string $str          Input file name
+     * @param bool   $relativePath Whether to preserve paths
      *
      * @return string
      */

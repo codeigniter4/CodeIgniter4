@@ -216,9 +216,9 @@ class DOMParser
     /**
      * Search the DOM using an XPath expression.
      *
-     * @param  string|null $search
-     * @param  string      $element
-     * @param  array       $paths
+     * @param string|null $search
+     * @param string      $element
+     * @param array       $paths
      *
      * @return DOMNodeList
      */

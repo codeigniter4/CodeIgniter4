@@ -43,10 +43,10 @@ class MockConnection extends BaseConnection
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param string  $sql
-     * @param mixed   ...$binds
-     * @param bool $setEscapeFlags
-     * @param string  $queryClass
+     * @param string $sql
+     * @param mixed  ...$binds
+     * @param bool   $setEscapeFlags
+     * @param string $queryClass
      *
      * @return BaseResult|Query|bool
      *

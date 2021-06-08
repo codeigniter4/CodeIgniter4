@@ -49,9 +49,9 @@ class CreditCardRulesTest extends CIUnitTestCase
     /**
      * @dataProvider creditCardProvider
      *
-     * @param string $type
+     * @param string      $type
      * @param string|null $number
-     * @param bool $expected
+     * @param bool        $expected
      */
     public function testValidCCNumber($type, $number, $expected = false)
     {

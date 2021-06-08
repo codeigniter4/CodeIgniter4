@@ -127,7 +127,7 @@ if (! function_exists('current_url')) {
      * Returns the current full URL based on the IncomingRequest.
      * String returns ignore query and fragment parts.
      *
-     * @param bool              $returnObject True to return an object instead of a string
+     * @param bool                 $returnObject True to return an object instead of a string
      * @param IncomingRequest|null $request      A request to use when retrieving the path
      *
      * @return string|URI
@@ -437,9 +437,9 @@ if (! function_exists('auto_link')) {
      * URLs or emails that end in a period. We'll strip these
      * off and add them after the link.
      *
-     * @param string  $str   the string
-     * @param string  $type  the type: email, url, or both
-     * @param bool $popup whether to create pop-up links
+     * @param string $str   the string
+     * @param string $type  the type: email, url, or both
+     * @param bool   $popup whether to create pop-up links
      *
      * @return string
      */
@@ -486,8 +486,8 @@ if (! function_exists('prep_url')) {
      * Formerly used URI, but that does not play nicely with URIs missing
      * the scheme.
      *
-     * @param  string  $str    the URL
-     * @param  bool $secure set true if you want to force https://
+     * @param  string $str    the URL
+     * @param  bool   $secure set true if you want to force https://
      * @return string
      */
     function prep_url(string $str = '', bool $secure = false): string
@@ -519,9 +519,9 @@ if (! function_exists('url_title')) {
      * human-friendly URL string with a "separator" string
      * as the word separator.
      *
-     * @param  string  $str       Input string
-     * @param  string  $separator Word separator (usually '-' or '_')
-     * @param  bool $lowercase Whether to transform the output string to lowercase
+     * @param  string $str       Input string
+     * @param  string $separator Word separator (usually '-' or '_')
+     * @param  bool   $lowercase Whether to transform the output string to lowercase
      * @return string
      */
     function url_title(string $str, string $separator = '-', bool $lowercase = false): string
@@ -559,9 +559,9 @@ if (! function_exists('mb_url_title')) {
      * human-friendly URL string with a "separator" string
      * as the word separator.
      *
-     * @param  string  $str       Input string
-     * @param  string  $separator Word separator (usually '-' or '_')
-     * @param  bool $lowercase Whether to transform the output string to lowercase
+     * @param  string $str       Input string
+     * @param  string $separator Word separator (usually '-' or '_')
+     * @param  bool   $lowercase Whether to transform the output string to lowercase
      * @return string
      */
     function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string

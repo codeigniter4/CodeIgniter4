@@ -296,8 +296,8 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exists, returns null.
      *
-     * @param int $n
-     * @param string  $className
+     * @param int    $n
+     * @param string $className
      *
      * @return mixed
      */

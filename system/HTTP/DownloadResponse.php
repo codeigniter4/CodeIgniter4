@@ -72,8 +72,8 @@ class DownloadResponse extends Response
     /**
      * Constructor.
      *
-     * @param string  $filename
-     * @param bool $setMime
+     * @param string $filename
+     * @param bool   $setMime
      */
     public function __construct(string $filename, bool $setMime)
     {
@@ -224,8 +224,8 @@ class DownloadResponse extends Response
     /**
      * Disallows status changing.
      *
-     * @param int $code
-     * @param string  $reason
+     * @param int    $code
+     * @param string $reason
      *
      * @throws DownloadException
      */

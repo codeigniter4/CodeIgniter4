@@ -134,10 +134,10 @@ trait ResponseTrait
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
      *
-     * @param int $code   The 3-digit integer result code to set.
-     * @param string  $reason The reason phrase to use with the
-     *                        provided status code; if none is provided, will
-     *                        default to the IANA name.
+     * @param int    $code   The 3-digit integer result code to set.
+     * @param string $reason The reason phrase to use with the
+     *                       provided status code; if none is provided, will
+     *                       default to the IANA name.
      *
      * @return $this
      * @throws HTTPException For invalid status code arguments.
@@ -241,7 +241,7 @@ trait ResponseTrait
      * Converts the $body into JSON and sets the Content Type header.
      *
      * @param array|string $body
-     * @param bool      $unencoded
+     * @param bool         $unencoded
      *
      * @return $this
      */
@@ -496,9 +496,9 @@ trait ResponseTrait
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string  $uri    The URI to redirect to
-     * @param string  $method
-     * @param int $code   The type of redirection, defaults to 302
+     * @param string $uri    The URI to redirect to
+     * @param string $method
+     * @param int    $code   The type of redirection, defaults to 302
      *
      * @return $this
      * @throws HTTPException For invalid status code.
@@ -548,8 +548,8 @@ trait ResponseTrait
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string       $path     Cookie path (default: '/')
      * @param string       $prefix   Cookie name prefix
-     * @param bool      $secure   Whether to only transfer cookies via SSL
-     * @param bool      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param bool         $secure   Whether to only transfer cookies via SSL
+     * @param bool         $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null  $samesite
      *
      * @return $this
@@ -721,7 +721,7 @@ trait ResponseTrait
      *
      * @param string      $filename The path to the file to send
      * @param string|null $data     The data to be downloaded
-     * @param bool     $setMime  Whether to try and send the actual MIME type
+     * @param bool        $setMime  Whether to try and send the actual MIME type
      *
      * @return DownloadResponse|null
      */

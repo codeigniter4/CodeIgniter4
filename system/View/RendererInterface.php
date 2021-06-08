@@ -22,11 +22,11 @@ interface RendererInterface
      * Builds the output based upon a file name and any
      * data that has already been set.
      *
-     * @param string  $view
-     * @param array   $options  Reserved for 3rd-party uses since
-     *                          it might be needed to pass additional info
-     *                          to other template engines.
-     * @param bool $saveData Whether to save data for subsequent calls
+     * @param string $view
+     * @param array  $options  Reserved for 3rd-party uses since
+     *                         it might be needed to pass additional info
+     *                         to other template engines.
+     * @param bool   $saveData Whether to save data for subsequent calls
      *
      * @return string
      */
@@ -38,11 +38,11 @@ interface RendererInterface
      * Builds the output based upon a string and any
      * data that has already been set.
      *
-     * @param string  $view     The view contents
-     * @param array   $options  Reserved for 3rd-party uses since
-     *                          it might be needed to pass additional info
-     *                          to other template engines.
-     * @param bool $saveData Whether to save data for subsequent calls
+     * @param string $view     The view contents
+     * @param array  $options  Reserved for 3rd-party uses since
+     *                         it might be needed to pass additional info
+     *                         to other template engines.
+     * @param bool   $saveData Whether to save data for subsequent calls
      *
      * @return string
      */

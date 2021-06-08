@@ -22,9 +22,9 @@ if (! function_exists('word_limiter')) {
      *
      * Limits a string to X number of words.
      *
-     * @param string  $str
-     * @param int $limit
-     * @param string  $endChar the end character. Usually an ellipsis
+     * @param string $str
+     * @param int    $limit
+     * @param string $endChar the end character. Usually an ellipsis
      *
      * @return string
      */
@@ -53,9 +53,9 @@ if (! function_exists('character_limiter')) {
      * Limits the string based on the character count.  Preserves complete words
      * so the character count may not be exactly as specified.
      *
-     * @param string  $str
-     * @param int $n
-     * @param string  $endChar the end character. Usually an ellipsis
+     * @param string $str
+     * @param int    $n
+     * @param string $endChar the end character. Usually an ellipsis
      *
      * @return string
      */
@@ -148,8 +148,8 @@ if (! function_exists('entities_to_ascii')) {
      *
      * Converts character entities back to ASCII
      *
-     * @param string  $str
-     * @param bool $all
+     * @param string $str
+     * @param bool   $all
      *
      * @return string
      */
@@ -390,8 +390,8 @@ if (! function_exists('word_wrap')) {
      * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
      * will URLs.
      *
-     * @param string  $str     the text string
-     * @param int $charlim = 76    the number of characters to wrap at
+     * @param string $str     the text string
+     * @param int    $charlim = 76    the number of characters to wrap at
      *
      * @return string
      */
@@ -476,12 +476,12 @@ if (! function_exists('ellipsize')) {
      *
      * This function will strip tags from a string, split it at its max_length and ellipsize
      *
-     * @param string  $str       String to ellipsize
-     * @param int $maxLength Max length of string
-     * @param mixed   $position  int (1|0) or float, .5, .2, etc for position to split
-     * @param string  $ellipsis  ellipsis ; Default '...'
+     * @param string $str       String to ellipsize
+     * @param int    $maxLength Max length of string
+     * @param mixed  $position  int (1|0) or float, .5, .2, etc for position to split
+     * @param string $ellipsis  ellipsis ; Default '...'
      *
-     * @return string    Ellipsized string
+     * @return string Ellipsized string
      */
     function ellipsize(string $str, int $maxLength, $position = 1, string $ellipsis = '&hellip;'): string
     {
@@ -516,7 +516,7 @@ if (! function_exists('strip_slashes')) {
      *
      * @param mixed $str string or array
      *
-     * @return mixed  string or array
+     * @return mixed string or array
      */
     function strip_slashes($str)
     {
@@ -607,9 +607,9 @@ if (! function_exists('reduce_multiples')) {
      *
      * Fred, Bill, Joe, Jimmy
      *
-     * @param string  $str
-     * @param string  $character the character you wish to reduce
-     * @param bool $trim      TRUE/FALSE - whether to trim the character from the beginning/end
+     * @param string $str
+     * @param string $character the character you wish to reduce
+     * @param bool   $trim      TRUE/FALSE - whether to trim the character from the beginning/end
      *
      * @return string
      */
@@ -629,8 +629,8 @@ if (! function_exists('random_string')) {
      *
      * Useful for generating passwords or hashes.
      *
-     * @param string  $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
-     * @param int $len  Number of characters
+     * @param string $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
+     * @param int    $len  Number of characters
      *
      * @return string
      */
@@ -682,9 +682,9 @@ if (! function_exists('increment_string')) {
     /**
      * Add's _1 to a string or increment the ending number to allow _2, _3, etc
      *
-     * @param string  $str       Required
-     * @param string  $separator What should the duplicate number be appended with
-     * @param int $first     Which number should be used for the first dupe increment
+     * @param string $str       Required
+     * @param string $separator What should the duplicate number be appended with
+     * @param int    $first     Which number should be used for the first dupe increment
      *
      * @return string
      */
@@ -733,10 +733,10 @@ if (! function_exists('excerpt')) {
      *
      * Allows to extract a piece of text surrounding a word or phrase.
      *
-     * @param string  $text     String to search the phrase
-     * @param string  $phrase   Phrase that will be searched for.
-     * @param int $radius   The amount of characters returned around the phrase.
-     * @param string  $ellipsis Ending that will be appended
+     * @param string $text     String to search the phrase
+     * @param string $phrase   Phrase that will be searched for.
+     * @param int    $radius   The amount of characters returned around the phrase.
+     * @param string $ellipsis Ending that will be appended
      *
      * @return string
      *

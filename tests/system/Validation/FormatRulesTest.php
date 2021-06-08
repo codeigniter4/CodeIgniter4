@@ -394,8 +394,8 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * Test alpha with spaces.
      *
-     * @param mixed   $value    Value.
-     * @param bool $expected Expected.
+     * @param mixed $value    Value.
+     * @param bool  $expected Expected.
      *
      * @dataProvider alphaSpaceProvider
      */

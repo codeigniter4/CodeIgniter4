@@ -63,7 +63,8 @@ class BaseCollector
     /**
      * Gets the Collector's title.
      *
-     * @param  bool $safe
+     * @param bool $safe
+     *
      * @return string
      */
     public function getTitle(bool $safe = false): string

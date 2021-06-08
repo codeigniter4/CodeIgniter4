@@ -47,7 +47,8 @@ class FileHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param  Cache $config
+     * @param Cache $config
+     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
@@ -101,9 +102,9 @@ class FileHandler extends BaseHandler
     /**
      * Saves an item to the cache store.
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value The data to save
-     * @param int $ttl   Time To Live, in seconds (default 60)
+     * @param string $key   Cache item name
+     * @param mixed  $value The data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
      *
      * @return bool Success or failure
      */
@@ -176,8 +177,8 @@ class FileHandler extends BaseHandler
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */
@@ -205,8 +206,8 @@ class FileHandler extends BaseHandler
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return bool
      */
@@ -264,9 +265,9 @@ class FileHandler extends BaseHandler
      * @param string $key Cache item name.
      *
      * @return array|false|null
-     *   Returns null if the item does not exist, otherwise array<string, mixed>
-     *   with at least the 'expire' key for absolute epoch expiry (or null).
-     *   Some handlers may return false when an item does not exist, which is deprecated.
+     *                          Returns null if the item does not exist, otherwise array<string, mixed>
+     *                          with at least the 'expire' key for absolute epoch expiry (or null).
+     *                          Some handlers may return false when an item does not exist, which is deprecated.
      */
     public function getMetaData(string $key)
     {
@@ -373,10 +374,10 @@ class FileHandler extends BaseHandler
      * If the second parameter is set to TRUE, any directories contained
      * within the supplied base directory will be nuked as well.
      *
-     * @param string  $path   File path
-     * @param bool $delDir Whether to delete any directories found in the path
-     * @param bool $htdocs Whether to skip deleting .htaccess and index page files
-     * @param int $_level Current directory depth level (default: 0; internal use only)
+     * @param string $path   File path
+     * @param bool   $delDir Whether to delete any directories found in the path
+     * @param bool   $htdocs Whether to skip deleting .htaccess and index page files
+     * @param int    $_level Current directory depth level (default: 0; internal use only)
      *
      * @return bool
      */
@@ -414,9 +415,9 @@ class FileHandler extends BaseHandler
      *
      * Any sub-folders contained within the specified path are read as well.
      *
-     * @param string  $sourceDir    Path to source
-     * @param bool $topLevelOnly Look only at the top level directory specified?
-     * @param bool $_recursion   Internal variable to determine recursion status - do not use in calls
+     * @param string $sourceDir    Path to source
+     * @param bool   $topLevelOnly Look only at the top level directory specified?
+     * @param bool   $_recursion   Internal variable to determine recursion status - do not use in calls
      *
      * @return array|false
      */

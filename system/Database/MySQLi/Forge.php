@@ -98,7 +98,8 @@ class Forge extends BaseForge
     /**
      * CREATE TABLE attributes
      *
-     * @param  array $attributes Associative array of table attributes
+     * @param array $attributes Associative array of table attributes
+     *
      * @return string
      */
     protected function _createTableAttributes(array $attributes): string
@@ -133,9 +134,10 @@ class Forge extends BaseForge
     /**
      * ALTER TABLE
      *
-     * @param  string $alterType ALTER type
-     * @param  string $table     Table name
-     * @param  mixed  $field     Column definition
+     * @param string $alterType ALTER type
+     * @param string $table     Table name
+     * @param mixed  $field     Column definition
+     *
      * @return string|string[]
      */
     protected function _alterTable(string $alterType, string $table, $field)
@@ -168,7 +170,8 @@ class Forge extends BaseForge
     /**
      * Process column
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     protected function _processColumn(array $field): string

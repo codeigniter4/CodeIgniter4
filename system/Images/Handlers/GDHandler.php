@@ -22,7 +22,8 @@ class GDHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param  Images|null $config
+     * @param Images|null $config
+     *
      * @throws ImageException
      */
     public function __construct($config = null)
@@ -236,7 +237,7 @@ class GDHandler extends BaseHandler
      *          ->save();
      *
      * @param string|null $target
-     * @param int     $quality
+     * @param int         $quality
      *
      * @return bool
      */
@@ -362,8 +363,8 @@ class GDHandler extends BaseHandler
     /**
      * Check if image type is supported and return image resource
      *
-     * @param string  $path      Image path
-     * @param int $imageType Image type
+     * @param string $path      Image path
+     * @param int    $imageType Image type
      *
      * @return resource|bool
      * @throws ImageException
@@ -491,9 +492,9 @@ class GDHandler extends BaseHandler
     /**
      * Handler-specific method for overlaying text on an image.
      *
-     * @param string  $text
-     * @param array   $options
-     * @param bool $isShadow Whether we are drawing the dropshadow or actual text
+     * @param string $text
+     * @param array  $options
+     * @param bool   $isShadow Whether we are drawing the dropshadow or actual text
      *
      * @return void
      */

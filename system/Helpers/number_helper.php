@@ -19,9 +19,9 @@ if (! function_exists('number_to_size')) {
     /**
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
-     * @param mixed   $num       Will be cast as int
-     * @param int $precision
-     * @param string  $locale
+     * @param mixed  $num       Will be cast as int
+     * @param int    $precision
+     * @param string $locale
      *
      * @return bool|string
      */
@@ -75,7 +75,7 @@ if (! function_exists('number_to_amount')) {
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
      * @param string      $num
-     * @param int     $precision
+     * @param int         $precision
      * @param string|null $locale
      *
      * @return bool|string
@@ -122,10 +122,10 @@ if (! function_exists('number_to_amount')) {
 
 if (! function_exists('number_to_currency')) {
     /**
-     * @param float   $num
-     * @param string  $currency
-     * @param string  $locale
-     * @param int $fraction
+     * @param float  $num
+     * @param string $currency
+     * @param string $locale
+     * @param int    $fraction
      *
      * @return string
      */
@@ -147,7 +147,7 @@ if (! function_exists('format_number')) {
      * Used by all of the functions of the number_helper.
      *
      * @param float       $num
-     * @param int     $precision
+     * @param int         $precision
      * @param string|null $locale
      * @param array       $options
      *

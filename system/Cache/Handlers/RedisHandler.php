@@ -152,9 +152,9 @@ class RedisHandler extends BaseHandler
     /**
      * Saves an item to the cache store.
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value The data to save
-     * @param int $ttl   Time To Live, in seconds (default 60)
+     * @param string $key   Cache item name
+     * @param mixed  $value The data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
      *
      * @return bool Success or failure
      */
@@ -241,8 +241,8 @@ class RedisHandler extends BaseHandler
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return int
      */
@@ -258,8 +258,8 @@ class RedisHandler extends BaseHandler
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param int $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
      * @return int
      */
@@ -305,8 +305,8 @@ class RedisHandler extends BaseHandler
      * @param string $key Cache item name.
      *
      * @return array|null
-     *   Returns null if the item does not exist, otherwise array<string, mixed>
-     *   with at least the 'expire' key for absolute epoch expiry (or null).
+     *                    Returns null if the item does not exist, otherwise array<string, mixed>
+     *                    with at least the 'expire' key for absolute epoch expiry (or null).
      */
     public function getMetaData(string $key)
     {

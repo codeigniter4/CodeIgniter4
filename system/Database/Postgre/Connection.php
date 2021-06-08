@@ -49,7 +49,8 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param  bool $persistent
+     * @param bool $persistent
+     *
      * @return mixed
      */
     public function connect(bool $persistent = false)
@@ -270,8 +271,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -306,8 +309,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -349,8 +354,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _foreignKeyData(string $table): array

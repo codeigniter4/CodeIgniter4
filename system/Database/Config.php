@@ -41,7 +41,7 @@ class Config extends BaseConfig
      *
      * @param string|array $group     The name of the connection group to use,
      *                                or an array of configuration settings.
-     * @param bool      $getShared Whether to return a shared instance of the connection.
+     * @param bool         $getShared Whether to return a shared instance of the connection.
      *
      * @return BaseConnection
      */

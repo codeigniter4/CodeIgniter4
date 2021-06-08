@@ -155,10 +155,10 @@ class Exceptions
      *
      * This seems to be primarily when a user triggers it with trigger_error().
      *
-     * @param int      $severity
-     * @param string       $message
-     * @param string|null  $file
-     * @param int|null $line
+     * @param int         $severity
+     * @param string      $message
+     * @param string|null $file
+     * @param int|null    $line
      *
      * @throws ErrorException
      */
@@ -200,7 +200,7 @@ class Exceptions
      * @param Throwable $exception
      * @param string    $templatePath
      *
-     * @return string       The path and filename of the view file to use
+     * @return string The path and filename of the view file to use
      */
     protected function determineView(Throwable $exception, string $templatePath): string
     {
@@ -231,7 +231,7 @@ class Exceptions
      * Given an exception and status code will display the error to the client.
      *
      * @param Throwable $exception
-     * @param int   $statusCode
+     * @param int       $statusCode
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -275,7 +275,7 @@ class Exceptions
      * Gathers the variables that will be made available to the view.
      *
      * @param Throwable $exception
-     * @param int   $statusCode
+     * @param int       $statusCode
      *
      * @return array
      */
@@ -421,9 +421,9 @@ class Exceptions
     /**
      * Creates a syntax-highlighted version of a PHP file.
      *
-     * @param string  $file
-     * @param int $lineNumber
-     * @param int $lines
+     * @param string $file
+     * @param int    $lineNumber
+     * @param int    $lines
      *
      * @return bool|string
      */

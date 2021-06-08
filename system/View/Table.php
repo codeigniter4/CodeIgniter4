@@ -148,8 +148,9 @@ class Table
      * columns. This allows a single array with many elements to be
      * displayed in a table that has a fixed column count.
      *
-     * @param  array   $array
-     * @param  int $columnLimit
+     * @param array $array
+     * @param int   $columnLimit
+     *
      * @return array|false
      */
     public function makeColumns($array = [], $columnLimit = 0)

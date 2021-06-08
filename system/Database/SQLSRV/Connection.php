@@ -233,8 +233,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -273,8 +275,10 @@ class Connection extends BaseConnection
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _foreignKeyData(string $table): array
@@ -341,8 +345,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array

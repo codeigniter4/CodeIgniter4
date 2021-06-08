@@ -195,9 +195,9 @@ class Time extends DateTime
      * Returns a new instance based on the year, month and day. If any of those three
      * are left empty, will default to the current value.
      *
-     * @param int|null             $year
-     * @param int|null             $month
-     * @param int|null             $day
+     * @param int|null                 $year
+     * @param int|null                 $month
+     * @param int|null                 $day
      * @param DateTimeZone|string|null $timezone
      * @param string|null              $locale
      *
@@ -214,9 +214,9 @@ class Time extends DateTime
     /**
      * Returns a new instance with the date set to today, and the time set to the values passed in.
      *
-     * @param int|null             $hour
-     * @param int|null             $minutes
-     * @param int|null             $seconds
+     * @param int|null                 $hour
+     * @param int|null                 $minutes
+     * @param int|null                 $seconds
      * @param DateTimeZone|string|null $timezone
      * @param string|null              $locale
      *
@@ -233,12 +233,12 @@ class Time extends DateTime
     /**
      * Returns a new instance with the date time values individually set.
      *
-     * @param int|null             $year
-     * @param int|null             $month
-     * @param int|null             $day
-     * @param int|null             $hour
-     * @param int|null             $minutes
-     * @param int|null             $seconds
+     * @param int|null                 $year
+     * @param int|null                 $month
+     * @param int|null                 $day
+     * @param int|null                 $hour
+     * @param int|null                 $minutes
+     * @param int|null                 $seconds
      * @param DateTimeZone|string|null $timezone
      * @param string|null              $locale
      *
@@ -284,7 +284,7 @@ class Time extends DateTime
     /**
      * Returns a new instance with the datetime set based on the provided UNIX timestamp.
      *
-     * @param int                  $timestamp
+     * @param int                      $timestamp
      * @param DateTimeZone|string|null $timezone
      * @param string|null              $locale
      *
@@ -736,8 +736,8 @@ class Time extends DateTime
     /**
      * Helper method to do the heavy lifting of the 'setX' methods.
      *
-     * @param string  $name
-     * @param int $value
+     * @param string $name
+     * @param int    $value
      *
      * @return Time
      * @throws Exception

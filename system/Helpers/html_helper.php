@@ -63,10 +63,10 @@ if (! function_exists('_list')) {
      *
      * Generates an HTML ordered list from an single or multi-dimensional array.
      *
-     * @param string  $type
-     * @param mixed   $list
-     * @param mixed   $attributes string, array, object
-     * @param int $depth
+     * @param string $type
+     * @param mixed  $list
+     * @param mixed  $attributes string, array, object
+     * @param int    $depth
      *
      * @return string
      */
@@ -109,7 +109,7 @@ if (! function_exists('img')) {
      * Generates an image element
      *
      * @param string|array        $src        Image source URI, or array of attributes and values
-     * @param bool             $indexPage  Whether to treat $src as a routed URI string
+     * @param bool                $indexPage  Whether to treat $src as a routed URI string
      * @param string|array|object $attributes Additional HTML attributes
      *
      * @return string
@@ -218,8 +218,8 @@ if (! function_exists('script_tag')) {
      *
      * Generates link to a JS file
      *
-     * @param mixed   $src       Script source or an array
-     * @param bool $indexPage Should indexPage be added to the JS path
+     * @param mixed $src       Script source or an array
+     * @param bool  $indexPage Should indexPage be added to the JS path
      *
      * @return string
      */
@@ -254,13 +254,13 @@ if (! function_exists('link_tag')) {
      *
      * Generates link to a CSS file
      *
-     * @param mixed   $href      Stylesheet href or an array
-     * @param string  $rel
-     * @param string  $type
-     * @param string  $title
-     * @param string  $media
-     * @param bool $indexPage should indexPage be added to the CSS path.
-     * @param string  $hreflang
+     * @param mixed  $href      Stylesheet href or an array
+     * @param string $rel
+     * @param string $type
+     * @param string $title
+     * @param string $media
+     * @param bool   $indexPage should indexPage be added to the CSS path.
+     * @param string $hreflang
      *
      * @return string
      */
@@ -320,11 +320,11 @@ if (! function_exists('video')) {
      * Generates a video element to embed videos. The video element can
      * contain one or more video sources
      *
-     * @param mixed   $src                Either a source string or an array of sources
-     * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser
-     * @param string  $attributes         HTML attributes
-     * @param array   $tracks
-     * @param bool $indexPage
+     * @param mixed  $src                Either a source string or an array of sources
+     * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser
+     * @param string $attributes         HTML attributes
+     * @param array  $tracks
+     * @param bool   $indexPage
      *
      * @return string
      */
@@ -374,11 +374,11 @@ if (! function_exists('audio')) {
      *
      * Generates an audio element to embed sounds
      *
-     * @param mixed   $src                Either a source string or an array of sources
-     * @param string  $unsupportedMessage The message to display if the media tag is not supported by the browser.
-     * @param string  $attributes         HTML attributes
-     * @param array   $tracks
-     * @param bool $indexPage
+     * @param mixed  $src                Either a source string or an array of sources
+     * @param string $unsupportedMessage The message to display if the media tag is not supported by the browser.
+     * @param string $attributes         HTML attributes
+     * @param array  $tracks
+     * @param bool   $indexPage
      *
      * @return string
      */
@@ -471,10 +471,10 @@ if (! function_exists('source')) {
      * Generates a source element that specifies multiple media resources
      * for either audio or video element
      *
-     * @param string  $src        The path of the media resource
-     * @param string  $type       The MIME-type of the resource with optional codecs parameters
-     * @param string  $attributes HTML attributes
-     * @param bool $indexPage
+     * @param string $src        The path of the media resource
+     * @param string $type       The MIME-type of the resource with optional codecs parameters
+     * @param string $attributes HTML attributes
+     * @param bool   $indexPage
      *
      * @return string
      */
@@ -531,11 +531,11 @@ if (! function_exists('object')) {
      * as either image or a resource plugin such as audio, video,
      * Java applets, ActiveX, PDF and Flash
      *
-     * @param string  $data       A resource URL
-     * @param string  $type       Content-type of the resource
-     * @param string  $attributes HTML attributes
-     * @param array   $params
-     * @param bool $indexPage
+     * @param string $data       A resource URL
+     * @param string $type       Content-type of the resource
+     * @param string $attributes HTML attributes
+     * @param array  $params
+     * @param bool   $indexPage
      *
      * @return string
      */
@@ -593,10 +593,10 @@ if (! function_exists('embed')) {
      *
      * Generates an embed element
      *
-     * @param string  $src        The path of the resource to embed
-     * @param string  $type       MIME-type
-     * @param string  $attributes HTML attributes
-     * @param bool $indexPage
+     * @param string $src        The path of the resource to embed
+     * @param string $type       MIME-type
+     * @param string $attributes HTML attributes
+     * @param bool   $indexPage
      *
      * @return string
      */

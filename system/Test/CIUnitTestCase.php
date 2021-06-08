@@ -396,8 +396,8 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string  $header     The leading portion of the header we are looking for
-     * @param bool $ignoreCase
+     * @param string $header     The leading portion of the header we are looking for
+     * @param bool   $ignoreCase
      *
      * @throws Exception
      */
@@ -425,8 +425,8 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string  $header     The leading portion of the header we don't want to find
-     * @param bool $ignoreCase
+     * @param string $header     The leading portion of the header we don't want to find
+     * @param bool   $ignoreCase
      *
      * @throws Exception
      */
@@ -457,10 +457,10 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param int $expected
-     * @param mixed   $actual
-     * @param string  $message
-     * @param int $tolerance
+     * @param int    $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param int    $tolerance
      *
      * @throws Exception
      */
@@ -477,10 +477,10 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed   $expected
-     * @param mixed   $actual
-     * @param string  $message
-     * @param int $tolerance
+     * @param mixed  $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param int    $tolerance
      *
      * @return void|bool
      * @throws Exception
@@ -528,8 +528,8 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Return first matching emitted header.
      *
-     * @param string  $header     Identifier of the header of interest
-     * @param bool $ignoreCase
+     * @param string $header     Identifier of the header of interest
+     * @param bool   $ignoreCase
      *
      * @return string|null The value of the header found, null if not found
      */

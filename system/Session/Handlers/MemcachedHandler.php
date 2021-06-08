@@ -53,8 +53,9 @@ class MemcachedHandler extends BaseHandler
     /**
      * Constructor
      *
-     * @param  AppConfig $config
-     * @param  string    $ipAddress
+     * @param AppConfig $config
+     * @param string    $ipAddress
+     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -140,7 +141,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string    Serialized session data
+     * @return string Serialized session data
      */
     public function read($sessionID): string
     {
