@@ -1266,7 +1266,7 @@ class Time extends DateTime
     protected static function hasRelativeKeywords(string $time): bool
     {
         // skip common format with a '-' in it
-        if (preg_match('/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/', $time) !== 1) {
+        if (preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $time) !== 1) {
             return preg_match(static::$relativePattern, $time) > 0;
         }
 

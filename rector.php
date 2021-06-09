@@ -5,6 +5,7 @@ use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\AddPregQuoteDelimiterRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
+use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -96,4 +97,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MoveVariableDeclarationNearReferenceRector::class);
     $services->set(RemoveVarTagFromClassConstantRector::class);
     $services->set(AddPregQuoteDelimiterRector::class);
+    $services->set(SimplifyRegexPatternRector::class);
 };

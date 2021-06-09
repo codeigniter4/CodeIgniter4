@@ -534,7 +534,7 @@ class CURLRequest extends Request
 
                 $this->response->setHeader($title, $value);
             } elseif (strpos($header, 'HTTP') === 0) {
-                preg_match('#^HTTP\/([12](?:\.[01])?) ([0-9]+) (.+)#', $header, $matches);
+                preg_match('#^HTTP\/([12](?:\.[01])?) (\d+) (.+)#', $header, $matches);
 
                 if (isset($matches[1])) {
                     $this->response->setProtocolVersion($matches[1]);
