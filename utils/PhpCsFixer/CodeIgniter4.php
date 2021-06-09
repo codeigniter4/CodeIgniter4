@@ -65,6 +65,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'function_to_constant' => true,
             'indentation_type'     => true,
             'line_ending'          => true,
+            'list_syntax'          => ['syntax' => 'short'],
             'no_alias_functions'   => ['sets' => ['@all']],
             'phpdoc_align'         => true,
             'phpdoc_scalar'        => [
