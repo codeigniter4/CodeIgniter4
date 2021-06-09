@@ -92,10 +92,10 @@ class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('ip_table');
 
         $data = [
-            [ 'ip' => '1.1.1.0', 'ip2' => '1.1.1.2' ],
-            [ 'ip' => '2.2.2.0', 'ip2' => '2.2.2.2' ],
-            [ 'ip' => '3.3.3.0', 'ip2' => '3.3.3.2' ],
-            [ 'ip' => '4.4.4.0', 'ip2' => '4.4.4.2' ],
+            ['ip' => '1.1.1.0', 'ip2' => '1.1.1.2'],
+            ['ip' => '2.2.2.0', 'ip2' => '2.2.2.2'],
+            ['ip' => '3.3.3.0', 'ip2' => '3.3.3.2'],
+            ['ip' => '4.4.4.0', 'ip2' => '4.4.4.2'],
         ];
 
         $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);

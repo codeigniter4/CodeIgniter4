@@ -88,6 +88,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'after_heredoc' => true,
                 'elements'      => ['arrays'],
             ],
+            'trim_array_spaces'               => true,
             'whitespace_after_comma_in_array' => true,
             'yoda_style'                      => [
                 'equal'                => false,
