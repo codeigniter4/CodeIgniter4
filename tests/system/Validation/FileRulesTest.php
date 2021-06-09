@@ -14,14 +14,14 @@ class FileRulesTest extends CIUnitTestCase
      */
     protected $validation;
     protected $config = [
-        'ruleSets'      => [
+        'ruleSets' => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA'        => [
+        'groupA' => [
             'foo' => 'required|min_length[5]',
         ],
         'groupA_errors' => [
@@ -40,7 +40,7 @@ class FileRulesTest extends CIUnitTestCase
         $this->validation->reset();
 
         $_FILES = [
-            'avatar'  => [
+            'avatar' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 'name'     => 'my-avatar.png',
                 'size'     => 4614,
@@ -58,7 +58,7 @@ class FileRulesTest extends CIUnitTestCase
                 'width'    => 640,
                 'height'   => 400,
             ],
-            'photo'   => [
+            'photo' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 'name'     => 'my-photo.png',
                 'size'     => 4614,
@@ -67,62 +67,62 @@ class FileRulesTest extends CIUnitTestCase
                 'width'    => 640,
                 'height'   => 400,
             ],
-            'images'  => [
+            'images' => [
                 'tmp_name' => [
                     TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                     TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 ],
-                'name'     => [
+                'name' => [
                     'my_avatar.png',
                     'my_bigfile.png',
                 ],
-                'size'     => [
+                'size' => [
                     4614,
                     1024000,
                 ],
-                'type'     => [
+                'type' => [
                     'image/png',
                     'image/png',
                 ],
-                'error'    => [
+                'error' => [
                     0,
                     0,
                 ],
-                'width'    => [
+                'width' => [
                     640,
                     640,
                 ],
-                'height'   => [
+                'height' => [
                     400,
                     400,
                 ],
             ],
-            'photos'  => [
+            'photos' => [
                 'tmp_name' => [
                     TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                     TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 ],
-                'name'     => [
+                'name' => [
                     'my_avatar.png',
                     'my_bigfile.png',
                 ],
-                'size'     => [
+                'size' => [
                     4614,
                     1024000,
                 ],
-                'type'     => [
+                'type' => [
                     'image/png',
                     'image/png',
                 ],
-                'error'    => [
+                'error' => [
                     1,
                     0,
                 ],
-                'width'    => [
+                'width' => [
                     640,
                     640,
                 ],
-                'height'   => [
+                'height' => [
                     400,
                     400,
                 ],

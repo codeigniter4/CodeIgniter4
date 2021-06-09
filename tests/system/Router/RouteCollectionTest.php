@@ -24,7 +24,7 @@ class RouteCollectionTest extends CIUnitTestCase
             'Config' => APPPATH . 'Config',
             'App'    => APPPATH,
         ];
-        $config   = array_merge($config, $defaults);
+        $config = array_merge($config, $defaults);
 
         Services::autoloader()->addNamespace($config);
 
@@ -1054,7 +1054,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes->addRedirect('users', 'namedRoute', 307);
 
         $expected = [
-            'users'   => [
+            'users' => [
                 'zombies' => '\Zombies::index',
             ],
             'zombies' => '\Zombies::index',
@@ -1073,7 +1073,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes->addRedirect('users', 'namedRoute', 307);
 
         $expected = [
-            'users'   => [
+            'users' => [
                 'zombies' => '\Zombies::index',
             ],
             'zombies' => '\Zombies::index',

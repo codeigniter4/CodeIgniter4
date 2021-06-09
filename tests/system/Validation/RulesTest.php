@@ -20,14 +20,14 @@ class RulesTest extends CIUnitTestCase
      */
     protected $validation;
     protected $config = [
-        'ruleSets'      => [
+        'ruleSets' => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA'        => [
+        'groupA' => [
             'foo' => 'required|min_length[5]',
         ],
         'groupA_errors' => [
@@ -740,7 +740,7 @@ class RulesTest extends CIUnitTestCase
                        'email'   => 'deva@example.com',
                        'country' => 'Elbonia',
                    ]);
-        $row  = $db->table('user')
+        $row = $db->table('user')
                    ->limit(1)
                    ->get()
                    ->getRow();
@@ -871,7 +871,7 @@ class RulesTest extends CIUnitTestCase
                        'email'   => 'deva@example.com',
                        'country' => 'Elbonia',
                    ]);
-        $row  = $db->table('user')
+        $row = $db->table('user')
                    ->limit(1)
                    ->get()
                    ->getRow();

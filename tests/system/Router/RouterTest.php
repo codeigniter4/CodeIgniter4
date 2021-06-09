@@ -37,15 +37,15 @@ class RouterTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
         $routes = [
-            'users'                                           => 'Users::index',
-            'user-setting/show-list'                          => 'User_setting::show_list',
-            'user-setting/(:segment)'                         => 'User_setting::detail/$1',
-            'posts'                                           => 'Blog::posts',
-            'pages'                                           => 'App\Pages::list_all',
-            'posts/(:num)'                                    => 'Blog::show/$1',
-            'posts/(:num)/edit'                               => 'Blog::edit/$1',
-            'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
-            'closure/(:num)/(:alpha)'                         => static function ($num, $str) {
+            'users'                        => 'Users::index',
+            'user-setting/show-list'       => 'User_setting::show_list',
+            'user-setting/(:segment)'      => 'User_setting::detail/$1',
+            'posts'                        => 'Blog::posts',
+            'pages'                        => 'App\Pages::list_all',
+            'posts/(:num)'                 => 'Blog::show/$1',
+            'posts/(:num)/edit'            => 'Blog::edit/$1',
+            'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
+            'closure/(:num)/(:alpha)'      => static function ($num, $str) {
                 return $num . '-' . $str;
             },
             '{locale}/pages'                                  => 'App\Pages::list_all',

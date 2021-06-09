@@ -571,7 +571,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
 
         $this->assertEquals(1, $pager->getFirstPageNumber());
         $this->assertEquals(3, $pager->getCurrentPageNumber());
@@ -588,7 +588,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
         $this->assertEquals(3, $pager->getFirstPageNumber());
@@ -605,7 +605,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
         $this->assertEquals(4, $pager->getPreviousPageNumber());
@@ -620,7 +620,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
         $this->assertNull($pager->getPreviousPageNumber());
@@ -635,7 +635,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
         $this->assertEquals(6, $pager->getNextPageNumber());
@@ -650,7 +650,7 @@ class PagerRendererTest extends CIUnitTestCase
             'total'       => 100,
             'segment'     => 2,
         ];
-        $pager   = new PagerRenderer($details);
+        $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
         $this->assertNull($pager->getNextPageNumber());

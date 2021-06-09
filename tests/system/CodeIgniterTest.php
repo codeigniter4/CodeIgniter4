@@ -64,11 +64,12 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunClosureRoute()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'pages/about',
         ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/pages/about';
 
         // Inject mock router.
@@ -140,7 +141,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnString()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'pages/about',
         ];
@@ -166,7 +167,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnResponseObject()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'pages/about',
         ];
@@ -177,7 +178,7 @@ class CodeIgniterTest extends CIUnitTestCase
         $routes = Services::routes();
         $routes->add('pages/(:segment)', static function ($segment) {
             $response = Services::response();
-            $string   = "You want to see 'about' page.";
+            $string = "You want to see 'about' page.";
 
             return $response->setBody($string);
         });
@@ -229,7 +230,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testTransfersCorrectHTTPVersion()
     {
-        $_SERVER['argv']            = [
+        $_SERVER['argv'] = [
             'index.php',
             '/',
         ];
@@ -290,7 +291,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithNamed()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'example',
         ];
@@ -315,7 +316,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithURI()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'example',
         ];
@@ -343,7 +344,7 @@ class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunRedirectionWithURINotSet()
     {
-        $_SERVER['argv']        = [
+        $_SERVER['argv'] = [
             'index.php',
             'example',
         ];
@@ -366,7 +367,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithHTTPCode303()
     {
-        $_SERVER['argv']            = [
+        $_SERVER['argv'] = [
             'index.php',
             'example',
         ];
@@ -391,7 +392,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunRedirectionWithHTTPCode301()
     {
-        $_SERVER['argv']            = [
+        $_SERVER['argv'] = [
             'index.php',
             'example',
         ];

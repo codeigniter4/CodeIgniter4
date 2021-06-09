@@ -13,7 +13,7 @@ class TestRegistrar
     public static function RegistrarConfig()
     {
         return [
-            'bar'    => [
+            'bar' => [
                 'first',
                 'second',
             ],

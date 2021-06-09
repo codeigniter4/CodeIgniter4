@@ -212,7 +212,7 @@ final class SaveModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts'   => [],
+                'casts' => [],
             ];
         };
 
@@ -242,13 +242,13 @@ final class SaveModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts'   => [],
+                'casts' => [],
             ];
         };
 
-        $testModel                    = new class extends Model {
-            protected $table          = 'empty';
-            protected $allowedFields  = [
+        $testModel                   = new class extends Model {
+            protected $table         = 'empty';
+            protected $allowedFields = [
                 'name',
             ];
             protected $returnType     = 'object';

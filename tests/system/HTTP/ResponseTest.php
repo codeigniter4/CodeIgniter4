@@ -345,7 +345,7 @@ class ResponseTest extends CIUnitTestCase
 
     public function testJSONWithArray()
     {
-        $body     = [
+        $body = [
             'foo' => 'bar',
             'bar' => [
                 1,
@@ -364,7 +364,7 @@ class ResponseTest extends CIUnitTestCase
 
     public function testJSONGetFromNormalBody()
     {
-        $body     = [
+        $body = [
             'foo' => 'bar',
             'bar' => [
                 1,
@@ -384,7 +384,7 @@ class ResponseTest extends CIUnitTestCase
 
     public function testXMLWithArray()
     {
-        $body     = [
+        $body = [
             'foo' => 'bar',
             'bar' => [
                 1,
@@ -403,7 +403,7 @@ class ResponseTest extends CIUnitTestCase
 
     public function testXMLGetFromNormalBody()
     {
-        $body     = [
+        $body = [
             'foo' => 'bar',
             'bar' => [
                 1,

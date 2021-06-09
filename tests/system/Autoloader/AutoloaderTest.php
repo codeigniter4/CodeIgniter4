@@ -30,7 +30,7 @@ class AutoloaderTest extends CIUnitTestCase
             'OtherClass'        => APPPATH . 'Controllers/Home.php',
             'Name\Spaced\Class' => APPPATH . 'Controllers/Home.php',
         ];
-        $config->psr4     = [
+        $config->psr4 = [
             'App'         => APPPATH,
             'CodeIgniter' => SYSTEMPATH,
         ];

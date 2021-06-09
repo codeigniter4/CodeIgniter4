@@ -26,10 +26,10 @@ final class CodeIgniter4 extends AbstractRuleset
             'binary_operator_spaces'  => [
                 'default'   => 'single_space',
                 'operators' => [
-                    '='  => 'align_single_space',
-                    '=>' => 'align_single_space',
-                    '||' => 'align_single_space',
-                    '.=' => 'align_single_space',
+                    '='  => 'align_single_space_minimal',
+                    '=>' => 'align_single_space_minimal',
+                    '||' => 'align_single_space_minimal',
+                    '.=' => 'align_single_space_minimal',
                 ],
             ],
             'blank_line_after_namespace'   => true,
@@ -61,15 +61,13 @@ final class CodeIgniter4 extends AbstractRuleset
                 'position_after_control_structures'                 => 'same',
                 'position_after_functions_and_oop_constructs'       => 'next',
             ],
-            'cast_spaces'                  => ['space' => 'single'],
-            'function_to_constant'         => true,
-            'indentation_type'             => true,
-            'line_ending'                  => true,
-            'no_alias_functions'           => [
-                'sets' => ['@all'],
-            ],
-            'phpdoc_align'  => true,
-            'phpdoc_scalar' => [
+            'cast_spaces'          => ['space' => 'single'],
+            'function_to_constant' => true,
+            'indentation_type'     => true,
+            'line_ending'          => true,
+            'no_alias_functions'   => ['sets' => ['@all']],
+            'phpdoc_align'         => true,
+            'phpdoc_scalar'        => [
                 'types' => [
                     'boolean',
                     'callback',
@@ -79,10 +77,10 @@ final class CodeIgniter4 extends AbstractRuleset
                     'str',
                 ],
             ],
-            'phpdoc_separation'            => true,
-            'static_lambda'                => true,
-            'ternary_to_null_coalescing'   => true,
-            'yoda_style'                   => [
+            'phpdoc_separation'          => true,
+            'static_lambda'              => true,
+            'ternary_to_null_coalescing' => true,
+            'yoda_style'                 => [
                 'equal'                => false,
                 'identical'            => null,
                 'less_and_greater'     => false,

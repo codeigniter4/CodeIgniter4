@@ -23,7 +23,7 @@ class TextHelperTest extends CIUnitTestCase
             "Is your name O'reilly?",
             "No, my name is O'connor.",
         ];
-        $str      = [
+        $str = [
             "Is your name O\'reilly?",
             "No, my name is O\'connor.",
         ];
@@ -198,7 +198,7 @@ class TextHelperTest extends CIUnitTestCase
             'ass',
             'fart',
         ];
-        $strs     = [
+        $strs = [
             'Ted bobbled the ball'         => 'Ted bobbled the ball',
             'Jake is a nerdo'              => 'Jake is a nerdo',
             'The borg will assimilate you' => 'The borg will assimilate you',
@@ -241,7 +241,7 @@ class TextHelperTest extends CIUnitTestCase
     public function testEllipsize()
     {
         $strs = [
-            '0'  => [
+            '0' => [
                 'this is my string'             => '&hellip; my string',
                 "here's another one"            => '&hellip;nother one',
                 'this one is just a bit longer' => '&hellip;bit longer',
@@ -253,7 +253,7 @@ class TextHelperTest extends CIUnitTestCase
                 'this one is just a bit longer' => 'this &hellip;onger',
                 'short'                         => 'short',
             ],
-            '1'  => [
+            '1' => [
                 'this is my string'             => 'this is my&hellip;',
                 "here's another one"            => "here's ano&hellip;",
                 'this one is just a bit longer' => 'this one i&hellip;',

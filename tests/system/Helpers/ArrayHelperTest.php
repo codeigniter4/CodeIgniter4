@@ -37,7 +37,7 @@ class ArrayHelperTest extends CIUnitTestCase
     public function testArrayDotEscape()
     {
         $data = [
-            'foo'     => [
+            'foo' => [
                 'bar.baz' => 23,
             ],
             'foo.bar' => [
@@ -123,7 +123,7 @@ class ArrayHelperTest extends CIUnitTestCase
                 'buzz' => [
                     'fizz' => 11,
                 ],
-                'bar'  => [
+                'bar' => [
                     'baz' => 23,
                 ],
             ],
@@ -140,7 +140,7 @@ class ArrayHelperTest extends CIUnitTestCase
                 'buzz' => [
                     'fizz' => 11,
                 ],
-                'bar'  => [
+                'bar' => [
                     'baz' => 23,
                 ],
             ],
@@ -425,10 +425,10 @@ class ArrayHelperTest extends CIUnitTestCase
                     'bar' => 2,
                     'baz' => 3,
                 ],
-                0     => [
+                0 => [
                     'fizz' => 4,
                 ],
-                1     => [
+                1 => [
                     'buzz' => 5,
                 ],
             ],

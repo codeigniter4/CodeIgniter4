@@ -432,7 +432,7 @@ EOF;
                     'svalue2' => 2,
                 ],
             ],
-            'loop'   => [
+            'loop' => [
                 [
                     'lvalue' => -3,
                 ],
@@ -450,7 +450,7 @@ EOF;
                             'nsvalue2' => 5,
                         ],
                     ],
-                    'nsloop'  => [
+                    'nsloop' => [
                         [
                             'nlvalue' => -6,
                         ],

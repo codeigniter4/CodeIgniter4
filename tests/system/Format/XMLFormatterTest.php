@@ -74,7 +74,7 @@ EOH;
 
     public function testValidatingXmlTags()
     {
-        $data     = [
+        $data = [
             'BBB096630BD' => 'foo',
             '096630FR'    => 'bar',
         ];
@@ -143,10 +143,10 @@ EOH;
                     'email'      => 'foo@bar.com',
                     'dependents' => [],
                 ],
-                'vote'   => [
+                'vote' => [
                     'list' => [],
                 ],
-                'user'   => [
+                'user' => [
                     'account' => [
                         'demo' => [
                             'info' => [
@@ -157,7 +157,7 @@ EOH;
                         ],
                     ],
                 ],
-                'xml'    => [
+                'xml' => [
                     'xml_version'  => '1.0',
                     'xml_encoding' => 'utf-8',
                 ],

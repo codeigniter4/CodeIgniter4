@@ -87,7 +87,7 @@ class WriteTypeQueryTest extends CIUnitTestCase
                 'name'  => 'My Name',
                 'date'  => 'My date',
             ];
-            $sql     = $builder->testMode()->replace($data);
+            $sql = $builder->testMode()->replace($data);
         }
 
         $this->assertTrue($this->db->isWriteType($sql));

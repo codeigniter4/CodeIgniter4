@@ -122,7 +122,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 
     public function testView()
     {
-        $data     = [
+        $data = [
             'testString' => 'bar',
             'bar'        => 'baz',
         ];
@@ -132,7 +132,7 @@ class CommonFunctionsTest extends CIUnitTestCase
 
     public function testViewSavedData()
     {
-        $data     = [
+        $data = [
             'testString' => 'bar',
             'bar'        => 'baz',
         ];

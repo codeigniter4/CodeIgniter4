@@ -281,7 +281,7 @@ class Connection extends BaseConnection
         $retVal = [];
 
         for ($i = 0, $c = count($query); $i < $c; $i++) {
-            $retVal[$i]              = new stdClass();
+            $retVal[$i] = new stdClass();
 
             $retVal[$i]->name        = $query[$i]->name;
             $retVal[$i]->type        = $query[$i]->type;
@@ -318,7 +318,7 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj       = new stdClass();
+            $obj = new stdClass();
 
             $obj->name = $row->name;
 

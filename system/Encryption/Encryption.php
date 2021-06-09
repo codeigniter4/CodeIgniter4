@@ -96,7 +96,7 @@ class Encryption
         $this->handlers = [
             'OpenSSL' => extension_loaded('openssl'),
             // the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
-            'Sodium'  => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
+            'Sodium' => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
         ];
 
         // If requested driver is not active, bail

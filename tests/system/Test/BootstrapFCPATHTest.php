@@ -75,7 +75,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function fileContents()
     {
-        $fileContents  = '';
+        $fileContents = '';
         $fileContents .= '<?php' . PHP_EOL;
         $fileContents .= "define('HOMEPATH', '" . $this->currentDir . "' . '/../../../');" . PHP_EOL;
         $fileContents .= "define('CONFIGPATH', '" . $this->currentDir . "' . '/../../../app/Config/');" . PHP_EOL;

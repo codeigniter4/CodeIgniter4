@@ -125,7 +125,7 @@ class IncomingRequestTest extends CIUnitTestCase
             'BC' => 'British Columbia',
             'SK' => 'Saskatchewan',
         ];
-        $session   = service('session');
+        $session = service('session');
         $session->set(['_ci_old_input' => ['post' => ['location' => $locations]]]);
 
         $this->assertEquals($locations, $this->request->getOldInput('location'));
@@ -178,8 +178,8 @@ class IncomingRequestTest extends CIUnitTestCase
             'en',
             'es',
         ];
-        $config->defaultLocale    = 'es';
-        $config->baseURL          = 'http://example.com/';
+        $config->defaultLocale = 'es';
+        $config->baseURL       = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -194,8 +194,8 @@ class IncomingRequestTest extends CIUnitTestCase
             'en',
             'es',
         ];
-        $config->defaultLocale    = 'es';
-        $config->baseURL          = 'http://example.com/';
+        $config->defaultLocale = 'es';
+        $config->baseURL       = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -218,7 +218,7 @@ class IncomingRequestTest extends CIUnitTestCase
             'fr',
             'en',
         ];
-        $config->baseURL          = 'http://example.com/';
+        $config->baseURL = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -236,7 +236,7 @@ class IncomingRequestTest extends CIUnitTestCase
             'fr',
             'en',
         ];
-        $config->baseURL          = 'http://example.com/';
+        $config->baseURL = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
@@ -309,7 +309,7 @@ class IncomingRequestTest extends CIUnitTestCase
                 'fizz' => 'buzz',
             ],
         ];
-        $json    = json_encode($jsonObj);
+        $json = json_encode($jsonObj);
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -331,7 +331,7 @@ class IncomingRequestTest extends CIUnitTestCase
                 'foo'  => 'bar',
             ],
         ];
-        $json    = json_encode($jsonObj);
+        $json = json_encode($jsonObj);
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -362,7 +362,7 @@ class IncomingRequestTest extends CIUnitTestCase
             'foo'  => 'bar',
             'fizz' => 'buzz',
         ];
-        $json    = json_encode($jsonObj);
+        $json = json_encode($jsonObj);
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -505,15 +505,15 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'     => [
+                'name' => [
                     'someFile.txt',
                     'someFile2.txt',
                 ],
-                'type'     => [
+                'type' => [
                     'text/plain',
                     'text/plain',
                 ],
-                'size'     => [
+                'size' => [
                     '124',
                     '125',
                 ],
@@ -521,7 +521,7 @@ class IncomingRequestTest extends CIUnitTestCase
                     '/tmp/myTempFile.txt',
                     '/tmp/myTempFile2.txt',
                 ],
-                'error'    => [
+                'error' => [
                     0,
                     0,
                 ],
@@ -597,7 +597,7 @@ class IncomingRequestTest extends CIUnitTestCase
                 '/test.php',
                 '/',
             ],
-            '/index.php'     => [
+            '/index.php' => [
                 '/index.php',
                 '/',
             ],

@@ -29,8 +29,8 @@ class FileLocatorTest extends CIUnitTestCase
                 TESTPATH,
                 SYSTEMPATH,
             ],
-            'Errors'        => APPPATH . 'Views/errors',
-            'System'        => SUPPORTPATH . 'Autoloader/system',
+            'Errors' => APPPATH . 'Views/errors',
+            'System' => SUPPORTPATH . 'Autoloader/system',
         ]);
 
         $this->locator = new FileLocator($autoloader);

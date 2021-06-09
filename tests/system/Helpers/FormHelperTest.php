@@ -178,7 +178,7 @@ EOH;
             'id'     => 'form',
             'method' => 'POST',
         ];
-        $hidden     = [
+        $hidden = [
             'foo' => 'bar',
         ];
         $this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
@@ -235,7 +235,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormHiddenArrayInput()
     {
-        $data     = [
+        $data = [
             'foo' => 'bar',
         ];
         $expected = <<<EOH
@@ -249,7 +249,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormHiddenArrayValues()
     {
-        $data     = [
+        $data = [
             'foo' => 'bar',
         ];
         $expected = <<<EOH
@@ -266,7 +266,7 @@ EOH;
         $expected = <<<EOH
 <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
 EOH;
-        $data     = [
+        $data = [
             'name'      => 'username',
             'id'        => 'username',
             'value'     => 'johndoe',
@@ -282,12 +282,12 @@ EOH;
         $expected = <<<EOH
 <input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
 EOH;
-        $data     = [
+        $data = [
             'id'   => 'identity',
             'name' => 'identity',
             'type' => 'email',
         ];
-        $extra    = [
+        $extra = [
             'class' => 'form-control form-control-lg',
         ];
         $this->assertEquals($expected, form_input($data, '', $extra));
@@ -323,7 +323,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormTextareaWithValueAttribute()
     {
-        $data     = [
+        $data = [
             'name'  => 'foo',
             'value' => 'bar',
         ];
@@ -337,7 +337,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormTextareaExtraRowsColsArray()
     {
-        $extra    = [
+        $extra = [
             'cols' => '30',
             'rows' => '5',
         ];
@@ -368,14 +368,14 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $options  = [
+        $options = [
             'small'  => 'Small Shirt',
             'med'    => 'Medium Shirt',
             'large'  => 'Large Shirt',
             'xlarge' => 'Extra Large Shirt',
         ];
         $this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
-        $expected     = <<<EOH
+        $expected = <<<EOH
 <select name="shirts" multiple="multiple">
 <option value="small" selected="selected">Small Shirt</option>
 <option value="med">Medium Shirt</option>
@@ -388,12 +388,12 @@ EOH;
             'large',
         ];
         $this->assertEquals($expected, form_dropdown('shirts', $options, $shirtsOnSale));
-        $options  = [
+        $options = [
             'Swedish Cars' => [
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars'  => [
+            'German Cars' => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],
@@ -415,12 +415,12 @@ EOH;
 
     public function testFormDropdownUnselected()
     {
-        $options  = [
+        $options = [
             'Swedish Cars' => [
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars'  => [
+            'German Cars' => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],
@@ -442,17 +442,17 @@ EOH;
 
     public function testFormDropdownInferred()
     {
-        $options       = [
+        $options = [
             'Swedish Cars' => [
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars'  => [
+            'German Cars' => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],
         ];
-        $expected      = <<<EOH
+        $expected = <<<EOH
 <select name="cars">
 <optgroup label="Swedish Cars">
 <option value="volvo">Volvo</option>
@@ -478,11 +478,11 @@ EOH;
 </select>
 
 EOH;
-        $data     = [
+        $data = [
             'name'     => 'foo',
             'selected' => 'bar',
         ];
-        $options  = [
+        $options = [
             'bar' => 'Bar',
         ];
         $this->assertEquals($expected, form_dropdown($data, $options));
@@ -497,7 +497,7 @@ EOH;
 </select>
 
 EOH;
-        $data     = [
+        $data = [
             'name'    => 'foo',
             'options' => [
                 'bar' => 'Bar',
@@ -514,7 +514,7 @@ EOH;
 </select>
 
 EOH;
-        $options  = [
+        $options = [
             'bar' => [],
         ];
         $this->assertEquals($expected, form_dropdown('foo', $options));
@@ -531,7 +531,7 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $options  = [
+        $options = [
             'small'  => 'Small Shirt',
             'med'    => 'Medium Shirt',
             'large'  => 'Large Shirt',
@@ -551,7 +551,7 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $options  = [
+        $options = [
             'small'  => 'Small Shirt',
             'med'    => 'Medium Shirt',
             'large'  => 'Large Shirt',
@@ -596,7 +596,7 @@ EOH;
         $attributes = [
             'name' => 'bar',
         ];
-        $expected   = <<<EOH
+        $expected = <<<EOH
 <fieldset name="bar">
 <legend>Foo</legend>
 
@@ -625,7 +625,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormCheckboxArrayData()
     {
-        $data     = [
+        $data = [
             'name'    => 'foo',
             'value'   => 'bar',
             'checked' => true,
@@ -640,7 +640,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormCheckboxArrayDataWithCheckedFalse()
     {
-        $data     = [
+        $data = [
             'name'    => 'foo',
             'value'   => 'bar',
             'checked' => false,
@@ -685,7 +685,7 @@ EOH;
         $attributes = [
             'id' => 'label1',
         ];
-        $expected   = <<<EOH
+        $expected = <<<EOH
 <label for="foo" id="label1">bar</label>
 EOH;
         $this->assertEquals($expected, form_label('bar', 'foo', $attributes));
@@ -712,7 +712,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormButtonWithDataArray()
     {
-        $data     = [
+        $data = [
             'name'    => 'foo',
             'content' => 'bar',
         ];
@@ -735,7 +735,7 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormDatalist()
     {
-        $options  = [
+        $options = [
             'foo1',
             'bar1',
         ];

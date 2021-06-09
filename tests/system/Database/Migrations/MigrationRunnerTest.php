@@ -197,7 +197,7 @@ class MigrationRunnerTest extends CIUnitTestCase
 
         $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 
-        $mig1      = (object) [
+        $mig1 = (object) [
             'name'      => 'Some_migration',
             'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
             'version'   => '2018-01-24-102301',
@@ -206,7 +206,7 @@ class MigrationRunnerTest extends CIUnitTestCase
         ];
         $mig1->uid = $runner->getObjectUid($mig1);
 
-        $mig2      = (object) [
+        $mig2 = (object) [
             'name'      => 'Another_migration',
             'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
             'version'   => '2018-01-24-102302',

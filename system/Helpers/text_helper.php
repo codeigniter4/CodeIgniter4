@@ -126,8 +126,8 @@ if (! function_exists('ascii_to_entities')) {
                 if (count($temp) === $count) {
                     $number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
                     $out .= '&#' . $number . ';';
-                    $count  = 1;
-                    $temp   = [];
+                    $count = 1;
+                    $temp  = [];
                 }
                 // If this is the last iteration, just output whatever we have
                 elseif ($i === $s) {
@@ -442,7 +442,7 @@ if (! function_exists('word_wrap')) {
                 }
                 // Trim the word down
                 $temp .= mb_substr($line, 0, $charlim - 1);
-                $line  = mb_substr($line, $charlim - 1);
+                $line = mb_substr($line, $charlim - 1);
             }
 
             // If $temp contains data it means we had to split up an over-length

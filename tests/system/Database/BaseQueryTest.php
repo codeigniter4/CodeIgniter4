@@ -93,35 +93,35 @@ class BaseQueryTest extends CIUnitTestCase
     public function queryTypes()
     {
         return [
-            'select'   => [
+            'select' => [
                 false,
                 'SELECT * FROM users',
             ],
-            'set'      => [
+            'set' => [
                 true,
                 'SET ...',
             ],
-            'insert'   => [
+            'insert' => [
                 true,
                 'INSERT INTO ...',
             ],
-            'update'   => [
+            'update' => [
                 true,
                 'UPDATE ...',
             ],
-            'delete'   => [
+            'delete' => [
                 true,
                 'DELETE ...',
             ],
-            'replace'  => [
+            'replace' => [
                 true,
                 'REPLACE ...',
             ],
-            'create'   => [
+            'create' => [
                 true,
                 'CREATE ...',
             ],
-            'drop'     => [
+            'drop' => [
                 true,
                 'DROP ...',
             ],
@@ -129,39 +129,39 @@ class BaseQueryTest extends CIUnitTestCase
                 true,
                 'TRUNCATE ...',
             ],
-            'load'     => [
+            'load' => [
                 true,
                 'LOAD ...',
             ],
-            'copy'     => [
+            'copy' => [
                 true,
                 'COPY ...',
             ],
-            'alter'    => [
+            'alter' => [
                 true,
                 'ALTER ...',
             ],
-            'rename'   => [
+            'rename' => [
                 true,
                 'RENAME ...',
             ],
-            'grant'    => [
+            'grant' => [
                 true,
                 'GRANT ...',
             ],
-            'revoke'   => [
+            'revoke' => [
                 true,
                 'REVOKE ...',
             ],
-            'lock'     => [
+            'lock' => [
                 true,
                 'LOCK ...',
             ],
-            'unlock'   => [
+            'unlock' => [
                 true,
                 'UNLOCK ...',
             ],
-            'reindex'  => [
+            'reindex' => [
                 true,
                 'REINDEX ...',
             ],

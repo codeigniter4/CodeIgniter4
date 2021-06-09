@@ -34,19 +34,19 @@ class ResponseTraitTest extends CIUnitTestCase
         $config = new App();
 
         foreach ([
-            'baseURL'          => 'http://example.com/',
-            'uriProtocol'      => 'REQUEST_URI',
-            'defaultLocale'    => 'en',
-            'negotiateLocale'  => false,
+            'baseURL' => 'http://example.com/',
+            'uriProtocol' => 'REQUEST_URI',
+            'defaultLocale' => 'en',
+            'negotiateLocale' => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled'       => false,
-            'cookiePrefix'     => '',
-            'cookieDomain'     => '',
-            'cookiePath'       => '/',
-            'cookieSecure'     => false,
-            'cookieHTTPOnly'   => false,
-            'proxyIPs'         => [],
-            'cookieSameSite'   => 'Lax',
+            'CSPEnabled' => false,
+            'cookiePrefix' => '',
+            'cookieDomain' => '',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHTTPOnly' => false,
+            'proxyIPs' => [],
+            'cookieSameSite' => 'Lax',
         ] as $key => $value) {
             $config->$key = $value;
         }
@@ -142,7 +142,7 @@ EOH;
             2,
             3,
         ];
-        $expected        = <<<EOH
+        $expected = <<<EOH
 [
     1,
     2,
@@ -492,19 +492,19 @@ EOH;
         $config = new App();
 
         foreach ([
-            'baseURL'          => 'http://example.com/',
-            'uriProtocol'      => 'REQUEST_URI',
-            'defaultLocale'    => 'en',
-            'negotiateLocale'  => false,
+            'baseURL' => 'http://example.com/',
+            'uriProtocol' => 'REQUEST_URI',
+            'defaultLocale' => 'en',
+            'negotiateLocale' => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled'       => false,
-            'cookiePrefix'     => '',
-            'cookieDomain'     => '',
-            'cookiePath'       => '/',
-            'cookieSecure'     => false,
-            'cookieHTTPOnly'   => false,
-            'proxyIPs'         => [],
-            'cookieSameSite'   => 'Lax',
+            'CSPEnabled' => false,
+            'cookiePrefix' => '',
+            'cookieDomain' => '',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHTTPOnly' => false,
+            'proxyIPs' => [],
+            'cookieSameSite' => 'Lax',
         ] as $key => $value) {
             $config->$key = $value;
         }

@@ -20,7 +20,7 @@ class ValidModel extends Model
     ];
 
     protected $validationRules = [
-        'name'  => [
+        'name' => [
             'required',
             'min_length[3]',
         ],

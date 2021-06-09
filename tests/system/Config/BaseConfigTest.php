@@ -53,7 +53,7 @@ class BaseConfigTest extends CIUnitTestCase
             'simpleconfig.shortie' => 123,
             'SimpleConfig.longie'  => 456,
         ];
-        $dotenv  = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
         $config = new SimpleConfig();
 

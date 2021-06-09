@@ -27,7 +27,7 @@ class UpdateTest extends CIUnitTestCase
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [
-            'id'   => [
+            'id' => [
                 1,
                 true,
             ],
@@ -53,7 +53,7 @@ class UpdateTest extends CIUnitTestCase
                 'Programmer',
                 true,
             ],
-            'id'   => [
+            'id' => [
                 1,
                 true,
             ],
@@ -75,7 +75,7 @@ class UpdateTest extends CIUnitTestCase
                 'Programmer',
                 true,
             ],
-            'id'   => [
+            'id' => [
                 1,
                 true,
             ],
@@ -184,7 +184,7 @@ class UpdateTest extends CIUnitTestCase
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 'foobar',
                 true,
             ],
@@ -210,7 +210,7 @@ class UpdateTest extends CIUnitTestCase
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 'foobar',
                 true,
             ],
@@ -235,7 +235,7 @@ class UpdateTest extends CIUnitTestCase
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'foobar\' WHERE "name" = \'Programmer\'';
         $expectedBinds = [
-            'name'  => [
+            'name' => [
                 'Programmer',
                 true,
             ],
@@ -289,7 +289,7 @@ class UpdateTest extends CIUnitTestCase
                 'bar',
                 true,
             ],
-            'id'  => [
+            'id' => [
                 2,
                 true,
             ],

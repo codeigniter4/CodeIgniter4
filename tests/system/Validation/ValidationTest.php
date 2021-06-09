@@ -21,17 +21,17 @@ final class ValidationTest extends CIUnitTestCase
      */
     protected $validation;
     protected $config = [
-        'ruleSets'      => [
+        'ruleSets' => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA'        => [
+        'groupA' => [
             'foo' => 'required|min_length[5]',
         ],
-        'login'         => [
+        'login' => [
             'username' => [
                 'label'  => 'Username',
                 'rules'  => 'required',
@@ -52,8 +52,8 @@ final class ValidationTest extends CIUnitTestCase
                 'min_length' => 'Shame, shame. Too short.',
             ],
         ],
-        'groupX'        => 'Not an array, so not a real group',
-        'templates'     => [
+        'groupX'    => 'Not an array, so not a real group',
+        'templates' => [
             'list'   => 'CodeIgniter\Validation\Views\list',
             'single' => 'CodeIgniter\Validation\Views\single',
         ],
@@ -477,7 +477,7 @@ final class ValidationTest extends CIUnitTestCase
 
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
-        $rules     = [
+        $rules = [
             'role' => 'required|min_length[5]',
         ];
         $validated = $this->validation
@@ -715,30 +715,30 @@ final class ValidationTest extends CIUnitTestCase
     public function arrayFieldDataProvider()
     {
         return [
-            'all_rules_should_pass'                                            => [
-                'body'    => [
+            'all_rules_should_pass' => [
+                'body' => [
                     'foo' => [
                         'a',
                         'b',
                         'c',
                     ],
                 ],
-                'rules'   => [
+                'rules' => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|max_length[2]',
                     'foo.2' => 'required|alpha|max_length[2]',
                 ],
                 'results' => [],
             ],
-            'first_field_will_return_required_error'                           => [
-                'body'    => [
+            'first_field_will_return_required_error' => [
+                'body' => [
                     'foo' => [
                         '',
                         'b',
                         'c',
                     ],
                 ],
-                'rules'   => [
+                'rules' => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|max_length[2]',
                     'foo.2' => 'required|alpha|max_length[2]',
@@ -748,14 +748,14 @@ final class ValidationTest extends CIUnitTestCase
                 ],
             ],
             'first_and second_field_will_return_required_and_min_length_error' => [
-                'body'    => [
+                'body' => [
                     'foo' => [
                         '',
                         'b',
                         'c',
                     ],
                 ],
-                'rules'   => [
+                'rules' => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
                     'foo.2' => 'required|alpha|max_length[2]',
@@ -776,7 +776,7 @@ final class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $_REQUEST = [
-            'id_user'   => [
+            'id_user' => [
                 1,
                 3,
             ],
@@ -805,7 +805,7 @@ final class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $_REQUEST = [
-            'id_user'   => [
+            'id_user' => [
                 '1dfd',
                 3,
             ],
@@ -982,7 +982,7 @@ final class ValidationTest extends CIUnitTestCase
         yield 'dot-on-middle-fail' => [
             false,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz'       => [
+            ['fizz' => [
                 'bar' => ['baz' => 'yes'],
             ]],
         ];
@@ -990,7 +990,7 @@ final class ValidationTest extends CIUnitTestCase
         yield 'dot-on-middle-pass' => [
             true,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz'       => [
+            ['fizz' => [
                 'bar' => ['baz' => 30],
             ]],
         ];

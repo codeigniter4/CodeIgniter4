@@ -88,7 +88,7 @@ class Logger extends BaseConfig
             /*
              * The log levels that this handler will handle.
              */
-            'handles'         => [
+            'handles' => [
                 'critical',
                 'alert',
                 'emergency',
@@ -106,7 +106,7 @@ class Logger extends BaseConfig
              *
              * Note: Leaving it blank will default to 'log'.
              */
-            'fileExtension'   => '',
+            'fileExtension' => '',
 
             /*
              * The file system permissions to be applied on newly created log files.
@@ -122,7 +122,7 @@ class Logger extends BaseConfig
              * By default, logs are written to WRITEPATH . 'logs/'
              * Specify a different destination here, if desired.
              */
-            'path'            => '',
+            'path' => '',
         ],
 
         /**

@@ -268,8 +268,10 @@ class Filters
     public function reset(): self
     {
         $this->initialized = false;
-        $this->arguments   = $this->argumentsClass = [];
-        $this->filters     = $this->filtersClass = [
+
+        $this->arguments = $this->argumentsClass = [];
+
+        $this->filters = $this->filtersClass = [
             'before' => [],
             'after'  => [],
         ];
