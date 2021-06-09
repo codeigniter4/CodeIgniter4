@@ -61,14 +61,15 @@ final class CodeIgniter4 extends AbstractRuleset
                 'position_after_control_structures'                 => 'same',
                 'position_after_functions_and_oop_constructs'       => 'next',
             ],
-            'cast_spaces'          => ['space' => 'single'],
-            'function_to_constant' => true,
-            'indentation_type'     => true,
-            'line_ending'          => true,
-            'list_syntax'          => ['syntax' => 'short'],
-            'no_alias_functions'   => ['sets' => ['@all']],
-            'phpdoc_align'         => true,
-            'phpdoc_scalar'        => [
+            'cast_spaces'                           => ['space' => 'single'],
+            'function_to_constant'                  => true,
+            'indentation_type'                      => true,
+            'line_ending'                           => true,
+            'list_syntax'                           => ['syntax' => 'short'],
+            'no_alias_functions'                    => ['sets' => ['@all']],
+            'no_trailing_comma_in_singleline_array' => true,
+            'phpdoc_align'                          => true,
+            'phpdoc_scalar'                         => [
                 'types' => [
                     'boolean',
                     'callback',
