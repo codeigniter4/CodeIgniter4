@@ -25,7 +25,7 @@ class ValidErrorsModel extends Model
             'min_length[10]',
             'errors' => [
                 'min_length' => 'Minimum Length Error',
-            ]
+            ],
         ],
         'token' => 'in_list[{id}]',
     ];

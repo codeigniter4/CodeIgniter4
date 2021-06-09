@@ -286,9 +286,7 @@ class ParserTest extends CIUnitTestCase
 
         $data = [
             'title'  => 'Super Heroes',
-            'powers' => [
-                $power
-            ],
+            'powers' => [$power],
         ];
 
         $template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
@@ -324,7 +322,7 @@ class ParserTest extends CIUnitTestCase
         $data = [
             'title'  => 'Super Heroes',
             'powers' => [
-                $power
+                $power,
             ],
         ];
 
