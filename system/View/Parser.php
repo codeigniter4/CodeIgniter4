@@ -180,6 +180,7 @@ class Parser extends View
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets several pieces of view data at once.
      * In the Parser, we need to store the context here
@@ -502,6 +503,7 @@ class Parser extends View
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Over-ride the substitution field delimiters.
      *

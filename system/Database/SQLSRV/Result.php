@@ -173,6 +173,7 @@ class Result extends BaseResult
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
      *

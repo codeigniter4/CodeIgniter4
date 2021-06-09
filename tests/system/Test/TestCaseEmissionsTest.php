@@ -29,6 +29,7 @@ class TestCaseEmissionsTest extends CIUnitTestCase
      */
 
     //--------------------------------------------------------------------
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -60,6 +61,7 @@ class TestCaseEmissionsTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled

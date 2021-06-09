@@ -69,6 +69,7 @@ class Database
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Creates a Forge instance for the current database type.
      *
@@ -87,6 +88,7 @@ class Database
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Creates a Utils instance for the current database type.
      *

@@ -105,6 +105,7 @@ interface PagerInterface
     public function getCurrentPage(string $group = 'default'): int;
 
     //--------------------------------------------------------------------
+
     /**
      * Returns the URI for a specific page for the specified group.
      *

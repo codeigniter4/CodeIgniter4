@@ -13,6 +13,7 @@ final class MemcachedHandlerTest extends CIUnitTestCase
     private static $key1 = 'key1';
     private static $key2 = 'key2';
     private static $key3 = 'key3';
+
     private static function getKeyArray()
     {
         return [

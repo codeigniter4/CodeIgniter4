@@ -61,7 +61,14 @@ final class CodeIgniter4 extends AbstractRuleset
                 'position_after_control_structures'                 => 'same',
                 'position_after_functions_and_oop_constructs'       => 'next',
             ],
-            'cast_spaces'                           => ['space' => 'single'],
+            'cast_spaces'                 => ['space' => 'single'],
+            'class_attributes_separation' => [
+                'elements' => [
+                    // 'const' => 'one_if_phpdoc', // @todo Enable in php-cs-fixer v3.1
+                    // 'property' => 'one_if_phpdoc', // @todo Enable in php-cs-fixer v3.1
+                    'method' => 'one',
+                ],
+            ],
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,

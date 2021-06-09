@@ -32,6 +32,7 @@ class Negotiate
     protected $request;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor
      *
@@ -45,6 +46,7 @@ class Negotiate
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Stores the request instance to grab the headers from.
      *

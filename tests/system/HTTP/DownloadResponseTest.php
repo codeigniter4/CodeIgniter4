@@ -286,6 +286,7 @@ class DownloadResponseTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled

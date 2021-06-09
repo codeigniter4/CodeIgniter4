@@ -683,6 +683,7 @@ class EntityTest extends CIUnitTestCase
 
         $method($string, true);
     }
+
     //--------------------------------------------------------------------
 
     public function testCastSetter()

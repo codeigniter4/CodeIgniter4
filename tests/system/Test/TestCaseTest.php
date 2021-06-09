@@ -10,7 +10,6 @@ use Config\App;
 
 class TestCaseTest extends CIUnitTestCase
 {
-
     //  protected function tearDown(): void
     //  {
     //      $buffer = ob_clean();
@@ -61,6 +60,7 @@ class TestCaseTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * PHPunit emits headers before we get nominal control of
      * the output stream, making header testing awkward, to say

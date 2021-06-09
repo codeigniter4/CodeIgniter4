@@ -49,6 +49,7 @@ abstract class BaseUtils
     protected $repairTable = false;
 
     //--------------------------------------------------------------------
+
     /**
      * Class constructor
      *
@@ -216,6 +217,7 @@ abstract class BaseUtils
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Generate CSV from a query result object
      *
@@ -251,6 +253,7 @@ abstract class BaseUtils
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Generate XML data from a query result object
      *
