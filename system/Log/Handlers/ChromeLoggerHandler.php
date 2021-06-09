@@ -27,7 +27,7 @@ class ChromeLoggerHandler extends BaseHandler
     /**
      * Version of this library - for ChromeLogger use.
      */
-    const VERSION = 1.0;
+    public const VERSION = 1.0;
 
     /**
      * The number of track frames returned from the backtrace.
