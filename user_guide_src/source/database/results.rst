@@ -153,11 +153,14 @@ parameter:
 
 This method returns a single result row without prefetching the whole
 result in memory as ``row()`` does. If your query has more than one row,
-it returns the current row and moves the internal data pointer ahead.
+it returns the current row and moves the internal data pointer ahead. For 
+use with MySQLi you must set MySQLi's result mode to MYSQLI_USE_RESULT.
 
 ::
 
-    $query = $db->query("YOUR QUERY");
+    $db->result_mode = MYSQLI_USE_RESULT;
+	
+	$query = $db->query("YOUR QUERY");
 
     while ($row = $query->getUnbufferedRow())
     {
