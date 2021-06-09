@@ -46,10 +46,10 @@ interface PagerInterface
      * Allows for a simple, manual, form of pagination where all of the data
      * is provided by the user. The URL is the current URI.
      *
-     * @param integer $page
-     * @param integer $perPage
-     * @param integer $total
-     * @param string  $template The output template alias to render.
+     * @param int    $page
+     * @param int    $perPage
+     * @param int    $total
+     * @param string $template The output template alias to render.
      *
      * @return string
      */
@@ -61,10 +61,10 @@ interface PagerInterface
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
      *
-     * @param string  $group
-     * @param integer $page
-     * @param integer $perPage
-     * @param integer $total
+     * @param string $group
+     * @param int    $page
+     * @param int    $perPage
+     * @param int    $total
      *
      * @return mixed
      */
@@ -89,7 +89,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getPageCount(string $group = 'default'): int;
 
@@ -100,7 +100,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getCurrentPage(string $group = 'default'): int;
 
@@ -108,9 +108,9 @@ interface PagerInterface
     /**
      * Returns the URI for a specific page for the specified group.
      *
-     * @param integer|null $page
-     * @param string       $group
-     * @param boolean      $returnObject
+     * @param int|null $page
+     * @param string   $group
+     * @param bool     $returnObject
      *
      * @return string|URI
      */
@@ -123,7 +123,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMore(string $group = 'default'): bool;
 
@@ -134,7 +134,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getFirstPage(string $group = 'default');
 
@@ -145,7 +145,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getLastPage(string $group = 'default');
 
@@ -178,7 +178,7 @@ interface PagerInterface
      *
      * @param string $group
      *
-     * @return integer
+     * @return int
      */
     public function getPerPage(string $group = 'default'): int;
 

@@ -19,7 +19,7 @@ class DatabaseTestCaseTest extends CIUnitTestCase
      * Should the db be refreshed before
      * each test?
      *
-     * @var boolean
+     * @var bool
      */
     protected $refresh = true;
 

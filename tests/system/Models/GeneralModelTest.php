@@ -144,7 +144,7 @@ final class GeneralModelTest extends CIUnitTestCase
         $model = new class extends Model {
 
             /**
-             * @var boolean
+             * @var bool
              */
             public $initialized = false;
 

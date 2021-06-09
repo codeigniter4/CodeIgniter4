@@ -55,7 +55,7 @@ class Filters
      * Whether we've done initial processing
      * on the filter lists.
      *
-     * @var boolean
+     * @var bool
      */
     protected $initialized = false;
 
@@ -159,6 +159,7 @@ class Filters
      * @param string $position
      *
      * @return RequestInterface|ResponseInterface|mixed
+     *
      * @throws FilterException
      */
     public function run(string $uri, string $position = 'before')
@@ -492,7 +493,8 @@ class Filters
     /**
      * Maps filter aliases to the equivalent filter classes
      *
-     * @param  string $position
+     * @param string $position
+     *
      * @throws FilterException
      *
      * @return void
@@ -527,7 +529,7 @@ class Filters
      * @param string $uri   URI to test against
      * @param mixed  $paths The path patterns to test
      *
-     * @return boolean True if any of the paths apply to the URI
+     * @return bool True if any of the paths apply to the URI
      */
     private function pathApplies(string $uri, $paths)
     {

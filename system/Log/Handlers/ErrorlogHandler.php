@@ -34,7 +34,7 @@ class ErrorlogHandler extends BaseHandler
      * Says where the error should go. Currently supported are
      * 0 (`TYPE_OS`) and 4 (`TYPE_SAPI`).
      *
-     * @var integer
+     * @var int
      */
     protected $messageType = 0;
 
@@ -65,7 +65,7 @@ class ErrorlogHandler extends BaseHandler
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      */
     public function handle($level, $message): bool
     {
@@ -77,10 +77,10 @@ class ErrorlogHandler extends BaseHandler
     /**
      * Extracted call to `error_log()` in order to be tested.
      *
-     * @param string  $message
-     * @param integer $messageType
+     * @param string $message
+     * @param int    $messageType
      *
-     * @return boolean
+     * @return bool
      *
      * @codeCoverageIgnore
      */

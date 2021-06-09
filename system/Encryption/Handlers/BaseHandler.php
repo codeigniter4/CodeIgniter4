@@ -47,9 +47,9 @@ abstract class BaseHandler implements EncrypterInterface
     /**
      * Byte-safe substr()
      *
-     * @param string  $str
-     * @param integer $start
-     * @param integer $length
+     * @param string $str
+     * @param int    $start
+     * @param int    $length
      *
      * @return string
      */
@@ -61,7 +61,8 @@ abstract class BaseHandler implements EncrypterInterface
     /**
      * __get() magic, providing readonly access to some of our properties
      *
-     * @param  string $key Property name
+     * @param string $key Property name
+     *
      * @return mixed
      */
     public function __get($key)
@@ -76,8 +77,9 @@ abstract class BaseHandler implements EncrypterInterface
     /**
      * __isset() magic, providing checking for some of our properties
      *
-     * @param  string $key Property name
-     * @return boolean
+     * @param string $key Property name
+     *
+     * @return bool
      */
     public function __isset($key): bool
     {

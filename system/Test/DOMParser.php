@@ -111,7 +111,7 @@ class DOMParser
      * @param string $search
      * @param string $element
      *
-     * @return boolean
+     * @return bool
      */
     public function see(string $search = null, string $element = null): bool
     {
@@ -133,7 +133,7 @@ class DOMParser
      * @param string      $search
      * @param string|null $element
      *
-     * @return boolean
+     * @return bool
      */
     public function dontSee(string $search = null, string $element = null): bool
     {
@@ -146,7 +146,7 @@ class DOMParser
      *
      * @param string $element
      *
-     * @return boolean
+     * @return bool
      */
     public function seeElement(string $element): bool
     {
@@ -158,7 +158,7 @@ class DOMParser
      *
      * @param string $element
      *
-     * @return boolean
+     * @return bool
      */
     public function dontSeeElement(string $element): bool
     {
@@ -172,7 +172,7 @@ class DOMParser
      * @param string      $text
      * @param string|null $details
      *
-     * @return boolean
+     * @return bool
      */
     public function seeLink(string $text, string $details = null): bool
     {
@@ -185,7 +185,7 @@ class DOMParser
      * @param string $field
      * @param string $value
      *
-     * @return boolean
+     * @return bool
      */
     public function seeInField(string $field, string $value): bool
     {
@@ -199,7 +199,7 @@ class DOMParser
      *
      * @param string $element
      *
-     * @return boolean
+     * @return bool
      */
     public function seeCheckboxIsChecked(string $element): bool
     {
@@ -216,9 +216,9 @@ class DOMParser
     /**
      * Search the DOM using an XPath expression.
      *
-     * @param  string|null $search
-     * @param  string      $element
-     * @param  array       $paths
+     * @param string|null $search
+     * @param string      $element
+     * @param array       $paths
      *
      * @return DOMNodeList
      */
@@ -273,7 +273,8 @@ class DOMParser
     /**
      * Look for the a selector  in the passed text.
      *
-     * @param  string $selector
+     * @param string $selector
+     *
      * @return array
      */
     public function parseSelector(string $selector)

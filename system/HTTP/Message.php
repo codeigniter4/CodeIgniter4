@@ -91,7 +91,7 @@ class Message implements MessageInterface
      *
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function hasHeader(string $name): bool
     {

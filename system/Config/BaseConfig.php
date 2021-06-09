@@ -40,7 +40,7 @@ class BaseConfig
     /**
      * Has module discovery happened yet?
      *
-     * @var boolean
+     * @var bool
      */
     protected static $didDiscovery = false;
 

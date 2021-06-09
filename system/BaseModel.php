@@ -57,7 +57,7 @@ abstract class BaseModel
     /**
      * Last insert ID
      *
-     * @var integer|string
+     * @var int|string
      */
     protected $insertID = 0;
 
@@ -82,7 +82,7 @@ abstract class BaseModel
      * simply set a date when rows are deleted, or
      * do hard deletes.
      *
-     * @var boolean
+     * @var bool
      */
     protected $useSoftDeletes = false;
 
@@ -98,7 +98,7 @@ abstract class BaseModel
      * If true, will set created_at, and updated_at
      * values during insert and update routines.
      *
-     * @var boolean
+     * @var bool
      */
     protected $useTimestamps = false;
 
@@ -130,7 +130,7 @@ abstract class BaseModel
      * Used by withDeleted to override the
      * model's softDelete setting.
      *
-     * @var boolean
+     * @var bool
      */
     protected $tempUseSoftDeletes;
 
@@ -153,7 +153,7 @@ abstract class BaseModel
      * Whether we should limit fields in inserts
      * and updates to those available in $allowedFields or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $protectFields = true;
 
@@ -185,7 +185,7 @@ abstract class BaseModel
      * Skip the model's validation. Used in conjunction with skipValidation()
      * to skip data validation for any future calls.
      *
-     * @var boolean
+     * @var bool
      */
     protected $skipValidation = false;
 
@@ -193,7 +193,7 @@ abstract class BaseModel
      * Whether rules should be removed that do not exist
      * in the passed in data. Used between inserts/updates.
      *
-     * @var boolean
+     * @var bool
      */
     protected $cleanValidationRules = true;
 
@@ -220,7 +220,7 @@ abstract class BaseModel
     /**
      * Whether to trigger the defined callbacks
      *
-     * @var boolean
+     * @var bool
      */
     protected $allowCallbacks = true;
 
@@ -228,7 +228,7 @@ abstract class BaseModel
      * Used by allowCallbacks() to override the
      * model's allowCallbacks setting.
      *
-     * @var boolean
+     * @var bool
      */
     protected $tempAllowCallbacks;
 
@@ -320,8 +320,8 @@ abstract class BaseModel
      * Fetches the row of database
      * This methods works only with dbCalls
      *
-     * @param boolean                   $singleton Single or multiple results
-     * @param array|integer|string|null $id        One primary key or an array of primary keys
+     * @param bool                  $singleton Single or multiple results
+     * @param array|int|string|null $id        One primary key or an array of primary keys
      *
      * @return array|object|null The resulting row of data, or null.
      */
@@ -343,8 +343,8 @@ abstract class BaseModel
      * Fetches all results, while optionally limiting them.
      * This methods works only with dbCalls
      *
-     * @param integer $limit  Limit
-     * @param integer $offset Offset
+     * @param int $limit  Limit
+     * @param int $offset Offset
      *
      * @return array
      */
@@ -364,7 +364,7 @@ abstract class BaseModel
      *
      * @param array $data Data
      *
-     * @return integer|string|boolean
+     * @return int|string|bool
      */
     abstract protected function doInsert(array $data);
 
@@ -372,12 +372,12 @@ abstract class BaseModel
      * Compiles batch insert and runs the queries, validating each row prior.
      * This methods works only with dbCalls
      *
-     * @param array|null   $set       An associative array of insert values
-     * @param boolean|null $escape    Whether to escape values and identifiers
-     * @param integer      $batchSize The size of the batch to run
-     * @param boolean      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return integer|boolean Number of rows inserted or FALSE on failure
+     * @return int|bool Number of rows inserted or FALSE on failure
      */
     abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
@@ -385,10 +385,10 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This methods works only with dbCalls
      *
-     * @param integer|array|string|null $id   ID
-     * @param array|null                $data Data
+     * @param int|array|string|null $id   ID
+     * @param array|null            $data Data
      *
-     * @return boolean
+     * @return bool
      */
     abstract protected function doUpdate($id = null, $data = null): bool;
 
@@ -398,10 +398,10 @@ abstract class BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param integer     $batchSize The size of the batch to run
-     * @param boolean     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      */
@@ -411,10 +411,10 @@ abstract class BaseModel
      * Deletes a single record from the database where $id matches
      * This methods works only with dbCalls
      *
-     * @param integer|string|array|null $id    The rows primary key(s)
-     * @param boolean                   $purge Allows overriding the soft deletes setting.
+     * @param int|string|array|null $id    The rows primary key(s)
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|boolean
+     * @return string|bool
      *
      * @throws DatabaseException
      */
@@ -425,7 +425,7 @@ abstract class BaseModel
      * through soft deletes (deleted = 1)
      * This methods works only with dbCalls
      *
-     * @return boolean|mixed
+     * @return bool|mixed
      */
     abstract protected function doPurgeDeleted();
 
@@ -443,7 +443,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $data      Data
-     * @param boolean    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -462,7 +462,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return integer|array|string|null
+     * @return int|array|string|null
      *
      * @deprecated Add an override on getIdValue() instead. Will be removed in version 5.0.
      */
@@ -474,7 +474,7 @@ abstract class BaseModel
      *
      * @param array|object $data
      *
-     * @return array|integer|string|null
+     * @return array|int|string|null
      *
      * @todo: Make abstract in version 5.0
      */
@@ -487,8 +487,8 @@ abstract class BaseModel
      * Override countAllResults to account for soft deleted accounts.
      * This methods works only with dbCalls
      *
-     * @param boolean $reset Reset
-     * @param boolean $test  Test
+     * @param bool $reset Reset
+     * @param bool $test  Test
      *
      * @return mixed
      */
@@ -498,7 +498,7 @@ abstract class BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * This methods works only with dbCalls
      *
-     * @param integer $size     Size
+     * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
      * @return void
@@ -510,7 +510,7 @@ abstract class BaseModel
     /**
      * Fetches the row of database
      *
-     * @param array|integer|string|null $id One primary key or an array of primary keys
+     * @param array|int|string|null $id One primary key or an array of primary keys
      *
      * @return array|object|null The resulting row of data, or null.
      */
@@ -572,8 +572,8 @@ abstract class BaseModel
     /**
      * Fetches all results, while optionally limiting them.
      *
-     * @param integer $limit  Limit
-     * @param integer $offset Offset
+     * @param int $limit  Limit
+     * @param int $offset Offset
      *
      * @return array
      */
@@ -657,7 +657,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return boolean
+     * @return bool
      *
      * @throws ReflectionException
      */
@@ -686,7 +686,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return boolean
+     * @return bool
      */
     protected function shouldUpdate($data) : bool
     {
@@ -696,7 +696,7 @@ abstract class BaseModel
     /**
      * Returns last insert ID or 0.
      *
-     * @return integer|string
+     * @return int|string
      */
     public function getInsertID()
     {
@@ -708,9 +708,9 @@ abstract class BaseModel
      * it will attempt to convert it to an array.
      *
      * @param array|object|null $data     Data
-     * @param boolean           $returnID Whether insert ID should be returned or not.
+     * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return integer|string|boolean
+     * @return int|string|bool
      *
      * @throws ReflectionException
      */
@@ -779,12 +779,12 @@ abstract class BaseModel
     /**
      * Compiles batch insert runs the queries, validating each row prior.
      *
-     * @param array|null   $set       an associative array of insert values
-     * @param boolean|null $escape    Whether to escape values and identifiers
-     * @param integer      $batchSize The size of the batch to run
-     * @param boolean      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       an associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return integer|boolean Number of rows inserted or FALSE on failure
+     * @return int|bool Number of rows inserted or FALSE on failure
      *
      * @throws ReflectionException
      */
@@ -835,10 +835,10 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param integer|array|string|null $id   ID
-     * @param array|object|null         $data Data
+     * @param int|array|string|null $id   ID
+     * @param array|object|null     $data Data
      *
-     * @return boolean
+     * @return bool
      *
      * @throws ReflectionException
      */
@@ -898,10 +898,10 @@ abstract class BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param integer     $batchSize The size of the batch to run
-     * @param boolean     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      * @throws ReflectionException
@@ -953,10 +953,10 @@ abstract class BaseModel
     /**
      * Deletes a single record from the database where $id matches
      *
-     * @param integer|string|array|null $id    The rows primary key(s)
-     * @param boolean                   $purge Allows overriding the soft deletes setting.
+     * @param int|string|array|null $id    The rows primary key(s)
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return BaseResult|boolean
+     * @return BaseResult|bool
      *
      * @throws DatabaseException
      */
@@ -995,7 +995,7 @@ abstract class BaseModel
      * Permanently deletes all rows that have been marked as deleted
      * through soft deletes (deleted = 1)
      *
-     * @return boolean|mixed
+     * @return bool|mixed
      */
     public function purgeDeleted()
     {
@@ -1010,7 +1010,7 @@ abstract class BaseModel
      * Sets $useSoftDeletes value so that we can temporarily override
      * the soft deletes settings. Can be used for all find* methods.
      *
-     * @param boolean $val Value
+     * @param bool $val Value
      *
      * @return $this
      */
@@ -1039,7 +1039,7 @@ abstract class BaseModel
      * Compiles a replace and runs the query
      *
      * @param array|null $data      Data
-     * @param boolean    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -1060,7 +1060,7 @@ abstract class BaseModel
      * The return array should be in the following format:
      *  ['source' => 'message']
      *
-     * @param boolean $forceDB Always grab the db error, not validation
+     * @param bool $forceDB Always grab the db error, not validation
      *
      * @return array<string,string>
      */
@@ -1079,10 +1079,10 @@ abstract class BaseModel
      * Expects a GET variable (?page=2) that specifies the page of results
      * to display.
      *
-     * @param integer|null $perPage Items per page
-     * @param string       $group   Will be used by the pagination library to identify a unique pagination set.
-     * @param integer|null $page    Optional page number (useful when the page number is provided in different way)
-     * @param integer      $segment Optional URI segment number (if page number is provided by URI segment)
+     * @param int|null $perPage Items per page
+     * @param string   $group   Will be used by the pagination library to identify a unique pagination set.
+     * @param int|null $page    Optional page number (useful when the page number is provided in different way)
+     * @param int      $segment Optional URI segment number (if page number is provided by URI segment)
      *
      * @return array|null
      */
@@ -1121,7 +1121,7 @@ abstract class BaseModel
      * Sets whether or not we should whitelist data set during
      * updates or inserts against $this->availableFields.
      *
-     * @param boolean $protect Value
+     * @param bool $protect Value
      *
      * @return $this
      */
@@ -1167,7 +1167,7 @@ abstract class BaseModel
     /**
      * Sets the date or current date if null value is passed
      *
-     * @param integer|null $userData An optional PHP timestamp to be converted.
+     * @param int|null $userData An optional PHP timestamp to be converted.
      *
      * @return mixed
      *
@@ -1191,9 +1191,9 @@ abstract class BaseModel
      *  - 'datetime' - Stores the data in the SQL datetime format
      *  - 'date'     - Stores the date (only) in the SQL date format.
      *
-     * @param integer $value value
+     * @param int $value value
      *
-     * @return integer|string
+     * @return int|string
      *
      * @throws ModelException
      */
@@ -1224,7 +1224,7 @@ abstract class BaseModel
      *
      * @param Time $value value
      *
-     * @return string|integer
+     * @return string|int
      */
     protected function timeToDate(Time $value)
     {
@@ -1246,7 +1246,7 @@ abstract class BaseModel
     /**
      * Set the value of the skipValidation flag.
      *
-     * @param boolean $skip Value
+     * @param bool $skip Value
      *
      * @return $this
      */
@@ -1323,7 +1323,7 @@ abstract class BaseModel
      * Should validation rules be removed before saving?
      * Most handy when doing updates.
      *
-     * @param boolean $choice Value
+     * @param bool $choice Value
      *
      * @return $this
      */
@@ -1340,7 +1340,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return boolean
+     * @return bool
      */
     public function validate($data): bool
     {
@@ -1433,7 +1433,7 @@ abstract class BaseModel
      * Sets $tempAllowCallbacks value so that we can temporarily override
      * the setting. Resets after the next method that uses triggers.
      *
-     * @param boolean $val value
+     * @param bool $val value
      *
      * @return $this
      */
@@ -1520,8 +1520,8 @@ abstract class BaseModel
      * to string on all Time instances
      *
      * @param string|object $data        Data
-     * @param boolean       $onlyChanged Only Changed Property
-     * @param boolean       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array Array
      *
@@ -1550,8 +1550,8 @@ abstract class BaseModel
      * properties as an array with raw values.
      *
      * @param string|object $data        Data
-     * @param boolean       $onlyChanged Only Changed Property
-     * @param boolean       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array|null Array
      *
@@ -1644,7 +1644,7 @@ abstract class BaseModel
      *
      * @param string $name Name
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $name): bool
     {

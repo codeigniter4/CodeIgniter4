@@ -185,7 +185,7 @@ class Factories
      * @param array  $options The array of component-specific directives
      * @param string $name    Class name, namespace optional
      *
-     * @return boolean
+     * @return bool
      */
     protected static function verifyPreferApp(array $options, string $name): bool
     {
@@ -208,7 +208,7 @@ class Factories
      * @param array  $options The array of component-specific directives
      * @param string $name    Class name, namespace optional
      *
-     * @return boolean
+     * @return bool
      */
     protected static function verifyInstanceOf(array $options, string $name): bool
     {

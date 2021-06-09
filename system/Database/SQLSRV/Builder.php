@@ -42,21 +42,21 @@ class Builder extends BaseBuilder
      * Whether to use SQL-92 standard quoted identifier
      * (double quotes) or brackets for identifier escaping.
      *
-     * @var boolean
+     * @var bool
      */
     protected $_quoted_identifier = true;
 
     /**
      * Handle increment/decrement on text
      *
-     * @var boolean
+     * @var bool
      */
     public $castTextToInt = true;
 
     /**
      * Handle IDENTITY_INSERT property/
      *
-     * @var boolean
+     * @var bool
      */
     public $keyPermission = false;
 
@@ -103,10 +103,10 @@ class Builder extends BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string  $table
-     * @param string  $cond   The join condition
-     * @param string  $type   The type of join
-     * @param boolean $escape Whether not to try to escape identifiers
+     * @param string $table
+     * @param string $cond   The join condition
+     * @param string $type   The type of join
+     * @param bool   $escape Whether not to try to escape identifiers
      *
      * @return $this
      */
@@ -227,10 +227,10 @@ class Builder extends BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param integer $value
+     * @param string $column
+     * @param int    $value
      *
-     * @return boolean
+     * @return bool
      */
     public function increment(string $column, int $value = 1)
     {
@@ -249,10 +249,10 @@ class Builder extends BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param integer $value
+     * @param string $column
+     * @param int    $value
      *
-     * @return boolean
+     * @return bool
      */
     public function decrement(string $column, int $value = 1)
     {
@@ -308,8 +308,8 @@ class Builder extends BaseBuilder
     /**
      * Local implementation of limit
      *
-     * @param string  $sql
-     * @param boolean $offsetIgnore
+     * @param string $sql
+     * @param bool   $offsetIgnore
      *
      * @return string
      */
@@ -336,6 +336,7 @@ class Builder extends BaseBuilder
      * @param array|null $set An associative array of insert values
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function replace(array $set = null)
@@ -498,11 +499,12 @@ class Builder extends BaseBuilder
      *
      * Compiles a delete string and runs the query
      *
-     * @param mixed   $where     The where clause
-     * @param integer $limit     The limit clause
-     * @param boolean $resetData
+     * @param mixed $where     The where clause
+     * @param int   $limit     The limit clause
+     * @param bool  $resetData
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
@@ -598,11 +600,11 @@ class Builder extends BaseBuilder
     /**
      * WHERE, HAVING
      *
-     * @param string  $qbKey  'QBWhere' or 'QBHaving'
-     * @param mixed   $key
-     * @param mixed   $value
-     * @param string  $type
-     * @param boolean $escape
+     * @param string $qbKey  'QBWhere' or 'QBHaving'
+     * @param mixed  $key
+     * @param mixed  $value
+     * @param string $type
+     * @param bool   $escape
      *
      * @return $this
      */
@@ -671,9 +673,9 @@ class Builder extends BaseBuilder
      * Compiles the select statement based on the other functions called
      * and runs the query
      *
-     * @param integer $limit  The limit clause
-     * @param integer $offset The offset clause
-     * @param boolean $reset  Are we want to clear query builder values?
+     * @param int  $limit  The limit clause
+     * @param int  $offset The offset clause
+     * @param bool $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface
      */

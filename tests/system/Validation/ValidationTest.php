@@ -953,7 +953,7 @@ final class ValidationTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
      *
-     * @param boolean $expected
+     * @param bool  $expected
      * @param array $rules
      * @param array $data
      *
@@ -1025,7 +1025,7 @@ final class ValidationTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
      *
-     * @param boolean $expected
+     * @param bool  $expected
      * @param array $rules
      * @param array $data
      *

@@ -17,7 +17,7 @@ trait DebugTraceableTrait
      * it is actually raised rather than were it is instantiated.
      *
      * @param string         $message
-     * @param integer        $code
+     * @param int            $code
      * @param Throwable|null $previous
      */
     final public function __construct(string $message = '', int $code = 0, Throwable $previous = null)

@@ -44,14 +44,14 @@ class FileHandler extends BaseHandler
     /**
      * Whether this is a new file.
      *
-     * @var boolean
+     * @var bool
      */
     protected $fileNew;
 
     /**
      * Whether IP addresses should be matched.
      *
-     * @var boolean
+     * @var bool
      */
     protected $matchIP = false;
 
@@ -102,7 +102,8 @@ class FileHandler extends BaseHandler
      * @param string $savePath Path to session files' directory
      * @param string $name     Session cookie name
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws Exception
      */
     public function open($savePath, $name): bool
@@ -132,7 +133,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string|boolean    Serialized session data
+     * @return string|bool Serialized session data
      */
     public function read($sessionID)
     {
@@ -196,7 +197,7 @@ class FileHandler extends BaseHandler
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
      *
-     * @return boolean
+     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -247,7 +248,7 @@ class FileHandler extends BaseHandler
      *
      * Releases locks and closes file descriptor.
      *
-     * @return boolean
+     * @return bool
      */
     public function close(): bool
     {
@@ -273,7 +274,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $sessionId Session ID
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($sessionId): bool
     {
@@ -299,9 +300,9 @@ class FileHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param integer $maxlifetime Maximum lifetime of sessions
+     * @param int $maxlifetime Maximum lifetime of sessions
      *
-     * @return boolean
+     * @return bool
      */
     public function gc($maxlifetime): bool
     {

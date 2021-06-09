@@ -67,7 +67,7 @@ class Connection extends BaseConnection
      * Whether to use SQL-92 standard quoted identifier
      * (double quotes) or brackets for identifier escaping.
      *
-     * @var boolean
+     * @var bool
      */
     protected $_quoted_identifier = true;
 
@@ -85,7 +85,8 @@ class Connection extends BaseConnection
     /**
      * Class constructor
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return void
      */
     public function __construct($params)
@@ -101,7 +102,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @throws DatabaseException
      *
@@ -175,7 +176,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -186,7 +188,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -196,7 +198,7 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -233,8 +235,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -273,8 +277,10 @@ class Connection extends BaseConnection
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _foreignKeyData(string $table): array
@@ -341,8 +347,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -376,7 +384,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -386,7 +394,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -396,7 +404,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -440,7 +448,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -566,8 +574,9 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param  string $sql An SQL query string
-     * @return boolean
+     * @param string $sql An SQL query string
+     *
+     * @return bool
      */
     public function isWriteType($sql): bool
     {

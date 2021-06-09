@@ -54,7 +54,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     protected $value;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $expires;
 
@@ -69,12 +69,12 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     protected $domain = '';
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $secure = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $httponly = true;
 
@@ -84,7 +84,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     protected $samesite = self::SAMESITE_LAX;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $raw = false;
 
@@ -158,8 +158,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Create a new Cookie instance from a `Set-Cookie` header.
      *
-     * @param string  $cookie
-     * @param boolean $raw
+     * @param string $cookie
+     * @param bool   $raw
      *
      * @throws CookieException
      *
@@ -567,7 +567,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @param string $offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -700,9 +700,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Converts expires time to Unix format.
      *
-     * @param DateTimeInterface|integer|string $expires
+     * @param DateTimeInterface|int|string $expires
      *
-     * @return integer
+     * @return int
      */
     protected static function convertExpiresTimestamp($expires = 0): int
     {
@@ -735,8 +735,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * If `$raw` is true, names should not contain invalid characters
      * as `setrawcookie()` will reject this.
      *
-     * @param string  $name
-     * @param boolean $raw
+     * @param string $name
+     * @param bool   $raw
      *
      * @throws CookieException
      *
@@ -756,10 +756,10 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Validates the special prefixes if some attribute requirements are met.
      *
-     * @param string  $prefix
-     * @param boolean $secure
-     * @param string  $path
-     * @param string  $domain
+     * @param string $prefix
+     * @param bool   $secure
+     * @param string $path
+     * @param string $domain
      *
      * @throws CookieException
      *
@@ -779,8 +779,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Validates the `SameSite` to be within the allowed types.
      *
-     * @param string  $samesite
-     * @param boolean $secure
+     * @param string $samesite
+     * @param bool   $secure
      *
      * @throws CookieException
      *

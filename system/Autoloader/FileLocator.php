@@ -176,9 +176,9 @@ class FileLocator
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
      *
-     * @param string  $path
-     * @param string  $ext
-     * @param boolean $prioritizeApp
+     * @param string $path
+     * @param string $ext
+     * @param bool   $prioritizeApp
      *
      * @return array
      */

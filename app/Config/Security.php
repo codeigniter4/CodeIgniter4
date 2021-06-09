@@ -48,7 +48,7 @@ class Security extends BaseConfig
      *
      * Defaults to two hours (in seconds).
      *
-     * @var integer
+     * @var int
      */
     public $expires = 7200;
 
@@ -59,7 +59,7 @@ class Security extends BaseConfig
      *
      * Regenerate CSRF Token on every request.
      *
-     * @var boolean
+     * @var bool
      */
     public $regenerate = true;
 
@@ -70,7 +70,7 @@ class Security extends BaseConfig
      *
      * Redirect to previous page with error on failure.
      *
-     * @var boolean
+     * @var bool
      */
     public $redirect = true;
 

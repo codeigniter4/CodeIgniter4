@@ -30,7 +30,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * The result boolean from a sqlsrv_execute.
      *
-     * @var boolean
+     * @var bool
      */
     protected $result;
 
@@ -45,6 +45,7 @@ class PreparedQuery extends BasePreparedQuery
      * @param array  $options Options takes an associative array;
      *
      * @return mixed
+     *
      * @throws Exception
      */
     public function _prepare(string $sql, array $options = [])
@@ -72,7 +73,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $data
      *
-     * @return boolean
+     * @return bool
      */
     public function _execute(array $data): bool
     {

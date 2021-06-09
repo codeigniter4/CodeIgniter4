@@ -20,7 +20,7 @@ class History extends BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -28,7 +28,7 @@ class History extends BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
@@ -36,7 +36,7 @@ class History extends BaseCollector
      * Whether this collector needs to display
      * a label or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasLabel = true;
 
@@ -58,8 +58,8 @@ class History extends BaseCollector
     /**
      * Specify time limit & file count for debug history.
      *
-     * @param integer $current Current history time
-     * @param integer $limit   Max history files
+     * @param int $current Current history time
+     * @param int $limit   Max history files
      */
     public function setFiles(int $current, int $limit = 20)
     {
@@ -120,7 +120,7 @@ class History extends BaseCollector
     /**
      * Displays the number of included files as a badge in the tab button.
      *
-     * @return integer
+     * @return int
      */
     public function getBadgeValue(): int
     {
@@ -130,7 +130,7 @@ class History extends BaseCollector
     /**
      * Return true if there are no history files.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty(): bool
     {

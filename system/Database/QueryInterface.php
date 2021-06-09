@@ -22,9 +22,9 @@ interface QueryInterface
     /**
      * Sets the raw query string to use for this statement.
      *
-     * @param string  $sql
-     * @param mixed   $binds
-     * @param boolean $setEscape
+     * @param string $sql
+     * @param mixed  $binds
+     * @param bool   $setEscape
      *
      * @return mixed
      */
@@ -60,7 +60,7 @@ interface QueryInterface
      * Returns the duration of this query during execution, or null if
      * the query has not been executed yet.
      *
-     * @param integer $decimals The accuracy of the returned time.
+     * @param int $decimals The accuracy of the returned time.
      *
      * @return string
      */
@@ -71,8 +71,8 @@ interface QueryInterface
     /**
      * Stores the error description that happened for this query.
      *
-     * @param integer $code
-     * @param string  $error
+     * @param int    $code
+     * @param string $error
      */
     public function setError(int $code, string $error);
 
@@ -81,7 +81,7 @@ interface QueryInterface
     /**
      * Reports whether this statement created an error not.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasError(): bool;
 
@@ -90,7 +90,7 @@ interface QueryInterface
     /**
      * Returns the error code created while executing this statement.
      *
-     * @return integer
+     * @return int
      */
     public function getErrorCode(): int;
 
@@ -108,7 +108,7 @@ interface QueryInterface
     /**
      * Determines if the statement is a write-type query or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isWriteType(): bool;
 

@@ -117,7 +117,7 @@ if (! function_exists('form_hidden')) {
      *
      * @param string|array $name      Field name or associative array to create multiple fields
      * @param string|array $value     Field value
-     * @param boolean      $recursing
+     * @param bool         $recursing
      *
      * @return string
      */
@@ -387,10 +387,10 @@ if (! function_exists('form_checkbox')) {
     /**
      * Checkbox Field
      *
-     * @param mixed   $data
-     * @param string  $value
-     * @param boolean $checked
-     * @param mixed   $extra
+     * @param mixed  $data
+     * @param string $value
+     * @param bool   $checked
+     * @param mixed  $extra
      *
      * @return string
      */
@@ -427,10 +427,10 @@ if (! function_exists('form_radio')) {
     /**
      * Radio Button
      *
-     * @param mixed   $data
-     * @param string  $value
-     * @param boolean $checked
-     * @param mixed   $extra
+     * @param mixed  $data
+     * @param string $value
+     * @param bool   $checked
+     * @param mixed  $extra
      *
      * @return string
      */
@@ -647,7 +647,7 @@ if (! function_exists('set_value')) {
      *
      * @param string          $field      Field name
      * @param string|string[] $default    Default value
-     * @param boolean         $htmlEscape Whether to escape HTML special characters or not
+     * @param bool            $htmlEscape Whether to escape HTML special characters or not
      *
      * @return string|string[]
      */
@@ -675,9 +675,9 @@ if (! function_exists('set_select')) {
      * Let's you set the selected value of a <select> menu via data in the POST array.
      * If Form Validation is active it retrieves the info from the validation class
      *
-     * @param string  $field
-     * @param string  $value
-     * @param boolean $default
+     * @param string $field
+     * @param string $value
+     * @param bool   $default
      *
      * @return string
      */
@@ -720,9 +720,9 @@ if (! function_exists('set_checkbox')) {
      * Let's you set the selected value of a checkbox via the value in the POST array.
      * If Form Validation is active it retrieves the info from the validation class
      *
-     * @param string  $field
-     * @param string  $value
-     * @param boolean $default
+     * @param string $field
+     * @param string $value
+     * @param bool   $default
      *
      * @return string
      */
@@ -766,9 +766,9 @@ if (! function_exists('set_radio')) {
      * Let's you set the selected value of a radio field via info in the POST array.
      * If Form Validation is active it retrieves the info from the validation class
      *
-     * @param string  $field
-     * @param string  $value
-     * @param boolean $default
+     * @param string $field
+     * @param string $value
+     * @param bool   $default
      *
      * @return string
      */

@@ -19,14 +19,14 @@ class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
     /**
      * Should run db migration only once?
      *
-     * @var boolean
+     * @var bool
      */
     protected $migrateOnce = true;
 
     /**
      * Should the db be refreshed before test?
      *
-     * @var boolean
+     * @var bool
      */
     protected $refresh = true;
 

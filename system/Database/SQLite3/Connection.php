@@ -42,9 +42,10 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
@@ -99,7 +100,7 @@ class Connection extends BaseConnection
      *
      * @param string $databaseName
      *
-     * @return boolean
+     * @return bool
      */
     public function setDatabase(string $databaseName): bool
     {
@@ -131,7 +132,7 @@ class Connection extends BaseConnection
      *
      * @param string $sql
      *
-     * @return mixed    \SQLite3Result object or bool
+     * @return mixed \SQLite3Result object or bool
      */
     public function execute(string $sql)
     {
@@ -154,7 +155,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -180,7 +181,7 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -214,6 +215,7 @@ class Connection extends BaseConnection
      * @param string $table Table name
      *
      * @return array|false
+     *
      * @throws DatabaseException
      */
     public function getFieldNames(string $table)
@@ -258,8 +260,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -295,8 +299,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -340,7 +346,8 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
      */
     public function _foreignKeyData(string $table): array
@@ -420,7 +427,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -432,7 +439,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -444,7 +451,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -456,7 +463,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -469,7 +476,7 @@ class Connection extends BaseConnection
      * Checks to see if the current install supports Foreign Keys
      * and has them enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function supportsForeignKeys(): bool
     {

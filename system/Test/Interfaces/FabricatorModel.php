@@ -34,7 +34,7 @@ interface FabricatorModel
      *
      * @param mixed|array|null $id One primary key or an array of primary keys
      *
-     * @return array|object|null    The resulting row of data, or null.
+     * @return array|object|null The resulting row of data, or null.
      */
     public function find($id = null);
 
@@ -43,9 +43,10 @@ interface FabricatorModel
      * it will attempt to convert it to an array.
      *
      * @param array|object $data
-     * @param boolean      $returnID Whether insert ID should be returned or not.
+     * @param bool         $returnID Whether insert ID should be returned or not.
      *
-     * @return integer|string|boolean
+     * @return int|string|bool
+     *
      * @throws ReflectionException
      */
     public function insert($data = null, bool $returnID = true);

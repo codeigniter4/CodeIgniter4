@@ -82,8 +82,8 @@ interface ResultInterface
      *
      * If row doesn't exists, returns null.
      *
-     * @param integer $n
-     * @param string  $className
+     * @param int    $n
+     * @param string $className
      *
      * @return mixed
      */
@@ -96,7 +96,7 @@ interface ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -109,7 +109,7 @@ interface ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -187,7 +187,7 @@ interface ResultInterface
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     public function getFieldCount(): int;
 
@@ -225,7 +225,7 @@ interface ResultInterface
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */

@@ -33,7 +33,7 @@ class Pager extends BaseConfig
      *
      * The default number of results shown in a single page.
      *
-     * @var integer
+     * @var int
      */
     public $perPage = 20;
 }

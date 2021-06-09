@@ -23,7 +23,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var boolean|array
+     * @var bool|array
      */
     protected $_unsigned = false;
 
@@ -58,10 +58,10 @@ class Forge extends BaseForge
     /**
      * Create database
      *
-     * @param string  $dbName
-     * @param boolean $ifNotExists Whether to add IF NOT EXISTS condition
+     * @param string $dbName
+     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
-     * @return boolean
+     * @return bool
      */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
@@ -77,7 +77,8 @@ class Forge extends BaseForge
      *
      * @param string $dbName
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws DatabaseException
      */
     public function dropDatabase(string $dbName): bool
@@ -269,7 +270,8 @@ class Forge extends BaseForge
      * @param string $table       Table name
      * @param string $foreignName Foreign name
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws DatabaseException
      */
     public function dropForeignKey(string $table, string $foreignName): bool

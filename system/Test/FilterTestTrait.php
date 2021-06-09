@@ -36,7 +36,7 @@ trait FilterTestTrait
     /**
      * Have the one-time classes been instantiated?
      *
-     * @var boolean
+     * @var bool
      */
     private $doneFilterSetUp = false;
 

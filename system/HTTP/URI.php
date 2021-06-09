@@ -76,7 +76,7 @@ class URI
     /**
      * URI Port
      *
-     * @var integer
+     * @var int
      */
     protected $port;
 
@@ -117,21 +117,21 @@ class URI
      * Whether passwords should be shown in userInfo/authority calls.
      * Default to false because URIs often show up in logs
      *
-     * @var boolean
+     * @var bool
      */
     protected $showPassword = false;
 
     /**
      * If true, will continue instead of throwing exceptions.
      *
-     * @var boolean
+     * @var bool
      */
     protected $silent = false;
 
     /**
      * If true, will use raw query string.
      *
-     * @var boolean
+     * @var bool
      */
     protected $rawQueryString = false;
 
@@ -183,7 +183,8 @@ class URI
      *
      * @param string $path
      *
-     * @return   string
+     * @return string
+     *
      * @internal
      */
     public static function removeDotSegments(string $path): string
@@ -251,7 +252,7 @@ class URI
      * If $silent == true, then will not throw exceptions and will
      * attempt to continue gracefully.
      *
-     * @param boolean $silent
+     * @param bool $silent
      *
      * @return URI
      */
@@ -268,7 +269,7 @@ class URI
      * If $raw == true, then will use parseStr() method
      * instead of native parse_str() function.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
      * @return URI
      */
@@ -321,6 +322,7 @@ class URI
      * added.
      *
      * @see    https://tools.ietf.org/html/rfc3986#section-3.1
+     *
      * @return string The URI scheme.
      */
     public function getScheme(): string
@@ -347,7 +349,7 @@ class URI
      *
      * @see https://tools.ietf.org/html/rfc3986#section-3.2
      *
-     * @param boolean $ignorePort
+     * @param bool $ignorePort
      *
      * @return string The URI authority, in "[user-info@]host[:port]" format.
      */
@@ -413,7 +415,7 @@ class URI
      * Temporarily sets the URI to show a password in userInfo. Will
      * reset itself after the first call to authority().
      *
-     * @param boolean $val
+     * @param bool $val
      *
      * @return URI
      */
@@ -435,6 +437,7 @@ class URI
      * Section 3.2.2.
      *
      * @see    http://tools.ietf.org/html/rfc3986#section-3.2.2
+     *
      * @return string The URI host.
      */
     public function getHost(): string
@@ -457,7 +460,7 @@ class URI
      * If no port is present, but a scheme is present, this method MAY return
      * the standard port for that scheme, but SHOULD return null.
      *
-     * @return null|integer The URI port.
+     * @return null|int The URI port.
      */
     public function getPort()
     {
@@ -489,6 +492,7 @@ class URI
      *
      * @see    https://tools.ietf.org/html/rfc3986#section-2
      * @see    https://tools.ietf.org/html/rfc3986#section-3.3
+     *
      * @return string The URI path.
      */
     public function getPath(): string
@@ -565,11 +569,11 @@ class URI
     /**
      * Returns the value of a specific segment of the URI path.
      *
-     * @param integer $number  Segment number
-     * @param string  $default Default value
+     * @param int    $number  Segment number
+     * @param string $default Default value
      *
-     * @return string     The value of the segment. If no segment is found,
-     *                    throws InvalidArgumentError
+     * @return string The value of the segment. If no segment is found,
+     *                throws InvalidArgumentError
      */
     public function getSegment(int $number, string $default = ''): string
     {
@@ -588,8 +592,8 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
-     * @param integer $number
-     * @param mixed   $value  (string or int)
+     * @param int   $number
+     * @param mixed $value  (string or int)
      *
      * @return $this
      */
@@ -618,7 +622,7 @@ class URI
     /**
      * Returns the total number of segments.
      *
-     * @return integer
+     * @return int
      */
     public function getTotalSegments(): int
     {
@@ -758,7 +762,7 @@ class URI
     /**
      * Sets the port portion of the URI.
      *
-     * @param integer $port
+     * @param int $port
      *
      * @return $this
      */

@@ -61,7 +61,7 @@ interface SecurityInterface
     /**
      * Check if CSRF cookie is expired.
      *
-     * @return boolean
+     * @return bool
      *
      * @deprecated
      */
@@ -70,7 +70,7 @@ interface SecurityInterface
     /**
      * Check if request should be redirect on failure.
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldRedirect(): bool;
 
@@ -85,8 +85,8 @@ interface SecurityInterface
      * e.g. file/in/some/approved/folder.txt, you can set the second optional
      * parameter, $relative_path to TRUE.
      *
-     * @param string  $str          Input file name
-     * @param boolean $relativePath Whether to preserve paths
+     * @param string $str          Input file name
+     * @param bool   $relativePath Whether to preserve paths
      *
      * @return string
      */

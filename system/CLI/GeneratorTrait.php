@@ -53,7 +53,7 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var boolean
+     * @var bool
      */
     private $hasClassName = true;
 
@@ -62,7 +62,7 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var boolean
+     * @var bool
      */
     private $sortImports = true;
 
@@ -71,7 +71,7 @@ trait GeneratorTrait
      *
      * @internal
      *
-     * @var boolean
+     * @var bool
      */
     private $enabledSuffixing = true;
 
@@ -335,7 +335,7 @@ trait GeneratorTrait
     /**
      * Allows child generators to modify the internal `$hasClassName` flag.
      *
-     * @param boolean $hasClassName
+     * @param bool $hasClassName
      *
      * @return $this
      */
@@ -349,7 +349,7 @@ trait GeneratorTrait
     /**
      * Allows child generators to modify the internal `$sortImports` flag.
      *
-     * @param boolean $sortImports
+     * @param bool $sortImports
      *
      * @return $this
      */
@@ -363,7 +363,7 @@ trait GeneratorTrait
     /**
      * Allows child generators to modify the internal `$enabledSuffixing` flag.
      *
-     * @param boolean $enabledSuffixing
+     * @param bool $enabledSuffixing
      *
      * @return $this
      */

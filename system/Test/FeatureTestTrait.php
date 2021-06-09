@@ -97,7 +97,8 @@ trait FeatureTestTrait
     /**
      * Set the format the request's body should have.
      *
-     * @param  string $format The desired format. Currently supported formats: xml, json
+     * @param string $format The desired format. Currently supported formats: xml, json
+     *
      * @return $this
      */
     public function withBodyFormat(string $format)
@@ -110,7 +111,8 @@ trait FeatureTestTrait
     /**
      * Set the raw body for the request
      *
-     * @param  mixed $body
+     * @param mixed $body
+     *
      * @return $this
      */
     public function withBody($body)
@@ -141,6 +143,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -217,6 +220,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -232,6 +236,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -247,6 +252,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -262,6 +268,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -277,6 +284,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -292,6 +300,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
      */
@@ -359,6 +368,7 @@ trait FeatureTestTrait
      * @param array|null $params
      *
      * @return Request
+     *
      * @throws ReflectionException
      */
     protected function populateGlobals(string $method, Request $request, array $params = null)
@@ -386,9 +396,10 @@ trait FeatureTestTrait
      * This allows the body to be formatted in a way that the controller is going to
      * expect as in the case of testing a JSON or XML API.
      *
-     * @param  Request    $request
-     * @param  null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
-     *                               what has been loaded into the request global of the request class.
+     * @param Request    $request
+     * @param null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
+     *                            what has been loaded into the request global of the request class.
+     *
      * @return Request
      */
     protected function setRequestBody(Request $request, array $params = null): Request

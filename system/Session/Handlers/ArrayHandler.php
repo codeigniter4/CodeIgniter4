@@ -31,7 +31,8 @@ class ArrayHandler extends BaseHandler
      * @param string $savePath Path to session files' directory
      * @param string $name     Session cookie name
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws Exception
      */
     public function open($savePath, $name): bool
@@ -48,7 +49,7 @@ class ArrayHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string    Serialized session data
+     * @return string Serialized session data
      */
     public function read($sessionID): string
     {
@@ -65,7 +66,7 @@ class ArrayHandler extends BaseHandler
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
      *
-     * @return boolean
+     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -79,7 +80,7 @@ class ArrayHandler extends BaseHandler
      *
      * Releases locks and closes file descriptor.
      *
-     * @return boolean
+     * @return bool
      */
     public function close(): bool
     {
@@ -95,7 +96,7 @@ class ArrayHandler extends BaseHandler
      *
      * @param string $sessionID
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($sessionID): bool
     {
@@ -109,9 +110,9 @@ class ArrayHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param integer $maxlifetime Maximum lifetime of sessions
+     * @param int $maxlifetime Maximum lifetime of sessions
      *
-     * @return boolean
+     * @return bool
      */
     public function gc($maxlifetime): bool
     {

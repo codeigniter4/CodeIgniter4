@@ -50,7 +50,7 @@ class Encryption extends BaseConfig
      *
      * See the user guide for more information on padding.
      *
-     * @var integer
+     * @var int
      */
     public $blockSize = 16;
 

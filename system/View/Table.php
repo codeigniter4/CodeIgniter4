@@ -44,7 +44,7 @@ class Table
     /**
      * Whether or not to automatically create the table header
      *
-     * @var boolean
+     * @var bool
      */
     public $autoHeading = true;
 
@@ -86,7 +86,8 @@ class Table
     /**
      * Set the template from the table config file if it exists
      *
-     * @param  array $config (default: array())
+     * @param array $config (default: array())
+     *
      * @return void
      */
     public function __construct($config = [])
@@ -100,8 +101,9 @@ class Table
     /**
      * Set the template
      *
-     * @param  array $template
-     * @return boolean
+     * @param array $template
+     *
+     * @return bool
      */
     public function setTemplate($template)
     {
@@ -148,8 +150,9 @@ class Table
      * columns. This allows a single array with many elements to be
      * displayed in a table that has a fixed column count.
      *
-     * @param  array   $array
-     * @param  integer $columnLimit
+     * @param array $array
+     * @param int   $columnLimit
+     *
      * @return array|false
      */
     public function makeColumns($array = [], $columnLimit = 0)
@@ -189,7 +192,8 @@ class Table
      *
      * Can be passed as an array or discreet params
      *
-     * @param  mixed $value
+     * @param mixed $value
+     *
      * @return Table
      */
     public function setEmpty($value)
@@ -218,7 +222,8 @@ class Table
      *
      * Ensures a standard associative array format for all cell data
      *
-     * @param  array $args
+     * @param array $args
+     *
      * @return array
      */
     protected function _prepArgs(array $args)
@@ -242,7 +247,8 @@ class Table
     /**
      * Add a table caption
      *
-     * @param  string $caption
+     * @param string $caption
+     *
      * @return Table
      */
     public function setCaption($caption)
@@ -399,7 +405,8 @@ class Table
     /**
      * Set table data from a database result object
      *
-     * @param  BaseResult $object Database result object
+     * @param BaseResult $object Database result object
+     *
      * @return void
      */
     protected function _setFromDBResult($object)

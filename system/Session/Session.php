@@ -53,7 +53,7 @@ class Session implements SessionInterface
      * The number of SECONDS you want the session to last.
      * Setting it to 0 (zero) means expire when the browser is closed.
      *
-     * @var integer
+     * @var int
      */
     protected $sessionExpiration = 7200;
 
@@ -79,14 +79,14 @@ class Session implements SessionInterface
      * WARNING: If you're using the database driver, don't forget to update
      * your session table's PRIMARY KEY when changing this setting.
      *
-     * @var boolean
+     * @var bool
      */
     protected $sessionMatchIP = false;
 
     /**
      * How many seconds between CI regenerating the session ID.
      *
-     * @var integer
+     * @var int
      */
     protected $sessionTimeToUpdate = 300;
 
@@ -95,7 +95,7 @@ class Session implements SessionInterface
      * when auto-regenerating the session ID. When set to FALSE, the data
      * will be later deleted by the garbage collector.
      *
-     * @var boolean
+     * @var bool
      */
     protected $sessionRegenerateDestroy = false;
 
@@ -129,7 +129,7 @@ class Session implements SessionInterface
     /**
      * Cookie will only be set if a secure HTTPS connection exists.
      *
-     * @var boolean
+     * @var bool
      *
      * @deprecated
      */
@@ -420,7 +420,7 @@ class Session implements SessionInterface
     /**
      * Regenerates the session ID.
      *
-     * @param boolean $destroy Should old session data be destroyed?
+     * @param bool $destroy Should old session data be destroyed?
      */
     public function regenerate(bool $destroy = false)
     {
@@ -482,8 +482,9 @@ class Session implements SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param  string|null $key Identifier of the session property to retrieve
-     * @return mixed	The property value(s)
+     * @param string|null $key Identifier of the session property to retrieve
+     *
+     * @return mixed The property value(s)
      */
     public function get(string $key = null)
     {
@@ -518,7 +519,7 @@ class Session implements SessionInterface
      *
      * @param string $key Identifier of the session property we are interested in.
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $key): bool
     {
@@ -604,7 +605,7 @@ class Session implements SessionInterface
      *
      * @param string $key Identifier of the session property to remove.
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $key): bool
     {
@@ -677,7 +678,7 @@ class Session implements SessionInterface
      *
      * @param array|string $key Property identifier or array of them
      *
-     * @return boolean False if any of the properties are not already set
+     * @return bool False if any of the properties are not already set
      */
     public function markAsFlashdata($key): bool
     {
@@ -762,7 +763,7 @@ class Session implements SessionInterface
      *
      * @param string|array $data  Session data key or associative array of items
      * @param null         $value Value to store
-     * @param integer      $ttl   Time-to-live in seconds
+     * @param int          $ttl   Time-to-live in seconds
      */
     public function setTempdata($data, $value = null, int $ttl = 300)
     {
@@ -774,8 +775,9 @@ class Session implements SessionInterface
      * Returns either a single piece of tempdata, or all temp data currently
      * in the session.
      *
-     * @param  string $key Session data key
-     * @return mixed  Session data value or null if not found.
+     * @param string $key Session data key
+     *
+     * @return mixed Session data value or null if not found.
      */
     public function getTempdata(string $key = null)
     {
@@ -813,9 +815,9 @@ class Session implements SessionInterface
      * it has a set lifespan within the session.
      *
      * @param string|array $key Property identifier or array of them
-     * @param integer      $ttl Time to live, in seconds
+     * @param int          $ttl Time to live, in seconds
      *
-     * @return boolean False if any of the properties were not set
+     * @return bool False if any of the properties were not set
      */
     public function markAsTempdata($key, int $ttl = 300): bool
     {
@@ -860,7 +862,7 @@ class Session implements SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param string|array $key	Property identifier or array of them
+     * @param string|array $key Property identifier or array of them
      */
     public function unmarkTempdata($key)
     {

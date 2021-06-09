@@ -66,9 +66,9 @@ class Builder extends BaseBuilder
     /**
      * ORDER BY
      *
-     * @param string  $orderBy
-     * @param string  $direction ASC, DESC or RANDOM
-     * @param boolean $escape
+     * @param string $orderBy
+     * @param string $direction ASC, DESC or RANDOM
+     * @param bool   $escape
      *
      * @return BaseBuilder
      */
@@ -97,8 +97,8 @@ class Builder extends BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param integer $value
+     * @param string $column
+     * @param int    $value
      *
      * @throws DatabaseException
      *
@@ -118,8 +118,8 @@ class Builder extends BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @param string  $column
-     * @param integer $value
+     * @param string $column
+     * @param int    $value
      *
      * @throws DatabaseException
      *
@@ -146,8 +146,10 @@ class Builder extends BaseBuilder
      *
      * @param array $set An associative array of insert values
      *
-     * @return   mixed
-     * @throws   DatabaseException
+     * @return mixed
+     *
+     * @throws DatabaseException
+     *
      * @internal param true $bool returns the generated SQL, false executes the query.
      */
     public function replace(array $set = null)
@@ -223,12 +225,14 @@ class Builder extends BaseBuilder
      *
      * Compiles a delete string and runs the query
      *
-     * @param mixed   $where
-     * @param integer $limit
-     * @param boolean $resetData
+     * @param mixed $where
+     * @param int   $limit
+     * @param bool  $resetData
      *
-     * @return   mixed
-     * @throws   DatabaseException
+     * @return mixed
+     *
+     * @throws DatabaseException
+     *
      * @internal param the $mixed where clause
      * @internal param the $mixed limit clause
      * @internal param $bool
@@ -268,8 +272,10 @@ class Builder extends BaseBuilder
      * @param string $table
      * @param array  $values
      *
-     * @return   string
-     * @throws   DatabaseException
+     * @return string
+     *
+     * @throws DatabaseException
+     *
      * @internal param the $string table name
      * @internal param the $array update data
      */
@@ -378,9 +384,9 @@ class Builder extends BaseBuilder
      * @param string      $column
      * @param string|null $not
      * @param string      $bind
-     * @param boolean     $insensitiveSearch
+     * @param bool        $insensitiveSearch
      *
-     * @return string     $like_statement
+     * @return string $like_statement
      */
     public function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
@@ -396,10 +402,10 @@ class Builder extends BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string  $table
-     * @param string  $cond   The join condition
-     * @param string  $type   The type of join
-     * @param boolean $escape Whether not to try to escape identifiers
+     * @param string $table
+     * @param string $cond   The join condition
+     * @param string $type   The type of join
+     * @param bool   $escape Whether not to try to escape identifiers
      *
      * @return BaseBuilder
      */

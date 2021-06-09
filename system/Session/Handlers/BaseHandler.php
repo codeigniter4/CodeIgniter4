@@ -60,7 +60,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Cookie secure?
      *
-     * @var boolean
+     * @var bool
      */
     protected $cookieSecure = false;
 
@@ -74,7 +74,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Match IP addresses for cookies?
      *
-     * @var boolean
+     * @var bool
      */
     protected $matchIP = false;
 
@@ -126,7 +126,7 @@ abstract class BaseHandler implements SessionHandlerInterface
      * Internal method to force removal of a cookie by the client
      * when session_destroy() is called.
      *
-     * @return boolean
+     * @return bool
      */
     protected function destroyCookie(): bool
     {
@@ -144,7 +144,7 @@ abstract class BaseHandler implements SessionHandlerInterface
      *
      * @param string $sessionID
      *
-     * @return boolean
+     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -158,7 +158,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Releases the lock, if any.
      *
-     * @return boolean
+     * @return bool
      */
     protected function releaseLock(): bool
     {
@@ -180,7 +180,7 @@ abstract class BaseHandler implements SessionHandlerInterface
      * so that the INI is set just in time for the error message to
      * be properly generated.
      *
-     * @return boolean
+     * @return bool
      */
     protected function fail(): bool
     {

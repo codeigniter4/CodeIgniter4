@@ -23,7 +23,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function alpha(?string $str = null): bool
     {
@@ -35,7 +35,7 @@ class FormatRules
      *
      * @param string|null $value Value.
      *
-     * @return boolean True if alpha with spaces, else false.
+     * @return bool True if alpha with spaces, else false.
      */
     public function alpha_space(?string $value = null): bool
     {
@@ -52,7 +52,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function alpha_dash(?string $str = null): bool
     {
@@ -69,7 +69,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function alpha_numeric_punct($str)
     {
@@ -82,7 +82,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function alpha_numeric(?string $str = null): bool
     {
@@ -94,7 +94,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function alpha_numeric_space(?string $str = null): bool
     {
@@ -110,7 +110,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function string($str = null): bool
     {
@@ -122,7 +122,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function decimal(?string $str = null): bool
     {
@@ -135,7 +135,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function hex(?string $str = null): bool
     {
@@ -147,7 +147,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function integer(?string $str = null): bool
     {
@@ -157,8 +157,9 @@ class FormatRules
     /**
      * Is a Natural number  (0,1,2,3, etc.)
      *
-     * @param  string|null $str
-     * @return boolean
+     * @param string|null $str
+     *
+     * @return bool
      */
     public function is_natural(?string $str = null): bool
     {
@@ -168,8 +169,9 @@ class FormatRules
     /**
      * Is a Natural number, but not a zero  (1,2,3, etc.)
      *
-     * @param  string|null $str
-     * @return boolean
+     * @param string|null $str
+     *
+     * @return bool
      */
     public function is_natural_no_zero(?string $str = null): bool
     {
@@ -181,7 +183,7 @@ class FormatRules
      *
      * @param string|null $str
      *
-     * @return boolean
+     * @return bool
      */
     public function numeric(?string $str = null): bool
     {
@@ -195,7 +197,7 @@ class FormatRules
      * @param string|null $str
      * @param string      $pattern
      *
-     * @return boolean
+     * @return bool
      */
     public function regex_match(?string $str, string $pattern): bool
     {
@@ -214,7 +216,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function timezone(string $str = null): bool
     {
@@ -227,8 +229,9 @@ class FormatRules
      * Tests a string for characters outside of the Base64 alphabet
      * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
      *
-     * @param  string $str
-     * @return boolean
+     * @param string $str
+     *
+     * @return bool
      */
     public function valid_base64(string $str = null): bool
     {
@@ -240,7 +243,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_json(string $str = null): bool
     {
@@ -254,7 +257,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_email(string $str = null): bool
     {
@@ -274,7 +277,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_emails(string $str = null): bool
     {
@@ -298,7 +301,7 @@ class FormatRules
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_ip(string $ip = null, string $which = null): bool
     {
@@ -328,7 +331,7 @@ class FormatRules
      *
      * @param string $str
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_url(string $str = null): bool
     {
@@ -355,7 +358,7 @@ class FormatRules
      * @param string $str
      * @param string $format
      *
-     * @return boolean
+     * @return bool
      */
     public function valid_date(string $str = null, string $format = null): bool
     {

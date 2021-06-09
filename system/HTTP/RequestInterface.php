@@ -36,7 +36,7 @@ interface RequestInterface
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @return boolean
+     * @return bool
      *
      * @deprecated Use Validation instead
      */
@@ -48,7 +48,7 @@ interface RequestInterface
      * Get the request method.
      * An extension of PSR-7's getMethod to allow casing.
      *
-     * @param boolean $upper Whether to return in upper or lower case.
+     * @param bool $upper Whether to return in upper or lower case.
      *
      * @return string
      *
@@ -62,8 +62,9 @@ interface RequestInterface
      * Fetch an item from the $_SERVER array.
      * Supplied by RequestTrait.
      *
-     * @param  string $index  Index for item to be fetched from $_SERVER
-     * @param  null   $filter A filter name to be applied
+     * @param string $index  Index for item to be fetched from $_SERVER
+     * @param null   $filter A filter name to be applied
+     *
      * @return mixed
      */
     public function getServer($index = null, $filter = null);

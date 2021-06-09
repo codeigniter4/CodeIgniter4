@@ -30,7 +30,7 @@ class SodiumHandler extends BaseHandler
     /**
      * Block size for padding message.
      *
-     * @var integer
+     * @var int
      */
     protected $blockSize = 16;
 

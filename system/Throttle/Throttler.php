@@ -37,7 +37,7 @@ class Throttler implements ThrottlerInterface
     /**
      * The number of seconds until the next token is available.
      *
-     * @var integer
+     * @var int
      */
     protected $tokenTime = 0;
 
@@ -52,7 +52,7 @@ class Throttler implements ThrottlerInterface
     /**
      * Timestamp to use (during testing)
      *
-     * @var integer
+     * @var int
      */
     protected $testTime;
 
@@ -74,7 +74,7 @@ class Throttler implements ThrottlerInterface
      * Returns the number of seconds until the next available token will
      * be released for usage.
      *
-     * @return integer
+     * @return int
      */
     public function getTokenTime(): int
     {
@@ -94,12 +94,13 @@ class Throttler implements ThrottlerInterface
      *      die('You submitted over 60 requests within a minute.');
      * }
      *
-     * @param string  $key      The name to use as the "bucket" name.
-     * @param integer $capacity The number of requests the "bucket" can hold
-     * @param integer $seconds  The time it takes the "bucket" to completely refill
-     * @param integer $cost     The number of tokens this action uses.
+     * @param string $key      The name to use as the "bucket" name.
+     * @param int    $capacity The number of requests the "bucket" can hold
+     * @param int    $seconds  The time it takes the "bucket" to completely refill
+     * @param int    $cost     The number of tokens this action uses.
      *
-     * @return   boolean
+     * @return bool
+     *
      * @internal param int $maxRequests
      */
     public function check(string $key, int $capacity, int $seconds, int $cost = 1): bool
@@ -168,7 +169,7 @@ class Throttler implements ThrottlerInterface
     /**
      * Used during testing to set the current timestamp to use.
      *
-     * @param integer $time
+     * @param int $time
      *
      * @return $this
      */
@@ -184,7 +185,7 @@ class Throttler implements ThrottlerInterface
     /**
      * Return the test time, defaulting to current.
      *
-     * @return integer
+     * @return int
      */
     public function time(): int
     {

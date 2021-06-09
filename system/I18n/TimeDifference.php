@@ -57,42 +57,42 @@ class TimeDifference
     /**
      * Weeks.
      *
-     * @var integer
+     * @var int
      */
     protected $weeks = 0;
 
     /**
      * Days.
      *
-     * @var integer
+     * @var int
      */
     protected $days = 0;
 
     /**
      * Hours.
      *
-     * @var integer
+     * @var int
      */
     protected $hours = 0;
 
     /**
      * Minutes.
      *
-     * @var integer
+     * @var int
      */
     protected $minutes = 0;
 
     /**
      * Seconds.
      *
-     * @var integer
+     * @var int
      */
     protected $seconds = 0;
 
     /**
      * Difference in seconds.
      *
-     * @var integer
+     * @var int
      */
     protected $difference;
 
@@ -119,9 +119,9 @@ class TimeDifference
     /**
      * Returns the number of years of difference between the two.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getYears(bool $raw = false)
     {
@@ -137,9 +137,9 @@ class TimeDifference
     /**
      * Returns the number of months difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getMonths(bool $raw = false)
     {
@@ -155,9 +155,9 @@ class TimeDifference
     /**
      * Returns the number of weeks difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getWeeks(bool $raw = false)
     {
@@ -173,9 +173,9 @@ class TimeDifference
     /**
      * Returns the number of days difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getDays(bool $raw = false)
     {
@@ -191,9 +191,9 @@ class TimeDifference
     /**
      * Returns the number of hours difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getHours(bool $raw = false)
     {
@@ -209,9 +209,9 @@ class TimeDifference
     /**
      * Returns the number of minutes difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return float|integer
+     * @return float|int
      */
     public function getMinutes(bool $raw = false)
     {
@@ -227,9 +227,9 @@ class TimeDifference
     /**
      * Returns the number of seconds difference between the two dates.
      *
-     * @param boolean $raw
+     * @param bool $raw
      *
-     * @return integer
+     * @return int
      */
     public function getSeconds(bool $raw = false)
     {
@@ -313,7 +313,7 @@ class TimeDifference
      *
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset($name)
     {

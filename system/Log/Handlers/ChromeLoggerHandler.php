@@ -32,7 +32,7 @@ class ChromeLoggerHandler extends BaseHandler
     /**
      * The number of track frames returned from the backtrace.
      *
-     * @var integer
+     * @var int
      */
     protected $backtraceLevel = 0;
 
@@ -99,7 +99,7 @@ class ChromeLoggerHandler extends BaseHandler
      * @param string $level
      * @param string $message
      *
-     * @return boolean
+     * @return bool
      */
     public function handle($level, $message): bool
     {

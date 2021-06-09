@@ -169,11 +169,11 @@ class MemcachedHandler extends BaseHandler
     /**
      * Saves an item to the cache store.
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value The data to save
-     * @param integer $ttl   Time To Live, in seconds (default 60)
+     * @param string $key   Cache item name
+     * @param mixed  $value The data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -206,7 +206,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $key Cache item name
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function delete(string $key)
     {
@@ -234,10 +234,10 @@ class MemcachedHandler extends BaseHandler
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
-     * @return integer|false
+     * @return int|false
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -256,10 +256,10 @@ class MemcachedHandler extends BaseHandler
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
-     * @return integer|false
+     * @return int|false
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -279,7 +279,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Will delete all items in the entire cache.
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function clean()
     {
@@ -309,9 +309,9 @@ class MemcachedHandler extends BaseHandler
      * @param string $key Cache item name.
      *
      * @return array|false|null
-     *   Returns null if the item does not exist, otherwise array<string, mixed>
-     *   with at least the 'expire' key for absolute epoch expiry (or null).
-     *   Some handlers may return false when an item does not exist, which is deprecated.
+     *                          Returns null if the item does not exist, otherwise array<string, mixed>
+     *                          with at least the 'expire' key for absolute epoch expiry (or null).
+     *                          Some handlers may return false when an item does not exist, which is deprecated.
      */
     public function getMetaData(string $key)
     {
@@ -337,7 +337,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Determines if the driver is supported on this system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSupported(): bool
     {

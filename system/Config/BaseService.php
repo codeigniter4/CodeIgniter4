@@ -146,7 +146,7 @@ class BaseService
     /**
      * Have we already discovered other Services?
      *
-     * @var boolean
+     * @var bool
      */
     protected static $discovered = false;
 
@@ -197,7 +197,7 @@ class BaseService
      * The Autoloader class is the central class that handles our
      * spl_autoload_register method, and helper methods.
      *
-     * @param boolean $getShared
+     * @param bool $getShared
      *
      * @return Autoloader
      */
@@ -219,7 +219,7 @@ class BaseService
      * within namespaced folders, as well as convenience methods for
      * loading 'helpers', and 'libraries'.
      *
-     * @param boolean $getShared
+     * @param bool $getShared
      *
      * @return FileLocator
      */
@@ -282,7 +282,7 @@ class BaseService
     /**
      * Reset shared instances and mocks for testing.
      *
-     * @param boolean $initAutoloader Initializes autoloader instance
+     * @param bool $initAutoloader Initializes autoloader instance
      */
     public static function reset(bool $initAutoloader = false)
     {

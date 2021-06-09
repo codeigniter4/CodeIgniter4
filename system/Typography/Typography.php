@@ -54,7 +54,7 @@ class Typography
     /**
      * whether or not to protect quotes within { curly braces }
      *
-     * @var boolean
+     * @var bool
      */
     public $protectBracedQuotes = false;
 
@@ -69,8 +69,8 @@ class Typography
      *     - Converts double dashes into em-dashes.
      *  - Converts two spaces into entities
      *
-     * @param string  $str
-     * @param boolean $reduceLinebreaks whether to reduce more then two consecutive newlines to two
+     * @param string $str
+     * @param bool   $reduceLinebreaks whether to reduce more then two consecutive newlines to two
      *
      * @return string
      */
@@ -231,7 +231,8 @@ class Typography
      * to curly entities, but it also converts em-dashes,
      * double spaces, and ampersands
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     public function formatCharacters(string $str): string
@@ -287,7 +288,8 @@ class Typography
      *
      * Converts newline characters into either <p> tags or <br />
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function formatNewLines(string $str): string
@@ -325,7 +327,8 @@ class Typography
      * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
      * likewise double spaces are converted to {@NBS} to prevent entity conversion
      *
-     * @param  array $match
+     * @param array $match
+     *
      * @return string
      */
     protected function protectCharacters(array $match): string
@@ -338,7 +341,8 @@ class Typography
     /**
      * Convert newlines to HTML line breaks except within PRE tags
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     public function nl2brExceptPre(string $str): string

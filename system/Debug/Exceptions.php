@@ -31,7 +31,7 @@ class Exceptions
     /**
      * Nesting level of the output buffering mechanism
      *
-     * @var integer
+     * @var int
      */
     public $ob_level;
 
@@ -155,10 +155,10 @@ class Exceptions
      *
      * This seems to be primarily when a user triggers it with trigger_error().
      *
-     * @param integer      $severity
-     * @param string       $message
-     * @param string|null  $file
-     * @param integer|null $line
+     * @param int         $severity
+     * @param string      $message
+     * @param string|null $file
+     * @param int|null    $line
      *
      * @throws ErrorException
      */
@@ -200,7 +200,7 @@ class Exceptions
      * @param Throwable $exception
      * @param string    $templatePath
      *
-     * @return string       The path and filename of the view file to use
+     * @return string The path and filename of the view file to use
      */
     protected function determineView(Throwable $exception, string $templatePath): string
     {
@@ -231,7 +231,7 @@ class Exceptions
      * Given an exception and status code will display the error to the client.
      *
      * @param Throwable $exception
-     * @param integer   $statusCode
+     * @param int       $statusCode
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -275,7 +275,7 @@ class Exceptions
      * Gathers the variables that will be made available to the view.
      *
      * @param Throwable $exception
-     * @param integer   $statusCode
+     * @param int       $statusCode
      *
      * @return array
      */
@@ -400,7 +400,7 @@ class Exceptions
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
      *
-     * @param integer $bytes
+     * @param int $bytes
      *
      * @return string
      */
@@ -421,11 +421,11 @@ class Exceptions
     /**
      * Creates a syntax-highlighted version of a PHP file.
      *
-     * @param string  $file
-     * @param integer $lineNumber
-     * @param integer $lines
+     * @param string $file
+     * @param int    $lineNumber
+     * @param int    $lines
      *
-     * @return boolean|string
+     * @return bool|string
      */
     public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {

@@ -28,7 +28,8 @@ interface ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param  boolean $persistent
+     * @param bool $persistent
+     *
      * @return mixed
      */
     public function connect(bool $persistent = false);
@@ -127,7 +128,7 @@ interface ConnectionInterface
      * @param string $sql
      * @param mixed  ...$binds
      *
-     * @return BaseResult|Query|boolean
+     * @return BaseResult|Query|bool
      */
     public function query(string $sql, $binds = null);
 
@@ -195,8 +196,9 @@ interface ConnectionInterface
     /**
      * Determines if the statement is a write-type query or not.
      *
-     * @param  string $sql
-     * @return boolean
+     * @param string $sql
+     *
+     * @return bool
      */
     public function isWriteType($sql): bool;
 }

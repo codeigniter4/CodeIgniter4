@@ -21,21 +21,21 @@ class Database extends BaseCollector
     /**
      * Whether this collector has timeline data.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = true;
 
     /**
      * Whether this collector should display its own tab.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
     /**
      * Whether this collector has data for the Vars tab.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasVarData = false;
 
@@ -150,7 +150,7 @@ class Database extends BaseCollector
     /**
      * Gets the "badge" value for the button.
      *
-     * @return integer
+     * @return int
      */
     public function getBadgeValue(): int
     {
@@ -175,7 +175,7 @@ class Database extends BaseCollector
     /**
      * Does this collector have any data collected?
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty(): bool
     {

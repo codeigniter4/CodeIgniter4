@@ -38,7 +38,7 @@ class Connection extends BaseConnection
      * of affected rows to be shown. Uses a preg_replace when enabled,
      * adding a bit more processing to all queries.
      *
-     * @var boolean
+     * @var bool
      */
     public $deleteHack = true;
 
@@ -67,9 +67,10 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param boolean $persistent
+     * @param bool $persistent
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
@@ -234,7 +235,7 @@ class Connection extends BaseConnection
      *
      * @param string $databaseName
      *
-     * @return boolean
+     * @return bool
      */
     public function setDatabase(string $databaseName): bool
     {
@@ -333,7 +334,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -345,7 +346,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -365,7 +367,8 @@ class Connection extends BaseConnection
      * additional "ESCAPE x" parameter for specifying the escape character
      * in "LIKE" strings, and this handles those directly with a backslash.
      *
-     * @param  string|string[] $str Input string
+     * @param string|string[] $str Input string
+     *
      * @return string|string[]
      */
     public function escapeLikeStringDirect($str)
@@ -399,7 +402,7 @@ class Connection extends BaseConnection
      * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -433,8 +436,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -467,8 +472,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      * @throws LogicException
      */
@@ -515,8 +522,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _foreignKeyData(string $table): array
@@ -612,7 +621,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer
+     * @return int
      */
     public function insertID(): int
     {
@@ -624,7 +633,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -638,7 +647,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -656,7 +665,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {

@@ -19,7 +19,7 @@ interface SessionInterface
     /**
      * Regenerates the session ID.
      *
-     * @param boolean $destroy Should old session data be destroyed?
+     * @param bool $destroy Should old session data be destroyed?
      */
     public function regenerate(bool $destroy = false);
 
@@ -70,7 +70,7 @@ interface SessionInterface
      *
      * @param string $key Identifier of the session property we are interested in.
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $key): bool;
 
@@ -110,9 +110,10 @@ interface SessionInterface
      *
      * If the item key is null, return all flashdata.
      *
-     * @param  string $key Property identifier
-     * @return array|null	The requested property value, or an associative
-     *     array  of them
+     * @param string $key Property identifier
+     *
+     * @return array|null The requested property value, or an associative
+     *                    array  of them
      */
     public function getFlashdata(string $key = null);
 
@@ -141,7 +142,7 @@ interface SessionInterface
     /**
      * Unmark data in the session as flashdata.
      *
-     * @param string|array $key	Property identifier or array of them
+     * @param string|array $key Property identifier or array of them
      */
     public function unmarkFlashdata($key);
 
@@ -150,7 +151,7 @@ interface SessionInterface
     /**
      * Retrieve all of the keys for session data marked as flashdata.
      *
-     * @return array	The property names of all flashdata
+     * @return array The property names of all flashdata
      */
     public function getFlashKeys(): array;
 
@@ -162,7 +163,7 @@ interface SessionInterface
      *
      * @param string|array $data  Session data key or associative array of items
      * @param mixed        $value Value to store
-     * @param integer      $ttl   Time-to-live in seconds
+     * @param int          $ttl   Time-to-live in seconds
      */
     public function setTempdata($data, $value = null, int $ttl = 300);
 
@@ -172,8 +173,9 @@ interface SessionInterface
      * Returns either a single piece of tempdata, or all temp data currently
      * in the session.
      *
-     * @param  string $key Session data key
-     * @return mixed        Session data value or null if not found.
+     * @param string $key Session data key
+     *
+     * @return mixed Session data value or null if not found.
      */
     public function getTempdata(string $key = null);
 
@@ -193,9 +195,9 @@ interface SessionInterface
      * it has a set lifespan within the session.
      *
      * @param string|array $key Property identifier or array of them
-     * @param integer      $ttl Time to live, in seconds
+     * @param int          $ttl Time to live, in seconds
      *
-     * @return boolean    False if any of the properties were not set
+     * @return bool False if any of the properties were not set
      */
     public function markAsTempdata($key, int $ttl = 300);
 
@@ -205,7 +207,7 @@ interface SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param string|array $key	Property identifier or array of them
+     * @param string|array $key Property identifier or array of them
      */
     public function unmarkTempdata($key);
 

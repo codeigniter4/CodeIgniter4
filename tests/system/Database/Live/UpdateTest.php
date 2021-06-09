@@ -198,6 +198,7 @@ class UpdateTest extends CIUnitTestCase
 
     /**
      * @group single
+     *
      * @see   https://github.com/codeigniter4/CodeIgniter4/issues/324
      */
     public function testUpdatePeriods()

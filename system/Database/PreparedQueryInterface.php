@@ -60,7 +60,7 @@ interface PreparedQueryInterface
     /**
      * Returns the error code created while executing this statement.
      *
-     * @return integer
+     * @return int
      */
     public function getErrorCode(): int;
 

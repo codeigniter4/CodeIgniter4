@@ -110,7 +110,7 @@ interface ResponseInterface
      * The status code is a 3-digit integer result code of the getServer's attempt
      * to understand and satisfy the request.
      *
-     * @return integer Status code.
+     * @return int Status code.
      *
      * @deprecated To be replaced by the PSR-7 version (compatible)
      */
@@ -127,12 +127,13 @@ interface ResponseInterface
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
      *
-     * @param integer $code   The 3-digit integer result code to set.
-     * @param string  $reason The reason phrase to use with the
-     *                        provided status code; if none is provided, will
-     *                        default to the IANA name.
+     * @param int    $code   The 3-digit integer result code to set.
+     * @param string $reason The reason phrase to use with the
+     *                       provided status code; if none is provided, will
+     *                       default to the IANA name.
      *
      * @return self
+     *
      * @throws InvalidArgumentException For invalid status code arguments.
      */
     public function setStatusCode(int $code, string $reason = '');
@@ -206,7 +207,7 @@ interface ResponseInterface
      * Converts the $body into JSON and sets the Content Type header.
      *
      * @param array|string $body
-     * @param boolean      $unencoded
+     * @param bool         $unencoded
      *
      * @return $this
      */
@@ -234,6 +235,7 @@ interface ResponseInterface
      * Retrieves the current body into XML and returns it.
      *
      * @return mixed|string
+     *
      * @throws InvalidArgumentException If the body property is not array.
      */
     public function getXML();
@@ -321,8 +323,8 @@ interface ResponseInterface
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string       $path     Cookie path (default: '/')
      * @param string       $prefix   Cookie name prefix
-     * @param boolean      $secure   Whether to only transfer cookies via SSL
-     * @param boolean      $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param bool         $secure   Whether to only transfer cookies via SSL
+     * @param bool         $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null  $samesite
      *
      * @return $this
@@ -346,7 +348,7 @@ interface ResponseInterface
      * @param string|null $value
      * @param string      $prefix
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCookie(string $name, string $value = null, string $prefix = ''): bool;
 
@@ -386,11 +388,12 @@ interface ResponseInterface
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string  $uri    The URI to redirect to
-     * @param string  $method
-     * @param integer $code   The type of redirection, defaults to 302
+     * @param string $uri    The URI to redirect to
+     * @param string $method
+     * @param int    $code   The type of redirection, defaults to 302
      *
      * @return $this
+     *
      * @throws HTTPException For invalid status code.
      */
     public function redirect(string $uri, string $method = 'auto', int $code = null);
@@ -403,7 +406,7 @@ interface ResponseInterface
      *
      * @param string      $filename The path to the file to send
      * @param string|null $data     The data to be downloaded
-     * @param boolean     $setMime  Whether to try and send the actual MIME type
+     * @param bool        $setMime  Whether to try and send the actual MIME type
      *
      * @return DownloadResponse|null
      */

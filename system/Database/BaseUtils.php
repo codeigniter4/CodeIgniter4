@@ -30,21 +30,21 @@ abstract class BaseUtils
     /**
      * List databases statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $listDatabases = false;
 
     /**
      * OPTIMIZE TABLE statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $optimizeTable = false;
 
     /**
      * REPAIR TABLE statement
      *
-     * @var string|boolean
+     * @var string|bool
      */
     protected $repairTable = false;
 
@@ -64,7 +64,8 @@ abstract class BaseUtils
     /**
      * List databases
      *
-     * @return array|boolean
+     * @return array|bool
+     *
      * @throws DatabaseException
      */
     public function listDatabases()
@@ -101,8 +102,9 @@ abstract class BaseUtils
     /**
      * Determine if a particular database exists
      *
-     * @param  string $databaseName
-     * @return boolean
+     * @param string $databaseName
+     *
+     * @return bool
      */
     public function databaseExists(string $databaseName): bool
     {
@@ -114,8 +116,10 @@ abstract class BaseUtils
     /**
      * Optimize Table
      *
-     * @param  string $tableName
-     * @return boolean
+     * @param string $tableName
+     *
+     * @return bool
+     *
      * @throws DatabaseException
      */
     public function optimizeTable(string $tableName)
@@ -139,6 +143,7 @@ abstract class BaseUtils
      * Optimize Database
      *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function optimizeDatabase()
@@ -184,8 +189,10 @@ abstract class BaseUtils
     /**
      * Repair Table
      *
-     * @param  string $tableName
+     * @param string $tableName
+     *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function repairTable(string $tableName)
@@ -292,8 +299,10 @@ abstract class BaseUtils
     /**
      * Database Backup
      *
-     * @param  array|string $params
+     * @param array|string $params
+     *
      * @return mixed
+     *
      * @throws DatabaseException
      */
     public function backup($params = [])

@@ -49,7 +49,8 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param  boolean $persistent
+     * @param bool $persistent
+     *
      * @return mixed
      */
     public function connect(bool $persistent = false)
@@ -118,7 +119,7 @@ class Connection extends BaseConnection
      *
      * @param string $databaseName
      *
-     * @return boolean
+     * @return bool
      */
     public function setDatabase(string $databaseName): bool
     {
@@ -174,7 +175,7 @@ class Connection extends BaseConnection
     /**
      * Returns the total number of rows affected by this query.
      *
-     * @return integer
+     * @return int
      */
     public function affectedRows(): int
     {
@@ -188,7 +189,8 @@ class Connection extends BaseConnection
      *
      * Escapes data based on type
      *
-     * @param  mixed $str
+     * @param mixed $str
+     *
      * @return mixed
      */
     public function escape($str)
@@ -213,7 +215,8 @@ class Connection extends BaseConnection
     /**
      * Platform-dependant string escape
      *
-     * @param  string $str
+     * @param string $str
+     *
      * @return string
      */
     protected function _escapeString(string $str): string
@@ -230,7 +233,7 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param boolean $prefixLimit
+     * @param bool $prefixLimit
      *
      * @return string
      */
@@ -270,8 +273,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _fieldData(string $table): array
@@ -306,8 +311,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _indexData(string $table): array
@@ -349,8 +356,10 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @param  string $table
+     * @param string $table
+     *
      * @return stdClass[]
+     *
      * @throws DatabaseException
      */
     public function _foreignKeyData(string $table): array
@@ -435,7 +444,7 @@ class Connection extends BaseConnection
     /**
      * Insert ID
      *
-     * @return integer|string
+     * @return int|string
      */
     public function insertID()
     {
@@ -529,8 +538,9 @@ class Connection extends BaseConnection
     /**
      * Set client encoding
      *
-     * @param  string $charset The client encoding to which the data will be converted.
-     * @return boolean
+     * @param string $charset The client encoding to which the data will be converted.
+     *
+     * @return bool
      */
     protected function setClientEncoding(string $charset): bool
     {
@@ -542,7 +552,7 @@ class Connection extends BaseConnection
     /**
      * Begin Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -554,7 +564,7 @@ class Connection extends BaseConnection
     /**
      * Commit Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -566,7 +576,7 @@ class Connection extends BaseConnection
     /**
      * Rollback Transaction
      *
-     * @return boolean
+     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -580,8 +590,9 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param  string $sql An SQL query string
-     * @return boolean
+     * @param string $sql An SQL query string
+     *
+     * @return bool
      */
     public function isWriteType($sql): bool
     {

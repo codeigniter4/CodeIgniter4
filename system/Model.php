@@ -41,6 +41,7 @@ use ReflectionProperty;
  *      - removes the need to use Result object directly in most cases
  *
  * @mixin    BaseBuilder
+ *
  * @property BaseConnection $db
  */
 class Model extends BaseModel
@@ -62,7 +63,7 @@ class Model extends BaseModel
     /**
      * Whether primary key uses auto increment.
      *
-     * @var boolean
+     * @var bool
      */
     protected $useAutoIncrement = true;
 
@@ -127,10 +128,10 @@ class Model extends BaseModel
      * matching $id. This methods works only with dbCalls
      * This methods works only with dbCalls
      *
-     * @param boolean                   $singleton Single or multiple results
-     * @param array|integer|string|null $id        One primary key or an array of primary keys
+     * @param bool                  $singleton Single or multiple results
+     * @param array|int|string|null $id        One primary key or an array of primary keys
      *
-     * @return array|object|null    The resulting row of data, or null.
+     * @return array|object|null The resulting row of data, or null.
      */
     protected function doFind(bool $singleton, $id = null)
     {
@@ -173,8 +174,8 @@ class Model extends BaseModel
      * all results, while optionally limiting them.
      * This methods works only with dbCalls
      *
-     * @param integer $limit  Limit
-     * @param integer $offset Offset
+     * @param int $limit  Limit
+     * @param int $offset Offset
      *
      * @return array
      */
@@ -223,7 +224,7 @@ class Model extends BaseModel
      *
      * @param array $data Data
      *
-     * @return Query|boolean
+     * @return Query|bool
      */
     protected function doInsert(array $data)
     {
@@ -257,12 +258,12 @@ class Model extends BaseModel
      * Compiles batch insert strings and runs the queries, validating each row prior.
      * This methods works only with dbCalls
      *
-     * @param array|null   $set       An associative array of insert values
-     * @param boolean|null $escape    Whether to escape values and identifiers
-     * @param integer      $batchSize The size of the batch to run
-     * @param boolean      $testing   True means only number of records is returned, false will execute the query
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return integer|boolean Number of rows inserted or FALSE on failure
+     * @return int|bool Number of rows inserted or FALSE on failure
      */
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
@@ -283,10 +284,10 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This methods works only with dbCalls
      *
-     * @param integer|array|string|null $id   ID
-     * @param array|null                $data Data
+     * @param int|array|string|null $id   ID
+     * @param array|null            $data Data
      *
-     * @return boolean
+     * @return bool
      */
     protected function doUpdate($id = null, $data = null): bool
     {
@@ -313,10 +314,10 @@ class Model extends BaseModel
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
-     * @param integer     $batchSize The size of the batch to run
-     * @param boolean     $returnSQL True means SQL is returned, false will execute the query
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed    Number of rows affected or FALSE on failure
+     * @return mixed Number of rows affected or FALSE on failure
      *
      * @throws DatabaseException
      */
@@ -330,10 +331,10 @@ class Model extends BaseModel
      * the table's primaryKey
      * This methods works only with dbCalls
      *
-     * @param integer|string|array|null $id    The rows primary key(s)
-     * @param boolean                   $purge Allows overriding the soft deletes setting.
+     * @param int|string|array|null $id    The rows primary key(s)
+     * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|boolean
+     * @return string|bool
      *
      * @throws DatabaseException
      */
@@ -373,7 +374,7 @@ class Model extends BaseModel
      * through soft deletes (deleted = 1)
      * This methods works only with dbCalls
      *
-     * @return boolean|mixed
+     * @return bool|mixed
      */
     protected function doPurgeDeleted()
     {
@@ -399,7 +400,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $data      Data
-     * @param boolean    $returnSQL Set to true to return Query String
+     * @param bool       $returnSQL Set to true to return Query String
      *
      * @return mixed
      */
@@ -433,7 +434,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return integer|array|string|null
+     * @return int|array|string|null
      *
      * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
      */
@@ -447,7 +448,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return integer|array|string|null
+     * @return int|array|string|null
      */
     public function getIdValue($data)
     {
@@ -468,7 +469,7 @@ class Model extends BaseModel
      * determine the rows to operate on.
      * This methods works only with dbCalls
      *
-     * @param integer $size     Size
+     * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
      * @return void
@@ -507,8 +508,8 @@ class Model extends BaseModel
     /**
      * Override countAllResults to account for soft deleted accounts.
      *
-     * @param boolean $reset Reset
-     * @param boolean $test  Test
+     * @param bool $reset Reset
+     * @param bool $test  Test
      *
      * @return mixed
      */
@@ -534,6 +535,7 @@ class Model extends BaseModel
      * @param string|null $table Table name
      *
      * @return BaseBuilder
+     *
      * @throws ModelException
      */
     public function builder(?string $table = null)
@@ -577,9 +579,9 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param mixed        $key    Field name, or an array of field/value pairs
-     * @param string|null  $value  Field value, if $key is a single field
-     * @param boolean|null $escape Whether to escape values and identifiers
+     * @param mixed       $key    Field name, or an array of field/value pairs
+     * @param string|null $value  Field value, if $key is a single field
+     * @param bool|null   $escape Whether to escape values and identifiers
      *
      * @return $this
      */
@@ -602,7 +604,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return boolean
+     * @return bool
      */
     protected function shouldUpdate($data) : bool
     {
@@ -620,9 +622,9 @@ class Model extends BaseModel
      * it will attempt to convert it to an array.
      *
      * @param array|object|null $data     Data
-     * @param boolean           $returnID Whether insert ID should be returned or not.
+     * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return BaseResult|object|integer|string|false
+     * @return BaseResult|object|int|string|false
      *
      * @throws ReflectionException
      */
@@ -647,10 +649,10 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param integer|array|string|null $id   ID
-     * @param array|object|null         $data Data
+     * @param int|array|string|null $id   ID
+     * @param array|object|null     $data Data
      *
-     * @return boolean
+     * @return bool
      *
      * @throws ReflectionException
      */
@@ -676,8 +678,8 @@ class Model extends BaseModel
      * properties as an array with raw values.
      *
      * @param string|object $data        Data
-     * @param boolean       $onlyChanged Only Changed Property
-     * @param boolean       $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $onlyChanged Only Changed Property
+     * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
      * @return array|null Array
      *
@@ -713,7 +715,7 @@ class Model extends BaseModel
      *
      * @param string $name Name
      *
-     * @return boolean
+     * @return bool
      */
     public function __isset(string $name): bool
     {
@@ -765,7 +767,7 @@ class Model extends BaseModel
      * @param string|object $data        Data
      * @param string|null   $primaryKey  Primary Key
      * @param string        $dateFormat  Date Format
-     * @param boolean       $onlyChanged Only Changed
+     * @param bool          $onlyChanged Only Changed
      *
      * @return array
      *

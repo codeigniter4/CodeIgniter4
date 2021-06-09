@@ -26,11 +26,11 @@ interface UploadedFileInterface
     /**
      * Accepts the file information as would be filled in from the $_FILES array.
      *
-     * @param string  $path         The temporary location of the uploaded file.
-     * @param string  $originalName The client-provided filename.
-     * @param string  $mimeType     The type of file as provided by PHP
-     * @param integer $size         The size of the file, in bytes
-     * @param integer $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+     * @param string $path         The temporary location of the uploaded file.
+     * @param string $originalName The client-provided filename.
+     * @param string $mimeType     The type of file as provided by PHP
+     * @param int    $size         The size of the file, in bytes
+     * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
     public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null);
 
@@ -62,8 +62,8 @@ interface UploadedFileInterface
      * @param string $name       the name to rename the file to.
      *
      * @throws InvalidArgumentException if the $path specified is invalid.
-     * @throws RuntimeException on any error during the move operation.
-     * @throws RuntimeException on the second or subsequent call to the method.
+     * @throws RuntimeException         on any error during the move operation.
+     * @throws RuntimeException         on the second or subsequent call to the method.
      */
     public function move(string $targetPath, string $name = null);
 
@@ -74,7 +74,7 @@ interface UploadedFileInterface
      * the move() method will not work and certain properties, like
      * the tempName, will no longer be available.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMoved(): bool;
 
@@ -92,7 +92,8 @@ interface UploadedFileInterface
      * the file in the $_FILES array.
      *
      * @see    http://php.net/manual/en/features.file-upload.errors.php
-     * @return integer One of PHP's UPLOAD_ERR_XXX constants.
+     *
+     * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError(): int;
 
@@ -109,7 +110,7 @@ interface UploadedFileInterface
      * the file in the $_FILES array.
      *
      * @return string The filename sent by the client or null if none
-     *     was provided.
+     *                was provided.
      */
     public function getName(): string;
 
@@ -150,7 +151,7 @@ interface UploadedFileInterface
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid(): bool;
 
@@ -163,9 +164,9 @@ interface UploadedFileInterface
      * last element is an integer as there may be cases that the delimiter may be present in the filename.
      * For the all other cases, it appends an integer starting from zero before the file's extension.
      *
-     * @param string  $destination
-     * @param string  $delimiter
-     * @param integer $i
+     * @param string $destination
+     * @param string $delimiter
+     * @param int    $i
      *
      * @return string
      */

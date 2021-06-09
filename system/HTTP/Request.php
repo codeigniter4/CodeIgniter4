@@ -72,7 +72,7 @@ class Request extends Message implements MessageInterface, RequestInterface
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @return boolean
+     * @return bool
      *
      * @deprecated Use Validation instead
      *
@@ -86,7 +86,7 @@ class Request extends Message implements MessageInterface, RequestInterface
     /**
      * Get the request method.
      *
-     * @param boolean $upper Whether to return in upper or lower case.
+     * @param bool $upper Whether to return in upper or lower case.
      *
      * @return string
      *

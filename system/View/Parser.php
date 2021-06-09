@@ -65,7 +65,7 @@ class Parser extends View
      * @param ViewConfig      $config
      * @param string          $viewPath
      * @param mixed           $loader
-     * @param boolean         $debug
+     * @param bool            $debug
      * @param LoggerInterface $logger
      */
     public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
@@ -84,9 +84,9 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified template view,
      * replacing them with any data that has already been set.
      *
-     * @param string  $view
-     * @param array   $options
-     * @param boolean $saveData
+     * @param string $view
+     * @param array  $options
+     * @param bool   $saveData
      *
      * @return string
      */
@@ -149,9 +149,9 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified string,
      * replacing them with any data that has already been set.
      *
-     * @param string  $template
-     * @param array   $options
-     * @param boolean $saveData
+     * @param string $template
+     * @param array  $options
+     * @param bool   $saveData
      *
      * @return string
      */
@@ -273,8 +273,9 @@ class Parser extends View
     /**
      * Parse a single key/value, extracting it
      *
-     * @param  string $key
-     * @param  string $val
+     * @param string $key
+     * @param string $val
+     *
      * @return array
      */
     protected function parseSingle(string $key, string $val): array
@@ -291,9 +292,10 @@ class Parser extends View
      *
      * Parses tag pairs: {some_tag} string... {/some_tag}
      *
-     * @param  string $variable
-     * @param  array  $data
-     * @param  string $template
+     * @param string $variable
+     * @param array  $data
+     * @param string $template
+     *
      * @return array
      */
     protected function parsePair(string $variable, array $data, string $template): array
@@ -503,8 +505,9 @@ class Parser extends View
     /**
      * Over-ride the substitution field delimiters.
      *
-     * @param  string $leftDelimiter
-     * @param  string $rightDelimiter
+     * @param string $leftDelimiter
+     * @param string $rightDelimiter
+     *
      * @return RendererInterface
      */
     public function setDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
@@ -521,10 +524,10 @@ class Parser extends View
      * Handles replacing a pseudo-variable with the actual content. Will double-check
      * for escaping brackets.
      *
-     * @param mixed   $pattern
-     * @param string  $content
-     * @param string  $template
-     * @param boolean $escape
+     * @param mixed  $pattern
+     * @param string $content
+     * @param string $template
+     * @param bool   $escape
      *
      * @return string
      */
@@ -556,9 +559,9 @@ class Parser extends View
     /**
      * Callback used during parse() to apply any filters to the value.
      *
-     * @param array   $matches
-     * @param string  $replace
-     * @param boolean $escape
+     * @param array  $matches
+     * @param string $replace
+     * @param bool   $escape
      *
      * @return string
      */
@@ -727,8 +730,7 @@ class Parser extends View
      *
      * @param string   $alias
      * @param callable $callback
-     *
-     * @param boolean  $isPair
+     * @param bool     $isPair
      *
      * @return $this
      */

@@ -32,7 +32,7 @@ class PreparedQuery extends BasePreparedQuery
      * The result resource from a successful
      * pg_exec. Or false.
      *
-     * @var Result|boolean
+     * @var Result|bool
      */
     protected $result;
 
@@ -48,6 +48,7 @@ class PreparedQuery extends BasePreparedQuery
      *                        Unused in the MySQLi driver.
      *
      * @return mixed
+     *
      * @throws Exception
      */
     public function _prepare(string $sql, array $options = [])
@@ -74,7 +75,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $data
      *
-     * @return boolean
+     * @return bool
      */
     public function _execute(array $data): bool
     {

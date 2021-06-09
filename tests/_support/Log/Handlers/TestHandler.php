@@ -44,7 +44,7 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      * @param $level
      * @param $message
      *
-     * @return boolean
+     * @return bool
      */
     public function handle($level, $message): bool
     {

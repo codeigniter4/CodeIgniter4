@@ -23,7 +23,7 @@ class Result extends BaseResult
     /**
      * Gets the number of fields in the result set.
      *
-     * @return integer
+     * @return int
      */
     public function getFieldCount(): int
     {
@@ -129,7 +129,7 @@ class Result extends BaseResult
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @param integer $n
+     * @param int $n
      *
      * @return mixed
      */
@@ -161,7 +161,7 @@ class Result extends BaseResult
      *
      * @param string $className
      *
-     * @return object|boolean|Entity
+     * @return object|bool|Entity
      */
     protected function fetchObject(string $className = 'stdClass')
     {
@@ -177,7 +177,7 @@ class Result extends BaseResult
     /**
      * Returns the number of rows in the resultID (i.e., mysqli_result object)
      *
-     * @return integer number of rows in a query result
+     * @return int number of rows in a query result
      */
     public function getNumRows(): int
     {

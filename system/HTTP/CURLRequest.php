@@ -251,8 +251,8 @@ class CURLRequest extends Request
     /**
      * Set form data to be sent.
      *
-     * @param array   $params
-     * @param boolean $multipart Set TRUE if you are sending CURLFiles
+     * @param array $params
+     * @param bool  $multipart Set TRUE if you are sending CURLFiles
      *
      * @return $this
      */
@@ -347,7 +347,7 @@ class CURLRequest extends Request
      * Get the request method. Overrides the Request class' method
      * since users expect a different answer here.
      *
-     * @param boolean|false $upper Whether to return in upper or lower case.
+     * @param bool|false $upper Whether to return in upper or lower case.
      *
      * @return string
      */
@@ -552,9 +552,11 @@ class CURLRequest extends Request
     /**
      * Set CURL options
      *
-     * @param  array $curlOptions
-     * @param  array $config
+     * @param array $curlOptions
+     * @param array $config
+     *
      * @return array
+     *
      * @throws InvalidArgumentException
      */
     protected function setCURLOptions(array $curlOptions = [], array $config = [])

@@ -36,7 +36,7 @@ class FileHandler extends BaseHandler
      * Mode for the stored files.
      * Must be chmod-safe (octal).
      *
-     * @var integer
+     * @var int
      *
      * @see https://www.php.net/manual/en/function.chmod.php
      */
@@ -47,7 +47,8 @@ class FileHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param  Cache $config
+     * @param Cache $config
+     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
@@ -101,11 +102,11 @@ class FileHandler extends BaseHandler
     /**
      * Saves an item to the cache store.
      *
-     * @param string  $key   Cache item name
-     * @param mixed   $value The data to save
-     * @param integer $ttl   Time To Live, in seconds (default 60)
+     * @param string $key   Cache item name
+     * @param mixed  $value The data to save
+     * @param int    $ttl   Time To Live, in seconds (default 60)
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -140,7 +141,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $key Cache item name
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function delete(string $key)
     {
@@ -156,7 +157,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $pattern Cache items glob-style pattern
      *
-     * @return integer The number of deleted items
+     * @return int The number of deleted items
      */
     public function deleteMatching(string $pattern)
     {
@@ -176,10 +177,10 @@ class FileHandler extends BaseHandler
     /**
      * Performs atomic incrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
-     * @return boolean
+     * @return bool
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -205,10 +206,10 @@ class FileHandler extends BaseHandler
     /**
      * Performs atomic decrementation of a raw stored value.
      *
-     * @param string  $key    Cache ID
-     * @param integer $offset Step/value to increase by
+     * @param string $key    Cache ID
+     * @param int    $offset Step/value to increase by
      *
-     * @return boolean
+     * @return bool
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -234,7 +235,7 @@ class FileHandler extends BaseHandler
     /**
      * Will delete all items in the entire cache.
      *
-     * @return boolean Success or failure
+     * @return bool Success or failure
      */
     public function clean()
     {
@@ -264,9 +265,9 @@ class FileHandler extends BaseHandler
      * @param string $key Cache item name.
      *
      * @return array|false|null
-     *   Returns null if the item does not exist, otherwise array<string, mixed>
-     *   with at least the 'expire' key for absolute epoch expiry (or null).
-     *   Some handlers may return false when an item does not exist, which is deprecated.
+     *                          Returns null if the item does not exist, otherwise array<string, mixed>
+     *                          with at least the 'expire' key for absolute epoch expiry (or null).
+     *                          Some handlers may return false when an item does not exist, which is deprecated.
      */
     public function getMetaData(string $key)
     {
@@ -288,7 +289,7 @@ class FileHandler extends BaseHandler
     /**
      * Determines if the driver is supported on this system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSupported(): bool
     {
@@ -303,7 +304,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $filename
      *
-     * @return boolean|mixed
+     * @return bool|mixed
      */
     protected function getItem(string $filename)
     {
@@ -341,7 +342,7 @@ class FileHandler extends BaseHandler
      * @param string $data
      * @param string $mode
      *
-     * @return boolean
+     * @return bool
      */
     protected function writeFile($path, $data, $mode = 'wb')
     {
@@ -373,12 +374,12 @@ class FileHandler extends BaseHandler
      * If the second parameter is set to TRUE, any directories contained
      * within the supplied base directory will be nuked as well.
      *
-     * @param string  $path   File path
-     * @param boolean $delDir Whether to delete any directories found in the path
-     * @param boolean $htdocs Whether to skip deleting .htaccess and index page files
-     * @param integer $_level Current directory depth level (default: 0; internal use only)
+     * @param string $path   File path
+     * @param bool   $delDir Whether to delete any directories found in the path
+     * @param bool   $htdocs Whether to skip deleting .htaccess and index page files
+     * @param int    $_level Current directory depth level (default: 0; internal use only)
      *
-     * @return boolean
+     * @return bool
      */
     protected function deleteFiles(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
     {
@@ -414,9 +415,9 @@ class FileHandler extends BaseHandler
      *
      * Any sub-folders contained within the specified path are read as well.
      *
-     * @param string  $sourceDir    Path to source
-     * @param boolean $topLevelOnly Look only at the top level directory specified?
-     * @param boolean $_recursion   Internal variable to determine recursion status - do not use in calls
+     * @param string $sourceDir    Path to source
+     * @param bool   $topLevelOnly Look only at the top level directory specified?
+     * @param bool   $_recursion   Internal variable to determine recursion status - do not use in calls
      *
      * @return array|false
      */

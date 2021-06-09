@@ -70,10 +70,11 @@ class Cell
      *
      * @param string      $library
      * @param null        $params
-     * @param integer     $ttl
+     * @param int         $ttl
      * @param string|null $cacheName
      *
      * @return string
+     *
      * @throws ReflectionException
      */
     public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string

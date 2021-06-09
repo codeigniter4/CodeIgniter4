@@ -33,7 +33,8 @@ class Honeypot
     /**
      * Constructor.
      *
-     * @param  HoneypotConfig $config
+     * @param HoneypotConfig $config
+     *
      * @throws HoneypotException
      */
     public function __construct(HoneypotConfig $config)
@@ -87,7 +88,8 @@ class Honeypot
      * Prepares the template by adding label
      * content and field name.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return string
      */
     protected function prepareTemplate(string $template): string

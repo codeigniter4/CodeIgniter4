@@ -28,21 +28,21 @@ class UserAgent
     /**
      * Flag for if the user-agent belongs to a browser
      *
-     * @var boolean
+     * @var bool
      */
     protected $isBrowser = false;
 
     /**
      * Flag for if the user-agent is a robot
      *
-     * @var boolean
+     * @var bool
      */
     protected $isRobot = false;
 
     /**
      * Flag for if the user-agent is a mobile browser
      *
-     * @var boolean
+     * @var bool
      */
     protected $isMobile = false;
 
@@ -121,7 +121,7 @@ class UserAgent
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function isBrowser(string $key = null): bool
     {
@@ -145,7 +145,7 @@ class UserAgent
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function isRobot(string $key = null): bool
     {
@@ -169,7 +169,7 @@ class UserAgent
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function isMobile(string $key = null): bool
     {
@@ -191,7 +191,7 @@ class UserAgent
     /**
      * Is this a referral from another site?
      *
-     * @return boolean
+     * @return bool
      */
     public function isReferral(): bool
     {
@@ -344,7 +344,7 @@ class UserAgent
     /**
      * Set the Platform
      *
-     * @return boolean
+     * @return bool
      */
     protected function setPlatform(): bool
     {
@@ -368,7 +368,7 @@ class UserAgent
     /**
      * Set the Browser
      *
-     * @return boolean
+     * @return bool
      */
     protected function setBrowser(): bool
     {
@@ -393,7 +393,7 @@ class UserAgent
     /**
      * Set the Robot
      *
-     * @return boolean
+     * @return bool
      */
     protected function setRobot(): bool
     {
@@ -417,7 +417,7 @@ class UserAgent
     /**
      * Set the Mobile Device
      *
-     * @return boolean
+     * @return bool
      */
     protected function setMobile(): bool
     {

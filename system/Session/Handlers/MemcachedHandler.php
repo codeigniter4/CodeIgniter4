@@ -44,7 +44,7 @@ class MemcachedHandler extends BaseHandler
     /**
      * Number of seconds until the session ends.
      *
-     * @var integer
+     * @var int
      */
     protected $sessionExpiration = 7200;
 
@@ -53,8 +53,9 @@ class MemcachedHandler extends BaseHandler
     /**
      * Constructor
      *
-     * @param  AppConfig $config
-     * @param  string    $ipAddress
+     * @param AppConfig $config
+     * @param string    $ipAddress
+     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -86,7 +87,7 @@ class MemcachedHandler extends BaseHandler
      * @param string $savePath Server path(s)
      * @param string $name     Session cookie name, unused
      *
-     * @return boolean
+     * @return bool
      */
     public function open($savePath, $name): bool
     {
@@ -140,7 +141,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string    Serialized session data
+     * @return string Serialized session data
      */
     public function read($sessionID): string
     {
@@ -169,7 +170,7 @@ class MemcachedHandler extends BaseHandler
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
      *
-     * @return boolean
+     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -213,7 +214,7 @@ class MemcachedHandler extends BaseHandler
      *
      * Releases locks and closes connection.
      *
-     * @return boolean
+     * @return bool
      */
     public function close(): bool
     {
@@ -241,7 +242,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $sessionId Session ID
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($sessionId): bool
     {
@@ -261,9 +262,9 @@ class MemcachedHandler extends BaseHandler
      *
      * Deletes expired sessions
      *
-     * @param integer $maxlifetime Maximum lifetime of sessions
+     * @param int $maxlifetime Maximum lifetime of sessions
      *
-     * @return boolean
+     * @return bool
      */
     public function gc($maxlifetime): bool
     {
@@ -280,7 +281,7 @@ class MemcachedHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return boolean
+     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -327,7 +328,7 @@ class MemcachedHandler extends BaseHandler
      *
      * Releases a previously acquired lock
      *
-     * @return boolean
+     * @return bool
      */
     protected function releaseLock(): bool
     {

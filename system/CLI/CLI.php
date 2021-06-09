@@ -39,7 +39,7 @@ class CLI
     /**
      * Is the readline library on the system?
      *
-     * @var boolean
+     * @var bool
      */
     public static $readline_support = false;
 
@@ -53,7 +53,7 @@ class CLI
     /**
      * Has the class already been initialized?
      *
-     * @var boolean
+     * @var bool
      */
     protected static $initialized = false;
 
@@ -122,21 +122,21 @@ class CLI
     /**
      * Height of the CLI window
      *
-     * @var integer|null
+     * @var int|null
      */
     protected static $height;
 
     /**
      * Width of the CLI window
      *
-     * @var integer|null
+     * @var int|null
      */
     protected static $width;
 
     /**
      * Whether the current stream supports colored output.
      *
-     * @var boolean
+     * @var bool
      */
     protected static $isColored = false;
 
@@ -180,7 +180,8 @@ class CLI
      * Named options must be in the following formats:
      * php index.php user -v --v -name=John --name=John
      *
-     * @param  string $prefix
+     * @param string $prefix
+     *
      * @return string
      *
      * @codeCoverageIgnore
@@ -280,7 +281,7 @@ class CLI
      * @param string       $value Input value
      * @param string|array $rules Validation rules
      *
-     * @return boolean
+     * @return bool
      *
      * @codeCoverageIgnore
      */
@@ -378,7 +379,7 @@ class CLI
     /**
      * Beeps a certain number of times.
      *
-     * @param integer $num The number of times to beep
+     * @param int $num The number of times to beep
      */
     public static function beep(int $num = 1)
     {
@@ -391,8 +392,8 @@ class CLI
      * Waits a certain number of seconds, optionally showing a wait message and
      * waiting for a key press.
      *
-     * @param integer $seconds   Number of seconds
-     * @param boolean $countdown Show a countdown or not
+     * @param int  $seconds   Number of seconds
+     * @param bool $countdown Show a countdown or not
      */
     public static function wait(int $seconds, bool $countdown = false)
     {
@@ -422,7 +423,7 @@ class CLI
     /**
      * if operating system === windows
      *
-     * @return boolean
+     * @return bool
      */
     public static function isWindows(): bool
     {
@@ -434,7 +435,7 @@ class CLI
     /**
      * Enter a number of empty lines
      *
-     * @param integer $num Number of lines to output
+     * @param int $num Number of lines to output
      *
      * @return void
      */
@@ -475,7 +476,7 @@ class CLI
      * @param string $background The background color
      * @param string $format     Other formatting to apply. Currently only 'underline' is understood
      *
-     * @return string    The color coded string
+     * @return string The color coded string
      */
     public static function color(string $text, string $foreground, string $background = null, string $format = null): string
     {
@@ -536,7 +537,7 @@ class CLI
      *
      * @param string $string
      *
-     * @return integer
+     * @return int
      */
     public static function strlen(?string $string): int
     {
@@ -566,7 +567,7 @@ class CLI
      * @param string   $function
      * @param resource $resource
      *
-     * @return boolean
+     * @return bool
      */
     public static function streamSupports(string $function, $resource): bool
     {
@@ -594,7 +595,7 @@ class CLI
      *
      * @param resource $resource
      *
-     * @return boolean
+     * @return bool
      */
     public static function hasColorSupport($resource): bool
     {
@@ -625,9 +626,9 @@ class CLI
     /**
      * Attempts to determine the width of the viewable CLI window.
      *
-     * @param integer $default
+     * @param int $default
      *
-     * @return integer
+     * @return int
      */
     public static function getWidth(int $default = 80): int
     {
@@ -643,9 +644,9 @@ class CLI
     /**
      * Attempts to determine the height of the viewable CLI window.
      *
-     * @param integer $default
+     * @param int $default
      *
-     * @return integer
+     * @return int
      */
     public static function getHeight(int $default = 32): int
     {
@@ -713,8 +714,8 @@ class CLI
      * Displays a progress bar on the CLI. You must call it repeatedly
      * to update it. Set $thisStep = false to erase the progress bar.
      *
-     * @param integer|boolean $thisStep
-     * @param integer         $totalSteps
+     * @param int|bool $thisStep
+     * @param int      $totalSteps
      */
     public static function showProgress($thisStep = 1, int $totalSteps = 10)
     {
@@ -754,9 +755,9 @@ class CLI
      * will padded with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
      *
-     * @param string  $string
-     * @param integer $max
-     * @param integer $padLeft
+     * @param string $string
+     * @param int    $max
+     * @param int    $padLeft
      *
      * @return string
      */
@@ -867,7 +868,7 @@ class CLI
      *
      * **IMPORTANT:** The index here is one-based instead of zero-based.
      *
-     * @param integer $index
+     * @param int $index
      *
      * @return mixed|null
      */
@@ -896,7 +897,7 @@ class CLI
      *
      * @param string $name
      *
-     * @return boolean|mixed|null
+     * @return bool|mixed|null
      */
     public static function getOption(string $name)
     {
@@ -929,8 +930,8 @@ class CLI
      * Returns the options as a string, suitable for passing along on
      * the CLI to other commands.
      *
-     * @param boolean $useLongOpts Use '--' for long options?
-     * @param boolean $trim        Trim final string output?
+     * @param bool $useLongOpts Use '--' for long options?
+     * @param bool $trim        Trim final string output?
      *
      * @return string
      */

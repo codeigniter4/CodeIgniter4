@@ -123,7 +123,7 @@ class TestResponse extends TestCase
      * Boils down the possible responses into a boolean valid/not-valid
      * response type.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOK(): bool
     {
@@ -141,7 +141,7 @@ class TestResponse extends TestCase
     /**
      * Asserts that the status is a specific value.
      *
-     * @param integer $code
+     * @param int $code
      *
      * @throws Exception
      */
@@ -177,7 +177,7 @@ class TestResponse extends TestCase
     /**
      * Returns whether or not the Response was a redirect or RedirectResponse
      *
-     * @return boolean
+     * @return bool
      */
     public function isRedirect(): bool
     {
@@ -387,8 +387,8 @@ class TestResponse extends TestCase
     /**
      * Test that the response contains a matching JSON fragment.
      *
-     * @param array   $fragment
-     * @param boolean $strict
+     * @param array $fragment
+     * @param bool  $strict
      *
      * @throws Exception
      */
@@ -525,8 +525,9 @@ class TestResponse extends TestCase
     /**
      * Forward any unrecognized method calls to our DOMParser instance.
      *
-     * @param  string $function Method name
-     * @param  mixed  $params   Any method parameters
+     * @param string $function Method name
+     * @param mixed  $params   Any method parameters
+     *
      * @return mixed
      */
     public function __call($function, $params)

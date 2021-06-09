@@ -20,7 +20,7 @@ class Files extends BaseCollector
      * Whether this collector has data that can
      * be displayed in the Timeline.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTimeline = false;
 
@@ -28,7 +28,7 @@ class Files extends BaseCollector
      * Whether this collector needs to display
      * content in a tab or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasTabContent = true;
 
@@ -95,7 +95,7 @@ class Files extends BaseCollector
     /**
      * Displays the number of included files as a badge in the tab button.
      *
-     * @return integer
+     * @return int
      */
     public function getBadgeValue(): int
     {

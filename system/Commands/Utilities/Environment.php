@@ -124,7 +124,7 @@ final class Environment extends BaseCommand
      *
      * @param string $newEnv
      *
-     * @return boolean
+     * @return bool
      */
     private function writeNewEnvironmentToEnvFile(string $newEnv): bool
     {

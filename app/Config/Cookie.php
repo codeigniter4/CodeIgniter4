@@ -27,7 +27,7 @@ class Cookie extends BaseConfig
      * cookie will not have the `Expires` attribute and will behave as a session
      * cookie.
      *
-     * @var DateTimeInterface|integer|string
+     * @var DateTimeInterface|int|string
      */
     public $expires = 0;
 
@@ -60,7 +60,7 @@ class Cookie extends BaseConfig
      *
      * Cookie will only be set if a secure HTTPS connection exists.
      *
-     * @var boolean
+     * @var bool
      */
     public $secure = false;
 
@@ -71,7 +71,7 @@ class Cookie extends BaseConfig
      *
      * Cookie will only be accessible via HTTP(S) (no JavaScript).
      *
-     * @var boolean
+     * @var bool
      */
     public $httponly = true;
 
@@ -110,7 +110,7 @@ class Cookie extends BaseConfig
      * If this is set to `true`, cookie names should be compliant of RFC 2616's
      * list of allowed characters.
      *
-     * @var boolean
+     * @var bool
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2

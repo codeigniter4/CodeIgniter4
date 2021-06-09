@@ -59,14 +59,14 @@ class UploadedFile extends File implements UploadedFileInterface
      * The error constant of the upload
      * (one of PHP's UPLOADERRXXX constants)
      *
-     * @var integer
+     * @var int
      */
     protected $error;
 
     /**
      * Whether the file has been moved already or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasMoved = false;
 
@@ -75,11 +75,11 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * Accepts the file information as would be filled in from the $_FILES array.
      *
-     * @param string  $path         The temporary location of the uploaded file.
-     * @param string  $originalName The client-provided filename.
-     * @param string  $mimeType     The type of file as provided by PHP
-     * @param integer $size         The size of the file, in bytes
-     * @param integer $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+     * @param string $path         The temporary location of the uploaded file.
+     * @param string $originalName The client-provided filename.
+     * @param string $mimeType     The type of file as provided by PHP
+     * @param int    $size         The size of the file, in bytes
+     * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
     public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
     {
@@ -117,16 +117,16 @@ class UploadedFile extends File implements UploadedFileInterface
      * @see http://php.net/is_uploaded_file
      * @see http://php.net/move_uploaded_file
      *
-     * @param string  $targetPath Path to which to move the uploaded file.
-     * @param string  $name       the name to rename the file to.
-     * @param boolean $overwrite  State for indicating whether to overwrite the previously generated file with the same
-     *                            name or not.
+     * @param string $targetPath Path to which to move the uploaded file.
+     * @param string $name       the name to rename the file to.
+     * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
+     *                           name or not.
      *
-     * @return boolean
+     * @return bool
      *
      * @throws InvalidArgumentException if the $path specified is invalid.
-     * @throws RuntimeException on any error during the move operation.
-     * @throws RuntimeException on the second or subsequent call to the method.
+     * @throws RuntimeException         on any error during the move operation.
+     * @throws RuntimeException         on the second or subsequent call to the method.
      */
     public function move(string $targetPath, string $name = null, bool $overwrite = false)
     {
@@ -192,7 +192,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * the move() method will not work and certain properties, like
      * the tempName, will no longer be available.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMoved(): bool
     {
@@ -213,7 +213,8 @@ class UploadedFile extends File implements UploadedFileInterface
      * the file in the $_FILES array.
      *
      * @see    http://php.net/manual/en/features.file-upload.errors.php
-     * @return integer One of PHP's UPLOAD_ERR_XXX constants.
+     *
+     * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError(): int
     {
@@ -348,7 +349,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid(): bool
     {
@@ -361,8 +362,9 @@ class UploadedFile extends File implements UploadedFileInterface
      * By default, upload files are saved in writable/uploads directory. The YYYYMMDD folder
      * and random file name will be created.
      *
-     * @param  string $folderName the folder name to writable/uploads directory.
-     * @param  string $fileName   the name to rename the file to.
+     * @param string $folderName the folder name to writable/uploads directory.
+     * @param string $fileName   the name to rename the file to.
+     *
      * @return string file full path
      */
     public function store(string $folderName = null, string $fileName = null): string

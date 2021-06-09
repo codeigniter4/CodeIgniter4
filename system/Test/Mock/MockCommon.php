@@ -16,8 +16,9 @@ if (! function_exists('is_cli')) {
      * Test to see if a request was made from the command line.
      * You can set the return value for testing.
      *
-     * @param  boolean $newReturn return value to set
-     * @return boolean
+     * @param bool $newReturn return value to set
+     *
+     * @return bool
      */
     function is_cli(bool $newReturn = null): bool
     {

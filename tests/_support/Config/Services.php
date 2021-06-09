@@ -17,8 +17,8 @@ class Services extends BaseServices
     /**
      * The URI class provides a way to model and manipulate URIs.
      *
-     * @param string  $uri
-     * @param boolean $getShared
+     * @param string $uri
+     * @param bool   $getShared
      *
      * @return URI
      */

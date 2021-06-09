@@ -61,8 +61,8 @@ class Iterator
      * time to execute the desired number of iterations, and the approximate
      * memory usage used during those iterations.
      *
-     * @param integer $iterations
-     * @param boolean $output
+     * @param int  $iterations
+     * @param bool $output
      *
      * @return string|null
      */

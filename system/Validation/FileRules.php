@@ -51,7 +51,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $name
      *
-     * @return boolean
+     * @return bool
      */
     public function uploaded(?string $blank, string $name): bool
     {
@@ -89,7 +89,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $params
      *
-     * @return boolean
+     * @return bool
      */
     public function max_size(?string $blank, string $params): bool
     {
@@ -132,7 +132,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $params
      *
-     * @return boolean
+     * @return bool
      */
     public function is_image(?string $blank, string $params): bool
     {
@@ -174,7 +174,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $params
      *
-     * @return boolean
+     * @return bool
      */
     public function mime_in(?string $blank, string $params): bool
     {
@@ -212,7 +212,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $params
      *
-     * @return boolean
+     * @return bool
      */
     public function ext_in(?string $blank, string $params): bool
     {
@@ -251,7 +251,7 @@ class FileRules
      * @param string|null $blank
      * @param string      $params
      *
-     * @return boolean
+     * @return bool
      */
     public function max_dims(?string $blank, string $params): bool
     {

@@ -21,7 +21,7 @@ class ConfigException extends CriticalError
     /**
      * Error code
      *
-     * @var integer
+     * @var int
      */
     protected $code = 3;
 

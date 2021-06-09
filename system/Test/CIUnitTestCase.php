@@ -75,28 +75,28 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Should run db migration?
      *
-     * @var boolean
+     * @var bool
      */
     protected $migrate = true;
 
     /**
      * Should run db migration only once?
      *
-     * @var boolean
+     * @var bool
      */
     protected $migrateOnce = false;
 
     /**
      * Should run seeding only once?
      *
-     * @var boolean
+     * @var bool
      */
     protected $seedOnce = false;
 
     /**
      * Should the db be refreshed before test?
      *
-     * @var boolean
+     * @var bool
      */
     protected $refresh = true;
 
@@ -186,7 +186,7 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Enabled auto clean op buffer after request call
      *
-     * @var boolean
+     * @var bool
      */
     protected $clean = true;
 
@@ -348,7 +348,8 @@ abstract class CIUnitTestCase extends TestCase
      * @param string      $level
      * @param string|null $expectedMessage
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws Exception
      */
     public function assertLogged(string $level, $expectedMessage = null)
@@ -370,7 +371,8 @@ abstract class CIUnitTestCase extends TestCase
      *
      * @param string $eventName
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws Exception
      */
     public function assertEventTriggered(string $eventName): bool
@@ -396,8 +398,8 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string  $header     The leading portion of the header we are looking for
-     * @param boolean $ignoreCase
+     * @param string $header     The leading portion of the header we are looking for
+     * @param bool   $ignoreCase
      *
      * @throws Exception
      */
@@ -425,8 +427,8 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string  $header     The leading portion of the header we don't want to find
-     * @param boolean $ignoreCase
+     * @param string $header     The leading portion of the header we don't want to find
+     * @param bool   $ignoreCase
      *
      * @throws Exception
      */
@@ -457,10 +459,10 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param integer $expected
-     * @param mixed   $actual
-     * @param string  $message
-     * @param integer $tolerance
+     * @param int    $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param int    $tolerance
      *
      * @throws Exception
      */
@@ -477,12 +479,13 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed   $expected
-     * @param mixed   $actual
-     * @param string  $message
-     * @param integer $tolerance
+     * @param mixed  $expected
+     * @param mixed  $actual
+     * @param string $message
+     * @param int    $tolerance
      *
-     * @return void|boolean
+     * @return void|bool
+     *
      * @throws Exception
      */
     public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
@@ -528,8 +531,8 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Return first matching emitted header.
      *
-     * @param string  $header     Identifier of the header of interest
-     * @param boolean $ignoreCase
+     * @param string $header     Identifier of the header of interest
+     * @param bool   $ignoreCase
      *
      * @return string|null The value of the header found, null if not found
      */

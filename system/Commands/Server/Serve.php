@@ -68,14 +68,14 @@ class Serve extends BaseCommand
     /**
      * The current port offset.
      *
-     * @var integer
+     * @var int
      */
     protected $portOffset = 0;
 
     /**
      * The max number of ports to attempt to serve from
      *
-     * @var integer
+     * @var int
      */
     protected $tries = 10;
 

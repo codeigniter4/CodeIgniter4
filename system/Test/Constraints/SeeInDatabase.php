@@ -11,7 +11,7 @@ class SeeInDatabase extends Constraint
      * The number of results that will show in the database
      * in case of failure.
      *
-     * @var integer
+     * @var int
      */
     protected $show = 3;
 
@@ -44,7 +44,7 @@ class SeeInDatabase extends Constraint
      *
      * @param mixed $table
      *
-     * @return boolean
+     * @return bool
      */
     public function matches($table): bool
     {
@@ -110,7 +110,7 @@ class SeeInDatabase extends Constraint
     /**
      * Gets a string representation of the constraint
      *
-     * @param integer $options
+     * @param int $options
      *
      * @return string
      */
