@@ -77,10 +77,11 @@ final class CodeIgniter4 extends AbstractRuleset
                     'str',
                 ],
             ],
-            'phpdoc_separation'          => true,
-            'static_lambda'              => true,
-            'ternary_to_null_coalescing' => true,
-            'yoda_style'                 => [
+            'phpdoc_separation'               => true,
+            'static_lambda'                   => true,
+            'ternary_to_null_coalescing'      => true,
+            'whitespace_after_comma_in_array' => true,
+            'yoda_style'                      => [
                 'equal'                => false,
                 'identical'            => null,
                 'less_and_greater'     => false,
