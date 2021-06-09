@@ -126,8 +126,8 @@ class FormatRules
      */
     public function decimal(?string $str = null): bool
     {
-        // @see https://regex101.com/r/HULifl/1/
-        return (bool) preg_match('/\A[-+]?[0-9]{0,}\.?[0-9]+\z/', $str);
+        // @see https://regex101.com/r/HULifl/2/
+        return (bool) preg_match('/\A[-+]?\d{0,}\.?\d+\z/', $str);
     }
 
     /**
@@ -151,7 +151,7 @@ class FormatRules
      */
     public function integer(?string $str = null): bool
     {
-        return (bool) preg_match('/\A[\-+]?[0-9]+\z/', $str);
+        return (bool) preg_match('/\A[\-+]?\d+\z/', $str);
     }
 
     /**
@@ -187,8 +187,8 @@ class FormatRules
      */
     public function numeric(?string $str = null): bool
     {
-        // @see https://regex101.com/r/bb9wtr/1
-        return (bool) preg_match('/\A[\-+]?[0-9]*\.?[0-9]+\z/', $str);
+        // @see https://regex101.com/r/bb9wtr/2
+        return (bool) preg_match('/\A[\-+]?\d*\.?\d+\z/', $str);
     }
 
     /**
