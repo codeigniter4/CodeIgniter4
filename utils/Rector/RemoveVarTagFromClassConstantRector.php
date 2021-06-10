@@ -6,10 +6,10 @@ namespace Utils\Rector;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassConst;
+use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 
 final class RemoveVarTagFromClassConstantRector extends AbstractRector
 {

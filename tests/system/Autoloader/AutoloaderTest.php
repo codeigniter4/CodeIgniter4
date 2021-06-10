@@ -2,11 +2,11 @@
 
 namespace CodeIgniter\Autoloader;
 
-use UnnamespacedClass;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use UnnamespacedClass;
 
 class AutoloaderTest extends CIUnitTestCase
 {

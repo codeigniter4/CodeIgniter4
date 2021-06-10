@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Test\Mock;
 
+use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
-use Closure;
 
 class MockCache extends BaseHandler implements CacheInterface
 {

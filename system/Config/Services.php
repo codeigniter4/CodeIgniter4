@@ -65,10 +65,10 @@ use Config\Honeypot as HoneypotConfig;
 use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
+use Config\Services as AppServices;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
-use Config\Services as AppServices;
 
 /**
  * Services Configuration file.

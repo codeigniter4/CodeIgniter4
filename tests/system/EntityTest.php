@@ -3,8 +3,8 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Entity\Exceptions\CastException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;

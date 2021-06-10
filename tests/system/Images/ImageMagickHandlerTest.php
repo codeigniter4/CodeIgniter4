@@ -2,11 +2,11 @@
 
 namespace CodeIgniter\Images;
 
-use Imagick;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
+use Imagick;
 
 /**
  * Unit testing for the ImageMagick image handler.
