@@ -103,10 +103,10 @@ class ResponseTraitTest extends CIUnitTestCase
         $this->assertEquals(201, $this->response->getStatusCode());
 
         $expected = <<<EOH
-{
-    "id": 3
-}
-EOH;
+            {
+                "id": 3
+            }
+            EOH;
         $this->assertEquals($expected, $this->response->getBody());
     }
 
@@ -125,10 +125,10 @@ EOH;
         $controller      = $this->makeController();
         $payload         = ['answer' => 42];
         $expected        = <<<EOH
-{
-    "answer": 42
-}
-EOH;
+            {
+                "answer": 42
+            }
+            EOH;
         $controller->respond($payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -143,12 +143,12 @@ EOH;
             3,
         ];
         $expected = <<<EOH
-[
-    1,
-    2,
-    3
-]
-EOH;
+            [
+                1,
+                2,
+                3
+            ]
+            EOH;
         $controller->respond($payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -161,11 +161,11 @@ EOH;
         $payload->name   = 'Tom';
         $payload->id     = 1;
         $expected        = <<<EOH
-{
-    "name": "Tom",
-    "id": 1
-}
-EOH;
+            {
+                "name": "Tom",
+                "id": 1
+            }
+            EOH;
         $controller->respond((array) $payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -480,10 +480,10 @@ EOH;
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><id>3</id></response>
+            <?xml version="1.0"?>
+            <response><id>3</id></response>
 
-EOH;
+            EOH;
         $this->assertEquals($expected, $this->response->getBody());
     }
 

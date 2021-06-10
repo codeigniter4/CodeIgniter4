@@ -181,11 +181,11 @@ class ParserFilterTest extends CIUnitTestCase
 
         $template = '{ value1|highlight_code }';
         $expected = <<<EOF
-<code><span style="color: #000000">
-<span style="color: #0000BB">Sincerely&nbsp;</span>
-</span>
-</code>
-EOF;
+            <code><span style="color: #000000">
+            <span style="color: #0000BB">Sincerely&nbsp;</span>
+            </span>
+            </code>
+            EOF;
         $this->assertEquals($expected, $parser->renderString($template));
     }
 

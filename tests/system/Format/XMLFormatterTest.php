@@ -22,10 +22,10 @@ class XMLFormatterTest extends CIUnitTestCase
         ];
 
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><foo>bar</foo></response>
+            <?xml version="1.0"?>
+            <response><foo>bar</foo></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
@@ -37,10 +37,10 @@ EOH;
         ];
 
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><foo><item0>bar</item0></foo></response>
+            <?xml version="1.0"?>
+            <response><foo><item0>bar</item0></foo></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
@@ -52,10 +52,10 @@ EOH;
         ];
 
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><item0><item0>foo</item0></item0></response>
+            <?xml version="1.0"?>
+            <response><item0><item0>foo</item0></item0></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
@@ -64,10 +64,10 @@ EOH;
     {
         $data     = ['Something'];
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><item0>Something</item0></response>
+            <?xml version="1.0"?>
+            <response><item0>Something</item0></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
@@ -79,10 +79,10 @@ EOH;
             '096630FR'    => 'bar',
         ];
         $expected = <<<EOH
-<?xml version="1.0"?>
-<response><BBB096630BD>foo</BBB096630BD><item096630FR>bar</item096630FR></response>
+            <?xml version="1.0"?>
+            <response><BBB096630BD>foo</BBB096630BD><item096630FR>bar</item096630FR></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
@@ -96,10 +96,10 @@ EOH;
     public function testValidatingInvalidTags(string $expected, array $input)
     {
         $expectedXML = <<<EOH
-<?xml version="1.0"?>
-<response><{$expected}>bar</{$expected}></response>
+            <?xml version="1.0"?>
+            <response><{$expected}>bar</{$expected}></response>
 
-EOH;
+            EOH;
 
         $this->assertEquals($expectedXML, $this->xmlFormatter->format($input));
     }
@@ -172,42 +172,42 @@ EOH;
 
         // do not change to tabs!!
         $expectedXML = <<<EOF
-<?xml version="1.0"?>
-<response>
-  <data>
-    <master>
-      <name>Foo</name>
-      <email>foo@bar.com</email>
-      <dependents/>
-    </master>
-    <vote>
-      <list/>
-    </vote>
-    <user>
-      <account>
-        <demo>
-          <info>
-            <is_banned>true</is_banned>
-            <last_login>2020-08-31</last_login>
-            <last_login_ip>127.0.0.1</last_login_ip>
-          </info>
-        </demo>
-      </account>
-    </user>
-    <itemxml>
-      <itemxml_version>1.0</itemxml_version>
-      <itemxml_encoding>utf-8</itemxml_encoding>
-    </itemxml>
-    <item0>
-      <misc>miscellaneous</misc>
-    </item0>
-    <item1>
-      <misc_data>miscellaneous data</misc_data>
-    </item1>
-  </data>
-</response>
+            <?xml version="1.0"?>
+            <response>
+              <data>
+                <master>
+                  <name>Foo</name>
+                  <email>foo@bar.com</email>
+                  <dependents/>
+                </master>
+                <vote>
+                  <list/>
+                </vote>
+                <user>
+                  <account>
+                    <demo>
+                      <info>
+                        <is_banned>true</is_banned>
+                        <last_login>2020-08-31</last_login>
+                        <last_login_ip>127.0.0.1</last_login_ip>
+                      </info>
+                    </demo>
+                  </account>
+                </user>
+                <itemxml>
+                  <itemxml_version>1.0</itemxml_version>
+                  <itemxml_encoding>utf-8</itemxml_encoding>
+                </itemxml>
+                <item0>
+                  <misc>miscellaneous</misc>
+                </item0>
+                <item1>
+                  <misc_data>miscellaneous data</misc_data>
+                </item1>
+              </data>
+            </response>
 
-EOF;
+            EOF;
 
         $dom                     = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;

@@ -75,6 +75,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'single_line'                         => true,
             ],
             'function_to_constant'                  => true,
+            'heredoc_indentation'                   => ['indentation' => 'start_plus_one'],
             'indentation_type'                      => true,
             'line_ending'                           => true,
             'list_syntax'                           => ['syntax' => 'short'],
