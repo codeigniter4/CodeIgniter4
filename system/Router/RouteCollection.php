@@ -225,6 +225,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Registers a new constraint with the system. Constraints are used
      * by the routes as placeholders for regular expressions to make defining
@@ -250,6 +251,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
@@ -267,6 +269,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default controller to use when no other controller has been
      * specified.
@@ -283,6 +286,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
@@ -299,6 +303,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Tells the system whether to convert dashes in URI strings into
      * underscores. In some search engines, including Google, dashes
@@ -318,6 +323,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * If TRUE, the system will attempt to match the URI against
      * Controllers by matching each segment against folders/files
@@ -338,6 +344,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the class/method that should be called if routing doesn't
      * find a match. It can be either a closure or the controller/method
@@ -402,6 +409,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default constraint to be used in the system. Typically
      * for use with the 'resource' method.
@@ -599,6 +607,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Adds a single route to the collection.
      *
@@ -743,6 +752,7 @@ class RouteCollection implements RouteCollectionInterface
     // be expanded in the future. See the docblock for 'add' method above for
     // current list of globally available options.
     //
+
     /**
      * Creates a collections of HTTP-verb based routes for a controller.
      *
@@ -937,6 +947,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a single route to match for multiple HTTP Verbs.
      *
@@ -966,6 +977,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to GET requests.
      *
@@ -983,6 +995,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to POST requests.
      *
@@ -1000,6 +1013,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to PUT requests.
      *
@@ -1017,6 +1031,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to DELETE requests.
      *
@@ -1034,6 +1049,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to HEAD requests.
      *
@@ -1051,6 +1067,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to PATCH requests.
      *
@@ -1068,6 +1085,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to OPTIONS requests.
      *
@@ -1085,6 +1103,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to command-line requests.
      *
@@ -1102,6 +1121,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Limits the routes to a specified ENVIRONMENT or they won't run.
      *

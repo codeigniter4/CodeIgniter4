@@ -136,6 +136,7 @@ class IncomingRequest extends Request
     protected $userAgent;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor
      *
@@ -698,6 +699,7 @@ class IncomingRequest extends Request
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Fetch the user agent string
      *

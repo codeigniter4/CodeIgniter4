@@ -271,6 +271,7 @@ class ParserTest extends CIUnitTestCase
         $power             = new class extends Entity {
             public $foo    = 'bar';
             protected $bar = 'baz';
+
             public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
             {
                 return [

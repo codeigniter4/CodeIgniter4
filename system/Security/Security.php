@@ -308,6 +308,7 @@ class Security implements SecurityInterface
     {
         return $this->cookie->isExpired();
     }
+
     /**
      * Check if request should be redirect on failure.
      *

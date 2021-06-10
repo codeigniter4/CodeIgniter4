@@ -748,6 +748,7 @@ class Validation implements ValidationInterface
     }
 
     // Misc
+
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.

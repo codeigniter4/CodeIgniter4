@@ -27,7 +27,7 @@ class ResponseSendTest extends CIUnitTestCase
      * The tests includes a basic sanity check, to make sure that
      * the body we thought would be sent actually was.
      */
-    //--------------------------------------------------------------------
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -61,6 +61,7 @@ class ResponseSendTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
@@ -96,12 +97,14 @@ class ResponseSendTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
+     * Make sure cookies are set by RedirectResponse this way
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */
-    // Make sure cookies are set by RedirectResponse this way
-    // See https://github.com/codeigniter4/CodeIgniter4/issues/1393
     public function testRedirectResponseCookies()
     {
         $loginTime = time();

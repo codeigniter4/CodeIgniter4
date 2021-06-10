@@ -867,6 +867,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $this->expectException(RouterException::class);
         $match = $routes->reverseRoute('myController::goto', 13, 'string');
     }
+
     //--------------------------------------------------------------------
 
     public function testReverseRoutingWithLocale()

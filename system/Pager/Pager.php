@@ -331,6 +331,7 @@ class Pager implements PagerInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Returns the URI for a specific page for the specified group.
      *

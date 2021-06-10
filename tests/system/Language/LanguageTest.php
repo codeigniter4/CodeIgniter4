@@ -287,6 +287,7 @@ class LanguageTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Testing base locale vs variants, with fallback to English.
      *

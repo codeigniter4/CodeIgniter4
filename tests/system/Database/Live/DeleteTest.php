@@ -47,6 +47,7 @@ class DeleteTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * @group  single
      *

@@ -40,6 +40,7 @@ abstract class Migration
     protected $forge;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor.
      *

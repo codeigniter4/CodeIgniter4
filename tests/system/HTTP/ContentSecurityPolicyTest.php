@@ -13,7 +13,6 @@ use Config\App;
  */
 class ContentSecurityPolicyTest extends CIUnitTestCase
 {
-
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)
     {
