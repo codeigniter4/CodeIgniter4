@@ -89,6 +89,7 @@ final class CodeIgniter4 extends AbstractRuleset
                     'phpstan-ignore-next-line',
                 ],
             ],
+            'compact_nullable_typehint'             => true,
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
