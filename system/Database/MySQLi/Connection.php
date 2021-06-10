@@ -63,17 +63,17 @@ class Connection extends BaseConnection
     public $mysqli;
 
     //--------------------------------------------------------------------
-	
+
     /**
      * MySQLi constant
      *
-     * For unbuffered queries use MYSQLI_USE_RESULT
-	 *
-	 * Default mode for buffered queries use MYSQLI_STORE_RESULT
+     * For unbuffered queries use `MYSQLI_USE_RESULT`.
+     *
+     * Default mode for buffered queries uses `MYSQLI_STORE_RESULT`.
      *
      * @var int
      */
-    public $result_mode = MYSQLI_STORE_RESULT;
+    public $resultMode = MYSQLI_STORE_RESULT;
 
     //--------------------------------------------------------------------
 
@@ -308,7 +308,7 @@ class Connection extends BaseConnection
         }
 
         try {
-            return $this->connID->query($this->prepQuery($sql),$this->result_mode);
+            return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
             log_message('error', $e->getMessage());
 
