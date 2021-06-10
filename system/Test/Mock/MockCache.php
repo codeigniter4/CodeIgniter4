@@ -122,8 +122,7 @@ class MockCache extends BaseHandler implements CacheInterface
             return false;
         }
 
-        unset($this->cache[$key]);
-        unset($this->expirations[$key]);
+        unset($this->cache[$key], $this->expirations[$key]);
 
         return true;
     }
@@ -144,8 +143,7 @@ class MockCache extends BaseHandler implements CacheInterface
         foreach (array_keys($this->cache) as $key) {
             if (fnmatch($pattern, $key)) {
                 $count++;
-                unset($this->cache[$key]);
-                unset($this->expirations[$key]);
+                unset($this->cache[$key], $this->expirations[$key]);
             }
         }
 
