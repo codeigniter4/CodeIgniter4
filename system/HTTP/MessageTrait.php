@@ -169,9 +169,7 @@ trait MessageTrait
     public function removeHeader(string $name): self
     {
         $origName = $this->getHeaderName($name);
-
-        unset($this->headers[$origName]);
-        unset($this->headerMap[strtolower($name)]);
+        unset($this->headers[$origName], $this->headerMap[strtolower($name)]);
 
         return $this;
     }

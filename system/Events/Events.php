@@ -217,8 +217,10 @@ class Events
 
         foreach (static::$listeners[$eventName][2] as $index => $check) {
             if ($check === $listener) {
-                unset(static::$listeners[$eventName][1][$index]);
-                unset(static::$listeners[$eventName][2][$index]);
+                unset(
+                    static::$listeners[$eventName][1][$index],
+                    static::$listeners[$eventName][2][$index]
+                );
 
                 return true;
             }

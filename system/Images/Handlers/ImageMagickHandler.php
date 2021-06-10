@@ -398,7 +398,7 @@ class ImageMagickHandler extends BaseHandler
             $cmd .= " -font '{$options['fontPath']}'";
         }
 
-        if (isset($options['hAlign']) && isset($options['vAlign'])) {
+        if (isset($options['hAlign'], $options['vAlign'])) {
             switch ($options['hAlign']) {
                 case 'left':
                     $xAxis   = $options['hOffset'] + $options['padding'];

@@ -284,9 +284,11 @@ class Factories
     public static function reset(string $component = null)
     {
         if ($component) {
-            unset(static::$options[$component]);
-            unset(static::$basenames[$component]);
-            unset(static::$instances[$component]);
+            unset(
+                static::$options[$component],
+                static::$basenames[$component],
+                static::$instances[$component]
+            );
 
             return;
         }
