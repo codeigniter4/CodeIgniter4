@@ -111,7 +111,7 @@ class ChromeLoggerHandler extends BaseHandler
         $backtrace = end($backtrace);
 
         $backtraceMessage = 'unknown';
-        if (isset($backtrace['file']) && isset($backtrace['line'])) {
+        if (isset($backtrace['file'], $backtrace['line'])) {
             $backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
         }
 

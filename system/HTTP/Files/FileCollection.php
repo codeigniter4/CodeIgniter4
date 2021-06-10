@@ -268,6 +268,6 @@ class FileCollection
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 
-        return (isset($currentIndex) && isset($value[$currentIndex])) ? $value[$currentIndex] : null;
+        return isset($currentIndex, $value[$currentIndex]) ? $value[$currentIndex] : null;
     }
 }

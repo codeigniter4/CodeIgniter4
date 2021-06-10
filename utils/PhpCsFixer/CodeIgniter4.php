@@ -76,6 +76,7 @@ final class CodeIgniter4 extends AbstractRuleset
             ],
             'class_keyword_remove'                  => false,
             'clean_namespace'                       => true,
+            'combine_consecutive_issets'            => true,
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
