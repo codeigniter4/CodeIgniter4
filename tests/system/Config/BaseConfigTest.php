@@ -2,11 +2,11 @@
 
 namespace CodeIgniter\Config;
 
-use SimpleConfig;
+use CodeIgniter\Test\CIUnitTestCase;
 use Encryption;
 use RegistrarConfig;
-use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
+use SimpleConfig;
 
 class BaseConfigTest extends CIUnitTestCase
 {

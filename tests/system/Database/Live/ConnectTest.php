@@ -2,10 +2,10 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use CodeIgniter\Config\Factories;
 use Config\Database;
 
 /**

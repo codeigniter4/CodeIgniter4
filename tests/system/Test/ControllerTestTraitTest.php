@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Test;
 
-use App\Controllers\NeverHeardOfIt;
 use App\Controllers\Home;
+use App\Controllers\NeverHeardOfIt;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;

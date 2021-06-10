@@ -70,6 +70,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_trailing_comma_in_singleline_array' => true,
             'no_whitespace_before_comma_in_array'   => ['after_heredoc' => true],
             'normalize_index_brace'                 => true,
+            'ordered_imports'                       => ['sort_algorithm' => 'alpha'],
             'phpdoc_align'                          => true,
             'phpdoc_scalar'                         => [
                 'types' => [
