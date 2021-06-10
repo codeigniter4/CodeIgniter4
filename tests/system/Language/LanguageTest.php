@@ -117,7 +117,7 @@ class LanguageTest extends CIUnitTestCase
 
         $this->lang->setData('books', [
             'bookList' => [
-                '{0, number, integer} related books.'
+                '{0, number, integer} related books.',
             ],
         ]);
 
@@ -146,7 +146,7 @@ class LanguageTest extends CIUnitTestCase
 
         $this->lang->setData('books', [
             'bookList' => [
-                '{0, number, integer} related books.'
+                '{0, number, integer} related books.',
             ],
         ]);
 

@@ -47,7 +47,7 @@ class FilesystemHelperTest extends CIUnitTestCase
                 'faz',
             ],
             'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
-            'simpleFile'
+            'simpleFile',
         ];
 
         $root = vfsStream::setup('root', null, $this->structure);
@@ -72,7 +72,7 @@ class FilesystemHelperTest extends CIUnitTestCase
             ],
             'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
             'simpleFile',
-            '.hidden'
+            '.hidden',
         ];
 
         $root = vfsStream::setup('root', null, $this->structure);

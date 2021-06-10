@@ -37,7 +37,7 @@ return [
         'parentClass'      => 'Parent class',
         'returnType'       => 'Return type',
         'tableName'        => 'Table name',
-        'usingCINamespace' => 'Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.'
+        'usingCINamespace' => 'Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.',
     ],
     'helpArguments'       => 'Arguments:',
     'helpDescription'     => 'Description:',
