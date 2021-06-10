@@ -15,7 +15,7 @@ class Services
      *
      * @var array
      */
-    static protected $mocks = [];
+    protected static $mocks = [];
 
     //--------------------------------------------------------------------
 
