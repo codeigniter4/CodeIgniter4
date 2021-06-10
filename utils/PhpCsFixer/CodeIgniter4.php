@@ -69,6 +69,11 @@ final class CodeIgniter4 extends AbstractRuleset
                     'method' => 'one',
                 ],
             ],
+            'class_definition' => [
+                'multi_line_extends_each_single_line' => true,
+                'single_item_single_line'             => true,
+                'single_line'                         => true,
+            ],
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
