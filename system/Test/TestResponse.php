@@ -218,7 +218,7 @@ class TestResponse extends TestCase
         $this->assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
     }
 
-    /*
+    /**
      * Assert that the given response was not a redirect.
      *
      * @throws Exception

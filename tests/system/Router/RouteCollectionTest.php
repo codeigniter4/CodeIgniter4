@@ -1413,11 +1413,10 @@ class RouteCollectionTest extends CIUnitTestCase
         $this->assertEquals($expected, $routes->getRoutes());
     }
 
-    //--------------------------------------------------------------------
-    // Battery of tests for reported issue
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
-
     /**
+     * Battery of tests for reported issue
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1697
      */
     public function testRouteToWithSubdomainMatch()
     {
@@ -1527,10 +1526,11 @@ class RouteCollectionTest extends CIUnitTestCase
         $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
-    //--------------------------------------------------------------------
-    // Tests for router overwritting issue
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
-
+    /**
+     * Tests for router overwritting issue
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
+     */
     public function testRouteOverwritingDifferentSubdomains()
     {
         Services::request()->setMethod('get');
@@ -1633,10 +1633,11 @@ class RouteCollectionTest extends CIUnitTestCase
         $this->assertEquals($expects, $router->handle('/'));
     }
 
-    //--------------------------------------------------------------------
-    // Tests for router DefaultNameSpace issue
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/2423
-
+    /**
+     * Tests for router DefaultNameSpace issue
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2423
+     */
     public function testRouteDefaultNameSpace()
     {
         Services::request()->setMethod('get');

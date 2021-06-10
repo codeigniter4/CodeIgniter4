@@ -199,7 +199,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertNull($result->ohno('Hi'));
     }
 
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/1834 */
     public function testResponseOverriding()
     {
         $result = $this->withURI('http://example.com/rest/')
@@ -210,7 +210,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertEquals('en', $response->lang);
     }
 
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/2470
+    /** @see https://github.com/codeigniter4/CodeIgniter4/issues/2470 */
     public function testControllerNoURI()
     {
         $logger = new Logger(new LoggerConfig());

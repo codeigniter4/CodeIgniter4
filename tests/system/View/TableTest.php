@@ -39,10 +39,9 @@ class TableTest extends CIUnitTestCase
         $this->assertEquals('awesome cap', $this->table->caption);
     }
 
-    /*
+    /**
      * @depends	test_prep_args
      */
-
     public function testSetHeading()
     {
         // uses _prep_args internally, so we'll just do a quick
@@ -78,10 +77,9 @@ class TableTest extends CIUnitTestCase
         );
     }
 
-    /*
+    /**
      * @depends	test_prep_args
      */
-
     public function testAddRow()
     {
         // uses _prep_args internally, so we'll just do a quick
