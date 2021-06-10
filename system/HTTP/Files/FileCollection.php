@@ -231,7 +231,8 @@ class FileCollection
 
                 $stack    = [&$pointer];
                 $iterator = new RecursiveIteratorIterator(
-                        new RecursiveArrayIterator($value), RecursiveIteratorIterator::SELF_FIRST
+                    new RecursiveArrayIterator($value),
+                    RecursiveIteratorIterator::SELF_FIRST
                 );
 
                 foreach ($iterator as $key => $val) {
@@ -261,13 +262,12 @@ class FileCollection
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {
-        if (! empty($index)) {
-            $currentIndex = array_shift($index);
-        }
+        $currentIndex = array_shift($index);
+
         if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex]) {
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 
-        return isset($currentIndex, $value[$currentIndex]) ? $value[$currentIndex] : null;
+        return $value[$currentIndex] ?? null;
     }
 }
