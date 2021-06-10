@@ -78,6 +78,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'clean_namespace'                       => true,
             'combine_consecutive_issets'            => true,
             'combine_consecutive_unsets'            => true,
+            'combine_nested_dirname'                => true,
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
