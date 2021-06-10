@@ -25,7 +25,7 @@ class Config extends BaseConfig
      *
      * @var array
      */
-    static protected $instances = [];
+    protected static $instances = [];
 
     /**
      * The main instance used to manage all of
@@ -33,7 +33,7 @@ class Config extends BaseConfig
      *
      * @var Database|null
      */
-    static protected $factory;
+    protected static $factory;
 
     //--------------------------------------------------------------------
 

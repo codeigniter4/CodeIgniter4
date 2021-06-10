@@ -97,6 +97,7 @@ final class CodeIgniter4 extends AbstractRuleset
             ],
             'trim_array_spaces'               => true,
             'whitespace_after_comma_in_array' => true,
+            'visibility_required'             => ['elements' => ['const', 'method', 'property']],
             'yoda_style'                      => [
                 'equal'                => false,
                 'identical'            => null,

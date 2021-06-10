@@ -22,12 +22,12 @@ class URI
     /**
      * Sub-delimiters used in query strings and fragments.
      */
-    const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+    public const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
 
     /**
      * Unreserved characters used in paths, query strings, and fragments.
      */
-    const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
+    public const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
 
     /**
      * Current URI string

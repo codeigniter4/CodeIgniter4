@@ -20,11 +20,11 @@ class MigrationTest extends CIUnitTestCase
         $migration             = new class extends Migration {
             protected $DBGroup = 'tests';
 
-            function up()
+            public function up()
             {
             }
 
-            function down()
+            public function down()
             {
             }
         };
