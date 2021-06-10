@@ -120,28 +120,28 @@ class UpdateTest extends CIUnitTestCase
         $space = ' ';
 
         $expected = <<<EOF
-		UPDATE "jobs" SET "name" = CASE{$space}
-		WHEN "id" = :id: THEN :name:
-		WHEN "id" = :id.1: THEN :name.1:
-		ELSE "name" END, "description" = CASE{$space}
-		WHEN "id" = :id: THEN :description:
-		WHEN "id" = :id.1: THEN :description.1:
-		ELSE "description" END
-		WHERE "id" IN(:id:,:id.1:)
-		EOF;
+            UPDATE "jobs" SET "name" = CASE{$space}
+            WHEN "id" = :id: THEN :name:
+            WHEN "id" = :id.1: THEN :name.1:
+            ELSE "name" END, "description" = CASE{$space}
+            WHEN "id" = :id: THEN :description:
+            WHEN "id" = :id.1: THEN :description.1:
+            ELSE "description" END
+            WHERE "id" IN(:id:,:id.1:)
+            EOF;
 
         $this->assertSame($expected, $query->getOriginalQuery());
 
         $expected = <<<EOF
-		UPDATE "jobs" SET "name" = CASE{$space}
-		WHEN "id" = 2 THEN 'Comedian'
-		WHEN "id" = 3 THEN 'Cab Driver'
-		ELSE "name" END, "description" = CASE{$space}
-		WHEN "id" = 2 THEN 'There''s something in your teeth'
-		WHEN "id" = 3 THEN 'I am yellow'
-		ELSE "description" END
-		WHERE "id" IN(2,3)
-		EOF;
+            UPDATE "jobs" SET "name" = CASE{$space}
+            WHEN "id" = 2 THEN 'Comedian'
+            WHEN "id" = 3 THEN 'Cab Driver'
+            ELSE "name" END, "description" = CASE{$space}
+            WHEN "id" = 2 THEN 'There''s something in your teeth'
+            WHEN "id" = 3 THEN 'I am yellow'
+            ELSE "description" END
+            WHERE "id" IN(2,3)
+            EOF;
 
         $this->assertSame($expected, $query->getQuery() );
     }

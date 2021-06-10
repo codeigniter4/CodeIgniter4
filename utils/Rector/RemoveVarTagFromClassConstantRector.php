@@ -18,18 +18,18 @@ final class RemoveVarTagFromClassConstantRector extends AbstractRector
         return new RuleDefinition('Remove @var tag from class constant', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
-				class Foo
-				{
-					/** @var string */
-					const X = 'test';
-				}
-				CODE_SAMPLE,
+                    class Foo
+                    {
+                    	/** @var string */
+                    	const X = 'test';
+                    }
+                    CODE_SAMPLE,
                 <<<'CODE_SAMPLE'
-				class Foo
-				{
-					const X = 'test';
-				}
-				CODE_SAMPLE
+                    class Foo
+                    {
+                    	const X = 'test';
+                    }
+                    CODE_SAMPLE
             ),
         ]);
     }

@@ -93,6 +93,8 @@ final class CodeIgniter4 extends AbstractRuleset
             'concat_space'                          => ['spacing' => 'one'],
             'constant_case'                         => ['case' => 'lower'],
             'function_to_constant'                  => true,
+            'heredoc_indentation'                   => ['indentation' => 'start_plus_one'],
+            'heredoc_to_nowdoc'                     => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
             'list_syntax'                           => ['syntax' => 'short'],

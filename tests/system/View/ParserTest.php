@@ -929,20 +929,20 @@ class ParserTest extends CIUnitTestCase
         ];
 
         $template = <<<'EOF'
-		<h3>#{heading}</h3>
-		{entries}
-			<h5>#{title}</h5>
-			<p>{body}</p>
-		{/entries}
-		EOF;
+            <h3>#{heading}</h3>
+            {entries}
+            	<h5>#{title}</h5>
+            	<p>{body}</p>
+            {/entries}
+            EOF;
 
         $expected = <<<'EOF'
-		<h3>#My Title</h3>
+            <h3>#My Title</h3>
 
-			<h5>#Subtitle</h5>
-			<p>Lorem ipsum</p>
+            	<h5>#Subtitle</h5>
+            	<p>Lorem ipsum</p>
 
-		EOF;
+            EOF;
 
         $this->parser->setData($data);
         $this->assertSame($expected, $this->parser->renderString($template));

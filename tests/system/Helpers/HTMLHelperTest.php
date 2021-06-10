@@ -37,13 +37,13 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testBasicUL()
     {
-        $expected = <<<EOH
-<ul>
-  <li>foo</li>
-  <li>bar</li>
-</ul>
+        $expected = <<<'EOH'
+            <ul>
+              <li>foo</li>
+              <li>bar</li>
+            </ul>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -56,13 +56,13 @@ EOH;
 
     public function testULWithClass()
     {
-        $expected = <<<EOH
-<ul class="test">
-  <li>foo</li>
-  <li>bar</li>
-</ul>
+        $expected = <<<'EOH'
+            <ul class="test">
+              <li>foo</li>
+              <li>bar</li>
+            </ul>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -75,19 +75,19 @@ EOH;
 
     public function testMultiLevelUL()
     {
-        $expected = <<<EOH
-<ul>
-  <li>foo</li>
-  <li>bar</li>
-  <li>2
-    <ul>
-      <li>foo</li>
-      <li>bar</li>
-    </ul>
-  </li>
-</ul>
+        $expected = <<<'EOH'
+            <ul>
+              <li>foo</li>
+              <li>bar</li>
+              <li>2
+                <ul>
+                  <li>foo</li>
+                  <li>bar</li>
+                </ul>
+              </li>
+            </ul>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -106,13 +106,13 @@ EOH;
 
     public function testBasicOL()
     {
-        $expected = <<<EOH
-<ol>
-  <li>foo</li>
-  <li>bar</li>
-</ol>
+        $expected = <<<'EOH'
+            <ol>
+              <li>foo</li>
+              <li>bar</li>
+            </ol>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -125,13 +125,13 @@ EOH;
 
     public function testOLWithClass()
     {
-        $expected = <<<EOH
-<ol class="test">
-  <li>foo</li>
-  <li>bar</li>
-</ol>
+        $expected = <<<'EOH'
+            <ol class="test">
+              <li>foo</li>
+              <li>bar</li>
+            </ol>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -144,19 +144,19 @@ EOH;
 
     public function testMultiLevelOL()
     {
-        $expected = <<<EOH
-<ol>
-  <li>foo</li>
-  <li>bar</li>
-  <li>2
-    <ol>
-      <li>foo</li>
-      <li>bar</li>
-    </ol>
-  </li>
-</ol>
+        $expected = <<<'EOH'
+            <ol>
+              <li>foo</li>
+              <li>bar</li>
+              <li>2
+                <ol>
+                  <li>foo</li>
+                  <li>bar</li>
+                </ol>
+              </li>
+            </ol>
 
-EOH;
+            EOH;
 
         $expected = ltrim($expected);
         $list     = [
@@ -299,12 +299,12 @@ EOH;
 
     public function testVideo()
     {
-        $expected = <<<EOH
-<video src="http://www.codeigniter.com/test.mp4" controls>
-  Your browser does not support the video tag.
-</video>
+        $expected = <<<'EOH'
+            <video src="http://www.codeigniter.com/test.mp4" controls>
+              Your browser does not support the video tag.
+            </video>
 
-EOH;
+            EOH;
 
         $target  = 'http://www.codeigniter.com/test.mp4';
         $message = 'Your browser does not support the video tag.';
@@ -314,14 +314,14 @@ EOH;
 
     public function testVideoWithTracks()
     {
-        $expected = <<<EOH
-<video src="http://example.com/test.mp4" controls>
-  <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-  <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
-  Your browser does not support the video tag.
-</video>
+        $expected = <<<'EOH'
+            <video src="http://example.com/test.mp4" controls>
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the video tag.
+            </video>
 
-EOH;
+            EOH;
 
         $target  = 'test.mp4';
         $message = 'Your browser does not support the video tag.';
@@ -331,14 +331,14 @@ EOH;
 
     public function testVideoWithTracksAndIndex()
     {
-        $expected = <<<EOH
-<video src="http://example.com/index.php/test.mp4" controls>
-  <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-  <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
-  Your browser does not support the video tag.
-</video>
+        $expected = <<<'EOH'
+            <video src="http://example.com/index.php/test.mp4" controls>
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the video tag.
+            </video>
 
-EOH;
+            EOH;
 
         $target  = 'test.mp4';
         $message = 'Your browser does not support the video tag.';
@@ -348,18 +348,18 @@ EOH;
 
     public function testVideoMultipleSources()
     {
-        $expected = <<<EOH
-<video class="test" controls>
-  <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
-  <source src="http://example.com/movie.ogg" type="video/ogg" />
-  <source src="http://example.com/movie.mov" type="video/quicktime" />
-  <source src="http://example.com/movie.ogv" type="video/ogv; codecs=dirac, speex" />
-  <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-  <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
-  Your browser does not support the video tag.
-</video>
+        $expected = <<<'EOH'
+            <video class="test" controls>
+              <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
+              <source src="http://example.com/movie.ogg" type="video/ogg" />
+              <source src="http://example.com/movie.mov" type="video/quicktime" />
+              <source src="http://example.com/movie.ogv" type="video/ogv; codecs=dirac, speex" />
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the video tag.
+            </video>
 
-EOH;
+            EOH;
 
         $sources = [
             source('movie.mp4', 'video/mp4', 'class="test"'),
@@ -377,16 +377,16 @@ EOH;
 
     public function testAudio()
     {
-        $expected = <<<EOH
-<audio id="test" controls>
-  <source src="http://example.com/sound.ogg" type="audio/ogg" />
-  <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
-  <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-  <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
-  Your browser does not support the audio tag.
-</audio>
+        $expected = <<<'EOH'
+            <audio id="test" controls>
+              <source src="http://example.com/sound.ogg" type="audio/ogg" />
+              <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the audio tag.
+            </audio>
 
-EOH;
+            EOH;
 
         $sources = [
             source('sound.ogg', 'audio/ogg'),
@@ -400,12 +400,12 @@ EOH;
 
     public function testAudioSimple()
     {
-        $expected = <<<EOH
-<audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
-  Your browser does not support the audio tag.
-</audio>
+        $expected = <<<'EOH'
+            <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
+              Your browser does not support the audio tag.
+            </audio>
 
-EOH;
+            EOH;
 
         $source  = 'sound.mpeg';
         $message = 'Your browser does not support the audio tag.';
@@ -416,12 +416,12 @@ EOH;
 
     public function testAudioWithSource()
     {
-        $expected = <<<EOH
-<audio src="http://codeigniter.com/sound.mpeg" type="audio/mpeg" id="test" controls>
-  Your browser does not support the audio tag.
-</audio>
+        $expected = <<<'EOH'
+            <audio src="http://codeigniter.com/sound.mpeg" type="audio/mpeg" id="test" controls>
+              Your browser does not support the audio tag.
+            </audio>
 
-EOH;
+            EOH;
 
         $source  = 'http://codeigniter.com/sound.mpeg';
         $message = 'Your browser does not support the audio tag.';
@@ -432,12 +432,12 @@ EOH;
 
     public function testAudioWithIndex()
     {
-        $expected = <<<EOH
-<audio src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" id="test" controls>
-  Your browser does not support the audio tag.
-</audio>
+        $expected = <<<'EOH'
+            <audio src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" id="test" controls>
+              Your browser does not support the audio tag.
+            </audio>
 
-EOH;
+            EOH;
 
         $source  = 'sound.mpeg';
         $message = 'Your browser does not support the audio tag.';
@@ -448,14 +448,14 @@ EOH;
 
     public function testAudioWithTracks()
     {
-        $expected = <<<EOH
-<audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
-  <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-  <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
-  Your browser does not support the audio tag.
-</audio>
+        $expected = <<<'EOH'
+            <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the audio tag.
+            </audio>
 
-EOH;
+            EOH;
 
         $source  = 'sound.mpeg';
         $message = 'Your browser does not support the audio tag.';
@@ -468,23 +468,23 @@ EOH;
 
     public function testMediaNameOnly()
     {
-        $expected = <<<EOH
-<av>
-</av>
+        $expected = <<<'EOH'
+            <av>
+            </av>
 
-EOH;
+            EOH;
         $this->assertEquals($expected, _media('av'));
     }
 
     public function testMediaWithSources()
     {
-        $expected = <<<EOH
-<av>
-  <source src="http://example.com/sound.ogg" type="audio/ogg" />
-  <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
-</av>
+        $expected = <<<'EOH'
+            <av>
+              <source src="http://example.com/sound.ogg" type="audio/ogg" />
+              <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
+            </av>
 
-EOH;
+            EOH;
         $sources = [
             source('sound.ogg', 'audio/ogg'),
             source('sound.mpeg', 'audio/mpeg'),
@@ -502,10 +502,10 @@ EOH;
 
     public function testEmbed()
     {
-        $expected = <<<EOH
-<embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
+        $expected = <<<'EOH'
+            <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
 
-EOH;
+            EOH;
 
         $type  = 'video/quicktime';
         $embed = embed('movie.mov', $type, 'class="test"');
@@ -514,10 +514,10 @@ EOH;
 
     public function testEmbedIndexed()
     {
-        $expected = <<<EOH
-<embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test" />
+        $expected = <<<'EOH'
+            <embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test" />
 
-EOH;
+            EOH;
 
         $type  = 'video/quicktime';
         $embed = embed('movie.mov', $type, 'class="test"', true);
@@ -526,10 +526,10 @@ EOH;
 
     public function testObject()
     {
-        $expected = <<<EOH
-<object data="http://example.com/movie.swf" class="test"></object>
+        $expected = <<<'EOH'
+            <object data="http://example.com/movie.swf" class="test"></object>
 
-EOH;
+            EOH;
 
         $type   = 'application/x-shockwave-flash';
         $object = object('movie.swf', $type, 'class="test"');
@@ -539,13 +539,13 @@ EOH;
 
     public function testObjectWithParams()
     {
-        $expected = <<<EOH
-<object data="http://example.com/movie.swf" class="test">
-  <param name="foo" type="ref" value="bar" class="test" />
-  <param name="hello" type="ref" value="world" class="test" />
-</object>
+        $expected = <<<'EOH'
+            <object data="http://example.com/movie.swf" class="test">
+              <param name="foo" type="ref" value="bar" class="test" />
+              <param name="hello" type="ref" value="world" class="test" />
+            </object>
 
-EOH;
+            EOH;
 
         $type  = 'application/x-shockwave-flash';
         $parms = [
@@ -558,10 +558,10 @@ EOH;
 
     public function testObjectIndexed()
     {
-        $expected = <<<EOH
-<object data="http://example.com/index.php/movie.swf" class="test"></object>
+        $expected = <<<'EOH'
+            <object data="http://example.com/index.php/movie.swf" class="test"></object>
 
-EOH;
+            EOH;
 
         $type   = 'application/x-shockwave-flash';
         $object = object('movie.swf', $type, 'class="test"', [], true);
