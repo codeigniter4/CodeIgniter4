@@ -91,6 +91,7 @@ final class CodeIgniter4 extends AbstractRuleset
             ],
             'compact_nullable_typehint'             => true,
             'concat_space'                          => ['spacing' => 'one'],
+            'constant_case'                         => ['case' => 'lower'],
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
