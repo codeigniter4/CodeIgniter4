@@ -74,6 +74,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'single_item_single_line'             => true,
                 'single_line'                         => true,
             ],
+            'class_keyword_remove' => false,
             'function_to_constant'                  => true,
             'indentation_type'                      => true,
             'line_ending'                           => true,
