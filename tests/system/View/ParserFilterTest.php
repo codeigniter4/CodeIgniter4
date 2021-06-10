@@ -180,7 +180,7 @@ class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
 
         $template = '{ value1|highlight_code }';
-        $expected = <<<EOF
+        $expected = <<<'EOF'
             <code><span style="color: #000000">
             <span style="color: #0000BB">Sincerely&nbsp;</span>
             </span>

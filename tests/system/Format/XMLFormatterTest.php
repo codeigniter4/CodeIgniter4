@@ -21,7 +21,7 @@ class XMLFormatterTest extends CIUnitTestCase
             'foo' => 'bar',
         ];
 
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><foo>bar</foo></response>
 
@@ -36,7 +36,7 @@ class XMLFormatterTest extends CIUnitTestCase
             'foo' => ['bar'],
         ];
 
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><foo><item0>bar</item0></foo></response>
 
@@ -51,7 +51,7 @@ class XMLFormatterTest extends CIUnitTestCase
             ['foo'],
         ];
 
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><item0><item0>foo</item0></item0></response>
 
@@ -63,7 +63,7 @@ class XMLFormatterTest extends CIUnitTestCase
     public function testStringFormatting()
     {
         $data     = ['Something'];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><item0>Something</item0></response>
 
@@ -78,7 +78,7 @@ class XMLFormatterTest extends CIUnitTestCase
             'BBB096630BD' => 'foo',
             '096630FR'    => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><BBB096630BD>foo</BBB096630BD><item096630FR>bar</item096630FR></response>
 
@@ -171,7 +171,7 @@ class XMLFormatterTest extends CIUnitTestCase
         ];
 
         // do not change to tabs!!
-        $expectedXML = <<<EOF
+        $expectedXML = <<<'EOF'
             <?xml version="1.0"?>
             <response>
               <data>

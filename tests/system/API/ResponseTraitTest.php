@@ -102,7 +102,7 @@ class ResponseTraitTest extends CIUnitTestCase
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(201, $this->response->getStatusCode());
 
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             {
                 "id": 3
             }
@@ -124,7 +124,7 @@ class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = null;
         $controller      = $this->makeController();
         $payload         = ['answer' => 42];
-        $expected        = <<<EOH
+        $expected        = <<<'EOH'
             {
                 "answer": 42
             }
@@ -142,7 +142,7 @@ class ResponseTraitTest extends CIUnitTestCase
             2,
             3,
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             [
                 1,
                 2,
@@ -160,7 +160,7 @@ class ResponseTraitTest extends CIUnitTestCase
         $payload         = new stdClass();
         $payload->name   = 'Tom';
         $payload->id     = 1;
-        $expected        = <<<EOH
+        $expected        = <<<'EOH'
             {
                 "name": "Tom",
                 "id": 1
@@ -479,7 +479,7 @@ class ResponseTraitTest extends CIUnitTestCase
         $this->assertEquals('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><id>3</id></response>
 

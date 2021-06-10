@@ -37,7 +37,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testBasicUL()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ul>
               <li>foo</li>
               <li>bar</li>
@@ -56,7 +56,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testULWithClass()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ul class="test">
               <li>foo</li>
               <li>bar</li>
@@ -75,7 +75,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testMultiLevelUL()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ul>
               <li>foo</li>
               <li>bar</li>
@@ -106,7 +106,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testBasicOL()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ol>
               <li>foo</li>
               <li>bar</li>
@@ -125,7 +125,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testOLWithClass()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ol class="test">
               <li>foo</li>
               <li>bar</li>
@@ -144,7 +144,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testMultiLevelOL()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <ol>
               <li>foo</li>
               <li>bar</li>
@@ -299,7 +299,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideo()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <video src="http://www.codeigniter.com/test.mp4" controls>
               Your browser does not support the video tag.
             </video>
@@ -314,7 +314,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoWithTracks()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <video src="http://example.com/test.mp4" controls>
               <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
               <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
@@ -331,7 +331,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoWithTracksAndIndex()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <video src="http://example.com/index.php/test.mp4" controls>
               <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
               <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
@@ -348,7 +348,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoMultipleSources()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <video class="test" controls>
               <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
               <source src="http://example.com/movie.ogg" type="video/ogg" />
@@ -377,7 +377,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudio()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <audio id="test" controls>
               <source src="http://example.com/sound.ogg" type="audio/ogg" />
               <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
@@ -400,7 +400,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudioSimple()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
               Your browser does not support the audio tag.
             </audio>
@@ -416,7 +416,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudioWithSource()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <audio src="http://codeigniter.com/sound.mpeg" type="audio/mpeg" id="test" controls>
               Your browser does not support the audio tag.
             </audio>
@@ -432,7 +432,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudioWithIndex()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <audio src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" id="test" controls>
               Your browser does not support the audio tag.
             </audio>
@@ -448,7 +448,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudioWithTracks()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
               <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
               <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
@@ -468,7 +468,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testMediaNameOnly()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <av>
             </av>
 
@@ -478,7 +478,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testMediaWithSources()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <av>
               <source src="http://example.com/sound.ogg" type="audio/ogg" />
               <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
@@ -502,7 +502,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testEmbed()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
 
             EOH;
@@ -514,7 +514,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testEmbedIndexed()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test" />
 
             EOH;
@@ -526,7 +526,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testObject()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test"></object>
 
             EOH;
@@ -539,7 +539,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testObjectWithParams()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test">
               <param name="foo" type="ref" value="bar" class="test" />
               <param name="hello" type="ref" value="world" class="test" />
@@ -558,7 +558,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testObjectIndexed()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <object data="http://example.com/index.php/movie.swf" class="test"></object>
 
             EOH;

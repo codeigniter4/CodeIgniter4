@@ -38,7 +38,7 @@ class FormHelperTest extends CIUnitTestCase
 
                 EOH;
         } else {
-            $expected = <<<EOH
+            $expected = <<<'EOH'
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
                 EOH;
@@ -62,7 +62,7 @@ class FormHelperTest extends CIUnitTestCase
         $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <form action="http://example.com/index.php/en/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
             EOH;
@@ -96,7 +96,7 @@ class FormHelperTest extends CIUnitTestCase
 
                 EOH;
         } else {
-            $expected = <<<EOH
+            $expected = <<<'EOH'
                 <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
 
                 EOH;
@@ -130,7 +130,7 @@ class FormHelperTest extends CIUnitTestCase
 
                 EOH;
         } else {
-            $expected = <<<EOH
+            $expected = <<<'EOH'
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 
                 EOH;
@@ -165,7 +165,7 @@ class FormHelperTest extends CIUnitTestCase
 
                 EOH;
         } else {
-            $expected = <<<EOH
+            $expected = <<<'EOH'
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
                 <input type="hidden" name="foo" value="bar" />
@@ -205,7 +205,7 @@ class FormHelperTest extends CIUnitTestCase
 
                 EOH;
         } else {
-            $expected = <<<EOH
+            $expected = <<<'EOH'
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 
                 EOH;
@@ -238,7 +238,7 @@ class FormHelperTest extends CIUnitTestCase
         $data = [
             'foo' => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
 
             <input type="hidden" name="foo" value="bar" />
 
@@ -252,7 +252,7 @@ class FormHelperTest extends CIUnitTestCase
         $data = [
             'foo' => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
 
             <input type="hidden" name="name[foo]" value="bar" />
 
@@ -327,7 +327,7 @@ class FormHelperTest extends CIUnitTestCase
             'name'  => 'foo',
             'value' => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <textarea name="foo" cols="40" rows="10">bar</textarea>
 
             EOH;
@@ -472,7 +472,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormDropdownWithSelectedAttribute()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <select name="foo">
             <option value="bar" selected="selected">Bar</option>
             </select>
@@ -491,7 +491,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormDropdownWithOptionsAttribute()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <select name="foo">
             <option value="bar">Bar</option>
             </select>
@@ -509,7 +509,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormDropdownWithEmptyArrayOptionValue()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <select name="foo">
             </select>
 
@@ -583,7 +583,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormFieldsetWithNoLegent()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <fieldset>
 
             EOH;
@@ -596,7 +596,7 @@ class FormHelperTest extends CIUnitTestCase
         $attributes = [
             'name' => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <fieldset name="bar">
             <legend>Foo</legend>
 
@@ -607,7 +607,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormFieldsetClose()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             </fieldset></div></div>
             EOH;
         $this->assertEquals($expected, form_fieldset_close('</div></div>'));
@@ -630,7 +630,7 @@ class FormHelperTest extends CIUnitTestCase
             'value'   => 'bar',
             'checked' => true,
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <input type="checkbox" name="foo" value="bar" checked="checked" />
 
             EOH;
@@ -645,7 +645,7 @@ class FormHelperTest extends CIUnitTestCase
             'value'   => 'bar',
             'checked' => false,
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <input type="checkbox" name="foo" value="bar" />
 
             EOH;
@@ -673,7 +673,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormLabel()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <label for="username">What is your Name</label>
             EOH;
         $this->assertEquals($expected, form_label('What is your Name', 'username'));
@@ -685,7 +685,7 @@ class FormHelperTest extends CIUnitTestCase
         $attributes = [
             'id' => 'label1',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <label for="foo" id="label1">bar</label>
             EOH;
         $this->assertEquals($expected, form_label('bar', 'foo', $attributes));
@@ -716,7 +716,7 @@ class FormHelperTest extends CIUnitTestCase
             'name'    => 'foo',
             'content' => 'bar',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <button name="foo" type="button">bar</button>
 
             EOH;
@@ -726,7 +726,7 @@ class FormHelperTest extends CIUnitTestCase
     // ------------------------------------------------------------------------
     public function testFormClose()
     {
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             </form></div></div>
             EOH;
         $this->assertEquals($expected, form_close('</div></div>'));
@@ -739,7 +739,7 @@ class FormHelperTest extends CIUnitTestCase
             'foo1',
             'bar1',
         ];
-        $expected = <<<EOH
+        $expected = <<<'EOH'
             <input type="text" name="foo" value="bar" list="foo_list" />
 
             <datalist id='foo_list'><option value='foo1'>
