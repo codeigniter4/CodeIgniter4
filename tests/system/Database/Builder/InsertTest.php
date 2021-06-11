@@ -8,7 +8,9 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 class InsertTest extends CIUnitTestCase
 {
-    /** @var MockConnection */
+    /**
+     * @var MockConnection
+     */
     protected $db;
 
     protected function setUp(): void

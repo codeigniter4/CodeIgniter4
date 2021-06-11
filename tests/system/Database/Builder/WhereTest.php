@@ -10,7 +10,9 @@ use stdClass;
 
 class WhereTest extends CIUnitTestCase
 {
-    /** @var MockConnection */
+    /**
+     * @var MockConnection
+     */
     protected $db;
 
     protected function setUp(): void
