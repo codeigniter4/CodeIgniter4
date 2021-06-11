@@ -125,7 +125,7 @@ class Logger extends BaseConfig
             'path' => '',
         ],
 
-        /**
+        /*
          * The ChromeLoggerHandler requires the use of the Chrome web browser
          * and the ChromeLogger extension. Uncomment this block to use it.
          */
@@ -137,7 +137,7 @@ class Logger extends BaseConfig
         //                   'error', 'info', 'notice', 'warning'],
         // ],
 
-        /**
+        /*
          * The ErrorlogHandler writes the logs to PHP's native `error_log()` function.
          * Uncomment this block to use it.
          */
