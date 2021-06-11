@@ -76,7 +76,7 @@ class Forge
     /**
      * CREATE DATABASE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $createDatabaseStr = 'CREATE DATABASE %s';
 
@@ -97,7 +97,7 @@ class Forge
     /**
      * DROP DATABASE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $dropDatabaseStr = 'DROP DATABASE %s';
 
@@ -111,7 +111,7 @@ class Forge
     /**
      * CREATE TABLE IF statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
 
@@ -128,21 +128,21 @@ class Forge
     /**
      * DROP TABLE IF EXISTS statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $dropTableIfStr = 'DROP TABLE IF EXISTS';
 
     /**
      * RENAME TABLE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s;';
 
     /**
      * UNSIGNED support
      *
-     * @var bool|array
+     * @var array|bool
      */
     protected $unsigned = true;
 
@@ -158,7 +158,7 @@ class Forge
     /**
      * DEFAULT value representation in CREATE/ALTER TABLE statements
      *
-     * @var string|false
+     * @var false|string
      */
     protected $default = ' DEFAULT ';
 
@@ -310,7 +310,7 @@ class Forge
     /**
      * Add Key
      *
-     * @param string|array $key
+     * @param array|string $key
      * @param bool         $primary
      * @param bool         $unique
      *
@@ -338,7 +338,7 @@ class Forge
     /**
      * Add Primary Key
      *
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return Forge
      */
@@ -352,7 +352,7 @@ class Forge
     /**
      * Add Unique Key
      *
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return Forge
      */
@@ -435,7 +435,7 @@ class Forge
      * @param string $table       Table name
      * @param string $foreignName Foreign name
      *
-     * @return bool|BaseResult|Query|false|mixed
+     * @return BaseResult|bool|false|mixed|Query
      *
      * @throws DatabaseException
      */
@@ -646,7 +646,7 @@ class Forge
      * @param bool   $ifExists Whether to add an IF EXISTS condition
      * @param bool   $cascade  Whether to add an CASCADE condition
      *
-     * @return string|bool
+     * @return bool|string
      */
     protected function _dropTable(string $table, bool $ifExists, bool $cascade)
     {
@@ -713,7 +713,7 @@ class Forge
      * Column Add
      *
      * @param string       $table Table name
-     * @param string|array $field Column definition
+     * @param array|string $field Column definition
      *
      * @return bool
      *
@@ -755,7 +755,7 @@ class Forge
      * Column Drop
      *
      * @param string       $table      Table name
-     * @param string|array $columnName Column name Array or comma separated
+     * @param array|string $columnName Column name Array or comma separated
      *
      * @return mixed
      *
@@ -781,7 +781,7 @@ class Forge
      * Column Modify
      *
      * @param string       $table Table name
-     * @param string|array $field Column definition
+     * @param array|string $field Column definition
      *
      * @return bool
      *
@@ -832,7 +832,7 @@ class Forge
      * @param string $table     Table name
      * @param mixed  $fields    Column definition
      *
-     * @return string|string[]|false
+     * @return false|string|string[]
      */
     protected function _alterTable(string $alterType, string $table, $fields)
     {
@@ -1004,7 +1004,7 @@ class Forge
      * @param array $attributes
      * @param array $field
      *
-     * @return null|void
+     * @return void|null
      */
     protected function _attributeUnsigned(array &$attributes, array &$field)
     {
@@ -1044,7 +1044,7 @@ class Forge
      * @param array $attributes
      * @param array $field
      *
-     * @return null|void
+     * @return void|null
      */
     protected function _attributeDefault(array &$attributes, array &$field)
     {

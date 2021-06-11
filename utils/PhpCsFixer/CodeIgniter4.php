@@ -145,8 +145,12 @@ final class CodeIgniter4 extends AbstractRuleset
                     'str',
                 ],
             ],
-            'phpdoc_separation'           => true,
-            'phpdoc_types'                => ['groups' => ['simple', 'alias', 'meta']],
+            'phpdoc_separation'  => true,
+            'phpdoc_types'       => ['groups' => ['simple', 'alias', 'meta']],
+            'phpdoc_types_order' => [
+                'null_adjustment' => 'always_last',
+                'sort_algorithm'  => 'alpha',
+            ],
             'static_lambda'               => true,
             'ternary_to_null_coalescing'  => true,
             'trailing_comma_in_multiline' => [

@@ -89,7 +89,7 @@ abstract class BaseHandler implements SessionHandlerInterface
      * The 'save path' for the session
      * varies between
      *
-     * @var string|array
+     * @var array|string
      */
     protected $savePath;
 

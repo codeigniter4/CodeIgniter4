@@ -23,7 +23,7 @@ if (! function_exists('set_cookie')) {
      * Accepts seven parameters, or you can submit an associative
      * array in the first parameter containing all the values.
      *
-     * @param string|array $name     Cookie name or array containing binds
+     * @param array|string $name     Cookie name or array containing binds
      * @param string       $value    The value of the cookie
      * @param string       $expire   The number of seconds until expiration
      * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com

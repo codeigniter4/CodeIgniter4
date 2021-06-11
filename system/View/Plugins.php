@@ -34,7 +34,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @return URI|mixed|string
+     * @return mixed|string|URI
      */
     public static function previousURL()
     {
@@ -119,7 +119,7 @@ class Plugins
      *
      * @param array $params
      *
-     * @return string|false
+     * @return false|string
      */
     public static function route(array $params = [])
     {

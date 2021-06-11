@@ -46,7 +46,7 @@ interface RouteCollectionInterface
      * You can pass an associative array as $placeholder, and have
      * multiple placeholders added at once.
      *
-     * @param string|array $placeholder
+     * @param array|string $placeholder
      * @param string       $pattern
      *
      * @return mixed
@@ -141,7 +141,7 @@ interface RouteCollectionInterface
      * Returns the 404 Override setting, which can be null, a closure
      * or the controller/string.
      *
-     * @return string|Closure|null
+     * @return Closure|string|null
      */
     public function get404Override();
 
@@ -217,7 +217,7 @@ interface RouteCollectionInterface
      * @param string $search
      * @param array  ...$params
      *
-     * @return string|false
+     * @return false|string
      */
     public function reverseRoute(string $search, ...$params);
 

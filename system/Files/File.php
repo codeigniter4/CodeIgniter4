@@ -31,7 +31,7 @@ class File extends SplFileInfo
     /**
      * Original MimeType
      *
-     * @var null|string
+     * @var string|null
      */
     protected $originalMimeType = null;
 

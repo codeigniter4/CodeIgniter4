@@ -307,7 +307,7 @@ trait ResponseTrait
      * Handles conversion of the of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
-     * @param string|array $body
+     * @param array|string $body
      * @param string       $format Valid: json, xml
      *
      * @return mixed
@@ -546,7 +546,7 @@ trait ResponseTrait
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param string|array $name     Cookie name or array containing binds
+     * @param array|string $name     Cookie name or array containing binds
      * @param string       $value    Cookie value
      * @param string       $expire   Cookie expiration time in seconds
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
@@ -629,7 +629,7 @@ trait ResponseTrait
      * @param string|null $name
      * @param string      $prefix
      *
-     * @return Cookie[]|Cookie|null
+     * @return Cookie|Cookie[]|null
      */
     public function getCookie(string $name = null, string $prefix = '')
     {

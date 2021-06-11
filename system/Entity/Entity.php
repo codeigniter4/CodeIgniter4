@@ -325,7 +325,7 @@ class Entity implements JsonSerializable
      *
      * @throws Exception
      *
-     * @return Time|mixed
+     * @return mixed|Time
      */
     protected function mutateDate($value)
     {

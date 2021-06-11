@@ -653,10 +653,10 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Calculate image aspect ratio.
      *
-     * @param int|float      $width
-     * @param int|float|null $height
-     * @param int|float      $origWidth
-     * @param int|float      $origHeight
+     * @param float|int      $width
+     * @param float|int|null $height
+     * @param float|int      $origWidth
+     * @param float|int      $origHeight
      *
      * @return array
      */
@@ -699,10 +699,10 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Based on the position, will determine the correct x/y coords to
      * crop the desired portion from the image.
      *
-     * @param int|float $width
-     * @param int|float $height
-     * @param int|float $origWidth
-     * @param int|float $origHeight
+     * @param float|int $width
+     * @param float|int $height
+     * @param float|int $origWidth
+     * @param float|int $origHeight
      * @param string    $position
      *
      * @return array

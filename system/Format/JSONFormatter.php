@@ -24,7 +24,7 @@ class JSONFormatter implements FormatterInterface
      *
      * @param mixed $data
      *
-     * @return string|bool (JSON string | false)
+     * @return bool|string (JSON string | false)
      */
     public function format($data)
     {

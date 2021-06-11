@@ -183,7 +183,7 @@ class Validation implements ValidationInterface
      *
      * @param string       $field
      * @param string|null  $label
-     * @param string|array $value
+     * @param array|string $value
      * @param array|null   $rules
      * @param array        $data
      *
@@ -318,7 +318,7 @@ class Validation implements ValidationInterface
      * Takes a Request object and grabs the input data to use from its
      * array values.
      *
-     * @param RequestInterface|IncomingRequest $request
+     * @param IncomingRequest|RequestInterface $request
      *
      * @return ValidationInterface
      */

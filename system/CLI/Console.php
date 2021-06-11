@@ -48,7 +48,7 @@ class Console
      *
      * @param bool $useSafeOutput
      *
-     * @return RequestInterface|Response|ResponseInterface|mixed
+     * @return mixed|RequestInterface|Response|ResponseInterface
      *
      * @throws Exception
      */

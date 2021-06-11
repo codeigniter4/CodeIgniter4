@@ -156,7 +156,7 @@ class Table
     /**
      * Drops columns from the table.
      *
-     * @param string|array $columns
+     * @param array|string $columns
      *
      * @return Table
      */
@@ -365,7 +365,7 @@ class Table
      * Attempts to drop all indexes and constraints
      * from the database for this table.
      *
-     * @return null|void
+     * @return void|null
      */
     protected function dropIndexes()
     {

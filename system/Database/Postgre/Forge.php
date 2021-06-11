@@ -81,7 +81,7 @@ class Forge extends BaseForge
      * @param string $table     Table name
      * @param mixed  $field     Column definition
      *
-     * @return string|array|bool
+     * @return array|bool|string
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {

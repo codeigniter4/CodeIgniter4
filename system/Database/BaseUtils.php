@@ -30,21 +30,21 @@ abstract class BaseUtils
     /**
      * List databases statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $listDatabases = false;
 
     /**
      * OPTIMIZE TABLE statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $optimizeTable = false;
 
     /**
      * REPAIR TABLE statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $repairTable = false;
 

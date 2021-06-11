@@ -397,7 +397,7 @@ trait FeatureTestTrait
      * expect as in the case of testing a JSON or XML API.
      *
      * @param Request    $request
-     * @param null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
+     * @param array|null $params  The parameters to be formatted and put in the body. If this is empty, it will get the
      *                            what has been loaded into the request global of the request class.
      *
      * @return Request

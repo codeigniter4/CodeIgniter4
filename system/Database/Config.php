@@ -40,7 +40,7 @@ class Config extends BaseConfig
     /**
      * Creates the default
      *
-     * @param string|array $group     The name of the connection group to use,
+     * @param array|string $group     The name of the connection group to use,
      *                                or an array of configuration settings.
      * @param bool         $getShared Whether to return a shared instance of the connection.
      *
@@ -101,7 +101,7 @@ class Config extends BaseConfig
      * Loads and returns an instance of the Forge for the specified
      * database group, and loads the group if it hasn't been loaded yet.
      *
-     * @param ConnectionInterface|string|array|null $group
+     * @param array|ConnectionInterface|string|null $group
      *
      * @return Forge
      */
@@ -117,7 +117,7 @@ class Config extends BaseConfig
     /**
      * Returns a new instance of the Database Utilities class.
      *
-     * @param string|array|null $group
+     * @param array|string|null $group
      *
      * @return BaseUtils
      */

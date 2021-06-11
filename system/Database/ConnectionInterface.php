@@ -94,7 +94,7 @@ interface ConnectionInterface
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,string|int>
+     * @return array<string,int|string>
      */
     public function error(): array;
 
@@ -129,7 +129,7 @@ interface ConnectionInterface
      * @param string $sql
      * @param mixed  ...$binds
      *
-     * @return BaseResult|Query|bool
+     * @return BaseResult|bool|Query
      */
     public function query(string $sql, $binds = null);
 
@@ -151,7 +151,7 @@ interface ConnectionInterface
     /**
      * Returns an instance of the query builder for this connection.
      *
-     * @param string|array $tableName Table name.
+     * @param array|string $tableName Table name.
      *
      * @return BaseBuilder Builder.
      */

@@ -115,8 +115,8 @@ if (! function_exists('form_hidden')) {
      * Generates hidden fields. You can pass a simple key/value string or
      * an associative array with multiple values.
      *
-     * @param string|array $name      Field name or associative array to create multiple fields
-     * @param string|array $value     Field value
+     * @param array|string $name      Field name or associative array to create multiple fields
+     * @param array|string $value     Field value
      * @param bool         $recursing
      *
      * @return string
@@ -815,7 +815,7 @@ if (! function_exists('parse_form_attributes')) {
      *
      * Helper function used by some of the form helpers
      *
-     * @param string|array $attributes List of attributes
+     * @param array|string $attributes List of attributes
      * @param array        $default    Default values
      *
      * @return string

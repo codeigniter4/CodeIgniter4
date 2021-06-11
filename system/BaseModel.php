@@ -364,7 +364,7 @@ abstract class BaseModel
      *
      * @param array $data Data
      *
-     * @return int|string|bool
+     * @return bool|int|string
      */
     abstract protected function doInsert(array $data);
 
@@ -377,7 +377,7 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows inserted or FALSE on failure
      */
     abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
@@ -385,7 +385,7 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This methods works only with dbCalls
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|null            $data Data
      *
      * @return bool
@@ -411,10 +411,10 @@ abstract class BaseModel
      * Deletes a single record from the database where $id matches
      * This methods works only with dbCalls
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|bool
+     * @return bool|string
      *
      * @throws DatabaseException
      */
@@ -462,7 +462,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      *
      * @deprecated Add an override on getIdValue() instead. Will be removed in version 5.0.
      */
@@ -710,7 +710,7 @@ abstract class BaseModel
      * @param array|object|null $data     Data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return int|string|bool
+     * @return bool|int|string
      *
      * @throws ReflectionException
      */
@@ -784,7 +784,7 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows inserted or FALSE on failure
      *
      * @throws ReflectionException
      */
@@ -835,7 +835,7 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|object|null     $data Data
      *
      * @return bool
@@ -953,7 +953,7 @@ abstract class BaseModel
     /**
      * Deletes a single record from the database where $id matches
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
      * @return BaseResult|bool
@@ -1224,7 +1224,7 @@ abstract class BaseModel
      *
      * @param Time $value value
      *
-     * @return string|int
+     * @return int|string
      */
     protected function timeToDate(Time $value)
     {
@@ -1308,7 +1308,7 @@ abstract class BaseModel
      * It could be used when you have to change default or override current validate rules.
      *
      * @param string       $field      Field Name
-     * @param string|array $fieldRules Validation rules
+     * @param array|string $fieldRules Validation rules
      *
      * @return $this
      */
@@ -1519,7 +1519,7 @@ abstract class BaseModel
      * This method use objectToRawArray internally and does conversion
      * to string on all Time instances
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
@@ -1549,7 +1549,7 @@ abstract class BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array with raw values.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
