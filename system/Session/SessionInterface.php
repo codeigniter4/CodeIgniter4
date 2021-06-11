@@ -133,7 +133,7 @@ interface SessionInterface
      *
      * @param string|array $key Property identifier or array of them
      *
-     * @return False if any of the properties are not already set
+     * @return false if any of the properties are not already set
      */
     public function markAsFlashdata($key);
 
