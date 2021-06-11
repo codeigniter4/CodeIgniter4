@@ -105,7 +105,20 @@ final class CodeIgniter4 extends AbstractRuleset
             'ordered_imports'                       => ['sort_algorithm' => 'alpha'],
             'phpdoc_align'                          => true,
             'phpdoc_indent'                         => true,
-            'phpdoc_scalar'                         => [
+            'phpdoc_inline_tag_normalizer'          => [
+                'tags' => [
+                    'example',
+                    'id',
+                    'internal',
+                    'inheritdoc',
+                    'inheritdocs',
+                    'link',
+                    'source',
+                    'toc',
+                    'tutorial',
+                ],
+            ],
+            'phpdoc_scalar' => [
                 'types' => [
                     'boolean',
                     'callback',
