@@ -9,13 +9,19 @@ use Config\Services;
 
 final class CommandRunnerTest extends CIUnitTestCase
 {
-    /** @var resource */
+    /**
+     * @var resource
+     */
     private $streamFilter;
 
-    /** @var Logger */
+    /**
+     * @var Logger
+     */
     private static $logger;
 
-    /** @var CommandRunner */
+    /**
+     * @var CommandRunner
+     */
     private static $runner;
 
     public static function setUpBeforeClass(): void

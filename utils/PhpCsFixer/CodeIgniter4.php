@@ -118,6 +118,11 @@ final class CodeIgniter4 extends AbstractRuleset
                     'tutorial',
                 ],
             ],
+            'phpdoc_line_span' => [
+                'const'    => 'multi',
+                'method'   => 'multi',
+                'property' => 'multi',
+            ],
             'phpdoc_scalar' => [
                 'types' => [
                     'boolean',
