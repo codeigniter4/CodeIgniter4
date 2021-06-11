@@ -20,7 +20,7 @@ class DatabaseTestCase extends CIUnitTestCase
      * The seed file(s) used for all tests within this test case.
      * Should be fully-namespaced or relative to $basePath
      *
-     * @var string|array
+     * @var array|string
      */
     protected $seed = 'Tests\Support\Database\Seeds\ExampleSeeder';
 
@@ -38,7 +38,7 @@ class DatabaseTestCase extends CIUnitTestCase
      * Note that running "all" runs migrations in date order,
      * but specifying namespaces runs them in namespace order (then date)
      *
-     * @var string|array|null
+     * @var array|string|null
      */
     protected $namespace = 'Tests\Support';
 

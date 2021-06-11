@@ -163,7 +163,7 @@ if (! function_exists('previous_url')) {
      *
      * @param bool $returnObject
      *
-     * @return URI|mixed|string
+     * @return mixed|string|URI
      */
     function previous_url(bool $returnObject = false)
     {

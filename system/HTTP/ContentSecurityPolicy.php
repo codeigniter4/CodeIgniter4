@@ -248,7 +248,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -270,7 +270,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-child-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -291,7 +291,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -312,7 +312,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-default-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -332,7 +332,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-font-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -350,7 +350,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-form-action
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -368,7 +368,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -386,7 +386,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-frame-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -406,7 +406,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-img-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -424,7 +424,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-media-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -442,7 +442,7 @@ class ContentSecurityPolicy
      *
      * @see https://www.w3.org/TR/CSP/#directive-manifest-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -460,7 +460,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-object-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -478,7 +478,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-plugin-types
      *
-     * @param string|array $mime              One or more plugin mime types, separate by spaces
+     * @param array|string $mime              One or more plugin mime types, separate by spaces
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -513,7 +513,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-sandbox
      *
-     * @param string|array $flags             An array of sandbox flags that can be added to the directive.
+     * @param array|string $flags             An array of sandbox flags that can be added to the directive.
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -531,7 +531,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -549,7 +549,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
-     * @param string|array $uri
+     * @param array|string $uri
      * @param bool|null    $explicitReporting
      *
      * @return $this
@@ -583,7 +583,7 @@ class ContentSecurityPolicy
     /**
      * DRY method to add an string or array to a class property.
      *
-     * @param string|array $options
+     * @param array|string $options
      * @param string       $target
      * @param bool|null    $explicitReporting
      *

@@ -25,7 +25,7 @@ class DebugToolbar implements FilterInterface
     /**
      * We don't need to do anything here.
      *
-     * @param RequestInterface|IncomingRequest $request
+     * @param IncomingRequest|RequestInterface $request
      * @param array|null                       $arguments
      *
      * @return void
@@ -40,8 +40,8 @@ class DebugToolbar implements FilterInterface
      * If the debug flag is set (CI_DEBUG) then collect performance
      * and debug information and display it in a toolbar.
      *
-     * @param RequestInterface|IncomingRequest $request
-     * @param ResponseInterface|Response       $response
+     * @param IncomingRequest|RequestInterface $request
+     * @param Response|ResponseInterface       $response
      * @param array|null                       $arguments
      *
      * @return void

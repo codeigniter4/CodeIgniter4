@@ -202,7 +202,7 @@ class Autoloader
      *
      * @param string $class
      *
-     * @return string|false
+     * @return false|string
      */
     public function loadClassmap(string $class)
     {
@@ -220,7 +220,7 @@ class Autoloader
      *
      * @param string $class The fully qualified class name.
      *
-     * @return string|false The mapped file on success, or boolean false
+     * @return false|string The mapped file on success, or boolean false
      *                      on failure.
      */
     public function loadClass(string $class)
@@ -236,7 +236,7 @@ class Autoloader
      *
      * @param string $class The fully-qualified class name
      *
-     * @return string|false The mapped file name on success, or boolean false on fail
+     * @return false|string The mapped file name on success, or boolean false on fail
      */
     protected function loadInNamespace(string $class)
     {
@@ -268,7 +268,7 @@ class Autoloader
      *
      * @param string $file
      *
-     * @return string|false The filename on success, false if the file is not loaded
+     * @return false|string The filename on success, false if the file is not loaded
      */
     protected function includeFile(string $file)
     {

@@ -79,7 +79,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var Request|IncomingRequest|CLIRequest
+     * @var CLIRequest|IncomingRequest|Request
      */
     protected $request;
 
@@ -100,7 +100,7 @@ class CodeIgniter
     /**
      * Controller to use.
      *
-     * @var string|Closure
+     * @var Closure|string
      */
     protected $controller;
 
@@ -287,7 +287,7 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes
      * @param bool                          $returnResponse
      *
-     * @return bool|RequestInterface|ResponseInterface|mixed
+     * @return bool|mixed|RequestInterface|ResponseInterface
      *
      * @throws RedirectException
      * @throws Exception
@@ -366,7 +366,7 @@ class CodeIgniter
      * @param Cache                         $cacheConfig
      * @param bool                          $returnResponse
      *
-     * @return RequestInterface|ResponseInterface|mixed
+     * @return mixed|RequestInterface|ResponseInterface
      *
      * @throws RedirectException
      */
@@ -992,7 +992,7 @@ class CodeIgniter
      *
      * This helps provider safer, more reliable previous_url() detection.
      *
-     * @param URI|string $uri
+     * @param string|URI $uri
      */
     public function storePreviousURL($uri)
     {

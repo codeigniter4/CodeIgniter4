@@ -21,14 +21,14 @@ abstract class BaseResult implements ResultInterface
     /**
      * Connection ID
      *
-     * @var resource|object
+     * @var object|resource
      */
     public $connID;
 
     /**
      * Result ID
      *
-     * @var resource|object|bool
+     * @var bool|object|resource
      */
     public $resultID;
 

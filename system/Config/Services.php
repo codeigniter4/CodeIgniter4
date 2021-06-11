@@ -201,7 +201,7 @@ class Services extends BaseService
     /**
      * The Email class allows you to send email via mail, sendmail, SMTP.
      *
-     * @param EmailConfig|array|null $config
+     * @param array|EmailConfig|null $config
      * @param bool                   $getShared
      *
      * @return Email

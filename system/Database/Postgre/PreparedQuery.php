@@ -32,7 +32,7 @@ class PreparedQuery extends BasePreparedQuery
      * The result resource from a successful
      * pg_exec. Or false.
      *
-     * @var Result|bool
+     * @var bool|Result
      */
     protected $result;
 

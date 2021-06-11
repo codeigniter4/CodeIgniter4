@@ -23,7 +23,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var bool|array
+     * @var array|bool
      */
     protected $_unsigned = false;
 
@@ -121,7 +121,7 @@ class Forge extends BaseForge
      * @param string $table     Table name
      * @param mixed  $field     Column definition
      *
-     * @return string|array|null
+     * @return array|string|null
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {

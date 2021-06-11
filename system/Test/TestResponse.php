@@ -371,7 +371,7 @@ class TestResponse extends TestCase
     /**
      * Returns the response's body as JSON
      *
-     * @return mixed|false
+     * @return false|mixed
      */
     public function getJSON()
     {
@@ -409,7 +409,7 @@ class TestResponse extends TestCase
      * Asserts that the JSON exactly matches the passed in data.
      * If the value being passed in is a string, it must be a json_encoded string.
      *
-     * @param string|array $test
+     * @param array|string $test
      *
      * @throws Exception
      */

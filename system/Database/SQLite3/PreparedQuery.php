@@ -22,7 +22,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * The SQLite3Result resource, or false.
      *
-     * @var Result|bool
+     * @var bool|Result
      */
     protected $result;
 

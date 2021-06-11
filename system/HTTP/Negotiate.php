@@ -27,7 +27,7 @@ class Negotiate
     /**
      * Request
      *
-     * @var RequestInterface|IncomingRequest
+     * @var IncomingRequest|RequestInterface
      */
     protected $request;
 

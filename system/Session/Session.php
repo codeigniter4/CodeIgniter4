@@ -453,7 +453,7 @@ class Session implements SessionInterface
      * If $data is an array, it is expected to be an array of key/value pairs
      * to be set as session properties.
      *
-     * @param string|array $data  Property name or associative array of properties
+     * @param array|string $data  Property name or associative array of properties
      * @param mixed        $value Property value if single key provided
      */
     public function set($data, $value = null)
@@ -548,7 +548,7 @@ class Session implements SessionInterface
      * identifiers to remove. Otherwise, it is interpreted as the identifier
      * of a specific session property to remove.
      *
-     * @param string|array $key Identifier of the session property or properties to remove.
+     * @param array|string $key Identifier of the session property or properties to remove.
      */
     public function remove($key)
     {
@@ -568,7 +568,7 @@ class Session implements SessionInterface
      *  $session->foo = bar;
      *
      * @param string       $key   Identifier of the session property to set.
-     * @param string|array $value
+     * @param array|string $value
      */
     public function __set(string $key, $value)
     {
@@ -581,7 +581,7 @@ class Session implements SessionInterface
      *
      * @param string $key Identifier of the session property to remove.
      *
-     * @return null|string
+     * @return string|null
      */
     public function __get(string $key)
     {
@@ -626,7 +626,7 @@ class Session implements SessionInterface
      * flashdata property, with $value containing the property value.
      *
      * @param array|string $data  Property identifier or associative array of properties
-     * @param string|array $value Property value if $data is a scalar
+     * @param array|string $value Property value if $data is a scalar
      */
     public function setFlashdata($data, $value = null)
     {
@@ -761,7 +761,7 @@ class Session implements SessionInterface
      * Sets new data into the session, and marks it as temporary data
      * with a set lifespan.
      *
-     * @param string|array $data  Session data key or associative array of items
+     * @param array|string $data  Session data key or associative array of items
      * @param null         $value Value to store
      * @param int          $ttl   Time-to-live in seconds
      */
@@ -814,7 +814,7 @@ class Session implements SessionInterface
      * Mark one of more pieces of data as being temporary, meaning that
      * it has a set lifespan within the session.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      * @param int          $ttl Time to live, in seconds
      *
      * @return bool False if any of the properties were not set
@@ -862,7 +862,7 @@ class Session implements SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      */
     public function unmarkTempdata($key)
     {

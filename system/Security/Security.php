@@ -417,7 +417,7 @@ class Security implements SecurityInterface
      *
      * @param RequestInterface $request
      *
-     * @return Security|false
+     * @return false|Security
      */
     protected function sendCookie(RequestInterface $request)
     {
