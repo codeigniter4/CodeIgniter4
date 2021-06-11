@@ -549,7 +549,7 @@ if (! function_exists('function_usable')) {
      * that version is yet to be released. This function will therefore
      * be just temporary, but would probably be kept for a few years.
      *
-     * @link   http://www.hardened-php.net/suhosin/
+     * @see   http://www.hardened-php.net/suhosin/
      *
      * @param string $functionName Function to check for
      *
@@ -708,7 +708,7 @@ if (! function_exists('is_really_writable')) {
      * the file, based on the read-only attribute. is_writable() is also unreliable
      * on Unix servers if safe_mode is on.
      *
-     * @link https://bugs.php.net/bug.php?id=54709
+     * @see https://bugs.php.net/bug.php?id=54709
      *
      * @param string $file
      *

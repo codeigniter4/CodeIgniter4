@@ -123,7 +123,19 @@ final class CodeIgniter4 extends AbstractRuleset
                 'method'   => 'multi',
                 'property' => 'multi',
             ],
-            'phpdoc_scalar' => [
+            'phpdoc_no_access'    => true,
+            'phpdoc_no_alias_tag' => [
+                'replacements' => [
+                    'property-read'  => 'property',
+                    'property-write' => 'property',
+                    'type'           => 'var',
+                    'link'           => 'see',
+                ],
+            ],
+            'phpdoc_no_empty_return'       => false,
+            'phpdoc_no_package'            => true,
+            'phpdoc_no_useless_inheritdoc' => true,
+            'phpdoc_scalar'                => [
                 'types' => [
                     'boolean',
                     'callback',
