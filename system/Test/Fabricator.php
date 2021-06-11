@@ -392,9 +392,9 @@ class Fabricator
     /**
      * Generate an array of faked data
      *
-     * @return array An array of faked data
-     *
      * @throws RuntimeException
+     *
+     * @return array An array of faked data
      */
     public function makeArray()
     {
@@ -429,9 +429,9 @@ class Fabricator
      *
      * @param string|null $className Class name of the object to create; null to use model default
      *
-     * @return object An instance of the class with faked data
-     *
      * @throws RuntimeException
+     *
+     * @return object An instance of the class with faked data
      */
     public function makeObject(string $className = null): object
     {
@@ -481,9 +481,9 @@ class Fabricator
      * @param int|null $count Optional number to create a collection
      * @param bool     $mock  Whether to execute or mock the insertion
      *
-     * @return array|object An array or object (based on returnType), or an array of returnTypes
-     *
      * @throws FrameworkException
+     *
+     * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
     public function create(int $count = null, bool $mock = false)
     {

@@ -420,9 +420,9 @@ if (! function_exists('esc')) {
      * @param string       $context
      * @param string       $encoding
      *
-     * @return array|string
-     *
      * @throws InvalidArgumentException
+     *
+     * @return array|string
      */
     function esc($data, string $context = 'html', string $encoding = null)
     {
@@ -720,9 +720,10 @@ if (! function_exists('is_really_writable')) {
      *
      * @param string $file
      *
+     * @throws Exception
+     *
      * @return bool
      *
-     * @throws Exception
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
      */
     function is_really_writable(string $file): bool
@@ -1178,9 +1179,9 @@ if (! function_exists('view_cell')) {
      * @param int         $ttl
      * @param string|null $cacheName
      *
-     * @return string
-     *
      * @throws ReflectionException
+     *
+     * @return string
      */
     function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
     {

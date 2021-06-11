@@ -40,9 +40,9 @@ class Database
      * @param array  $params
      * @param string $alias
      *
-     * @return mixed
-     *
      * @throws InvalidArgumentException
+     *
+     * @return mixed
      *
      * @internal param bool $useBuilder
      */
@@ -113,9 +113,9 @@ class Database
      *
      * @param array $params
      *
-     * @return array
-     *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     protected function parseDSN(array $params): array
     {

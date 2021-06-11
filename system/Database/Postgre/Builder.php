@@ -146,11 +146,11 @@ class Builder extends BaseBuilder
      *
      * @param array $set An associative array of insert values
      *
-     * @return mixed
-     *
      * @throws DatabaseException
      *
-     * @internal param true $bool returns the generated SQL, false executes the query.
+     * @return mixed
+     *
+     * @internal
      */
     public function replace(array $set = null)
     {
@@ -229,13 +229,13 @@ class Builder extends BaseBuilder
      * @param int   $limit
      * @param bool  $resetData
      *
-     * @return mixed
-     *
      * @throws DatabaseException
      *
-     * @internal param the $mixed where clause
-     * @internal param the $mixed limit clause
+     * @return mixed
+     *
      * @internal param $bool
+     * @internal param the $mixed limit clause
+     * @internal param the $mixed where clause
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
     {
@@ -272,12 +272,12 @@ class Builder extends BaseBuilder
      * @param string $table
      * @param array  $values
      *
-     * @return string
-     *
      * @throws DatabaseException
      *
-     * @internal param the $string table name
+     * @return string
+     *
      * @internal param the $array update data
+     * @internal param the $string table name
      */
     protected function _update(string $table, array $values): string
     {

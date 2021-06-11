@@ -44,9 +44,9 @@ class Connection extends BaseConnection
      *
      * @param bool $persistent
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function connect(bool $persistent = false)
     {
@@ -214,9 +214,9 @@ class Connection extends BaseConnection
      *
      * @param string $table Table name
      *
-     * @return array|false
-     *
      * @throws DatabaseException
+     *
+     * @return array|false
      */
     public function getFieldNames(string $table)
     {
@@ -262,9 +262,9 @@ class Connection extends BaseConnection
      *
      * @param string $table
      *
-     * @return stdClass[]
-     *
      * @throws DatabaseException
+     *
+     * @return stdClass[]
      */
     public function _fieldData(string $table): array
     {
@@ -301,9 +301,9 @@ class Connection extends BaseConnection
      *
      * @param string $table
      *
-     * @return stdClass[]
-     *
      * @throws DatabaseException
+     *
+     * @return stdClass[]
      */
     public function _indexData(string $table): array
     {
