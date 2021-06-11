@@ -14,7 +14,7 @@ namespace CodeIgniter\Modules;
 /**
  * Modules Class
  *
- * @link https://codeigniter.com/user_guide/general/modules.html
+ * @see https://codeigniter.com/user_guide/general/modules.html
  */
 class Modules
 {
