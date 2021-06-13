@@ -32,26 +32,6 @@ class PublisherException extends FrameworkException
 	}
 
 	/**
-	 * Throws when an object is expected to be a directory but is not or is missing.
-	 *
-	 * @param string $caller The method causing the exception
-	 */
-	public static function forExpectedDirectory(string $caller)
-	{
-		return new static(lang('Publisher.expectedDirectory', [$caller]));
-	}
-
-	/**
-	 * Throws when an object is expected to be a file but is not or is missing.
-	 *
-	 * @param string $caller The method causing the exception
-	 */
-	public static function forExpectedFile(string $caller)
-	{
-		return new static(lang('Publisher.expectedFile', [$caller]));
-	}
-
-	/**
 	 * Throws when given a destination that is not in the list of allowed directories.
 	 *
 	 * @param string $destination
