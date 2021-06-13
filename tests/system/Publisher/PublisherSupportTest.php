@@ -53,75 +53,11 @@ class PublisherSupportTest extends CIUnitTestCase
 	public function testDiscoverStores()
 	{
 		$publisher = Publisher::discover()[0];
-		$publisher->setFiles([])->addFile($this->file);
+		$publisher->set([])->addFile($this->file);
 
 		$result = Publisher::discover();
 		$this->assertSame($publisher, $result[0]);
-		$this->assertSame([$this->file], $result[0]->getFiles());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testResolveDirectoryDirectory()
-	{
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveDirectory');
-
-		$this->assertSame($this->directory, $method($this->directory));
-	}
-
-	public function testResolveDirectoryFile()
-	{
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveDirectory');
-
-		$this->expectException(PublisherException::class);
-		$this->expectExceptionMessage(lang('Publisher.expectedDirectory', ['invokeArgs']));
-
-		$method($this->file);
-	}
-
-	public function testResolveDirectorySymlink()
-	{
-		// Create a symlink to test
-		$link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
-		symlink($this->directory, $link);
-
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveDirectory');
-
-		$this->assertSame($this->directory, $method($link));
-
-		unlink($link);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testResolveFileFile()
-	{
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveFile');
-
-		$this->assertSame($this->file, $method($this->file));
-	}
-
-	public function testResolveFileSymlink()
-	{
-		// Create a symlink to test
-		$link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
-		symlink($this->file, $link);
-
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveFile');
-
-		$this->assertSame($this->file, $method($link));
-
-		unlink($link);
-	}
-
-	public function testResolveFileDirectory()
-	{
-		$method = $this->getPrivateMethodInvoker(Publisher::class, 'resolveFile');
-
-		$this->expectException(PublisherException::class);
-		$this->expectExceptionMessage(lang('Publisher.expectedFile', ['invokeArgs']));
-
-		$method($this->directory);
+		$this->assertSame([$this->file], $result[0]->get());
 	}
 
 	//--------------------------------------------------------------------
