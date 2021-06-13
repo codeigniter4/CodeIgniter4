@@ -28,8 +28,8 @@ Concept and Usage
 * How can I update my project when the framework or modules change?
 * How can components inject new content into existing projects?
 
-At its most basic, publishing amounts to copying a file or files into a project. ``Publisher`` uses fluent-style
-command chaining to read, filter, and process input files, then copies or merges them into the target destination.
+At its most basic, publishing amounts to copying a file or files into a project. ``Publisher`` extends ``FileCollection``
+to enact fluent-style command chaining to read, filter, and process input files, then copies or merges them into the target destination.
 You may use ``Publisher`` on demand in your Controllers or other components, or you may stage publications by extending
 the class and leveraging its discovery with ``spark publish``.
 
@@ -320,6 +320,8 @@ Now when your module users run ``php spark auth:publish`` they will have the fol
 Library Reference
 *****************
 
+.. note:: ``Publisher`` is an extension of :doc:`FileCollection </libraries/files>` so has access to all those methods for reading and filtering files.
+
 Support Methods
 ===============
 
@@ -346,33 +348,6 @@ files and changes, and this provides the path to a transient, writable directory
 Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use ``getMessage()`` on the Throwable to get the error message.
 
-**getFiles(): string[]**
-
-Returns an array of all the loaded input files.
-
-Inputting Files
-===============
-
-**setFiles(array $files)**
-
-Sets the list of input files to the provided string array of file paths.
-
-**addFile(string $file)**
-**addFiles(array $files)**
-
-Adds the file or files to the current list of input files. Files are absolute paths to actual files.
-
-**removeFile(string $file)**
-**removeFiles(array $files)**
-
-Removes the file or files from the current list of input files.
-
-**addDirectory(string $directory, bool $recursive = false)**
-**addDirectories(array $directories, bool $recursive = false)**
-
-Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
-absolute paths to actual directories.
-
 **addPath(string $path, bool $recursive = true)**
 **addPaths(array $path, bool $recursive = true)**
 
@@ -387,29 +362,6 @@ file to the list.
 
 .. note:: The CURL request made is a simple ``GET`` and uses the response body for the file contents. Some
 	remote files may need a custom request to be handled properly.
-
-Filtering Files
-===============
-
-**removePattern(string $pattern, string $scope = null)**
-**retainPattern(string $pattern, string $scope = null)**
-
-Filters the current file list through the pattern (and optional scope), removing or retaining matched
-files. ``$pattern`` may be a complete regex (like ``'#[A-Za-z]+\.php#'``) or a pseudo-regex similar
-to ``glob()`` (like ``*.css``).
-If a ``$scope`` is provided then only files in or under that directory will be considered (i.e. files
-outside of ``$scope`` are always retained). When no scope is provided then all files are subject.
-
-Examples::
-
-	$publisher = new Publisher(APPPATH . 'Config');
-	$publisher->addPath('/', true); // Adds all Config files and directories
-
-	$publisher->removePattern('*tion.php'); // Would remove Encryption.php, Validation.php, and boot/production.php
-	$publisher->removePattern('*tion.php', APPPATH . 'Config/boot'); // Would only remove boot/production.php
-
-	$publisher->retainPattern('#A.+php$#'); // Would keep only Autoload.php
-	$publisher->retainPattern('#d.+php$#', APPPATH . 'Config/boot'); // Would keep everything but boot/production.php and boot/testing.php
 
 Outputting Files
 ================
