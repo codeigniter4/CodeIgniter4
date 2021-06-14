@@ -13,6 +13,7 @@ namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\Test\Mock\MockCache;
 use Config\Cache;
 
 /**
@@ -20,20 +21,40 @@ use Config\Cache;
  */
 class CacheFactory
 {
-    /**
-     * Attempts to create the desired cache handler, based upon the
-     *
-     * @return CacheInterface
-     */
-    public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)
-    {
-        if (! isset($config->validHandlers) || ! is_array($config->validHandlers)) {
-            throw CacheException::forInvalidHandlers();
-        }
+	/**
+	 * The class to use when mocking
+	 *
+	 * @var string
+	 */
+	public static $mockClass = MockCache::class;
 
-        if (! isset($config->handler) || ! isset($config->backupHandler)) {
-            throw CacheException::forNoBackup();
-        }
+	/**
+	 * The service to inject the mock as
+	 *
+	 * @var string
+	 */
+	public static $mockServiceName = 'cache';
+
+	/**
+	 * Attempts to create the desired cache handler, based upon the
+	 *
+	 * @param Cache       $config
+	 * @param string|null $handler
+	 * @param string|null $backup
+	 *
+	 * @return CacheInterface
+	 */
+	public static function getHandler(Cache $config, string $handler = null, string $backup = null)
+	{
+		if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
+		{
+			throw CacheException::forInvalidHandlers();
+		}
+
+		if (! isset($config->handler) || ! isset($config->backupHandler))
+		{
+			throw CacheException::forNoBackup();
+		}
 
         $handler = ! empty($handler) ? $handler : $config->handler;
         $backup  = ! empty($backup) ? $backup : $config->backupHandler;
