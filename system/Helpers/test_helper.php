@@ -48,7 +48,6 @@ if (! function_exists('mock'))
 {
 	/**
 	 * Used within our test suite to mock certain system tools.
-	 * All tools using this MUST use the MockableTrait
 	 *
 	 * @param string $className Fully qualified class name
 	 */
