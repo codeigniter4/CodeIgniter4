@@ -58,7 +58,7 @@ if (! function_exists('mock'))
 	function mock(string $className)
 	{
 		$mockClass   = $className::$mockClass;
-		$mockService = $className::$mockServiceName;
+		$mockService = $className::$mockServiceName ?? '';
 
 		if (empty($mockClass) || ! class_exists($mockClass))
 		{
