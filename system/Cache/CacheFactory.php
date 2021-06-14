@@ -13,6 +13,7 @@ namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\Test\Mock\MockCache;
 use Config\Cache;
 
 /**
@@ -22,6 +23,20 @@ use Config\Cache;
  */
 class CacheFactory
 {
+	/**
+	 * The class to use when mocking
+	 *
+	 * @var string
+	 */
+	public static $mockClass = MockCache::class;
+
+	/**
+	 * The service to inject the mock as
+	 *
+	 * @var string
+	 */
+	public static $mockServiceName = 'cache';
+
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
@@ -83,6 +98,4 @@ class CacheFactory
 
 		return $adapter;
 	}
-
-	//--------------------------------------------------------------------
 }

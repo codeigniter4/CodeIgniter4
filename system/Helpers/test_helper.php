@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
+use CodeIgniter\Exceptions\TestException;
 use CodeIgniter\Test\Fabricator;
+use Config\Services;
 
 /**
  * CodeIgniter Test Helpers
@@ -43,5 +45,34 @@ if (! function_exists('fake'))
 		}
 
 		return $fabricator->make();
+	}
+}
+
+if (! function_exists('mock'))
+{
+	/**
+	 * Used within our test suite to mock certain system tools.
+	 * All tools using this MUST use the MockableTrait
+	 *
+	 * @param string $className Fully qualified class name
+	 */
+	function mock(string $className)
+	{
+		$mockClass   = $className::$mockClass;
+		$mockService = $className::$mockServiceName;
+
+		if (empty($mockClass) || ! class_exists($mockClass))
+		{
+			throw TestException::forInvalidMockClass($mockClass);
+		}
+
+		$mock = new $mockClass();
+
+		if (! empty($mockService))
+		{
+			Services::injectMock($mockService, $mock);
+		}
+
+		return $mock;
 	}
 }

@@ -13,6 +13,7 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
+use PHPUnit\Framework\Assert;
 use Closure;
 
 class MockCache extends BaseHandler implements CacheInterface
@@ -31,7 +32,12 @@ class MockCache extends BaseHandler implements CacheInterface
 	 */
 	protected $expirations = [];
 
-	//--------------------------------------------------------------------
+	/**
+	 * If true, will not cache any data.
+	 *
+	 * @var boolean
+	 */
+	protected $bypass = false;
 
 	/**
 	 * Takes care of any handler-specific setup that must be done.
@@ -39,8 +45,6 @@ class MockCache extends BaseHandler implements CacheInterface
 	public function initialize()
 	{
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -57,8 +61,6 @@ class MockCache extends BaseHandler implements CacheInterface
 			? $this->cache[$key]
 			: null;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Get an item from the cache, or execute the given Closure and store the result.
@@ -83,8 +85,6 @@ class MockCache extends BaseHandler implements CacheInterface
 		return $value;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Saves an item to the cache store.
 	 *
@@ -100,6 +100,11 @@ class MockCache extends BaseHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
 	{
+		if ($this->bypass)
+		{
+			return false;
+		}
+
 		$key = static::validateKey($key, $this->prefix);
 
 		$this->cache[$key]       = $value;
@@ -107,8 +112,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
 		return true;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Deletes a specific item from the cache store.
@@ -132,8 +135,6 @@ class MockCache extends BaseHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Deletes items from the cache store matching a given pattern.
 	 *
@@ -156,8 +157,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
 		return $count;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Performs atomic incrementation of a raw stored value.
@@ -183,8 +182,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
 		return $this->save($key, $data + $offset);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Performs atomic decrementation of a raw stored value.
@@ -212,8 +209,6 @@ class MockCache extends BaseHandler implements CacheInterface
 		return $this->save($key, $data - $offset);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Will delete all items in the entire cache.
 	 *
@@ -227,8 +222,6 @@ class MockCache extends BaseHandler implements CacheInterface
 		return true;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns information on the entire cache.
 	 *
@@ -241,8 +234,6 @@ class MockCache extends BaseHandler implements CacheInterface
 	{
 		return array_keys($this->cache);
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Returns detailed information about the specific item in the cache.
@@ -272,8 +263,6 @@ class MockCache extends BaseHandler implements CacheInterface
 		];
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Determines if the driver is supported on this system.
 	 *
@@ -285,5 +274,68 @@ class MockCache extends BaseHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
+	// Test Helpers
+	//--------------------------------------------------------------------
 
+	/**
+	 * Instructs the class to ignore all
+	 * requests to cache an item, and always "miss"
+	 * when checked for existing data.
+	 *
+	 * @return $this
+	 */
+	public function bypass(bool $bypass = true)
+	{
+		$this->clean();
+
+		$this->bypass = $bypass;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+	// Additional Assertions
+	//--------------------------------------------------------------------
+
+	/**
+	 * Asserts that the cache has an item named $key.
+	 * The value is not checked since storing false or null
+	 * values is valid.
+	 *
+	 * @param string $key
+	 */
+	public function assertHas(string $key)
+	{
+		Assert::assertNotNull($this->get($key), "The cache does not have an item named: `{$key}`");
+	}
+
+	/**
+	 * Asserts that the cache has an item named $key with a value matching $value.
+	 *
+	 * @param string $key
+	 * @param null   $value
+	 */
+	public function assertHasValue(string $key, $value = null)
+	{
+		$item = $this->get($key);
+
+		// Let assertHas handle throwing the error for consistency
+		// if the key is not found
+		if (empty($item))
+		{
+			$this->assertHas($key);
+		}
+
+		Assert::assertEquals($value, $this->get($key), "The cached item `{$key}` does not equal match expectation. Found: " . print_r($value, true));
+	}
+
+	/**
+	 * Asserts that the cache does NOT have an item named $key.
+	 *
+	 * @param string $key
+	 */
+	public function assertMissing(string $key)
+	{
+		Assert::assertFalse(array_key_exists($key, $this->cache), "The cached item named `{$key}` exists.");
+	}
 }
