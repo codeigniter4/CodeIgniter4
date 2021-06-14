@@ -2,7 +2,7 @@
 Mocking System Classes
 ######################
 
-Several classes within the framework provide mocked versions of the classes that can be used during testing. These classes
+Several components within the framework provide mocked versions of their classes that can be used during testing. These classes
 can take the place of the normal class during test execution, often providing additional assertions to test that actions
 have taken place (or not taken place) during the execution of the test. This might be checking data gets cached correctly,
 emails were sent correctly, etc.
