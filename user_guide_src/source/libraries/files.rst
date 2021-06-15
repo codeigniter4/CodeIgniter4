@@ -144,12 +144,37 @@ When your collection is complete, you can use ``get()`` to retrieve the final li
 
 Below are the specific methods for working with a ``FileCollection``.
 
-Inputting Files
-===============
+Starting a Collection
+=====================
+
+**__construct(string[] $files = [])**
+
+The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
+**add()** so any files supplied by child classes in the **$files** will remain.
+
+**define()**
+
+Allows child classes to define their own initial files. This method is called by the constructor and allows
+predefined collections without having to use their methods. Example::
+
+	class ConfigCollection extends \CodeIgniter\Files\FileCollection
+	{
+		protected function define(): void {
+
+			$this->add(APPPATH . 'Config', true)->retainPattern('*.php');
+		}
+	}
+
+Now you may use the ``ConfigCollection`` anywhere in your project to access all App Config files without
+having to re-call the collection methods every time.
 
 **set(array $files)**
 
-Sets the list of input files to the provided string array of file paths.
+Sets the list of input files to the provided string array of file paths. This will remove any existing
+files from the collection, so ``$collection->set([])`` is essentially a hard reset.
+
+Inputting Files
+===============
 
 **add(string[]|string $paths, bool $recursive = true)**
 
