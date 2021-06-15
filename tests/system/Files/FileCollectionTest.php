@@ -99,6 +99,38 @@ class FileCollectionTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testConstructorAddsFiles()
+	{
+		$expected = [
+			$this->directory . 'apple.php',
+			$this->file,
+		];
+
+		$collection = new class([$this->file]) extends FileCollection {
+
+			protected $files = [
+				SUPPORTPATH . 'Files/able/apple.php',
+			];
+		};
+
+		$this->assertSame($expected, $collection->get());
+	}
+
+	public function testConstructorCallsDefine()
+	{
+		$collection = new class([$this->file]) extends FileCollection {
+
+			protected function define(): void
+			{
+				$this->add(SUPPORTPATH . 'Files/baker/banana.php');
+			}
+		};
+
+		$this->assertSame([$this->file], $collection->get());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAddStringFile()
 	{
 		$files = new FileCollection();

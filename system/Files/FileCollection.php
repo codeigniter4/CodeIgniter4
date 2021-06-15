@@ -122,7 +122,7 @@ class FileCollection implements Countable, IteratorAggregate
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the Filesystem helper and stores initial files.
+	 * Loads the Filesystem helper and adds any initial files.
 	 *
 	 * @param string[] $files
 	 */
@@ -130,7 +130,17 @@ class FileCollection implements Countable, IteratorAggregate
 	{
 		helper(['filesystem']);
 
-		$this->set($files);
+		$this->add($files)->define();
+	}
+
+	/**
+	 * Applies any initial inputs after the constructor.
+	 * This method is a stub to be implemented by child classes.
+	 *
+	 * @return void
+	 */
+	protected function define(): void
+	{
 	}
 
 	/**
