@@ -667,8 +667,11 @@ class URI
         }
 
         return static::createURIString(
-            $scheme, $this->getAuthority(), $path, // Absolute URIs should use a "/" for an empty path
-            $this->getQuery(), $this->getFragment()
+            $scheme,
+            $this->getAuthority(),
+            $path, // Absolute URIs should use a "/" for an empty path
+            $this->getQuery(),
+            $this->getFragment()
         );
     }
 
@@ -984,9 +987,11 @@ class URI
 
         // Encode characters
         $path = preg_replace_callback(
-                '/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', static function (array $matches) {
-                    return rawurlencode($matches[0]);
-                }, $path
+            '/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
+            static function (array $matches) {
+                return rawurlencode($matches[0]);
+            },
+            $path
         );
 
         return $path;

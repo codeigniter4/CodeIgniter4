@@ -284,8 +284,10 @@ trait RequestTrait
 
         // @phpstan-ignore-next-line
         if (is_array($value)
-            && ($filter !== FILTER_DEFAULT
-                || ((is_numeric($flags) && $flags !== 0)
+            && (
+                $filter !== FILTER_DEFAULT
+                || (
+                    (is_numeric($flags) && $flags !== 0)
                     || is_array($flags) && count($flags) > 0
                 )
             )

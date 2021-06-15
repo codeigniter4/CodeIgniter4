@@ -173,21 +173,10 @@ if (! function_exists('entities_to_ascii')) {
         }
 
         if ($all) {
-            return str_replace([
-                '&amp;',
-                '&lt;',
-                '&gt;',
-                '&quot;',
-                '&apos;',
-                '&#45;',
-            ], [
-                '&',
-                '<',
-                '>',
-                '"',
-                "'",
-                '-',
-            ], $str
+            return str_replace(
+                ['&amp;', '&lt;', '&gt;', '&quot;', '&apos;', '&#45;'],
+                ['&', '<', '>', '"', "'",  '-'],
+                $str
             );
         }
 
@@ -230,15 +219,21 @@ if (! function_exists('word_censor')) {
 
             if ($replacement !== '') {
                 $str = preg_replace(
-                        "/({$delim})(" . $badword . ")({$delim})/i", "\\1{$replacement}\\3", $str
+                    "/({$delim})(" . $badword . ")({$delim})/i",
+                    "\\1{$replacement}\\3",
+                    $str
                 );
             } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE)) {
                 $matches = $matches[1];
 
                 for ($i = count($matches) - 1; $i >= 0; $i--) {
                     $length = strlen($matches[$i][0]);
-                    $str    = substr_replace(
-                            $str, str_repeat('#', $length), $matches[$i][1], $length
+
+                    $str = substr_replace(
+                        $str,
+                        str_repeat('#', $length),
+                        $matches[$i][1],
+                        $length
                     );
                 }
             }
@@ -269,25 +264,10 @@ if (! function_exists('highlight_code')) {
          * so they don't accidentally break the string out of PHP,
          * and thus, thwart the highlighting.
          */
-        $str = str_replace([
-            '&lt;',
-            '&gt;',
-            '<?',
-            '?>',
-            '<%',
-            '%>',
-            '\\',
-            '</script>',
-        ], [
-            '<',
-            '>',
-            'phptagopen',
-            'phptagclose',
-            'asptagopen',
-            'asptagclose',
-            'backslashtmp',
-            'scriptclose',
-        ], $str
+        $str = str_replace(
+            ['&lt;', '&gt;', '<?', '?>', '<%', '%>', '\\', '</script>'],
+            ['<', '>', 'phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'],
+            $str
         );
 
         // The highlight_string function requires that the text be surrounded
@@ -295,33 +275,39 @@ if (! function_exists('highlight_code')) {
         $str = highlight_string('<?php ' . $str . ' ?>', true);
 
         // Remove our artificially added PHP, and the syntax highlighting that came with it
-        $str = preg_replace([
-            '/<span style="color: #([A-Z0-9]+)">&lt;\?php(&nbsp;| )/i',
-            '/(<span style="color: #[A-Z0-9]+">.*?)\?&gt;<\/span>\n<\/span>\n<\/code>/is',
-            '/<span style="color: #[A-Z0-9]+"\><\/span>/i',
-        ], [
-            '<span style="color: #$1">',
-            "$1</span>\n</span>\n</code>",
-            '',
-        ], $str
+        $str = preg_replace(
+            [
+                '/<span style="color: #([A-Z0-9]+)">&lt;\?php(&nbsp;| )/i',
+                '/(<span style="color: #[A-Z0-9]+">.*?)\?&gt;<\/span>\n<\/span>\n<\/code>/is',
+                '/<span style="color: #[A-Z0-9]+"\><\/span>/i',
+            ],
+            [
+                '<span style="color: #$1">',
+                "$1</span>\n</span>\n</code>",
+                '',
+            ],
+            $str
         );
 
         // Replace our markers back to PHP tags.
-        return str_replace([
-            'phptagopen',
-            'phptagclose',
-            'asptagopen',
-            'asptagclose',
-            'backslashtmp',
-            'scriptclose',
-        ], [
-            '&lt;?',
-            '?&gt;',
-            '&lt;%',
-            '%&gt;',
-            '\\',
-            '&lt;/script&gt;',
-        ], $str
+        return str_replace(
+            [
+                'phptagopen',
+                'phptagclose',
+                'asptagopen',
+                'asptagclose',
+                'backslashtmp',
+                'scriptclose',
+            ],
+            [
+                '&lt;?',
+                '?&gt;',
+                '&lt;%',
+                '%&gt;',
+                '\\',
+                '&lt;/script&gt;',
+            ],
+            $str
         );
     }
 }

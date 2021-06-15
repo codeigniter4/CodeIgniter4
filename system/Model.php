@@ -610,11 +610,10 @@ class Model extends BaseModel
     {
         // When useAutoIncrement feature is disabled check
         // in the database if given record already exists
-        return parent::shouldUpdate($data) &&
-            ($this->useAutoIncrement
+        return parent::shouldUpdate($data)
+            && $this->useAutoIncrement
                 ? true
-                : $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1
-            );
+                : $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1;
     }
 
     /**

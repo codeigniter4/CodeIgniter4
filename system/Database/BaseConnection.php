@@ -1352,15 +1352,18 @@ abstract class BaseConnection implements ConnectionInterface
 
         // escape LIKE condition wildcards
         if ($like === true) {
-            return str_replace([
-                $this->likeEscapeChar,
-                '%',
-                '_',
-            ], [
-                $this->likeEscapeChar . $this->likeEscapeChar,
-                $this->likeEscapeChar . '%',
-                $this->likeEscapeChar . '_',
-            ], $str
+            return str_replace(
+                [
+                    $this->likeEscapeChar,
+                    '%',
+                    '_',
+                ],
+                [
+                    $this->likeEscapeChar . $this->likeEscapeChar,
+                    $this->likeEscapeChar . '%',
+                    $this->likeEscapeChar . '_',
+                ],
+                $str
             );
         }
 

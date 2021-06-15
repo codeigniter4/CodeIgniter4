@@ -225,9 +225,9 @@ if (! function_exists('get_filenames')) {
 
         try {
             foreach (new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::SELF_FIRST
-                ) as $name => $object) {
+                new RecursiveDirectoryIterator($sourceDir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            ) as $name => $object) {
                 $basename = pathinfo($name, PATHINFO_BASENAME);
                 if (! $hidden && $basename[0] === '.') {
                     continue;

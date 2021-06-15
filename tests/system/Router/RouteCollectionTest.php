@@ -257,9 +257,10 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', static function ($routes) {
-                    $routes->add('users/list', '\Users::list');
-                }
+            'admin',
+            static function ($routes) {
+                $routes->add('users/list', '\Users::list');
+            }
         );
 
         $expected = [
@@ -276,9 +277,10 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                '<script>admin', static function ($routes) {
-                    $routes->add('users/list', '\Users::list');
-                }
+            '<script>admin',
+            static function ($routes) {
+                $routes->add('users/list', '\Users::list');
+            }
         );
 
         $expected = [
@@ -295,9 +297,11 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['namespace' => 'Admin'], static function ($routes) {
-                    $routes->add('users/list', 'Users::list');
-                }
+            'admin',
+            ['namespace' => 'Admin'],
+            static function ($routes) {
+                $routes->add('users/list', 'Users::list');
+            }
         );
 
         $expected = [
@@ -314,9 +318,10 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                '', static function ($routes) {
-                    $routes->add('users/list', '\Users::list');
-                }
+            '',
+            static function ($routes) {
+                $routes->add('users/list', '\Users::list');
+            }
         );
 
         $expected = [
@@ -336,13 +341,15 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $routes->group('admin', static function ($routes) {
             $routes->group(
-                '', static function ($routes) {
+                '',
+                static function ($routes) {
                     $routes->add('users/list', '\Users::list');
 
                     $routes->group('delegate', static function ($routes) {
                         $routes->add('foo', '\Users::foo');
                     });
-                });
+                }
+            );
         });
 
         $expected = [
@@ -794,15 +801,17 @@ class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->environment(
-                'testing', static function ($routes) {
-                    $routes->get('here', 'there');
-                }
+            'testing',
+            static function ($routes) {
+                $routes->get('here', 'there');
+            }
         );
 
         $routes->environment(
-                'badenvironment', static function ($routes) {
-                    $routes->get('from', 'to');
-                }
+            'badenvironment',
+            static function ($routes) {
+                $routes->get('from', 'to');
+            }
         );
 
         $this->assertEquals($expected, $routes->getRoutes());
@@ -938,12 +947,14 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
         $routes->post(
-                'user/insert', static function () {
-                }, ['as' => 'namedRoute2']
+            'user/insert',
+            static function () {},
+            ['as' => 'namedRoute2']
         );
         $routes->put(
-                'user/insert', static function () {
-                }, ['as' => 'namedRoute3']
+            'user/insert',
+            static function () {},
+            ['as' => 'namedRoute3']
         );
 
         $match1 = $routes->reverseRoute('namedRoute1');
@@ -1286,8 +1297,9 @@ class RouteCollectionTest extends CIUnitTestCase
             'foo' => 'baz',
         ];
         $routes->add(
-                'administrator', static function () {
-                }, $options
+            'administrator',
+            static function () {},
+            $options
         );
 
         $options = $routes->getRoutesOptions('administrator');
@@ -1312,16 +1324,19 @@ class RouteCollectionTest extends CIUnitTestCase
             'bar' => 'baz',
         ];
         $routes->get(
-                'administrator', static function () {
-                }, $options1
+            'administrator',
+            static function () {},
+            $options1
         );
         $routes->post(
-                'administrator', static function () {
-                }, $options2
+            'administrator',
+            static function () {},
+            $options2
         );
         $routes->add(
-                'administrator', static function () {
-                }, $options3
+            'administrator',
+            static function () {},
+            $options3
         );
 
         $options = $routes->getRoutesOptions('administrator');
@@ -1343,9 +1358,11 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['filter' => 'role'], static function ($routes) {
-                    $routes->add('users', '\Users::list');
-                }
+            'admin',
+            ['filter' => 'role'],
+            static function ($routes) {
+                $routes->add('users', '\Users::list');
+            }
         );
 
         $this->assertTrue($routes->isFiltered('admin/users'));
@@ -1360,9 +1377,11 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->group(
-                'admin', ['filter' => 'role:admin,manager'], static function ($routes) {
-                    $routes->add('users', '\Users::list');
-                }
+            'admin',
+            ['filter' => 'role:admin,manager'],
+            static function ($routes) {
+                $routes->add('users', '\Users::list');
+            }
         );
 
         $this->assertTrue($routes->isFiltered('admin/users'));
@@ -1396,8 +1415,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
         $routes->set404Override(static function () {
             echo 'Explode now';
-        }
-        );
+        });
         $this->assertTrue(is_callable($routes->get404Override()));
     }
 

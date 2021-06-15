@@ -26,10 +26,12 @@ class JsonCast extends BaseCast
     public static function get($value, array $params = [])
     {
         $associative = in_array('array', $params, true);
-        $tmp         = ! is_null($value) ? ($associative ? [] : new stdClass) : null;
+
+        $tmp = ! is_null($value) ? ($associative ? [] : new stdClass) : null;
 
         if (function_exists('json_decode')
-            && ((is_string($value)
+            && (
+                (is_string($value)
                     && strlen($value) > 1
                     && in_array($value[0], ['[', '{', '"'], true))
                 || is_numeric($value)

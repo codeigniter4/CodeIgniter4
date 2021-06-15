@@ -201,10 +201,11 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $foundFiles = $this->locator->search('Language/en/Validation.php', 'php', false);
 
-        $this->assertEquals([
-            SYSTEMPATH . 'Language/en/Validation.php',
-            APPPATH . 'Language/en/Validation.php',
-        ],
+        $this->assertEquals(
+            [
+                SYSTEMPATH . 'Language/en/Validation.php',
+                APPPATH . 'Language/en/Validation.php',
+            ],
             $foundFiles
         );
     }

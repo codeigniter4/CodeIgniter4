@@ -50,12 +50,13 @@ class TableTest extends CIUnitTestCase
 
         $this->table->setHeading('name', 'color', 'size');
 
-        $this->assertEquals([
-            ['data' => 'name'],
-            ['data' => 'color'],
-            ['data' => 'size'],
-        ],
-                $this->table->heading
+        $this->assertEquals(
+            [
+                ['data' => 'name'],
+                ['data' => 'color'],
+                ['data' => 'size'],
+            ],
+            $this->table->heading
         );
     }
 
@@ -69,11 +70,12 @@ class TableTest extends CIUnitTestCase
 
         $this->table->setFooting('Subtotal', $subtotal);
 
-        $this->assertEquals([
-            ['data' => 'Subtotal'],
-            ['data' => $subtotal],
-        ],
-                $this->table->footing
+        $this->assertEquals(
+            [
+                ['data' => 'Subtotal'],
+                ['data' => $subtotal],
+            ],
+            $this->table->footing
         );
     }
 
@@ -92,12 +94,13 @@ class TableTest extends CIUnitTestCase
 
         $this->assertCount(3, $this->table->rows);
 
-        $this->assertEquals([
-            ['data' => 'your'],
-            ['data' => 'pony'],
-            ['data' => 'stinks'],
-        ],
-                $this->table->rows[1]
+        $this->assertEquals(
+            [
+                ['data' => 'your'],
+                ['data' => 'pony'],
+                ['data' => 'stinks'],
+            ],
+            $this->table->rows[1]
         );
     }
 
@@ -113,8 +116,8 @@ class TableTest extends CIUnitTestCase
         ];
 
         $this->assertEquals(
-                $expected,
-                $this->table->prepArgs(['name', 'color', 'size'])
+            $expected,
+            $this->table->prepArgs(['name', 'color', 'size'])
         );
 
         // with cell attributes
@@ -125,8 +128,8 @@ class TableTest extends CIUnitTestCase
         ];
 
         $this->assertEquals(
-                $expected,
-                $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
+            $expected,
+            $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
         );
     }
 
@@ -196,24 +199,17 @@ class TableTest extends CIUnitTestCase
 
         // No column count - no changes to the array
         $this->assertEquals(
-                $fiveValues,
-                $this->table->makeColumns($fiveValues)
+            $fiveValues,
+            $this->table->makeColumns($fiveValues)
         );
 
         // Column count of 3 leaves us with one &nbsp;
-        $this->assertEquals([
+        $this->assertEquals(
             [
-                'Laura',
-                'Red',
-                '15',
+                ['Laura', 'Red', '15'],
+                ['Katie', 'Blue', '&nbsp;'],
             ],
-            [
-                'Katie',
-                'Blue',
-                '&nbsp;',
-            ],
-        ],
-                $this->table->makeColumns($fiveValues, 3)
+            $this->table->makeColumns($fiveValues, 3)
         );
     }
 
