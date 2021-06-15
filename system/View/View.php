@@ -407,7 +407,6 @@ class View implements RendererInterface
      * @param string $name Section name
      *
      * @return void
-     *
      */
     public function section(string $name)
     {
@@ -421,9 +420,9 @@ class View implements RendererInterface
     /**
      * Captures the last section
      *
-     * @return void
-     *
      * @throws RuntimeException
+     *
+     * @return void
      */
     public function endSection()
     {

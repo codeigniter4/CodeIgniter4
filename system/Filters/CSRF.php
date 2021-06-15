@@ -40,9 +40,9 @@ class CSRF implements FilterInterface
      * @param IncomingRequest|RequestInterface $request
      * @param array|null                       $arguments
      *
-     * @return mixed
-     *
      * @throws SecurityException
+     *
+     * @return mixed
      */
     public function before(RequestInterface $request, $arguments = null)
     {

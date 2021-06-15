@@ -194,9 +194,9 @@ class Forge
      * @param string $dbName
      * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
@@ -249,9 +249,9 @@ class Forge
      *
      * @param string $dbName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     private function databaseExists(string $dbName): bool
     {
@@ -273,9 +273,9 @@ class Forge
      *
      * @param string $dbName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function dropDatabase(string $dbName): bool
     {
@@ -409,9 +409,9 @@ class Forge
      * @param string $onUpdate
      * @param string $onDelete
      *
-     * @return Forge
-     *
      * @throws DatabaseException
+     *
+     * @return Forge
      */
     public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
     {
@@ -435,9 +435,9 @@ class Forge
      * @param string $table       Table name
      * @param string $foreignName Foreign name
      *
-     * @return BaseResult|bool|false|mixed|Query
-     *
      * @throws DatabaseException
+     *
+     * @return BaseResult|bool|false|mixed|Query
      */
     public function dropForeignKey(string $table, string $foreignName)
     {
@@ -464,9 +464,9 @@ class Forge
      * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      * @param array  $attributes  Associative array of table attributes
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function createTable(string $table, bool $ifNotExists = false, array $attributes = [])
     {
@@ -594,9 +594,9 @@ class Forge
      * @param bool   $ifExists  Whether to add an IF EXISTS condition
      * @param bool   $cascade   Whether to add an CASCADE condition
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function dropTable(string $tableName, bool $ifExists = false, bool $cascade = false)
     {
@@ -673,9 +673,9 @@ class Forge
      * @param string $tableName    Old table name
      * @param string $newTableName New table name
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function renameTable(string $tableName, string $newTableName)
     {
@@ -715,9 +715,9 @@ class Forge
      * @param string       $table Table name
      * @param array|string $field Column definition
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function addColumn(string $table, $field): bool
     {
@@ -757,9 +757,9 @@ class Forge
      * @param string       $table      Table name
      * @param array|string $columnName Column name Array or comma separated
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function dropColumn(string $table, $columnName)
     {
@@ -783,9 +783,9 @@ class Forge
      * @param string       $table Table name
      * @param array|string $field Column definition
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function modifyColumn(string $table, $field): bool
     {

@@ -70,9 +70,9 @@ class FileHandler extends BaseHandler
      * @param string $level
      * @param string $message
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function handle($level, $message): bool
     {

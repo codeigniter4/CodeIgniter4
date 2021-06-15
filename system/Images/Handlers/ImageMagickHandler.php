@@ -64,9 +64,9 @@ class ImageMagickHandler extends BaseHandler
      *
      * @param bool $maintainRatio
      *
-     * @return ImageMagickHandler
-     *
      * @throws Exception
+     *
+     * @return ImageMagickHandler
      */
     public function _resize(bool $maintainRatio = false)
     {
@@ -93,9 +93,9 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Crops the image.
      *
-     * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
-     *
      * @throws Exception
+     *
+     * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
      */
     public function _crop()
     {
@@ -122,9 +122,9 @@ class ImageMagickHandler extends BaseHandler
      *
      * @param int $angle
      *
-     * @return $this
-     *
      * @throws Exception
+     *
+     * @return $this
      */
     protected function _rotate(int $angle)
     {
@@ -149,9 +149,9 @@ class ImageMagickHandler extends BaseHandler
      * @param int $green
      * @param int $blue
      *
-     * @return $this
-     *
      * @throws Exception
+     *
+     * @return $this
      */
     public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
@@ -174,9 +174,9 @@ class ImageMagickHandler extends BaseHandler
      *
      * @param string $direction
      *
-     * @return $this
-     *
      * @throws Exception
+     *
+     * @return $this
      */
     public function _flip(string $direction)
     {
@@ -217,9 +217,9 @@ class ImageMagickHandler extends BaseHandler
      * @param string $action
      * @param int    $quality
      *
-     * @return array Lines of output from shell command
-     *
      * @throws Exception
+     *
+     * @return array Lines of output from shell command
      */
     protected function process(string $action, int $quality = 100): array
     {
@@ -315,9 +315,9 @@ class ImageMagickHandler extends BaseHandler
      * To ensure we can use all features, like transparency,
      * during the process, we'll use a PNG as the temp file type.
      *
-     * @return string
-     *
      * @throws Exception
+     *
+     * @return string
      */
     protected function getResourcePath()
     {
