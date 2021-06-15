@@ -120,7 +120,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * Set the default attributes to a Cookie instance by injecting
      * the values from the `CookieConfig` config or an array.
      *
-     * @param CookieConfig|array<string, mixed> $config
+     * @param array<string, mixed>|CookieConfig $config
      *
      * @return array<string, mixed> The old defaults array. Useful for resetting.
      */

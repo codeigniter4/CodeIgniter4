@@ -335,7 +335,7 @@ if (! function_exists('db_connect')) {
      * If $getShared === false then a new connection instance will be provided,
      * otherwise it will all calls will return the same instance.
      *
-     * @param ConnectionInterface|array|string|null $db
+     * @param array|ConnectionInterface|string|null $db
      * @param bool                                  $getShared
      *
      * @return BaseConnection
@@ -416,11 +416,11 @@ if (! function_exists('esc')) {
      *
      * Valid context values: html, js, css, url, attr, raw, null
      *
-     * @param string|array $data
+     * @param array|string $data
      * @param string       $context
      * @param string       $encoding
      *
-     * @return string|array
+     * @return array|string
      *
      * @throws InvalidArgumentException
      */
@@ -584,7 +584,7 @@ if (! function_exists('helper')) {
      *   2. {namespace}/Helpers
      *   3. system/Helpers
      *
-     * @param string|array $filenames
+     * @param array|string $filenames
      *
      * @throws FileNotFoundException
      */
@@ -838,7 +838,7 @@ if (! function_exists('old')) {
      *
      * @param string      $key
      * @param null        $default
-     * @param string|bool $escape
+     * @param bool|string $escape
      *
      * @return mixed|null
      */
@@ -960,7 +960,7 @@ if (! function_exists('session')) {
      *
      * @param string $val
      *
-     * @return Session|mixed|null
+     * @return mixed|Session|null
      */
     function session(string $val = null)
     {
@@ -1104,7 +1104,7 @@ if (! function_exists('timer')) {
      *
      * @param string|null $name
      *
-     * @return Timer|mixed
+     * @return mixed|Timer
      */
     function timer(string $name = null)
     {
@@ -1199,7 +1199,7 @@ if (! function_exists('class_basename')) {
     /**
      * Get the class "basename" of the given object / class.
      *
-     * @param string|object $class
+     * @param object|string $class
      *
      * @return string
      *

@@ -37,7 +37,7 @@ class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
      * Note that running "all" runs migrations in date order,
      * but specifying namespaces runs them in namespace order (then date)
      *
-     * @var string|array|null
+     * @var array|string|null
      */
     protected $namespace = [
         'Tests\Support\MigrationTestMigrations',

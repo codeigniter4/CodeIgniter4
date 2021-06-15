@@ -41,7 +41,7 @@ interface SessionInterface
      * If $data is an array, it is expected to be an array of key/value pairs
      * to be set as session properties.
      *
-     * @param string|array $data  Property name or associative array of properties
+     * @param array|string $data  Property name or associative array of properties
      * @param mixed        $value Property value if single key provided
      */
     public function set($data, $value = null);
@@ -83,7 +83,7 @@ interface SessionInterface
      * identifiers to remove. Otherwise, it is interpreted as the identifier
      * of a specific session property to remove.
      *
-     * @param string|array $key Identifier of the session property or properties to remove.
+     * @param array|string $key Identifier of the session property or properties to remove.
      */
     public function remove($key);
 
@@ -98,8 +98,8 @@ interface SessionInterface
      * Otherwise, it is interpreted as the identifier of a specific
      * flashdata property, with $value containing the property value.
      *
-     * @param string|array $data  Property identifier or associative array of properties
-     * @param string|array $value Property value if $data is a scalar
+     * @param array|string $data  Property identifier or associative array of properties
+     * @param array|string $value Property value if $data is a scalar
      */
     public function setFlashdata($data, $value = null);
 
@@ -131,9 +131,9 @@ interface SessionInterface
     /**
      * Mark a session property or properties as flashdata.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      *
-     * @return False if any of the properties are not already set
+     * @return false if any of the properties are not already set
      */
     public function markAsFlashdata($key);
 
@@ -142,7 +142,7 @@ interface SessionInterface
     /**
      * Unmark data in the session as flashdata.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      */
     public function unmarkFlashdata($key);
 
@@ -161,7 +161,7 @@ interface SessionInterface
      * Sets new data into the session, and marks it as temporary data
      * with a set lifespan.
      *
-     * @param string|array $data  Session data key or associative array of items
+     * @param array|string $data  Session data key or associative array of items
      * @param mixed        $value Value to store
      * @param int          $ttl   Time-to-live in seconds
      */
@@ -194,7 +194,7 @@ interface SessionInterface
      * Mark one of more pieces of data as being temporary, meaning that
      * it has a set lifespan within the session.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      * @param int          $ttl Time to live, in seconds
      *
      * @return bool False if any of the properties were not set
@@ -207,7 +207,7 @@ interface SessionInterface
      * Unmarks temporary data in the session, effectively removing its
      * lifespan and allowing it to live as long as the session does.
      *
-     * @param string|array $key Property identifier or array of them
+     * @param array|string $key Property identifier or array of them
      */
     public function unmarkTempdata($key);
 

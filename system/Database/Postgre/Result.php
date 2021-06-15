@@ -127,7 +127,7 @@ class Result extends BaseResult
      *
      * @param string $className
      *
-     * @return object|bool|Entity
+     * @return bool|Entity|object
      */
     protected function fetchObject(string $className = 'stdClass')
     {

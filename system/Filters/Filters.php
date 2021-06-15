@@ -158,7 +158,7 @@ class Filters
      * @param string $uri
      * @param string $position
      *
-     * @return RequestInterface|ResponseInterface|mixed
+     * @return mixed|RequestInterface|ResponseInterface
      *
      * @throws FilterException
      */

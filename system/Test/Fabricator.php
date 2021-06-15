@@ -94,7 +94,7 @@ class Fabricator
     /**
      * Store the model instance and initialize Faker to the locale.
      *
-     * @param string|object $model      Instance or classname of the model to use
+     * @param object|string $model      Instance or classname of the model to use
      * @param array|null    $formatters Array of property => formatter
      * @param string|null   $locale     Locale for Faker provider
      *

@@ -91,21 +91,21 @@ class BaseBuilder
     /**
      * QB LIMIT data
      *
-     * @var int|bool
+     * @var bool|int
      */
     protected $QBLimit = false;
 
     /**
      * QB OFFSET data
      *
-     * @var int|bool
+     * @var bool|int
      */
     protected $QBOffset = false;
 
     /**
      * QB ORDER BY data
      *
-     * @var array|null|string
+     * @var array|string|null
      */
     public $QBOrderBy = [];
 
@@ -249,7 +249,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param string|array        $tableName
+     * @param array|string        $tableName
      * @param ConnectionInterface $db
      * @param array               $options
      *
@@ -283,7 +283,7 @@ class BaseBuilder
     /**
      * Returns the current database connection
      *
-     * @return ConnectionInterface|BaseConnection
+     * @return BaseConnection|ConnectionInterface
      */
     public function db(): ConnectionInterface
     {
@@ -357,7 +357,7 @@ class BaseBuilder
      *
      * Generates the SELECT portion of the query
      *
-     * @param string|array $select
+     * @param array|string $select
      * @param bool         $escape
      *
      * @return $this
@@ -810,7 +810,7 @@ class BaseBuilder
      * joined with 'AND' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -829,7 +829,7 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -848,7 +848,7 @@ class BaseBuilder
      * joined with 'AND' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -867,7 +867,7 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -886,7 +886,7 @@ class BaseBuilder
      * joined with 'AND' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -905,7 +905,7 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -924,7 +924,7 @@ class BaseBuilder
      * joined with 'AND' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -943,7 +943,7 @@ class BaseBuilder
      * joined with 'OR' if appropriate.
      *
      * @param string               $key    The field to search
-     * @param array|string|Closure $values The values searched on, or anonymous function with subquery
+     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
      * @param bool                 $escape
      *
      * @return $this
@@ -1480,7 +1480,7 @@ class BaseBuilder
     /**
      * GROUP BY
      *
-     * @param string|array $by
+     * @param array|string $by
      * @param bool         $escape
      *
      * @return $this
@@ -1518,7 +1518,7 @@ class BaseBuilder
      *
      * Separates multiple calls with 'AND'.
      *
-     * @param string|array $key
+     * @param array|string $key
      * @param mixed        $value
      * @param bool         $escape
      *
@@ -1536,7 +1536,7 @@ class BaseBuilder
      *
      * Separates multiple calls with 'OR'.
      *
-     * @param string|array $key
+     * @param array|string $key
      * @param mixed        $value
      * @param bool         $escape
      *
@@ -1672,7 +1672,7 @@ class BaseBuilder
      *
      * Allows key/value pairs to be set for insert(), update() or replace().
      *
-     * @param string|array|object $key    Field name, or an array of field/value pairs
+     * @param array|object|string $key    Field name, or an array of field/value pairs
      * @param string              $value  Field value, if $key is a single field
      * @param bool                $escape Whether to escape values and identifiers
      *
@@ -1775,7 +1775,7 @@ class BaseBuilder
      * @param int  $offset The offset clause
      * @param bool $reset  Are we want to clear query builder values?
      *
-     * @return ResultInterface|false
+     * @return false|ResultInterface
      */
     public function get(int $limit = null, int $offset = 0, bool $reset = true)
     {
@@ -1921,7 +1921,7 @@ class BaseBuilder
      *
      * Allows the where clause, limit and offset to be added directly
      *
-     * @param string|array $where  Where condition
+     * @param array|string $where  Where condition
      * @param int          $limit  Limit value
      * @param int          $offset Offset value
      * @param bool         $reset  Are we want to clear query builder values?
@@ -1963,7 +1963,7 @@ class BaseBuilder
      * @param bool  $escape    Whether to escape values and identifiers
      * @param int   $batchSize Batch size
      *
-     * @return int|false Number of rows inserted or FALSE on failure
+     * @return false|int Number of rows inserted or FALSE on failure
      *
      * @throws DatabaseException
      */
@@ -2095,7 +2095,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return string|bool
+     * @return bool|string
      */
     public function getCompiledInsert(bool $reset = true)
     {
@@ -2126,7 +2126,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return Query|bool
+     * @return bool|Query
      */
     public function insert(array $set = null, bool $escape = null)
     {
@@ -2210,7 +2210,7 @@ class BaseBuilder
      *
      * @param array $set An associative array of insert values
      *
-     * @return BaseResult|Query|string|false
+     * @return BaseResult|false|Query|string
      *
      * @throws DatabaseException
      */
@@ -2282,7 +2282,7 @@ class BaseBuilder
      *
      * @param bool $reset TRUE: reset QB values; FALSE: leave QB values alone
      *
-     * @return string|bool
+     * @return bool|string
      */
     public function getCompiledUpdate(bool $reset = true)
     {
@@ -2672,7 +2672,7 @@ class BaseBuilder
      * @param int   $limit     The limit clause
      * @param bool  $resetData
      *
-     * @return string|bool
+     * @return bool|string
      *
      * @throws DatabaseException
      */
@@ -2775,7 +2775,7 @@ class BaseBuilder
      *
      * Used to track SQL statements written with aliased tables.
      *
-     * @param string|array $table The table to inspect
+     * @param array|string $table The table to inspect
      *
      * @return string|void
      */

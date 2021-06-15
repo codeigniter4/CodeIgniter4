@@ -48,7 +48,7 @@ class MockConnection extends BaseConnection
      * @param bool   $setEscapeFlags
      * @param string $queryClass
      *
-     * @return BaseResult|Query|bool
+     * @return BaseResult|bool|Query
      *
      * @todo BC set $queryClass default as null in 4.1
      */

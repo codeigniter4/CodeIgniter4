@@ -224,7 +224,7 @@ class Model extends BaseModel
      *
      * @param array $data Data
      *
-     * @return Query|bool
+     * @return bool|Query
      */
     protected function doInsert(array $data)
     {
@@ -263,7 +263,7 @@ class Model extends BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows inserted or FALSE on failure
      */
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
@@ -284,7 +284,7 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This methods works only with dbCalls
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|null            $data Data
      *
      * @return bool
@@ -331,10 +331,10 @@ class Model extends BaseModel
      * the table's primaryKey
      * This methods works only with dbCalls
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|bool
+     * @return bool|string
      *
      * @throws DatabaseException
      */
@@ -434,7 +434,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      *
      * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
      */
@@ -448,7 +448,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      */
     public function getIdValue($data)
     {
@@ -624,7 +624,7 @@ class Model extends BaseModel
      * @param array|object|null $data     Data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return BaseResult|object|int|string|false
+     * @return BaseResult|false|int|object|string
      *
      * @throws ReflectionException
      */
@@ -649,7 +649,7 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|object|null     $data Data
      *
      * @return bool
@@ -677,7 +677,7 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array with raw values.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
@@ -707,17 +707,15 @@ class Model extends BaseModel
      */
     public function __get(string $name)
     {
-         if (parent::__isset($name))
-         {
-             return parent::__get($name);
-         }
+        if (parent::__isset($name)) {
+            return parent::__get($name);
+        }
 
-         if (isset($this->builder()->$name))
-         {
-             return $this->builder()->$name;
-         }
+        if (isset($this->builder()->$name)) {
+            return $this->builder()->$name;
+        }
 
-         return null;
+        return null;
     }
 
     /**
@@ -774,7 +772,7 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param string|null   $primaryKey  Primary Key
      * @param string        $dateFormat  Date Format
      * @param bool          $onlyChanged Only Changed

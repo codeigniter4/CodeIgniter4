@@ -217,8 +217,8 @@ class CLI
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
      * @param string       $field      Output "field" question
-     * @param string|array $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param string|array $validation Validation rules
+     * @param array|string $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param array|string $validation Validation rules
      *
      * @return string The user input
      *
@@ -279,7 +279,7 @@ class CLI
      *
      * @param string       $field Prompt "field" output
      * @param string       $value Input value
-     * @param string|array $rules Validation rules
+     * @param array|string $rules Validation rules
      *
      * @return bool
      *
@@ -714,7 +714,7 @@ class CLI
      * Displays a progress bar on the CLI. You must call it repeatedly
      * to update it. Set $thisStep = false to erase the progress bar.
      *
-     * @param int|bool $thisStep
+     * @param bool|int $thisStep
      * @param int      $totalSteps
      */
     public static function showProgress($thisStep = 1, int $totalSteps = 10)

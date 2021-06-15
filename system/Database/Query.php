@@ -50,7 +50,7 @@ class Query implements QueryInterface
      * The start time in seconds with microseconds
      * for when this query was executed.
      *
-     * @var string|float
+     * @var float|string
      */
     protected $startTime;
 
@@ -196,7 +196,7 @@ class Query implements QueryInterface
      * @param bool $returnRaw
      * @param int  $decimals
      *
-     * @return string|float
+     * @return float|string
      */
     public function getStartTime(bool $returnRaw = false, int $decimals = 6)
     {

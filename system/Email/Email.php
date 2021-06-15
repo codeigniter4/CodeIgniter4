@@ -550,7 +550,7 @@ class Email
     /**
      * Set Recipients
      *
-     * @param string|array $to
+     * @param array|string $to
      *
      * @return Email
      */
@@ -668,7 +668,7 @@ class Email
      * @param string|null $newname
      * @param string      $mime
      *
-     * @return Email|bool
+     * @return bool|Email
      */
     public function attach($file, $disposition = '', $newname = null, $mime = '')
     {
@@ -719,7 +719,7 @@ class Email
      *
      * @param string $filename
      *
-     * @return string|bool
+     * @return bool|string
      */
     public function setAttachmentCID($filename)
     {
@@ -961,7 +961,7 @@ class Email
     /**
      * Validate Email Address
      *
-     * @param string|array $email
+     * @param array|string $email
      *
      * @return bool
      */
@@ -1004,7 +1004,7 @@ class Email
     /**
      * Clean Extended Email Address: Joe Smith <joe@smith.com>
      *
-     * @param string|array $email
+     * @param array|string $email
      *
      * @return array|string
      */
@@ -1922,7 +1922,7 @@ class Email
     /**
      * SMTP Connect
      *
-     * @return string|bool
+     * @return bool|string
      */
     protected function SMTPConnect()
     {

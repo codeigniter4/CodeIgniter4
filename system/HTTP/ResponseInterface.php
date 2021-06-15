@@ -171,7 +171,7 @@ interface ResponseInterface
      * $date can be either a string representation of the date or,
      * preferably, an instance of DateTime.
      *
-     * @param string|DateTime $date
+     * @param DateTime|string $date
      */
     public function setLastModified($date);
 
@@ -317,7 +317,7 @@ interface ResponseInterface
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param string|array $name     Cookie name or array containing binds
+     * @param array|string $name     Cookie name or array containing binds
      * @param string       $value    Cookie value
      * @param string       $expire   Cookie expiration time in seconds
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
@@ -358,7 +358,7 @@ interface ResponseInterface
      * @param string|null $name
      * @param string      $prefix
      *
-     * @return Cookie[]|Cookie|null
+     * @return Cookie|Cookie[]|null
      */
     public function getCookie(string $name = null, string $prefix = '');
 

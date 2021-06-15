@@ -59,7 +59,7 @@ class Time extends DateTime
     protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
     /**
-     * @var static|DateTimeInterface|null
+     * @var DateTimeInterface|static|null
      */
     protected static $testNow;
 
@@ -110,7 +110,7 @@ class Time extends DateTime
     /**
      * Returns a new Time instance with the timezone set.
      *
-     * @param string|DateTimeZone|null $timezone
+     * @param DateTimeZone|string|null $timezone
      * @param string|null              $locale
      *
      * @return Time
@@ -371,7 +371,7 @@ class Time extends DateTime
      * Creates an instance of Time that will be returned during testing
      * when calling 'Time::now' instead of the current time.
      *
-     * @param Time|DateTimeInterface|string|null $datetime
+     * @param DateTimeInterface|string|Time|null $datetime
      * @param DateTimeZone|string|null           $timezone
      * @param string|null                        $locale
      *
@@ -795,7 +795,7 @@ class Time extends DateTime
     /**
      * Returns a new instance with the revised timezone.
      *
-     * @param string|DateTimeZone $timezone
+     * @param DateTimeZone|string $timezone
      *
      * @return Time
      *
@@ -1063,7 +1063,7 @@ class Time extends DateTime
      *
      * @param string|null $format
      *
-     * @return string|bool
+     * @return bool|string
      *
      * @throws Exception
      */
@@ -1085,7 +1085,7 @@ class Time extends DateTime
      * and are not required to be in the same timezone, as both times are
      * converted to UTC and compared that way.
      *
-     * @param Time|DateTimeInterface|string $testTime
+     * @param DateTimeInterface|string|Time $testTime
      * @param string|null                   $timezone
      *
      * @return bool
@@ -1108,7 +1108,7 @@ class Time extends DateTime
     /**
      * Ensures that the times are identical, taking timezone into account.
      *
-     * @param Time|DateTimeInterface|string $testTime
+     * @param DateTimeInterface|string|Time $testTime
      * @param string|null                   $timezone
      *
      * @return bool

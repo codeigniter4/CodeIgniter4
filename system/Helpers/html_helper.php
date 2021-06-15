@@ -108,9 +108,9 @@ if (! function_exists('img')) {
      *
      * Generates an image element
      *
-     * @param string|array        $src        Image source URI, or array of attributes and values
+     * @param array|string        $src        Image source URI, or array of attributes and values
      * @param bool                $indexPage  Whether to treat $src as a routed URI string
-     * @param string|array|object $attributes Additional HTML attributes
+     * @param array|object|string $attributes Additional HTML attributes
      *
      * @return string
      */

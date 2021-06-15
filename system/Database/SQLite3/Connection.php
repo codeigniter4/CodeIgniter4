@@ -412,7 +412,7 @@ class Connection extends BaseConnection
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,string|int>
+     * @return array<string,int|string>
      */
     public function error(): array
     {

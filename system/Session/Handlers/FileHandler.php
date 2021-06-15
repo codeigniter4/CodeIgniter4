@@ -133,7 +133,7 @@ class FileHandler extends BaseHandler
      *
      * @param string $sessionID Session ID
      *
-     * @return string|bool Serialized session data
+     * @return bool|string Serialized session data
      */
     public function read($sessionID)
     {

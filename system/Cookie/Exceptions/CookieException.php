@@ -110,7 +110,7 @@ class CookieException extends FrameworkException
     /**
      * Thrown when the `CookieStore` class is filled with invalid Cookie objects.
      *
-     * @param array<string|integer> $data
+     * @param array<int|string> $data
      *
      * @return static
      */

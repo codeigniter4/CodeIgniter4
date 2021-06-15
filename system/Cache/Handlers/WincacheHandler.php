@@ -116,7 +116,7 @@ class WincacheHandler extends BaseHandler
      * @param string $key    Cache ID
      * @param int    $offset Step/value to increase by
      *
-     * @return int|false
+     * @return false|int
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -133,7 +133,7 @@ class WincacheHandler extends BaseHandler
      * @param string $key    Cache ID
      * @param int    $offset Step/value to increase by
      *
-     * @return int|false
+     * @return false|int
      */
     public function decrement(string $key, int $offset = 1)
     {

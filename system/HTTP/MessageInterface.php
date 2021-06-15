@@ -62,7 +62,7 @@ interface MessageInterface
      * Sets a header and it's value.
      *
      * @param string            $name
-     * @param array|null|string $value
+     * @param array|string|null $value
      *
      * @return $this
      */

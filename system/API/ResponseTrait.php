@@ -128,7 +128,7 @@ trait ResponseTrait
     /**
      * Used for generic failures that no custom methods exist for.
      *
-     * @param string|array $messages
+     * @param array|string $messages
      * @param int          $status        HTTP status code
      * @param string|null  $code          Custom, API-specific, error code
      * @param string       $customMessage
@@ -368,7 +368,7 @@ trait ResponseTrait
      * Handles formatting a response. Currently makes some heavy assumptions
      * and needs updating! :)
      *
-     * @param string|array|null $data
+     * @param array|string|null $data
      *
      * @return string|null
      */
