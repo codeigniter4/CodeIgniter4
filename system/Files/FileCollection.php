@@ -45,7 +45,7 @@ class FileCollection implements Countable, IteratorAggregate
 	 *
 	 * @throws FileException
 	 */
-	protected static function resolveDirectory(string $directory): string
+	final protected static function resolveDirectory(string $directory): string
 	{
 		if (! is_dir($directory = set_realpath($directory)))
 		{
@@ -65,7 +65,7 @@ class FileCollection implements Countable, IteratorAggregate
 	 *
 	 * @throws FileException
 	 */
-	protected static function resolveFile(string $file): string
+	final protected static function resolveFile(string $file): string
 	{
 		if (! is_file($file = set_realpath($file)))
 		{
@@ -84,7 +84,7 @@ class FileCollection implements Countable, IteratorAggregate
 	 *
 	 * @return string[]
 	 */
-	protected static function filterFiles(array $files, string $directory): array
+	final protected static function filterFiles(array $files, string $directory): array
 	{
 		$directory = self::resolveDirectory($directory);
 
@@ -101,7 +101,7 @@ class FileCollection implements Countable, IteratorAggregate
 	 *
 	 * @return string[]
 	 */
-	protected static function matchFiles(array $files, string $pattern): array
+	final protected static function matchFiles(array $files, string $pattern): array
 	{
 		// Convert pseudo-regex into their true form
 		if (@preg_match($pattern, null) === false) // @phpstan-ignore-line
