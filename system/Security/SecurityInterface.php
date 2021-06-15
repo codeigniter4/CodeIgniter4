@@ -24,9 +24,9 @@ interface SecurityInterface
      *
      * @param RequestInterface $request
      *
-     * @return $this|false
-     *
      * @throws SecurityException
+     *
+     * @return $this|false
      */
     public function verify(RequestInterface $request);
 

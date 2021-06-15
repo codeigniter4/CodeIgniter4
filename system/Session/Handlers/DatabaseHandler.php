@@ -101,9 +101,9 @@ class DatabaseHandler extends BaseHandler
      * @param string $savePath Path to session files' directory
      * @param string $name     Session cookie name
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function open($savePath, $name): bool
     {

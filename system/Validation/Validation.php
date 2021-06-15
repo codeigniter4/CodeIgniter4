@@ -444,9 +444,9 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @return string[] Rule group.
-     *
      * @throws InvalidArgumentException If group not found.
+     *
+     * @return string[] Rule group.
      */
     public function getRuleGroup(string $group): array
     {

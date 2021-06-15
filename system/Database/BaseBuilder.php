@@ -496,10 +496,10 @@ class BaseBuilder
      * @param string $alias
      * @param string $type
      *
-     * @return $this
-     *
-     * @throws DataException
      * @throws DatabaseException
+     * @throws DataException
+     *
+     * @return $this
      */
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
@@ -1963,9 +1963,9 @@ class BaseBuilder
      * @param bool  $escape    Whether to escape values and identifiers
      * @param int   $batchSize Batch size
      *
-     * @return false|int Number of rows inserted or FALSE on failure
-     *
      * @throws DatabaseException
+     *
+     * @return false|int Number of rows inserted or FALSE on failure
      */
     public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
     {
@@ -2167,9 +2167,9 @@ class BaseBuilder
      * validate that the there data is actually being set and that table
      * has been chosen to be inserted into.
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     protected function validateInsert(): bool
     {
@@ -2210,9 +2210,9 @@ class BaseBuilder
      *
      * @param array $set An associative array of insert values
      *
-     * @return BaseResult|false|Query|string
-     *
      * @throws DatabaseException
+     *
+     * @return BaseResult|false|Query|string
      */
     public function replace(array $set = null)
     {
@@ -2391,9 +2391,9 @@ class BaseBuilder
      * validate that data is actually being set and that a table has been
      * chosen to be update.
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     protected function validateUpdate(): bool
     {
@@ -2420,9 +2420,9 @@ class BaseBuilder
      * @param string $index     The where key
      * @param int    $batchSize The size of the batch to run
      *
-     * @return mixed Number of rows affected, SQL string, or FALSE on failure
-     *
      * @throws DatabaseException
+     *
+     * @return mixed Number of rows affected, SQL string, or FALSE on failure
      */
     public function updateBatch(array $set = null, string $index = null, int $batchSize = 100)
     {
@@ -2533,9 +2533,9 @@ class BaseBuilder
      * @param string       $index
      * @param bool         $escape
      *
-     * @return $this|null
-     *
      * @throws DatabaseException
+     *
+     * @return $this|null
      */
     public function setUpdateBatch($key, string $index = '', bool $escape = null)
     {
@@ -2672,9 +2672,9 @@ class BaseBuilder
      * @param int   $limit     The limit clause
      * @param bool  $resetData
      *
-     * @return bool|string
-     *
      * @throws DatabaseException
+     *
+     * @return bool|string
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
     {

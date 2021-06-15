@@ -73,9 +73,9 @@ class Cell
      * @param int         $ttl
      * @param string|null $cacheName
      *
-     * @return string
-     *
      * @throws ReflectionException
+     *
+     * @return string
      */
     public function render(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
     {

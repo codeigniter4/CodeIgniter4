@@ -322,9 +322,9 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed|void
-     *
      * @throws DatabaseException
+     *
+     * @return mixed|void
      */
     public function initialize()
     {
@@ -924,9 +924,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param array|string $tableName
      *
-     * @return BaseBuilder
-     *
      * @throws DatabaseException
+     *
+     * @return BaseBuilder
      */
     public function table($tableName)
     {
@@ -1273,9 +1273,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $table the table
      *
-     * @return string
-     *
      * @throws DatabaseException
+     *
+     * @return string
      */
     public function prefixTable(string $table = ''): string
     {
@@ -1409,9 +1409,9 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string $functionName
      * @param array  ...$params
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function callFunction(string $functionName, ...$params): bool
     {
@@ -1443,9 +1443,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param bool $constrainByPrefix = FALSE
      *
-     * @return array|bool
-     *
      * @throws DatabaseException
+     *
+     * @return array|bool
      */
     public function listTables(bool $constrainByPrefix = false)
     {
@@ -1512,9 +1512,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $table Table name
      *
-     * @return array|false
-     *
      * @throws DatabaseException
+     *
+     * @return array|false
      */
     public function getFieldNames(string $table)
     {

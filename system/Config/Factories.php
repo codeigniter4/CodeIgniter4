@@ -22,8 +22,8 @@ use Config\Services;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
- * @method static Model models(...$arguments)
  * @method static BaseConfig config(...$arguments)
+ * @method static Model models(...$arguments)
  */
 class Factories
 {

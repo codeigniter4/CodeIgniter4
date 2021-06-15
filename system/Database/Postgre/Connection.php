@@ -275,9 +275,9 @@ class Connection extends BaseConnection
      *
      * @param string $table
      *
-     * @return stdClass[]
-     *
      * @throws DatabaseException
+     *
+     * @return stdClass[]
      */
     public function _fieldData(string $table): array
     {
@@ -313,9 +313,9 @@ class Connection extends BaseConnection
      *
      * @param string $table
      *
-     * @return stdClass[]
-     *
      * @throws DatabaseException
+     *
+     * @return stdClass[]
      */
     public function _indexData(string $table): array
     {
@@ -358,9 +358,9 @@ class Connection extends BaseConnection
      *
      * @param string $table
      *
-     * @return stdClass[]
-     *
      * @throws DatabaseException
+     *
+     * @return stdClass[]
      */
     public function _foreignKeyData(string $table): array
     {

@@ -35,7 +35,6 @@ class ResourceControllerTest extends CIUnitTestCase
     protected $codeigniter;
 
     /**
-     *
      * @var \CodeIgniter\Router\RoutesCollection
      */
     protected $routes;

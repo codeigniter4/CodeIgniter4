@@ -18,14 +18,14 @@ use Throwable;
 /**
  * BaseCommand is the base class used in creating CLI commands.
  *
- * @property string          $group
- * @property string          $name
- * @property string          $usage
- * @property string          $description
- * @property array           $options
  * @property array           $arguments
- * @property LoggerInterface $logger
  * @property Commands        $commands
+ * @property string          $description
+ * @property string          $group
+ * @property LoggerInterface $logger
+ * @property string          $name
+ * @property array           $options
+ * @property string          $usage
  */
 abstract class BaseCommand
 {
@@ -113,9 +113,9 @@ abstract class BaseCommand
      * @param string $command
      * @param array  $params
      *
-     * @return mixed
-     *
      * @throws ReflectionException
+     *
+     * @return mixed
      */
     protected function call(string $command, array $params = [])
     {

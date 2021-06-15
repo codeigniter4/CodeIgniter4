@@ -182,9 +182,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Verifies that a file has been supplied and it is an image.
      *
-     * @return Image The image instance
-     *
      * @throws ImageException
+     *
+     * @return Image The image instance
      */
     protected function image(): Image
     {

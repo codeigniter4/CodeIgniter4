@@ -348,9 +348,9 @@ abstract class CIUnitTestCase extends TestCase
      * @param string      $level
      * @param string|null $expectedMessage
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function assertLogged(string $level, $expectedMessage = null)
     {
@@ -371,9 +371,9 @@ abstract class CIUnitTestCase extends TestCase
      *
      * @param string $eventName
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function assertEventTriggered(string $eventName): bool
     {
@@ -484,9 +484,9 @@ abstract class CIUnitTestCase extends TestCase
      * @param string $message
      * @param int    $tolerance
      *
-     * @return bool|void
-     *
      * @throws Exception
+     *
+     * @return bool|void
      */
     public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
     {

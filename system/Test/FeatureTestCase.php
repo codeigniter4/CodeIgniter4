@@ -148,10 +148,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function call(string $method, string $path, array $params = null)
     {
@@ -225,10 +225,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function get(string $path, array $params = null)
     {
@@ -241,10 +241,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function post(string $path, array $params = null)
     {
@@ -257,10 +257,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function put(string $path, array $params = null)
     {
@@ -273,10 +273,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function patch(string $path, array $params = null)
     {
@@ -289,10 +289,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function delete(string $path, array $params = null)
     {
@@ -305,10 +305,10 @@ class FeatureTestCase extends CIUnitTestCase
      * @param string     $path
      * @param array|null $params
      *
-     * @return FeatureResponse
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return FeatureResponse
      */
     public function options(string $path, array $params = null)
     {
@@ -370,9 +370,9 @@ class FeatureTestCase extends CIUnitTestCase
      * @param Request    $request
      * @param array|null $params
      *
-     * @return Request
-     *
      * @throws ReflectionException
+     *
+     * @return Request
      */
     protected function populateGlobals(string $method, Request $request, array $params = null)
     {

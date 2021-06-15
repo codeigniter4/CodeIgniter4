@@ -335,9 +335,9 @@ class Builder extends BaseBuilder
      *
      * @param array|null $set An associative array of insert values
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function replace(array $set = null)
     {
@@ -503,9 +503,9 @@ class Builder extends BaseBuilder
      * @param int   $limit     The limit clause
      * @param bool  $resetData
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function delete($where = '', int $limit = null, bool $resetData = true)
     {

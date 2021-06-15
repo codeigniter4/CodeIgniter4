@@ -1272,9 +1272,9 @@ class RouteCollection implements RouteCollectionInterface
      * @param string     $from
      * @param array|null $params
      *
-     * @return string
-     *
      * @throws RouterException
+     *
+     * @return string
      */
     protected function fillRouteParams(string $from, array $params = null): string
     {
