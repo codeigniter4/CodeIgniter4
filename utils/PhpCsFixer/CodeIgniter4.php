@@ -194,6 +194,8 @@ final class CodeIgniter4 extends AbstractRuleset
             'switch_case_semicolon_to_colon' => true,
             'switch_case_space'              => true,
             'switch_continue_to_break'       => true,
+            'ternary_operator_spaces'        => true,
+            'ternary_to_elvis_operator'      => true,
             'ternary_to_null_coalescing'     => true,
             'trailing_comma_in_multiline'    => [
                 'after_heredoc' => true,
