@@ -353,7 +353,8 @@ class GDHandler extends BaseHandler
         if ($this->resource === null) {
             // if valid image type, make corresponding image resource
             $this->resource = $this->getImageResource(
-                $this->image()->getPathname(), $this->image()->imageType
+                $this->image()->getPathname(),
+                $this->image()->imageType
             );
         }
     }

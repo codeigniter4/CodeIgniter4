@@ -21,7 +21,8 @@ class ReflectionHelperTest extends CIUnitTestCase
     public function testGetPrivatePropertyWithStatic()
     {
         $actual = $this->getPrivateProperty(
-            __TestForReflectionHelper::class, 'static_private'
+            __TestForReflectionHelper::class,
+            'static_private'
         );
         $this->assertEquals('xyz', $actual);
     }
@@ -30,7 +31,9 @@ class ReflectionHelperTest extends CIUnitTestCase
     {
         $obj = new __TestForReflectionHelper();
         $this->setPrivateProperty(
-            $obj, 'private', 'open'
+            $obj,
+            'private',
+            'open'
         );
         $this->assertEquals('open', $obj->getPrivate());
     }
@@ -38,10 +41,13 @@ class ReflectionHelperTest extends CIUnitTestCase
     public function testSetPrivatePropertyWithStatic()
     {
         $this->setPrivateProperty(
-            __TestForReflectionHelper::class, 'static_private', 'abc'
+            __TestForReflectionHelper::class,
+            'static_private',
+            'abc'
         );
         $this->assertEquals(
-            'abc', __TestForReflectionHelper::getStaticPrivate()
+            'abc',
+            __TestForReflectionHelper::getStaticPrivate()
         );
     }
 
@@ -49,20 +55,24 @@ class ReflectionHelperTest extends CIUnitTestCase
     {
         $obj    = new __TestForReflectionHelper();
         $method = $this->getPrivateMethodInvoker(
-            $obj, 'privateMethod'
+            $obj,
+            'privateMethod'
         );
         $this->assertEquals(
-            'private param1param2', $method('param1', 'param2')
+            'private param1param2',
+            $method('param1', 'param2')
         );
     }
 
     public function testGetPrivateMethodInvokerWithStatic()
     {
         $method = $this->getPrivateMethodInvoker(
-            __TestForReflectionHelper::class, 'privateStaticMethod'
+            __TestForReflectionHelper::class,
+            'privateStaticMethod'
         );
         $this->assertEquals(
-            'private_static param1param2', $method('param1', 'param2')
+            'private_static param1param2',
+            $method('param1', 'param2')
         );
     }
 }

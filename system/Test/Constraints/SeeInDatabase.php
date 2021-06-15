@@ -62,7 +62,9 @@ class SeeInDatabase extends Constraint
     {
         return sprintf(
             "a row in the table [%s] matches the attributes \n%s\n\n%s",
-            $table, $this->toString(JSON_PRETTY_PRINT), $this->getAdditionalInfo($table)
+            $table,
+            $this->toString(JSON_PRETTY_PRINT),
+            $this->getAdditionalInfo($table)
         );
     }
 
@@ -78,10 +80,9 @@ class SeeInDatabase extends Constraint
         $builder = $this->db->table($table);
 
         $similar = $builder->where(
-                array_key_first($this->data),
-                $this->data[array_key_first($this->data)]
-            )->limit($this->show)
-            ->get()->getResultArray();
+            array_key_first($this->data),
+            $this->data[array_key_first($this->data)]
+        )->limit($this->show)->get()->getResultArray();
 
         if ($similar !== []) {
             $description = 'Found similar results: ' . json_encode($similar, JSON_PRETTY_PRINT);

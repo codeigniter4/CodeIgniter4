@@ -102,7 +102,8 @@ class CommonFunctionsTest extends CIUnitTestCase
 
         $response = $this->createMock(Response::class);
         $routes   = new RouteCollection(
-            Services::locator(), new Modules()
+            Services::locator(),
+            new Modules()
         );
         \CodeIgniter\Services::injectMock('response', $response);
         \CodeIgniter\Services::injectMock('routes', $routes);

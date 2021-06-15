@@ -228,10 +228,7 @@ if (! function_exists('humanize')) {
     {
         $replacement = trim($string);
 
-        return ucwords
-                (
-                preg_replace('/[' . $separator . ']+/', ' ', $replacement)
-        );
+        return ucwords(preg_replace('/[' . $separator . ']+/', ' ', $replacement));
     }
 }
 
@@ -247,9 +244,9 @@ if (! function_exists('is_pluralizable')) {
      */
     function is_pluralizable(string $word): bool
     {
-        $uncountables = in_array
-                (
-            strtolower($word), [
+        $uncountables = in_array(
+            strtolower($word),
+            [
                 'advice',
                 'bravery',
                 'butter',
@@ -296,7 +293,9 @@ if (! function_exists('is_pluralizable')) {
                 'weather',
                 'wisdom',
                 'work',
-            ], true);
+            ],
+            true
+        );
 
         return ! $uncountables;
     }

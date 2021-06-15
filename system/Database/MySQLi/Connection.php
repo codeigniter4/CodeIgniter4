@@ -108,18 +108,21 @@ class Connection extends BaseConnection
 
         if (isset($this->strictOn)) {
             if ($this->strictOn) {
-                $this->mysqli->options(MYSQLI_INIT_COMMAND,
-                    'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
+                $this->mysqli->options(
+                    MYSQLI_INIT_COMMAND,
+                    'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")'
+                );
             } else {
-                $this->mysqli->options(MYSQLI_INIT_COMMAND, 'SET SESSION sql_mode =
-						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-												@@sql_mode,
-												"STRICT_ALL_TABLES,", ""),
-											",STRICT_ALL_TABLES", ""),
-										"STRICT_ALL_TABLES", ""),
-									"STRICT_TRANS_TABLES,", ""),
-								",STRICT_TRANS_TABLES", ""),
-							"STRICT_TRANS_TABLES", "")'
+                $this->mysqli->options(
+                    MYSQLI_INIT_COMMAND,
+                    'SET SESSION sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                                        @@sql_mode,
+                                        "STRICT_ALL_TABLES,", ""),
+                                    ",STRICT_ALL_TABLES", ""),
+                                "STRICT_ALL_TABLES", ""),
+                            "STRICT_TRANS_TABLES,", ""),
+                        ",STRICT_TRANS_TABLES", ""),
+                    "STRICT_TRANS_TABLES", "")'
                 );
             }
         }
@@ -162,16 +165,25 @@ class Connection extends BaseConnection
 
                 $clientFlags += MYSQLI_CLIENT_SSL;
                 $this->mysqli->ssl_set(
-                    $ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
-                    $ssl['capath'] ?? null, $ssl['cipher'] ?? null
+                    $ssl['key'] ?? null,
+                    $ssl['cert'] ?? null,
+                    $ssl['ca'] ?? null,
+                    $ssl['capath'] ?? null,
+                    $ssl['cipher'] ?? null
                 );
             }
         }
 
         try {
-            if ($this->mysqli->real_connect($hostname, $this->username, $this->password,
-                $this->database, $port, $socket, $clientFlags)
-            ) {
+            if ($this->mysqli->real_connect(
+                $hostname,
+                $this->username,
+                $this->password,
+                $this->database,
+                $port,
+                $socket,
+                $clientFlags
+            )) {
                 // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
                 if (($clientFlags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, 'mysqlnd 5.7.3', '<=')
                     && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
@@ -189,8 +201,8 @@ class Connection extends BaseConnection
                 }
 
                 if (! $this->mysqli->set_charset($this->charset)) {
-                    log_message('error',
-                        "Database: Unable to set the configured connection charset ('{$this->charset}').");
+                    log_message('error', "Database: Unable to set the configured connection charset ('{$this->charset}').");
+
                     $this->mysqli->close();
 
                     if ($this->DBDebug) {
@@ -397,15 +409,10 @@ class Connection extends BaseConnection
         $str = $this->_escapeString($str);
 
         // Escape LIKE condition wildcards
-        return str_replace([
-            $this->likeEscapeChar,
-            '%',
-            '_',
-        ], [
-            '\\' . $this->likeEscapeChar,
-            '\\' . '%',
-            '\\' . '_',
-        ], $str
+        return str_replace(
+            [$this->likeEscapeChar, '%', '_'],
+            ['\\' . $this->likeEscapeChar, '\\' . '%', '\\' . '_'],
+            $str
         );
     }
 

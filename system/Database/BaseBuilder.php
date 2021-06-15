@@ -2104,9 +2104,14 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-                $this->db->protectIdentifiers(
-                        $this->QBFrom[0], true, null, false
-                ), array_keys($this->QBSet), array_values($this->QBSet)
+            $this->db->protectIdentifiers(
+                $this->QBFrom[0],
+                true,
+                null,
+                false
+            ),
+            array_keys($this->QBSet),
+            array_values($this->QBSet)
         );
 
         if ($reset === true) {
@@ -2139,9 +2144,14 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-                $this->db->protectIdentifiers(
-                        $this->QBFrom[0], true, $escape, false
-                ), array_keys($this->QBSet), array_values($this->QBSet)
+            $this->db->protectIdentifiers(
+                $this->QBFrom[0],
+                true,
+                $escape,
+                false
+            ),
+            array_keys($this->QBSet),
+            array_values($this->QBSet)
         );
 
         if (! $this->testMode) {
@@ -2465,7 +2475,10 @@ class BaseBuilder
         $savedQBWhere = $this->QBWhere;
 
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
-            $sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
+            $sql = $this->_updateBatch(
+                $table,
+                array_slice($this->QBSet, $i, $batchSize),
+                $this->db->protectIdentifiers($index)
             );
 
             if ($this->testMode) {
@@ -2920,7 +2933,10 @@ class BaseBuilder
 
                 // Split multiple conditions
                 $conditions = preg_split(
-                        '/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i', $qbkey['condition'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+                    '/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i',
+                    $qbkey['condition'],
+                    -1,
+                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
                 );
 
                 foreach ($conditions as &$condition) {

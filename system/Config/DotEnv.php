@@ -187,7 +187,8 @@ class DotEnv
                 )             # end of the capturing sub-pattern
                 %1$s          # and the closing quote
                 .*$           # and discard any string after the closing quote
-                /mx', $quote
+                /mx',
+                $quote
             );
 
             $value = preg_replace($regexPattern, '$1', $value);

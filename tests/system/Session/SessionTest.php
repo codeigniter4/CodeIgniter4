@@ -258,10 +258,11 @@ class SessionTest extends CIUnitTestCase
         $session->set('hobbies', ['cooking' => 'baking']);
         $session->push('hobbies', ['sport' => 'tennis']);
 
-        $this->assertEquals([
-            'cooking' => 'baking',
-            'sport'   => 'tennis',
-        ],
+        $this->assertEquals(
+            [
+                'cooking' => 'baking',
+                'sport'   => 'tennis',
+            ],
             $session->get('hobbies')
         );
     }

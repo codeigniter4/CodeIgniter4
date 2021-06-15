@@ -41,10 +41,13 @@ if (! function_exists('strip_image_tags')) {
      */
     function strip_image_tags(string $str): string
     {
-        return preg_replace([
-            '#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
-            '#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
-        ], '\\2', $str
+        return preg_replace(
+            [
+                '#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
+                '#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i',
+            ],
+            '\\2',
+            $str
         );
     }
 }
