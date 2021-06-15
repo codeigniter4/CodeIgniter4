@@ -821,7 +821,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // When transactions are nested we only begin/commit/rollback the outermost ones
         if ($this->transDepth > 0) {
-            $this->transDepth ++;
+            $this->transDepth++;
 
             return true;
         }
@@ -836,7 +836,7 @@ abstract class BaseConnection implements ConnectionInterface
         $this->transFailure = ($testMode === true);
 
         if ($this->_transBegin()) {
-            $this->transDepth ++;
+            $this->transDepth++;
 
             return true;
         }
@@ -859,7 +859,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // When transactions are nested we only begin/commit/rollback the outermost ones
         if ($this->transDepth > 1 || $this->_transCommit()) {
-            $this->transDepth --;
+            $this->transDepth--;
 
             return true;
         }
@@ -882,7 +882,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         // When transactions are nested we only begin/commit/rollback the outermost ones
         if ($this->transDepth > 1 || $this->_transRollback()) {
-            $this->transDepth --;
+            $this->transDepth--;
 
             return true;
         }

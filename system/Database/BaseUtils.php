@@ -57,7 +57,7 @@ abstract class BaseUtils
      */
     public function __construct(ConnectionInterface &$db)
     {
-        $this->db = & $db;
+        $this->db = &$db;
     }
 
     //--------------------------------------------------------------------
@@ -91,7 +91,7 @@ abstract class BaseUtils
             return $this->db->dataCache['db_names'];
         }
 
-        for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++) {
+        for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i++) {
             $this->db->dataCache['db_names'][] = current($query[$i]);
         }
 

@@ -691,7 +691,7 @@ class Email
 
             fclose($fp);
         } else {
-            $fileContent = & $file; // buffered file
+            $fileContent = &$file; // buffered file
         }
 
         // declare names on their own, to make phpcbf happy
@@ -1042,7 +1042,7 @@ class Email
         $body = preg_match('/\<body.*?\>(.*)\<\/body\>/si', $this->body, $match) ? $match[1] : $this->body;
         $body = str_replace("\t", '', preg_replace('#<!--(.*)--\>#', '', trim(strip_tags($body))));
 
-        for ($i = 20; $i >= 3; $i --) {
+        for ($i = 20; $i >= 3; $i--) {
             $body = str_replace(str_repeat("\n", $i), "\n\n", $body);
         }
 
@@ -1080,7 +1080,7 @@ class Email
         $unwrap = [];
 
         if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
-            for ($i = 0, $c = count($matches[0]); $i < $c; $i ++) {
+            for ($i = 0, $c = count($matches[0]); $i < $c; $i++) {
                 $unwrap[] = $matches[1][$i];
                 $str      = str_replace($matches[0][$i], '{{unwrapped' . $i . '}}', $str);
             }
@@ -1488,7 +1488,7 @@ class Email
             // Loop through each character in the line to add soft-wrap
             // characters at the end of a line " =\r\n" and add the newly
             // processed line(s) to the output (see comment on $crlf class property)
-            for ($i = 0; $i < $length; $i ++) {
+            for ($i = 0; $i < $length; $i++) {
                 // Grab the next character
                 $char  = $line[$i];
                 $ascii = ord($char);
@@ -1577,7 +1577,7 @@ class Email
 
         $output = '=?' . $this->charset . '?Q?';
 
-        for ($i = 0, $length = static::strlen($output); $i < $chars; $i ++) {
+        for ($i = 0, $length = static::strlen($output); $i < $chars; $i++) {
             $chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 
             // RFC 2045 sets a limit of 76 characters per line.
@@ -1679,7 +1679,7 @@ class Email
             }
         }
 
-        for ($i = 0, $c = count($chunk); $i < $c; $i ++) {
+        for ($i = 0, $c = count($chunk); $i < $c; $i++) {
             unset($this->headers['Bcc']);
             $bcc = $this->cleanEmail($this->stringToArray($chunk[$i]));
 

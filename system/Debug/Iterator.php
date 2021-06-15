@@ -75,9 +75,8 @@ class Iterator
             $start    = microtime(true);
             $startMem = $maxMemory = memory_get_usage(true);
 
-            for ($i = 0; $i < $iterations; $i ++) {
-                $result = $test();
-
+            for ($i = 0; $i < $iterations; $i++) {
+                $result    = $test();
                 $maxMemory = max($maxMemory, memory_get_usage(true));
 
                 unset($result);

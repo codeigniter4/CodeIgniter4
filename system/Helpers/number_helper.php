@@ -275,7 +275,7 @@ if (! function_exists('number_to_roman')) {
                     break;
             }
             if ($num > 10) {
-                $return = $_number_to_roman($num / 10, ++ $th) . $return;
+                $return = $_number_to_roman($num / 10, ++$th) . $return;
             }
 
             return $return;
