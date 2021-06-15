@@ -9,7 +9,9 @@ use CodeIgniter\Test\Mock\MockQuery;
 
 class UpdateTest extends CIUnitTestCase
 {
-    /** @var MockConnection */
+    /**
+     * @var MockConnection
+     */
     protected $db;
 
     protected function setUp(): void

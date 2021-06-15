@@ -104,7 +104,38 @@ final class CodeIgniter4 extends AbstractRuleset
             'normalize_index_brace'                 => true,
             'ordered_imports'                       => ['sort_algorithm' => 'alpha'],
             'phpdoc_align'                          => true,
-            'phpdoc_scalar'                         => [
+            'phpdoc_indent'                         => true,
+            'phpdoc_inline_tag_normalizer'          => [
+                'tags' => [
+                    'example',
+                    'id',
+                    'internal',
+                    'inheritdoc',
+                    'inheritdocs',
+                    'link',
+                    'source',
+                    'toc',
+                    'tutorial',
+                ],
+            ],
+            'phpdoc_line_span' => [
+                'const'    => 'multi',
+                'method'   => 'multi',
+                'property' => 'multi',
+            ],
+            'phpdoc_no_access'    => true,
+            'phpdoc_no_alias_tag' => [
+                'replacements' => [
+                    'property-read'  => 'property',
+                    'property-write' => 'property',
+                    'type'           => 'var',
+                    'link'           => 'see',
+                ],
+            ],
+            'phpdoc_no_empty_return'       => false,
+            'phpdoc_no_package'            => true,
+            'phpdoc_no_useless_inheritdoc' => true,
+            'phpdoc_scalar'                => [
                 'types' => [
                     'boolean',
                     'callback',
