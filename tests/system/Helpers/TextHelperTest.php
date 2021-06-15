@@ -345,7 +345,7 @@ class TextHelperTest extends CIUnitTestCase
         $result = '';
         alternator();
 
-        for ($i = 0; $i < 4; $i ++) {
+        for ($i = 0; $i < 4; $i++) {
             $result .= alternator('I', 'you', 'we') . $phrase;
         }
         $this->assertEquals('I scream! you scream! we scream! I scream! ', $result);
@@ -356,7 +356,7 @@ class TextHelperTest extends CIUnitTestCase
         $phrase = ' scream! ';
         $result = '';
 
-        for ($i = 0; $i < 4; $i ++) {
+        for ($i = 0; $i < 4; $i++) {
             $result .= alternator() . $phrase;
         }
 

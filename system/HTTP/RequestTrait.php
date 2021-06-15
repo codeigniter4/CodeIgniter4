@@ -112,7 +112,7 @@ trait RequestTrait
                             // Make sure we're have the "full" IPv6 format
                             $ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
 
-                            for ($j = 0; $j < 8; $j ++) {
+                            for ($j = 0; $j < 8; $j++) {
                                 $ip[$j] = intval($ip[$j], 16);
                             }
 

@@ -207,9 +207,9 @@ class Forge extends BaseForge
     {
         $sql = '';
 
-        for ($i = 0, $c = count($this->keys); $i < $c; $i ++) {
+        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
             if (is_array($this->keys[$i])) {
-                for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++) {
+                for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
                     if (! isset($this->fields[$this->keys[$i][$i2]])) {
                         unset($this->keys[$i][$i2]);
 

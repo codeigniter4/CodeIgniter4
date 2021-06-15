@@ -1365,7 +1365,7 @@ class RouteCollection implements RouteCollectionInterface
             // Get a constant string to work with.
             $to = preg_replace('/(\$\d+)/', '$X', $to);
 
-            for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i ++) {
+            for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i++) {
                 $to = preg_replace_callback(
                         '/\$X/', static function ($m) use ($i) {
                             return '$' . $i;

@@ -198,13 +198,13 @@ class File extends SplFileInfo
                 if (is_numeric(end($parts))) {
                     $i = end($parts);
                     array_pop($parts);
-                    $parts[]     = ++ $i;
+                    $parts[]     = ++$i;
                     $destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
                 } else {
-                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
+                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
                 }
             } else {
-                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . $extension;
+                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
             }
         }
 

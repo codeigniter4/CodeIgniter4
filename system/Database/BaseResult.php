@@ -140,7 +140,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         if ($_data !== null) {
-            for ($i = 0; $i < $c; $i ++) {
+            for ($i = 0; $i < $c; $i++) {
                 $this->customResultObject[$className][$i] = new $className();
 
                 foreach ($this->{$_data}[$i] as $key => $value) {
@@ -444,7 +444,7 @@ abstract class BaseResult implements ResultInterface
             return null;
         }
 
-        return isset($result[$this->currentRow + 1]) ? $result[++ $this->currentRow] : null;
+        return isset($result[$this->currentRow + 1]) ? $result[++$this->currentRow] : null;
     }
 
     //--------------------------------------------------------------------
@@ -464,7 +464,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         if (isset($result[$this->currentRow - 1])) {
-            -- $this->currentRow;
+            $this->currentRow--;
         }
 
         return $result[$this->currentRow];

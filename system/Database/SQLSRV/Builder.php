@@ -141,12 +141,13 @@ class Builder extends BaseBuilder
                 $joints     = $joints[0];
                 array_unshift($joints, ['', 0]);
 
-                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i --) {
+                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--) {
                     $joints[$i][1] += strlen($joints[$i][0]); // offset
                     $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
                     $pos            = $joints[$i][1] - strlen($joints[$i][0]);
                     $joints[$i]     = $joints[$i][0];
                 }
+
                 ksort($conditions);
             } else {
                 $conditions = [$cond];

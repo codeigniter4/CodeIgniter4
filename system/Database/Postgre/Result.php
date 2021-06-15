@@ -41,7 +41,7 @@ class Result extends BaseResult
     {
         $fieldNames = [];
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
             $fieldNames[] = pg_field_name($this->resultID, $i);
         }
 
@@ -59,7 +59,7 @@ class Result extends BaseResult
     {
         $retVal = [];
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
             $retVal[$i]             = new stdClass();
             $retVal[$i]->name       = pg_field_name($this->resultID, $i);
             $retVal[$i]->type       = pg_field_type_oid($this->resultID, $i);

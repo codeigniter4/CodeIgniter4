@@ -43,7 +43,7 @@ class Result extends BaseResult
     {
         $fieldNames = [];
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
             $fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
         }
 
@@ -70,7 +70,7 @@ class Result extends BaseResult
         $retVal = [];
         $this->resultID->fetchArray(SQLITE3_NUM); // @phpstan-ignore-line
 
-        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++) {
+        for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
             $retVal[$i]             = new stdClass();
             $retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
             $type                   = $this->resultID->columnType($i); // @phpstan-ignore-line

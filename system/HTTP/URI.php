@@ -579,7 +579,7 @@ class URI
     {
         // The segment should treat the array as 1-based for the user
         // but we still have to deal with a zero-based array.
-        $number -= 1;
+        $number--;
 
         if ($number > count($this->segments) && ! $this->silent) {
             throw HTTPException::forURISegmentOutOfRange($number);
@@ -601,7 +601,7 @@ class URI
     {
         // The segment should treat the array as 1-based for the user
         // but we still have to deal with a zero-based array.
-        $number -= 1;
+        $number--;
 
         if ($number > count($this->segments) + 1) {
             if ($this->silent) {

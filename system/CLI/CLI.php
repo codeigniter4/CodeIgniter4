@@ -403,7 +403,7 @@ class CLI
             while ($time > 0) {
                 static::fwrite(STDOUT, $time . '... ');
                 sleep(1);
-                $time --;
+                $time--;
             }
 
             static::write();
@@ -442,7 +442,7 @@ class CLI
     public static function newLine(int $num = 1)
     {
         // Do it once or more, write with empty string gives us a new line
-        for ($i = 0; $i < $num; $i ++) {
+        for ($i = 0; $i < $num; $i++) {
             static::write();
         }
     }
@@ -998,7 +998,7 @@ class CLI
         $maxColsLengths = [];
 
         // Read row by row and define the longest columns
-        for ($row = 0; $row < $totalRows; $row ++) {
+        for ($row = 0; $row < $totalRows; $row++) {
             $column = 0; // Current column index
 
             foreach ($tableRows[$row] as $col) {
@@ -1013,13 +1013,13 @@ class CLI
                 }
 
                 // We can go check the size of the next column...
-                $column ++;
+                $column++;
             }
         }
 
         // Read row by row and add spaces at the end of the columns
         // to match the exact column length
-        for ($row = 0; $row < $totalRows; $row ++) {
+        for ($row = 0; $row < $totalRows; $row++) {
             $column = 0;
 
             foreach ($tableRows[$row] as $col) {
@@ -1029,14 +1029,14 @@ class CLI
                     $tableRows[$row][$column] = $tableRows[$row][$column] . str_repeat(' ', $diff);
                 }
 
-                $column ++;
+                $column++;
             }
         }
 
         $table = '';
 
         // Joins columns and append the well formatted rows to the table
-        for ($row = 0; $row < $totalRows; $row ++) {
+        for ($row = 0; $row < $totalRows; $row++) {
             // Set the table border-top
             if ($row === 0) {
                 $cols = '+';
