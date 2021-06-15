@@ -610,7 +610,7 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 	ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
 You can choose the Database group to use by adding a new line to the
-**application\Config\App.php** file with the name of the group to use::
+**app/Config/App.php** file with the name of the group to use::
 
   public $sessionDBGroup = 'groupName';
 
