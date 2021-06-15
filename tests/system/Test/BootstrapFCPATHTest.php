@@ -15,7 +15,7 @@ namespace CodeIgniter\Test;
 
 class BootstrapFCPATHTest extends CIUnitTestCase
 {
-    private $currentDir = __dir__;
+    private $currentDir = __DIR__;
     private $dir1       = '/tmp/dir1';
     private $file1      = '/tmp/dir1/testFile.php';
 
@@ -44,7 +44,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function correctFCPATH()
     {
-        return realpath(__dir__ . '/../../../public') . DIRECTORY_SEPARATOR;
+        return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
     }
 
     private function buildDirectories() : void
