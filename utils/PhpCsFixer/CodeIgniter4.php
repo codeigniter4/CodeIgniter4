@@ -106,6 +106,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'lowercase_static_reference'            => true,
             'magic_constant_casing'                 => true,
             'magic_method_casing'                   => true,
+            'mb_str_functions'                      => false,
             'modernize_types_casting'               => true,
             'no_alias_functions'                    => ['sets' => ['@all']],
             'no_short_bool_cast'                    => true,
