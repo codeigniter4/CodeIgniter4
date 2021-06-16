@@ -166,8 +166,11 @@ it returns the current row and moves the internal data pointer ahead.
         echo $row->body;
     }
 
-For use with MySQLi you must set MySQLi's result mode to 
-``MYSQLI_USE_RESULT``.
+For use with MySQLi you may set MySQLi's result mode to 
+``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not 
+generally recommended but it can be beneficial in some circumstances 
+such as writing large queries to csv. If you change the result mode 
+be aware of the tradeoffs associated with it.
 
 ::
 
@@ -175,11 +178,13 @@ For use with MySQLi you must set MySQLi's result mode to
 
     $query = $db->query("YOUR QUERY");
 
-    while ($row = $query->getUnbufferedRow())
-    {
-        echo $row->title;
-        echo $row->name;
-        echo $row->body;
+    $file = new \CodeIgniter\Files\File(WRITEPATH.'data.csv');
+
+    $csv = $file->openFile('w');
+
+    while ($row = $query->getUnbufferedRow('array'))
+    {	
+    	$csv->fputcsv($row);
     }
 
     $db->resultMode = MYSQLI_STORE_RESULT; // return to default mode
