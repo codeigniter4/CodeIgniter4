@@ -669,8 +669,10 @@ class FiltersTest extends CIUnitTestCase
 
         $filters = new Filters((object) $config, $this->request, $this->response);
 
-        $filters = $filters->addFilter('Some\OtherClass', 'another', 'before', 'globals')
-                ->initialize('admin/foo/bar');
+        $filters = $filters
+            ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
+            ->initialize('admin/foo/bar');
+
         $list = $filters->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));
@@ -684,9 +686,11 @@ class FiltersTest extends CIUnitTestCase
 
         $filters = new Filters((object) $config, $this->request, $this->response);
 
-        $filters = $filters->addFilter('Some\OtherClass', 'another', 'before', 'globals')
-                ->initialize('admin/foo/bar')
-                ->initialize();
+        $filters = $filters
+            ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
+            ->initialize('admin/foo/bar')
+            ->initialize();
+
         $list = $filters->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));

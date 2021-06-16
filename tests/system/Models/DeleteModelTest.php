@@ -96,8 +96,8 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $this->db->table('user')
-                 ->where('id', 1)
-                 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+            ->where('id', 1)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
         $this->model->purgeDeleted();
 
@@ -110,8 +110,8 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $this->db->table('user')
-                 ->where('id', 1)
-                 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+            ->where('id', 1)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
         $users = $this->model->onlyDeleted()->findAll();
         $this->assertCount(1, $users);
@@ -190,8 +190,8 @@ final class DeleteModelTest extends LiveModelTestCase
     public function testPurgeDeletedWithSoftDeleteFalse(): void
     {
         $this->db->table('job')
-                 ->where('id', 1)
-                 ->update(['deleted_at' => time()]);
+            ->where('id', 1)
+            ->update(['deleted_at' => time()]);
 
         $this->createModel(JobModel::class);
         $this->model->purgeDeleted();

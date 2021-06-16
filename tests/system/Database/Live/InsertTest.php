@@ -62,8 +62,8 @@ class InsertTest extends CIUnitTestCase
         $this->db->table('job')->replace($data);
 
         $row = $this->db->table('job')
-                        ->getwhere(['id' => 5])
-                        ->getRow();
+            ->getwhere(['id' => 5])
+            ->getRow();
 
         $this->assertEquals('Cab Driver', $row->name);
     }
@@ -81,8 +81,8 @@ class InsertTest extends CIUnitTestCase
         $this->db->table('job')->replace($data);
 
         $row = $this->db->table('job')
-                        ->getwhere(['id' => 1])
-                        ->getRow();
+            ->getwhere(['id' => 1])
+            ->getRow();
 
         $this->assertEquals('Cab Driver', $row->name);
     }

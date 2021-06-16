@@ -183,10 +183,10 @@ class SelectTest extends CIUnitTestCase
     public function testSelectWithMultipleWheresOnSameColumnAgain()
     {
         $users = $this->db->table('user')
-                          ->whereIn('id', [1, 2])
-                          ->orWhere('id', 3)
-                          ->get()
-                          ->getResultArray();
+            ->whereIn('id', [1, 2])
+            ->orWhere('id', 3)
+            ->get()
+            ->getResultArray();
 
         $this->assertCount(3, $users);
 

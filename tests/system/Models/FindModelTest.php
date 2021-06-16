@@ -72,8 +72,8 @@ final class FindModelTest extends LiveModelTestCase
     public function testFindRespectsSoftDeletes(): void
     {
         $this->db->table('user')
-                 ->where('id', 4)
-                 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+            ->where('id', 4)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
         $this->createModel(UserModel::class);
 
@@ -122,8 +122,8 @@ final class FindModelTest extends LiveModelTestCase
     public function testFindAllRespectsSoftDeletes(): void
     {
         $this->db->table('user')
-                 ->where('id', 4)
-                 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+            ->where('id', 4)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
         $this->createModel(UserModel::class);
 
@@ -171,8 +171,8 @@ final class FindModelTest extends LiveModelTestCase
     public function testFirstRespectsSoftDeletes($aggregate, $groupBy): void
     {
         $this->db->table('user')
-                 ->where('id', 1)
-                 ->update(['deleted_at' => date('Y-m-d H:i:s')]);
+            ->where('id', 1)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
 
         $this->createModel(UserModel::class);
 

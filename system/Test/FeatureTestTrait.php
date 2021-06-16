@@ -188,8 +188,8 @@ trait FeatureTestTrait
         Services::injectMock('filters', Services::filters(null, false));
 
         $response = $this->app
-                ->setRequest($request)
-                ->run($routes, true);
+            ->setRequest($request)
+            ->run($routes, true);
 
         $output = \ob_get_contents();
         if (empty($response->getBody()) && ! empty($output)) {

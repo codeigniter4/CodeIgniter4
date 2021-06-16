@@ -796,9 +796,9 @@ class MigrationRunner
         $this->ensureTable();
 
         $query = $this->db->table($this->table)
-                          ->where('batch', $batch)
-                          ->orderBy('id', $order)
-                          ->get();
+            ->where('batch', $batch)
+            ->orderBy('id', $order)
+            ->get();
 
         return ! empty($query) ? $query->getResultObject() : [];
     }
@@ -815,11 +815,11 @@ class MigrationRunner
         $this->ensureTable();
 
         $batches = $this->db->table($this->table)
-                          ->select('batch')
-                          ->distinct()
-                          ->orderBy('batch', 'asc')
-                          ->get()
-                          ->getResultArray();
+            ->select('batch')
+            ->distinct()
+            ->orderBy('batch', 'asc')
+            ->get()
+            ->getResultArray();
 
         return array_map('intval', array_column($batches, 'batch'));
     }
@@ -836,9 +836,9 @@ class MigrationRunner
         $this->ensureTable();
 
         $batch = $this->db->table($this->table)
-                          ->selectMax('batch')
-                          ->get()
-                          ->getResultObject();
+            ->selectMax('batch')
+            ->get()
+            ->getResultObject();
 
         $batch = is_array($batch) && count($batch)
             ? end($batch)->batch
@@ -894,11 +894,11 @@ class MigrationRunner
         }
 
         $migration = $this->db->table($this->table)
-              ->where('batch', $batch)
-              ->orderBy('id', 'desc')
-              ->limit(1)
-              ->get()
-              ->getResultObject();
+            ->where('batch', $batch)
+            ->orderBy('id', 'desc')
+            ->limit(1)
+            ->get()
+            ->getResultObject();
 
         return count($migration) ? $migration[0]->version : 0;
     }

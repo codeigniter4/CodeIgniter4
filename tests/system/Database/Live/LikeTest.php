@@ -74,9 +74,9 @@ class LikeTest extends CIUnitTestCase
     public function testOrLike()
     {
         $jobs = $this->db->table('job')->like('name', 'ian')
-                        ->orLike('name', 'veloper')
-                        ->get()
-                        ->getResult();
+            ->orLike('name', 'veloper')
+            ->get()
+            ->getResult();
 
         $this->assertCount(3, $jobs);
         $this->assertEquals('Developer', $jobs[0]->name);
@@ -89,9 +89,9 @@ class LikeTest extends CIUnitTestCase
     public function testNotLike()
     {
         $jobs = $this->db->table('job')
-                         ->notLike('name', 'veloper')
-                         ->get()
-                         ->getResult();
+            ->notLike('name', 'veloper')
+            ->get()
+            ->getResult();
 
         $this->assertCount(3, $jobs);
         $this->assertEquals('Politician', $jobs[0]->name);
@@ -104,10 +104,10 @@ class LikeTest extends CIUnitTestCase
     public function testOrNotLike()
     {
         $jobs = $this->db->table('job')
-                         ->like('name', 'ian')
-                         ->orNotLike('name', 'veloper')
-                         ->get()
-                         ->getResult();
+            ->like('name', 'ian')
+            ->orNotLike('name', 'veloper')
+            ->get()
+            ->getResult();
 
         $this->assertCount(3, $jobs);
         $this->assertEquals('Politician', $jobs[0]->name);

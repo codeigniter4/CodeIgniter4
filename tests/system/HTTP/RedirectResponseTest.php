@@ -128,8 +128,7 @@ class RedirectResponseTest extends CIUnitTestCase
         $response = new RedirectResponse(new App());
 
         $validation = $this->createMock(Validation::class);
-        $validation->method('getErrors')
-                ->willReturn(['foo' => 'bar']);
+        $validation->method('getErrors')->willReturn(['foo' => 'bar']);
 
         Services::injectMock('validation', $validation);
 

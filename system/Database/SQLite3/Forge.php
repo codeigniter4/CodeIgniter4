@@ -136,11 +136,10 @@ class Forge extends BaseForge
                 return '';
 
             case 'CHANGE':
-                $sqlTable = new Table($this->db, $this);
-
-                $sqlTable->fromTable($table)
-                         ->modifyColumn($field)
-                         ->run();
+                (new Table($this->db, $this))
+                    ->fromTable($table)
+                    ->modifyColumn($field)
+                    ->run();
 
                 return null;
 

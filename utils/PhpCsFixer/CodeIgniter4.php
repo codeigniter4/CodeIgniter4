@@ -113,6 +113,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'keep_multiple_spaces_after_comma' => false,
                 'on_multiline'                     => 'ensure_fully_multiline',
             ],
+            'method_chaining_indentation'            => true,
             'modernize_types_casting'                => true,
             'multiline_comment_opening_closing'      => true,
             'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],

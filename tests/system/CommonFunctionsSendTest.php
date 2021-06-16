@@ -30,8 +30,8 @@ class CommonFunctionsSendTest extends CIUnitTestCase
         $routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
         $response = redirect()->route('login')
-                ->setCookie('foo', 'onething', YEAR)
-                ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('foo', 'onething', YEAR)
+            ->setCookie('login_time', $loginTime, YEAR);
         $response->pretend(false);
         $this->assertTrue($response->hasCookie('foo', 'onething'));
         $this->assertTrue($response->hasCookie('login_time'));
