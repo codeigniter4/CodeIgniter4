@@ -29,9 +29,9 @@ trait ReflectionHelper
      * @param object|string $obj    object or class name
      * @param string        $method method name
      *
-     * @return Closure
-     *
      * @throws ReflectionException
+     *
+     * @return Closure
      */
     public static function getPrivateMethodInvoker($obj, $method)
     {
@@ -52,9 +52,9 @@ trait ReflectionHelper
      * @param object|string $obj
      * @param string        $property
      *
-     * @return ReflectionProperty
-     *
      * @throws ReflectionException
+     *
+     * @return ReflectionProperty
      */
     private static function getAccessibleRefProperty($obj, $property)
     {
@@ -87,9 +87,9 @@ trait ReflectionHelper
      * @param object|string $obj      object or class name
      * @param string        $property property name
      *
-     * @return mixed value
-     *
      * @throws ReflectionException
+     *
+     * @return mixed value
      */
     public static function getPrivateProperty($obj, $property)
     {

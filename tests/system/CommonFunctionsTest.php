@@ -293,15 +293,15 @@ class CommonFunctionsTest extends CIUnitTestCase
         ];
 
         $response = new RedirectResponse(new App());
-        $returned = $response->withInput();
+        $response->withInput();
 
         $this->assertEquals('bar', old('foo')); // regular parameter
         $this->assertEquals('doo', old('yabba dabba', 'doo')); // non-existing parameter
         $this->assertEquals('fritz', old('zibble')); // serialized parameter
     }
 
-    // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */

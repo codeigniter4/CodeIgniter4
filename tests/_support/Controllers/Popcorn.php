@@ -43,7 +43,9 @@ class Popcorn extends Controller
         return redirect()->to('/');
     }
 
-    // @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
+     */
     public function index3()
     {
         return $this->response->setJSON(['lang' => $this->request->getLocale()]);

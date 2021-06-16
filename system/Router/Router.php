@@ -103,6 +103,7 @@ class Router implements RouterInterface
     protected $filterInfo;
 
     //--------------------------------------------------------------------
+
     /**
      * Stores a reference to the RouteCollection object.
      *
@@ -125,10 +126,10 @@ class Router implements RouterInterface
     /**
      * @param string|null $uri
      *
-     * @return mixed|string
-     *
-     * @throws RedirectException
      * @throws PageNotFoundException
+     * @throws RedirectException
+     *
+     * @return mixed|string
      */
     public function handle(string $uri = null)
     {
@@ -359,9 +360,9 @@ class Router implements RouterInterface
      *
      * @param string $uri The URI path to compare against the routes
      *
-     * @return bool Whether the route was matched or not.
-     *
      * @throws RedirectException
+     *
+     * @return bool Whether the route was matched or not.
      */
     protected function checkRoutes(string $uri): bool
     {

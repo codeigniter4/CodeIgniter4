@@ -56,6 +56,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     protected $db;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor.
      *
@@ -117,6 +118,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     abstract public function _prepare(string $sql, array $options = []);
 
     //--------------------------------------------------------------------
+
     /**
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.

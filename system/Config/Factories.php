@@ -22,8 +22,8 @@ use Config\Services;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
- * @method static Model models(...$arguments)
  * @method static BaseConfig config(...$arguments)
+ * @method static Model models(...$arguments)
  */
 class Factories
 {
@@ -284,9 +284,11 @@ class Factories
     public static function reset(string $component = null)
     {
         if ($component) {
-            unset(static::$options[$component]);
-            unset(static::$basenames[$component]);
-            unset(static::$instances[$component]);
+            unset(
+                static::$options[$component],
+                static::$basenames[$component],
+                static::$instances[$component]
+            );
 
             return;
         }

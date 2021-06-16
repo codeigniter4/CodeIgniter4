@@ -75,9 +75,9 @@ if (! function_exists('directory_mirror')) {
      * @param string $targetDir
      * @param bool   $overwrite Whether individual files overwrite on collision
      *
-     * @return void
-     *
      * @throws InvalidArgumentException
+     *
+     * @return void
      */
     function directory_mirror(string $originDir, string $targetDir, bool $overwrite = true): void
     {

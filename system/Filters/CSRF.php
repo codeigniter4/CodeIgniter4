@@ -37,12 +37,12 @@ class CSRF implements FilterInterface
      * sent back to the client, allowing for error pages,
      * redirects, etc.
      *
-     * @param RequestInterface|IncomingRequest $request
+     * @param IncomingRequest|RequestInterface $request
      * @param array|null                       $arguments
      *
-     * @return mixed
-     *
      * @throws SecurityException
+     *
+     * @return mixed
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -64,11 +64,12 @@ class CSRF implements FilterInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * We don't have anything to do here.
      *
-     * @param RequestInterface|IncomingRequest $request
-     * @param ResponseInterface|Response       $response
+     * @param IncomingRequest|RequestInterface $request
+     * @param Response|ResponseInterface       $response
      * @param array|null                       $arguments
      *
      * @return mixed

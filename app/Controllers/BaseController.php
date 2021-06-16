@@ -25,7 +25,7 @@ class BaseController extends Controller
     /**
      * Instance of the main Request object.
      *
-     * @var IncomingRequest|CLIRequest
+     * @var CLIRequest|IncomingRequest
      */
     protected $request;
 

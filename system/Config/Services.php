@@ -65,10 +65,10 @@ use Config\Honeypot as HoneypotConfig;
 use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
+use Config\Services as AppServices;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
-use Config\Services as AppServices;
 
 /**
  * Services Configuration file.
@@ -201,7 +201,7 @@ class Services extends BaseService
     /**
      * The Email class allows you to send email via mail, sendmail, SMTP.
      *
-     * @param EmailConfig|array|null $config
+     * @param array|EmailConfig|null $config
      * @param bool                   $getShared
      *
      * @return Email

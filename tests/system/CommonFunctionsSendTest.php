@@ -14,6 +14,7 @@ class CommonFunctionsSendTest extends CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Make sure cookies are set by RedirectResponse this way
      * See https://github.com/codeigniter4/CodeIgniter4/issues/1393

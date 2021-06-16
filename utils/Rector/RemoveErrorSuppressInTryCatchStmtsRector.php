@@ -18,15 +18,15 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
         return new RuleDefinition('Remove error suppression operator `@` inside try...catch blocks', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
-					try {
-						@rmdir($dirname);
-					} catch (Exception $e) {}
-				CODE_SAMPLE,
+                    	try {
+                    		@rmdir($dirname);
+                    	} catch (Exception $e) {}
+                    CODE_SAMPLE,
                 <<<'CODE_SAMPLE'
-				try {
-					rmdir($dirname);
-				} catch (Exception $e) {}
-				CODE_SAMPLE
+                    try {
+                    	rmdir($dirname);
+                    } catch (Exception $e) {}
+                    CODE_SAMPLE
             ),
         ]);
     }

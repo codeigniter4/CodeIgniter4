@@ -166,14 +166,14 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var object|resource|bool
+     * @var bool|object|resource
      */
     public $connID = false;
 
     /**
      * Result ID
      *
-     * @var object|resource|bool
+     * @var bool|object|resource
      */
     public $resultID = false;
 
@@ -196,7 +196,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Identifier escape character
      *
-     * @var string|array
+     * @var array|string
      */
     public $escapeChar = '"';
 
@@ -322,9 +322,9 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed|void
-     *
      * @throws DatabaseException
+     *
+     * @return mixed|void
      */
     public function initialize()
     {
@@ -597,7 +597,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param bool   $setEscapeFlags
      * @param string $queryClass
      *
-     * @return BaseResult|Query|bool
+     * @return BaseResult|bool|Query
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -918,14 +918,15 @@ abstract class BaseConnection implements ConnectionInterface
     abstract protected function _transRollback(): bool;
 
     //--------------------------------------------------------------------
+
     /**
      * Returns an instance of the query builder for this connection.
      *
-     * @param string|array $tableName
-     *
-     * @return BaseBuilder
+     * @param array|string $tableName
      *
      * @throws DatabaseException
+     *
+     * @return BaseBuilder
      */
     public function table($tableName)
     {
@@ -939,6 +940,7 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Creates a prepared statement with the database that can then
      * be used to execute multiple statements against. Within the
@@ -1062,12 +1064,12 @@ abstract class BaseConnection implements ConnectionInterface
      * insert the table prefix (if it exists) in the proper position, and escape only
      * the correct identifiers.
      *
-     * @param string|array $item
+     * @param array|string $item
      * @param bool         $prefixSingle
      * @param bool         $protectIdentifiers
      * @param bool         $fieldExists
      *
-     * @return string|array
+     * @return array|string
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, bool $protectIdentifiers = null, bool $fieldExists = true)
     {
@@ -1271,9 +1273,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $table the table
      *
-     * @return string
-     *
      * @throws DatabaseException
+     *
+     * @return string
      */
     public function prefixTable(string $table = ''): string
     {
@@ -1407,9 +1409,9 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string $functionName
      * @param array  ...$params
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function callFunction(string $functionName, ...$params): bool
     {
@@ -1441,9 +1443,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param bool $constrainByPrefix = FALSE
      *
-     * @return bool|array
-     *
      * @throws DatabaseException
+     *
+     * @return array|bool
      */
     public function listTables(bool $constrainByPrefix = false)
     {
@@ -1510,9 +1512,9 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $table Table name
      *
-     * @return array|false
-     *
      * @throws DatabaseException
+     *
+     * @return array|false
      */
     public function getFieldNames(string $table)
     {
@@ -1712,7 +1714,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param bool $constrainByPrefix
      *
-     * @return string|false
+     * @return false|string
      */
     abstract protected function _listTables(bool $constrainByPrefix = false);
 
@@ -1723,7 +1725,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param string $table
      *
-     * @return string|false
+     * @return false|string
      */
     abstract protected function _listColumns(string $table = '');
 

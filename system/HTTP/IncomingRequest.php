@@ -136,6 +136,7 @@ class IncomingRequest extends Request
     protected $userAgent;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor
      *
@@ -515,7 +516,7 @@ class IncomingRequest extends Request
      * to grab data from the request object and can be used in lieu of the
      * other get* methods in most cases.
      *
-     * @param string|array|null $index
+     * @param array|string|null $index
      * @param int|null          $filter Filter constant
      * @param mixed             $flags
      *
@@ -616,7 +617,7 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from GET data.
      *
-     * @param string|array|null $index  Index for item to fetch from $_GET.
+     * @param array|string|null $index  Index for item to fetch from $_GET.
      * @param int|null          $filter A filter name to apply.
      * @param mixed|null        $flags
      *
@@ -632,7 +633,7 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from POST.
      *
-     * @param string|array|null $index  Index for item to fetch from $_POST.
+     * @param array|string|null $index  Index for item to fetch from $_POST.
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
@@ -648,7 +649,7 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from POST data with fallback to GET.
      *
-     * @param string|array|null $index  Index for item to fetch from $_POST or $_GET
+     * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
@@ -667,7 +668,7 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from GET data with fallback to POST.
      *
-     * @param string|array|null $index  Index for item to be fetched from $_GET or $_POST
+     * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
@@ -686,7 +687,7 @@ class IncomingRequest extends Request
     /**
      * Fetch an item from the COOKIE array.
      *
-     * @param string|array|null $index  Index for item to be fetched from $_COOKIE
+     * @param array|string|null $index  Index for item to be fetched from $_COOKIE
      * @param int|null          $filter A filter name to be applied
      * @param mixed             $flags
      *
@@ -698,6 +699,7 @@ class IncomingRequest extends Request
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Fetch the user agent string
      *

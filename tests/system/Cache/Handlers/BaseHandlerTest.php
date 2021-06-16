@@ -2,8 +2,8 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
-use stdClass;
 use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
 
 class BaseHandlerTest extends CIUnitTestCase

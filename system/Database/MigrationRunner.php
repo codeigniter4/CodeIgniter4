@@ -128,7 +128,7 @@ class MigrationRunner
      * - array of database configuration values
      *
      * @param MigrationsConfig                      $config
-     * @param ConnectionInterface|array|string|null $db
+     * @param array|ConnectionInterface|string|null $db
      *
      * @throws ConfigException
      */
@@ -509,7 +509,7 @@ class MigrationRunner
      * @param string $path The path to the file
      * @param string $path The namespace of the target migration
      *
-     * @return object|false Returns the migration object, or false on failure
+     * @return false|object Returns the migration object, or false on failure
      */
     protected function migrationFromFile(string $path, string $namespace)
     {

@@ -30,25 +30,26 @@ abstract class BaseUtils
     /**
      * List databases statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $listDatabases = false;
 
     /**
      * OPTIMIZE TABLE statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $optimizeTable = false;
 
     /**
      * REPAIR TABLE statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $repairTable = false;
 
     //--------------------------------------------------------------------
+
     /**
      * Class constructor
      *
@@ -64,9 +65,9 @@ abstract class BaseUtils
     /**
      * List databases
      *
-     * @return array|bool
-     *
      * @throws DatabaseException
+     *
+     * @return array|bool
      */
     public function listDatabases()
     {
@@ -118,9 +119,9 @@ abstract class BaseUtils
      *
      * @param string $tableName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function optimizeTable(string $tableName)
     {
@@ -142,9 +143,9 @@ abstract class BaseUtils
     /**
      * Optimize Database
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function optimizeDatabase()
     {
@@ -191,9 +192,9 @@ abstract class BaseUtils
      *
      * @param string $tableName
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function repairTable(string $tableName)
     {
@@ -216,6 +217,7 @@ abstract class BaseUtils
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Generate CSV from a query result object
      *
@@ -251,6 +253,7 @@ abstract class BaseUtils
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Generate XML data from a query result object
      *
@@ -301,9 +304,9 @@ abstract class BaseUtils
      *
      * @param array|string $params
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function backup($params = [])
     {

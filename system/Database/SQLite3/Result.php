@@ -108,9 +108,9 @@ class Result extends BaseResult
      *
      * @param int $n
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function dataSeek(int $n = 0)
     {
@@ -144,7 +144,7 @@ class Result extends BaseResult
      *
      * @param string $className
      *
-     * @return object|bool
+     * @return bool|object
      */
     protected function fetchObject(string $className = 'stdClass')
     {

@@ -13,8 +13,8 @@ namespace CodeIgniter\Test;
 
 use Closure;
 use CodeIgniter\Filters\Exceptions\FilterException;
-use CodeIgniter\Filters\Filters;
 use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;

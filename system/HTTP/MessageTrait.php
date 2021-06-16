@@ -135,7 +135,7 @@ trait MessageTrait
      * Sets a header and it's value.
      *
      * @param string            $name
-     * @param array|null|string $value
+     * @param array|string|null $value
      *
      * @return $this
      */
@@ -169,9 +169,7 @@ trait MessageTrait
     public function removeHeader(string $name): self
     {
         $origName = $this->getHeaderName($name);
-
-        unset($this->headers[$origName]);
-        unset($this->headerMap[strtolower($name)]);
+        unset($this->headers[$origName], $this->headerMap[strtolower($name)]);
 
         return $this;
     }
@@ -234,9 +232,9 @@ trait MessageTrait
      *
      * @param string $version
      *
-     * @return $this
-     *
      * @throws HTTPException For invalid protocols
+     *
+     * @return $this
      */
     public function setProtocolVersion(string $version): self
     {

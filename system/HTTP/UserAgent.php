@@ -102,7 +102,7 @@ class UserAgent
      *
      * Sets the User Agent and runs the compilation routine
      *
-     * @param null|UserAgents $config
+     * @param UserAgents|null $config
      */
     public function __construct(UserAgents $config = null)
     {

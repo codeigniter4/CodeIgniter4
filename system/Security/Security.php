@@ -155,9 +155,9 @@ class Security implements SecurityInterface
      *
      * @param RequestInterface $request
      *
-     * @return $this|false
-     *
      * @throws SecurityException
+     *
+     * @return $this|false
      *
      * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
      *
@@ -201,9 +201,9 @@ class Security implements SecurityInterface
      *
      * @param RequestInterface $request
      *
-     * @return $this|false
-     *
      * @throws SecurityException
+     *
+     * @return $this|false
      */
     public function verify(RequestInterface $request)
     {
@@ -308,6 +308,7 @@ class Security implements SecurityInterface
     {
         return $this->cookie->isExpired();
     }
+
     /**
      * Check if request should be redirect on failure.
      *
@@ -416,7 +417,7 @@ class Security implements SecurityInterface
      *
      * @param RequestInterface $request
      *
-     * @return Security|false
+     * @return false|Security
      */
     protected function sendCookie(RequestInterface $request)
     {

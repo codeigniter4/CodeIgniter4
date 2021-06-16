@@ -84,7 +84,7 @@ class RouteCollection implements RouteCollectionInterface
      * A callable that will be shown
      * when the route cannot be matched.
      *
-     * @var string|Closure
+     * @var Closure|string
      */
     protected $override404;
 
@@ -225,6 +225,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Registers a new constraint with the system. Constraints are used
      * by the routes as placeholders for regular expressions to make defining
@@ -233,7 +234,7 @@ class RouteCollection implements RouteCollectionInterface
      * You can pass an associative array as $placeholder, and have
      * multiple placeholders added at once.
      *
-     * @param string|array $placeholder
+     * @param array|string $placeholder
      * @param string|null  $pattern
      *
      * @return RouteCollectionInterface
@@ -250,6 +251,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
@@ -267,6 +269,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default controller to use when no other controller has been
      * specified.
@@ -283,6 +286,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
@@ -299,6 +303,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Tells the system whether to convert dashes in URI strings into
      * underscores. In some search engines, including Google, dashes
@@ -318,6 +323,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * If TRUE, the system will attempt to match the URI against
      * Controllers by matching each segment against folders/files
@@ -338,6 +344,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the class/method that should be called if routing doesn't
      * find a match. It can be either a closure or the controller/method
@@ -362,7 +369,7 @@ class RouteCollection implements RouteCollectionInterface
      * Returns the 404 Override setting, which can be null, a closure
      * or the controller/string.
      *
-     * @return string|Closure|null
+     * @return Closure|string|null
      */
     public function get404Override()
     {
@@ -402,6 +409,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Sets the default constraint to be used in the system. Typically
      * for use with the 'resource' method.
@@ -599,6 +607,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Adds a single route to the collection.
      *
@@ -743,6 +752,7 @@ class RouteCollection implements RouteCollectionInterface
     // be expanded in the future. See the docblock for 'add' method above for
     // current list of globally available options.
     //
+
     /**
      * Creates a collections of HTTP-verb based routes for a controller.
      *
@@ -937,6 +947,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a single route to match for multiple HTTP Verbs.
      *
@@ -945,7 +956,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array        $verbs
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -966,11 +977,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to GET requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -983,11 +995,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to POST requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1000,11 +1013,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to PUT requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1017,11 +1031,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to DELETE requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1034,11 +1049,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to HEAD requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1051,11 +1067,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to PATCH requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1068,11 +1085,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to OPTIONS requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1085,11 +1103,12 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Specifies a route that is only available to command-line requests.
      *
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      *
      * @return RouteCollectionInterface
@@ -1102,6 +1121,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Limits the routes to a specified ENVIRONMENT or they won't run.
      *
@@ -1137,7 +1157,7 @@ class RouteCollection implements RouteCollectionInterface
      * @param string $search
      * @param mixed  ...$params
      *
-     * @return string|false
+     * @return false|string
      */
     public function reverseRoute(string $search, ...$params)
     {
@@ -1252,9 +1272,9 @@ class RouteCollection implements RouteCollectionInterface
      * @param string     $from
      * @param array|null $params
      *
-     * @return string
-     *
      * @throws RouterException
+     *
+     * @return string
      */
     protected function fillRouteParams(string $from, array $params = null): string
     {
@@ -1290,7 +1310,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string       $verb
      * @param string       $from
-     * @param string|array $to
+     * @param array|string $to
      * @param array|null   $options
      */
     protected function create(string $verb, string $from, $to, array $options = null)

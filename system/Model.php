@@ -224,7 +224,7 @@ class Model extends BaseModel
      *
      * @param array $data Data
      *
-     * @return Query|bool
+     * @return bool|Query
      */
     protected function doInsert(array $data)
     {
@@ -263,7 +263,7 @@ class Model extends BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows inserted or FALSE on failure
      */
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
@@ -284,7 +284,7 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This methods works only with dbCalls
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|null            $data Data
      *
      * @return bool
@@ -317,9 +317,9 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
-     *
      * @throws DatabaseException
+     *
+     * @return mixed Number of rows affected or FALSE on failure
      */
     protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
@@ -331,12 +331,12 @@ class Model extends BaseModel
      * the table's primaryKey
      * This methods works only with dbCalls
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool|string
      */
     protected function doDelete($id = null, bool $purge = false)
     {
@@ -434,7 +434,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      *
      * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
      */
@@ -448,7 +448,7 @@ class Model extends BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      */
     public function getIdValue($data)
     {
@@ -472,9 +472,9 @@ class Model extends BaseModel
      * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
-     * @return void
-     *
      * @throws DataException
+     *
+     * @return void
      */
     public function chunk(int $size, Closure $userFunc)
     {
@@ -534,9 +534,9 @@ class Model extends BaseModel
      *
      * @param string|null $table Table name
      *
-     * @return BaseBuilder
-     *
      * @throws ModelException
+     *
+     * @return BaseBuilder
      */
     public function builder(?string $table = null)
     {
@@ -624,9 +624,9 @@ class Model extends BaseModel
      * @param array|object|null $data     Data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return BaseResult|object|int|string|false
-     *
      * @throws ReflectionException
+     *
+     * @return BaseResult|false|int|object|string
      */
     public function insert($data = null, bool $returnID = true)
     {
@@ -649,12 +649,12 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|object|null     $data Data
      *
-     * @return bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool
      */
     public function update($id = null, $data = null): bool
     {
@@ -677,13 +677,13 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array with raw values.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array|null Array
-     *
      * @throws ReflectionException
+     *
+     * @return array|null Array
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {
@@ -707,7 +707,15 @@ class Model extends BaseModel
      */
     public function __get(string $name)
     {
-        return parent::__get($name) ?? $this->builder()->$name ?? null;
+        if (parent::__isset($name)) {
+            return parent::__get($name);
+        }
+
+        if (isset($this->builder()->$name)) {
+            return $this->builder()->$name;
+        }
+
+        return null;
     }
 
     /**
@@ -764,14 +772,14 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param string|null   $primaryKey  Primary Key
      * @param string        $dateFormat  Date Format
      * @param bool          $onlyChanged Only Changed
      *
-     * @return array
-     *
      * @throws ReflectionException
+     *
+     * @return array
      *
      * @codeCoverageIgnore
      *

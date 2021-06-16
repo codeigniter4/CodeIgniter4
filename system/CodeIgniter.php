@@ -44,7 +44,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    const CI_VERSION = '4.1.3';
+    public const CI_VERSION = '4.1.3';
 
     private const MIN_PHP_VERSION = '7.3';
 
@@ -79,7 +79,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var Request|IncomingRequest|CLIRequest
+     * @var CLIRequest|IncomingRequest|Request
      */
     protected $request;
 
@@ -100,7 +100,7 @@ class CodeIgniter
     /**
      * Controller to use.
      *
-     * @var string|Closure
+     * @var Closure|string
      */
     protected $controller;
 
@@ -287,10 +287,10 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes
      * @param bool                          $returnResponse
      *
-     * @return bool|RequestInterface|ResponseInterface|mixed
-     *
-     * @throws RedirectException
      * @throws Exception
+     * @throws RedirectException
+     *
+     * @return bool|mixed|RequestInterface|ResponseInterface
      */
     public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -366,9 +366,9 @@ class CodeIgniter
      * @param Cache                         $cacheConfig
      * @param bool                          $returnResponse
      *
-     * @return RequestInterface|ResponseInterface|mixed
-     *
      * @throws RedirectException
+     *
+     * @return mixed|RequestInterface|ResponseInterface
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
@@ -742,9 +742,9 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes An collection interface to use in place
      *                                              of the config file.
      *
-     * @return string|null
-     *
      * @throws RedirectException
+     *
+     * @return string|null
      */
     protected function tryToRouteIt(RouteCollectionInterface $routes = null)
     {
@@ -992,7 +992,7 @@ class CodeIgniter
      *
      * This helps provider safer, more reliable previous_url() detection.
      *
-     * @param URI|string $uri
+     * @param string|URI $uri
      */
     public function storePreviousURL($uri)
     {

@@ -335,7 +335,7 @@ if (! function_exists('db_connect')) {
      * If $getShared === false then a new connection instance will be provided,
      * otherwise it will all calls will return the same instance.
      *
-     * @param ConnectionInterface|array|string|null $db
+     * @param array|ConnectionInterface|string|null $db
      * @param bool                                  $getShared
      *
      * @return BaseConnection
@@ -416,13 +416,13 @@ if (! function_exists('esc')) {
      *
      * Valid context values: html, js, css, url, attr, raw, null
      *
-     * @param string|array $data
+     * @param array|string $data
      * @param string       $context
      * @param string       $encoding
      *
-     * @return string|array
-     *
      * @throws InvalidArgumentException
+     *
+     * @return array|string
      */
     function esc($data, string $context = 'html', string $encoding = null)
     {
@@ -549,7 +549,7 @@ if (! function_exists('function_usable')) {
      * that version is yet to be released. This function will therefore
      * be just temporary, but would probably be kept for a few years.
      *
-     * @link   http://www.hardened-php.net/suhosin/
+     * @see   http://www.hardened-php.net/suhosin/
      *
      * @param string $functionName Function to check for
      *
@@ -584,7 +584,7 @@ if (! function_exists('helper')) {
      *   2. {namespace}/Helpers
      *   3. system/Helpers
      *
-     * @param string|array $filenames
+     * @param array|string $filenames
      *
      * @throws FileNotFoundException
      */
@@ -716,13 +716,14 @@ if (! function_exists('is_really_writable')) {
      * the file, based on the read-only attribute. is_writable() is also unreliable
      * on Unix servers if safe_mode is on.
      *
-     * @link https://bugs.php.net/bug.php?id=54709
+     * @see https://bugs.php.net/bug.php?id=54709
      *
      * @param string $file
      *
+     * @throws Exception
+     *
      * @return bool
      *
-     * @throws Exception
      * @codeCoverageIgnore Not practical to test, as travis runs on linux
      */
     function is_really_writable(string $file): bool
@@ -838,7 +839,7 @@ if (! function_exists('old')) {
      *
      * @param string      $key
      * @param null        $default
-     * @param string|bool $escape
+     * @param bool|string $escape
      *
      * @return mixed|null
      */
@@ -960,7 +961,7 @@ if (! function_exists('session')) {
      *
      * @param string $val
      *
-     * @return Session|mixed|null
+     * @return mixed|Session|null
      */
     function session(string $val = null)
     {
@@ -1104,7 +1105,7 @@ if (! function_exists('timer')) {
      *
      * @param string|null $name
      *
-     * @return Timer|mixed
+     * @return mixed|Timer
      */
     function timer(string $name = null)
     {
@@ -1178,9 +1179,9 @@ if (! function_exists('view_cell')) {
      * @param int         $ttl
      * @param string|null $cacheName
      *
-     * @return string
-     *
      * @throws ReflectionException
+     *
+     * @return string
      */
     function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
     {
@@ -1199,7 +1200,7 @@ if (! function_exists('class_basename')) {
     /**
      * Get the class "basename" of the given object / class.
      *
-     * @param string|object $class
+     * @param object|string $class
      *
      * @return string
      *

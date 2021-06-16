@@ -102,11 +102,11 @@ class ResponseTraitTest extends CIUnitTestCase
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(201, $this->response->getStatusCode());
 
-        $expected = <<<EOH
-{
-    "id": 3
-}
-EOH;
+        $expected = <<<'EOH'
+            {
+                "id": 3
+            }
+            EOH;
         $this->assertEquals($expected, $this->response->getBody());
     }
 
@@ -124,11 +124,11 @@ EOH;
         $this->formatter = null;
         $controller      = $this->makeController();
         $payload         = ['answer' => 42];
-        $expected        = <<<EOH
-{
-    "answer": 42
-}
-EOH;
+        $expected        = <<<'EOH'
+            {
+                "answer": 42
+            }
+            EOH;
         $controller->respond($payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -142,13 +142,13 @@ EOH;
             2,
             3,
         ];
-        $expected = <<<EOH
-[
-    1,
-    2,
-    3
-]
-EOH;
+        $expected = <<<'EOH'
+            [
+                1,
+                2,
+                3
+            ]
+            EOH;
         $controller->respond($payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -160,12 +160,12 @@ EOH;
         $payload         = new stdClass();
         $payload->name   = 'Tom';
         $payload->id     = 1;
-        $expected        = <<<EOH
-{
-    "name": "Tom",
-    "id": 1
-}
-EOH;
+        $expected        = <<<'EOH'
+            {
+                "name": "Tom",
+                "id": 1
+            }
+            EOH;
         $controller->respond((array) $payload);
         $this->assertEquals($expected, $this->response->getBody());
     }
@@ -479,11 +479,11 @@ EOH;
         $this->assertEquals('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
-        $expected = <<<EOH
-<?xml version="1.0"?>
-<response><id>3</id></response>
+        $expected = <<<'EOH'
+            <?xml version="1.0"?>
+            <response><id>3</id></response>
 
-EOH;
+            EOH;
         $this->assertEquals($expected, $this->response->getBody());
     }
 

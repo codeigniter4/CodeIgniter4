@@ -32,7 +32,7 @@ interface FabricatorModel
      * Fetches the row of database from $this->table with a primary key
      * matching $id.
      *
-     * @param mixed|array|null $id One primary key or an array of primary keys
+     * @param array|mixed|null $id One primary key or an array of primary keys
      *
      * @return array|object|null The resulting row of data, or null.
      */
@@ -45,9 +45,9 @@ interface FabricatorModel
      * @param array|object $data
      * @param bool         $returnID Whether insert ID should be returned or not.
      *
-     * @return int|string|bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool|int|string
      */
     public function insert($data = null, bool $returnID = true);
 

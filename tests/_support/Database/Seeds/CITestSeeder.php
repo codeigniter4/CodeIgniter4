@@ -111,25 +111,30 @@ class CITestSeeder extends Seeder
 
         if ($this->db->DBDriver === 'Postgre') {
             $data['type_test'][0]['type_time'] = '15:22:00';
-            unset($data['type_test'][0]['type_enum']);
-            unset($data['type_test'][0]['type_set']);
-            unset($data['type_test'][0]['type_mediumtext']);
-            unset($data['type_test'][0]['type_real']);
-            unset($data['type_test'][0]['type_double']);
-            unset($data['type_test'][0]['type_decimal']);
-            unset($data['type_test'][0]['type_blob']);
+            unset(
+                $data['type_test'][0]['type_enum'],
+                $data['type_test'][0]['type_set'],
+                $data['type_test'][0]['type_mediumtext'],
+                $data['type_test'][0]['type_real'],
+                $data['type_test'][0]['type_double'],
+                $data['type_test'][0]['type_decimal'],
+                $data['type_test'][0]['type_blob']
+            );
         }
 
         if ($this->db->DBDriver === 'SQLSRV') {
             $data['type_test'][0]['type_date']     = '2020-01-11';
             $data['type_test'][0]['type_time']     = '15:22:00.000';
             $data['type_test'][0]['type_datetime'] = '2020-06-18 05:12:24.000';
-            unset($data['type_test'][0]['type_timestamp']);
-            unset($data['type_test'][0]['type_enum']);
-            unset($data['type_test'][0]['type_set']);
-            unset($data['type_test'][0]['type_mediumtext']);
-            unset($data['type_test'][0]['type_double']);
-            unset($data['type_test'][0]['type_blob']);
+
+            unset(
+                $data['type_test'][0]['type_timestamp'],
+                $data['type_test'][0]['type_enum'],
+                $data['type_test'][0]['type_set'],
+                $data['type_test'][0]['type_mediumtext'],
+                $data['type_test'][0]['type_double'],
+                $data['type_test'][0]['type_blob']
+            );
         }
 
         foreach ($data as $table => $dummy_data) {

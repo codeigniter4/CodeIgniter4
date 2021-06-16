@@ -140,10 +140,10 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foo' => ['bar'], // not excluded
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -189,10 +189,10 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foo' => ['except' => $except],
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -201,7 +201,7 @@ class FiltersTest extends CIUnitTestCase
 
         $expected = [
             'before' => [
-                'bar'
+                'bar',
             ],
             'after' => ['baz'],
         ];
@@ -283,10 +283,10 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foog' => ['except' => ['admin/*']],
-                    'barg'
+                    'barg',
                 ],
                 'after' => [
-                    'bazg'
+                    'bazg',
                 ],
             ],
             'methods' => [
@@ -515,10 +515,10 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foo' => ['except' => 'admin/*'],
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -527,7 +527,7 @@ class FiltersTest extends CIUnitTestCase
 
         $expected = [
             'before' => [
-                'bar'
+                'bar',
             ],
             'after' => ['baz'],
         ];
@@ -548,10 +548,10 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foo' => ['except' => 'george/*'],
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -581,11 +581,11 @@ class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [
                 'before' => [
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
                     'foo' => ['except' => 'admin/*'],
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -594,7 +594,7 @@ class FiltersTest extends CIUnitTestCase
 
         $expected = [
             'before' => [
-                'bar'
+                'bar',
             ],
             'after' => ['baz'],
         ];
@@ -614,11 +614,11 @@ class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [
                 'before' => [
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
                     'foo' => ['except' => 'george/*'],
-                    'baz'
+                    'baz',
                 ],
             ],
         ];
@@ -627,7 +627,7 @@ class FiltersTest extends CIUnitTestCase
 
         $expected = [
             'before' => [
-                'bar'
+                'bar',
             ],
             'after' => [
                 'foo',
@@ -814,11 +814,11 @@ class FiltersTest extends CIUnitTestCase
             'globals' => [
                 'before' => [
                     'foo' => ['except' => 'Admin/*'],
-                    'bar'
+                    'bar',
                 ],
                 'after' => [
                     'foo' => ['except' => 'Admin/*'],
-                    'baz'
+                    'baz',
                 ],
             ],
             'filters' => [
@@ -910,7 +910,7 @@ class FiltersTest extends CIUnitTestCase
 
         $expected = [
             'before' => [
-                'one'
+                'one',
             ],
             'after' => [
                 'foo',

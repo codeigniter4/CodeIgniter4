@@ -73,6 +73,7 @@ abstract class BaseHandler implements HandlerInterface
     abstract public function handle($level, $message): bool;
 
     //--------------------------------------------------------------------
+
     /**
      * Stores the date format to use while logging messages.
      *

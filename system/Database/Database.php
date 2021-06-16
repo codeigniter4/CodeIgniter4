@@ -40,9 +40,9 @@ class Database
      * @param array  $params
      * @param string $alias
      *
-     * @return mixed
-     *
      * @throws InvalidArgumentException
+     *
+     * @return mixed
      *
      * @internal param bool $useBuilder
      */
@@ -69,6 +69,7 @@ class Database
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Creates a Forge instance for the current database type.
      *
@@ -87,6 +88,7 @@ class Database
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Creates a Utils instance for the current database type.
      *
@@ -111,9 +113,9 @@ class Database
      *
      * @param array $params
      *
-     * @return array
-     *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     protected function parseDSN(array $params): array
     {

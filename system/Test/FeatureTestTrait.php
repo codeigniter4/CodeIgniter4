@@ -142,10 +142,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function call(string $method, string $path, array $params = null)
     {
@@ -219,10 +219,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function get(string $path, array $params = null)
     {
@@ -235,10 +235,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function post(string $path, array $params = null)
     {
@@ -251,10 +251,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function put(string $path, array $params = null)
     {
@@ -267,10 +267,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function patch(string $path, array $params = null)
     {
@@ -283,10 +283,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function delete(string $path, array $params = null)
     {
@@ -299,10 +299,10 @@ trait FeatureTestTrait
      * @param string     $path
      * @param array|null $params
      *
-     * @return TestResponse
-     *
      * @throws RedirectException
      * @throws Exception
+     *
+     * @return TestResponse
      */
     public function options(string $path, array $params = null)
     {
@@ -367,9 +367,9 @@ trait FeatureTestTrait
      * @param Request    $request
      * @param array|null $params
      *
-     * @return Request
-     *
      * @throws ReflectionException
+     *
+     * @return Request
      */
     protected function populateGlobals(string $method, Request $request, array $params = null)
     {
@@ -397,7 +397,7 @@ trait FeatureTestTrait
      * expect as in the case of testing a JSON or XML API.
      *
      * @param Request    $request
-     * @param null|array $params  The parameters to be formatted and put in the body. If this is empty, it will get the
+     * @param array|null $params  The parameters to be formatted and put in the body. If this is empty, it will get the
      *                            what has been loaded into the request global of the request class.
      *
      * @return Request

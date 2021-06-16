@@ -198,10 +198,10 @@ class Language
     /**
      * Advanced message formatting.
      *
-     * @param string|array $message Message.
+     * @param array|string $message Message.
      * @param array        $args    Arguments.
      *
-     * @return string|array Returns formatted message.
+     * @return array|string Returns formatted message.
      */
     protected function formatMessage($message, array $args = [])
     {
@@ -231,7 +231,7 @@ class Language
      * @param string $locale
      * @param bool   $return
      *
-     * @return void|array
+     * @return array|void
      */
     protected function load(string $file, string $locale, bool $return = false)
     {

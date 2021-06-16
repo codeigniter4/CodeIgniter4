@@ -139,9 +139,9 @@ trait ResponseTrait
      *                       provided status code; if none is provided, will
      *                       default to the IANA name.
      *
-     * @return $this
-     *
      * @throws HTTPException For invalid status code arguments.
+     *
+     * @return $this
      */
     public function setStatusCode(int $code, string $reason = '')
     {
@@ -256,9 +256,9 @@ trait ResponseTrait
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @return mixed|string
-     *
      * @throws InvalidArgumentException If the body property is not array.
+     *
+     * @return mixed|string
      */
     public function getJSON()
     {
@@ -288,9 +288,9 @@ trait ResponseTrait
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @return mixed|string
-     *
      * @throws InvalidArgumentException If the body property is not array.
+     *
+     * @return mixed|string
      */
     public function getXML()
     {
@@ -307,12 +307,12 @@ trait ResponseTrait
      * Handles conversion of the of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
-     * @param string|array $body
+     * @param array|string $body
      * @param string       $format Valid: json, xml
      *
-     * @return mixed
-     *
      * @throws InvalidArgumentException If the body property is not string or array.
+     *
+     * @return mixed
      */
     protected function formatBody($body, string $format)
     {
@@ -503,9 +503,9 @@ trait ResponseTrait
      * @param string $method
      * @param int    $code   The type of redirection, defaults to 302
      *
-     * @return $this
-     *
      * @throws HTTPException For invalid status code.
+     *
+     * @return $this
      */
     public function redirect(string $uri, string $method = 'auto', int $code = null)
     {
@@ -546,7 +546,7 @@ trait ResponseTrait
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param string|array $name     Cookie name or array containing binds
+     * @param array|string $name     Cookie name or array containing binds
      * @param string       $value    Cookie value
      * @param string       $expire   Cookie expiration time in seconds
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
@@ -629,7 +629,7 @@ trait ResponseTrait
      * @param string|null $name
      * @param string      $prefix
      *
-     * @return Cookie[]|Cookie|null
+     * @return Cookie|Cookie[]|null
      */
     public function getCookie(string $name = null, string $prefix = '')
     {

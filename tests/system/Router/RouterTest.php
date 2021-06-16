@@ -3,10 +3,10 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
-use CodeIgniter\Exceptions\PageNotFoundException;
 
 class RouterTest extends CIUnitTestCase
 {

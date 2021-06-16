@@ -114,6 +114,7 @@ class IncomingRequestTest extends CIUnitTestCase
     }
 
     // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled

@@ -165,7 +165,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Make the image resource object if needed
      */
-    protected abstract function ensureResource();
+    abstract protected function ensureResource();
 
     //--------------------------------------------------------------------
 
@@ -182,9 +182,9 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Verifies that a file has been supplied and it is an image.
      *
-     * @return Image The image instance
-     *
      * @throws ImageException
+     *
+     * @return Image The image instance
      */
     protected function image(): Image
     {
@@ -398,7 +398,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @internal
      */
-    protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);
+    abstract protected function _flatten(int $red = 255, int $green = 255, int $blue = 255);
 
     //--------------------------------------------------------------------
 
@@ -409,7 +409,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return mixed
      */
-    protected abstract function _rotate(int $angle);
+    abstract protected function _rotate(int $angle);
 
     //--------------------------------------------------------------------
 
@@ -441,7 +441,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
-    protected abstract function _flip(string $direction);
+    abstract protected function _flip(string $direction);
 
     //--------------------------------------------------------------------
 
@@ -484,7 +484,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param string $text
      * @param array  $options
      */
-    protected abstract function _text(string $text, array $options = []);
+    abstract protected function _text(string $text, array $options = []);
 
     //--------------------------------------------------------------------
 
@@ -495,7 +495,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
-    public abstract function _resize(bool $maintainRatio = false);
+    abstract public function _resize(bool $maintainRatio = false);
 
     //--------------------------------------------------------------------
 
@@ -504,7 +504,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
-    public abstract function _crop();
+    abstract public function _crop();
 
     //--------------------------------------------------------------------
 
@@ -513,7 +513,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return int
      */
-    public abstract function _getWidth();
+    abstract public function _getWidth();
 
     //--------------------------------------------------------------------
 
@@ -522,7 +522,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return int
      */
-    public abstract function _getHeight();
+    abstract public function _getHeight();
 
     //--------------------------------------------------------------------
 
@@ -653,10 +653,10 @@ abstract class BaseHandler implements ImageHandlerInterface
     /**
      * Calculate image aspect ratio.
      *
-     * @param int|float      $width
-     * @param int|float|null $height
-     * @param int|float      $origWidth
-     * @param int|float      $origHeight
+     * @param float|int      $width
+     * @param float|int|null $height
+     * @param float|int      $origWidth
+     * @param float|int      $origHeight
      *
      * @return array
      */
@@ -699,10 +699,10 @@ abstract class BaseHandler implements ImageHandlerInterface
      * Based on the position, will determine the correct x/y coords to
      * crop the desired portion from the image.
      *
-     * @param int|float $width
-     * @param int|float $height
-     * @param int|float $origWidth
-     * @param int|float $origHeight
+     * @param float|int $width
+     * @param float|int $height
+     * @param float|int $origWidth
+     * @param float|int $origHeight
      * @param string    $position
      *
      * @return array
@@ -773,7 +773,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return string
      */
-    public abstract function getVersion();
+    abstract public function getVersion();
 
     //--------------------------------------------------------------------
 
@@ -789,7 +789,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return bool
      */
-    public abstract function save(string $target = null, int $quality = 90);
+    abstract public function save(string $target = null, int $quality = 90);
 
     //--------------------------------------------------------------------
 
@@ -800,7 +800,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return mixed
      */
-    protected abstract function process(string $action);
+    abstract protected function process(string $action);
 
     //--------------------------------------------------------------------
 

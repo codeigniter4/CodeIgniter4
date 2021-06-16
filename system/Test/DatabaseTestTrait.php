@@ -260,9 +260,9 @@ trait DatabaseTestTrait
      * @param string $column
      * @param array  $where
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function grabFromDatabase(string $table, string $column, array $where)
     {
@@ -287,9 +287,9 @@ trait DatabaseTestTrait
      * @param string $table
      * @param array  $where
      *
-     * @return void
-     *
      * @throws DatabaseException
+     *
+     * @return void
      */
     public function seeInDatabase(string $table, array $where)
     {
@@ -343,9 +343,9 @@ trait DatabaseTestTrait
      * @param string $table
      * @param array  $where
      *
-     * @return void
-     *
      * @throws DatabaseException
+     *
+     * @return void
      */
     public function seeNumRecords(int $expected, string $table, array $where)
     {

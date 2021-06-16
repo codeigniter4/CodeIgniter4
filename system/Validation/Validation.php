@@ -183,7 +183,7 @@ class Validation implements ValidationInterface
      *
      * @param string       $field
      * @param string|null  $label
-     * @param string|array $value
+     * @param array|string $value
      * @param array|null   $rules
      * @param array        $data
      *
@@ -318,7 +318,7 @@ class Validation implements ValidationInterface
      * Takes a Request object and grabs the input data to use from its
      * array values.
      *
-     * @param RequestInterface|IncomingRequest $request
+     * @param IncomingRequest|RequestInterface $request
      *
      * @return ValidationInterface
      */
@@ -444,9 +444,9 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @return string[] Rule group.
-     *
      * @throws InvalidArgumentException If group not found.
+     *
+     * @return string[] Rule group.
      */
     public function getRuleGroup(string $group): array
     {
@@ -748,6 +748,7 @@ class Validation implements ValidationInterface
     }
 
     // Misc
+
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.

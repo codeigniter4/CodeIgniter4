@@ -14,7 +14,6 @@ use RuntimeException;
  */
 class FatalLocator extends FileLocator
 {
-
     /**
      * Throws.
      *
@@ -22,7 +21,7 @@ class FatalLocator extends FileLocator
      * @param string $folder The folder within the namespace that we should look for the file.
      * @param string $ext    The file extension the file should have.
      *
-     * @return string|false The path to the file, or false if not found.
+     * @return false|string The path to the file, or false if not found.
      */
     public function locateFile(string $file, string $folder = null, string $ext = 'php')
     {

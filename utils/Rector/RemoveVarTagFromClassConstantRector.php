@@ -6,10 +6,10 @@ namespace Utils\Rector;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassConst;
+use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 
 final class RemoveVarTagFromClassConstantRector extends AbstractRector
 {
@@ -18,18 +18,18 @@ final class RemoveVarTagFromClassConstantRector extends AbstractRector
         return new RuleDefinition('Remove @var tag from class constant', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
-				class Foo
-				{
-					/** @var string */
-					const X = 'test';
-				}
-				CODE_SAMPLE,
+                    class Foo
+                    {
+                    	/** @var string */
+                    	const X = 'test';
+                    }
+                    CODE_SAMPLE,
                 <<<'CODE_SAMPLE'
-				class Foo
-				{
-					const X = 'test';
-				}
-				CODE_SAMPLE
+                    class Foo
+                    {
+                    	const X = 'test';
+                    }
+                    CODE_SAMPLE
             ),
         ]);
     }

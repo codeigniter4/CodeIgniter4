@@ -195,7 +195,7 @@ class CommandTest extends CIUnitTestCase
                 'reveal as -df "using mixed \'quotes\'\" here\""',
                 [
                     'as',
-                    'df' => 'using mixed \'quotes\'" here"'
+                    'df' => 'using mixed \'quotes\'" here"',
                 ],
             ],
         ];

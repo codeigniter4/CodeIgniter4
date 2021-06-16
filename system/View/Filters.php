@@ -62,7 +62,7 @@ class Filters
      * @param string $value
      * @param string $adjustment
      *
-     * @return int|false
+     * @return false|int
      */
     public static function date_modify($value, string $adjustment)
     {
@@ -194,7 +194,7 @@ class Filters
     /**
      * Returns the $value displayed in a localized manner.
      *
-     * @param int|float   $value
+     * @param float|int   $value
      * @param int         $precision
      * @param string      $type
      * @param string|null $locale
@@ -223,7 +223,7 @@ class Filters
     /**
      * Returns the $value displayed as a currency string.
      *
-     * @param int|float   $value
+     * @param float|int   $value
      * @param string      $currency
      * @param string|null $locale
      * @param int         $fraction
@@ -288,7 +288,7 @@ class Filters
      * @param mixed  $precision
      * @param string $type
      *
-     * @return string|float
+     * @return float|string
      */
     public static function round(string $value, $precision = 2, string $type = 'common')
     {

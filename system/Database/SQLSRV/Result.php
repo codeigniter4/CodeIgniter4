@@ -161,7 +161,7 @@ class Result extends BaseResult
      *
      * @param string $className
      *
-     * @return object|bool|Entity
+     * @return bool|Entity|object
      */
     protected function fetchObject(string $className = 'stdClass')
     {
@@ -173,6 +173,7 @@ class Result extends BaseResult
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
      *

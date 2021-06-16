@@ -27,11 +27,12 @@ class Negotiate
     /**
      * Request
      *
-     * @var RequestInterface|IncomingRequest
+     * @var IncomingRequest|RequestInterface
      */
     protected $request;
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor
      *
@@ -45,6 +46,7 @@ class Negotiate
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Stores the request instance to grab the headers from.
      *

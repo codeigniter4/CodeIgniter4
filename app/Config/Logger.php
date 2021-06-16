@@ -35,7 +35,7 @@ class Logger extends BaseConfig
      * For a live site you'll usually enable Critical or higher (3) to be logged otherwise
      * your log files will fill up very fast.
      *
-     * @var int|array
+     * @var array|int
      */
     public $threshold = 4;
 
@@ -125,7 +125,7 @@ class Logger extends BaseConfig
             'path' => '',
         ],
 
-        /**
+        /*
          * The ChromeLoggerHandler requires the use of the Chrome web browser
          * and the ChromeLogger extension. Uncomment this block to use it.
          */
@@ -137,7 +137,7 @@ class Logger extends BaseConfig
         //                   'error', 'info', 'notice', 'warning'],
         // ],
 
-        /**
+        /*
          * The ErrorlogHandler writes the logs to PHP's native `error_log()` function.
          * Uncomment this block to use it.
          */

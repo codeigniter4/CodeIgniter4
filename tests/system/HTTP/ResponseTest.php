@@ -231,7 +231,7 @@ class ResponseTest extends CIUnitTestCase
             'etag'          => '12345678',
             'last-modified' => $date,
             'max-age'       => 300,
-            'must-revalidate'
+            'must-revalidate',
         ];
 
         $response->setCache($options);

@@ -62,7 +62,7 @@ interface MessageInterface
      * Sets a header and it's value.
      *
      * @param string            $name
-     * @param array|null|string $value
+     * @param array|string|null $value
      *
      * @return $this
      */
@@ -104,9 +104,9 @@ interface MessageInterface
      *
      * @param string $version
      *
-     * @return $this
-     *
      * @throws HTTPException For invalid protocols
+     *
+     * @return $this
      */
     public function setProtocolVersion(string $version);
 }

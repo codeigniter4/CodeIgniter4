@@ -23,7 +23,7 @@ class Forge extends BaseForge
     /**
      * UNSIGNED support
      *
-     * @var bool|array
+     * @var array|bool
      */
     protected $_unsigned = false;
 
@@ -77,9 +77,9 @@ class Forge extends BaseForge
      *
      * @param string $dbName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function dropDatabase(string $dbName): bool
     {
@@ -121,7 +121,7 @@ class Forge extends BaseForge
      * @param string $table     Table name
      * @param mixed  $field     Column definition
      *
-     * @return string|array|null
+     * @return array|string|null
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
@@ -270,9 +270,9 @@ class Forge extends BaseForge
      * @param string $table       Table name
      * @param string $foreignName Foreign name
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function dropForeignKey(string $table, string $foreignName): bool
     {

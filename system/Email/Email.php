@@ -171,7 +171,7 @@ class Email
      * Newline character sequence.
      * Use "\r\n" to comply with RFC 822.
      *
-     * @link http://www.ietf.org/rfc/rfc822.txt
+     * @see http://www.ietf.org/rfc/rfc822.txt
      *
      * @var string "\r\n" or "\n"
      */
@@ -186,7 +186,7 @@ class Email
      * switching to "\n", while improper, is the only solution
      * that seems to work for all environments.
      *
-     * @link http://www.ietf.org/rfc/rfc822.txt
+     * @see http://www.ietf.org/rfc/rfc822.txt
      *
      * @var string
      */
@@ -550,7 +550,7 @@ class Email
     /**
      * Set Recipients
      *
-     * @param string|array $to
+     * @param array|string $to
      *
      * @return Email
      */
@@ -668,7 +668,7 @@ class Email
      * @param string|null $newname
      * @param string      $mime
      *
-     * @return Email|bool
+     * @return bool|Email
      */
     public function attach($file, $disposition = '', $newname = null, $mime = '')
     {
@@ -719,7 +719,7 @@ class Email
      *
      * @param string $filename
      *
-     * @return string|bool
+     * @return bool|string
      */
     public function setAttachmentCID($filename)
     {
@@ -961,7 +961,7 @@ class Email
     /**
      * Validate Email Address
      *
-     * @param string|array $email
+     * @param array|string $email
      *
      * @return bool
      */
@@ -1004,7 +1004,7 @@ class Email
     /**
      * Clean Extended Email Address: Joe Smith <joe@smith.com>
      *
-     * @param string|array $email
+     * @param array|string $email
      *
      * @return array|string
      */
@@ -1922,7 +1922,7 @@ class Email
     /**
      * SMTP Connect
      *
-     * @return string|bool
+     * @return bool|string
      */
     protected function SMTPConnect()
     {
@@ -2177,8 +2177,8 @@ class Email
      * qualified domain name (eg: "mail.example.com") or an IP literal
      * (eg: "[1.2.3.4]").
      *
-     * @link https://tools.ietf.org/html/rfc5321#section-2.3.5
-     * @link http://cbl.abuseat.org/namingproblems.html
+     * @see https://tools.ietf.org/html/rfc5321#section-2.3.5
+     * @see http://cbl.abuseat.org/namingproblems.html
      *
      * @return string
      */

@@ -76,7 +76,7 @@ class Forge
     /**
      * CREATE DATABASE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $createDatabaseStr = 'CREATE DATABASE %s';
 
@@ -97,7 +97,7 @@ class Forge
     /**
      * DROP DATABASE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $dropDatabaseStr = 'DROP DATABASE %s';
 
@@ -111,7 +111,7 @@ class Forge
     /**
      * CREATE TABLE IF statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
 
@@ -128,21 +128,21 @@ class Forge
     /**
      * DROP TABLE IF EXISTS statement
      *
-     * @var string|bool
+     * @var bool|string
      */
     protected $dropTableIfStr = 'DROP TABLE IF EXISTS';
 
     /**
      * RENAME TABLE statement
      *
-     * @var string|false
+     * @var false|string
      */
     protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s;';
 
     /**
      * UNSIGNED support
      *
-     * @var bool|array
+     * @var array|bool
      */
     protected $unsigned = true;
 
@@ -158,11 +158,12 @@ class Forge
     /**
      * DEFAULT value representation in CREATE/ALTER TABLE statements
      *
-     * @var string|false
+     * @var false|string
      */
     protected $default = ' DEFAULT ';
 
     //--------------------------------------------------------------------
+
     /**
      * Constructor.
      *
@@ -174,6 +175,7 @@ class Forge
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Provides access to the forge's current database connection.
      *
@@ -192,9 +194,9 @@ class Forge
      * @param string $dbName
      * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
@@ -247,9 +249,9 @@ class Forge
      *
      * @param string $dbName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     private function databaseExists(string $dbName): bool
     {
@@ -271,9 +273,9 @@ class Forge
      *
      * @param string $dbName
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function dropDatabase(string $dbName): bool
     {
@@ -308,7 +310,7 @@ class Forge
     /**
      * Add Key
      *
-     * @param string|array $key
+     * @param array|string $key
      * @param bool         $primary
      * @param bool         $unique
      *
@@ -336,7 +338,7 @@ class Forge
     /**
      * Add Primary Key
      *
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return Forge
      */
@@ -350,7 +352,7 @@ class Forge
     /**
      * Add Unique Key
      *
-     * @param string|array $key
+     * @param array|string $key
      *
      * @return Forge
      */
@@ -407,9 +409,9 @@ class Forge
      * @param string $onUpdate
      * @param string $onDelete
      *
-     * @return Forge
-     *
      * @throws DatabaseException
+     *
+     * @return Forge
      */
     public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
     {
@@ -433,9 +435,9 @@ class Forge
      * @param string $table       Table name
      * @param string $foreignName Foreign name
      *
-     * @return bool|BaseResult|Query|false|mixed
-     *
      * @throws DatabaseException
+     *
+     * @return BaseResult|bool|false|mixed|Query
      */
     public function dropForeignKey(string $table, string $foreignName)
     {
@@ -462,9 +464,9 @@ class Forge
      * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
      * @param array  $attributes  Associative array of table attributes
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function createTable(string $table, bool $ifNotExists = false, array $attributes = [])
     {
@@ -592,9 +594,9 @@ class Forge
      * @param bool   $ifExists  Whether to add an IF EXISTS condition
      * @param bool   $cascade   Whether to add an CASCADE condition
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function dropTable(string $tableName, bool $ifExists = false, bool $cascade = false)
     {
@@ -644,7 +646,7 @@ class Forge
      * @param bool   $ifExists Whether to add an IF EXISTS condition
      * @param bool   $cascade  Whether to add an CASCADE condition
      *
-     * @return string|bool
+     * @return bool|string
      */
     protected function _dropTable(string $table, bool $ifExists, bool $cascade)
     {
@@ -671,9 +673,9 @@ class Forge
      * @param string $tableName    Old table name
      * @param string $newTableName New table name
      *
-     * @return mixed
-     *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function renameTable(string $tableName, string $newTableName)
     {
@@ -711,11 +713,11 @@ class Forge
      * Column Add
      *
      * @param string       $table Table name
-     * @param string|array $field Column definition
-     *
-     * @return bool
+     * @param array|string $field Column definition
      *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function addColumn(string $table, $field): bool
     {
@@ -753,11 +755,11 @@ class Forge
      * Column Drop
      *
      * @param string       $table      Table name
-     * @param string|array $columnName Column name Array or comma separated
-     *
-     * @return mixed
+     * @param array|string $columnName Column name Array or comma separated
      *
      * @throws DatabaseException
+     *
+     * @return mixed
      */
     public function dropColumn(string $table, $columnName)
     {
@@ -779,11 +781,11 @@ class Forge
      * Column Modify
      *
      * @param string       $table Table name
-     * @param string|array $field Column definition
-     *
-     * @return bool
+     * @param array|string $field Column definition
      *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function modifyColumn(string $table, $field): bool
     {
@@ -830,7 +832,7 @@ class Forge
      * @param string $table     Table name
      * @param mixed  $fields    Column definition
      *
-     * @return string|string[]|false
+     * @return false|string|string[]
      */
     protected function _alterTable(string $alterType, string $table, $fields)
     {
@@ -1002,7 +1004,7 @@ class Forge
      * @param array $attributes
      * @param array $field
      *
-     * @return null|void
+     * @return void|null
      */
     protected function _attributeUnsigned(array &$attributes, array &$field)
     {
@@ -1042,7 +1044,7 @@ class Forge
      * @param array $attributes
      * @param array $field
      *
-     * @return null|void
+     * @return void|null
      */
     protected function _attributeDefault(array &$attributes, array &$field)
     {

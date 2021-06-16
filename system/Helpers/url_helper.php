@@ -29,9 +29,9 @@ if (! function_exists('_get_uri')) {
      * @param string   $relativePath May include queries or fragments
      * @param App|null $config
      *
-     * @return URI
-     *
      * @throws InvalidArgumentException For invalid paths or config
+     *
+     * @return URI
      */
     function _get_uri(string $relativePath = '', App $config = null): URI
     {
@@ -163,7 +163,7 @@ if (! function_exists('previous_url')) {
      *
      * @param bool $returnObject
      *
-     * @return URI|mixed|string
+     * @return mixed|string|URI
      */
     function previous_url(bool $returnObject = false)
     {

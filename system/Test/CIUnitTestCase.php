@@ -104,7 +104,7 @@ abstract class CIUnitTestCase extends TestCase
      * The seed file(s) used for all tests within this test case.
      * Should be fully-namespaced or relative to $basePath
      *
-     * @var string|array
+     * @var array|string
      */
     protected $seed = '';
 
@@ -122,7 +122,7 @@ abstract class CIUnitTestCase extends TestCase
      * Note that running "all" runs migrations in date order,
      * but specifying namespaces runs them in namespace order (then date)
      *
-     * @var string|array|null
+     * @var array|string|null
      */
     protected $namespace = 'Tests\Support';
 
@@ -348,9 +348,9 @@ abstract class CIUnitTestCase extends TestCase
      * @param string      $level
      * @param string|null $expectedMessage
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function assertLogged(string $level, $expectedMessage = null)
     {
@@ -371,9 +371,9 @@ abstract class CIUnitTestCase extends TestCase
      *
      * @param string $eventName
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function assertEventTriggered(string $eventName): bool
     {
@@ -484,9 +484,9 @@ abstract class CIUnitTestCase extends TestCase
      * @param string $message
      * @param int    $tolerance
      *
-     * @return void|bool
-     *
      * @throws Exception
+     *
+     * @return bool|void
      */
     public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
     {

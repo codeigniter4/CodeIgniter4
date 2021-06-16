@@ -333,9 +333,9 @@ abstract class BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @return array|null The resulting row of data, or null if no data found.
-     *
      * @throws DataException
+     *
+     * @return array|null The resulting row of data, or null if no data found.
      */
     abstract protected function doFindColumn(string $columnName);
 
@@ -364,7 +364,7 @@ abstract class BaseModel
      *
      * @param array $data Data
      *
-     * @return int|string|bool
+     * @return bool|int|string
      */
     abstract protected function doInsert(array $data);
 
@@ -377,7 +377,7 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows inserted or FALSE on failure
      */
     abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
@@ -385,7 +385,7 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This methods works only with dbCalls
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|null            $data Data
      *
      * @return bool
@@ -401,9 +401,9 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
-     *
      * @throws DatabaseException
+     *
+     * @return mixed Number of rows affected or FALSE on failure
      */
     abstract protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false);
 
@@ -411,12 +411,12 @@ abstract class BaseModel
      * Deletes a single record from the database where $id matches
      * This methods works only with dbCalls
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return string|bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool|string
      */
     abstract protected function doDelete($id = null, bool $purge = false);
 
@@ -462,7 +462,7 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return int|array|string|null
+     * @return array|int|string|null
      *
      * @deprecated Add an override on getIdValue() instead. Will be removed in version 5.0.
      */
@@ -501,9 +501,9 @@ abstract class BaseModel
      * @param int     $size     Size
      * @param Closure $userFunc Callback Function
      *
-     * @return void
-     *
      * @throws DataException
+     *
+     * @return void
      */
     abstract public function chunk(int $size, Closure $userFunc);
 
@@ -554,9 +554,9 @@ abstract class BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @return array|null The resulting row of data, or null if no data found.
-     *
      * @throws DataException
+     *
+     * @return array|null The resulting row of data, or null if no data found.
      */
     public function findColumn(string $columnName)
     {
@@ -657,9 +657,9 @@ abstract class BaseModel
      *
      * @param array|object $data Data
      *
-     * @return bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool
      */
     public function save($data): bool
     {
@@ -710,9 +710,9 @@ abstract class BaseModel
      * @param array|object|null $data     Data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @return int|string|bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool|int|string
      */
     public function insert($data = null, bool $returnID = true)
     {
@@ -784,9 +784,9 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return int|bool Number of rows inserted or FALSE on failure
-     *
      * @throws ReflectionException
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
@@ -835,12 +835,12 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param int|array|string|null $id   ID
+     * @param array|int|string|null $id   ID
      * @param array|object|null     $data Data
      *
-     * @return bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool
      */
     public function update($id = null, $data = null): bool
     {
@@ -901,10 +901,10 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
-     *
      * @throws DatabaseException
      * @throws ReflectionException
+     *
+     * @return mixed Number of rows affected or FALSE on failure
      */
     public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
@@ -953,12 +953,12 @@ abstract class BaseModel
     /**
      * Deletes a single record from the database where $id matches
      *
-     * @param int|string|array|null $id    The rows primary key(s)
+     * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return BaseResult|bool
-     *
      * @throws DatabaseException
+     *
+     * @return BaseResult|bool
      */
     public function delete($id = null, bool $purge = false)
     {
@@ -1141,9 +1141,9 @@ abstract class BaseModel
      *
      * @param array $data Data
      *
-     * @return array
-     *
      * @throws DataException
+     *
+     * @return array
      */
     protected function doProtectFields(array $data): array
     {
@@ -1169,9 +1169,9 @@ abstract class BaseModel
      *
      * @param int|null $userData An optional PHP timestamp to be converted.
      *
-     * @return mixed
-     *
      * @throws ModelException
+     *
+     * @return mixed
      */
     protected function setDate(?int $userData = null)
     {
@@ -1193,9 +1193,9 @@ abstract class BaseModel
      *
      * @param int $value value
      *
-     * @return int|string
-     *
      * @throws ModelException
+     *
+     * @return int|string
      */
     protected function intToDate(int $value)
     {
@@ -1224,7 +1224,7 @@ abstract class BaseModel
      *
      * @param Time $value value
      *
-     * @return string|int
+     * @return int|string
      */
     protected function timeToDate(Time $value)
     {
@@ -1308,7 +1308,7 @@ abstract class BaseModel
      * It could be used when you have to change default or override current validate rules.
      *
      * @param string       $field      Field Name
-     * @param string|array $fieldRules Validation rules
+     * @param array|string $fieldRules Validation rules
      *
      * @return $this
      */
@@ -1462,9 +1462,9 @@ abstract class BaseModel
      * @param string $event     Event
      * @param array  $eventData Event Data
      *
-     * @return mixed
-     *
      * @throws DataException
+     *
+     * @return mixed
      */
     protected function trigger(string $event, array $eventData)
     {
@@ -1519,13 +1519,13 @@ abstract class BaseModel
      * This method use objectToRawArray internally and does conversion
      * to string on all Time instances
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array Array
-     *
      * @throws ReflectionException
+     *
+     * @return array Array
      */
     protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
@@ -1549,13 +1549,13 @@ abstract class BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array with raw values.
      *
-     * @param string|object $data        Data
+     * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array|null Array
-     *
      * @throws ReflectionException
+     *
+     * @return array|null Array
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {
@@ -1585,11 +1585,11 @@ abstract class BaseModel
      * @param array|object|null $data Data
      * @param string            $type Type of data (insert|update)
      *
-     * @return array
-     *
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     *
+     * @return array
      */
     protected function transformDataToArray($data, string $type): array
     {
