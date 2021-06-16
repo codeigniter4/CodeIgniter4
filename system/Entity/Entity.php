@@ -106,7 +106,7 @@ class Entity implements JsonSerializable
      * Holds info whenever properties have to be casted
      *
      * @var bool
-     **/
+     */
     private $_cast = true;
 
     /**

@@ -109,6 +109,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'magic_method_casing'                   => true,
             'mb_str_functions'                      => false,
             'modernize_types_casting'               => true,
+            'multiline_comment_opening_closing'     => true,
             'no_alias_functions'                    => ['sets' => ['@all']],
             'no_short_bool_cast'                    => true,
             'no_trailing_comma_in_singleline_array' => true,
