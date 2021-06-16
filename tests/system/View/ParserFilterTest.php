@@ -17,8 +17,7 @@ class ParserFilterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->loader = Services::locator();
-        ;
+        $this->loader   = Services::locator();
         $this->viewsDir = __DIR__ . '/Views';
         $this->config   = new View();
     }
