@@ -356,7 +356,7 @@ if (! function_exists('safe_mailto')) {
 
         $x = str_split('<a href="mailto:', 1);
 
-        for ($i = 0, $l = strlen($email); $i < $l; $i ++) {
+        for ($i = 0, $l = strlen($email); $i < $l; $i++) {
             $x[] = '|' . ord($email[$i]);
         }
 
@@ -367,14 +367,14 @@ if (! function_exists('safe_mailto')) {
                 foreach ($attributes as $key => $val) {
                     $x[] = ' ' . $key . '="';
 
-                    for ($i = 0, $l = strlen($val); $i < $l; $i ++) {
+                    for ($i = 0, $l = strlen($val); $i < $l; $i++) {
                         $x[] = '|' . ord($val[$i]);
                     }
 
                     $x[] = '"';
                 }
             } else {
-                for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i ++) {
+                for ($i = 0, $l = mb_strlen($attributes); $i < $l; $i++) {
                     $x[] = mb_substr($attributes, $i, 1);
                 }
             }
@@ -384,7 +384,7 @@ if (! function_exists('safe_mailto')) {
 
         $temp = [];
 
-        for ($i = 0, $l = strlen($title); $i < $l; $i ++) {
+        for ($i = 0, $l = strlen($title); $i < $l; $i++) {
             $ordinal = ord($title[$i]);
 
             if ($ordinal < 128) {

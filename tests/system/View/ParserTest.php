@@ -781,7 +781,7 @@ class ParserTest extends CIUnitTestCase
 
             $out = '';
 
-            for ($i = 1; $i <= $count; $i ++) {
+            for ($i = 1; $i <= $count; $i++) {
                 $out .= ' ' . $i * $step;
             }
 

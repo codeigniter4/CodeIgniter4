@@ -284,8 +284,8 @@ class CreditCardRules
         $sum  = 0;
         $flip = 0;
 
-        for ($i = strlen($number) - 1; $i >= 0; $i --) {
-            $sum += $sumTable[$flip ++ & 0x1][$number[$i]];
+        for ($i = strlen($number) - 1; $i >= 0; $i--) {
+            $sum += $sumTable[$flip++ & 0x1][$number[$i]];
         }
 
         return $sum % 10 === 0;

@@ -294,7 +294,7 @@ class Connection extends BaseConnection
 
         $retVal = [];
 
-        for ($i = 0, $c = count($query); $i < $c; $i ++) {
+        for ($i = 0, $c = count($query); $i < $c; $i++) {
             $retVal[$i] = new stdClass();
 
             $retVal[$i]->name       = $query[$i]->column_name;

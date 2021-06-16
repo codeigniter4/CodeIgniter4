@@ -271,7 +271,7 @@ class PagerRenderer
 
         $uri = clone $this->uri;
 
-        for ($i = $this->first; $i <= $this->last; $i ++) {
+        for ($i = $this->first; $i <= $this->last; $i++) {
             $uri     = $this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i);
             $links[] = [
                 'uri'    => URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment()),

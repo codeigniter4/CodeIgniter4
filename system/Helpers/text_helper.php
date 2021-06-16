@@ -102,7 +102,7 @@ if (! function_exists('ascii_to_entities')) {
     {
         $out = '';
 
-        for ($i = 0, $s = strlen($str) - 1, $count = 1, $temp = []; $i <= $s; $i ++) {
+        for ($i = 0, $s = strlen($str) - 1, $count = 1, $temp = []; $i <= $s; $i++) {
             $ordinal = ord($str[$i]);
 
             if ($ordinal < 128) {
@@ -156,7 +156,7 @@ if (! function_exists('entities_to_ascii')) {
     function entities_to_ascii(string $str, bool $all = true): string
     {
         if (preg_match_all('/\&#(\d+)\;/', $str, $matches)) {
-            for ($i = 0, $s = count($matches[0]); $i < $s; $i ++) {
+            for ($i = 0, $s = count($matches[0]); $i < $s; $i++) {
                 $digits = $matches[1][$i];
                 $out    = '';
                 if ($digits < 128) {
@@ -235,7 +235,7 @@ if (! function_exists('word_censor')) {
             } elseif (preg_match_all("/{$delim}(" . $badword . "){$delim}/i", $str, $matches, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE)) {
                 $matches = $matches[1];
 
-                for ($i = count($matches) - 1; $i >= 0; $i --) {
+                for ($i = count($matches) - 1; $i >= 0; $i--) {
                     $length = strlen($matches[$i][0]);
                     $str    = substr_replace(
                             $str, str_repeat('#', $length), $matches[$i][1], $length
@@ -410,7 +410,7 @@ if (! function_exists('word_wrap')) {
         $unwrap = [];
 
         if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
-            for ($i = 0, $c = count($matches[0]); $i < $c; $i ++) {
+            for ($i = 0, $c = count($matches[0]); $i < $c; $i++) {
                 $unwrap[] = $matches[1][$i];
                 $str      = str_replace($matches[0][$i], '{{unwrapped' . $i . '}}', $str);
             }
@@ -765,7 +765,7 @@ if (! function_exists('excerpt')) {
             if ((strlen($e) + $count + 1) < $radius) {
                 $prev = ' ' . $e . $prev;
             }
-            $count = ++ $count + strlen($e);
+            $count = ++$count + strlen($e);
         }
 
         $count = 0;
@@ -774,7 +774,7 @@ if (! function_exists('excerpt')) {
             if ((strlen($s) + $count + 1) < $radius) {
                 $post .= $s . ' ';
             }
-            $count = ++ $count + strlen($s);
+            $count = ++$count + strlen($s);
         }
 
         $ellPre = $phrase ? $ellipsis : '';

@@ -308,7 +308,7 @@ class MemcachedHandler extends BaseHandler
 
             $this->lockKey = $lockKey;
             break;
-        } while (++ $attempt < 30);
+        } while (++$attempt < 30);
 
         if ($attempt === 30) {
             $this->logger->error('Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
