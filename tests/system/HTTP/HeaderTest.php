@@ -174,8 +174,7 @@ class HeaderTest extends CIUnitTestCase
         $expected = '';
 
         $header = new Header($name);
-        $header->setValue('bar')
-               ->setValue(null);
+        $header->setValue('bar')->setValue(null);
 
         $this->assertEquals($name, $header->getName());
         $this->assertEquals($expected, $header->getValueLine());
@@ -189,8 +188,7 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name);
 
-        $header->setValue('bar')
-               ->appendValue(['baz' => 'fuzz']);
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
         $this->assertEquals($name, $header->getName());
         $this->assertEquals($expected, $header->getValueLine());
@@ -206,8 +204,7 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name);
 
-        $header->setValue('bar')
-               ->appendValue(['baz' => 'fuzz']);
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
         $this->assertEquals($expected, (string) $header);
     }

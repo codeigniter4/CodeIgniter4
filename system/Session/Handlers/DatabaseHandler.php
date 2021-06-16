@@ -139,8 +139,8 @@ class DatabaseHandler extends BaseHandler
         }
 
         $builder = $this->db->table($this->table)
-                ->select($this->platform === 'postgre' ? "encode(data, 'base64') AS data" : 'data')
-                ->where('id', $sessionID);
+            ->select($this->platform === 'postgre' ? "encode(data, 'base64') AS data" : 'data')
+            ->where('id', $sessionID);
 
         if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);

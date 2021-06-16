@@ -109,9 +109,7 @@ class CommonFunctionsTest extends CIUnitTestCase
         \CodeIgniter\Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
-
-        $response->method('redirect')
-                ->will($this->returnArgument(0));
+        $response->method('redirect')->will($this->returnArgument(0));
 
         $this->assertInstanceOf(RedirectResponse::class, redirect('base'));
     }
@@ -391,8 +389,8 @@ class CommonFunctionsTest extends CIUnitTestCase
         $routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
         $answer1 = redirect()->route('login')
-                ->setCookie('foo', 'onething', YEAR)
-                ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('foo', 'onething', YEAR)
+            ->setCookie('login_time', $loginTime, YEAR);
 
         $this->assertTrue($answer1->hasCookie('foo', 'onething'));
         $this->assertTrue($answer1->hasCookie('login_time'));

@@ -1077,9 +1077,10 @@ class URI
 
         // 5.2.2 Transform References in a non-strict method (no scheme)
         if (! empty($relative->getAuthority())) {
-            $transformed->setAuthority($relative->getAuthority())
-                    ->setPath($relative->getPath())
-                    ->setQuery($relative->getQuery());
+            $transformed
+                ->setAuthority($relative->getAuthority())
+                ->setPath($relative->getPath())
+                ->setQuery($relative->getQuery());
         } else {
             if ($relative->getPath() === '') {
                 $transformed->setPath($this->getPath());

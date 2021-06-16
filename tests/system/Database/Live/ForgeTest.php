@@ -536,8 +536,8 @@ class ForgeTest extends CIUnitTestCase
         $this->forge->addColumn('forge_test_table', $newField);
 
         $fieldNames = $this->db->table('forge_test_table')
-                ->get()
-                ->getFieldNames();
+            ->get()
+            ->getFieldNames();
 
         $this->forge->dropTable('forge_test_table', true);
 

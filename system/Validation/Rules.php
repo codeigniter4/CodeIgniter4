@@ -136,9 +136,9 @@ class Rules
         $db = Database::connect($data['DBGroup'] ?? null);
 
         $row = $db->table($table)
-                  ->select('1')
-                  ->where($field, $str)
-                  ->limit(1);
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
 
         if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue)) {
             $row = $row->where($whereField, $whereValue);
@@ -192,9 +192,9 @@ class Rules
         $db = Database::connect($data['DBGroup'] ?? null);
 
         $row = $db->table($table)
-                  ->select('1')
-                  ->where($field, $str)
-                  ->limit(1);
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
 
         if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);

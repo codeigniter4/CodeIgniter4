@@ -163,8 +163,8 @@ trait ControllerTester
         helper('url');
 
         $result = (new ControllerResponse())
-                ->setRequest($this->request)
-                ->setResponse($this->response);
+            ->setRequest($this->request)
+            ->setResponse($this->response);
 
         $response = null;
 
