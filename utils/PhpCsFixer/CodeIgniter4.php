@@ -120,6 +120,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'native_function_casing'                  => true,
             'native_function_type_declaration_casing' => true,
             'no_alias_functions'                      => ['sets' => ['@all']],
+            'no_alias_language_construct_call'        => true,
             'no_short_bool_cast'                      => true,
             'no_trailing_comma_in_singleline_array'   => true,
             'no_unset_cast'                           => true,
