@@ -20,27 +20,27 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
  */
 interface EncrypterInterface
 {
-	/**
-	 * Encrypt - convert plaintext into ciphertext
-	 *
-	 * @param string            $data   Input data
-	 * @param array|string|null $params Overridden parameters, specifically the key
-	 *
-	 * @throws EncryptionException
-	 *
-	 * @return string
-	 */
-	public function encrypt($data, $params = null);
+    /**
+     * Encrypt - convert plaintext into ciphertext
+     *
+     * @param string            $data   Input data
+     * @param array|string|null $params Overridden parameters, specifically the key
+     *
+     * @throws EncryptionException
+     *
+     * @return string
+     */
+    public function encrypt($data, $params = null);
 
-	/**
-	 * Decrypt - convert ciphertext into plaintext
-	 *
-	 * @param string            $data   Encrypted data
-	 * @param array|string|null $params Overridden parameters, specifically the key
-	 *
-	 * @throws EncryptionException
-	 *
-	 * @return string
-	 */
-	public function decrypt($data, $params = null);
+    /**
+     * Decrypt - convert ciphertext into plaintext
+     *
+     * @param string            $data   Encrypted data
+     * @param array|string|null $params Overridden parameters, specifically the key
+     *
+     * @throws EncryptionException
+     *
+     * @return string
+     */
+    public function decrypt($data, $params = null);
 }

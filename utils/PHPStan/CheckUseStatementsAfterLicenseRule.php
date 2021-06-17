@@ -13,58 +13,52 @@ use PHPStan\Rules\Rule;
 
 final class CheckUseStatementsAfterLicenseRule implements Rule
 {
-	/**
-	 * @var string
-	 */
-	private const ERROR_MESSAGE = 'Use statement must be located after license docblock';
+    /**
+     * @var string
+     */
+    private const ERROR_MESSAGE = 'Use statement must be located after license docblock';
 
-	/**
-	 * @var string
-	 */
-	private const COPYRIGHT_REGEX = '/\* \(c\) CodeIgniter Foundation <admin@codeigniter\.com>/m';
+    /**
+     * @var string
+     */
+    private const COPYRIGHT_REGEX = '/\* \(c\) CodeIgniter Foundation <admin@codeigniter\.com>/m';
 
-	public function getNodeType(): string
-	{
-		return Stmt::class;
-	}
+    public function getNodeType(): string
+    {
+        return Stmt::class;
+    }
 
-	/**
-	 * @param Stmt $node
-	 */
-	public function processNode(Node $node, Scope $scope): array
-	{
-		$comments = $node->getComments();
+    /**
+     * @param Stmt $node
+     */
+    public function processNode(Node $node, Scope $scope): array
+    {
+        $comments = $node->getComments();
 
-		if ($comments === [])
-		{
-			return [];
-		}
+        if ($comments === []) {
+            return [];
+        }
 
-		foreach ($comments as $comment)
-		{
-			if (! $comment instanceof Doc)
-			{
-				continue;
-			}
+        foreach ($comments as $comment) {
+            if (! $comment instanceof Doc) {
+                continue;
+            }
 
-			if (! preg_match(self::COPYRIGHT_REGEX, $comment->getText()))
-			{
-				continue;
-			}
+            if (! preg_match(self::COPYRIGHT_REGEX, $comment->getText())) {
+                continue;
+            }
 
-			$previous = $node->getAttribute('previous');
+            $previous = $node->getAttribute('previous');
 
-			while ($previous)
-			{
-				if ($previous instanceof Use_)
-				{
-					return [self::ERROR_MESSAGE];
-				}
+            while ($previous) {
+                if ($previous instanceof Use_) {
+                    return [self::ERROR_MESSAGE];
+                }
 
-				$previous = $previous->getAttribute('previous');
-			}
-		}
+                $previous = $previous->getAttribute('previous');
+            }
+        }
 
-		return [];
-	}
+        return [];
+    }
 }

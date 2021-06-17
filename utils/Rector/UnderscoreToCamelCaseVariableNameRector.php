@@ -23,153 +23,140 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 {
-	/**
-	 * @var string
-	 * @see https://regex101.com/r/OtFn8I/1
-	 */
-	private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
+    /**
+     * @see https://regex101.com/r/OtFn8I/1
+     */
+    private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
 
-	/**
-	 * @var ReservedKeywordAnalyzer
-	 */
-	private $reservedKeywordAnalyzer;
+    /**
+     * @var ReservedKeywordAnalyzer
+     */
+    private $reservedKeywordAnalyzer;
 
-	/**
-	 * @var StringFormatConverter
-	 */
-	private $stringFormatConverter;
+    /**
+     * @var StringFormatConverter
+     */
+    private $stringFormatConverter;
 
-	public function __construct(
-		ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
-		StringFormatConverter $stringFormatConverter
-	)
-	{
-		$this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
-		$this->stringFormatConverter   = $stringFormatConverter;
-	}
-
-	public function getRuleDefinition(): RuleDefinition
-	{
-		return new RuleDefinition('Change under_score names to camelCase', [
-			new CodeSample(
-				<<<'CODE_SAMPLE'
-final class SomeClass
-{
-    public function run($a_b)
-    {
-        $some_value = $a_b;
+    public function __construct(
+        ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
+        StringFormatConverter $stringFormatConverter
+    ) {
+        $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
+        $this->stringFormatConverter   = $stringFormatConverter;
     }
-}
-CODE_SAMPLE
+
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition('Change under_score names to camelCase', [
+            new CodeSample(
+                <<<'CODE_SAMPLE'
+                    final class SomeClass
+                    {
+                        public function run($a_b)
+                        {
+                            $some_value = $a_b;
+                        }
+                    }
+                    CODE_SAMPLE
 ,
-				<<<'CODE_SAMPLE'
-final class SomeClass
-{
-    public function run($aB)
-    {
-        $someValue = $aB;
+                <<<'CODE_SAMPLE'
+                    final class SomeClass
+                    {
+                        public function run($aB)
+                        {
+                            $someValue = $aB;
+                        }
+                    }
+                    CODE_SAMPLE
+            ),
+        ]);
     }
-}
-CODE_SAMPLE
-			),
-		]);
-	}
 
-	/**
-	 * @return string[]
-	 */
-	public function getNodeTypes(): array
-	{
-		return [Variable::class];
-	}
+    /**
+     * @return string[]
+     */
+    public function getNodeTypes(): array
+    {
+        return [Variable::class];
+    }
 
-	/**
-	 * @param Variable $node
-	 */
-	public function refactor(Node $node): ?Node
-	{
-		$nodeName = $this->getName($node);
-		if ($nodeName === null)
-		{
-			return null;
-		}
+    /**
+     * @param Variable $node
+     */
+    public function refactor(Node $node): ?Node
+    {
+        $nodeName = $this->getName($node);
+        if ($nodeName === null) {
+            return null;
+        }
 
-		if (! Strings::contains($nodeName, '_'))
-		{
-			return null;
-		}
+        if (! Strings::contains($nodeName, '_')) {
+            return null;
+        }
 
-		if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName))
-		{
-			return null;
-		}
+        if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName)) {
+            return null;
+        }
 
-		if ($nodeName[0] === '_')
-		{
-			return null;
-		}
+        if ($nodeName[0] === '_') {
+            return null;
+        }
 
-		$camelCaseName = $this->stringFormatConverter->underscoreAndHyphenToCamelCase($nodeName);
-		if ($camelCaseName === 'this')
-		{
-			return null;
-		}
+        $camelCaseName = $this->stringFormatConverter->underscoreAndHyphenToCamelCase($nodeName);
+        if ($camelCaseName === 'this') {
+            return null;
+        }
 
-		$node->name = $camelCaseName;
-		$this->updateDocblock($node, $nodeName, $camelCaseName);
+        $node->name = $camelCaseName;
+        $this->updateDocblock($node, $nodeName, $camelCaseName);
 
-		return $node;
-	}
+        return $node;
+    }
 
-	private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
-	{
-		$parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
-		while ($parentNode)
-		{
-			/**
-			 * @var ClassMethod|Function_ $parentNode
-			 */
-			$parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
-			if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_)
-			{
-				break;
-			}
-		}
+    private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
+    {
+        $parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
 
-		if ($parentNode === null)
-		{
-			return;
-		}
+        while ($parentNode) {
+            /**
+             * @var ClassMethod|Function_ $parentNode
+             */
+            $parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
 
-		$docComment = $parentNode->getDocComment();
-		if ($docComment === null)
-		{
-			return;
-		}
+            if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_) {
+                break;
+            }
+        }
 
-		$docCommentText = $docComment->getText();
-		if ($docCommentText === null)
-		{
-			return;
-		}
+        if ($parentNode === null) {
+            return;
+        }
 
-		if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
-		{
-			return;
-		}
+        $docComment = $parentNode->getDocComment();
+        if ($docComment === null) {
+            return;
+        }
 
-		$phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentNode);
-		$paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
+        $docCommentText = $docComment->getText();
+        if ($docCommentText === null) {
+            return;
+        }
 
-		foreach ($paramTagValueNodes as $paramTagValueNode)
-		{
-			if ($paramTagValueNode->parameterName === '$' . $variableName)
-			{
-				$paramTagValueNode->parameterName = '$' . $camelCaseName;
-				break;
-			}
-		}
+        if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName))) {
+            return;
+        }
 
-		$parentNode->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
-	}
+        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentNode);
+        $paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
+
+        foreach ($paramTagValueNodes as $paramTagValueNode) {
+            if ($paramTagValueNode->parameterName === '$' . $variableName) {
+                $paramTagValueNode->parameterName = '$' . $camelCaseName;
+                break;
+            }
+        }
+
+        $parentNode->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
+    }
 }

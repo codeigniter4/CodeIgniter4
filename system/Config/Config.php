@@ -18,36 +18,36 @@ namespace CodeIgniter\Config;
  */
 class Config
 {
-	/**
-	 * Create new configuration instances or return
-	 * a shared instance
-	 *
-	 * @param string  $name      Configuration name
-	 * @param boolean $getShared Use shared instance
-	 *
-	 * @return mixed|null
-	 */
-	public static function get(string $name, bool $getShared = true)
-	{
-		return Factories::config($name, ['getShared' => $getShared]);
-	}
+    /**
+     * Create new configuration instances or return
+     * a shared instance
+     *
+     * @param string $name      Configuration name
+     * @param bool   $getShared Use shared instance
+     *
+     * @return mixed|null
+     */
+    public static function get(string $name, bool $getShared = true)
+    {
+        return Factories::config($name, ['getShared' => $getShared]);
+    }
 
-	/**
-	 * Helper method for injecting mock instances while testing.
-	 *
-	 * @param string $name
-	 * @param object $instance
-	 */
-	public static function injectMock(string $name, $instance)
-	{
-		Factories::injectMock('config', $name, $instance);
-	}
+    /**
+     * Helper method for injecting mock instances while testing.
+     *
+     * @param string $name
+     * @param object $instance
+     */
+    public static function injectMock(string $name, $instance)
+    {
+        Factories::injectMock('config', $name, $instance);
+    }
 
-	/**
-	 * Resets the static arrays
-	 */
-	public static function reset()
-	{
-		Factories::reset('config');
-	}
+    /**
+     * Resets the static arrays
+     */
+    public static function reset()
+    {
+        Factories::reset('config');
+    }
 }

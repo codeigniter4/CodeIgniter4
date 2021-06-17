@@ -1,11 +1,13 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
 class Hello extends Controller
 {
-	public function index()
-	{
-		return 'Hello';
-	}
+    public function index()
+    {
+        return 'Hello';
+    }
 }

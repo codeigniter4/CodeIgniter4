@@ -16,10 +16,10 @@ use CodeIgniter\Security\Security;
 
 class MockSecurity extends Security
 {
-	public function sendCookie(RequestInterface $request)
-	{
-		$_COOKIE['csrf_cookie_name'] = $this->hash;
+    public function sendCookie(RequestInterface $request)
+    {
+        $_COOKIE['csrf_cookie_name'] = $this->hash;
 
-		return $this;
-	}
+        return $this;
+    }
 }

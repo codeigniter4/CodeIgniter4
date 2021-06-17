@@ -1,5 +1,5 @@
 <?php
 
 return [
-   'languageGetLineInvalidArgumentException' => 'Whatever this would be, translated',
+    'languageGetLineInvalidArgumentException' => 'Whatever this would be, translated',
 ];

@@ -20,24 +20,24 @@ use Config\Services;
  */
 class Config
 {
-	/**
-	 * Return toolbar config values as an array.
-	 *
-	 * @return array
-	 */
-	public static function display(): array
-	{
-		$config = config(App::class);
+    /**
+     * Return toolbar config values as an array.
+     *
+     * @return array
+     */
+    public static function display(): array
+    {
+        $config = config(App::class);
 
-		return [
-			'ciVersion'   => CodeIgniter::CI_VERSION,
-			'phpVersion'  => phpversion(),
-			'phpSAPI'     => php_sapi_name(),
-			'environment' => ENVIRONMENT,
-			'baseURL'     => $config->baseURL,
-			'timezone'    => app_timezone(),
-			'locale'      => Services::request()->getLocale(),
-			'cspEnabled'  => $config->CSPEnabled,
-		];
-	}
+        return [
+            'ciVersion'   => CodeIgniter::CI_VERSION,
+            'phpVersion'  => PHP_VERSION,
+            'phpSAPI'     => PHP_SAPI,
+            'environment' => ENVIRONMENT,
+            'baseURL'     => $config->baseURL,
+            'timezone'    => app_timezone(),
+            'locale'      => Services::request()->getLocale(),
+            'cspEnabled'  => $config->CSPEnabled,
+        ];
+    }
 }

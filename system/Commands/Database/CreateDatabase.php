@@ -23,148 +23,137 @@ use Throwable;
  */
 class CreateDatabase extends BaseCommand
 {
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Database';
+    /**
+     * The group the command is lumped under
+     * when listing commands.
+     *
+     * @var string
+     */
+    protected $group = 'Database';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'db:create';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'db:create';
 
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Create a new database schema.';
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Create a new database schema.';
 
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'db:create <db_name> [options]';
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'db:create <db_name> [options]';
 
-	/**
-	 * The Command's arguments
-	 *
-	 * @var array<string, string>
-	 */
-	protected $arguments = [
-		'db_name' => 'The database name to use',
-	];
+    /**
+     * The Command's arguments
+     *
+     * @var array<string, string>
+     */
+    protected $arguments = [
+        'db_name' => 'The database name to use',
+    ];
 
-	/**
-	 * The Command's options
-	 *
-	 * @var array<string, string>
-	 */
-	protected $options = [
-		'--ext' => 'File extension of the database file for SQLite3. Can be `db` or `sqlite`. Defaults to `db`.',
-	];
+    /**
+     * The Command's options
+     *
+     * @var array<string, string>
+     */
+    protected $options = [
+        '--ext' => 'File extension of the database file for SQLite3. Can be `db` or `sqlite`. Defaults to `db`.',
+    ];
 
-	/**
-	 * Creates a new database.
-	 *
-	 * @param array $params
-	 *
-	 * @return void
-	 */
-	public function run(array $params)
-	{
-		$name = array_shift($params);
+    /**
+     * Creates a new database.
+     *
+     * @param array $params
+     *
+     * @return void
+     */
+    public function run(array $params)
+    {
+        $name = array_shift($params);
 
-		if (empty($name))
-		{
-			$name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
-		}
+        if (empty($name)) {
+            $name = CLI::prompt('Database name', null, 'required'); // @codeCoverageIgnore
+        }
 
-		try
-		{
-			/**
-			 * @var Database $config
-			 */
-			$config = config('Database');
+        try {
+            /**
+             * @var Database $config
+             */
+            $config = config('Database');
 
-			// Set to an empty database to prevent connection errors.
-			$group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
-			$config->{$group}['database'] = '';
+            // Set to an empty database to prevent connection errors.
+            $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
 
-			$db = Database::connect();
+            $config->{$group}['database'] = '';
 
-			// Special SQLite3 handling
-			if ($db instanceof Connection)
-			{
-				$ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
+            $db = Database::connect();
 
-				if (! in_array($ext, ['db', 'sqlite'], true))
-				{
-					$ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
-				}
+            // Special SQLite3 handling
+            if ($db instanceof Connection) {
+                $ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
 
-				if ($name !== ':memory:')
-				{
-					$name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
-				}
+                if (! in_array($ext, ['db', 'sqlite'], true)) {
+                    $ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
+                }
 
-				$config->{$group}['DBDriver'] = 'SQLite3';
-				$config->{$group}['database'] = $name;
+                if ($name !== ':memory:') {
+                    $name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
+                }
 
-				if ($name !== ':memory:')
-				{
-					$dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
+                $config->{$group}['DBDriver'] = 'SQLite3';
+                $config->{$group}['database'] = $name;
 
-					if (is_file($dbName))
-					{
-						CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
-						CLI::newLine();
+                if ($name !== ':memory:') {
+                    $dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
 
-						return;
-					}
+                    if (is_file($dbName)) {
+                        CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');
+                        CLI::newLine();
 
-					unset($dbName);
-				}
+                        return;
+                    }
 
-				// Connect to new SQLite3 to create new database
-				$db = Database::connect(null, false);
-				$db->connect();
+                    unset($dbName);
+                }
 
-				if (! is_file($db->getDatabase()) && $name !== ':memory:')
-				{
-					// @codeCoverageIgnoreStart
-					CLI::error('Database creation failed.', 'light_gray', 'red');
-					CLI::newLine();
-					return;
-					// @codeCoverageIgnoreEnd
-				}
-			}
-			elseif (! Database::forge()->createDatabase($name))
-			{
-				// @codeCoverageIgnoreStart
-				CLI::error('Database creation failed.', 'light_gray', 'red');
-				CLI::newLine();
-				return;
-				// @codeCoverageIgnoreEnd
-			}
+                // Connect to new SQLite3 to create new database
+                $db = Database::connect(null, false);
+                $db->connect();
 
-			CLI::write("Database \"{$name}\" successfully created.", 'green');
-			CLI::newLine();
-		}
-		catch (Throwable $e)
-		{
-			$this->showError($e);
-		}
-		finally
-		{
-			// Reset the altered config no matter what happens.
-			Factories::reset('config');
-		}
-	}
+                if (! is_file($db->getDatabase()) && $name !== ':memory:') {
+                    // @codeCoverageIgnoreStart
+                    CLI::error('Database creation failed.', 'light_gray', 'red');
+                    CLI::newLine();
+
+                    return;
+                    // @codeCoverageIgnoreEnd
+                }
+            } elseif (! Database::forge()->createDatabase($name)) {
+                // @codeCoverageIgnoreStart
+                CLI::error('Database creation failed.', 'light_gray', 'red');
+                CLI::newLine();
+
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            CLI::write("Database \"{$name}\" successfully created.", 'green');
+            CLI::newLine();
+        } catch (Throwable $e) {
+            $this->showError($e);
+        } finally {
+            // Reset the altered config no matter what happens.
+            Factories::reset('config');
+        }
+    }
 }

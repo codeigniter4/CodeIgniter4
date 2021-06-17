@@ -13,32 +13,30 @@ use PHPStan\Rules\Rule;
 
 final class CheckFrameworkExceptionInstantiationViaNamedConstructorRule implements Rule
 {
-	/**
-	 * @var string
-	 */
-	private const ERROR_MESSAGE = 'FrameworkException instance creation via new expression is not allowed, use its named constructor instead';
+    /**
+     * @var string
+     */
+    private const ERROR_MESSAGE = 'FrameworkException instance creation via new expression is not allowed, use its named constructor instead';
 
-	public function getNodeType(): string
-	{
-		return New_::class;
-	}
+    public function getNodeType(): string
+    {
+        return New_::class;
+    }
 
-	/**
-	 * @param New_ $node
-	 */
-	public function processNode(Node $node, Scope $scope): array
-	{
-		$class = $node->class;
-		if (! $class instanceof FullyQualified)
-		{
-			return [];
-		}
+    /**
+     * @param New_ $node
+     */
+    public function processNode(Node $node, Scope $scope): array
+    {
+        $class = $node->class;
+        if (! $class instanceof FullyQualified) {
+            return [];
+        }
 
-		if (! is_a((string) $class, FrameworkException::class, true))
-		{
-			return [];
-		}
+        if (! is_a((string) $class, FrameworkException::class, true)) {
+            return [];
+        }
 
-		return [self::ERROR_MESSAGE];
-	}
+        return [self::ERROR_MESSAGE];
+    }
 }

@@ -42,10 +42,15 @@ jobs:
       matrix:
         php-versions: ['7.3', '7.4', '8.0']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+        mysql-versions: ['5.7']
+        include:
+          - php-versions: 7.4
+            db-platforms: MySQLi
+            mysql-versions: 8.0
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql-versions }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test
@@ -100,9 +105,8 @@ jobs:
 
       - name: Install latest ImageMagick
         run: |
-          sudo apt-get remove ghostscript
-          sudo apt-get update
-          sudo apt-get install -y imagemagick ghostscript-x gsfonts
+          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback ttf-dejavu-core
+          sudo apt-get install -y imagemagick
 
       - name: Get composer cache directory
         id: composercache
@@ -118,7 +122,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --ansi --no-interaction
-          composer remove --ansi --dev --unused -W rector/rector phpstan/phpstan codeigniter4/codeigniter4-standard squizlabs/php_codesniffer
+          composer remove --ansi --dev --unused -W rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config
           php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
@@ -133,10 +137,10 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - if: matrix.php-versions == '7.4'
+      - if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '7.4'
         name: Run Coveralls
         run: |
-          composer global require php-coveralls/php-coveralls:^2.4
+          composer global require --ansi php-coveralls/php-coveralls:^2.4
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -144,6 +148,7 @@ jobs:
           COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
   coveralls-finish:
+    if: github.repository_owner == 'codeigniter4'
     needs: [tests]
     runs-on: ubuntu-20.04
     steps:

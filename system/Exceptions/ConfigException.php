@@ -16,17 +16,17 @@ namespace CodeIgniter\Exceptions;
  */
 class ConfigException extends CriticalError
 {
-	use DebugTraceableTrait;
+    use DebugTraceableTrait;
 
-	/**
-	 * Error code
-	 *
-	 * @var integer
-	 */
-	protected $code = 3;
+    /**
+     * Error code
+     *
+     * @var int
+     */
+    protected $code = 3;
 
-	public static function forDisabledMigrations()
-	{
-		return new static(lang('Migrations.disabled'));
-	}
+    public static function forDisabledMigrations()
+    {
+        return new static(lang('Migrations.disabled'));
+    }
 }

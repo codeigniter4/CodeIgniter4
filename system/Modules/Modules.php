@@ -18,41 +18,40 @@ namespace CodeIgniter\Modules;
  */
 class Modules
 {
-	/**
-	 * Auto-Discover
-	 *
-	 * @var boolean
-	 */
-	public $enabled = true;
+    /**
+     * Auto-Discover
+     *
+     * @var bool
+     */
+    public $enabled = true;
 
-	/**
-	 * Auto-Discovery Within Composer Packages
-	 *
-	 * @var boolean
-	 */
-	public $discoverInComposer = true;
+    /**
+     * Auto-Discovery Within Composer Packages
+     *
+     * @var bool
+     */
+    public $discoverInComposer = true;
 
-	/**
-	 * Auto-Discover Rules Handler
-	 *
-	 * @var array
-	 */
-	public $aliases = [];
+    /**
+     * Auto-Discover Rules Handler
+     *
+     * @var array
+     */
+    public $aliases = [];
 
-	/**
-	 * Should the application auto-discover the requested resource.
-	 *
-	 * @param string $alias
-	 *
-	 * @return boolean
-	 */
-	public function shouldDiscover(string $alias): bool
-	{
-		if (! $this->enabled)
-		{
-			return false;
-		}
+    /**
+     * Should the application auto-discover the requested resource.
+     *
+     * @param string $alias
+     *
+     * @return bool
+     */
+    public function shouldDiscover(string $alias): bool
+    {
+        if (! $this->enabled) {
+            return false;
+        }
 
-		return in_array(strtolower($alias), $this->aliases, true);
-	}
+        return in_array(strtolower($alias), $this->aliases, true);
+    }
 }

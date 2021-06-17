@@ -16,29 +16,29 @@ namespace CodeIgniter\Entity\Cast;
  */
 abstract class BaseCast implements CastInterface
 {
-	/**
-	 * Get
-	 *
-	 * @param mixed $value  Data
-	 * @param array $params Additional param
-	 *
-	 * @return mixed
-	 */
-	public static function get($value, array $params = [])
-	{
-		return $value;
-	}
+    /**
+     * Get
+     *
+     * @param mixed $value  Data
+     * @param array $params Additional param
+     *
+     * @return mixed
+     */
+    public static function get($value, array $params = [])
+    {
+        return $value;
+    }
 
-	/**
-	 * Set
-	 *
-	 * @param mixed $value  Data
-	 * @param array $params Additional param
-	 *
-	 * @return mixed
-	 */
-	public static function set($value, array $params = [])
-	{
-		return $value;
-	}
+    /**
+     * Set
+     *
+     * @param mixed $value  Data
+     * @param array $params Additional param
+     *
+     * @return mixed
+     */
+    public static function set($value, array $params = [])
+    {
+        return $value;
+    }
 }

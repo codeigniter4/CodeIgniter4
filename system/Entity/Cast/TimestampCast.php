@@ -18,18 +18,17 @@ use CodeIgniter\Entity\Exceptions\CastException;
  */
 class TimestampCast extends BaseCast
 {
-	/**
-	 * @inheritDoc
-	 */
-	public static function get($value, array $params = [])
-	{
-		$value = strtotime($value);
+    /**
+     * @inheritDoc
+     */
+    public static function get($value, array $params = [])
+    {
+        $value = strtotime($value);
 
-		if ($value === false)
-		{
-			throw CastException::forInvalidTimestamp();
-		}
+        if ($value === false) {
+            throw CastException::forInvalidTimestamp();
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 }

@@ -20,72 +20,70 @@ use CodeIgniter\CLI\CLI;
  */
 class ClearCache extends BaseCommand
 {
-	/**
-	 * Command grouping.
-	 *
-	 * @var string
-	 */
-	protected $group = 'Cache';
+    /**
+     * Command grouping.
+     *
+     * @var string
+     */
+    protected $group = 'Cache';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'cache:clear';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'cache:clear';
 
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Clears the current system caches.';
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Clears the current system caches.';
 
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'cache:clear [driver]';
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'cache:clear [driver]';
 
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [
-		'driver' => 'The cache driver to use',
-	];
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [
+        'driver' => 'The cache driver to use',
+    ];
 
-	/**
-	 * Clears the cache
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$config  = config('Cache');
-		$handler = $params[0] ?? $config->handler;
+    /**
+     * Clears the cache
+     *
+     * @param array $params
+     */
+    public function run(array $params)
+    {
+        $config  = config('Cache');
+        $handler = $params[0] ?? $config->handler;
 
-		if (! array_key_exists($handler, $config->validHandlers))
-		{
-			CLI::error($handler . ' is not a valid cache handler.');
+        if (! array_key_exists($handler, $config->validHandlers)) {
+            CLI::error($handler . ' is not a valid cache handler.');
 
-			return;
-		}
+            return;
+        }
 
-		$config->handler = $handler;
-		$cache           = CacheFactory::getHandler($config);
+        $config->handler = $handler;
+        $cache           = CacheFactory::getHandler($config);
 
-		if (! $cache->clean())
-		{
-			// @codeCoverageIgnoreStart
-			CLI::error('Error while clearing the cache.');
+        if (! $cache->clean()) {
+            // @codeCoverageIgnoreStart
+            CLI::error('Error while clearing the cache.');
 
-			return;
-			// @codeCoverageIgnoreEnd
-		}
+            return;
+            // @codeCoverageIgnoreEnd
+        }
 
-		CLI::write(CLI::color('Cache cleared.', 'green'));
-	}
+        CLI::write(CLI::color('Cache cleared.', 'green'));
+    }
 }

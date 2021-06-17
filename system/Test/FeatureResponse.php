@@ -18,8 +18,8 @@ namespace CodeIgniter\Test;
  */
 class FeatureResponse extends TestResponse
 {
-	/**
-	 * @deprecated Will be protected in a future release, use response() instead
-	 */
-	public $response;
+    /**
+     * @deprecated Will be protected in a future release, use response() instead
+     */
+    public $response;
 }

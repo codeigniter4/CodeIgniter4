@@ -1,12 +1,13 @@
-<?php namespace CodeIgniter\Filters\fixtures;
+<?php
+
+namespace CodeIgniter\Filters\fixtures;
 
 class InvalidClass
 {
-	public function index()
-	{
-		return 'bad';
-	}
+    public function index()
+    {
+        return 'bad';
+    }
 
-	//--------------------------------------------------------------------
-
+    //--------------------------------------------------------------------
 }

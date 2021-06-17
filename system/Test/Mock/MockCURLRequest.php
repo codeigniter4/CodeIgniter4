@@ -22,39 +22,39 @@ use CodeIgniter\HTTP\CURLRequest;
  */
 class MockCURLRequest extends CURLRequest
 {
-	public $curl_options;
+    public $curl_options;
 
-	protected $output = '';
+    protected $output = '';
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function setOutput($output)
-	{
-		$this->output = $output;
+    public function setOutput($output)
+    {
+        $this->output = $output;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function sendRequest(array $curlOptions = []): string
-	{
-		// Save so we can access later.
-		$this->curl_options = $curlOptions;
+    protected function sendRequest(array $curlOptions = []): string
+    {
+        // Save so we can access later.
+        $this->curl_options = $curlOptions;
 
-		return $this->output;
-	}
+        return $this->output;
+    }
 
-	//--------------------------------------------------------------------
-	// for testing purposes only
-	public function getBaseURI()
-	{
-		return $this->baseURI;
-	}
+    //--------------------------------------------------------------------
+    // for testing purposes only
+    public function getBaseURI()
+    {
+        return $this->baseURI;
+    }
 
-	// for testing purposes only
-	public function getDelay()
-	{
-		return $this->delay;
-	}
+    // for testing purposes only
+    public function getDelay()
+    {
+        return $this->delay;
+    }
 }

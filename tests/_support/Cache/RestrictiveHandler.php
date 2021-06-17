@@ -19,8 +19,8 @@ use CodeIgniter\Cache\Handlers\DummyHandler;
  */
 class RestrictiveHandler extends DummyHandler
 {
-	/**
-	 * Maximum key length.
-	 */
-	public const MAX_KEY_LENGTH = 10;
+    /**
+     * Maximum key length.
+     */
+    public const MAX_KEY_LENGTH = 10;
 }

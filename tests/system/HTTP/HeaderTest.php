@@ -1,212 +1,214 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 
 class HeaderTest extends CIUnitTestCase
 {
-	public function testHeaderStoresBasics()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderStoresBasics()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($value, $header->getValue());
+    }
 
-	public function testHeaderStoresBasicsWithNull()
-	{
-		$name  = 'foo';
-		$value = null;
+    public function testHeaderStoresBasicsWithNull()
+    {
+        $name  = 'foo';
+        $value = null;
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals('', $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals('', $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderStoresArrayValues()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+    public function testHeaderStoresArrayValues()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($value, $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderSetters()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+    public function testHeaderSetters()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-				$header = new Header($name);
-				$this->assertEquals($name, $header->getName());
-				$this->assertEquals(null, $header->getValue());
-				$this->assertEquals($name . ': ', (string) $header);
+        $header = new Header($name);
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals(null, $header->getValue());
+        $this->assertEquals($name . ': ', (string) $header);
 
-				$name = 'foo2';
-		$header->setName($name)->setValue($value);
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-				$this->assertEquals($name . ': bar, baz', (string) $header);
-	}
+        $name = 'foo2';
+        $header->setName($name)->setValue($value);
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($value, $header->getValue());
+        $this->assertEquals($name . ': bar, baz', (string) $header);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderAppendsValueSkippedForNull()
-	{
-		$name     = 'foo';
-		$value    = 'bar';
-		$expected = 'bar';
+    public function testHeaderAppendsValueSkippedForNull()
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$header->appendValue(null);
+        $header->appendValue(null);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValue());
+    }
 
-	public function testHeaderConvertsSingleToArray()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderConvertsSingleToArray()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$expected = [
-			'bar',
-			'baz',
-		];
+        $expected = [
+            'bar',
+            'baz',
+        ];
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$header->appendValue('baz');
+        $header->appendValue('baz');
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderPrependsValueSkippedForNull()
-	{
-		$name     = 'foo';
-		$value    = 'bar';
-		$expected = 'bar';
+    public function testHeaderPrependsValueSkippedForNull()
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$header->prependValue(null);
+        $header->prependValue(null);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValue());
+    }
 
-	public function testHeaderPrependsValue()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderPrependsValue()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$expected = [
-			'baz',
-			'bar',
-		];
+        $expected = [
+            'baz',
+            'bar',
+        ];
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$header->prependValue('baz');
+        $header->prependValue('baz');
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderLineSimple()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+    public function testHeaderLineSimple()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-		$expected = 'bar, baz';
+        $expected = 'bar, baz';
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValueLine());
+    }
 
-	public function testHeaderLineValueNotStringOrArray()
-	{
-		$name  = 'foo';
-		$value = new stdClass;
+    public function testHeaderLineValueNotStringOrArray()
+    {
+        $name  = 'foo';
+        $value = new stdClass;
 
-		$expected = '';
+        $expected = '';
 
-		$header = new Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValueLine());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderSetValueWithNullWillMarkAsEmptyString()
-	{
-		$name     = 'foo';
-		$expected = '';
+    public function testHeaderSetValueWithNullWillMarkAsEmptyString()
+    {
+        $name     = 'foo';
+        $expected = '';
 
-		$header = new Header($name);
-		$header->setValue('bar')
-			   ->setValue(null);
+        $header = new Header($name);
+        $header->setValue('bar')
+               ->setValue(null);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValueLine());
+    }
 
-	public function testHeaderLineWithArrayValues()
-	{
-		$name = 'foo';
+    public function testHeaderLineWithArrayValues()
+    {
+        $name = 'foo';
 
-		$expected = 'bar, baz=fuzz';
+        $expected = 'bar, baz=fuzz';
 
-		$header = new Header($name);
+        $header = new Header($name);
 
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
+        $header->setValue('bar')
+               ->appendValue(['baz' => 'fuzz']);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $this->assertEquals($name, $header->getName());
+        $this->assertEquals($expected, $header->getValueLine());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testHeaderToStringShowsEntireHeader()
-	{
-		$name = 'foo';
+    public function testHeaderToStringShowsEntireHeader()
+    {
+        $name = 'foo';
 
-		$expected = 'foo: bar, baz=fuzz';
+        $expected = 'foo: bar, baz=fuzz';
 
-		$header = new Header($name);
+        $header = new Header($name);
 
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
+        $header->setValue('bar')
+               ->appendValue(['baz' => 'fuzz']);
 
-		$this->assertEquals($expected, (string)$header);
-	}
+        $this->assertEquals($expected, (string) $header);
+    }
 }

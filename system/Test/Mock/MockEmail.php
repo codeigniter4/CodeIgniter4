@@ -16,27 +16,25 @@ use CodeIgniter\Events\Events;
 
 class MockEmail extends Email
 {
-	/**
-	 * Value to return from mocked send().
-	 *
-	 * @var boolean
-	 */
-	public $returnValue = true;
+    /**
+     * Value to return from mocked send().
+     *
+     * @var bool
+     */
+    public $returnValue = true;
 
-	public function send($autoClear = true)
-	{
-		if ($this->returnValue)
-		{
-			$this->setArchiveValues();
+    public function send($autoClear = true)
+    {
+        if ($this->returnValue) {
+            $this->setArchiveValues();
 
-			if ($autoClear)
-			{
-				$this->clear();
-			}
+            if ($autoClear) {
+                $this->clear();
+            }
 
-			Events::trigger('email', $this->archive);
-		}
+            Events::trigger('email', $this->archive);
+        }
 
-		return $this->returnValue;
-	}
+        return $this->returnValue;
+    }
 }

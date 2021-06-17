@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -8,37 +10,36 @@ use CodeIgniter\Test\DatabaseTestTrait;
  */
 class LimitTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
-	protected $refresh = true;
+    use DatabaseTestTrait;
+    protected $refresh = true;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function testLimit()
-	{
-		$jobs = $this->db->table('job')
-						->limit(2)
-						->get()
-						->getResult();
+    public function testLimit()
+    {
+        $jobs = $this->db->table('job')
+                        ->limit(2)
+                        ->get()
+                        ->getResult();
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Developer', $jobs[0]->name);
-		$this->assertEquals('Politician', $jobs[1]->name);
-	}
+        $this->assertCount(2, $jobs);
+        $this->assertEquals('Developer', $jobs[0]->name);
+        $this->assertEquals('Politician', $jobs[1]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testLimitAndOffset()
-	{
-		$jobs = $this->db->table('job')
-						->limit(2, 2)
-						->get()
-						->getResult();
+    public function testLimitAndOffset()
+    {
+        $jobs = $this->db->table('job')
+                        ->limit(2, 2)
+                        ->get()
+                        ->getResult();
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician', $jobs[1]->name);
-	}
+        $this->assertCount(2, $jobs);
+        $this->assertEquals('Accountant', $jobs[0]->name);
+        $this->assertEquals('Musician', $jobs[1]->name);
+    }
 
-	//--------------------------------------------------------------------
-
+    //--------------------------------------------------------------------
 }

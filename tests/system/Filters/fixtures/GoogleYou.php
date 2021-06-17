@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Filters\fixtures;
+<?php
+
+namespace CodeIgniter\Filters\fixtures;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\FilterInterface;
@@ -7,16 +9,15 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class GoogleYou implements FilterInterface
 {
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        $response      = Services::response();
+        $response->csp = 'http://google.com';
 
-	public function before(RequestInterface $request, $arguments = null)
-	{
-		$response      = Services::response();
-		$response->csp = 'http://google.com';
-		return $response;
-	}
+        return $response;
+    }
 
-	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-	{
-	}
-
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+    }
 }

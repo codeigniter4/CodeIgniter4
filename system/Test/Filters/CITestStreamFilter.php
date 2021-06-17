@@ -20,35 +20,34 @@ use php_user_filter;
  */
 class CITestStreamFilter extends php_user_filter
 {
-	/**
-	 * Buffer to capture stream content.
-	 *
-	 * @var string
-	 */
-	public static $buffer = '';
+    /**
+     * Buffer to capture stream content.
+     *
+     * @var string
+     */
+    public static $buffer = '';
 
-	/**
-	 * Output filtering - catch it all.
-	 *
-	 * @param resource $in
-	 * @param resource $out
-	 * @param integer  $consumed
-	 * @param boolean  $closing
-	 *
-	 * @return integer
-	 */
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in))
-		{
-			static::$buffer .= $bucket->data;
+    /**
+     * Output filtering - catch it all.
+     *
+     * @param resource $in
+     * @param resource $out
+     * @param int      $consumed
+     * @param bool     $closing
+     *
+     * @return int
+     */
+    public function filter($in, $out, &$consumed, $closing)
+    {
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            static::$buffer .= $bucket->data;
 
-			$consumed += $bucket->datalen;
-		}
+            $consumed += $bucket->datalen;
+        }
 
-		// @phpstan-ignore-next-line
-		return PSFS_PASS_ON;
-	}
+        // @phpstan-ignore-next-line
+        return PSFS_PASS_ON;
+    }
 }
 
 // @codeCoverageIgnoreStart

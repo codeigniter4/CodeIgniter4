@@ -1,27 +1,29 @@
-<?php namespace Tests\Support\Models;
+<?php
+
+namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-	protected $table = 'user';
+    protected $table = 'user';
 
-	protected $allowedFields = [
-		'name',
-		'email',
-		'country',
-		'deleted_at',
-	];
+    protected $allowedFields = [
+        'name',
+        'email',
+        'country',
+        'deleted_at',
+    ];
 
-	protected $returnType = 'object';
+    protected $returnType = 'object';
 
-	protected $useSoftDeletes = true;
+    protected $useSoftDeletes = true;
 
-	protected $dateFormat = 'datetime';
+    protected $dateFormat = 'datetime';
 
-	public $name = '';
+    public $name = '';
 
-	public $email = '';
+    public $email = '';
 
-	public $country = '';
+    public $country = '';
 }

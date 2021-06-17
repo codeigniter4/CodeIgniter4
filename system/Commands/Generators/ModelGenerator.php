@@ -20,119 +20,115 @@ use CodeIgniter\CLI\GeneratorTrait;
  */
 class ModelGenerator extends BaseCommand
 {
-	use GeneratorTrait;
+    use GeneratorTrait;
 
-	/**
-	 * The Command's Group
-	 *
-	 * @var string
-	 */
-	protected $group = 'Generators';
+    /**
+     * The Command's Group
+     *
+     * @var string
+     */
+    protected $group = 'Generators';
 
-	/**
-	 * The Command's Name
-	 *
-	 * @var string
-	 */
-	protected $name = 'make:model';
+    /**
+     * The Command's Name
+     *
+     * @var string
+     */
+    protected $name = 'make:model';
 
-	/**
-	 * The Command's Description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Generates a new model file.';
+    /**
+     * The Command's Description
+     *
+     * @var string
+     */
+    protected $description = 'Generates a new model file.';
 
-	/**
-	 * The Command's Usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'make:model <name> [options]';
+    /**
+     * The Command's Usage
+     *
+     * @var string
+     */
+    protected $usage = 'make:model <name> [options]';
 
-	/**
-	 * The Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [
-		'name' => 'The model class name.',
-	];
+    /**
+     * The Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [
+        'name' => 'The model class name.',
+    ];
 
-	/**
-	 * The Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'--table'     => 'Supply a table name. Default: "the lowercased plural of the class name".',
-		'--dbgroup'   => 'Database group to use. Default: "default".',
-		'--return'    => 'Return type, Options: [array, object, entity]. Default: "array".',
-		'--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-		'--suffix'    => 'Append the component title to the class name (e.g. User => UserModel).',
-		'--force'     => 'Force overwrite existing file.',
-	];
+    /**
+     * The Command's Options
+     *
+     * @var array
+     */
+    protected $options = [
+        '--table'     => 'Supply a table name. Default: "the lowercased plural of the class name".',
+        '--dbgroup'   => 'Database group to use. Default: "default".',
+        '--return'    => 'Return type, Options: [array, object, entity]. Default: "array".',
+        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
+        '--suffix'    => 'Append the component title to the class name (e.g. User => UserModel).',
+        '--force'     => 'Force overwrite existing file.',
+    ];
 
-	/**
-	 * Actually execute a command.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$this->component = 'Model';
-		$this->directory = 'Models';
-		$this->template  = 'model.tpl.php';
+    /**
+     * Actually execute a command.
+     *
+     * @param array $params
+     */
+    public function run(array $params)
+    {
+        $this->component = 'Model';
+        $this->directory = 'Models';
+        $this->template  = 'model.tpl.php';
 
-		$this->classNameLang = 'CLI.generator.className.model';
-		$this->execute($params);
-	}
+        $this->classNameLang = 'CLI.generator.className.model';
+        $this->execute($params);
+    }
 
-	/**
-	 * Prepare options and do the necessary replacements.
-	 *
-	 * @param string $class
-	 *
-	 * @return string
-	 */
-	protected function prepare(string $class): string
-	{
-		$table   = $this->getOption('table');
-		$DBGroup = $this->getOption('dbgroup');
-		$return  = $this->getOption('return');
+    /**
+     * Prepare options and do the necessary replacements.
+     *
+     * @param string $class
+     *
+     * @return string
+     */
+    protected function prepare(string $class): string
+    {
+        $table   = $this->getOption('table');
+        $DBGroup = $this->getOption('dbgroup');
+        $return  = $this->getOption('return');
 
-		$baseClass = strtolower(str_replace(trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\') . '\\', '', $class));
-		$baseClass = strpos($baseClass, 'model') ? str_replace('model', '', $baseClass) : $baseClass;
+        $baseClass = strtolower(str_replace(trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\') . '\\', '', $class));
+        $baseClass = strpos($baseClass, 'model') ? str_replace('model', '', $baseClass) : $baseClass;
 
-		$table   = is_string($table) ? $table : plural($baseClass);
-		$DBGroup = is_string($DBGroup) ? $DBGroup : 'default';
-		$return  = is_string($return) ? $return : 'array';
+        $table   = is_string($table) ? $table : plural($baseClass);
+        $DBGroup = is_string($DBGroup) ? $DBGroup : 'default';
+        $return  = is_string($return) ? $return : 'array';
 
-		if (! in_array($return, ['array', 'object', 'entity'], true))
-		{
-			// @codeCoverageIgnoreStart
-			$return = CLI::prompt(lang('CLI.generator.returnType'), ['array', 'object', 'entity'], 'required');
-			CLI::newLine();
-			// @codeCoverageIgnoreEnd
-		}
+        if (! in_array($return, ['array', 'object', 'entity'], true)) {
+            // @codeCoverageIgnoreStart
+            $return = CLI::prompt(lang('CLI.generator.returnType'), ['array', 'object', 'entity'], 'required');
+            CLI::newLine();
+            // @codeCoverageIgnoreEnd
+        }
 
-		if ($return === 'entity')
-		{
-			$return = str_replace('Models', 'Entities', $class);
+        if ($return === 'entity') {
+            $return = str_replace('Models', 'Entities', $class);
 
-			if ($pos = strpos($return, 'Model'))
-			{
-				$return = substr($return, 0, $pos);
+            if ($pos = strpos($return, 'Model')) {
+                $return = substr($return, 0, $pos);
 
-				if ($this->getOption('suffix'))
-				{
-					$return .= 'Entity';
-				}
-			}
+                if ($this->getOption('suffix')) {
+                    $return .= 'Entity';
+                }
+            }
 
-			$this->call('make:entity', array_merge([$baseClass], $this->params));
-		}
+            $this->call('make:entity', array_merge([$baseClass], $this->params));
+        }
 
-		return $this->parseTemplate($class, ['{table}', '{DBGroup}', '{return}'], [$table, $DBGroup, $return]);
-	}
+        return $this->parseTemplate($class, ['{table}', '{DBGroup}', '{return}'], [$table, $DBGroup, $return]);
+    }
 }

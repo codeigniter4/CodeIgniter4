@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\CodeIgniter;
@@ -22,256 +23,263 @@ use Tests\Support\Models\UserModel;
 class ResourcePresenterTest extends CIUnitTestCase
 {
 
-	/**
-	 * @var CodeIgniter
-	 */
-	protected $codeigniter;
+    /**
+     * @var CodeIgniter
+     */
+    protected $codeigniter;
 
-	/**
-	 *
-	 * @var \CodeIgniter\Router\RoutesCollection
-	 */
-	protected $routes;
+    /**
+     *
+     * @var \CodeIgniter\Router\RoutesCollection
+     */
+    protected $routes;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		Services::reset();
+        Services::reset();
 
-		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
-		// Inject mock router.
-		$this->routes = Services::routes();
-		$this->routes->presenter('work', ['controller' => 'Tests\Support\RESTful\Worker2']);
-		Services::injectMock('routes', $this->routes);
+        // Inject mock router.
+        $this->routes = Services::routes();
+        $this->routes->presenter('work', ['controller' => 'Tests\Support\RESTful\Worker2']);
+        Services::injectMock('routes', $this->routes);
 
-		$config            = new App();
-		$this->codeigniter = new MockCodeIgniter($config);
-	}
+        $config            = new App();
+        $this->codeigniter = new MockCodeIgniter($config);
+    }
 
-	public function tearDown(): void
-	{
-		parent::tearDown();
+    public function tearDown(): void
+    {
+        parent::tearDown();
 
-		if (count(ob_list_handlers()) > 1)
-		{
-			ob_end_clean();
-		}
-	}
+        if (count(ob_list_handlers()) > 1) {
+            ob_end_clean();
+        }
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testResourceGet()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-		];
-		$_SERVER['argc']           = 2;
-		$_SERVER['REQUEST_URI']    = '/work';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+    public function testResourceGet()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+        ];
+        $_SERVER['argc'] = 2;
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        $_SERVER['REQUEST_URI']    = '/work';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->assertEquals(lang('RESTful.notImplemented', ['index']), $output);
-	}
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-	public function testResourceShow()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'show',
-			'1',
-		];
-		$_SERVER['argc']           = 4;
-		$_SERVER['REQUEST_URI']    = '/work/show/1';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->assertEquals(lang('RESTful.notImplemented', ['index']), $output);
+    }
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+    public function testResourceShow()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'show',
+            '1',
+        ];
+        $_SERVER['argc'] = 4;
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $output);
-	}
+        $_SERVER['REQUEST_URI']    = '/work/show/1';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-	public function testResourceNew()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'new',
-		];
-		$_SERVER['argc']           = 3;
-		$_SERVER['REQUEST_URI']    = '/work/new';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $output);
+    }
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $output);
-	}
+    public function testResourceNew()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'new',
+        ];
+        $_SERVER['argc'] = 3;
 
-	public function testResourceCreate()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'create',
-		];
-		$_SERVER['argc']           = 3;
-		$_SERVER['REQUEST_URI']    = '/work/create';
-		$_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/work/new';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $output);
-	}
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $output);
+    }
 
-	public function testResourceRemove()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'remove',
-			'123',
-		];
-		$_SERVER['argc']           = 3;
-		$_SERVER['REQUEST_URI']    = '/work/remove/123';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+    public function testResourceCreate()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'create',
+        ];
+        $_SERVER['argc'] = 3;
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        $_SERVER['REQUEST_URI']    = '/work/create';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['remove']), $output);
-	}
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-	public function testResourceDelete()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'delete',
-			'123',
-		];
-		$_SERVER['argc']           = 3;
-		$_SERVER['REQUEST_URI']    = '/work/delete/123';
-		$_SERVER['REQUEST_METHOD'] = 'POST';
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $output);
+    }
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+    public function testResourceRemove()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'remove',
+            '123',
+        ];
+        $_SERVER['argc'] = 3;
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $output);
-	}
+        $_SERVER['REQUEST_URI']    = '/work/remove/123';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-	public function testResourceEdit()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'edit',
-			'1',
-			'edit',
-		];
-		$_SERVER['argc']           = 4;
-		$_SERVER['REQUEST_URI']    = '/work/edit/1';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['remove']), $output);
+    }
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $output);
-	}
+    public function testResourceDelete()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'delete',
+            '123',
+        ];
+        $_SERVER['argc'] = 3;
 
-	public function testResourceUpdate()
-	{
-		$_SERVER['argv']           = [
-			'index.php',
-			'work',
-			'update',
-			'123',
-		];
-		$_SERVER['argc']           = 4;
-		$_SERVER['REQUEST_URI']    = '/work/update/123';
-		$_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/work/delete/123';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
 
-		ob_start();
-		$this->codeigniter->useSafeOutput(true)->run($this->routes);
-		$output = ob_get_clean();
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-		$this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $output);
-	}
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $output);
+    }
 
-	//--------------------------------------------------------------------
+    public function testResourceEdit()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'edit',
+            '1',
+            'edit',
+        ];
+        $_SERVER['argc'] = 4;
 
-	public function testModel()
-	{
-		$resource = new MockResourcePresenter();
-		$this->assertEmpty($resource->getModel());
-		$this->assertEmpty($resource->getModelName());
-	}
+        $_SERVER['REQUEST_URI']    = '/work/edit/1';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-	public function testModelBogus()
-	{
-		$resource = new MockResourcePresenter();
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-		$resource->setModel('Something');
-		$this->assertEmpty($resource->getModel());
-		$this->assertEquals('Something', $resource->getModelName());
-	}
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $output);
+    }
 
-	public function testModelByName()
-	{
-		$resource = new MockResourcePresenter();
-		$resource->setModel('\Tests\Support\Models\UserModel');
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
-	}
+    public function testResourceUpdate()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'work',
+            'update',
+            '123',
+        ];
+        $_SERVER['argc'] = 4;
 
-	public function testModelByObject()
-	{
-		$resource = new MockResourcePresenter();
-		$model    = new UserModel();
-		$resource->setModel($model);
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $_SERVER['REQUEST_URI']    = '/work/update/123';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
 
-		// Note that the leading backslash is missing if we build it this way
-		$this->assertEquals('Tests\Support\Models\UserModel', $resource->getModelName());
-	}
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $output = ob_get_clean();
 
-	public function testChangeSetModelByObject()
-	{
-		$resource = new MockResourcePresenter();
-		$resource->setModel('\Tests\Support\Models\UserModel');
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $output);
+    }
 
-		$model = new EntityModel();
-		$resource->setModel($model);
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-		$this->assertEquals('Tests\Support\Models\EntityModel', $resource->getModelName());
-	}
+    //--------------------------------------------------------------------
 
-	public function testChangeSetModelByName()
-	{
-		$resource = new MockResourcePresenter();
-		$resource->setModel('\Tests\Support\Models\UserModel');
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-		$this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+    public function testModel()
+    {
+        $resource = new MockResourcePresenter();
+        $this->assertEmpty($resource->getModel());
+        $this->assertEmpty($resource->getModelName());
+    }
 
-		$resource->setModel('\Tests\Support\Models\EntityModel');
-		$this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-		$this->assertEquals('\Tests\Support\Models\EntityModel', $resource->getModelName());
-	}
+    public function testModelBogus()
+    {
+        $resource = new MockResourcePresenter();
+
+        $resource->setModel('Something');
+        $this->assertEmpty($resource->getModel());
+        $this->assertEquals('Something', $resource->getModelName());
+    }
+
+    public function testModelByName()
+    {
+        $resource = new MockResourcePresenter();
+        $resource->setModel('\Tests\Support\Models\UserModel');
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+    }
+
+    public function testModelByObject()
+    {
+        $resource = new MockResourcePresenter();
+        $model    = new UserModel();
+        $resource->setModel($model);
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+
+        // Note that the leading backslash is missing if we build it this way
+        $this->assertEquals('Tests\Support\Models\UserModel', $resource->getModelName());
+    }
+
+    public function testChangeSetModelByObject()
+    {
+        $resource = new MockResourcePresenter();
+        $resource->setModel('\Tests\Support\Models\UserModel');
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+
+        $model = new EntityModel();
+        $resource->setModel($model);
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertEquals('Tests\Support\Models\EntityModel', $resource->getModelName());
+    }
+
+    public function testChangeSetModelByName()
+    {
+        $resource = new MockResourcePresenter();
+        $resource->setModel('\Tests\Support\Models\UserModel');
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+
+        $resource->setModel('\Tests\Support\Models\EntityModel');
+        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertEquals('\Tests\Support\Models\EntityModel', $resource->getModelName());
+    }
 }

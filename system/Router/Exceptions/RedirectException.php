@@ -18,10 +18,10 @@ use Exception;
  */
 class RedirectException extends Exception
 {
-	/**
-	 * Status code for redirects
-	 *
-	 * @var integer
-	 */
-	protected $code = 302;
+    /**
+     * Status code for redirects
+     *
+     * @var int
+     */
+    protected $code = 302;
 }

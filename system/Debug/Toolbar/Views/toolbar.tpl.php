@@ -95,7 +95,7 @@
 			</thead>
 			<tbody>
 			<?= $this->renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration,
-				$styles) ?>
+                $styles) ?>
 			</tbody>
 		</table>
 	</div>
@@ -121,7 +121,7 @@
 			<?php foreach ($vars['varData'] as $heading => $items) : ?>
 
 				<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('<?= strtolower(str_replace(' ',
-					'-', $heading)) ?>'); return false;">
+                    '-', $heading)) ?>'); return false;">
 					<h2><?= $heading ?></h2>
 				</a>
 
@@ -268,7 +268,7 @@
 	</div>
 </div>
 <style type="text/css">
-	<?php foreach($styles as $name => $style) : ?>
+	<?php foreach ($styles as $name => $style) : ?>
 	.<?= $name ?> {
 		<?= $style ?>
 	}

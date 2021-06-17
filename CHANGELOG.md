@@ -1,10 +1,66 @@
 # Changelog
 
-## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
+## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...HEAD)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...v4.1.3)
 
-## [v4.1.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.2) (2021-05-17)
+**Fixed bugs:**
+
+- Bug: Error using SQLITE3 strftime in CodeIgniter 4.1.2 [\#4760](https://github.com/codeigniter4/CodeIgniter4/issues/4760)
+- Bug: Caching something through cron, is not accessible in the web application [\#4751](https://github.com/codeigniter4/CodeIgniter4/issues/4751)
+- Bug: SQLite Drop Column [\#4746](https://github.com/codeigniter4/CodeIgniter4/issues/4746)
+- Bug: CURL Class - BaseURI options notworking  [\#4713](https://github.com/codeigniter4/CodeIgniter4/issues/4713)
+- Bug: autorouting [\#4711](https://github.com/codeigniter4/CodeIgniter4/issues/4711)
+- Bug: curlrequest not using baseURI on localhost [\#4707](https://github.com/codeigniter4/CodeIgniter4/issues/4707)
+- Bug: cli not working with cron [\#4699](https://github.com/codeigniter4/CodeIgniter4/issues/4699)
+
+**Closed issues:**
+
+- Bug: Class 'Locale' not found [\#4775](https://github.com/codeigniter4/CodeIgniter4/issues/4775)
+- Bug: deprecated notice on CodeIgniter\HTTP\RequestInterface::getMethod\(\) [\#4717](https://github.com/codeigniter4/CodeIgniter4/issues/4717)
+- Allow to join models between primary keys and foreign keys [\#4714](https://github.com/codeigniter4/CodeIgniter4/issues/4714)
+- DateTime::\_\_construct\(\): Failed to parse time string \(\) at position 0 \(�\): Unexpected character [\#4708](https://github.com/codeigniter4/CodeIgniter4/issues/4708)
+- Bug: Query Builder breaks with SQL function LENGTH\(\) and column name "row" [\#4687](https://github.com/codeigniter4/CodeIgniter4/issues/4687)
+
+**Merged pull requests:**
+
+- Expand Query named binds recognition [\#4769](https://github.com/codeigniter4/CodeIgniter4/pull/4769) ([paulbalandan](https://github.com/paulbalandan))
+- \[Rector\] Remove @var from class constant [\#4766](https://github.com/codeigniter4/CodeIgniter4/pull/4766) ([samsonasik](https://github.com/samsonasik))
+- Set WarningsReturnAsErrors = 0 before connection [\#4762](https://github.com/codeigniter4/CodeIgniter4/pull/4762) ([obelisk-services](https://github.com/obelisk-services))
+- \[Rector\] Apply Rector: VarConstantCommentRector [\#4759](https://github.com/codeigniter4/CodeIgniter4/pull/4759) ([samsonasik](https://github.com/samsonasik))
+- \[Autoloader\] include\_once is not needed on Autoloader::loadClass\(\) with no namespace [\#4756](https://github.com/codeigniter4/CodeIgniter4/pull/4756) ([samsonasik](https://github.com/samsonasik))
+- Fix imagemagick build [\#4755](https://github.com/codeigniter4/CodeIgniter4/pull/4755) ([michalsn](https://github.com/michalsn))
+- \[Rector\] Apply Rector: MoveVariableDeclarationNearReferenceRector [\#4752](https://github.com/codeigniter4/CodeIgniter4/pull/4752) ([samsonasik](https://github.com/samsonasik))
+- SQLite3 "nullable" [\#4749](https://github.com/codeigniter4/CodeIgniter4/pull/4749) ([MGatner](https://github.com/MGatner))
+- Remove $response variable at ControllerResponse::\_\_construct\(\) as never defined [\#4747](https://github.com/codeigniter4/CodeIgniter4/pull/4747) ([samsonasik](https://github.com/samsonasik))
+- Use variable for Config/Paths config to reduce repetitive definition [\#4745](https://github.com/codeigniter4/CodeIgniter4/pull/4745) ([samsonasik](https://github.com/samsonasik))
+- \[Rector\] Apply Rector : ListToArrayDestructRector [\#4743](https://github.com/codeigniter4/CodeIgniter4/pull/4743) ([samsonasik](https://github.com/samsonasik))
+- Add default TTL [\#4742](https://github.com/codeigniter4/CodeIgniter4/pull/4742) ([MGatner](https://github.com/MGatner))
+- update return sample of `dot array\_search\(\)` [\#4740](https://github.com/codeigniter4/CodeIgniter4/pull/4740) ([totoprayogo1916](https://github.com/totoprayogo1916))
+- Additional check for `$argv` variable when detecting CLI [\#4739](https://github.com/codeigniter4/CodeIgniter4/pull/4739) ([paulbalandan](https://github.com/paulbalandan))
+- Ensure variable declarations [\#4737](https://github.com/codeigniter4/CodeIgniter4/pull/4737) ([jeromegamez](https://github.com/jeromegamez))
+- Fix setting of value in Cookie's flag attributes [\#4736](https://github.com/codeigniter4/CodeIgniter4/pull/4736) ([paulbalandan](https://github.com/paulbalandan))
+- Add missing imports [\#4735](https://github.com/codeigniter4/CodeIgniter4/pull/4735) ([jeromegamez](https://github.com/jeromegamez))
+- Add environment spark command [\#4734](https://github.com/codeigniter4/CodeIgniter4/pull/4734) ([paulbalandan](https://github.com/paulbalandan))
+- Remove explicit condition that is always true [\#4731](https://github.com/codeigniter4/CodeIgniter4/pull/4731) ([jeromegamez](https://github.com/jeromegamez))
+- Deduplicate code [\#4730](https://github.com/codeigniter4/CodeIgniter4/pull/4730) ([jeromegamez](https://github.com/jeromegamez))
+- Replace `isset\(\)` with the `??` null coalesce operator [\#4729](https://github.com/codeigniter4/CodeIgniter4/pull/4729) ([jeromegamez](https://github.com/jeromegamez))
+- Remove unused imports [\#4728](https://github.com/codeigniter4/CodeIgniter4/pull/4728) ([jeromegamez](https://github.com/jeromegamez))
+- Fix truncated SCRIPT\_NAME [\#4726](https://github.com/codeigniter4/CodeIgniter4/pull/4726) ([MGatner](https://github.com/MGatner))
+- Expand CLI detection [\#4725](https://github.com/codeigniter4/CodeIgniter4/pull/4725) ([paulbalandan](https://github.com/paulbalandan))
+- \[Rector\] Add custom Rector Rule: RemoveErrorSuppressInTryCatchStmtsRector rector rule [\#4724](https://github.com/codeigniter4/CodeIgniter4/pull/4724) ([samsonasik](https://github.com/samsonasik))
+- Test with MySQL 8 [\#4721](https://github.com/codeigniter4/CodeIgniter4/pull/4721) ([jeromegamez](https://github.com/jeromegamez))
+- Replace URI string casts [\#4716](https://github.com/codeigniter4/CodeIgniter4/pull/4716) ([MGatner](https://github.com/MGatner))
+- Format URI directly [\#4715](https://github.com/codeigniter4/CodeIgniter4/pull/4715) ([MGatner](https://github.com/MGatner))
+- Additional File functions [\#4712](https://github.com/codeigniter4/CodeIgniter4/pull/4712) ([MGatner](https://github.com/MGatner))
+- Remove unused private rowOffset property in Database/SQLSRV/Result.php [\#4709](https://github.com/codeigniter4/CodeIgniter4/pull/4709) ([samsonasik](https://github.com/samsonasik))
+- Check for configured instead of hard-coded database in DbUtilsTest [\#4705](https://github.com/codeigniter4/CodeIgniter4/pull/4705) ([jeromegamez](https://github.com/jeromegamez))
+- Revert UG margins [\#4704](https://github.com/codeigniter4/CodeIgniter4/pull/4704) ([MGatner](https://github.com/MGatner))
+- Create .git/hooks directory if not already present [\#4703](https://github.com/codeigniter4/CodeIgniter4/pull/4703) ([jeromegamez](https://github.com/jeromegamez))
+- Annotate specifically designed slow tests with custom limits [\#4698](https://github.com/codeigniter4/CodeIgniter4/pull/4698) ([paulbalandan](https://github.com/paulbalandan))
+- Cache robustness [\#4697](https://github.com/codeigniter4/CodeIgniter4/pull/4697) ([MGatner](https://github.com/MGatner))
+
+## [v4.1.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.2) (2021-05-18)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.1...v4.1.2)
 

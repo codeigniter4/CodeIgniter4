@@ -22,78 +22,78 @@ use Config\Autoload;
  */
 class Namespaces extends BaseCommand
 {
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'CodeIgniter';
+    /**
+     * The group the command is lumped under
+     * when listing commands.
+     *
+     * @var string
+     */
+    protected $group = 'CodeIgniter';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'namespaces';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'namespaces';
 
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Verifies your namespaces are setup correctly.';
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Verifies your namespaces are setup correctly.';
 
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'namespaces';
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'namespaces';
 
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [];
 
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [];
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = [];
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Displays the help for the spark cli script itself.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$config = new Autoload();
+    /**
+     * Displays the help for the spark cli script itself.
+     *
+     * @param array $params
+     */
+    public function run(array $params)
+    {
+        $config = new Autoload();
 
-		$tbody = [];
-		foreach ($config->psr4 as $ns => $path)
-		{
-			$path = realpath($path) ?: $path;
+        $tbody = [];
 
-			$tbody[] = [
-				$ns,
-				realpath($path) ?: $path,
-				is_dir($path) ? 'Yes' : 'MISSING',
-			];
-		}
+        foreach ($config->psr4 as $ns => $path) {
+            $path = realpath($path) ?: $path;
 
-		$thead = [
-			'Namespace',
-			'Path',
-			'Found?',
-		];
+            $tbody[] = [
+                $ns,
+                realpath($path) ?: $path,
+                is_dir($path) ? 'Yes' : 'MISSING',
+            ];
+        }
 
-		CLI::table($tbody, $thead);
-	}
+        $thead = [
+            'Namespace',
+            'Path',
+            'Found?',
+        ];
+
+        CLI::table($tbody, $thead);
+    }
 }

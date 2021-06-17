@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
@@ -13,126 +14,125 @@ use Config\App;
 class ResponseSendTest extends CIUnitTestCase
 {
 
-	/**
-	 * These need to be run as a separate process, since phpunit
-	 * has already captured the "normal" output, and we will get
-	 * a "Cannot modify headers" message if we try to change
-	 * headers or cookies now.
-	 *
-	 * Furthermore, these tests needs to flush the output buffering
-	 * that might be in progress, and start our own output buffer
-	 * capture.
-	 *
-	 * The tests includes a basic sanity check, to make sure that
-	 * the body we thought would be sent actually was.
-	 */
-	//--------------------------------------------------------------------
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testHeadersMissingDate()
-	{
-		$response = new Response(new App());
-		$response->pretend(false);
+    /**
+     * These need to be run as a separate process, since phpunit
+     * has already captured the "normal" output, and we will get
+     * a "Cannot modify headers" message if we try to change
+     * headers or cookies now.
+     *
+     * Furthermore, these tests needs to flush the output buffering
+     * that might be in progress, and start our own output buffer
+     * capture.
+     *
+     * The tests includes a basic sanity check, to make sure that
+     * the body we thought would be sent actually was.
+     */
 
-		$body = 'Hello';
-		$response->setBody($body);
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testHeadersMissingDate()
+    {
+        $response = new Response(new App());
+        $response->pretend(false);
 
-		$response->setCookie('foo', 'bar');
-		$this->assertTrue($response->hasCookie('foo'));
-		$this->assertTrue($response->hasCookie('foo', 'bar'));
+        $body = 'Hello';
+        $response->setBody($body);
 
-		// Drop the date header, to make sure it gets put back in
-		$response->removeHeader('Date');
+        $response->setCookie('foo', 'bar');
+        $this->assertTrue($response->hasCookie('foo'));
+        $this->assertTrue($response->hasCookie('foo', 'bar'));
 
-		// send it
-		ob_start();
-		$response->send();
+        // Drop the date header, to make sure it gets put back in
+        $response->removeHeader('Date');
 
-		$buffer = ob_clean();
-		if (ob_get_level() > 0)
-		{
-			ob_end_clean();
-		}
+        // send it
+        ob_start();
+        $response->send();
 
-		// and what actually got sent?
-		$this->assertHeaderEmitted('Date:');
-	}
+        $buffer = ob_clean();
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
 
-	//--------------------------------------------------------------------
-	/**
-	 * This test does not test that CSP is handled properly -
-	 * it makes sure that sending gives CSP a chance to do its thing.
-	 *
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testHeadersWithCSP()
-	{
-		$config             = new App();
-		$config->CSPEnabled = true;
-		$response           = new Response($config);
-		$response->pretend(false);
+        // and what actually got sent?
+        $this->assertHeaderEmitted('Date:');
+    }
 
-		$body = 'Hello';
-		$response->setBody($body);
+    //--------------------------------------------------------------------
 
-		$response->setCookie('foo', 'bar');
-		$this->assertTrue($response->hasCookie('foo'));
-		$this->assertTrue($response->hasCookie('foo', 'bar'));
+    /**
+     * This test does not test that CSP is handled properly -
+     * it makes sure that sending gives CSP a chance to do its thing.
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testHeadersWithCSP()
+    {
+        $config             = new App();
+        $config->CSPEnabled = true;
+        $response           = new Response($config);
+        $response->pretend(false);
 
-		// send it
-		ob_start();
-		$response->send();
+        $body = 'Hello';
+        $response->setBody($body);
 
-		$buffer = ob_clean();
-		if (ob_get_level() > 0)
-		{
-			ob_end_clean();
-		}
+        $response->setCookie('foo', 'bar');
+        $this->assertTrue($response->hasCookie('foo'));
+        $this->assertTrue($response->hasCookie('foo', 'bar'));
 
-		// and what actually got sent?; test both ways
-		$this->assertHeaderEmitted('Content-Security-Policy:');
-	}
+        // send it
+        ob_start();
+        $response->send();
 
-	//--------------------------------------------------------------------
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	// Make sure cookies are set by RedirectResponse this way
-	// See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-	public function testRedirectResponseCookies()
-	{
-		$loginTime = time();
+        $buffer = ob_clean();
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
 
-		$response = new Response(new App());
-		$response->pretend(false);
+        // and what actually got sent?; test both ways
+        $this->assertHeaderEmitted('Content-Security-Policy:');
+    }
 
-		$routes = service('routes');
-		$routes->add('user/login', 'Auth::verify', ['as' => 'login']);
+    //--------------------------------------------------------------------
 
-		$answer1 = $response->redirect('/login')
-				->setCookie('foo', 'bar', YEAR)
-				->setCookie('login_time', $loginTime, YEAR);
-		$this->assertTrue($answer1->hasCookie('foo', 'bar'));
-		$this->assertTrue($answer1->hasCookie('login_time'));
-		$response->setBody('Hello');
+    /**
+     * Make sure cookies are set by RedirectResponse this way
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testRedirectResponseCookies()
+    {
+        $loginTime = time();
 
-		// send it
-		ob_start();
-		$response->send();
+        $response = new Response(new App());
+        $response->pretend(false);
 
-		$buffer = ob_clean();
-		if (ob_get_level() > 0)
-		{
-			ob_end_clean();
-		}
+        $routes = service('routes');
+        $routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
-		// and what actually got sent?
-		$this->assertHeaderEmitted('Set-Cookie: foo=bar;');
-		$this->assertHeaderEmitted('Set-Cookie: login_time');
-	}
+        $answer1 = $response->redirect('/login')
+                ->setCookie('foo', 'bar', YEAR)
+                ->setCookie('login_time', $loginTime, YEAR);
+        $this->assertTrue($answer1->hasCookie('foo', 'bar'));
+        $this->assertTrue($answer1->hasCookie('login_time'));
+        $response->setBody('Hello');
 
+        // send it
+        ob_start();
+        $response->send();
+
+        $buffer = ob_clean();
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // and what actually got sent?
+        $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
+        $this->assertHeaderEmitted('Set-Cookie: login_time');
+    }
 }

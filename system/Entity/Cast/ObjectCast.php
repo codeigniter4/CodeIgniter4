@@ -16,11 +16,11 @@ namespace CodeIgniter\Entity\Cast;
  */
 class ObjectCast extends BaseCast
 {
-	/**
-	 * @inheritDoc
-	 */
-	public static function get($value, array $params = []): object
-	{
-		return (object) $value;
-	}
+    /**
+     * @inheritDoc
+     */
+    public static function get($value, array $params = []): object
+    {
+        return (object) $value;
+    }
 }

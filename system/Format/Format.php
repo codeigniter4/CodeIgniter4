@@ -19,63 +19,60 @@ use Config\Format as FormatConfig;
  */
 class Format
 {
-	/**
-	 * Configuration instance
-	 *
-	 * @var FormatConfig
-	 */
-	protected $config;
+    /**
+     * Configuration instance
+     *
+     * @var FormatConfig
+     */
+    protected $config;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param FormatConfig $config
-	 */
-	public function __construct(FormatConfig $config)
-	{
-		$this->config = $config;
-	}
+    /**
+     * Constructor.
+     *
+     * @param FormatConfig $config
+     */
+    public function __construct(FormatConfig $config)
+    {
+        $this->config = $config;
+    }
 
-	/**
-	 * Returns the current configuration instance.
-	 *
-	 * @return FormatConfig
-	 */
-	public function getConfig()
-	{
-		return $this->config;
-	}
+    /**
+     * Returns the current configuration instance.
+     *
+     * @return FormatConfig
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
 
-	/**
-	 * A Factory method to return the appropriate formatter for the given mime type.
-	 *
-	 * @param string $mime
-	 *
-	 * @throws FormatException
-	 *
-	 * @return FormatterInterface
-	 */
-	public function getFormatter(string $mime): FormatterInterface
-	{
-		if (! array_key_exists($mime, $this->config->formatters))
-		{
-			throw FormatException::forInvalidMime($mime);
-		}
+    /**
+     * A Factory method to return the appropriate formatter for the given mime type.
+     *
+     * @param string $mime
+     *
+     * @throws FormatException
+     *
+     * @return FormatterInterface
+     */
+    public function getFormatter(string $mime): FormatterInterface
+    {
+        if (! array_key_exists($mime, $this->config->formatters)) {
+            throw FormatException::forInvalidMime($mime);
+        }
 
-		$className = $this->config->formatters[$mime];
+        $className = $this->config->formatters[$mime];
 
-		if (! class_exists($className))
-		{
-			throw FormatException::forInvalidFormatter($className);
-		}
+        if (! class_exists($className)) {
+            throw FormatException::forInvalidFormatter($className);
+        }
 
-		$class = new $className();
+        $class = new $className();
 
-		if (! $class instanceof FormatterInterface)
-		{
-			throw FormatException::forInvalidFormatter($className);
-		}
+        if (! $class instanceof FormatterInterface) {
+            throw FormatException::forInvalidFormatter($className);
+        }
 
-		return $class;
-	}
+        return $class;
+    }
 }

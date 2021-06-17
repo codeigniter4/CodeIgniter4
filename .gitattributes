@@ -25,6 +25,7 @@ utils/ export-ignore
 rector.php export-ignore
 phpunit.xml.dist export-ignore
 phpstan.neon.dist export-ignore
+.php-cs-fixer.dist.php export-ignore
 
 # The source user guide, either
 user_guide_src/ export-ignore
