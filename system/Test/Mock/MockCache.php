@@ -337,6 +337,6 @@ class MockCache extends BaseHandler implements CacheInterface
 	 */
 	public function assertMissing(string $key)
 	{
-		Assert::assertFalse(array_key_exists($key, $this->cache), "The cached item named `{$key}` exists.");
+		Assert::assertArrayNotHasKey($key, $this->cache, "The cached item named `{$key}` exists.");
 	}
 }
