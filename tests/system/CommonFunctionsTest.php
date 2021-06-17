@@ -41,12 +41,12 @@ class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->assertEquals(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
-        $atts        = new stdClass;
+        $atts        = new stdClass();
         $atts->class = 'foo';
         $atts->id    = 'bar';
         $this->assertEquals(' class="foo" id="bar"', stringify_attributes($atts));
 
-        $atts = new stdClass;
+        $atts = new stdClass();
         $this->assertEquals('', stringify_attributes($atts));
 
         $this->assertEquals(' class="foo" id="bar"', stringify_attributes('class="foo" id="bar"'));
@@ -58,7 +58,7 @@ class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
 
-        $atts         = new stdClass;
+        $atts         = new stdClass();
         $atts->width  = 800;
         $atts->height = 600;
         $this->assertEquals('width=800,height=600', stringify_attributes($atts, true));

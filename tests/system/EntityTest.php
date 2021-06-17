@@ -810,7 +810,7 @@ class EntityTest extends CIUnitTestCase
 
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
     {
-        $entity                   = new class extends Entity {
+        $entity                   = new class() extends Entity {
             protected $attributes = [
                 '_foo' => null,
                 'bar'  => null,
@@ -979,7 +979,7 @@ class EntityTest extends CIUnitTestCase
 
     protected function getEntity() : Entity
     {
-        return new class extends Entity {
+        return new class() extends Entity {
             protected $attributes = [
                 'foo'        => null,
                 'bar'        => null,
@@ -1019,7 +1019,7 @@ class EntityTest extends CIUnitTestCase
 
     protected function getMappedEntity() : Entity
     {
-        return new class extends Entity {
+        return new class() extends Entity {
             protected $attributes = [
                 'foo'    => null,
                 'simple' => null,
@@ -1050,7 +1050,7 @@ class EntityTest extends CIUnitTestCase
 
     protected function getSwappedEntity() : Entity
     {
-        return new class extends Entity {
+        return new class() extends Entity {
             protected $attributes = [
                 'foo' => 'foo',
                 'bar' => 'bar',
@@ -1130,7 +1130,7 @@ class EntityTest extends CIUnitTestCase
 
     protected function getCastNullableEntity() : Entity
     {
-        return new class extends Entity {
+        return new class() extends Entity {
             protected $attributes = [
                 'string_null'           => null,
                 'string_empty'          => null,
@@ -1160,7 +1160,7 @@ class EntityTest extends CIUnitTestCase
 
     protected function getCustomCastEntity() : Entity
     {
-        return new class extends Entity {
+        return new class() extends Entity {
             protected $attributes = [
                 'first'  => null,
                 'second' => null,

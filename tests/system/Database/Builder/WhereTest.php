@@ -227,7 +227,7 @@ class WhereTest extends CIUnitTestCase
         return [
             'null'                    => [null],
             'not array'               => ['not array'],
-            'not instanceof \Closure' => [new stdClass],
+            'not instanceof \Closure' => [new stdClass()],
         ];
     }
 

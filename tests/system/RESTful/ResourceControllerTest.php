@@ -274,13 +274,13 @@ class ResourceControllerTest extends CIUnitTestCase
     {
         $resource = new MockResourceController();
 
-        $config = new App;
-        $uri    = new URI;
-        $agent  = new UserAgent;
+        $config = new App();
+        $uri    = new URI();
+        $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);
         $response = new Response($config);
-        $logger   = new NullLogger;
+        $logger   = new NullLogger();
 
         $resource->initController($request, $response, $logger);
         $resource->setFormat('json');
@@ -292,7 +292,7 @@ class ResourceControllerTest extends CIUnitTestCase
         $theResponse = $resource->respond($data);
         $result      = $theResponse->getBody();
 
-        $JSONFormatter = new JSONFormatter;
+        $JSONFormatter = new JSONFormatter();
         $expected      = $JSONFormatter->format($data);
 
         $this->assertEquals($expected, $result);
@@ -303,13 +303,13 @@ class ResourceControllerTest extends CIUnitTestCase
     {
         $resource = new MockResourceController();
 
-        $config = new App;
-        $uri    = new URI;
-        $agent  = new UserAgent;
+        $config = new App();
+        $uri    = new URI();
+        $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);
         $response = new Response($config);
-        $logger   = new NullLogger;
+        $logger   = new NullLogger();
 
         $resource->initController($request, $response, $logger);
         $resource->setFormat('xml');
@@ -321,7 +321,7 @@ class ResourceControllerTest extends CIUnitTestCase
         $theResponse = $resource->respond($data);
         $result      = $theResponse->getBody();
 
-        $XMLFormatter = new XMLFormatter;
+        $XMLFormatter = new XMLFormatter();
         $expected     = $XMLFormatter->format($data);
 
         $this->assertEquals($expected, $result);

@@ -156,7 +156,7 @@ class HeaderTest extends CIUnitTestCase
     public function testHeaderLineValueNotStringOrArray()
     {
         $name  = 'foo';
-        $value = new stdClass;
+        $value = new stdClass();
 
         $expected = '';
 
