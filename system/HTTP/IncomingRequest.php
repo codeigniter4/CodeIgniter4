@@ -440,12 +440,11 @@ class IncomingRequest extends Request
             if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
                 $this->uri->setScheme('https');
             }
+        } elseif (! is_cli()) {
+            // @codeCoverageIgnoreStart
+            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+            // @codeCoverageIgnoreEnd
         }
-        // @codeCoverageIgnoreStart
-        elseif (! is_cli()) {
-            die('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
-        }
-        // @codeCoverageIgnoreEnd
 
         return $this;
     }
