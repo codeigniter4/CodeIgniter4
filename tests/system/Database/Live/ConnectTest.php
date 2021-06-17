@@ -76,7 +76,7 @@ class ConnectTest extends CIUnitTestCase
 
         $config                      = config('Database');
         $config->default['DBDriver'] = 'MySQLi';
-        Factories::injectMock('config','Database', $config);
+        Factories::injectMock('config', 'Database', $config);
 
         $db1 = Database::connect('default');
         $this->assertNotInstanceOf(Connection::class, $db1);

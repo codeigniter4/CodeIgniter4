@@ -322,10 +322,10 @@ class Toolbar
             $toolbar = Services::toolbar(config(Toolbar::class));
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
-                    $stats['startTime'],
-                    $stats['totalTime'],
-                    $request,
-                    $response
+                $stats['startTime'],
+                $stats['totalTime'],
+                $request,
+                $response
             );
 
             helper('filesystem');

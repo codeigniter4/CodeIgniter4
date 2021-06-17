@@ -92,10 +92,8 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        $data = array_combine([
-            '__ci_type',
-            '__ci_value',
-        ],
+        $data = array_combine(
+            ['__ci_type', '__ci_value'],
             $this->redis->hmget($key, ['__ci_type', '__ci_value'])
         );
 

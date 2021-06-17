@@ -190,9 +190,8 @@ class Connection extends BaseConnection
         return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
                . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
                . (($prefixLimit !== false && $this->DBPrefix !== '')
-                ? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr,
-                    $this->likeEscapeChar)
-                : '');
+                    ? ' AND "NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . '%\' ' . sprintf($this->likeEscapeStr, $this->likeEscapeChar)
+                    : '');
     }
 
     //--------------------------------------------------------------------

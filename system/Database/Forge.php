@@ -441,8 +441,11 @@ class Forge
      */
     public function dropForeignKey(string $table, string $foreignName)
     {
-        $sql = sprintf($this->dropConstraintStr, $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName));
+        $sql = sprintf(
+            $this->dropConstraintStr,
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
+        );
 
         if ($sql === false) { // @phpstan-ignore-line
             if ($this->db->DBDebug) {
@@ -557,8 +560,13 @@ class Forge
         }
 
         // createTableStr will usually have the following format: "%s %s (%s\n)"
-        $sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns,
-            $this->_createTableAttributes($attributes));
+        $sql = sprintf(
+            $this->createTableStr . '%s',
+            $sql,
+            $this->db->escapeIdentifiers($table),
+            $columns,
+            $this->_createTableAttributes($attributes)
+        );
 
         return $sql;
     }
@@ -625,8 +633,12 @@ class Forge
 
         // Update table list cache
         if ($query && ! empty($this->db->dataCache['table_names'])) {
-            $key = array_search(strtolower($this->db->DBPrefix . $tableName),
-                array_map('strtolower', $this->db->dataCache['table_names']), true);
+            $key = array_search(
+                strtolower($this->db->DBPrefix . $tableName),
+                array_map('strtolower', $this->db->dataCache['table_names']),
+                true
+            );
+
             if ($key !== false) {
                 unset($this->db->dataCache['table_names'][$key]);
             }
@@ -691,14 +703,19 @@ class Forge
             return false;
         }
 
-        $result = $this->db->query(sprintf($this->renameTableStr,
-                $this->db->escapeIdentifiers($this->db->DBPrefix . $tableName),
-                $this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName))
-        );
+        $result = $this->db->query(sprintf(
+            $this->renameTableStr,
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $tableName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $newTableName)
+        ));
 
         if ($result && ! empty($this->db->dataCache['table_names'])) {
-            $key = array_search(strtolower($this->db->DBPrefix . $tableName),
-                array_map('strtolower', $this->db->dataCache['table_names']), true);
+            $key = array_search(
+                strtolower($this->db->DBPrefix . $tableName),
+                array_map('strtolower', $this->db->dataCache['table_names']),
+                true
+            );
+
             if ($key !== false) {
                 $this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $newTableName;
             }

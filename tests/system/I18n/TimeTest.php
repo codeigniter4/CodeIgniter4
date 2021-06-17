@@ -22,8 +22,12 @@ class TimeTest extends CIUnitTestCase
     public function testNewTimeNow()
     {
         $formatter = new IntlDateFormatter(
-                'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'America/Chicago', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+            'en_US',
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::SHORT,
+            'America/Chicago', // Default for CodeIgniter
+            IntlDateFormatter::GREGORIAN,
+            'yyyy-MM-dd HH:mm:ss'
         );
 
         $time = new Time(null, 'America/Chicago');
@@ -34,8 +38,12 @@ class TimeTest extends CIUnitTestCase
     public function testTimeWithTimezone()
     {
         $formatter = new IntlDateFormatter(
-                'en_US', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+            'en_US',
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::SHORT,
+            'Europe/London', // Default for CodeIgniter
+                IntlDateFormatter::GREGORIAN,
+            'yyyy-MM-dd HH:mm:ss'
         );
 
         $time = new Time('now', 'Europe/London');
@@ -46,8 +54,12 @@ class TimeTest extends CIUnitTestCase
     public function testTimeWithTimezoneAndLocale()
     {
         $formatter = new IntlDateFormatter(
-                'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+            'fr_FR',
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::SHORT,
+            'Europe/London', // Default for CodeIgniter
+                IntlDateFormatter::GREGORIAN,
+            'yyyy-MM-dd HH:mm:ss'
         );
 
         $time = new Time('now', 'Europe/London', 'fr_FR');
@@ -58,7 +70,12 @@ class TimeTest extends CIUnitTestCase
     public function testTimeWithDateTimeZone()
     {
         $formatter = new IntlDateFormatter(
-                'fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, 'Europe/London', IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd HH:mm:ss'
+            'fr_FR',
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::SHORT,
+            'Europe/London',
+            IntlDateFormatter::GREGORIAN,
+            'yyyy-MM-dd HH:mm:ss'
         );
 
         $time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');

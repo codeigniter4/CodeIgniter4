@@ -90,7 +90,9 @@ class MemcachedHandler extends BaseHandler
 
                 // Add server
                 $this->memcached->addServer(
-                    $this->config['host'], $this->config['port'], $this->config['weight']
+                    $this->config['host'],
+                    $this->config['port'],
+                    $this->config['weight']
                 );
 
                 // attempt to get status of servers
@@ -107,7 +109,8 @@ class MemcachedHandler extends BaseHandler
 
                 // Check if we can connect to the server
                 $canConnect = $this->memcached->connect(
-                    $this->config['host'], $this->config['port']
+                    $this->config['host'],
+                    $this->config['port']
                 );
 
                 // If we can't connect, throw a CriticalError exception
@@ -117,16 +120,17 @@ class MemcachedHandler extends BaseHandler
 
                 // Add server, third parameter is persistence and defaults to TRUE.
                 $this->memcached->addServer(
-                    $this->config['host'], $this->config['port'], true, $this->config['weight']
+                    $this->config['host'],
+                    $this->config['port'],
+                    true,
+                    $this->config['weight']
                 );
             } else {
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');
             }
         } catch (CriticalError $e) {
-            // If a CriticalError exception occurs, throw it up.
             throw $e;
         } catch (Exception $e) {
-            // If an \Exception occurs, convert it into a CriticalError exception and throw it.
             throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
         }
     }
