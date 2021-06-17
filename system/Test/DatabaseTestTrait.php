@@ -232,8 +232,8 @@ trait DatabaseTestTrait
         if (! empty($this->insertCache)) {
             foreach ($this->insertCache as $row) {
                 $this->db->table($row[0])
-                        ->where($row[1])
-                        ->delete();
+                    ->where($row[1])
+                    ->delete();
             }
         }
     }
@@ -267,9 +267,9 @@ trait DatabaseTestTrait
     public function grabFromDatabase(string $table, string $column, array $where)
     {
         $query = $this->db->table($table)
-                          ->select($column)
-                          ->where($where)
-                          ->get();
+            ->select($column)
+            ->where($where)
+            ->get();
 
         $query = $query->getRow();
 
@@ -309,8 +309,8 @@ trait DatabaseTestTrait
     public function dontSeeInDatabase(string $table, array $where)
     {
         $count = $this->db->table($table)
-                          ->where($where)
-                          ->countAllResults();
+            ->where($where)
+            ->countAllResults();
 
         $this->assertTrue($count === 0, 'Row was found in database');
     }
@@ -331,8 +331,7 @@ trait DatabaseTestTrait
             $data,
         ];
 
-        return $this->db->table($table)
-                        ->insert($data);
+        return $this->db->table($table)->insert($data);
     }
 
     /**
@@ -350,8 +349,8 @@ trait DatabaseTestTrait
     public function seeNumRecords(int $expected, string $table, array $where)
     {
         $count = $this->db->table($table)
-                          ->where($where)
-                          ->countAllResults();
+            ->where($where)
+            ->countAllResults();
 
         $this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
     }

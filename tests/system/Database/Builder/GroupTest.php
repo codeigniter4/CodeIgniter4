@@ -25,8 +25,7 @@ class GroupTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('user', $this->db);
 
-        $builder->select('name')
-                ->groupBy('name');
+        $builder->select('name')->groupBy('name');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name"';
 
@@ -40,8 +39,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('SUM(id) > 2');
+            ->groupBy('name')
+            ->having('SUM(id) > 2');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 2';
 
@@ -55,9 +54,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('id >', 3)
-                ->orHaving('SUM(id) > 2');
+            ->groupBy('name')
+            ->having('id >', 3)
+            ->orHaving('SUM(id) > 2');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" > 3 OR SUM(id) > 2';
 
@@ -71,8 +70,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingIn('id', [1, 2]);
+            ->groupBy('name')
+            ->havingIn('id', [1, 2]);
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2)';
 
@@ -85,8 +84,7 @@ class GroupTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('user', $this->db);
 
-        $builder->select('name')
-                ->groupBy('name');
+        $builder->select('name')->groupBy('name');
 
         $builder->havingIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
@@ -104,9 +102,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingIn('id', [1, 2])
-                ->orHavingIn('group_id', [5, 6]);
+            ->groupBy('name')
+            ->havingIn('id', [1, 2])
+            ->orHavingIn('group_id', [5, 6]);
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2) OR "group_id" IN (5,6)';
 
@@ -119,8 +117,7 @@ class GroupTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('user', $this->db);
 
-        $builder->select('name')
-                ->groupBy('name');
+        $builder->select('name')->groupBy('name');
 
         $builder->havingIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
@@ -141,8 +138,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingNotIn('id', [1, 2]);
+            ->groupBy('name')
+            ->havingNotIn('id', [1, 2]);
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2)';
 
@@ -155,8 +152,7 @@ class GroupTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('user', $this->db);
 
-        $builder->select('name')
-                ->groupBy('name');
+        $builder->select('name')->groupBy('name');
 
         $builder->havingNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
@@ -174,9 +170,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingNotIn('id', [1, 2])
-                ->orHavingNotIn('group_id', [5, 6]);
+            ->groupBy('name')
+            ->havingNotIn('id', [1, 2])
+            ->orHavingNotIn('group_id', [5, 6]);
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2) OR "group_id" NOT IN (5,6)';
 
@@ -189,8 +185,7 @@ class GroupTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('user', $this->db);
 
-        $builder->select('name')
-                ->groupBy('name');
+        $builder->select('name')->groupBy('name');
 
         $builder->havingNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
@@ -211,8 +206,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\'';
 
@@ -226,8 +221,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'before');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'before');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\'';
 
@@ -241,8 +236,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'after');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'after');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\'';
 
@@ -256,8 +251,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->notHavingLike('pet_name', 'a');
+            ->groupBy('name')
+            ->notHavingLike('pet_name', 'a');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a%\' ESCAPE \'!\'';
 
@@ -271,8 +266,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->notHavingLike('pet_name', 'a', 'before');
+            ->groupBy('name')
+            ->notHavingLike('pet_name', 'a', 'before');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a\' ESCAPE \'!\'';
 
@@ -286,8 +281,8 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->notHavingLike('pet_name', 'a', 'after');
+            ->groupBy('name')
+            ->notHavingLike('pet_name', 'a', 'after');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'a%\' ESCAPE \'!\'';
 
@@ -301,9 +296,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a')
-                ->orHavingLike('pet_color', 'b');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a')
+            ->orHavingLike('pet_color', 'b');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b%\' ESCAPE \'!\'';
 
@@ -317,9 +312,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'before')
-                ->orHavingLike('pet_color', 'b', 'before');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'before')
+            ->orHavingLike('pet_color', 'b', 'before');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b\' ESCAPE \'!\'';
 
@@ -333,9 +328,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'after')
-                ->orHavingLike('pet_color', 'b', 'after');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'after')
+            ->orHavingLike('pet_color', 'b', 'after');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'b%\' ESCAPE \'!\'';
 
@@ -349,9 +344,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a')
-                ->orNotHavingLike('pet_color', 'b');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a')
+            ->orNotHavingLike('pet_color', 'b');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b%\' ESCAPE \'!\'';
 
@@ -365,9 +360,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'before')
-                ->orNotHavingLike('pet_color', 'b', 'before');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'before')
+            ->orNotHavingLike('pet_color', 'b', 'before');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b\' ESCAPE \'!\'';
 
@@ -381,9 +376,9 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->havingLike('pet_name', 'a', 'after')
-                ->orNotHavingLike('pet_color', 'b', 'after');
+            ->groupBy('name')
+            ->havingLike('pet_name', 'a', 'after')
+            ->orNotHavingLike('pet_color', 'b', 'after');
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'b%\' ESCAPE \'!\'';
 
@@ -397,12 +392,12 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('SUM(id) <', 3)
-                ->havingGroupStart()
-                    ->having('SUM(id)', 2)
-                    ->having('name', 'adam')
-                ->havingGroupEnd();
+            ->groupBy('name')
+            ->having('SUM(id) <', 3)
+            ->havingGroupStart()
+            ->having('SUM(id)', 2)
+            ->having('name', 'adam')
+            ->havingGroupEnd();
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
@@ -416,12 +411,12 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('SUM(id) >', 3)
-                ->orHavingGroupStart()
-                    ->having('SUM(id)', 2)
-                    ->having('name', 'adam')
-                ->havingGroupEnd();
+            ->groupBy('name')
+            ->having('SUM(id) >', 3)
+            ->orHavingGroupStart()
+            ->having('SUM(id)', 2)
+            ->having('name', 'adam')
+            ->havingGroupEnd();
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 3 OR   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
@@ -435,12 +430,12 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('SUM(id) <', 3)
-                ->notHavingGroupStart()
-                    ->having('SUM(id)', 2)
-                    ->having('name', 'adam')
-                ->havingGroupEnd();
+            ->groupBy('name')
+            ->having('SUM(id) <', 3)
+            ->notHavingGroupStart()
+            ->having('SUM(id)', 2)
+            ->having('name', 'adam')
+            ->havingGroupEnd();
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
@@ -454,12 +449,12 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->select('name')
-                ->groupBy('name')
-                ->having('SUM(id) <', 3)
-                ->orNotHavingGroupStart()
-                    ->having('SUM(id)', 2)
-                    ->having('name', 'adam')
-                ->havingGroupEnd();
+            ->groupBy('name')
+            ->having('SUM(id) <', 3)
+            ->orNotHavingGroupStart()
+            ->having('SUM(id)', 2)
+            ->having('name', 'adam')
+            ->havingGroupEnd();
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 OR NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
@@ -473,10 +468,10 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->groupStart()
-                    ->where('id >', 3)
-                    ->where('name !=', 'Luke')
-                ->groupEnd()
-                ->where('name', 'Darth');
+            ->where('id >', 3)
+            ->where('name !=', 'Luke')
+            ->groupEnd()
+            ->where('name', 'Darth');
 
         $expectedSQL = 'SELECT * FROM "user" WHERE   ( "id" > 3 AND "name" != \'Luke\'  ) AND "name" = \'Darth\'';
 
@@ -490,10 +485,10 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->where('name', 'Darth')
-                ->orGroupStart()
-                    ->where('id >', 3)
-                    ->where('name !=', 'Luke')
-                ->groupEnd();
+            ->orGroupStart()
+            ->where('id >', 3)
+            ->where('name !=', 'Luke')
+            ->groupEnd();
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR   ( "id" > 3 AND "name" != \'Luke\'  )';
 
@@ -507,10 +502,10 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->where('name', 'Darth')
-                ->notGroupStart()
-                ->where('id >', 3)
-                ->where('name !=', 'Luke')
-                ->groupEnd();
+            ->notGroupStart()
+            ->where('id >', 3)
+            ->where('name !=', 'Luke')
+            ->groupEnd();
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' AND NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
@@ -524,15 +519,13 @@ class GroupTest extends CIUnitTestCase
         $builder = new BaseBuilder('user', $this->db);
 
         $builder->where('name', 'Darth')
-                ->orNotGroupStart()
-                ->where('id >', 3)
-                ->where('name !=', 'Luke')
-                ->groupEnd();
+            ->orNotGroupStart()
+            ->where('id >', 3)
+            ->where('name !=', 'Luke')
+            ->groupEnd();
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
         $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 }

@@ -150,10 +150,10 @@ class Pager implements PagerInterface
         if (! array_key_exists($template, $this->config->templates)) {
             throw PagerException::forInvalidTemplate($template);
         }
+
         $pager = new PagerRenderer($this->getDetails($group));
 
-        return $this->view->setVar('pager', $pager)
-                        ->render($this->config->templates[$template]);
+        return $this->view->setVar('pager', $pager)->render($this->config->templates[$template]);
     }
 
     //--------------------------------------------------------------------

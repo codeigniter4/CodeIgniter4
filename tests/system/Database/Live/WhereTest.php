@@ -53,8 +53,8 @@ class WhereTest extends CIUnitTestCase
     public function testWhereCustomString()
     {
         $jobs = $this->db->table('job')->where("id > 2 AND name != 'Accountant'")
-                            ->get()
-                            ->getResult();
+            ->get()
+            ->getResult();
 
         $this->assertCount(1, $jobs);
 
@@ -67,10 +67,10 @@ class WhereTest extends CIUnitTestCase
     public function testOrWhere()
     {
         $jobs = $this->db->table('job')
-                        ->where('name !=', 'Accountant')
-                        ->orWhere('id >', 3)
-                        ->get()
-                        ->getResult();
+            ->where('name !=', 'Accountant')
+            ->orWhere('id >', 3)
+            ->get()
+            ->getResult();
 
         $this->assertCount(3, $jobs);
         $this->assertEquals('Developer', $jobs[0]->name);
@@ -83,10 +83,10 @@ class WhereTest extends CIUnitTestCase
     public function testOrWhereSameColumn()
     {
         $jobs = $this->db->table('job')
-                        ->where('name', 'Developer')
-                        ->orWhere('name', 'Politician')
-                        ->get()
-                        ->getResult();
+            ->where('name', 'Developer')
+            ->orWhere('name', 'Politician')
+            ->get()
+            ->getResult();
 
         $this->assertCount(2, $jobs);
         $this->assertEquals('Developer', $jobs[0]->name);
@@ -98,9 +98,9 @@ class WhereTest extends CIUnitTestCase
     public function testWhereIn()
     {
         $jobs = $this->db->table('job')
-                        ->whereIn('name', ['Politician', 'Accountant'])
-                        ->get()
-                        ->getResult();
+            ->whereIn('name', ['Politician', 'Accountant'])
+            ->get()
+            ->getResult();
 
         $this->assertCount(2, $jobs);
         $this->assertEquals('Politician', $jobs[0]->name);
@@ -115,9 +115,9 @@ class WhereTest extends CIUnitTestCase
     public function testWhereNotIn()
     {
         $jobs = $this->db->table('job')
-                         ->whereNotIn('name', ['Politician', 'Accountant'])
-                         ->get()
-                         ->getResult();
+            ->whereNotIn('name', ['Politician', 'Accountant'])
+            ->get()
+            ->getResult();
 
         $this->assertCount(2, $jobs);
         $this->assertEquals('Developer', $jobs[0]->name);
@@ -129,14 +129,14 @@ class WhereTest extends CIUnitTestCase
     public function testSubQuery()
     {
         $subQuery = $this->db->table('job')
-                             ->select('id')
-                             ->where('name', 'Developer')
-                             ->getCompiledSelect();
+            ->select('id')
+            ->where('name', 'Developer')
+            ->getCompiledSelect();
 
         $jobs = $this->db->table('job')
-                         ->where('id not in (' . $subQuery . ')', null, false)
-                         ->get()
-                         ->getResult();
+            ->where('id not in (' . $subQuery . ')', null, false)
+            ->get()
+            ->getResult();
 
         $this->assertCount(3, $jobs);
         $this->assertEquals('Politician', $jobs[0]->name);
@@ -149,14 +149,14 @@ class WhereTest extends CIUnitTestCase
     public function testSubQueryAnotherType()
     {
         $subQuery = $this->db->table('job')
-                             ->select('id')
-                             ->where('name', 'Developer')
-                             ->getCompiledSelect();
+            ->select('id')
+            ->where('name', 'Developer')
+            ->getCompiledSelect();
 
         $jobs = $this->db->table('job')
-                         ->where('id = (' . $subQuery . ')', null, false)
-                         ->get()
-                         ->getResult();
+            ->where('id = (' . $subQuery . ')', null, false)
+            ->get()
+            ->getResult();
 
         $this->assertCount(1, $jobs);
         $this->assertEquals('Developer', $jobs[0]->name);
@@ -167,15 +167,15 @@ class WhereTest extends CIUnitTestCase
     public function testWhereNullParam()
     {
         $this->db->table('job')
-                 ->insert([
-                     'name'        => 'Brewmaster',
-                     'description' => null,
-                 ]);
+            ->insert([
+                'name'        => 'Brewmaster',
+                'description' => null,
+            ]);
 
         $jobs = $this->db->table('job')
-                         ->where('description', null)
-                         ->get()
-                         ->getResult();
+            ->where('description', null)
+            ->get()
+            ->getResult();
 
         $this->assertCount(1, $jobs);
         $this->assertEquals('Brewmaster', $jobs[0]->name);
@@ -186,15 +186,15 @@ class WhereTest extends CIUnitTestCase
     public function testWhereIsNull()
     {
         $this->db->table('job')
-                 ->insert([
-                     'name'        => 'Brewmaster',
-                     'description' => null,
-                 ]);
+            ->insert([
+                'name'        => 'Brewmaster',
+                'description' => null,
+            ]);
 
         $jobs = $this->db->table('job')
-                         ->where('description IS NULL')
-                         ->get()
-                         ->getResult();
+            ->where('description IS NULL')
+            ->get()
+            ->getResult();
 
         $this->assertCount(1, $jobs);
         $this->assertEquals('Brewmaster', $jobs[0]->name);
@@ -205,15 +205,15 @@ class WhereTest extends CIUnitTestCase
     public function testWhereIsNotNull()
     {
         $this->db->table('job')
-                 ->insert([
-                     'name'        => 'Brewmaster',
-                     'description' => null,
-                 ]);
+            ->insert([
+                'name'        => 'Brewmaster',
+                'description' => null,
+            ]);
 
         $jobs = $this->db->table('job')
-                         ->where('description IS NOT NULL')
-                         ->get()
-                         ->getResult();
+            ->where('description IS NOT NULL')
+            ->get()
+            ->getResult();
 
         $this->assertCount(4, $jobs);
     }

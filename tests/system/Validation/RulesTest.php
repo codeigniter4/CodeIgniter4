@@ -691,11 +691,11 @@ class RulesTest extends CIUnitTestCase
     {
         $db = Database::connect();
         $db->table('user')
-           ->insert([
-               'name'    => 'Derek Travis',
-               'email'   => 'derek@world.com',
-               'country' => 'Elbonia',
-           ]);
+            ->insert([
+                'name'    => 'Derek Travis',
+                'email'   => 'derek@world.com',
+                'country' => 'Elbonia',
+            ]);
 
         $data = [
             'email' => 'derek@world.com',
@@ -733,17 +733,17 @@ class RulesTest extends CIUnitTestCase
      */
     public function testIsUniqueIgnoresParams()
     {
-        $db   = Database::connect();
-        $user = $db->table('user')
-                   ->insert([
-                       'name'    => 'Developer A',
-                       'email'   => 'deva@example.com',
-                       'country' => 'Elbonia',
-                   ]);
+        $db = Database::connect();
+        $db->table('user')
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
         $row = $db->table('user')
-                   ->limit(1)
-                   ->get()
-                   ->getRow();
+            ->limit(1)
+            ->get()
+            ->getRow();
 
         $data = [
             'email' => 'derek@world.co.uk',
@@ -771,9 +771,9 @@ class RulesTest extends CIUnitTestCase
 
         $db  = Database::connect();
         $row = $db->table('user')
-                  ->limit(1)
-                  ->get()
-                  ->getRow();
+            ->limit(1)
+            ->get()
+            ->getRow();
 
         $data = [
             'id'    => $row->id,
@@ -796,11 +796,11 @@ class RulesTest extends CIUnitTestCase
     {
         $db = Database::connect();
         $db->table('user')
-                   ->insert([
-                       'name'    => 'Developer A',
-                       'email'   => 'deva@example.com',
-                       'country' => 'Elbonia',
-                   ]);
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
 
         $this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
     }
@@ -814,11 +814,11 @@ class RulesTest extends CIUnitTestCase
     {
         $db = Database::connect();
         $db->table('user')
-           ->insert([
-               'name'    => 'Derek Travis',
-               'email'   => 'derek@world.com',
-               'country' => 'Elbonia',
-           ]);
+            ->insert([
+                'name'    => 'Derek Travis',
+                'email'   => 'derek@world.com',
+                'country' => 'Elbonia',
+            ]);
 
         $data = [
             'email' => 'derek1@world.com',
@@ -840,11 +840,11 @@ class RulesTest extends CIUnitTestCase
     {
         $db = Database::connect();
         $db->table('user')
-           ->insert([
-               'name'    => 'Derek Travis',
-               'email'   => 'derek@world.com',
-               'country' => 'Elbonia',
-           ]);
+            ->insert([
+                'name'    => 'Derek Travis',
+                'email'   => 'derek@world.com',
+                'country' => 'Elbonia',
+            ]);
 
         $data = [
             'email' => 'derek@world.com',
@@ -864,17 +864,17 @@ class RulesTest extends CIUnitTestCase
      */
     public function testIsNotUniqueIgnoresParams()
     {
-        $db   = Database::connect();
-        $user = $db->table('user')
-                   ->insert([
-                       'name'    => 'Developer A',
-                       'email'   => 'deva@example.com',
-                       'country' => 'Elbonia',
-                   ]);
+        $db = Database::connect();
+        $db->table('user')
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
         $row = $db->table('user')
-                   ->limit(1)
-                   ->get()
-                   ->getRow();
+            ->limit(1)
+            ->get()
+            ->getRow();
 
         $data = [
             'email' => 'derek@world.co.uk',
@@ -902,9 +902,9 @@ class RulesTest extends CIUnitTestCase
 
         $db  = Database::connect();
         $row = $db->table('user')
-                  ->limit(1)
-                  ->get()
-                  ->getRow();
+            ->limit(1)
+            ->get()
+            ->getRow();
 
         $data = [
             'id'    => $row->id,
@@ -927,11 +927,11 @@ class RulesTest extends CIUnitTestCase
     {
         $db = Database::connect();
         $db->table('user')
-                   ->insert([
-                       'name'    => 'Developer A',
-                       'email'   => 'deva@example.com',
-                       'country' => 'Elbonia',
-                   ]);
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
 
         $this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
     }

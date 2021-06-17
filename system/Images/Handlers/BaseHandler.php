@@ -548,19 +548,16 @@ abstract class BaseHandler implements ImageHandlerInterface
                 return $this->rotate(180);
 
             case 4:
-                return $this->rotate(180)
-                                ->flip('horizontal');
+                return $this->rotate(180)->flip('horizontal');
 
             case 5:
-                return $this->rotate(270)
-                                ->flip('horizontal');
+                return $this->rotate(270)->flip('horizontal');
 
             case 6:
                 return $this->rotate(270);
 
             case 7:
-                return $this->rotate(90)
-                                ->flip('horizontal');
+                return $this->rotate(90)->flip('horizontal');
 
             case 8:
                 return $this->rotate(90);
@@ -644,8 +641,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         [$x, $y] = $this->calcCropCoords($cropWidth, $cropHeight, $origWidth, $origHeight, $position);
 
-        return $this->crop($cropWidth, $cropHeight, $x, $y)
-                        ->resize($width, $height);
+        return $this->crop($cropWidth, $cropHeight, $x, $y)->resize($width, $height);
     }
 
     //--------------------------------------------------------------------

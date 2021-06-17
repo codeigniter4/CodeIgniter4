@@ -26,9 +26,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(NeverHeardOfIt::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(NeverHeardOfIt::class)
+            ->execute('index');
     }
 
     public function testBadControllerMethod()
@@ -36,18 +36,18 @@ class ControllerTestTraitTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Home::class)
-                ->execute('nothere');
+            ->withLogger($logger)
+            ->controller(Home::class)
+            ->execute('nothere');
     }
 
     public function testController()
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Home::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(Home::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
@@ -56,8 +56,8 @@ class ControllerTestTraitTest extends CIUnitTestCase
     public function testControllerWithoutLogger()
     {
         $result = $this->withURI('http://example.com')
-                ->controller(Home::class)
-                ->execute('index');
+            ->controller(Home::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
@@ -67,9 +67,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
@@ -79,9 +79,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertEquals('Hi there', $body);
@@ -91,9 +91,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('pop');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('pop');
 
         $this->assertEquals(567, $result->response()->getStatusCode());
     }
@@ -102,9 +102,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('popper');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('popper');
 
         $this->assertEquals(500, $result->response()->getStatusCode());
     }
@@ -116,13 +116,13 @@ class ControllerTestTraitTest extends CIUnitTestCase
         $body   = '';
 
         $result = $this->withURI('http://example.com')
-                ->withConfig($config)
-                ->withRequest(Services::request($config))
-                ->withResponse(Services::response($config))
-                ->withLogger($logger)
-                ->withBody($body)
-                ->controller(Popcorn::class)
-                ->execute('index');
+            ->withConfig($config)
+            ->withRequest(Services::request($config))
+            ->withResponse(Services::response($config))
+            ->withLogger($logger)
+            ->withBody($body)
+            ->controller(Popcorn::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertEquals('Hi there', $body);
@@ -132,9 +132,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('popper');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('popper');
 
         $req = $result->request();
         $this->assertEquals('get', $req->getMethod());
@@ -144,9 +144,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('oops');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('oops');
 
         $this->assertFalse($result->isOK());
         $this->assertEquals(401, $result->response()->getStatusCode());
@@ -156,9 +156,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('weasel');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('weasel');
 
         $body = $result->response()->getBody(); // empty
         $this->assertEmpty($body);
@@ -169,9 +169,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('goaway');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('goaway');
 
         $this->assertTrue($result->isRedirect());
     }
@@ -180,9 +180,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('index');
 
         $this->assertTrue($result->see('Hi'));
     }
@@ -191,9 +191,9 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
-                ->withLogger($logger)
-                ->controller(Popcorn::class)
-                ->execute('index');
+            ->withLogger($logger)
+            ->controller(Popcorn::class)
+            ->execute('index');
 
         // won't fail, but doesn't do anything
         $this->assertNull($result->ohno('Hi'));
@@ -205,8 +205,8 @@ class ControllerTestTraitTest extends CIUnitTestCase
     public function testResponseOverriding()
     {
         $result = $this->withURI('http://example.com/rest/')
-                ->controller(Popcorn::class)
-                ->execute('index3');
+            ->controller(Popcorn::class)
+            ->execute('index3');
 
         $response = json_decode($result->response()->getBody());
         $this->assertEquals('en', $response->lang);
@@ -219,8 +219,8 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withLogger($logger)
-                       ->controller(Home::class)
-                       ->execute('index');
+            ->controller(Home::class)
+            ->execute('index');
 
         $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
@@ -229,7 +229,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
     public function testRedirectRoute()
     {
         $result = $this->controller(Popcorn::class)
-                        ->execute('toindex');
+            ->execute('toindex');
         $this->assertTrue($result->isRedirect());
     }
 }

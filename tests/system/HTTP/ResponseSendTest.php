@@ -116,8 +116,8 @@ class ResponseSendTest extends CIUnitTestCase
         $routes->add('user/login', 'Auth::verify', ['as' => 'login']);
 
         $answer1 = $response->redirect('/login')
-                ->setCookie('foo', 'bar', YEAR)
-                ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('foo', 'bar', YEAR)
+            ->setCookie('login_time', $loginTime, YEAR);
         $this->assertTrue($answer1->hasCookie('foo', 'bar'));
         $this->assertTrue($answer1->hasCookie('login_time'));
         $response->setBody('Hello');

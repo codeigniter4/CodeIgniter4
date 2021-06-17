@@ -1097,8 +1097,8 @@ class Time extends DateTime
         $testTime = $this->getUTCObject($testTime, $timezone);
 
         $ourTime = $this->toDateTime()
-                ->setTimezone(new DateTimeZone('UTC'))
-                ->format('Y-m-d H:i:s');
+            ->setTimezone(new DateTimeZone('UTC'))
+            ->format('Y-m-d H:i:s');
 
         return $testTime->format('Y-m-d H:i:s') === $ourTime;
     }

@@ -151,8 +151,7 @@ class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->where('name', 'Accountant')
-                ->orWhere('name', 'foobar');
+        $builder->where('name', 'Accountant')->orWhere('name', 'foobar');
 
         $expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = \'Accountant\' OR "name" = \'foobar\'';
         $expectedBinds = [

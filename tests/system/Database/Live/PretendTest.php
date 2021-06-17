@@ -22,14 +22,14 @@ class PretendTest extends CIUnitTestCase
     public function testPretendReturnsQueryObject()
     {
         $result = $this->db->pretend(false)
-                           ->table('user')
-                           ->get();
+            ->table('user')
+            ->get();
 
         $this->assertFalse($result instanceof Query);
 
         $result = $this->db->pretend(true)
-                    ->table('user')
-                    ->get();
+            ->table('user')
+            ->get();
 
         $this->assertInstanceOf(Query::class, $result);
     }
