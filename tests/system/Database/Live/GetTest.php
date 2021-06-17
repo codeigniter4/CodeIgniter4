@@ -239,7 +239,7 @@ class GetTest extends CIUnitTestCase
 
     public function testGetRowWithCustomReturnType()
     {
-        $testClass = new class { };
+        $testClass = new class() {};
 
         $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
 
