@@ -15,7 +15,6 @@ use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
 use PHPUnit\Framework\Assert;
-use Closure;
 
 class MockCache extends BaseHandler implements CacheInterface
 {
