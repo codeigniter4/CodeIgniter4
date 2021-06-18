@@ -119,6 +119,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'multiline_whitespace_before_semicolons'  => ['strategy' => 'no_multi_line'],
             'native_function_casing'                  => true,
             'native_function_type_declaration_casing' => true,
+            'new_with_braces'                         => true,
             'no_alias_functions'                      => ['sets' => ['@all']],
             'no_short_bool_cast'                      => true,
             'no_trailing_comma_in_singleline_array'   => true,

@@ -32,7 +32,7 @@ class RouterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $moduleConfig          = new Modules;
+        $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 

@@ -101,7 +101,7 @@ class MockResult extends BaseResult
      */
     protected function fetchObject($className = 'stdClass')
     {
-        return new $className;
+        return new $className();
     }
 
     //--------------------------------------------------------------------

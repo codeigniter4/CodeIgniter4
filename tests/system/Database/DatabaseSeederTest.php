@@ -21,7 +21,7 @@ class DatabaseSeederTest extends CIUnitTestCase
     {
         $this->expectException('InvalidArgumentException');
 
-        $config            = new Database;
+        $config            = new Database();
         $config->filesPath = APPPATH . 'Foo';
         new Seeder($config);
     }

@@ -475,7 +475,7 @@ class Toolbar
                 break;
 
             case 'xml':
-                $formatter = new XMLFormatter;
+                $formatter = new XMLFormatter();
                 $output    = $formatter->format($data);
                 break;
         }

@@ -26,7 +26,7 @@ class BaseHandlerTest extends CIUnitTestCase
             [false],
             [null],
             [42],
-            [new stdClass],
+            [new stdClass()],
         ];
     }
 
