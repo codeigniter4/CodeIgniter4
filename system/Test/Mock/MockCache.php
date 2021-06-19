@@ -102,7 +102,7 @@ class MockCache extends BaseHandler implements CacheInterface
 	{
 		if ($this->bypass)
 		{
-			return false;
+			return true;
 		}
 
 		$key = static::validateKey($key, $this->prefix);
@@ -129,8 +129,7 @@ class MockCache extends BaseHandler implements CacheInterface
 			return false;
 		}
 
-		unset($this->cache[$key]);
-		unset($this->expirations[$key]);
+		unset($this->cache[$key], $this->expirations[$key]);
 
 		return true;
 	}
@@ -145,13 +144,13 @@ class MockCache extends BaseHandler implements CacheInterface
 	public function deleteMatching(string $pattern)
 	{
 		$count = 0;
+
 		foreach (array_keys($this->cache) as $key)
 		{
 			if (fnmatch($pattern, $key))
 			{
 				$count++;
-				unset($this->cache[$key]);
-				unset($this->expirations[$key]);
+				unset($this->cache[$key], $this->expirations[$key]);
 			}
 		}
 
@@ -241,8 +240,8 @@ class MockCache extends BaseHandler implements CacheInterface
 	 * @param string $key Cache item name.
 	 *
 	 * @return array|null
-	 *   Returns null if the item does not exist, otherwise array<string, mixed>
-	 *   with at least the 'expire' key for absolute epoch expiry (or null).
+	 *                    Returns null if the item does not exist, otherwise array<string, mixed>
+	 *                    with at least the 'expire' key for absolute epoch expiry (or null).
 	 */
 	public function getMetaData(string $key)
 	{
