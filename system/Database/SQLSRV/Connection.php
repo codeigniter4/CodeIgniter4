@@ -588,4 +588,29 @@ class Connection extends BaseConnection
     }
 
     // --------------------------------------------------------------------
+	
+	/**
+	 * Returns an instance of the query builder for this connection.
+	 *
+	 * @param string|array $tableName
+	 *
+	 * @return BaseBuilder
+	 * @throws DatabaseException
+	 */
+	public function table($tableName)
+	{
+			
+		if (empty($tableName))
+		{
+			throw new DatabaseException('You must set the database table to be used with your query.');
+		}
+
+		$className = str_replace('Connection', 'Builder', get_class($this));
+		
+		$tableName="[".$this->database."].[".$this->schema."].[".$tableName."]";
+
+		return new $className($tableName, $this);
+	}
+	
+	// --------------------------------------------------------------------
 }
