@@ -644,19 +644,11 @@ if (! function_exists('is_cli')) {
     /**
      * Check if PHP was invoked from the command line.
      *
-     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
+     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in php-cli
      */
     function is_cli(): bool
     {
-        if (PHP_SAPI === 'cli') {
-            return true;
-        }
-
         if (defined('STDIN')) {
-            return true;
-        }
-
-        if (stristr(PHP_SAPI, 'cgi') && getenv('TERM')) {
             return true;
         }
 
