@@ -159,6 +159,36 @@ it returns the current row and moves the internal data pointer ahead.
         echo $row->body;
     }
 
+For use with MySQLi you may set MySQLi's result mode to 
+``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not 
+generally recommended but it can be beneficial in some circumstances 
+such as writing large queries to csv. If you change the result mode 
+be aware of the tradeoffs associated with it.
+
+::
+
+    $db->resultMode = MYSQLI_USE_RESULT; // for unbuffered results
+
+    $query = $db->query("YOUR QUERY");
+
+    $file = new \CodeIgniter\Files\File(WRITEPATH.'data.csv');
+
+    $csv = $file->openFile('w');
+
+    while ($row = $query->getUnbufferedRow('array'))
+    {	
+    	$csv->fputcsv($row);
+    }
+
+    $db->resultMode = MYSQLI_STORE_RESULT; // return to default mode
+
+.. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same  
+    connection will result in error until all records have been fetched or 
+    a ``freeResult()`` call has been made. The ``getNumRows()`` method will only 
+    return the number of rows based on the current position of the data pointer. 
+    MyISAM tables will remain locked until all the records have been fetched 
+    or a ``freeResult()`` call has been made.
+
 You can optionally pass 'object' (default) or 'array' in order to specify
 the returned value's type::
 
