@@ -589,14 +589,15 @@ class Connection extends BaseConnection
 
     // --------------------------------------------------------------------
 	
-	/**
-	 * Returns an instance of the query builder for this connection.
-	 *
-	 * @param string|array $tableName
-	 *
-	 * @return BaseBuilder
-	 * @throws DatabaseException
-	 */
+	 /**
+     * Returns an instance of the query builder for this connection.
+     *
+     * @param array|string $tableName
+     *
+     * @throws DatabaseException
+     *
+     * @return BaseBuilder
+     */
 	public function table($tableName)
 	{
 			
