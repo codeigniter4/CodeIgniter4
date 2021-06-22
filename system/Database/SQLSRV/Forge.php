@@ -83,7 +83,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $createTableIfStr = "IF NOT EXISTS(SELECT t.name, s.name as schema_name, t.type_desc FROM sys.tables t INNER JOIN sys.schemas s on s.schema_id = t.schema_id WHERE s.name=N'%s' AND t.name=N'%s' AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
+    protected $createTableIfStr = "IF NOT EXISTS(SELECT t.name, s.name as schema_name, t.type_desc FROM sys.tables t INNER JOIN sys.schemas s on s.schema_id = t.schema_id WHERE s.name=N'%s' AND t.name=REPLACE(N'%s', '\"', '') AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
 
     /**
      * CREATE TABLE statement
@@ -111,7 +111,7 @@ class Forge extends BaseForge
             . "FROM sys.tables t "
             . "INNER JOIN sys.schemas s on s.schema_id = t.schema_id "
             . "WHERE s.name=N'" . $this->db->schema . "' "
-            . "AND t.name=N'%s' "
+            . "AND t.name=REPLACE(N'%s', '\"', '') "
             . "AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
 
         $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
@@ -463,58 +463,4 @@ class Forge extends BaseForge
 
     //--------------------------------------------------------------------
 
-    /**
-     * Create Table
-     *
-     * @param string $table       Table name
-     * @param bool   $ifNotExists Whether to add 'IF NOT EXISTS' condition
-     * @param array  $attributes  Associative array of table attributes
-     *
-     * @return mixed
-     */
-    protected function _createTable(string $table, bool $ifNotExists, array $attributes)
-    {
-        // For any platforms that don't support Create If Not Exists...
-        if ($ifNotExists === true && $this->createTableIfStr === false) {
-            if ($this->db->tableExists($table)) {
-                return true;
-            }
-
-            $ifNotExists = false;
-        }
-
-        $sql = ($ifNotExists) ? sprintf($this->createTableIfStr, $table) : 'CREATE TABLE';
-
-        $columns = $this->_processFields(true);
-
-        for ($i = 0, $c = count($columns); $i < $c; $i++) {
-            $columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
-        }
-
-        $columns = implode(',', $columns);
-
-        $columns .= $this->_processPrimaryKeys($table);
-        $columns .= $this->_processForeignKeys($table);
-
-        // Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
-        if ($this->createTableKeys === true) {
-            $indexes = $this->_processIndexes($table);
-            if (is_string($indexes)) {
-                $columns .= $indexes;
-            }
-        }
-
-        // createTableStr will usually have the following format: "%s %s (%s\n)"
-        $sql = sprintf(
-            $this->createTableStr . '%s',
-            $sql,
-            $this->db->escapeIdentifiers($table),
-            $columns,
-            $this->_createTableAttributes($attributes)
-        );
-
-        return $sql;
-    }
-
-    //--------------------------------------------------------------------
 }
