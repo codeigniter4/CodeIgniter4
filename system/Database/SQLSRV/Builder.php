@@ -547,6 +547,44 @@ class Builder extends BaseBuilder
         return $this;
     }
 
+    //--------------------------------------------------------------------
+
+    /**
+     * "Count All" query
+     *
+     * Generates a platform-specific query string that counts all records in
+     * the particular table
+     *
+     * @param bool $reset Are we want to clear query builder values?
+     *
+     * @return int|string when $test = true
+     */
+    public function countAll(bool $reset = true)
+    {
+        $table = $this->QBFrom[0];
+
+        $sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM '
+                . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->protectIdentifiers($table, true, null, false);
+
+        if ($this->testMode) {
+            return $sql;
+        }
+
+        $query = $this->db->query($sql, null, false);
+        if (empty($query->getResult())) {
+            return 0;
+        }
+
+        $query = $query->getRow();
+
+        if ($reset === true) {
+            $this->resetSelect();
+        }
+
+        return (int) $query->numrows;
+    }
+
+    //--------------------------------------------------------------------
     /**
      * Delete statement
      *
