@@ -97,9 +97,13 @@ class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryAndReturnsManualResultObject()
     {
-        $query = $this->db->prepare(static function ($db) {
+        $query = $this->db->prepare(static function ($db) {	
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
-
+			
+			if ($db->DBDriver === 'SQLSRV'){
+				$sql = "INSERT INTO {$db->schema}.{$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+			}
+			
             return (new Query($db))->setQuery($sql);
         });
 
