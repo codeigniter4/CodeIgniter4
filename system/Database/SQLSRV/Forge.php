@@ -26,7 +26,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    private $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
+    protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
      * CREATE DATABASE IF statement
