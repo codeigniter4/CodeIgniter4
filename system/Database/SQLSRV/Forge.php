@@ -192,7 +192,6 @@ class Forge extends BaseForge
             }
 
             if (isset($data['type'])) {
-                // EXEC sp_rename 'Sales.SalesTerritory.TerritoryID', 'TerrID', 'COLUMN';
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
                     . " {$data['type']}{$data['length']}";
             }
@@ -216,7 +215,6 @@ class Forge extends BaseForge
             }
 
             if (!empty($data['new_name'])) {
-                // EXEC sp_rename '[dbo].[db_misc].[value]', 'valueasdasd', 'COLUMN';
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
             }
         }
