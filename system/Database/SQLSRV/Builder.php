@@ -199,6 +199,26 @@ class Builder extends BaseBuilder
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
 
+        //--------------------------------------------------------------------
+
+    /**
+     * Insert batch statement
+     *
+     * Generates a platform-specific insert string from the supplied data.
+     *
+     * @param string $table  Table name
+     * @param array  $keys   INSERT keys
+     * @param array  $values INSERT values
+     *
+     * @return string
+     */
+    protected function _insertBatch(string $table, array $keys, array $values): string
+    {
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+    }
+
+    //--------------------------------------------------------------------
+
     /**
      * Update statement
      *
