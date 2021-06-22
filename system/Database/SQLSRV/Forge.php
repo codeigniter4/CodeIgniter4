@@ -18,6 +18,7 @@ use CodeIgniter\Database\Forge as BaseForge;
  */
 class Forge extends BaseForge
 {
+
     /**
      * DROP CONSTRAINT statement
      *
@@ -80,7 +81,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $createTableIfStr = "IF NOT EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nCREATE TABLE";
+    protected $createTableIfStr = "IF NOT EXISTS(SELECT t.name, s.name as schema_name, t.type_desc FROM sys.tables t INNER JOIN sys.schemas s on s.schema_id = t.schema_id WHERE s.name=N'%s' AND t.name=N'%s' AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
 
     /**
      * CREATE TABLE statement
@@ -97,6 +98,25 @@ class Forge extends BaseForge
     protected $_drop_table_if = "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
 
     //--------------------------------------------------------------------
+
+
+    public function __construct(\CodeIgniter\Database\BaseConnection $db)
+    {
+        parent::__construct($db);
+
+        // Update the table string to avoid pulling in
+        $this->createTableIfStr = "IF NOT EXISTS"
+            . "(SELECT t.name, s.name as schema_name, t.type_desc "
+            . "FROM sys.tables t "
+            . "INNER JOIN sys.schemas s on s.schema_id = t.schema_id "
+            . "WHERE s.name=N'" . $this->db->schema . "' "
+            . "AND t.name=N'%s' "
+            . "AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
+
+        $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
+
+        $this->renameTableStr = "EXEC sp_rename '[" . $this->db->schema . "].[%s]' , '[%s]' ;";
+    }
 
     /**
      * CREATE TABLE attributes
@@ -138,7 +158,7 @@ class Forge extends BaseForge
                 $fld = array_intersect($field, $index->fields);
 
                 // Drop index if field is part of an index
-                if (! empty($fld)) {
+                if (!empty($fld)) {
                     $this->_dropIndex($table, $index);
                 }
             }
@@ -163,28 +183,28 @@ class Forge extends BaseForge
 
             if (isset($data['type'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . " {$data['type']}{$data['length']}";
+                    . " {$data['type']}{$data['length']}";
             }
 
-            if (! empty($data['default'])) {
+            if (!empty($data['default'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($data['name']) . '_def'
-                        . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
+                    . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
             }
 
             if (isset($data['null'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
+                    . ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
             }
 
-            if (! empty($data['comment'])) {
+            if (!empty($data['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
-                        . "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
-                        . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
-                        . "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
-                        . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
+                    . "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
+                    . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
+                    . "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
+                    . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
             }
 
-            if (! empty($data['new_name'])) {
+            if (!empty($data['new_name'])) {
                 // EXEC sp_rename '[dbo].[db_misc].[value]', 'valueasdasd', 'COLUMN';
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
             }
@@ -224,13 +244,13 @@ class Forge extends BaseForge
     protected function _processColumn(array $field): string
     {
         return $this->db->escapeIdentifiers($field['name'])
-                . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-                . ' ' . $field['type'] . $field['length']
-                . $field['default']
-                . $field['null']
-                . $field['auto_increment']
-                . '' // (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
-                . $field['unique'];
+            . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
+            . ' ' . $field['type'] . $field['length']
+            . $field['default']
+            . $field['null']
+            . $field['auto_increment']
+            . '' // (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
+            . $field['unique'];
     }
 
     /**
@@ -257,8 +277,8 @@ class Forge extends BaseForge
                 $nameIndex = $table . '_' . $field . '_foreign';
 
                 $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                        . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-                        . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+                    . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
+                    . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
                 if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
@@ -283,14 +303,14 @@ class Forge extends BaseForge
     protected function _processPrimaryKeys(string $table): string
     {
         for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (! isset($this->fields[$this->primaryKeys[$i]])) {
+            if (!isset($this->fields[$this->primaryKeys[$i]])) {
                 unset($this->primaryKeys[$i]);
             }
         }
 
         if ($this->primaryKeys !== []) {
             $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
+                . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
         }
 
         return $sql ?? '';
@@ -314,8 +334,8 @@ class Forge extends BaseForge
 
         switch (strtoupper($attributes['TYPE'])) {
             case 'MEDIUMINT':
-                $attributes['TYPE']     = 'INTEGER';
-                $attributes['UNSIGNED'] = false;
+                $attributes['TYPE']      = 'INTEGER';
+                $attributes['UNSIGNED']  = false;
                 break;
 
             case 'INTEGER':
@@ -324,8 +344,8 @@ class Forge extends BaseForge
                 break;
 
             case 'ENUM':
-                $attributes['TYPE']       = 'TEXT';
-                $attributes['CONSTRAINT'] = null;
+                $attributes['TYPE']          = 'TEXT';
+                $attributes['CONSTRAINT']    = null;
 
                 break;
             /* case 'DATETIME':
@@ -350,7 +370,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false) {
+        if (!empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false) {
             $field['auto_increment'] = ' IDENTITY(1,1)';
         }
     }
@@ -386,4 +406,53 @@ class Forge extends BaseForge
 
         return $sql;
     }
+
+        //--------------------------------------------------------------------
+
+    /**
+     * Rename Table
+     *
+     * @param string $tableName    Old table name
+     * @param string $newTableName New table name
+     *
+     * @throws DatabaseException
+     *
+     * @return mixed
+     */
+    public function renameTable(string $tableName, string $newTableName)
+    {
+        if ($tableName === '' || $newTableName === '') {
+            throw new InvalidArgumentException('A table name is required for that operation.');
+        }
+
+        if ($this->renameTableStr === false) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        $result = $this->db->query(sprintf(
+            $this->renameTableStr,
+            $this->db->DBPrefix . $tableName,
+            $this->db->DBPrefix . $newTableName
+        ));
+
+        if ($result && ! empty($this->db->dataCache['table_names'])) {
+            $key = array_search(
+                strtolower($this->db->DBPrefix . $tableName),
+                array_map('strtolower', $this->db->dataCache['table_names']),
+                true
+            );
+
+            if ($key !== false) {
+                $this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $newTableName;
+            }
+        }
+
+        return $result;
+    }
+
+    //--------------------------------------------------------------------
 }
