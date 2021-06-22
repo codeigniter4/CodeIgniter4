@@ -116,7 +116,7 @@ class Forge extends BaseForge
 
         $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
 
-        $this->renameTableStr = "EXEC sp_rename '[" . $this->db->schema . "].[%s]' , '%s' ;";
+        $this->renameTableStr = "EXEC sp_rename [".$this->db->escapeIdentifiers($this->db->schema).".%s] , %s ;";
 
         $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
     }
@@ -459,53 +459,6 @@ class Forge extends BaseForge
         }
 
         return $sql;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Rename Table
-     *
-     * @param string $tableName    Old table name
-     * @param string $newTableName New table name
-     *
-     * @throws DatabaseException
-     *
-     * @return mixed
-     */
-    public function renameTable(string $tableName, string $newTableName)
-    {
-        if ($tableName === '' || $newTableName === '') {
-            throw new InvalidArgumentException('A table name is required for that operation.');
-        }
-
-        if ($this->renameTableStr === false) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('This feature is not available for the database you are using.');
-            }
-
-            return false;
-        }
-
-        $result = $this->db->query(sprintf(
-            $this->renameTableStr,
-            $this->db->DBPrefix . $tableName,
-            $this->db->DBPrefix . $newTableName
-        ));
-
-        if ($result && !empty($this->db->dataCache['table_names'])) {
-            $key = array_search(
-                strtolower($this->db->DBPrefix . $tableName),
-                array_map('strtolower', $this->db->dataCache['table_names']),
-                true
-            );
-
-            if ($key !== false) {
-                $this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $newTableName;
-            }
-        }
-
-        return $result;
     }
 
     //--------------------------------------------------------------------
