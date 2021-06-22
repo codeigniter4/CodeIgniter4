@@ -11,7 +11,9 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
+use InvalidArgumentException;
 
 /**
  * Forge for SQLSRV
@@ -70,10 +72,10 @@ class Forge extends BaseForge
      * @var array
      */
     protected $unsigned = [
-        'TINYINT'  => 'SMALLINT',
-        'SMALLINT' => 'INT',
-        'INT'      => 'BIGINT',
-        'REAL'     => 'FLOAT',
+        'TINYINT'    => 'SMALLINT',
+        'SMALLINT'   => 'INT',
+        'INT'        => 'BIGINT',
+        'REAL'       => 'FLOAT',
     ];
 
     /**
@@ -104,7 +106,6 @@ class Forge extends BaseForge
     {
         parent::__construct($db);
 
-        // Update the table string to avoid pulling in
         $this->createTableIfStr = "IF NOT EXISTS"
             . "(SELECT t.name, s.name as schema_name, t.type_desc "
             . "FROM sys.tables t "
@@ -115,7 +116,9 @@ class Forge extends BaseForge
 
         $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
 
-        $this->renameTableStr = "EXEC sp_rename '[" . $this->db->schema . "].[%s]' , '[%s]' ;";
+        $this->renameTableStr = "EXEC sp_rename '[" . $this->db->schema . "].[%s]' , '%s' ;";
+
+        $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
     }
 
     /**
@@ -141,9 +144,6 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-        if ($alterType === 'ADD') {
-            return parent::_alterTable($alterType, $table, $field);
-        }
 
         // Handle DROP here
         if ($alterType === 'DROP') {
@@ -163,7 +163,7 @@ class Forge extends BaseForge
                 }
             }
 
-            $sql = 'ALTER TABLE [' . $table . '] DROP ';
+            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' DROP ';
 
             $fields = array_map(static function ($item) {
                 return 'COLUMN [' . trim($item) . ']';
@@ -172,9 +172,19 @@ class Forge extends BaseForge
             return $sql . implode(',', $fields);
         }
 
-        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+
+        $sql .= ($alterType === 'ADD') ? 'ADD ' : ' ';
 
         $sqls = [];
+
+        if ($alterType === 'ADD') {
+            foreach ($field as $data) {
+                $sqls[] = $sql . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
+            }
+
+            return $sqls;
+        }
 
         foreach ($field as $data) {
             if ($data['_literal'] !== false) {
@@ -182,6 +192,7 @@ class Forge extends BaseForge
             }
 
             if (isset($data['type'])) {
+                // EXEC sp_rename 'Sales.SalesTerritory.TerritoryID', 'TerrID', 'COLUMN';
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
                     . " {$data['type']}{$data['length']}";
             }
@@ -234,6 +245,51 @@ class Forge extends BaseForge
         return $this->db->simpleQuery($sql);
     }
 
+    //--------------------------------------------------------------------
+
+    /**
+     * Process indexes
+     *
+     * @param string $table
+     *
+     * @return array|string
+     */
+    protected function _processIndexes(string $table)
+    {
+        $sqls = [];
+
+        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
+            $this->keys[$i] = (array) $this->keys[$i];
+
+            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
+                if (!isset($this->fields[$this->keys[$i][$i2]])) {
+                    unset($this->keys[$i][$i2]);
+                }
+            }
+            if (count($this->keys[$i]) <= 0) {
+                continue;
+            }
+
+            if (in_array($i, $this->uniqueKeys, true)) {
+                $sqls[] = 'ALTER TABLE '
+                    . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
+                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+
+                continue;
+            }
+
+            $sqls[] = 'CREATE INDEX '
+                . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                . ' ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+        }
+
+        return $sqls;
+    }
+
+    //--------------------------------------------------------------------
+
     /**
      * Process column
      *
@@ -278,7 +334,7 @@ class Forge extends BaseForge
 
                 $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
                     . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-                    . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+                    . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
                 if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
@@ -407,7 +463,7 @@ class Forge extends BaseForge
         return $sql;
     }
 
-        //--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     /**
      * Rename Table
@@ -439,7 +495,7 @@ class Forge extends BaseForge
             $this->db->DBPrefix . $newTableName
         ));
 
-        if ($result && ! empty($this->db->dataCache['table_names'])) {
+        if ($result && !empty($this->db->dataCache['table_names'])) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
                 array_map('strtolower', $this->db->dataCache['table_names']),
@@ -452,6 +508,61 @@ class Forge extends BaseForge
         }
 
         return $result;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Create Table
+     *
+     * @param string $table       Table name
+     * @param bool   $ifNotExists Whether to add 'IF NOT EXISTS' condition
+     * @param array  $attributes  Associative array of table attributes
+     *
+     * @return mixed
+     */
+    protected function _createTable(string $table, bool $ifNotExists, array $attributes)
+    {
+        // For any platforms that don't support Create If Not Exists...
+        if ($ifNotExists === true && $this->createTableIfStr === false) {
+            if ($this->db->tableExists($table)) {
+                return true;
+            }
+
+            $ifNotExists = false;
+        }
+
+        $sql = ($ifNotExists) ? sprintf($this->createTableIfStr, $table) : 'CREATE TABLE';
+
+        $columns = $this->_processFields(true);
+
+        for ($i = 0, $c = count($columns); $i < $c; $i++) {
+            $columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
+        }
+
+        $columns = implode(',', $columns);
+
+        $columns .= $this->_processPrimaryKeys($table);
+        $columns .= $this->_processForeignKeys($table);
+
+        // Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
+        if ($this->createTableKeys === true) {
+            $indexes = $this->_processIndexes($table);
+            if (is_string($indexes)) {
+                $columns .= $indexes;
+            }
+        }
+
+        // createTableStr will usually have the following format: "%s %s (%s\n)"
+        $sql = sprintf(
+            $this->createTableStr . '%s',
+            $sql,
+            $this->db->escapeIdentifiers($table),
+            $columns,
+            $this->_createTableAttributes($attributes)
+        );
+
+        return $sql;
     }
 
     //--------------------------------------------------------------------
