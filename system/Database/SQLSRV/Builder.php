@@ -1,5 +1,7 @@
 <?php
 
+namespace CodeIgniter\Database\SQLSRV;
+
 /**
  * This file is part of the CodeIgniter 4 framework.
  *
@@ -9,13 +11,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLSRV;
-
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\ResultInterface;
+use const CI_DEBUG;
 
 /**
  * Builder for SQLSRV

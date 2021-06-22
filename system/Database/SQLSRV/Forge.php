@@ -1,4 +1,5 @@
 <?php
+namespace CodeIgniter\Database\SQLSRV;
 
 /**
  * This file is part of the CodeIgniter 4 framework.
@@ -9,8 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLSRV;
-
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 use InvalidArgumentException;
@@ -26,7 +26,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
+    private $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
      * CREATE DATABASE IF statement
@@ -102,7 +102,7 @@ class Forge extends BaseForge
     //--------------------------------------------------------------------
 
 
-    public function __construct(\CodeIgniter\Database\BaseConnection $db)
+    public function __construct(BaseConnection $db)
     {
         parent::__construct($db);
 

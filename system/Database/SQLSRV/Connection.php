@@ -1,4 +1,5 @@
 <?php
+namespace CodeIgniter\Database\SQLSRV;
 
 /**
  * This file is part of the CodeIgniter 4 framework.
@@ -9,11 +10,8 @@
  * file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\SQLSRV;
-
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use Exception;
 use stdClass;
 
 /**
@@ -500,7 +498,7 @@ class Connection extends BaseConnection
 
             log_message('error', $error['message']);
             if ($this->DBDebug) {
-                throw new Exception($error['message']);
+                throw new \Exception($error['message']);
             }
         }
 
