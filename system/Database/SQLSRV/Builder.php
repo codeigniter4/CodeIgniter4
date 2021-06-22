@@ -276,7 +276,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    private function getFullName(string $table): string
+    protected function getFullName(string $table): string
     {
         $alias = '';
 
@@ -301,7 +301,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    private function addIdentity(string $fullTable, string $insert): string
+    protected function addIdentity(string $fullTable, string $insert): string
     {
         return 'SET IDENTITY_INSERT ' . $fullTable . " ON\n" . $insert . "\nSET IDENTITY_INSERT " . $fullTable . ' OFF';
     }
