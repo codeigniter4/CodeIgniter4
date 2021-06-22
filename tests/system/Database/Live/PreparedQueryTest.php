@@ -41,7 +41,7 @@ class PreparedQueryTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'SQLSRV') {
             $database = $this->db->getDatabase();
-            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
+            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}{$this->db->schema}{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
         } else {
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
