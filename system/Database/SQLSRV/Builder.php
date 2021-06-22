@@ -364,9 +364,9 @@ class Builder extends BaseBuilder
             return $sql;
         }
 
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' ON');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' ON');
         $result = $this->db->query($sql, $this->binds, false);
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' OFF');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' OFF');
 
         return $result;
     }
