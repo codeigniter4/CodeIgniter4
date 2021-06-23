@@ -63,7 +63,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // auto import fully qualified class names
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
-    $parameters->set(Option::ENABLE_CACHE, true);
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
 
     $services = $containerConfigurator->services();

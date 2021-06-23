@@ -20,10 +20,10 @@
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.1",
         "nexusphp/tachycardia": "^1.0",
-        "phpstan/phpstan": "0.12.88",
+        "phpstan/phpstan": "0.12.90",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.11.20",
+        "rector/rector": "0.11.21",
         "symplify/package-builder": "^9.3"
     },
     "suggest": {
