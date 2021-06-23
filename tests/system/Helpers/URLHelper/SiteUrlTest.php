@@ -266,6 +266,6 @@ final class SiteUrlTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
-        $this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null, $this->config));
+        $this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
 }

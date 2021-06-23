@@ -91,9 +91,10 @@ class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('CodeIgniter\Database\Exceptions\DatabaseException', 'You must use the "set" method to update an entry.');
+        $this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
-        $builder->update(null, null, null, true);
+        $builder->update(null, null, null);
     }
 
     public function testUpdateBatch()
