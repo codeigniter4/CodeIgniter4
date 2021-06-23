@@ -309,7 +309,7 @@ class CURLRequest extends Request
 
         if (array_key_exists('headers', $options) && is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
-                if(is_scalar($value)) {
+                if (is_scalar($value)) {
                     $value = (string)$value;
                 }
                 $this->setHeader($name, $value);
