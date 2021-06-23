@@ -11,12 +11,12 @@ namespace CodeIgniter\Database\SQLSRV;
  * file that was distributed with this source code.
  */
 
+use const CI_DEBUG;
 use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\ResultInterface;
-use const CI_DEBUG;
 
 /**
  * Builder for SQLSRV
@@ -117,7 +117,7 @@ class Builder extends BaseBuilder
         if ($type !== '') {
             $type = strtoupper(trim($type));
 
-            if (!in_array($type, $this->joinTypes, true)) {
+            if (! in_array($type, $this->joinTypes, true)) {
                 $type = '';
             } else {
                 $type .= ' ';
@@ -128,32 +128,32 @@ class Builder extends BaseBuilder
         // in the protectIdentifiers to know whether to add a table prefix
         $this->trackAliases($table);
 
-        if (!is_bool($escape)) {
+        if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
 
-        if (!$this->hasOperator($cond)) {
+        if (! $this->hasOperator($cond)) {
             $cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
         } elseif ($escape === false) {
             $cond = ' ON ' . $cond;
         } else {
             // Split multiple conditions
             if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
-                $conditions  = [];
-                $joints      = $joints[0];
+                $conditions = [];
+                $joints     = $joints[0];
                 array_unshift($joints, ['', 0]);
 
                 for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--) {
-                    $joints[$i][1]   += strlen($joints[$i][0]); // offset
-                    $conditions[$i]  = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
-                    $pos             = $joints[$i][1] - strlen($joints[$i][0]);
-                    $joints[$i]      = $joints[$i][0];
+                    $joints[$i][1] += strlen($joints[$i][0]); // offset
+                    $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
+                    $pos            = $joints[$i][1] - strlen($joints[$i][0]);
+                    $joints[$i]     = $joints[$i][0];
                 }
 
                 ksort($conditions);
             } else {
-                $conditions  = [$cond];
-                $joints      = [''];
+                $conditions = [$cond];
+                $joints     = [''];
             }
 
             $cond = ' ON ';
@@ -161,8 +161,8 @@ class Builder extends BaseBuilder
             foreach ($conditions as $i => $condition) {
                 $operator = $this->getOperator($condition);
 
-                $cond    .= $joints[$i];
-                $cond    .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+                $cond .= $joints[$i];
+                $cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
             }
         }
 
@@ -262,8 +262,8 @@ class Builder extends BaseBuilder
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
-        $ids     = [];
-        $final   = [];
+        $ids   = [];
+        $final = [];
 
         foreach ($values as $val) {
             $ids[] = $val[$index];
@@ -346,9 +346,9 @@ class Builder extends BaseBuilder
         $alias = '';
 
         if (strpos($table, ' ') !== false) {
-            $alias   = explode(' ', $table);
-            $table   = array_shift($alias);
-            $alias   = ' ' . implode(' ', $alias);
+            $alias = explode(' ', $table);
+            $table = array_shift($alias);
+            $alias = ' ' . implode(' ', $alias);
         }
 
         if ($this->db->escapeChar === '"') {
@@ -453,8 +453,8 @@ class Builder extends BaseBuilder
     {
         // check whether the existing keys are part of the primary key.
         // if so then use them for the "ON" part and exclude them from the $values and $keys
-        $pKeys       = $this->db->getIndexData($table);
-        $keyFields   = [];
+        $pKeys     = $this->db->getIndexData($table);
+        $keyFields = [];
 
         foreach ($pKeys as $key) {
             if ($key->type === 'PRIMARY') {
@@ -478,8 +478,8 @@ class Builder extends BaseBuilder
         });
 
         // Get the common field and values from the keys data and index fields
-        $common  = array_intersect($keys, $escKeyFields);
-        $bingo   = [];
+        $common = array_intersect($keys, $escKeyFields);
+        $bingo  = [];
 
         foreach ($common as $v) {
             $k = array_search($v, $escKeyFields, true);
@@ -542,8 +542,8 @@ class Builder extends BaseBuilder
 
         $sql = $type . '( CAST( ' . $this->db->protectIdentifiers(trim($select)) . ' AS FLOAT ) ) AS ' . $this->db->escapeIdentifiers(trim($alias));
 
-        $this->QBSelect[]    = $sql;
-        $this->QBNoEscape[]  = null;
+        $this->QBSelect[]   = $sql;
+        $this->QBNoEscape[] = null;
 
         return $this;
     }
@@ -586,6 +586,7 @@ class Builder extends BaseBuilder
     }
 
     //--------------------------------------------------------------------
+
     /**
      * Delete statement
      *
@@ -627,7 +628,7 @@ class Builder extends BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        if (!empty($limit)) {
+        if (! empty($limit)) {
             $this->QBLimit = $limit;
         }
 
@@ -655,10 +656,10 @@ class Builder extends BaseBuilder
         if ($selectOverride !== false) {
             $sql = $selectOverride;
         } else {
-            $sql = (!$this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
+            $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
             // SQL Server can't work with select * if group by is specified
-            if (empty($this->QBSelect) && !empty($this->QBGroupBy) && is_array($this->QBGroupBy)) {
+            if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy)) {
                 foreach ($this->QBGroupBy as $field) {
                     $this->QBSelect[] = is_array($field) ? $field['field'] : $field;
                 }
@@ -671,8 +672,8 @@ class Builder extends BaseBuilder
                 // The reason we protect identifiers here rather than in the select() function
                 // is because until the user calls the from() function we don't know if there are aliases
                 foreach ($this->QBSelect as $key => $val) {
-                    $noEscape                = $this->QBNoEscape[$key] ?? null;
-                    $this->QBSelect[$key]    = $this->db->protectIdentifiers($val, false, $noEscape);
+                    $noEscape             = $this->QBNoEscape[$key] ?? null;
+                    $this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $noEscape);
                 }
 
                 $sql .= implode(', ', $this->QBSelect);
@@ -680,12 +681,12 @@ class Builder extends BaseBuilder
         }
 
         // Write the "FROM" portion of the query
-        if (!empty($this->QBFrom)) {
+        if (! empty($this->QBFrom)) {
             $sql .= "\nFROM " . $this->_fromTables();
         }
 
         // Write the "JOIN" portion of the query
-        if (!empty($this->QBJoin)) {
+        if (! empty($this->QBJoin)) {
             $sql .= "\n" . implode("\n", $this->QBJoin);
         }
 
@@ -714,12 +715,12 @@ class Builder extends BaseBuilder
      */
     protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
     {
-        if (!is_array($key)) {
+        if (! is_array($key)) {
             $key = [$key => $value];
         }
 
         // If the escape value was not set will base it on the global setting
-        if (!is_bool($escape)) {
+        if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
         }
 
@@ -729,7 +730,7 @@ class Builder extends BaseBuilder
             if ($v !== null) {
                 $op = $this->getOperator($k, true);
 
-                if (!empty($op)) {
+                if (! empty($op)) {
                     $k = trim($k);
 
                     end($op);
@@ -755,7 +756,7 @@ class Builder extends BaseBuilder
                 } else {
                     $v = " :$bind:";
                 }
-            } elseif (!$this->hasOperator($k) && $qbKey !== 'QBHaving') {
+            } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
                 $k .= ' IS NULL';
             } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
@@ -763,8 +764,8 @@ class Builder extends BaseBuilder
             }
 
             $this->{$qbKey}[] = [
-                'condition'  => $prefix . $k . $v,
-                'escape'     => $escape,
+                'condition' => $prefix . $k . $v,
+                'escape'    => $escape,
             ];
         }
 
@@ -785,7 +786,7 @@ class Builder extends BaseBuilder
      */
     public function get(int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (!is_null($limit)) {
+        if (! is_null($limit)) {
             $this->limit($limit, $offset);
         }
 

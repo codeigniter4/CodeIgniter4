@@ -1,4 +1,5 @@
 <?php
+
 namespace CodeIgniter\Database\SQLSRV;
 
 /**
@@ -72,10 +73,10 @@ class Forge extends BaseForge
      * @var array
      */
     protected $unsigned = [
-        'TINYINT'    => 'SMALLINT',
-        'SMALLINT'   => 'INT',
-        'INT'        => 'BIGINT',
-        'REAL'       => 'FLOAT',
+        'TINYINT'  => 'SMALLINT',
+        'SMALLINT' => 'INT',
+        'INT'      => 'BIGINT',
+        'REAL'     => 'FLOAT',
     ];
 
     /**
@@ -101,7 +102,6 @@ class Forge extends BaseForge
 
     //--------------------------------------------------------------------
 
-
     public function __construct(BaseConnection $db)
     {
         parent::__construct($db);
@@ -116,7 +116,7 @@ class Forge extends BaseForge
 
         $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
 
-        $this->renameTableStr = "EXEC sp_rename [".$this->db->escapeIdentifiers($this->db->schema).".%s] , %s ;";
+        $this->renameTableStr = "EXEC sp_rename [" . $this->db->escapeIdentifiers($this->db->schema) . ".%s] , %s ;";
 
         $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
     }
@@ -158,7 +158,7 @@ class Forge extends BaseForge
                 $fld = array_intersect($field, $index->fields);
 
                 // Drop index if field is part of an index
-                if (!empty($fld)) {
+                if (! empty($fld)) {
                     $this->_dropIndex($table, $index);
                 }
             }
@@ -196,7 +196,7 @@ class Forge extends BaseForge
                     . " {$data['type']}{$data['length']}";
             }
 
-            if (!empty($data['default'])) {
+            if (! empty($data['default'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($data['name']) . '_def'
                     . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
             }
@@ -206,7 +206,7 @@ class Forge extends BaseForge
                     . ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
             }
 
-            if (!empty($data['comment'])) {
+            if (! empty($data['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
                     . "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
                     . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
@@ -214,7 +214,7 @@ class Forge extends BaseForge
                     . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
             }
 
-            if (!empty($data['new_name'])) {
+            if (! empty($data['new_name'])) {
                 $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
             }
         }
@@ -260,7 +260,7 @@ class Forge extends BaseForge
             $this->keys[$i] = (array) $this->keys[$i];
 
             for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
-                if (!isset($this->fields[$this->keys[$i][$i2]])) {
+                if (! isset($this->fields[$this->keys[$i][$i2]])) {
                     unset($this->keys[$i][$i2]);
                 }
             }
@@ -357,7 +357,7 @@ class Forge extends BaseForge
     protected function _processPrimaryKeys(string $table): string
     {
         for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (!isset($this->fields[$this->primaryKeys[$i]])) {
+            if (! isset($this->fields[$this->primaryKeys[$i]])) {
                 unset($this->primaryKeys[$i]);
             }
         }
@@ -388,8 +388,8 @@ class Forge extends BaseForge
 
         switch (strtoupper($attributes['TYPE'])) {
             case 'MEDIUMINT':
-                $attributes['TYPE']      = 'INTEGER';
-                $attributes['UNSIGNED']  = false;
+                $attributes['TYPE']     = 'INTEGER';
+                $attributes['UNSIGNED'] = false;
                 break;
 
             case 'INTEGER':
@@ -398,8 +398,8 @@ class Forge extends BaseForge
                 break;
 
             case 'ENUM':
-                $attributes['TYPE']          = 'TEXT';
-                $attributes['CONSTRAINT']    = null;
+                $attributes['TYPE']       = 'TEXT';
+                $attributes['CONSTRAINT'] = null;
 
                 break;
             /* case 'DATETIME':
@@ -424,7 +424,7 @@ class Forge extends BaseForge
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
-        if (!empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false) {
+        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true && stripos($field['type'], 'INT') !== false) {
             $field['auto_increment'] = ' IDENTITY(1,1)';
         }
     }
@@ -462,5 +462,4 @@ class Forge extends BaseForge
     }
 
     //--------------------------------------------------------------------
-
 }
