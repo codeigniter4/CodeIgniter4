@@ -2,6 +2,7 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use Exception;
 /**
  * This file is part of the CodeIgniter 4 framework.
  *
@@ -499,7 +500,7 @@ class Connection extends BaseConnection
 
             log_message('error', $error['message']);
             if ($this->DBDebug) {
-                throw new \Exception($error['message']);
+                throw new Exception($error['message']);
             }
         }
 
