@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use Exception;
 /**
  * This file is part of the CodeIgniter 4 framework.
  *
@@ -14,6 +13,7 @@ use Exception;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use Exception;
 use stdClass;
 
 /**
