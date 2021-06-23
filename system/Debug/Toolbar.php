@@ -245,11 +245,12 @@ class Toolbar
         }
 
         // Sort it
-        array_multisort(
+        $sortArray = [
           array_column($data, 'start'), SORT_NUMERIC, SORT_ASC,
           array_column($data, 'duration'), SORT_NUMERIC, SORT_DESC,
-          $data
-        );
+          &$data
+        ];
+        array_multisort(...$sortArray);
 
         return $data;
     }
