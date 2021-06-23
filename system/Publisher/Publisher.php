@@ -88,6 +88,8 @@ class Publisher extends FileCollection
 	protected $destination = FCPATH;
 
 	//--------------------------------------------------------------------
+	// Support Methods
+	//--------------------------------------------------------------------
 
 	/**
 	 * Discovers and returns all Publishers in the specified namespace directory.
@@ -155,6 +157,8 @@ class Publisher extends FileCollection
 	}
 
 	//--------------------------------------------------------------------
+	// Class Core
+	//--------------------------------------------------------------------
 
 	/**
 	 * Loads the helper and verifies the source and destination directories.
@@ -218,6 +222,8 @@ class Publisher extends FileCollection
 	}
 
 	//--------------------------------------------------------------------
+	// Property Accessors
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the source directory.
@@ -276,6 +282,8 @@ class Publisher extends FileCollection
 	}
 
 	//--------------------------------------------------------------------
+	// Additional Handlers
+	//--------------------------------------------------------------------
 
 	/**
 	 * Verifies and adds paths to the list.
@@ -309,8 +317,6 @@ class Publisher extends FileCollection
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Downloads and stages files from an array of URIs.
@@ -348,6 +354,8 @@ class Publisher extends FileCollection
 	}
 
 	//--------------------------------------------------------------------
+	// Write Methods
+	//--------------------------------------------------------------------
 
 	/**
 	 * Removes the destination and all its files and folders.
@@ -360,8 +368,6 @@ class Publisher extends FileCollection
 
 		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Copies all files into the destination, does not create directory structure.
