@@ -181,7 +181,7 @@ class RouterTest extends CIUnitTestCase
     {
         $router = new Router($this->collection, $this->request);
 
-        $router->handle('closure/123/alpha', $this->request);
+        $router->handle('closure/123/alpha');
 
         $closure = $router->controllerName();
 

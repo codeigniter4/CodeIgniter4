@@ -26,6 +26,7 @@ use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
+use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php71\Rector\List_\ListToArrayDestructRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
@@ -63,7 +64,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // auto import fully qualified class names
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
-    $parameters->set(Option::ENABLE_CACHE, true);
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
 
     $services = $containerConfigurator->services();
@@ -98,4 +98,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(RemoveVarTagFromClassConstantRector::class);
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
+    $services->set(RemoveExtraParametersRector::class);
 };
