@@ -35,6 +35,8 @@ class FileCollection implements Countable, IteratorAggregate
 	protected $files = [];
 
 	//--------------------------------------------------------------------
+	// Support Methods
+	//--------------------------------------------------------------------
 
 	/**
 	 * Resolves a full path and verifies it is an actual directory.
@@ -104,7 +106,7 @@ class FileCollection implements Countable, IteratorAggregate
 	final protected static function matchFiles(array $files, string $pattern): array
 	{
 		// Convert pseudo-regex into their true form
-		if (@preg_match($pattern, null) === false) // @phpstan-ignore-line
+		if (@preg_match($pattern, '') === false)
 		{
 			$pattern = str_replace(
 				['#', '.', '*', '?'],
@@ -119,6 +121,8 @@ class FileCollection implements Countable, IteratorAggregate
 		});
 	}
 
+	//--------------------------------------------------------------------
+	// Class Core
 	//--------------------------------------------------------------------
 
 	/**
@@ -210,6 +214,8 @@ class FileCollection implements Countable, IteratorAggregate
 	}
 
 	//--------------------------------------------------------------------
+	// File Handling
+	//--------------------------------------------------------------------
 
 	/**
 	 * Verifies and adds files to the list.
@@ -269,6 +275,8 @@ class FileCollection implements Countable, IteratorAggregate
 	}
 
 	//--------------------------------------------------------------------
+	// Directory Handling
+	//--------------------------------------------------------------------
 
 	/**
 	 * Verifies and adds files from each
@@ -318,6 +326,8 @@ class FileCollection implements Countable, IteratorAggregate
 	}
 
 	//--------------------------------------------------------------------
+	// Filtering
+	//--------------------------------------------------------------------
 
 	/**
 	 * Removes any files from the list that match the supplied pattern
@@ -365,6 +375,8 @@ class FileCollection implements Countable, IteratorAggregate
 		return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
 	}
 
+	//--------------------------------------------------------------------
+	// Interface Methods
 	//--------------------------------------------------------------------
 
     /**
