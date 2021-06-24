@@ -159,8 +159,8 @@ predefined collections without having to use their methods. Example::
 
 	class ConfigCollection extends \CodeIgniter\Files\FileCollection
 	{
-		protected function define(): void {
-
+		protected function define(): void
+		{
 			$this->add(APPPATH . 'Config', true)->retainPattern('*.php');
 		}
 	}
