@@ -25,7 +25,7 @@ final class MessageTest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->message = null;
         unset($this->message);

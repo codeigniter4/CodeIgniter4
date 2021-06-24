@@ -49,7 +49,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->fileHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

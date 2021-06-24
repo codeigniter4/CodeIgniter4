@@ -64,7 +64,7 @@ final class RouterTest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
     }
 

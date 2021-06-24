@@ -21,7 +21,7 @@ final class CLITest extends CIUnitTestCase
         $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->stream_filter);
     }

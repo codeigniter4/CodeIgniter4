@@ -42,7 +42,7 @@ final class SiteUrlTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $this->config);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

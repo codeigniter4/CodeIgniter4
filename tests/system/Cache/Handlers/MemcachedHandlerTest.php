@@ -40,7 +40,7 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $this->memcachedHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         foreach (self::getKeyArray() as $key) {
             $this->memcachedHandler->delete($key);

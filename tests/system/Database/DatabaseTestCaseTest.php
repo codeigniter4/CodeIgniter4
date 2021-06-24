@@ -49,7 +49,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         if (! self::$loaded) {
             Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');

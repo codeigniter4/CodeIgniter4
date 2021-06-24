@@ -22,7 +22,7 @@ final class GetNumRowsTest extends CIUnitTestCase
      *
      * @see \CodeIgniter\Test\CIDatabaseTestCase::setUp()
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -33,7 +33,7 @@ final class GetNumRowsTest extends CIUnitTestCase
      *
      * @see \CodeIgniter\Test\CIDatabaseTestCase::tearDown()
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

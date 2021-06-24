@@ -42,7 +42,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->app = new MockCodeIgniter(new MockCLIConfig());
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->stream_filter);
     }

@@ -15,7 +15,7 @@ final class PretendTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // We share `$this->db` in testing, so we need to restore the state.
         $this->db->pretend(false);

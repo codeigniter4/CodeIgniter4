@@ -13,7 +13,7 @@ use DateTimeZone;
  */
 final class DownloadResponseTest extends CIUnitTestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             unset($_SERVER['HTTP_USER_AGENT']);

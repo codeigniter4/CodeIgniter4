@@ -30,7 +30,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $this->writeFiles();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->deleteFiles();

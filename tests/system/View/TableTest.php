@@ -12,7 +12,7 @@ use stdClass;
  */
 final class TableTest extends CIUnitTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = new MockTable();
     }

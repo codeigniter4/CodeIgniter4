@@ -157,9 +157,10 @@ final class CodeIgniter4 extends AbstractRuleset
                 'target'          => 'newest',
                 'use_class_const' => true,
             ],
-            'phpdoc_align'                 => true,
-            'phpdoc_indent'                => true,
-            'phpdoc_inline_tag_normalizer' => [
+            'php_unit_set_up_tear_down_visibility' => true,
+            'phpdoc_align'                         => true,
+            'phpdoc_indent'                        => true,
+            'phpdoc_inline_tag_normalizer'         => [
                 'tags' => [
                     'example',
                     'id',

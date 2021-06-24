@@ -28,7 +28,7 @@ final class FileMovingTest extends CIUnitTestCase
         $_FILES = [];
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->root = null;
