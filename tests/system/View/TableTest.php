@@ -43,7 +43,7 @@ final class TableTest extends CIUnitTestCase
     }
 
     /**
-     * @depends	testPrepArgs
+     * @depends testPrepArgs
      */
     public function testSetHeading()
     {
@@ -83,7 +83,7 @@ final class TableTest extends CIUnitTestCase
     }
 
     /**
-     * @depends	testPrepArgs
+     * @depends testPrepArgs
      */
     public function testAddRow()
     {
