@@ -21,7 +21,6 @@ Vagrantfile.dist export-ignore
 
 # They don't want our test files
 tests/system/ export-ignore
-utils/ export-ignore
 rector.php export-ignore
 phpunit.xml.dist export-ignore
 phpstan.neon.dist export-ignore
