@@ -185,10 +185,7 @@ class FileCollection implements Countable, IteratorAggregate
 	 */
 	public function add($paths, bool $recursive = true)
 	{
-		if (! is_array($paths))
-		{
-			$paths = [$paths];
-		}
+		$paths = (array) $paths;
 
 		foreach ($paths as $path)
 		{
