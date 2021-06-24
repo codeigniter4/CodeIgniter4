@@ -874,7 +874,7 @@ class RouteCollectionTest extends CIUnitTestCase
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
         $this->expectException(RouterException::class);
-        $match = $routes->reverseRoute('myController::goto', 13, 'string');
+        $routes->reverseRoute('myController::goto', 13, 'string');
     }
 
     //--------------------------------------------------------------------

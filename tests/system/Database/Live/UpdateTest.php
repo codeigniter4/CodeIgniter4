@@ -217,8 +217,6 @@ class UpdateTest extends CIUnitTestCase
             ->set('description', 'name', false)
             ->update();
 
-        $result = $this->db->table('user')->get()->getResultArray();
-
         $this->seeInDatabase('job', [
             'name'        => 'Developer',
             'description' => 'Developer',

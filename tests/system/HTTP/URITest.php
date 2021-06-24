@@ -468,8 +468,6 @@ class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path?key=value';
-
         $this->expectException(HTTPException::class);
         $uri->setQuery('?key=value#fragment');
     }

@@ -300,8 +300,6 @@ class DownloadResponseTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }

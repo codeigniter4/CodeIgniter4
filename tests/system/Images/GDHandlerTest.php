@@ -37,7 +37,7 @@ class GDHandlerTest extends CIUnitTestCase
         ];
         vfsStream::create($structure);
         // with one of them read only
-        $wont = $this->root->getChild('wontwork')->chmod(0400);
+        $this->root->getChild('wontwork')->chmod(0400);
 
         $this->start = $this->root->url() . '/';
 

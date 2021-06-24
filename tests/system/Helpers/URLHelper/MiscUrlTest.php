@@ -72,7 +72,6 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testPreviousURLUsesRefererIfNeeded()
     {
         $uri1 = 'http://example.com/one?two';
-        $uri2 = 'http://example.com/two?foo';
 
         $_SERVER['HTTP_REFERER'] = $uri1;
 

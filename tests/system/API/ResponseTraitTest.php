@@ -448,7 +448,7 @@ class ResponseTraitTest extends CIUnitTestCase
         $original                = $_SERVER;
         $_SERVER['CONTENT_TYPE'] = $mimeType;
 
-        $controller = $this->makeController([], 'http://codeigniter.com', ['Accept' => $mimeType]);
+        $this->makeController([], 'http://codeigniter.com', ['Accept' => $mimeType]);
         $this->assertEquals($mimeType, $this->request->getHeaderLine('Accept'), 'Request header...');
         $this->response->setContentType($contentType);
         $this->assertEquals($contentType, $this->response->getHeaderLine('Content-Type'), 'Response header pre-response...');

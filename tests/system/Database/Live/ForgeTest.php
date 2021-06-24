@@ -573,7 +573,7 @@ class ForgeTest extends CIUnitTestCase
 
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey(['username', 'active']);
-        $create = $this->forge->createTable('forge_test_fields', true);
+        $this->forge->createTable('forge_test_fields', true);
 
         $fieldsNames = $this->db->getFieldNames('forge_test_fields');
         $fieldsData  = $this->db->getFieldData('forge_test_fields');

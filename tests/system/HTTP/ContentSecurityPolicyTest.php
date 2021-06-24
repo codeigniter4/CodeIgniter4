@@ -48,7 +48,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     public function testExistence()
     {
         $this->prepare();
-        $result = $this->work();
+        $this->work();
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
@@ -63,7 +63,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->prepare();
         $this->csp->reportOnly(false);
-        $result = $this->work();
+        $this->work();
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
@@ -515,7 +515,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     public function testCSPDisabled()
     {
         $this->prepare(false);
-        $result = $this->work();
+        $this->work();
         $this->response->CSP->addStyleSrc('https://example.com');
 
         $this->assertHeaderNotEmitted('content-security-policy', true);

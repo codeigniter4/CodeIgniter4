@@ -49,8 +49,6 @@ class TestCaseEmissionsTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }
@@ -81,8 +79,7 @@ class TestCaseEmissionsTest extends CIUnitTestCase
 
         // send it
         ob_start();
-        $response->send();
-        $output = ob_clean(); // what really was sent
+        $response->send(); // what really was sent
         if (ob_get_level() > 0) {
             ob_end_clean();
         }

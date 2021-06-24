@@ -239,7 +239,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
-        $output = ob_get_clean();
+        ob_get_clean();
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
 
@@ -284,7 +284,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
         ob_start();
         $codeigniter->useSafeOutput(true)->run();
-        $output = ob_get_clean();
+        ob_get_clean();
 
         $this->assertEquals('https://example.com/', $response->header('Location')->getValue());
     }

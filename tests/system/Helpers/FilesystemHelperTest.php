@@ -113,7 +113,7 @@ class FilesystemHelperTest extends CIUnitTestCase
         // Create a subdirectory
         $this->structure['foo']['bam'] = ['zab' => 'A deep file'];
 
-        $vfs  = vfsStream::setup('root', null, $this->structure);
+        vfsStream::setup('root', null, $this->structure);
         $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo');
@@ -130,7 +130,7 @@ class FilesystemHelperTest extends CIUnitTestCase
         $this->structure['foo']['far'] = 'all your base';
         $this->structure['foo']['faz'] = 'are belong to us';
 
-        $vfs  = vfsStream::setup('root', null, $this->structure);
+        vfsStream::setup('root', null, $this->structure);
         $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo', true);
@@ -147,7 +147,7 @@ class FilesystemHelperTest extends CIUnitTestCase
         $this->structure['foo']['far'] = 'all your base';
         $this->structure['foo']['faz'] = 'are belong to us';
 
-        $vfs  = vfsStream::setup('root', null, $this->structure);
+        vfsStream::setup('root', null, $this->structure);
         $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo', false);
@@ -168,7 +168,7 @@ class FilesystemHelperTest extends CIUnitTestCase
 
     public function testWriteFileFailure()
     {
-        $vfs = vfsStream::setup('root');
+        vfsStream::setup('root');
 
         $this->assertFalse(write_file(vfsStream::url('apple#test.php'), 'Simple'));
     }
