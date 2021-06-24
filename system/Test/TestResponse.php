@@ -268,7 +268,7 @@ class TestResponse extends TestCase
      */
     public function assertSessionHas(string $key, $value = null)
     {
-        $this->assertTrue(array_key_exists($key, $_SESSION), "'{$key}' is not in the current \$_SESSION");
+        $this->assertArrayHasKey($key, $_SESSION, "'{$key}' is not in the current \$_SESSION");
 
         if (is_null($value)) {
             return;
@@ -290,7 +290,7 @@ class TestResponse extends TestCase
      */
     public function assertSessionMissing(string $key)
     {
-        $this->assertFalse(array_key_exists($key, $_SESSION), "'{$key}' should not be present in \$_SESSION.");
+        $this->assertArrayNotHasKey($key, $_SESSION, "'{$key}' should not be present in \$_SESSION.");
     }
 
     //--------------------------------------------------------------------

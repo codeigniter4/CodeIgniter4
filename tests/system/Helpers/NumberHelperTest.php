@@ -27,9 +27,9 @@ final class NumberHelperTest extends CIUnitTestCase
 
     public function testRomanNumberRange()
     {
-        $this->assertEquals(null, number_to_roman(-1));
-        $this->assertEquals(null, number_to_roman(0));
-        $this->assertEquals(null, number_to_roman(4000));
+        $this->assertNull(number_to_roman(-1));
+        $this->assertNull(number_to_roman(0));
+        $this->assertNull(number_to_roman(4000));
     }
 
     public function testFormatNumber()

@@ -136,10 +136,25 @@ final class CodeIgniter4 extends AbstractRuleset
             'not_operator_with_successor_space'       => true,
             'normalize_index_brace'                   => true,
             'ordered_imports'                         => ['sort_algorithm' => 'alpha'],
-            'php_unit_internal_class'                 => ['types' => ['normal', 'final']],
-            'phpdoc_align'                            => true,
-            'phpdoc_indent'                           => true,
-            'phpdoc_inline_tag_normalizer'            => [
+            'php_unit_construct'                      => [
+                'assertions' => [
+                    'assertSame',
+                    'assertEquals',
+                    'assertNotEquals',
+                    'assertNotSame',
+                ],
+            ],
+            'php_unit_dedicate_assert'               => ['target' => 'newest'],
+            'php_unit_dedicate_assert_internal_type' => ['target' => 'newest'],
+            'php_unit_expectation'                   => ['target' => 'newest'],
+            'php_unit_internal_class'                => ['types' => ['normal', 'final']],
+            'php_unit_no_expectation_annotation'     => [
+                'target'          => 'newest',
+                'use_class_const' => true,
+            ],
+            'phpdoc_align'                 => true,
+            'phpdoc_indent'                => true,
+            'phpdoc_inline_tag_normalizer' => [
                 'tags' => [
                     'example',
                     'id',

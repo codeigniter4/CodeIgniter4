@@ -60,7 +60,7 @@ final class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name);
         $this->assertEquals($name, $header->getName());
-        $this->assertEquals(null, $header->getValue());
+        $this->assertEmpty($header->getValue());
         $this->assertEquals($name . ': ', (string) $header);
 
         $name = 'foo2';

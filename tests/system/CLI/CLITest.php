@@ -276,7 +276,7 @@ final class CLITest extends CIUnitTestCase
         ];
         $_SERVER['argc'] = 3;
         CLI::init();
-        $this->assertEquals(null, CLI::getSegment(3));
+        $this->assertNull(CLI::getSegment(3));
         $this->assertEquals('b', CLI::getSegment(1));
         $this->assertEquals('c', CLI::getSegment(2));
         $this->assertEquals('b/c', CLI::getURI());
@@ -301,7 +301,7 @@ final class CLITest extends CIUnitTestCase
             'sure',
         ];
         CLI::init();
-        $this->assertEquals(null, CLI::getSegment(7));
+        $this->assertNull(CLI::getSegment(7));
         $this->assertEquals('b', CLI::getSegment(1));
         $this->assertEquals('c', CLI::getSegment(2));
         $this->assertEquals('d', CLI::getSegment(3));
@@ -362,12 +362,12 @@ final class CLITest extends CIUnitTestCase
         $height = new ReflectionProperty(CLI::class, 'height');
         $height->setAccessible(true);
         $height->setValue(null);
-        $this->assertTrue(is_int(CLI::getHeight()));
+        $this->assertIsInt(CLI::getHeight());
 
         $width = new ReflectionProperty(CLI::class, 'width');
         $width->setAccessible(true);
         $width->setValue(null);
-        $this->assertTrue(is_int(CLI::getWidth()));
+        $this->assertIsInt(CLI::getWidth());
     }
 
     /**

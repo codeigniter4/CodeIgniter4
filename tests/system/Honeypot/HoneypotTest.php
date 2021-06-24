@@ -70,12 +70,12 @@ final class HoneypotTest extends CIUnitTestCase
         unset($_POST[$this->config->name]);
         $this->request = Services::request();
 
-        $this->assertEquals(false, $this->honeypot->hasContent($this->request));
+        $this->assertFalse($this->honeypot->hasContent($this->request));
     }
 
     public function testHasContent()
     {
-        $this->assertEquals(true, $this->honeypot->hasContent($this->request));
+        $this->assertTrue($this->honeypot->hasContent($this->request));
     }
 
     //--------------------------------------------------------------------

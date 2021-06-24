@@ -423,7 +423,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->request->setGlobal('post', $post);
 
         $this->assertEquals(['zipcode' => 90210], $this->request->fetchGlobal('post', 'clients[address]'));
-        $this->assertEquals(null, $this->request->fetchGlobal('post', 'clients[zipcode]'));
+        $this->assertNull($this->request->fetchGlobal('post', 'clients[zipcode]'));
     }
 
     public function testFetchGlobalWithKeylessArrayChildElement()

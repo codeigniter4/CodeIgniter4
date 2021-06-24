@@ -264,24 +264,24 @@ final class ViewTest extends CIUnitTestCase
     {
         // Make sure debugging is on for our view
         $view = new View($this->config, $this->viewsDir, $this->loader, true);
-        $this->assertEquals(0, count($view->getPerformanceData()));
+        $this->assertCount(0, $view->getPerformanceData());
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
         $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-        $this->assertEquals(1, count($view->getPerformanceData()));
+        $this->assertCount(1, $view->getPerformanceData());
     }
 
     public function testPerformanceNonLogging()
     {
         // Make sure debugging is on for our view
         $view = new View($this->config, $this->viewsDir, $this->loader, false);
-        $this->assertEquals(0, count($view->getPerformanceData()));
+        $this->assertCount(0, $view->getPerformanceData());
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
         $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
-        $this->assertEquals(0, count($view->getPerformanceData()));
+        $this->assertCount(0, $view->getPerformanceData());
     }
 
     public function testRenderLayoutExtendsCorrectly()
@@ -366,7 +366,7 @@ final class ViewTest extends CIUnitTestCase
         $this->setPrivateProperty($view, 'saveData', true);
         $view->setVar('testString', 'test');
         $view->render('simple', null, false);
-        $this->assertEquals(true, $this->getPrivateProperty($view, 'saveData'));
+        $this->assertTrue($this->getPrivateProperty($view, 'saveData'));
     }
 
     public function testRenderSaveDataUseAfterSaveDataFalse()

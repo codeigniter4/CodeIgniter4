@@ -353,7 +353,7 @@ final class GDHandlerTest extends CIUnitTestCase
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
             $this->handler->save(null, 100);
-            $this->assertTrue(file_exists($this->origin . 'ci-logo.' . $type));
+            $this->assertFileExists($this->origin . 'ci-logo.' . $type);
 
             $this->assertEquals(
                 file_get_contents($this->origin . 'ci-logo.' . $type),

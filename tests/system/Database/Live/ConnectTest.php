@@ -41,7 +41,7 @@ final class ConnectTest extends CIUnitTestCase
     {
         // We should have our test database connection already.
         $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertEquals(1, count($instances));
+        $this->assertCount(1, $instances);
 
         $db1 = Database::connect($this->group1);
         $db2 = Database::connect($this->group2);
@@ -49,7 +49,7 @@ final class ConnectTest extends CIUnitTestCase
         $this->assertNotSame($db1, $db2);
 
         $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertEquals(3, count($instances));
+        $this->assertCount(3, $instances);
     }
 
     public function testConnectReturnsProvidedConnection()

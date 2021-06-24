@@ -195,7 +195,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
         $this->assertEquals('txt', $file->getExtension());
         // but not client mime type
-        $this->assertEquals(null, Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+        $this->assertNull(Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
 
         // proposed extension does not match finfo_open mime type (text/plain)
         // but can be resolved by reverse searching

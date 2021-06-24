@@ -85,17 +85,17 @@ final class AlterTableTest extends CIUnitTestCase
         $fields = $this->getPrivateProperty($this->table, 'fields');
 
         $this->assertCount(4, $fields);
-        $this->assertTrue(array_key_exists('id', $fields));
+        $this->assertArrayHasKey('id', $fields);
         $this->assertNull($fields['id']['default']);
         $this->assertTrue($fields['id']['null']);
         $this->assertEquals('integer', strtolower($fields['id']['type']));
 
-        $this->assertTrue(array_key_exists('name', $fields));
+        $this->assertArrayHasKey('name', $fields);
         $this->assertNull($fields['name']['default']);
         $this->assertFalse($fields['name']['null']);
         $this->assertEquals('varchar', strtolower($fields['name']['type']));
 
-        $this->assertTrue(array_key_exists('email', $fields));
+        $this->assertArrayHasKey('email', $fields);
         $this->assertNull($fields['email']['default']);
         $this->assertTrue($fields['email']['null']);
         $this->assertEquals('varchar', strtolower($fields['email']['type']));
@@ -103,11 +103,11 @@ final class AlterTableTest extends CIUnitTestCase
         $keys = $this->getPrivateProperty($this->table, 'keys');
 
         $this->assertCount(3, $keys);
-        $this->assertTrue(array_key_exists('foo_name', $keys));
+        $this->assertArrayHasKey('foo_name', $keys);
         $this->assertEquals(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
-        $this->assertTrue(array_key_exists('id', $keys));
+        $this->assertArrayHasKey('id', $keys);
         $this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
-        $this->assertTrue(array_key_exists('id', $keys));
+        $this->assertArrayHasKey('id', $keys);
         $this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
     }
 
@@ -135,8 +135,8 @@ final class AlterTableTest extends CIUnitTestCase
 
         $oldKeys = $this->db->getIndexData('foo');
 
-        $this->assertTrue(array_key_exists('foo_name', $oldKeys));
-        $this->assertTrue(array_key_exists('foo_email', $oldKeys));
+        $this->assertArrayHasKey('foo_name', $oldKeys);
+        $this->assertArrayHasKey('foo_email', $oldKeys);
 
         $result = $this->table
             ->fromTable('foo')
@@ -145,8 +145,8 @@ final class AlterTableTest extends CIUnitTestCase
 
         $newKeys = $this->db->getIndexData('foo');
 
-        $this->assertFalse(array_key_exists('foo_name', $newKeys));
-        $this->assertTrue(array_key_exists('foo_email', $newKeys));
+        $this->assertArrayNotHasKey('foo_name', $newKeys);
+        $this->assertArrayHasKey('foo_email', $newKeys);
 
         $this->assertTrue($result);
     }
@@ -189,7 +189,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertTrue($result);
 
         $keys = $this->db->getForeignKeyData('aliens');
-        $this->assertTrue(empty($keys));
+        $this->assertEmpty($keys);
     }
 
     public function testProcessCopiesOldData()

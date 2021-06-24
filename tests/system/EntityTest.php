@@ -144,8 +144,8 @@ final class EntityTest extends CIUnitTestCase
 
         $attributes = $this->getPrivateProperty($entity, 'attributes');
 
-        $this->assertTrue(array_key_exists('foo', $attributes));
-        $this->assertFalse(array_key_exists('bar', $attributes));
+        $this->assertArrayHasKey('foo', $attributes);
+        $this->assertArrayNotHasKey('bar', $attributes);
     }
 
     public function testUnsetWorksWithMapping()
@@ -492,9 +492,9 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getCastNullableEntity();
 
-        $this->assertSame(null, $entity->string_null);
+        $this->assertNull($entity->string_null);
         $this->assertSame('', $entity->string_empty);
-        $this->assertSame(null, $entity->integer_null);
+        $this->assertNull($entity->integer_null);
         $this->assertSame(0, $entity->integer_0);
         $this->assertSame('value', $entity->string_value_not_null);
     }

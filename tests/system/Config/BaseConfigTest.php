@@ -257,6 +257,6 @@ final class BaseConfigTest extends CIUnitTestCase
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
-        $this->assertSame(true, $this->getPrivateProperty($config, 'didDiscovery'));
+        $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
     }
 }
