@@ -152,6 +152,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'php_unit_method_casing'                 => ['case' => 'camel_case'],
             'php_unit_mock'                          => ['target' => 'newest'],
             'php_unit_mock_short_will_return'        => true,
+            'php_unit_namespaced'                    => true,
             'php_unit_no_expectation_annotation'     => [
                 'target'          => 'newest',
                 'use_class_const' => true,
