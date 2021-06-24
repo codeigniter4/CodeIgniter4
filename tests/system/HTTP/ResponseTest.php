@@ -245,8 +245,6 @@ class ResponseTest extends CIUnitTestCase
     {
         $response = new Response(new App());
 
-        $date = date('r');
-
         $options = [];
 
         $response->setCache($options);

@@ -17,6 +17,7 @@ use Rector\CodeQualityStrict\Rector\Variable\MoveVariableDeclarationNearReferenc
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
 use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
@@ -99,4 +100,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
     $services->set(RemoveExtraParametersRector::class);
+    $services->set(RemoveUnusedVariableAssignRector::class);
 };

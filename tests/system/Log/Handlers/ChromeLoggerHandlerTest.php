@@ -72,7 +72,7 @@ class ChromeLoggerHandlerTest extends CIUnitTestCase
         $data              = new stdClass();
         $data->code        = 123;
         $data->explanation = "That's no moon, it's a pumpkin";
-        $result            = $logger->setDateFormat('F j, Y');
+        $logger->setDateFormat('F j, Y');
 
         $logger->handle('warning', $data);
 

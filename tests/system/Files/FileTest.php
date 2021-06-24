@@ -75,6 +75,6 @@ class FileTest extends CIUnitTestCase
     {
         $this->expectException('CodeIgniter\Files\Exceptions\FileNotFoundException');
 
-        $file = new File(SYSTEMPATH . 'Commoner.php', true);
+        new File(SYSTEMPATH . 'Commoner.php', true);
     }
 }

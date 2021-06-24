@@ -85,8 +85,6 @@ class ParserFilterTest extends CIUnitTestCase
     public function testDateModify()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
-
-        $today     = date('Y-m-d');
         $tommorrow = date('Y-m-d', strtotime('+1 day'));
 
         $data = [

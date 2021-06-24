@@ -18,7 +18,7 @@ class DEBugTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->db, 'DBDebug', true);
         $this->expectException('Exception');
-        $result = $this->db->simpleQuery('SELECT * FROM db_error');
+        $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
     public function testDBDebugFalse()

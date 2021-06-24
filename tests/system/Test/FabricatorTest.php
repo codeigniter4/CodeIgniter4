@@ -55,7 +55,7 @@ class FabricatorTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
-        $fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
+        new Fabricator('SillyRabbit\Models\AreForKids');
     }
 
     public function testConstructorSetsFormatters()

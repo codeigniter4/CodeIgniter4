@@ -25,7 +25,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $this->withURI('http://example.com')
             ->withLogger($logger)
             ->controller(NeverHeardOfIt::class)
             ->execute('index');
@@ -35,7 +35,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $this->withURI('http://example.com')
             ->withLogger($logger)
             ->controller(Home::class)
             ->execute('nothere');
@@ -49,7 +49,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -59,7 +58,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -71,7 +69,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -222,7 +219,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 

@@ -331,7 +331,7 @@ class CommonFunctionsTest extends CIUnitTestCase
         $_POST    = ['location' => $locations];
 
         $response = new RedirectResponse(new App());
-        $returned = $response->withInput();
+        $response->withInput();
 
         $this->assertEquals($locations, old('location'));
     }
@@ -382,8 +382,6 @@ class CommonFunctionsTest extends CIUnitTestCase
     public function testRedirectResponseCookies1()
     {
         $loginTime = time();
-
-        $response = new Response(new App());
 
         $routes = service('routes');
         $routes->add('user/login', 'Auth::verify', ['as' => 'login']);

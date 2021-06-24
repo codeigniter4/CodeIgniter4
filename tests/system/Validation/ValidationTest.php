@@ -451,10 +451,6 @@ final class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
-
-        $rules = [
-            'role' => 'required|min_length[5]',
-        ];
         $this->validation->withRequest($request->withMethod('patch'))->run($data);
         $this->assertEquals([], $this->validation->getErrors());
     }

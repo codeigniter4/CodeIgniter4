@@ -36,7 +36,7 @@ class BadQueryTest extends CIUnitTestCase
         $this->setPrivateProperty($this->db, 'DBDebug', true);
         // expect an exception, class and message varies by DBMS
         $this->expectException(Exception::class);
-        $query = $this->db->query('SELECT * FROM table_does_not_exist');
+        $this->db->query('SELECT * FROM table_does_not_exist');
 
         // this code is never executed
     }

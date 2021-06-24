@@ -328,7 +328,6 @@ class ViewTest extends CIUnitTestCase
         $view = new View($this->config, $this->viewsDir, $this->loader);
 
         $view->setVar('testString', 'Hello World');
-        $expected = "<p>Open</p>\n<h1>Hello World</h1>";
 
         $content = $view->render('extend_include');
 

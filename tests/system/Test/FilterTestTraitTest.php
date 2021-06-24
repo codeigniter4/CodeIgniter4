@@ -54,7 +54,7 @@ class FilterTestTraitTest extends CIUnitTestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid filter position passed: banana');
 
-        $caller = $this->getFilterCaller('test-customfilter', 'banana');
+        $this->getFilterCaller('test-customfilter', 'banana');
     }
 
     public function testCallerUsesClonedInstance()

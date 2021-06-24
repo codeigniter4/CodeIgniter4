@@ -208,7 +208,7 @@ class AlterTableTest extends CIUnitTestCase
 
         $this->seeInDatabase('foo', ['name' => 'George Clinton']);
 
-        $result = $this->table
+        $this->table
             ->fromTable('foo')
             ->dropColumn('name')
             ->run();

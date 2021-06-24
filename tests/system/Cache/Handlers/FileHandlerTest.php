@@ -243,7 +243,6 @@ final class FileHandlerTest extends CIUnitTestCase
 
     public function testGetCacheInfo()
     {
-        $time = time();
         $this->fileHandler->save(self::$key1, 'value');
 
         $actual = $this->fileHandler->getCacheInfo();
