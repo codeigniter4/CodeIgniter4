@@ -157,11 +157,15 @@ final class CodeIgniter4 extends AbstractRuleset
                 'target'          => 'newest',
                 'use_class_const' => true,
             ],
-            'php_unit_set_up_tear_down_visibility' => true,
-            'php_unit_test_annotation'             => ['style' => 'prefix'],
-            'phpdoc_align'                         => true,
-            'phpdoc_indent'                        => true,
-            'phpdoc_inline_tag_normalizer'         => [
+            'php_unit_set_up_tear_down_visibility'   => true,
+            'php_unit_test_annotation'               => ['style' => 'prefix'],
+            'php_unit_test_case_static_method_calls' => [
+                'call_type' => 'this',
+                'methods'   => [],
+            ],
+            'phpdoc_align'                 => true,
+            'phpdoc_indent'                => true,
+            'phpdoc_inline_tag_normalizer' => [
                 'tags' => [
                     'example',
                     'id',
