@@ -147,6 +147,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'php_unit_dedicate_assert'               => ['target' => 'newest'],
             'php_unit_dedicate_assert_internal_type' => ['target' => 'newest'],
             'php_unit_expectation'                   => ['target' => 'newest'],
+            'php_unit_fqcn_annotation'               => true,
             'php_unit_internal_class'                => ['types' => ['normal', 'final']],
             'php_unit_no_expectation_annotation'     => [
                 'target'          => 'newest',
