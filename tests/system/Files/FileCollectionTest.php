@@ -118,7 +118,7 @@ class FileCollectionTest extends CIUnitTestCase
 
 	public function testConstructorCallsDefine()
 	{
-		$collection = new class([$this->file]) extends FileCollection {
+		$collection = new class() extends FileCollection {
 
 			protected function define(): void
 			{
