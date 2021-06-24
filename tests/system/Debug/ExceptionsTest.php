@@ -5,7 +5,10 @@ namespace CodeIgniter\Debug;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 
-class ExceptionsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ExceptionsTest extends CIUnitTestCase
 {
     public function testNew()
     {

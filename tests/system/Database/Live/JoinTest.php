@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class JoinTest extends CIUnitTestCase
+final class JoinTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

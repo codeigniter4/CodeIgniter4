@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
 use Faker\Generator;
 
-class DatabaseSeederTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DatabaseSeederTest extends CIUnitTestCase
 {
     public function testInstantiateNoSeedPath()
     {

@@ -9,8 +9,10 @@ use Config\Modules;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class RouteCollectionTest extends CIUnitTestCase
+final class RouteCollectionTest extends CIUnitTestCase
 {
     public function tearDown(): void
     {

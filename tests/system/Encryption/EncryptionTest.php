@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
 
-class EncryptionTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EncryptionTest extends CIUnitTestCase
 {
     /**
      * @var \CodeIgniter\Encryption\Encryption

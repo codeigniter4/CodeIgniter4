@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ValidationGeneratorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ValidationGeneratorTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

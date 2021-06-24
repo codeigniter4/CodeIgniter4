@@ -6,7 +6,10 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
-class NegotiateTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class NegotiateTest extends CIUnitTestCase
 {
 
     /**

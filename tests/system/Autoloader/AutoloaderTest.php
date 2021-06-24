@@ -8,7 +8,10 @@ use Config\Modules;
 use Config\Services;
 use UnnamespacedClass;
 
-class AutoloaderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class AutoloaderTest extends CIUnitTestCase
 {
     /**
      * @var Autoloader

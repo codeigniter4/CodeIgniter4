@@ -7,6 +7,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use Exception;
 
+/**
+ * @internal
+ */
 final class MemcachedHandlerTest extends CIUnitTestCase
 {
     private $memcachedHandler;

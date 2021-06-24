@@ -4,7 +4,10 @@ namespace CodeIgniter\Test;
 
 use InvalidArgumentException;
 
-class DOMParserTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DOMParserTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

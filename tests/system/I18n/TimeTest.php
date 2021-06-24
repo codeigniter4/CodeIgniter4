@@ -9,7 +9,10 @@ use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
 
-class TimeTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TimeTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

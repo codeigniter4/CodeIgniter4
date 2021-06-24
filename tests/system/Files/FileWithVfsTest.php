@@ -5,7 +5,10 @@ namespace CodeIgniter\Files;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileWithVfsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileWithVfsTest extends CIUnitTestCase
 {
 
     // For VFS stuff

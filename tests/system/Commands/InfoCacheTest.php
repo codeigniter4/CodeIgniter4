@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 
-class InfoCacheTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class InfoCacheTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

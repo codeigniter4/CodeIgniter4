@@ -5,7 +5,10 @@ namespace CodeIgniter\I18n;
 use CodeIgniter\Test\CIUnitTestCase;
 use Locale;
 
-class TimeDifferenceTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TimeDifferenceTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

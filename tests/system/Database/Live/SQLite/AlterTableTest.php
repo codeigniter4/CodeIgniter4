@@ -11,8 +11,10 @@ use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class AlterTableTest extends CIUnitTestCase
+final class AlterTableTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

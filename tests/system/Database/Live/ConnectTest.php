@@ -10,8 +10,10 @@ use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class ConnectTest extends CIUnitTestCase
+final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

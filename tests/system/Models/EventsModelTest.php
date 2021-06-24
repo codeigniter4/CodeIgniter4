@@ -5,6 +5,9 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DataException;
 use Tests\Support\Models\EventModel;
 
+/**
+ * @internal
+ */
 final class EventsModelTest extends LiveModelTestCase
 {
     /**

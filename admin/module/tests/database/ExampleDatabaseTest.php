@@ -2,7 +2,10 @@
 
 use Tests\Support\Models\ExampleModel;
 
-class ExampleDatabaseTest extends \Tests\Support\DatabaseTestCase
+/**
+ * @internal
+ */
+final class ExampleDatabaseTest extends \Tests\Support\DatabaseTestCase
 {
     public function setUp(): void
     {

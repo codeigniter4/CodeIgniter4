@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class LimitTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class LimitTest extends CIUnitTestCase
 {
     protected $db;
 

@@ -11,8 +11,10 @@ use Config\Services;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class PagerTest extends CIUnitTestCase
+final class PagerTest extends CIUnitTestCase
 {
 
     /**

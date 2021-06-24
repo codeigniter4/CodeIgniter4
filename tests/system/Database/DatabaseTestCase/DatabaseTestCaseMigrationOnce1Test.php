@@ -12,8 +12,10 @@ use Config\Services;
  * show $migrateOnce applies per test case file.
  *
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
+final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

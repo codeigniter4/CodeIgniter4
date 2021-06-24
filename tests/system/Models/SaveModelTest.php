@@ -14,6 +14,9 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
+/**
+ * @internal
+ */
 final class SaveModelTest extends LiveModelTestCase
 {
     public function testSaveNewRecordObject(): void

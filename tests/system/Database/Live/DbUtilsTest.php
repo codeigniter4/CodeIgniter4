@@ -9,8 +9,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DbUtilsTest extends CIUnitTestCase
+final class DbUtilsTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

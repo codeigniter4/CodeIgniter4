@@ -12,6 +12,8 @@ use Tests\Support\Models\UserModel;
 /**
  * GeneralModelTest should be used when only testing Model's
  * features without requiring a database connection.
+ *
+ * @internal
  */
 final class GeneralModelTest extends CIUnitTestCase
 {

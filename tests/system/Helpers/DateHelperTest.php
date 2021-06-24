@@ -5,6 +5,9 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 
+/**
+ * @internal
+ */
 final class DateHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

@@ -9,8 +9,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class HoneypotTest extends CIUnitTestCase
+final class HoneypotTest extends CIUnitTestCase
 {
     protected $config;
     protected $honeypot;

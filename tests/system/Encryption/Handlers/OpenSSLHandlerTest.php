@@ -7,7 +7,10 @@ use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
-class OpenSSLHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class OpenSSLHandlerTest extends CIUnitTestCase
 {
     /**
      * @var \CodeIgniter\Encryption\Encryption

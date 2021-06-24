@@ -2,7 +2,10 @@
 
 use Config\Services;
 
-class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class HealthTest extends \CodeIgniter\Test\CIUnitTestCase
 {
     public function setUp(): void
     {

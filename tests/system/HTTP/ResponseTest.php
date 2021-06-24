@@ -12,7 +12,10 @@ use Config\Services;
 use DateTime;
 use DateTimeZone;
 
-class ResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ResponseTest extends CIUnitTestCase
 {
     protected $server;
 

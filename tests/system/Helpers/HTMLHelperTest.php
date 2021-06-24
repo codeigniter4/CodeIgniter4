@@ -5,6 +5,9 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class HTMLHelperTest extends CIUnitTestCase
 {
     private $tracks;

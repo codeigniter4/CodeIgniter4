@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockTable;
 use stdClass;
 
-class TableTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TableTest extends CIUnitTestCase
 {
     public function setUp(): void
     {

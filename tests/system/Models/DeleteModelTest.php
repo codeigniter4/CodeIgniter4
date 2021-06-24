@@ -8,6 +8,9 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 
+/**
+ * @internal
+ */
 final class DeleteModelTest extends LiveModelTestCase
 {
     public function testDeleteBasics(): void

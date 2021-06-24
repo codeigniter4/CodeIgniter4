@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class LimitTest extends CIUnitTestCase
+final class LimitTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     protected $refresh = true;

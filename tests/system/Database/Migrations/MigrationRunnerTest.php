@@ -16,8 +16,10 @@ use org\bovigo\vfs\vfsStream;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class MigrationRunnerTest extends CIUnitTestCase
+final class MigrationRunnerTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

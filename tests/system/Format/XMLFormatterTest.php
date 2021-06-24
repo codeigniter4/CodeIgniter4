@@ -5,7 +5,10 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Test\CIUnitTestCase;
 use DOMDocument;
 
-class XMLFormatterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class XMLFormatterTest extends CIUnitTestCase
 {
     protected $xmlFormatter;
 

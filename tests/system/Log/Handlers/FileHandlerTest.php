@@ -7,7 +7,10 @@ use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 
-class FileHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

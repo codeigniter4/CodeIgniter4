@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class GenerateKeyTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class GenerateKeyTest extends CIUnitTestCase
 {
     private $streamFilter;
     private $envPath;

@@ -10,8 +10,10 @@ use Config\App;
  *
  * See https://apimirror.com/http/headers/content-security-policy
  * See https://cspvalidator.org/
+ *
+ * @internal
  */
-class ContentSecurityPolicyTest extends CIUnitTestCase
+final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)

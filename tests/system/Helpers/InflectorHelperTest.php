@@ -4,6 +4,9 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class InflectorHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

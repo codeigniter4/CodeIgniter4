@@ -5,7 +5,10 @@ namespace CodeIgniter\Throttle;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 
-class ThrottleTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ThrottleTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

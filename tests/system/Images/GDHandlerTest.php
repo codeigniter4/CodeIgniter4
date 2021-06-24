@@ -15,8 +15,10 @@ use org\bovigo\vfs\vfsStream;
  * and we can make sure the code coverage is good.
  *
  * Was unable to test fontPath & related logic.
+ *
+ * @internal
  */
-class GDHandlerTest extends CIUnitTestCase
+final class GDHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

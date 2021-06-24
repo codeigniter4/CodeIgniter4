@@ -9,7 +9,10 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
-class FilesystemHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FilesystemHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

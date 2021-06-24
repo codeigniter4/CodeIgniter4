@@ -7,7 +7,10 @@ use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 
-class CellTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CellTest extends CIUnitTestCase
 {
     protected $cache;
 

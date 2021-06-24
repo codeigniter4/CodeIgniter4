@@ -4,7 +4,10 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class FileTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileTest extends CIUnitTestCase
 {
     public function testNewGoodChecked()
     {

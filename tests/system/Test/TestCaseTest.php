@@ -8,7 +8,10 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\App;
 
-class TestCaseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TestCaseTest extends CIUnitTestCase
 {
     //  protected function tearDown(): void
     //  {

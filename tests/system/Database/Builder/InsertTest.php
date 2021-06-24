@@ -6,7 +6,10 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class InsertTest extends CIUnitTestCase
 {
     /**
      * @var MockConnection

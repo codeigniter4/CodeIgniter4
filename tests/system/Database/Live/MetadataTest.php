@@ -8,8 +8,10 @@ use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class MetadataTest extends CIUnitTestCase
+final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

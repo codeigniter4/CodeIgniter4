@@ -9,7 +9,10 @@ use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
 use CURLFile;
 
-class CURLRequestTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CURLRequestTest extends CIUnitTestCase
 {
     /**
      * @var MockCURLRequest

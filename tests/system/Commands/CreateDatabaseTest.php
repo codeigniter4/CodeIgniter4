@@ -8,7 +8,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;
 
-class CreateDatabaseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CreateDatabaseTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

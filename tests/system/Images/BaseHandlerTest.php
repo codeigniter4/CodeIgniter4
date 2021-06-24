@@ -16,8 +16,10 @@ use org\bovigo\vfs\vfsStream;
  * with vfsStream, so the support files are used directly for
  * most work, and the virtual file system will be used for
  * testing saving only.
+ *
+ * @internal
  */
-class BaseHandlerTest extends CIUnitTestCase
+final class BaseHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

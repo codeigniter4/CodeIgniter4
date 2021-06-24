@@ -11,6 +11,9 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use Config\Services;
 
+/**
+ * @internal
+ */
 final class CookieHelperTest extends CIUnitTestCase
 {
     private $name;

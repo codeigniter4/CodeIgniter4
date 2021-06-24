@@ -19,8 +19,10 @@ use Psr\Log\LoggerInterface;
  * we can exercise everything without blowing up :-/
  *
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class ControllerTest extends CIUnitTestCase
+final class ControllerTest extends CIUnitTestCase
 {
 
     /**

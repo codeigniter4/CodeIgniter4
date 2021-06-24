@@ -18,8 +18,10 @@ require_once __DIR__ . '/fixtures/Role.php';
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class FiltersTest extends CIUnitTestCase
+final class FiltersTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;

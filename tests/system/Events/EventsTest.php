@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
 use Config\Modules;
 
-class EventsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EventsTest extends CIUnitTestCase
 {
     /**
      * Accessible event manager instance

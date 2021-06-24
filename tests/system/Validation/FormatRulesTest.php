@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
 
-class FormatRulesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FormatRulesTest extends CIUnitTestCase
 {
     public const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
     public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';

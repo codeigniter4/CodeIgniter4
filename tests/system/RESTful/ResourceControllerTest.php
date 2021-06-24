@@ -25,8 +25,10 @@ use Tests\Support\Models\UserModel;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ResourceControllerTest extends CIUnitTestCase
+final class ResourceControllerTest extends CIUnitTestCase
 {
 
     /**

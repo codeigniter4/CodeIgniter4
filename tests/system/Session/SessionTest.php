@@ -16,8 +16,10 @@ use Config\Logger as LoggerConfig;
  * @runTestsInSeparateProcesses
  *
  * @preserveGlobalState disabled
+ *
+ * @internal
  */
-class SessionTest extends CIUnitTestCase
+final class SessionTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

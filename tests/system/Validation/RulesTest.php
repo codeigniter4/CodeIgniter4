@@ -9,7 +9,10 @@ use Config\Services;
 use stdClass;
 use Tests\Support\Validation\TestRules;
 
-class RulesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class RulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

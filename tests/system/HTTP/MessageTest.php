@@ -5,7 +5,10 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 
-class MessageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MessageTest extends CIUnitTestCase
 {
 
     /**

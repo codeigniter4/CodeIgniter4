@@ -9,7 +9,10 @@ use CodeIgniter\View\View;
 use Config;
 use RuntimeException;
 
-class ViewTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ViewTest extends CIUnitTestCase
 {
     protected $loader;
     protected $viewsDir;

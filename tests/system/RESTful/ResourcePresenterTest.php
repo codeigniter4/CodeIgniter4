@@ -19,8 +19,10 @@ use Tests\Support\Models\UserModel;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ResourcePresenterTest extends CIUnitTestCase
+final class ResourcePresenterTest extends CIUnitTestCase
 {
 
     /**

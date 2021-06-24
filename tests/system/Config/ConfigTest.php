@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\DocTypes;
 use stdClass;
 
-class ConfigTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ConfigTest extends CIUnitTestCase
 {
     public function testCreateSingleInstance()
     {

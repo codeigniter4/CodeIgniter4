@@ -9,8 +9,10 @@ use Config\App;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class IncomingRequestTest extends CIUnitTestCase
+final class IncomingRequestTest extends CIUnitTestCase
 {
 
     /**

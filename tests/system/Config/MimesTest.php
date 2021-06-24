@@ -5,7 +5,10 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
 
-class MimesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MimesTest extends CIUnitTestCase
 {
     public function extensionsList()
     {

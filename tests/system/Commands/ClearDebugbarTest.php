@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ClearDebugbarTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ClearDebugbarTest extends CIUnitTestCase
 {
     protected $streamFilter;
     protected $time;

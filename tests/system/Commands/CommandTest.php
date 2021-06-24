@@ -7,7 +7,10 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 use Tests\Support\Commands\ParamsReveal;
 
-class CommandTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CommandTest extends CIUnitTestCase
 {
     private $streamFilter;
     protected $logger;

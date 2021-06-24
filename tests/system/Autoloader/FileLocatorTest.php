@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 
-class FileLocatorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileLocatorTest extends CIUnitTestCase
 {
     /**
      * @var FileLocator

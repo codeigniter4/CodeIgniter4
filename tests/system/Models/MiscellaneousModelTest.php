@@ -10,6 +10,9 @@ use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
+/**
+ * @internal
+ */
 final class MiscellaneousModelTest extends LiveModelTestCase
 {
     public function testChunk(): void

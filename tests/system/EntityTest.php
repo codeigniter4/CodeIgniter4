@@ -14,7 +14,10 @@ use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
 use Tests\Support\SomeEntity;
 
-class EntityTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 

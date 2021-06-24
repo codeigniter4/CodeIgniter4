@@ -10,8 +10,10 @@ use Config\App;
  * except also testing the methods added by CLIRequest
  *
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class CLIRequestTest extends CIUnitTestCase
+final class CLIRequestTest extends CIUnitTestCase
 {
 
     /**

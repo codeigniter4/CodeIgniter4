@@ -7,6 +7,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 
+/**
+ * @internal
+ */
 final class CommandRunnerTest extends CIUnitTestCase
 {
     /**

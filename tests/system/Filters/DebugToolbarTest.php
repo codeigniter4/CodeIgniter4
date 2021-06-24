@@ -8,8 +8,10 @@ use Config\Filters as FilterConfig;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class DebugToolbarTest extends CIUnitTestCase
+final class DebugToolbarTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;
