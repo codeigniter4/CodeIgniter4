@@ -10,7 +10,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
  *
  * @internal
  */
-final class DEBugTest extends CIUnitTestCase
+final class DbDebugTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

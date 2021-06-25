@@ -41,7 +41,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
     {
         $result1     = $this->readOutput($this->file1);
         $correctPath = $this->correctFCPATH();
-        $this->assertEquals($correctPath, $result1);
+        $this->assertSame($correctPath, $result1);
     }
 
     private function correctFCPATH()

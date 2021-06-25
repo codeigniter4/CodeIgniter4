@@ -46,7 +46,7 @@ final class MimesTest extends CIUnitTestCase
      */
     public function testGuessExtensionFromType($expected, $mime)
     {
-        $this->assertEquals($expected, Mimes::guessExtensionFromType($mime));
+        $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
     }
 
     //--------------------------------------------------------------------
@@ -84,7 +84,7 @@ final class MimesTest extends CIUnitTestCase
      */
     public function testGuessTypeFromExtension($expected, $ext)
     {
-        $this->assertEquals($expected, Mimes::guessTypeFromExtension($ext));
+        $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }
 
     //--------------------------------------------------------------------

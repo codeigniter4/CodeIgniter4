@@ -71,12 +71,12 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->config->indexPage                 = $indexPage;
         $this->config->forceGlobalSecureRequests = $secure;
 
-        $this->assertEquals($expectedSiteUrl, site_url($path, $scheme, $this->config));
+        $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
 
         // base_url is always the trimmed site_url without index page
         $expectedBaseUrl = $indexPage === '' ? $expectedSiteUrl : str_replace('/' . $indexPage, '', $expectedSiteUrl);
         $expectedBaseUrl = rtrim($expectedBaseUrl, '/');
-        $this->assertEquals($expectedBaseUrl, base_url($path, $scheme));
+        $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
     public function configProvider()
@@ -247,13 +247,13 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test';
 
-        $this->assertEquals('http://example.com', base_url());
+        $this->assertSame('http://example.com', base_url());
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test/page';
 
-        $this->assertEquals('http://example.com', base_url());
-        $this->assertEquals('http://example.com/profile', base_url('profile'));
+        $this->assertSame('http://example.com', base_url());
+        $this->assertSame('http://example.com/profile', base_url('profile'));
     }
 
     public function testBaseURLService()
@@ -267,7 +267,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
-        $this->assertEquals('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
+        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
+        $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
 }

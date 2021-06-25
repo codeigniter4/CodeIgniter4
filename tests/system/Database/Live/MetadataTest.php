@@ -49,7 +49,7 @@ final class MetadataTest extends CIUnitTestCase
     {
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
     }
 
     //--------------------------------------------------------------------
@@ -58,7 +58,7 @@ final class MetadataTest extends CIUnitTestCase
     {
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
     }
 
     //--------------------------------------------------------------------
@@ -89,7 +89,7 @@ final class MetadataTest extends CIUnitTestCase
         $this->db->setPrefix($DBPrefix);
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
 
         // Clean up temporary table
         $this->db->setPrefix('tmp_');

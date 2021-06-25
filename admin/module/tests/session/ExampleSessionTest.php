@@ -16,6 +16,6 @@ final class ExampleSessionTest extends \Tests\Support\SessionTestCase
 
         $value = $this->session->get('logged_in');
 
-        $this->assertEquals(123, $value);
+        $this->assertSame(123, $value);
     }
 }

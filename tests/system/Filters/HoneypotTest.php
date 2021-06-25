@@ -66,7 +66,7 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $request = $filters->run($uri, 'before');
-        $this->assertEquals($expected, $request);
+        $this->assertSame($expected, $request);
     }
 
     //--------------------------------------------------------------------

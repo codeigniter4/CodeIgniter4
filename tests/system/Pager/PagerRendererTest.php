@@ -59,7 +59,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(2);
 
         $this->assertTrue($pager->hasPrevious());
-        $this->assertEquals('http://example.com/foo?foo=bar&page=2', $pager->getPrevious());
+        $this->assertSame('http://example.com/foo?foo=bar&page=2', $pager->getPrevious());
     }
 
     //--------------------------------------------------------------------
@@ -80,7 +80,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(0);
 
         $this->assertTrue($pager->hasPrevious());
-        $this->assertEquals('http://example.com/foo?foo=bar&page=3', $pager->getPrevious());
+        $this->assertSame('http://example.com/foo?foo=bar&page=3', $pager->getPrevious());
     }
 
     //--------------------------------------------------------------------
@@ -121,7 +121,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(2);
 
         $this->assertTrue($pager->hasNext());
-        $this->assertEquals('http://example.com/foo?foo=bar&page=7', $pager->getNext());
+        $this->assertSame('http://example.com/foo?foo=bar&page=7', $pager->getNext());
     }
 
     //--------------------------------------------------------------------
@@ -142,7 +142,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(0);
 
         $this->assertTrue($pager->hasNext());
-        $this->assertEquals('http://example.com/foo?foo=bar&page=5', $pager->getNext());
+        $this->assertSame('http://example.com/foo?foo=bar&page=5', $pager->getNext());
     }
 
     //--------------------------------------------------------------------
@@ -177,7 +177,7 @@ final class PagerRendererTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $pager->links());
+        $this->assertSame($expected, $pager->links());
     }
 
     //--------------------------------------------------------------------
@@ -196,8 +196,8 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $pager = new PagerRenderer($details);
 
-        $this->assertEquals('http://example.com/foo?foo=bar&page=1', $pager->getFirst());
-        $this->assertEquals('http://example.com/foo?foo=bar&page=50', $pager->getLast());
+        $this->assertSame('http://example.com/foo?foo=bar&page=1', $pager->getFirst());
+        $this->assertSame('http://example.com/foo?foo=bar&page=50', $pager->getLast());
     }
 
     //--------------------------------------------------------------------
@@ -216,7 +216,7 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $pager = new PagerRenderer($details);
 
-        $this->assertEquals('http://example.com/foo?foo=bar&page=10', $pager->getCurrent());
+        $this->assertSame('http://example.com/foo?foo=bar&page=10', $pager->getCurrent());
     }
 
     //--------------------------------------------------------------------
@@ -236,7 +236,7 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $pager = new PagerRenderer($details);
 
-        $this->assertEquals('http://example.com/foo/10?foo=bar', $pager->getCurrent());
+        $this->assertSame('http://example.com/foo/10?foo=bar', $pager->getCurrent());
     }
 
     //--------------------------------------------------------------------
@@ -260,13 +260,13 @@ final class PagerRendererTest extends CIUnitTestCase
 
         // with surropund count of 2
         $pager->setSurroundCount(2);
-        $this->assertEquals($this->expect . '1', $pager->getPrevious());
-        $this->assertEquals($this->expect . '7', $pager->getNext());
+        $this->assertSame($this->expect . '1', $pager->getPrevious());
+        $this->assertSame($this->expect . '7', $pager->getNext());
 
         // with unchanged surround count
         $pager->setSurroundCount();
-        $this->assertEquals($this->expect . '1', $pager->getPrevious());
-        $this->assertEquals($this->expect . '7', $pager->getNext());
+        $this->assertSame($this->expect . '1', $pager->getPrevious());
+        $this->assertSame($this->expect . '7', $pager->getNext());
 
         // and with huge surround count
         $pager->setSurroundCount(100);
@@ -310,7 +310,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(2);
 
         $this->assertTrue($pager->hasPrevious());
-        $this->assertEquals('http://example.com/foo/2?foo=bar', $pager->getPrevious());
+        $this->assertSame('http://example.com/foo/2?foo=bar', $pager->getPrevious());
     }
 
     //--------------------------------------------------------------------
@@ -332,7 +332,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(0);
 
         $this->assertTrue($pager->hasPrevious());
-        $this->assertEquals('http://example.com/foo/3?foo=bar', $pager->getPrevious());
+        $this->assertSame('http://example.com/foo/3?foo=bar', $pager->getPrevious());
     }
 
     //--------------------------------------------------------------------
@@ -375,7 +375,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(2);
 
         $this->assertTrue($pager->hasNext());
-        $this->assertEquals('http://example.com/foo/7?foo=bar', $pager->getNext());
+        $this->assertSame('http://example.com/foo/7?foo=bar', $pager->getNext());
     }
 
     //--------------------------------------------------------------------
@@ -397,7 +397,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager->setSurroundCount(0);
 
         $this->assertTrue($pager->hasNext());
-        $this->assertEquals('http://example.com/foo/5?foo=bar', $pager->getNext());
+        $this->assertSame('http://example.com/foo/5?foo=bar', $pager->getNext());
     }
 
     //--------------------------------------------------------------------
@@ -433,7 +433,7 @@ final class PagerRendererTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $pager->links());
+        $this->assertSame($expected, $pager->links());
     }
 
     //--------------------------------------------------------------------
@@ -453,8 +453,8 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $pager = new PagerRenderer($details);
 
-        $this->assertEquals('http://example.com/foo/1?foo=bar', $pager->getFirst());
-        $this->assertEquals('http://example.com/foo/50?foo=bar', $pager->getLast());
+        $this->assertSame('http://example.com/foo/1?foo=bar', $pager->getFirst());
+        $this->assertSame('http://example.com/foo/50?foo=bar', $pager->getLast());
     }
 
     //--------------------------------------------------------------------
@@ -508,7 +508,7 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $this->assertNotNull($pager->getPreviousPage());
         $this->assertTrue($pager->hasPreviousPage());
-        $this->assertEquals('http://example.com/foo?page=2', $pager->getPreviousPage());
+        $this->assertSame('http://example.com/foo?page=2', $pager->getPreviousPage());
     }
 
     //--------------------------------------------------------------------
@@ -526,7 +526,7 @@ final class PagerRendererTest extends CIUnitTestCase
         ];
 
         $pager = new PagerRenderer($details);
-        $this->assertEquals('http://example.com/foo/2', $pager->getPreviousPage());
+        $this->assertSame('http://example.com/foo/2', $pager->getPreviousPage());
     }
 
     //--------------------------------------------------------------------
@@ -546,7 +546,7 @@ final class PagerRendererTest extends CIUnitTestCase
 
         $this->assertNotNull($pager->getNextPage());
         $this->assertTrue($pager->hasNextPage());
-        $this->assertEquals('http://example.com/foo?page=4', $pager->getNextPage());
+        $this->assertSame('http://example.com/foo?page=4', $pager->getNextPage());
     }
 
     public function testGetNextPageWithSegmentHigherThanZero()
@@ -562,7 +562,7 @@ final class PagerRendererTest extends CIUnitTestCase
         ];
 
         $pager = new PagerRenderer($details);
-        $this->assertEquals('http://example.com/foo/4', $pager->getNextPage());
+        $this->assertSame('http://example.com/foo/4', $pager->getNextPage());
     }
 
     public function testGetPageNumber()
@@ -576,10 +576,10 @@ final class PagerRendererTest extends CIUnitTestCase
         ];
         $pager = new PagerRenderer($details);
 
-        $this->assertEquals(1, $pager->getFirstPageNumber());
-        $this->assertEquals(3, $pager->getCurrentPageNumber());
-        $this->assertEquals(10, $pager->getLastPageNumber());
-        $this->assertEquals(10, $pager->getPageCount());
+        $this->assertSame(1, $pager->getFirstPageNumber());
+        $this->assertSame(3, $pager->getCurrentPageNumber());
+        $this->assertSame(10, $pager->getLastPageNumber());
+        $this->assertSame(10, $pager->getPageCount());
     }
 
     public function testGetPageNumberSetSurroundCount()
@@ -594,9 +594,9 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
-        $this->assertEquals(3, $pager->getFirstPageNumber());
-        $this->assertEquals(5, $pager->getCurrentPageNumber());
-        $this->assertEquals(7, $pager->getLastPageNumber());
+        $this->assertSame(3, $pager->getFirstPageNumber());
+        $this->assertSame(5, $pager->getCurrentPageNumber());
+        $this->assertSame(7, $pager->getLastPageNumber());
     }
 
     public function testGetPreviousPageNumber()
@@ -611,7 +611,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
-        $this->assertEquals(4, $pager->getPreviousPageNumber());
+        $this->assertSame(4, $pager->getPreviousPageNumber());
     }
 
     public function testGetPreviousPageNumberNull()
@@ -641,7 +641,7 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager = new PagerRenderer($details);
         $pager->setSurroundCount(2);
 
-        $this->assertEquals(6, $pager->getNextPageNumber());
+        $this->assertSame(6, $pager->getNextPageNumber());
     }
 
     public function testGetNextPageNumberNull()

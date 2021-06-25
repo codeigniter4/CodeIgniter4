@@ -67,7 +67,7 @@ final class InsertTest extends CIUnitTestCase
             ->getwhere(['id' => 5])
             ->getRow();
 
-        $this->assertEquals('Cab Driver', $row->name);
+        $this->assertSame('Cab Driver', $row->name);
     }
 
     //--------------------------------------------------------------------
@@ -86,7 +86,7 @@ final class InsertTest extends CIUnitTestCase
             ->getwhere(['id' => 1])
             ->getRow();
 
-        $this->assertEquals('Cab Driver', $row->name);
+        $this->assertSame('Cab Driver', $row->name);
     }
 
     //--------------------------------------------------------------------

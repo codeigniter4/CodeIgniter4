@@ -37,7 +37,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setVar('foo', 'bar');
 
-        $this->assertEquals(['foo' => 'bar'], $view->getData());
+        $this->assertSame(['foo' => 'bar'], $view->getData());
     }
 
     public function testSetVarOverwrites()
@@ -47,7 +47,7 @@ final class ViewTest extends CIUnitTestCase
         $view->setVar('foo', 'bar');
         $view->setVar('foo', 'baz');
 
-        $this->assertEquals(['foo' => 'baz'], $view->getData());
+        $this->assertSame(['foo' => 'baz'], $view->getData());
     }
 
     //--------------------------------------------------------------------
@@ -63,7 +63,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setData($expected);
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     public function testSetDataMergesData()
@@ -82,7 +82,7 @@ final class ViewTest extends CIUnitTestCase
             'bar' => 'baz',
         ]);
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     public function testSetDataOverwritesData()
@@ -100,7 +100,7 @@ final class ViewTest extends CIUnitTestCase
             'bar' => 'baz',
         ]);
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     //--------------------------------------------------------------------
@@ -111,7 +111,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setVar('foo', 'bar&', 'html');
 
-        $this->assertEquals(['foo' => 'bar&amp;'], $view->getData());
+        $this->assertSame(['foo' => 'bar&amp;'], $view->getData());
     }
 
     public function testSetDataWillEscapeAll()
@@ -128,7 +128,7 @@ final class ViewTest extends CIUnitTestCase
             'bar' => 'baz<',
         ], 'html');
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     //--------------------------------------------------------------------
@@ -152,13 +152,13 @@ final class ViewTest extends CIUnitTestCase
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
 
-        $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>'));
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>'));
     }
 
     public function testRenderStringNullTempdata()
     {
         $view = new View($this->config, $this->viewsDir, $this->loader);
-        $this->assertEquals('test string', $view->renderString('test string'));
+        $this->assertSame('test string', $view->renderString('test string'));
     }
 
     //--------------------------------------------------------------------
@@ -196,7 +196,7 @@ final class ViewTest extends CIUnitTestCase
 
         $expected = ['testString' => 'Hello World'];
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     public function testRenderCanSaveDataThroughConfigSetting()
@@ -210,7 +210,7 @@ final class ViewTest extends CIUnitTestCase
 
         $expected = ['testString' => 'Hello World'];
 
-        $this->assertEquals($expected, $view->getData());
+        $this->assertSame($expected, $view->getData());
     }
 
     //--------------------------------------------------------------------
@@ -224,7 +224,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->resetData();
 
-        $this->assertEquals([], $view->getData());
+        $this->assertSame([], $view->getData());
     }
 
     //--------------------------------------------------------------------
@@ -250,11 +250,11 @@ final class ViewTest extends CIUnitTestCase
 
         //I think saveData is sava current data, is not clean already set data.
         $view->setVar('testString', 'Hello World');
-        $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
         $this->assertArrayNotHasKey('testString', $view->getData());
 
         $view->setVar('testString', 'Hello World');
-        $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
         $this->assertArrayHasKey('testString', $view->getData());
     }
 
@@ -268,7 +268,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
-        $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
         $this->assertCount(1, $view->getPerformanceData());
     }
 
@@ -280,7 +280,7 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setVar('testString', 'Hello World');
         $expected = '<h1>Hello World</h1>';
-        $this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
+        $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], true));
         $this->assertCount(0, $view->getPerformanceData());
     }
 
@@ -336,7 +336,7 @@ final class ViewTest extends CIUnitTestCase
 
         $this->assertTrue(strpos($content, '<p>Open</p>') !== false);
         $this->assertTrue(strpos($content, '<h1>Hello World</h1>') !== false);
-        $this->assertEquals(2, substr_count($content, 'Hello World'));
+        $this->assertSame(2, substr_count($content, 'Hello World'));
     }
 
     public function testRenderLayoutBroken()
