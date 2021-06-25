@@ -158,7 +158,9 @@ class PredisHandler extends BaseHandler
             return false;
         }
 
-        $this->redis->expireat($key, time() + $ttl);
+        if ($ttl) {
+            $this->redis->expireat($key, time() + $ttl);
+        }
 
         return true;
     }
