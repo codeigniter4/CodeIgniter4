@@ -23,6 +23,10 @@ use PHPUnit\Framework\TestCase;
  *
  * Consolidated response processing
  * for test results.
+ *
+ * @no-final
+ *
+ * @internal
  */
 class TestResponse extends TestCase
 {

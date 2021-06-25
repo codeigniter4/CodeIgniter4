@@ -8,8 +8,10 @@ use Exception;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class BadQueryTest extends CIUnitTestCase
+final class BadQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

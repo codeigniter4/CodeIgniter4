@@ -11,7 +11,10 @@ use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
 
-class FabricatorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FabricatorTest extends CIUnitTestCase
 {
     /**
      * Default formatters to use for UserModel. Should match detected version.

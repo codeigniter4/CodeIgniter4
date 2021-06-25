@@ -7,8 +7,10 @@ use org\bovigo\vfs\vfsStream;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class DotEnvTest extends CIUnitTestCase
+final class DotEnvTest extends CIUnitTestCase
 {
     protected $fixturesFolder;
 

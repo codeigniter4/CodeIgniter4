@@ -6,7 +6,10 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class ImageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ImageTest extends CIUnitTestCase
 {
     protected $path = 'tests/_support/ci-logo.png';
 

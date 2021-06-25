@@ -8,8 +8,10 @@ use Config\Services;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseTest extends CIUnitTestCase
+final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

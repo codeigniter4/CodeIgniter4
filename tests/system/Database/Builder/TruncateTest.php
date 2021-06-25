@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class TruncateTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TruncateTest extends CIUnitTestCase
 {
     protected $db;
 

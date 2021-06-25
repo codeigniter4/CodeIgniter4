@@ -11,8 +11,10 @@ use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class FabricatorLiveTest extends CIUnitTestCase
+final class FabricatorLiveTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

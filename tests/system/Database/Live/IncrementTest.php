@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class IncrementTest extends CIUnitTestCase
+final class IncrementTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

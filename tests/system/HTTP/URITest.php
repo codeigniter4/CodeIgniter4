@@ -10,8 +10,10 @@ use Config\App;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class URITest extends CIUnitTestCase
+final class URITest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

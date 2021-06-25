@@ -9,7 +9,10 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use stdClass;
 
-class ChromeLoggerHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
     public function testCanHandleLogLevel()
     {

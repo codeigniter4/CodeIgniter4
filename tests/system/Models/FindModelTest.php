@@ -8,6 +8,9 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
 
+/**
+ * @internal
+ */
 final class FindModelTest extends LiveModelTestCase
 {
     public function testFindReturnsRow(): void

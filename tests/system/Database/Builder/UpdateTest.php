@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
 
-class UpdateTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class UpdateTest extends CIUnitTestCase
 {
     /**
      * @var MockConnection

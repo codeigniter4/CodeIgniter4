@@ -12,8 +12,10 @@ use RuntimeException;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class ForgeTest extends CIUnitTestCase
+final class ForgeTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

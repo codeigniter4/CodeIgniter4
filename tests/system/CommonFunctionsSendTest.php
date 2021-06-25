@@ -4,7 +4,10 @@ namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class CommonFunctionsSendTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CommonFunctionsSendTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

@@ -9,7 +9,10 @@ use stdClass;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
 
-class FactoriesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FactoriesTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

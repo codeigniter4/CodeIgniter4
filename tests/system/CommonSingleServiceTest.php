@@ -7,6 +7,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use ReflectionMethod;
 
+/**
+ * @internal
+ */
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
     /**

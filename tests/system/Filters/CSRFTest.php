@@ -7,8 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class CSRFTest extends CIUnitTestCase
+final class CSRFTest extends CIUnitTestCase
 {
     protected $config;
     protected $request;

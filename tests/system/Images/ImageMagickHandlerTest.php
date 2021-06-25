@@ -16,8 +16,10 @@ use Imagick;
  * and we can make sure the code coverage is good.
  *
  * Was unable to test fontPath & related logic.
+ *
+ * @internal
  */
-class ImageMagickHandlerTest extends CIUnitTestCase
+final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

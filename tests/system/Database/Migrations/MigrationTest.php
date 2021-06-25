@@ -6,7 +6,10 @@ use CodeIgniter\Database\Migration;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-class MigrationTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MigrationTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

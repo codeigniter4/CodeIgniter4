@@ -10,7 +10,10 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 
-class ConsoleTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ConsoleTest extends CIUnitTestCase
 {
     private $stream_filter;
 

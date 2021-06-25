@@ -11,9 +11,11 @@ namespace CodeIgniter\Test;
  * It writes a file in the temp directory that loads the bootstrap file
  * then compares its echo FCPATH; to the correct FCPATH returned
  * from correctFCPATH();
+ *
+ * @internal
  */
 
-class BootstrapFCPATHTest extends CIUnitTestCase
+final class BootstrapFCPATHTest extends CIUnitTestCase
 {
     private $currentDir = __DIR__;
     private $dir1       = '/tmp/dir1';

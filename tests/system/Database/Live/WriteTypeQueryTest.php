@@ -8,8 +8,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class WriteTypeQueryTest extends CIUnitTestCase
+final class WriteTypeQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

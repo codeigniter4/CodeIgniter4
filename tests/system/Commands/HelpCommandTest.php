@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class HelpCommandTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class HelpCommandTest extends CIUnitTestCase
 {
     private $streamFilter;
 

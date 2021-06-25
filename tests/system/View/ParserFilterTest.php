@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Parser;
 use Config\View;
 
-class ParserFilterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ParserFilterTest extends CIUnitTestCase
 {
     protected $loader;
     protected $viewsDir;
@@ -84,7 +87,7 @@ class ParserFilterTest extends CIUnitTestCase
 
     public function testDateModify()
     {
-        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $parser    = new Parser($this->config, $this->viewsDir, $this->loader);
         $tommorrow = date('Y-m-d', strtotime('+1 day'));
 
         $data = [

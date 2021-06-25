@@ -6,7 +6,10 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
 
-class EmailTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EmailTest extends CIUnitTestCase
 {
     public function testEmailValidation()
     {

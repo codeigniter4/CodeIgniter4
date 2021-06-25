@@ -10,8 +10,10 @@ use Config\App;
  * TestCaseTest because it messes with output
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
+ *
+ * @internal
  */
-class ResponseSendTest extends CIUnitTestCase
+final class ResponseSendTest extends CIUnitTestCase
 {
 
     /**

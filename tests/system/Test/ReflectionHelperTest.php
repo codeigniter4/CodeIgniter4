@@ -2,7 +2,10 @@
 
 namespace CodeIgniter\Test;
 
-class ReflectionHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ReflectionHelperTest extends CIUnitTestCase
 {
     public function testGetPrivatePropertyWithObject()
     {

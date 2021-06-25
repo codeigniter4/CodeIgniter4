@@ -12,7 +12,10 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use stdClass;
 
-class ResponseTraitTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ResponseTraitTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;

@@ -10,7 +10,10 @@ use Config\App;
 use Config\Services;
 use PHPUnit\Framework\AssertionFailedError;
 
-class TestResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TestResponseTest extends CIUnitTestCase
 {
     /**
      * @var TestResponse

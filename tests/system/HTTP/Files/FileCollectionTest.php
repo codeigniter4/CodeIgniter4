@@ -5,7 +5,10 @@ namespace CodeIgniter\HTTP\Files;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
 
-class FileCollectionTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileCollectionTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

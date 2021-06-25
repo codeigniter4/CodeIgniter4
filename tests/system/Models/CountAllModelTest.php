@@ -5,6 +5,9 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\BaseBuilder;
 use Tests\Support\Models\UserModel;
 
+/**
+ * @internal
+ */
 final class CountAllModelTest extends LiveModelTestCase
 {
     /**

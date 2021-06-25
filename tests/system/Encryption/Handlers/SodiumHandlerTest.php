@@ -6,7 +6,10 @@ use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
-class SodiumHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SodiumHandlerTest extends CIUnitTestCase
 {
     /**
      * @var \CodeIgniter\Encryption\Encryption

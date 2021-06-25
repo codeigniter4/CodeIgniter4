@@ -8,7 +8,10 @@ use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class JoinTest extends CIUnitTestCase
 {
     protected $db;
 

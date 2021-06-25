@@ -15,6 +15,8 @@ use Config\App;
  * simultaneously.
  *
  * @backupGlobals enabled
+ *
+ * @internal
  */
 final class SiteUrlTest extends CIUnitTestCase
 {

@@ -10,7 +10,10 @@ use Config\Services;
 use Config\View as ViewConfig;
 use stdClass;
 
-class ParserTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ParserTest extends CIUnitTestCase
 {
     /**
      * @var FileLocator

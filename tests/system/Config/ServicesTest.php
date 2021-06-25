@@ -36,7 +36,10 @@ use Config\App;
 use Config\Exceptions;
 use Tests\Support\Config\Services as Services;
 
-class ServicesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ServicesTest extends CIUnitTestCase
 {
     protected $config;
     protected $original;

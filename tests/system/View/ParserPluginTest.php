@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 
-class ParserPluginTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ParserPluginTest extends CIUnitTestCase
 {
     /**
      * @var Parser

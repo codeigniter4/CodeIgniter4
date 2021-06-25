@@ -4,6 +4,9 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class NumberHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void

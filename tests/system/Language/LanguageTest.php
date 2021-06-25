@@ -7,7 +7,10 @@ use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
 use Tests\Support\Language\SecondMockLanguage;
 
-class LanguageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class LanguageTest extends CIUnitTestCase
 {
     /**
      * @var MockLanguage

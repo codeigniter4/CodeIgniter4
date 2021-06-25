@@ -6,7 +6,10 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileMovingTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileMovingTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

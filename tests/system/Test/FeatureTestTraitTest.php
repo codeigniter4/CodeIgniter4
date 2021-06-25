@@ -12,8 +12,10 @@ use CodeIgniter\Test\TestResponse;
  * @group                       DatabaseLive
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class FeatureTestTraitTest extends CIUnitTestCase
+final class FeatureTestTraitTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
 

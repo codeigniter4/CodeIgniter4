@@ -7,7 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
-class ModelFactoryTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ModelFactoryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

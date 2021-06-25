@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ClearLogsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ClearLogsTest extends CIUnitTestCase
 {
     protected $streamFilter;
     protected $date;

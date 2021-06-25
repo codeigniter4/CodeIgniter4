@@ -8,8 +8,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class PretendTest extends CIUnitTestCase
+final class PretendTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

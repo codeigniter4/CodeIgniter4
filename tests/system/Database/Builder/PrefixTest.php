@@ -5,7 +5,10 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class PrefixTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class PrefixTest extends CIUnitTestCase
 {
     protected $db;
 

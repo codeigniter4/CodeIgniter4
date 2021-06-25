@@ -15,6 +15,8 @@ use Config\App;
  * Includes: current_url, uri_string, uri_is
  *
  * @backupGlobals enabled
+ *
+ * @internal
  */
 final class CurrentUrlTest extends CIUnitTestCase
 {

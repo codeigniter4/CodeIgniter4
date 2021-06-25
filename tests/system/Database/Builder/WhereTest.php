@@ -8,7 +8,10 @@ use CodeIgniter\Test\Mock\MockConnection;
 use InvalidArgumentException;
 use stdClass;
 
-class WhereTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class WhereTest extends CIUnitTestCase
 {
     /**
      * @var MockConnection

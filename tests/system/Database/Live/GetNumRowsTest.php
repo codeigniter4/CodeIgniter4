@@ -5,7 +5,10 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-class GetNumRowsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class GetNumRowsTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 

@@ -8,7 +8,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 
-class DownloadResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DownloadResponseTest extends CIUnitTestCase
 {
     public function tearDown(): void
     {

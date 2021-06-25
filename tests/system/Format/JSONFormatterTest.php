@@ -4,7 +4,10 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class JSONFormatterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class JSONFormatterTest extends CIUnitTestCase
 {
     protected $jsonFormatter;
 

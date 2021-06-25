@@ -5,7 +5,10 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 
-class HeaderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class HeaderTest extends CIUnitTestCase
 {
     public function testHeaderStoresBasics()
     {

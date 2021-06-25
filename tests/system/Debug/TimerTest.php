@@ -4,6 +4,9 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class TimerTest extends CIUnitTestCase
 {
     /**

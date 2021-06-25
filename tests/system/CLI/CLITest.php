@@ -6,6 +6,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use ReflectionProperty;
 
+/**
+ * @internal
+ */
 final class CLITest extends CIUnitTestCase
 {
     private $stream_filter;

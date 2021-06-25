@@ -4,7 +4,10 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class ArrayHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ArrayHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

@@ -5,7 +5,10 @@ namespace CodeIgniter\Pager;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 
-class PagerRendererTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class PagerRendererTest extends CIUnitTestCase
 {
     /**
      * @var URI

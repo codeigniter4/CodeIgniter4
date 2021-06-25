@@ -6,7 +6,10 @@ use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
-class CacheFactoryTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CacheFactoryTest extends CIUnitTestCase
 {
     private static $directory = 'CacheFactory';
     private $cacheFactory;

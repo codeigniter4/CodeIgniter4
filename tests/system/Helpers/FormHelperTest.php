@@ -8,7 +8,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
 
-class FormHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

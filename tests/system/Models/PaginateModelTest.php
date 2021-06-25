@@ -5,6 +5,9 @@ namespace CodeIgniter\Models;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
+/**
+ * @internal
+ */
 final class PaginateModelTest extends LiveModelTestCase
 {
     public function testPaginate(): void

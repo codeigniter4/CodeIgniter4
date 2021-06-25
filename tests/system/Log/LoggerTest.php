@@ -11,7 +11,10 @@ use CodeIgniter\Test\TestLogger;
 use Exception;
 use Tests\Support\Log\Handlers\TestHandler;
 
-class LoggerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class LoggerTest extends CIUnitTestCase
 {
     public function testThrowsExceptionWithBadHandlerSettings()
     {

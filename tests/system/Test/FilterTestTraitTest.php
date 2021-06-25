@@ -21,8 +21,10 @@ use Tests\Support\Filters\Customfilter;
  * in test/_support/Filters/Customfilter.php:
  *  - alias: test-customfilter
  *  - class: \Tests\Support\Filters\Customfilter::class
+ *
+ * @internal
  */
-class FilterTestTraitTest extends CIUnitTestCase
+final class FilterTestTraitTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 

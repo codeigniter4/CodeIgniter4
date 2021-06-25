@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class EmptyTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EmptyTest extends CIUnitTestCase
 {
     protected $db;
 

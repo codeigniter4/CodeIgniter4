@@ -16,8 +16,10 @@ use Config\Security as SecurityConfig;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class SecurityTest extends CIUnitTestCase
+final class SecurityTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

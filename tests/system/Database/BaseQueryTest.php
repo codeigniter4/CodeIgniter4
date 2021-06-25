@@ -5,7 +5,10 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseQueryTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseQueryTest extends CIUnitTestCase
 {
     protected $db;
 

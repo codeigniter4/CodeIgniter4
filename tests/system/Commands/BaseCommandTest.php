@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Commands\AppInfo;
 
-class BaseCommandTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseCommandTest extends CIUnitTestCase
 {
     protected $logger;
     protected $runner;

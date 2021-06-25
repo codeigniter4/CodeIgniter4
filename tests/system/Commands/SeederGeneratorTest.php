@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class SeederGeneratorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SeederGeneratorTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

@@ -11,8 +11,10 @@ use Config\Modules;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class CodeIgniterTest extends CIUnitTestCase
+final class CodeIgniterTest extends CIUnitTestCase
 {
     /**
      * @var CodeIgniter

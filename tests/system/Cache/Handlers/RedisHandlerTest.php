@@ -6,6 +6,9 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
+/**
+ * @internal
+ */
 final class RedisHandlerTest extends CIUnitTestCase
 {
     private $redisHandler;

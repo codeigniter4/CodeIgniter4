@@ -1,6 +1,9 @@
 <?php
 
-class ExampleSessionTest extends \Tests\Support\SessionTestCase
+/**
+ * @internal
+ */
+final class ExampleSessionTest extends \Tests\Support\SessionTestCase
 {
     public function setUp(): void
     {

@@ -26,8 +26,10 @@ use Tests\Support\Models\JobModel;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class CommonFunctionsTest extends CIUnitTestCase
+final class CommonFunctionsTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

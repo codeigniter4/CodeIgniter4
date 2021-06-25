@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class ConfigurableSortImportsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

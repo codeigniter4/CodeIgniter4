@@ -8,7 +8,10 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 
-class RouterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class RouterTest extends CIUnitTestCase
 {
 
     /**

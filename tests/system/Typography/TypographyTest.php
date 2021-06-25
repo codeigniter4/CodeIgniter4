@@ -4,7 +4,10 @@ namespace CodeIgniter\Typography;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class TypographyTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TypographyTest extends CIUnitTestCase
 {
     protected $typography;
 

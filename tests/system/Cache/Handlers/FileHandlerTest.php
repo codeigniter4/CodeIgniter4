@@ -6,6 +6,9 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
+/**
+ * @internal
+ */
 final class FileHandlerTest extends CIUnitTestCase
 {
     private static $directory = 'FileHandler';

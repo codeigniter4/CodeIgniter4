@@ -7,7 +7,10 @@ use CodeIgniter\Database\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 
-class ConfigTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 

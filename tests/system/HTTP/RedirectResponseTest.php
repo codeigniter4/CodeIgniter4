@@ -12,7 +12,10 @@ use Config\App;
 use Config\Modules;
 use Config\Services;
 
-class RedirectResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class RedirectResponseTest extends CIUnitTestCase
 {
     /**
      * @var RouteCollection

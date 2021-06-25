@@ -16,8 +16,10 @@ use Tests\Support\Controllers\Popcorn;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ControllerTestTraitTest extends CIUnitTestCase
+final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 

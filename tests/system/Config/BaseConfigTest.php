@@ -8,7 +8,10 @@ use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
 
-class BaseConfigTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseConfigTest extends CIUnitTestCase
 {
     protected $fixturesFolder;
 

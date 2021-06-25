@@ -7,8 +7,10 @@ use Config\App;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class IncomingRequestDetectingTest extends CIUnitTestCase
+final class IncomingRequestDetectingTest extends CIUnitTestCase
 {
 
     /**

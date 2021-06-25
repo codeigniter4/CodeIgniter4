@@ -29,9 +29,13 @@ use ReflectionException;
  * Provides a base class with the trait for doing full HTTP testing
  * against your application.
  *
+ * @no-final
+ *
  * @deprecated Use FeatureTestTrait instead
  *
  * @codeCoverageIgnore
+ *
+ * @internal
  */
 class FeatureTestCase extends CIUnitTestCase
 {
