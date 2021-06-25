@@ -236,6 +236,7 @@ final class CodeIgniter4 extends AbstractRuleset
             ],
             'phpdoc_var_annotation_correct_order' => true,
             'phpdoc_var_without_name'             => true,
+            'pow_to_exponentiation'               => true,
             'set_type_to_cast'                    => true,
             'short_scalar_cast'                   => true,
             'standardize_increment'               => true,
