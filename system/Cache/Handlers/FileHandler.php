@@ -210,7 +210,7 @@ class FileHandler extends BaseHandler
         }
 
         return [
-            'expire' => $data['time'] + $data['ttl'],
+            'expire' => $data['ttl'] > 0 ? $data['time'] + $data['ttl'] : null,
             'mtime'  => filemtime($this->path . $key),
             'data'   => $data['data'],
         ];
