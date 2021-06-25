@@ -39,7 +39,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->redisHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         foreach (self::getKeyArray() as $key) {
             $this->redisHandler->delete($key);

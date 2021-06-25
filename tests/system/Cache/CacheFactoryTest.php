@@ -26,7 +26,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->config->storePath .= self::$directory;
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (is_dir($this->config->storePath)) {
             chmod($this->config->storePath, 0777);

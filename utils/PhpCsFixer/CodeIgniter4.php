@@ -147,14 +147,27 @@ final class CodeIgniter4 extends AbstractRuleset
             'php_unit_dedicate_assert'               => ['target' => 'newest'],
             'php_unit_dedicate_assert_internal_type' => ['target' => 'newest'],
             'php_unit_expectation'                   => ['target' => 'newest'],
+            'php_unit_fqcn_annotation'               => true,
             'php_unit_internal_class'                => ['types' => ['normal', 'final']],
+            'php_unit_method_casing'                 => ['case' => 'camel_case'],
+            'php_unit_mock'                          => ['target' => 'newest'],
+            'php_unit_mock_short_will_return'        => true,
+            'php_unit_namespaced'                    => true,
             'php_unit_no_expectation_annotation'     => [
                 'target'          => 'newest',
                 'use_class_const' => true,
             ],
-            'phpdoc_align'                 => true,
-            'phpdoc_indent'                => true,
-            'phpdoc_inline_tag_normalizer' => [
+            'php_unit_set_up_tear_down_visibility'   => true,
+            'php_unit_size_class'                    => false,
+            'php_unit_test_annotation'               => ['style' => 'prefix'],
+            'php_unit_test_case_static_method_calls' => [
+                'call_type' => 'this',
+                'methods'   => [],
+            ],
+            'php_unit_test_class_requires_covers' => false,
+            'phpdoc_align'                        => true,
+            'phpdoc_indent'                       => true,
+            'phpdoc_inline_tag_normalizer'        => [
                 'tags' => [
                     'example',
                     'id',

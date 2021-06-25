@@ -14,7 +14,7 @@ use Config\Modules;
  */
 final class RouteCollectionTest extends CIUnitTestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
     }
 

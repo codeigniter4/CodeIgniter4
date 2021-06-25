@@ -12,7 +12,7 @@ use stdClass;
  */
 final class TableTest extends CIUnitTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->table = new MockTable();
     }
@@ -43,7 +43,7 @@ final class TableTest extends CIUnitTestCase
     }
 
     /**
-     * @depends	testPrepArgs
+     * @depends testPrepArgs
      */
     public function testSetHeading()
     {
@@ -83,7 +83,7 @@ final class TableTest extends CIUnitTestCase
     }
 
     /**
-     * @depends	testPrepArgs
+     * @depends testPrepArgs
      */
     public function testAddRow()
     {

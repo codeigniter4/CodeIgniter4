@@ -45,14 +45,14 @@ final class DatabaseTestCase extends CIUnitTestCase
      */
     protected $namespace = 'Tests\Support';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         // Extra code to run before each test
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

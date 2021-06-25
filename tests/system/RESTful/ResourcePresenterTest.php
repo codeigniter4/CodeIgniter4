@@ -54,7 +54,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

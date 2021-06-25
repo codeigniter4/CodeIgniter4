@@ -44,7 +44,7 @@ final class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
 

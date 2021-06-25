@@ -22,7 +22,7 @@ final class URITest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Factories::reset('config');
     }

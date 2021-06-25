@@ -25,7 +25,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->server = $_SERVER;
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $_SERVER = $this->server;
         Factories::reset('config');

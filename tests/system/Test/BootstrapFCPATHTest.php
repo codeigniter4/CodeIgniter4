@@ -30,7 +30,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $this->writeFiles();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->deleteFiles();
@@ -41,7 +41,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
     {
         $result1     = $this->readOutput($this->file1);
         $correctPath = $this->correctFCPATH();
-        self::assertEquals($correctPath, $result1);
+        $this->assertEquals($correctPath, $result1);
     }
 
     private function correctFCPATH()

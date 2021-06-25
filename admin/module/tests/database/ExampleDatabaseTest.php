@@ -7,7 +7,7 @@ use Tests\Support\Models\ExampleModel;
  */
 final class ExampleDatabaseTest extends \Tests\Support\DatabaseTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

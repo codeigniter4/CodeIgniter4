@@ -29,7 +29,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
     protected $start;
     protected $config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

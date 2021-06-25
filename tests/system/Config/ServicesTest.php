@@ -52,7 +52,7 @@ final class ServicesTest extends CIUnitTestCase
         $this->config   = new App();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $_SERVER = $this->original;
         Services::reset();

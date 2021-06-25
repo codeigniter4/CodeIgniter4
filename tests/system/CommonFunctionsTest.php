@@ -111,7 +111,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         \CodeIgniter\Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
-        $response->method('redirect')->will($this->returnArgument(0));
+        $response->method('redirect')->willReturnArgument(0);
 
         $this->assertInstanceOf(RedirectResponse::class, redirect('base'));
     }

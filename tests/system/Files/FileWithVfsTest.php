@@ -32,7 +32,7 @@ final class FileWithVfsTest extends CIUnitTestCase
         $this->file  = new File($this->start . 'able/apple.php');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

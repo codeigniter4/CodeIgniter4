@@ -26,7 +26,7 @@ final class ClearCacheTest extends CIUnitTestCase
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
     }

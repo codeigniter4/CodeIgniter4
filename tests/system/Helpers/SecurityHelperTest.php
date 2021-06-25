@@ -34,7 +34,7 @@ final class SecurityHelperTest extends CIUnitTestCase
         $this->assertEquals('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
     }
 
-    public function test_encode_php_tags()
+    public function testEncodePhpTags()
     {
         $this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
     }

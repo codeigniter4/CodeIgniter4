@@ -40,7 +40,7 @@ final class AlterTableTest extends CIUnitTestCase
      */
     protected $forge;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

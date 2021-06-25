@@ -30,7 +30,7 @@ final class DEBugTest extends CIUnitTestCase
         $this->assertFalse($result);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->setPrivateProperty($this->db, 'DBDebug', true);
         parent::tearDown();

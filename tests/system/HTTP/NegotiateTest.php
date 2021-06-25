@@ -33,7 +33,7 @@ final class NegotiateTest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->request = $this->negotiate = null;
         unset($this->request, $this->negotiate);

@@ -49,7 +49,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['SCRIPT_NAME'] = '/index.php';
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
