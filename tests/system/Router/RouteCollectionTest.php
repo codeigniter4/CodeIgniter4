@@ -1398,7 +1398,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         Services::request()->setMethod('get');
         $routes = $this->getCollector();
 
-        $this->assertEquals(null, $routes->get404Override());
+        $this->assertNull($routes->get404Override());
     }
 
     public function test404OverrideString()
@@ -1418,7 +1418,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->set404Override(static function () {
             echo 'Explode now';
         });
-        $this->assertTrue(is_callable($routes->get404Override()));
+        $this->assertIsCallable($routes->get404Override());
     }
 
     //--------------------------------------------------------------------
@@ -1729,15 +1729,15 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $collection = $this->getCollector();
 
-        $this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+        $this->assertFalse($this->getPrivateProperty($collection, 'prioritizeDetected'));
 
         $collection->add('/', 'Controller::method', ['priority' => 0]);
 
-        $this->assertEquals(false, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+        $this->assertFalse($this->getPrivateProperty($collection, 'prioritizeDetected'));
 
         $collection->add('priority', 'Controller::method', ['priority' => 1]);
 
-        $this->assertEquals(true, $this->getPrivateProperty($collection, 'prioritizeDetected'));
+        $this->assertTrue($this->getPrivateProperty($collection, 'prioritizeDetected'));
     }
 
     public function testRoutePriorityValue()

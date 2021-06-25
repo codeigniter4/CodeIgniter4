@@ -177,7 +177,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertTrue(in_array('More', $this->lang->loaded(), true));
 
         $this->lang->loadem('More', 'en');
-        $this->assertEquals(1, count($this->lang->loaded())); // should only be there once
+        $this->assertCount(1, $this->lang->loaded()); // should only be there once
     }
 
     //--------------------------------------------------------------------
@@ -188,11 +188,11 @@ final class LanguageTest extends CIUnitTestCase
 
         $result = $this->lang->loadem('More', 'en', true);
         $this->assertFalse(in_array('More', $this->lang->loaded(), true));
-        $this->assertEquals(3, count($result));
+        $this->assertCount(3, $result);
 
         $result = $this->lang->loadem('More', 'en');
         $this->assertTrue(in_array('More', $this->lang->loaded(), true));
-        $this->assertEquals(1, count($this->lang->loaded()));
+        $this->assertCount(1, $this->lang->loaded());
     }
 
     //--------------------------------------------------------------------

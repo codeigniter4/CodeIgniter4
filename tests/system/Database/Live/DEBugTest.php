@@ -27,7 +27,7 @@ final class DEBugTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->db, 'DBDebug', false);
         $result = $this->db->simpleQuery('SELECT * FROM db_error');
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
     }
 
     public function tearDown(): void

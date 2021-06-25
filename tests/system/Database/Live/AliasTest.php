@@ -26,7 +26,7 @@ final class AliasTest extends CIUnitTestCase
             ->where('j.name', 'Developer')
             ->get();
 
-        $this->assertEquals(1, count($jobs->getResult()));
+        $this->assertCount(1, $jobs->getResult());
     }
 
     //--------------------------------------------------------------------

@@ -188,8 +188,8 @@ final class SessionTest extends CIUnitTestCase
 
         $result = $session->get();
 
-        $this->assertTrue(array_key_exists('foo', $result));
-        $this->assertTrue(array_key_exists('bar', $result));
+        $this->assertArrayHasKey('foo', $result);
+        $this->assertArrayHasKey('bar', $result);
     }
 
     public function testGetAsProperty()

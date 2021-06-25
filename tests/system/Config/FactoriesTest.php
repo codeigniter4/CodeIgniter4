@@ -62,7 +62,7 @@ final class FactoriesTest extends CIUnitTestCase
         $result = Factories::getOptions('widgets');
 
         $this->assertEquals('bar', $result['foo']);
-        $this->assertEquals(true, $result['preferApp']);
+        $this->assertTrue($result['preferApp']);
     }
 
     public function testUsesConfigOptions()

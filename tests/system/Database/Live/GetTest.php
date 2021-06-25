@@ -163,9 +163,9 @@ final class GetTest extends CIUnitTestCase
             $this->assertEquals('int', $typeTest[5]->type_name);  //INTEGER
             $this->assertEquals('float', $typeTest[6]->type_name);  //FLOAT
             $this->assertEquals('numeric', $typeTest[7]->type_name);  //NUMERIC
-            $this->assertEquals(null, $typeTest[8]->type_name);  //DATE
-            $this->assertEquals(null, $typeTest[9]->type_name);  //TIME
-            $this->assertEquals(null, $typeTest[10]->type_name);  //DATETIME
+            $this->assertNull($typeTest[8]->type_name);  //DATE
+            $this->assertNull($typeTest[9]->type_name);  //TIME
+            $this->assertNull($typeTest[10]->type_name);  //DATETIME
             $this->assertEquals('bigint', $typeTest[11]->type_name); //BIGINT
             $this->assertEquals('real', $typeTest[12]->type_name);  //REAL
             $this->assertEquals('decimal', $typeTest[13]->type_name);  //DECIMAL

@@ -194,7 +194,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->injectSessionMock();
 
         $_SESSION['bogus'] = 'Hi there';
-        $this->assertEquals(null, session('notbogus'));
+        $this->assertNull(session('notbogus'));
     }
 
     public function testRouteTo()

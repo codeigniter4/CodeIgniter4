@@ -575,7 +575,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertEquals(1, $options[CURLOPT_VERBOSE]);
 
         $this->assertArrayHasKey(CURLOPT_STDERR, $options);
-        $this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+        $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
     public function testDebugOptionFalse()
@@ -604,7 +604,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertEquals(1, $options[CURLOPT_VERBOSE]);
 
         $this->assertArrayHasKey(CURLOPT_STDERR, $options);
-        $this->assertTrue(is_resource($options[CURLOPT_STDERR]));
+        $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
     //--------------------------------------------------------------------

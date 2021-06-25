@@ -255,8 +255,8 @@ final class PagerRendererTest extends CIUnitTestCase
         $pager = new PagerRenderer($details);
 
         // without any surround count
-        $this->assertEquals(null, $pager->getPrevious());
-        $this->assertEquals(null, $pager->getNext());
+        $this->assertNull($pager->getPrevious());
+        $this->assertNull($pager->getNext());
 
         // with surropund count of 2
         $pager->setSurroundCount(2);
@@ -270,8 +270,8 @@ final class PagerRendererTest extends CIUnitTestCase
 
         // and with huge surround count
         $pager->setSurroundCount(100);
-        $this->assertEquals(null, $pager->getPrevious());
-        $this->assertEquals(null, $pager->getNext());
+        $this->assertNull($pager->getPrevious());
+        $this->assertNull($pager->getNext());
     }
 
     //--------------------------------------------------------------------

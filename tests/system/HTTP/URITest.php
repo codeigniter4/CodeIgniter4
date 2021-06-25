@@ -298,7 +298,7 @@ final class URITest extends CIUnitTestCase
 
         $uri->setSilent()->setPort(70000);
 
-        $this->assertEquals(null, $uri->getPort());
+        $this->assertNull($uri->getPort());
     }
 
     //--------------------------------------------------------------------

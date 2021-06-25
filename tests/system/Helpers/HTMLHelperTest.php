@@ -295,7 +295,7 @@ final class HTMLHelperTest extends CIUnitTestCase
     public function testDocTypeInvalid()
     {
         $target = 'good-guess';
-        $this->assertEquals(false, doctype($target));
+        $this->assertEmpty(doctype($target));
     }
 
     // ------------------------------------------------------------------------
