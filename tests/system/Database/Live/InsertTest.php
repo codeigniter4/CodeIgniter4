@@ -93,7 +93,7 @@ final class InsertTest extends CIUnitTestCase
 
     public function testBug302()
     {
-        $code = "my code \'CodeIgniter\Autoloader\'";
+        $code = "my code \\'CodeIgniter\\Autoloader\\'";
 
         $this->db->table('misc')->insert([
             'key'   => 'test',

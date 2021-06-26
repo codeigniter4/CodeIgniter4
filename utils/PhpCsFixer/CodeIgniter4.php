@@ -100,8 +100,13 @@ final class CodeIgniter4 extends AbstractRuleset
             'doctrine_annotation_braces'           => false,
             'doctrine_annotation_indentation'      => false,
             'doctrine_annotation_spaces'           => false,
-            'final_class'                          => false,
-            'final_internal_class'                 => [
+            'escape_implicit_backslashes'          => [
+                'double_quoted'  => true,
+                'heredoc_syntax' => true,
+                'single_quoted'  => false,
+            ],
+            'final_class'          => false,
+            'final_internal_class' => [
                 'annotation_exclude'                         => ['@no-final'],
                 'annotation_include'                         => ['@internal'],
                 'consider_absent_docblock_as_internal_class' => false,

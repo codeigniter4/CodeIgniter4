@@ -550,7 +550,7 @@ if (! function_exists('quotes_to_entities')) {
      */
     function quotes_to_entities(string $str): string
     {
-        return str_replace(["\'", '"', "'", '"'], ['&#39;', '&quot;', '&#39;', '&quot;'], $str);
+        return str_replace(["\\'", '"', "'", '"'], ['&#39;', '&quot;', '&#39;', '&quot;'], $str);
     }
 }
 
