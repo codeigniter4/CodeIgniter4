@@ -213,7 +213,7 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger->log('debug', 'Test message {file} {line}');
         $line     = __LINE__ - 1;
-        $expected = "LoggerTest.php $line";
+        $expected = "LoggerTest.php {$line}";
 
         $logs = TestHandler::getLogs();
 

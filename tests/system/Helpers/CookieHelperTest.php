@@ -78,8 +78,8 @@ final class CookieHelperTest extends CIUnitTestCase
     {
         $pre       = 'Hello, I try to';
         $pst       = 'your site';
-        $unsec     = "$pre <script>alert('Hack');</script> $pst";
-        $sec       = "$pre [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] $pst";
+        $unsec     = "{$pre} <script>alert('Hack');</script> {$pst}";
+        $sec       = "{$pre} [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] {$pst}";
         $unsecured = 'unsecured';
         $secured   = 'secured';
 

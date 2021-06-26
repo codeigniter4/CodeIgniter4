@@ -37,7 +37,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="$Name" value="$Value" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
 
                 EOH;
         } else {
@@ -95,7 +95,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="$Name" value="$Value" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
 
                 EOH;
         } else {
@@ -129,7 +129,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
-                <input type="hidden" name="$Name" value="$Value" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
 
                 EOH;
         } else {
@@ -164,7 +164,7 @@ final class FormHelperTest extends CIUnitTestCase
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
                 <input type="hidden" name="foo" value="bar" />
-                <input type="hidden" name="$Name" value="$Value" />
+                <input type="hidden" name="{$Name}" value="{$Value}" />
 
                 EOH;
         } else {
@@ -204,7 +204,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
-                <input type="hidden" name="$Name" value="$Value" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
 
                 EOH;
         } else {

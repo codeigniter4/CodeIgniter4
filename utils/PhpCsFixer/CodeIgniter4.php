@@ -100,6 +100,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'doctrine_annotation_braces'           => false,
             'doctrine_annotation_indentation'      => false,
             'doctrine_annotation_spaces'           => false,
+            'explicit_string_variable'             => true,
             'final_class'                          => false,
             'final_internal_class'                 => [
                 'annotation_exclude'                         => ['@no-final'],
@@ -249,6 +250,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'psr_autoloading'                     => ['dir' => null],
             'set_type_to_cast'                    => true,
             'short_scalar_cast'                   => true,
+            'simple_to_complex_string_variable'   => true,
             'standardize_increment'               => true,
             'static_lambda'                       => true,
             'switch_case_semicolon_to_colon'      => true,

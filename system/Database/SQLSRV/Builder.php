@@ -643,14 +643,14 @@ class Builder extends BaseBuilder
                 if (empty($op)) {
                     $k .= ' =';
                 } else {
-                    $k .= " $op";
+                    $k .= " {$op}";
                 }
 
                 if ($v instanceof Closure) {
                     $builder = $this->cleanClone();
                     $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
                 } else {
-                    $v = " :$bind:";
+                    $v = " :{$bind}:";
                 }
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
