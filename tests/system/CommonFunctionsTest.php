@@ -371,7 +371,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $appConfig = new App();
 
         foreach ($defaults as $key => $config) {
-            $appConfig->$key = $config;
+            $appConfig->{$key} = $config;
         }
 
         $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);

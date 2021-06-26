@@ -710,8 +710,8 @@ class Model extends BaseModel
             return parent::__get($name);
         }
 
-        if (isset($this->builder()->$name)) {
-            return $this->builder()->$name;
+        if (isset($this->builder()->{$name})) {
+            return $this->builder()->{$name};
         }
 
         return null;
@@ -730,7 +730,7 @@ class Model extends BaseModel
             return true;
         }
 
-        return isset($this->builder()->$name);
+        return isset($this->builder()->{$name});
     }
 
     /**

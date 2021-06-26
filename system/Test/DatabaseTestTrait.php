@@ -273,7 +273,7 @@ trait DatabaseTestTrait
 
         $query = $query->getRow();
 
-        return $query->$column ?? false;
+        return $query->{$column} ?? false;
     }
 
     //--------------------------------------------------------------------

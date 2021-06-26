@@ -307,7 +307,7 @@ abstract class BaseConnection implements ConnectionInterface
     public function __construct(array $params)
     {
         foreach ($params as $key => $value) {
-            $this->$key = $value;
+            $this->{$key} = $value;
         }
 
         $queryClass = str_replace('Connection', 'Query', static::class);
@@ -360,7 +360,7 @@ abstract class BaseConnection implements ConnectionInterface
                     // Replace the current settings with those of the failover
                     foreach ($failover as $key => $val) {
                         if (property_exists($this, $key)) {
-                            $this->$key = $val;
+                            $this->{$key} = $val;
                         }
                     }
 
@@ -1783,7 +1783,7 @@ abstract class BaseConnection implements ConnectionInterface
     public function __get(string $key)
     {
         if (property_exists($this, $key)) {
-            return $this->$key;
+            return $this->{$key};
         }
 
         return null;

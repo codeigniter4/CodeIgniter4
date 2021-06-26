@@ -100,6 +100,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'doctrine_annotation_braces'           => false,
             'doctrine_annotation_indentation'      => false,
             'doctrine_annotation_spaces'           => false,
+            'explicit_indirect_variable'           => true,
             'final_class'                          => false,
             'final_internal_class'                 => [
                 'annotation_exclude'                         => ['@no-final'],

@@ -573,7 +573,7 @@ trait ResponseTrait
             // always leave 'name' in last place, as the loop will break otherwise, due to $$item
             foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item) {
                 if (isset($name[$item])) {
-                    $$item = $name[$item];
+                    ${$item} = $name[$item];
                 }
             }
         }

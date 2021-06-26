@@ -272,7 +272,7 @@ class BaseBuilder
         if (! empty($options)) {
             foreach ($options as $key => $value) {
                 if (property_exists($this, $key)) {
-                    $this->$key = $value;
+                    $this->{$key} = $value;
                 }
             }
         }
@@ -754,7 +754,7 @@ class BaseBuilder
         }
 
         foreach ($key as $k => $v) {
-            $prefix = empty($this->$qbKey) ? $this->groupGetType('') : $this->groupGetType($type);
+            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
             if ($v !== null) {
                 $op = $this->getOperator($k, true);
@@ -1014,7 +1014,7 @@ class BaseBuilder
             $ok      = $this->setBind($ok, $whereIn, $escape);
         }
 
-        $prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
+        $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
         $whereIn = [
             'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
@@ -1231,7 +1231,7 @@ class BaseBuilder
                 $v = strtolower($v);
             }
 
-            $prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
+            $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
             if ($side === 'none') {
                 $bind = $this->setBind($k, $v, $escape);
@@ -1417,7 +1417,7 @@ class BaseBuilder
         $type = $this->groupGetType($type);
 
         $this->QBWhereGroupStarted = true;
-        $prefix                    = empty($this->$clause) ? '' : $type;
+        $prefix                    = empty($this->{$clause}) ? '' : $type;
         $where                     = [
             'condition' => $prefix . $not . str_repeat(' ', ++$this->QBWhereGroupCount) . ' (',
             'escape'    => false,
@@ -2918,8 +2918,8 @@ class BaseBuilder
      */
     protected function compileWhereHaving(string $qbKey): string
     {
-        if (! empty($this->$qbKey)) {
-            foreach ($this->$qbKey as &$qbkey) {
+        if (! empty($this->{$qbKey})) {
+            foreach ($this->{$qbKey} as &$qbkey) {
                 // Is this condition already compiled?
                 if (is_string($qbkey)) {
                     continue;
@@ -2975,7 +2975,7 @@ class BaseBuilder
             }
 
             return ($qbKey === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
-                    . implode("\n", $this->$qbKey);
+                    . implode("\n", $this->{$qbKey});
         }
 
         return '';
@@ -3173,7 +3173,7 @@ class BaseBuilder
     protected function resetRun(array $qbResetItems)
     {
         foreach ($qbResetItems as $item => $defaultValue) {
-            $this->$item = $defaultValue;
+            $this->{$item} = $defaultValue;
         }
     }
 

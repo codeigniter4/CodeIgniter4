@@ -137,7 +137,7 @@ class Cell
                 }
             }
 
-            $output = $instance->$method(...array_values($fireArgs));
+            $output = $instance->{$method}(...array_values($fireArgs));
         }
         // Can we cache it?
         if (! empty($this->cache) && $ttl !== 0) {

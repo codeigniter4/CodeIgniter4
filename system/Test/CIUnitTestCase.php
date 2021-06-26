@@ -236,7 +236,7 @@ abstract class CIUnitTestCase extends TestCase
         }
 
         foreach ($this->setUpMethods as $method) {
-            $this->$method();
+            $this->{$method}();
         }
 
         // Check for the database trait
@@ -253,7 +253,7 @@ abstract class CIUnitTestCase extends TestCase
         parent::tearDown();
 
         foreach ($this->tearDownMethods as $method) {
-            $this->$method();
+            $this->{$method}();
         }
 
         // Check for the database trait
@@ -283,7 +283,7 @@ abstract class CIUnitTestCase extends TestCase
             $method = $stage . class_basename($trait);
 
             if (method_exists($this, $method)) {
-                $this->$method();
+                $this->{$method}();
             }
         }
     }

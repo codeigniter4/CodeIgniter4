@@ -50,7 +50,7 @@ final class SessionTest extends CIUnitTestCase
         $appConfig = new AppConfig();
 
         foreach ($config as $key => $c) {
-            $appConfig->$key = $c;
+            $appConfig->{$key} = $c;
         }
 
         $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);

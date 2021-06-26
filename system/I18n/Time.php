@@ -778,7 +778,7 @@ class Time extends DateTime
     {
         [$year, $month, $day, $hour, $minute, $second] = explode('-', $this->format('Y-n-j-G-i-s'));
 
-        $$name = $value;
+        ${$name} = $value;
 
         return Time::create(
             (int) $year,
@@ -1352,7 +1352,7 @@ class Time extends DateTime
         $method = 'get' . ucfirst($name);
 
         if (method_exists($this, $method)) {
-            return $this->$method();
+            return $this->{$method}();
         }
 
         return null;

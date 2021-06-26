@@ -51,7 +51,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             'proxyIPs' => [],
             'cookieSameSite' => 'Lax',
         ] as $key => $value) {
-            $config->$key = $value;
+            $config->{$key} = $value;
         }
 
         if (is_null($this->request)) {
@@ -509,7 +509,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             'proxyIPs' => [],
             'cookieSameSite' => 'Lax',
         ] as $key => $value) {
-            $config->$key = $value;
+            $config->{$key} = $value;
         }
 
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
