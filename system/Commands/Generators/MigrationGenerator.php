@@ -101,10 +101,11 @@ class MigrationGenerator extends BaseCommand
             $table   = $this->getOption('table');
             $DBGroup = $this->getOption('dbgroup');
 
-            $data['session'] = true;
-            $data['table']   = is_string($table) ? $table : 'ci_sessions';
-            $data['DBGroup'] = is_string($DBGroup) ? $DBGroup : 'default';
-            $data['matchIP'] = config('App')->sessionMatchIP;
+            $data['session']  = true;
+            $data['table']    = is_string($table) ? $table : 'ci_sessions';
+            $data['DBGroup']  = is_string($DBGroup) ? $DBGroup : 'default';
+            $data['DBDriver'] = config('Database')->{$data['DBGroup']}['DBDriver'];
+            $data['matchIP']  = config('App')->sessionMatchIP;
         }
 
         return $this->parseTemplate($class, [], [], $data);
