@@ -15,7 +15,7 @@ final class RouterTest extends CIUnitTestCase
 {
 
     /**
-     * @var RouteCollection $collection
+     * @var RouteCollection
      */
     protected $collection;
 
