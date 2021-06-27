@@ -118,6 +118,31 @@ class Migration_Create_test_tables extends Migration
             'ip'  => ['type' => 'VARCHAR', 'constraint' => 100],
             'ip2' => ['type' => 'VARCHAR', 'constraint' => 100],
         ])->createTable('ip_table', true);
+
+        // Database session table
+        if ($this->db->DBDriver === 'MySQLi') {
+            $this->forge->addField([
+                'id'         => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
+                'ip_address' => ['type' => 'VARCHAR', 'constraint' => 45, 'null' => false],
+                'timestamp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                'data' => ['type' => 'BLOB', 'null' => false],
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->addKey('timestamp');
+            $this->forge->createTable('ci_sessions', true);
+        }
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $this->forge->addField([
+                'id' => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
+                'ip_address inet NOT NULL',
+                'timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                "data bytea DEFAULT '' NOT NULL",
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->addKey('timestamp');
+            $this->forge->createTable('ci_sessions', true);
+        }
     }
 
     //--------------------------------------------------------------------
@@ -133,5 +158,9 @@ class Migration_Create_test_tables extends Migration
         $this->forge->dropTable('stringifypkey', true);
         $this->forge->dropTable('without_auto_increment', true);
         $this->forge->dropTable('ip_table', true);
+
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'])) {
+            $this->forge->dropTable('ci_sessions', true);
+        }
     }
 }
