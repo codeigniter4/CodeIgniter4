@@ -12,7 +12,7 @@
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Autoloader\FileLocator;
-use CodeIgniter\Files\File;
+use CodeIgniter\Files\FileCollection;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
 use RuntimeException;
@@ -28,13 +28,13 @@ use Throwable;
  * path to a verified file while a "path" is relative to its source
  * or destination and may indicate either a file or directory of
  * unconfirmed existence.
- * class failures throw the PublisherException, but some underlying
+ * Class failures throw the PublisherException, but some underlying
  * methods may percolate different exceptions, like FileException,
  * FileNotFoundException or InvalidArgumentException.
  * Write operations will catch all errors in the file-specific
  * $errors property to minimize impact of partial batch operations.
  */
-class Publisher
+class Publisher extends FileCollection
 {
 	/**
 	 * Array of discovered Publishers.
@@ -50,13 +50,6 @@ class Publisher
 	 * @var string|null
 	 */
 	private $scratch;
-
-	/**
-	 * The current list of files.
-	 *
-	 * @var string[]
-	 */
-	private $files = [];
 
 	/**
 	 * Exceptions for specific files from the last write operation.
@@ -93,6 +86,10 @@ class Publisher
 	 * @var string
 	 */
 	protected $destination = FCPATH;
+
+	//--------------------------------------------------------------------
+	// Support Methods
+	//--------------------------------------------------------------------
 
 	/**
 	 * Discovers and returns all Publishers in the specified namespace directory.
@@ -134,95 +131,6 @@ class Publisher
 		return self::$discovered[$directory];
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Resolves a full path and verifies it is an actual directory.
-	 *
-	 * @param string $directory
-	 *
-	 * @return string
-	 *
-	 * @throws PublisherException
-	 */
-	private static function resolveDirectory(string $directory): string
-	{
-		if (! is_dir($directory = set_realpath($directory)))
-		{
-			$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
-			throw PublisherException::forExpectedDirectory($caller['function']);
-		}
-
-		return $directory;
-	}
-
-	/**
-	 * Resolves a full path and verifies it is an actual file.
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 *
-	 * @throws PublisherException
-	 */
-	private static function resolveFile(string $file): string
-	{
-		if (! is_file($file = set_realpath($file)))
-		{
-			$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
-			throw PublisherException::forExpectedFile($caller['function']);
-		}
-
-		return $file;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Removes files that are not part of the given directory (recursive).
-	 *
-	 * @param string[] $files
-	 * @param string   $directory
-	 *
-	 * @return string[]
-	 */
-	private static function filterFiles(array $files, string $directory): array
-	{
-		$directory = self::resolveDirectory($directory);
-
-		return array_filter($files, function ($value) use ($directory) {
-			return strpos($value, $directory) === 0;
-		});
-	}
-
-	/**
-	 * Returns any files whose `basename` matches the given pattern.
-	 *
-	 * @param array<string> $files
-	 * @param string        $pattern Regex or pseudo-regex string
-	 *
-	 * @return string[]
-	 */
-	private static function matchFiles(array $files, string $pattern): array
-	{
-		// Convert pseudo-regex into their true form
-		if (@preg_match($pattern, null) === false) // @phpstan-ignore-line
-		{
-			$pattern = str_replace(
-				['#', '.', '*', '?'],
-				['\#', '\.', '.*', '.'],
-				$pattern
-			);
-			$pattern = "#{$pattern}#";
-		}
-
-		return array_filter($files, function ($value) use ($pattern) {
-			return (bool) preg_match($pattern, basename($value));
-		});
-	}
-
-	//--------------------------------------------------------------------
-
 	/*
 	 * Removes a directory and all its files and subdirectories.
 	 *
@@ -248,6 +156,8 @@ class Publisher
 		}
 	}
 
+	//--------------------------------------------------------------------
+	// Class Core
 	//--------------------------------------------------------------------
 
 	/**
@@ -305,12 +215,14 @@ class Publisher
 		// Safeguard against accidental misuse
 		if ($this->source === ROOTPATH && $this->destination === FCPATH)
 		{
-			throw new RuntimeException('Child classes of Publisher should provide their own source and destination or publish method.');
+			throw new RuntimeException('Child classes of Publisher should provide their own publish method or a source and destination.');
 		}
 
 		return $this->addPath('/')->merge(true);
 	}
 
+	//--------------------------------------------------------------------
+	// Property Accessors
 	//--------------------------------------------------------------------
 
 	/**
@@ -369,142 +281,8 @@ class Publisher
 		return $this->published;
 	}
 
-	/**
-	 * Optimizes and returns the current file list.
-	 *
-	 * @return string[]
-	 */
-	final public function getFiles(): array
-	{
-		$this->files = array_unique($this->files, SORT_STRING);
-		sort($this->files, SORT_STRING);
-
-		return $this->files;
-	}
-
 	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the file list directly, files are still subject to verification.
-	 * This works as a "reset" method with [].
-	 *
-	 * @param string[] $files The new file list to use
-	 *
-	 * @return $this
-	 */
-	final public function setFiles(array $files)
-	{
-		$this->files = [];
-
-		return $this->addFiles($files);
-	}
-
-	/**
-	 * Verifies and adds files to the list.
-	 *
-	 * @param string[] $files
-	 *
-	 * @return $this
-	 */
-	final public function addFiles(array $files)
-	{
-		foreach ($files as $file)
-		{
-			$this->addFile($file);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Verifies and adds a single file to the file list.
-	 *
-	 * @param string $file
-	 *
-	 * @return $this
-	 */
-	final public function addFile(string $file)
-	{
-		$this->files[] = self::resolveFile($file);
-
-		return $this;
-	}
-
-	/**
-	 * Removes files from the list.
-	 *
-	 * @param string[] $files
-	 *
-	 * @return $this
-	 */
-	final public function removeFiles(array $files)
-	{
-		$this->files = array_diff($this->files, $files);
-
-		return $this;
-	}
-
-	/**
-	 * Removes a single file from the list.
-	 *
-	 * @param string $file
-	 *
-	 * @return $this
-	 */
-	final public function removeFile(string $file)
-	{
-		return $this->removeFiles([$file]);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Verifies and adds files from each
-	 * directory to the list.
-	 *
-	 * @param string[] $directories
-	 * @param bool $recursive
-	 *
-	 * @return $this
-	 */
-	final public function addDirectories(array $directories, bool $recursive = false)
-	{
-		foreach ($directories as $directory)
-		{
-			$this->addDirectory($directory, $recursive);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Verifies and adds all files from a directory.
-	 *
-	 * @param string  $directory
-	 * @param boolean $recursive
-	 *
-	 * @return $this
-	 */
-	final public function addDirectory(string $directory, bool $recursive = false)
-	{
-		$directory = self::resolveDirectory($directory);
-
-		// Map the directory to depth 2 to so directories become arrays
-		foreach (directory_map($directory, 2, true) as $key => $path)
-		{
-			if (is_string($path))
-			{
-				$this->addFile($directory . $path);
-			}
-			elseif ($recursive && is_array($path))
-			{
-				$this->addDirectory($directory . $key, true);
-			}
-		}
-
-		return $this;
-	}
-
+	// Additional Handlers
 	//--------------------------------------------------------------------
 
 	/**
@@ -535,22 +313,10 @@ class Publisher
 	 */
 	final public function addPath(string $path, bool $recursive = true)
 	{
-		$full = $this->source . $path;
+		$this->add($this->source . $path, $recursive);
 
-		// Test for a directory
-		try
-		{
-			$directory = self::resolveDirectory($full);
-		}
-		catch (PublisherException $e)
-		{
-			return $this->addFile($full);
-		}
-
-		return $this->addDirectory($full, $recursive);
+		return $this;
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * Downloads and stages files from an array of URIs.
@@ -588,53 +354,7 @@ class Publisher
 	}
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Removes any files from the list that match the supplied pattern
-	 * (within the optional scope).
-	 *
-	 * @param string      $pattern Regex or pseudo-regex string
-	 * @param string|null $scope The directory to limit the scope
-	 *
-	 * @return $this
-	 */
-	final public function removePattern(string $pattern, string $scope = null)
-	{
-		if ($pattern === '')
-		{
-			return $this;
-		}
-
-		// Start with all files or those in scope
-		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
-
-		// Remove any files that match the pattern
-		return $this->removeFiles(self::matchFiles($files, $pattern));
-	}
-
-	/**
-	 * Keeps only the files from the list that match
-	 * (within the optional scope).
-	 *
-	 * @param string      $pattern Regex or pseudo-regex string
-	 * @param string|null $scope A directory to limit the scope
-	 *
-	 * @return $this
-	 */
-	final public function retainPattern(string $pattern, string $scope = null)
-	{
-		if ($pattern === '')
-		{
-			return $this;
-		}
-
-		// Start with all files or those in scope
-		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
-
-		// Matches the pattern within the scoped files and remove their inverse.
-		return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
-	}
-
+	// Write Methods
 	//--------------------------------------------------------------------
 
 	/**
@@ -649,8 +369,6 @@ class Publisher
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Copies all files into the destination, does not create directory structure.
 	 *
@@ -662,7 +380,7 @@ class Publisher
 	{
 		$this->errors = $this->published = [];
 
-		foreach ($this->getFiles() as $file)
+		foreach ($this->get() as $file)
 		{
 			$to = $this->destination . basename($file);
 
@@ -693,7 +411,7 @@ class Publisher
 		$this->errors = $this->published = [];
 
 		// Get the files from source for special handling
-		$sourced = self::filterFiles($this->getFiles(), $this->source);
+		$sourced = self::filterFiles($this->get(), $this->source);
 
 		// Handle everything else with a flat copy
 		$this->files = array_diff($this->files, $sourced);
