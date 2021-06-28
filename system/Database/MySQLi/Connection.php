@@ -160,12 +160,13 @@ class Connection extends BaseConnection
                     }
                 }
 
-                $clientFlags += MYSQLI_CLIENT_SSL;
                 $this->mysqli->ssl_set(
                     $ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null,
                     $ssl['capath'] ?? null, $ssl['cipher'] ?? null
                 );
             }
+
+            $clientFlags += MYSQLI_CLIENT_SSL;
         }
 
         try {
