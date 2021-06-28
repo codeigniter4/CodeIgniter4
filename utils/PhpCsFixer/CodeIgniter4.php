@@ -100,9 +100,22 @@ final class CodeIgniter4 extends AbstractRuleset
             'doctrine_annotation_braces'           => false,
             'doctrine_annotation_indentation'      => false,
             'doctrine_annotation_spaces'           => false,
-            'explicit_string_variable'             => true,
-            'final_class'                          => false,
-            'final_internal_class'                 => [
+            'echo_tag_syntax'                      => [
+                'format'                         => 'short',
+                'long_function'                  => 'echo',
+                'shorten_simple_statements_only' => false,
+            ],
+            'elseif'            => true,
+            'encoding'          => true,
+            'ereg_to_preg'      => true,
+            'error_suppression' => [
+                'mute_deprecation_error'         => true,
+                'noise_remaining_usages'         => false,
+                'noise_remaining_usages_exclude' => [],
+            ],
+            'explicit_string_variable' => true,
+            'final_class'              => false,
+            'final_internal_class'     => [
                 'annotation_exclude'                         => ['@no-final'],
                 'annotation_include'                         => ['@internal'],
                 'consider_absent_docblock_as_internal_class' => false,
