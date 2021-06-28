@@ -113,8 +113,9 @@ final class CodeIgniter4 extends AbstractRuleset
                 'noise_remaining_usages'         => false,
                 'noise_remaining_usages_exclude' => [],
             ],
-            'final_class'          => false,
-            'final_internal_class' => [
+            'explicit_string_variable' => true,
+            'final_class'              => false,
+            'final_internal_class'     => [
                 'annotation_exclude'                         => ['@no-final'],
                 'annotation_include'                         => ['@internal'],
                 'consider_absent_docblock_as_internal_class' => false,
@@ -270,6 +271,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'psr_autoloading'                     => ['dir' => null],
             'set_type_to_cast'                    => true,
             'short_scalar_cast'                   => true,
+            'simple_to_complex_string_variable'   => true,
             'standardize_increment'               => true,
             'static_lambda'                       => true,
             'switch_case_semicolon_to_colon'      => true,

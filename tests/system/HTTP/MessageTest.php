@@ -275,7 +275,7 @@ final class MessageTest extends CIUnitTestCase
         $this->message->populateHeaders();
 
         $this->assertNull($this->message->header('content-type'));
-        putenv("CONTENT_TYPE=$originalEnv");
+        putenv("CONTENT_TYPE={$originalEnv}");
         $this->message->removeHeader('accept-language');
         $_SERVER = $original; // restore so code coverage doesn't break
     }

@@ -64,10 +64,10 @@ class XMLFormatter implements FormatterInterface
             $key = $this->normalizeXMLTag($key);
 
             if (is_array($value)) {
-                $subnode = $output->addChild("$key");
+                $subnode = $output->addChild("{$key}");
                 $this->arrayToXML($value, $subnode);
             } else {
-                $output->addChild("$key", htmlspecialchars("$value"));
+                $output->addChild("{$key}", htmlspecialchars("{$value}"));
             }
         }
     }

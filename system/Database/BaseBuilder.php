@@ -776,14 +776,14 @@ class BaseBuilder
                 if (empty($op)) {
                     $k .= ' =';
                 } else {
-                    $k .= " $op";
+                    $k .= " {$op}";
                 }
 
                 if ($v instanceof Closure) {
                     $builder = $this->cleanClone();
                     $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
                 } else {
-                    $v = " :$bind:";
+                    $v = " :{$bind}:";
                 }
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
@@ -989,9 +989,8 @@ class BaseBuilder
             if (CI_DEBUG) {
                 throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
             }
-            // @codeCoverageIgnoreStart
-            return $this;
-            // @codeCoverageIgnoreEnd
+
+            return $this; // @codeCoverageIgnore
         }
 
         if (! is_bool($escape)) {
@@ -1017,7 +1016,7 @@ class BaseBuilder
         $prefix = empty($this->$clause) ? $this->groupGetType('') : $this->groupGetType($type);
 
         $whereIn = [
-            'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ($ok)" : " IN :{$ok}:"),
+            'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ({$ok})" : " IN :{$ok}:"),
             'escape'    => false,
         ];
 
@@ -1236,11 +1235,11 @@ class BaseBuilder
             if ($side === 'none') {
                 $bind = $this->setBind($k, $v, $escape);
             } elseif ($side === 'before') {
-                $bind = $this->setBind($k, "%$v", $escape);
+                $bind = $this->setBind($k, "%{$v}", $escape);
             } elseif ($side === 'after') {
-                $bind = $this->setBind($k, "$v%", $escape);
+                $bind = $this->setBind($k, "{$v}%", $escape);
             } else {
-                $bind = $this->setBind($k, "%$v%", $escape);
+                $bind = $this->setBind($k, "%{$v}%", $escape);
             }
 
             $likeStatement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
@@ -1691,7 +1690,7 @@ class BaseBuilder
         foreach ($key as $k => $v) {
             if ($escape) {
                 $bind                                                           = $this->setBind($k, $v, $escape);
-                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
+                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":{$bind}:";
             } else {
                 $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
             }
@@ -2573,7 +2572,7 @@ class BaseBuilder
 
                 $bind = $this->setBind($k2, $v2, $escape);
 
-                $clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
+                $clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":{$bind}:";
             }
 
             if ($indexSet === false) {

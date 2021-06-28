@@ -111,7 +111,7 @@ final class CLITest extends CIUnitTestCase
 
         CLI::init(); // force re-check on env
         $this->assertSame('test', CLI::color('test', 'white', 'green'));
-        putenv($nocolor ? "NO_COLOR=$nocolor" : 'NO_COLOR');
+        putenv($nocolor ? "NO_COLOR={$nocolor}" : 'NO_COLOR');
     }
 
     public function testColorSupportOnHyperTerminals()
@@ -121,7 +121,7 @@ final class CLITest extends CIUnitTestCase
 
         CLI::init(); // force re-check on env
         $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
-        putenv($termProgram ? "TERM_PROGRAM=$termProgram" : 'TERM_PROGRAM');
+        putenv($termProgram ? "TERM_PROGRAM={$termProgram}" : 'TERM_PROGRAM');
     }
 
     public function testStreamSupports()
