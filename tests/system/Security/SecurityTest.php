@@ -36,8 +36,8 @@ final class SecurityTest extends CIUnitTestCase
 
         $hash = $security->getHash();
 
-        $this->assertEquals(32, strlen($hash));
-        $this->assertEquals('csrf_test_name', $security->getTokenName());
+        $this->assertSame(32, strlen($hash));
+        $this->assertSame('csrf_test_name', $security->getTokenName());
     }
 
     public function testHashIsReadFromCookie()
@@ -46,7 +46,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $security = new Security(new MockAppConfig());
 
-        $this->assertEquals('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
+        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }
 
     public function testCSRFVerifySetsCookieWhenNotPOST()
@@ -57,7 +57,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $security->verify(new Request(new MockAppConfig()));
 
-        $this->assertEquals($_COOKIE['csrf_cookie_name'], $security->getHash());
+        $this->assertSame($_COOKIE['csrf_cookie_name'], $security->getHash());
     }
 
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
@@ -156,7 +156,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $filename = './<!--foo-->';
 
-        $this->assertEquals('foo', $security->sanitizeFilename($filename));
+        $this->assertSame('foo', $security->sanitizeFilename($filename));
     }
 
     public function testRegenerateWithFalseSecurityRegenerateProperty()

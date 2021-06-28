@@ -27,19 +27,19 @@ final class TableTest extends CIUnitTestCase
         $template = ['a' => 'b'];
 
         $this->table->setTemplate($template);
-        $this->assertEquals($template, $this->table->template);
+        $this->assertSame($template, $this->table->template);
     }
 
     public function testSetEmpty()
     {
         $this->table->setEmpty('nada');
-        $this->assertEquals('nada', $this->table->emptyCells);
+        $this->assertSame('nada', $this->table->emptyCells);
     }
 
     public function testSetCaption()
     {
         $this->table->setCaption('awesome cap');
-        $this->assertEquals('awesome cap', $this->table->caption);
+        $this->assertSame('awesome cap', $this->table->caption);
     }
 
     /**
@@ -53,7 +53,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->table->setHeading('name', 'color', 'size');
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 ['data' => 'name'],
                 ['data' => 'color'],
@@ -73,7 +73,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->table->setFooting('Subtotal', $subtotal);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 ['data' => 'Subtotal'],
                 ['data' => $subtotal],
@@ -97,7 +97,7 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertCount(3, $this->table->rows);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 ['data' => 'your'],
                 ['data' => 'pony'],
@@ -118,7 +118,7 @@ final class TableTest extends CIUnitTestCase
             ['data' => 'size'],
         ];
 
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             $this->table->prepArgs(['name', 'color', 'size'])
         );
@@ -130,7 +130,7 @@ final class TableTest extends CIUnitTestCase
             'class' => 'awesome',
         ];
 
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             $this->table->prepArgs(['name', 'color', 'size', ['data' => 'weight', 'class' => 'awesome']])
         );
@@ -173,14 +173,14 @@ final class TableTest extends CIUnitTestCase
         $this->table->compileTemplate();
 
         $this->assertArrayHasKey('nonsense', $this->table->template);
-        $this->assertEquals('foo', $this->table->template['nonsense']);
+        $this->assertSame('foo', $this->table->template['nonsense']);
 
         // override default
         $this->table->setTemplate(['table_close' => '</table junk>']);
         $this->table->compileTemplate();
 
         $this->assertArrayHasKey('table_close', $this->table->template);
-        $this->assertEquals('</table junk>', $this->table->template['table_close']);
+        $this->assertSame('</table junk>', $this->table->template['table_close']);
     }
 
     public function testMakeColumns()
@@ -201,13 +201,13 @@ final class TableTest extends CIUnitTestCase
         ];
 
         // No column count - no changes to the array
-        $this->assertEquals(
+        $this->assertSame(
             $fiveValues,
             $this->table->makeColumns($fiveValues)
         );
 
         // Column count of 3 leaves us with one &nbsp;
-        $this->assertEquals(
+        $this->assertSame(
             [
                 ['Laura', 'Red', '15'],
                 ['Katie', 'Blue', '&nbsp;'],
@@ -278,14 +278,14 @@ final class TableTest extends CIUnitTestCase
             ['data' => 'number'],
         ];
 
-        $this->assertEquals($expected, $this->table->heading);
+        $this->assertSame($expected, $this->table->heading);
 
         $expected = [
             ['data' => 'Katie'],
             ['data' => 'Blue'],
         ];
 
-        $this->assertEquals($expected, $this->table->rows[1]);
+        $this->assertSame($expected, $this->table->rows[1]);
     }
 
     public function testSetFromObject()
@@ -304,14 +304,14 @@ final class TableTest extends CIUnitTestCase
             ['data' => 'email'],
         ];
 
-        $this->assertEquals($expected, $this->table->heading);
+        $this->assertSame($expected, $this->table->heading);
 
         $expected = [
             'name'  => ['data' => 'Foo Bar'],
             'email' => ['data' => 'foo@bar.com'],
         ];
 
-        $this->assertEquals($expected, $this->table->rows[1]);
+        $this->assertSame($expected, $this->table->rows[1]);
     }
 
     public function testGenerate()
@@ -464,7 +464,7 @@ final class TableTest extends CIUnitTestCase
 
         $table = $this->table->generate($data);
 
-        $this->assertEquals('Undefined table data', $table);
+        $this->assertSame('Undefined table data', $table);
     }
 
     // --------------------------------------------------------------------

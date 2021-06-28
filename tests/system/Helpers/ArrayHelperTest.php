@@ -23,7 +23,7 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar', $data));
+        $this->assertSame(23, dot_array_search('foo.bar', $data));
     }
 
     public function testArrayDotTooManyLevels()
@@ -34,7 +34,7 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
     }
 
     public function testArrayDotEscape()
@@ -48,8 +48,8 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar\.baz', $data));
-        $this->assertEquals(42, dot_array_search('foo\.bar.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.bar\.baz', $data));
+        $this->assertSame(42, dot_array_search('foo\.bar.baz', $data));
     }
 
     public function testArraySearchDotMultiLevels()
@@ -103,7 +103,7 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(['bar' => 23], dot_array_search('foo', $data));
+        $this->assertSame(['bar' => 23], dot_array_search('foo', $data));
     }
 
     public function testArrayDotWildcard()
@@ -116,7 +116,7 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.*.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
     public function testArrayDotWildcardWithMultipleChoices()
@@ -132,8 +132,8 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(11, dot_array_search('foo.*.fizz', $data));
-        $this->assertEquals(23, dot_array_search('foo.*.baz', $data));
+        $this->assertSame(11, dot_array_search('foo.*.fizz', $data));
+        $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
     public function testArrayDotNestedNotFound()
@@ -162,7 +162,7 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(['baz' => 23], dot_array_search('foo.bar.*', $data));
+        $this->assertSame(['baz' => 23], dot_array_search('foo.bar.*', $data));
     }
 
     /**
@@ -191,7 +191,7 @@ final class ArrayHelperTest extends CIUnitTestCase
 
         $result = array_deep_search($key, $data);
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testArrayDeepSearchReturnNullEmptyArray()
@@ -209,7 +209,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
         $this->assertTrue($success);
-        $this->assertEquals($expected, array_column($data, 'name'));
+        $this->assertSame($expected, array_column($data, 'name'));
     }
 
     /**
@@ -225,7 +225,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
         $this->assertTrue($success);
-        $this->assertEquals($expected, array_column((array) $data, 'name'));
+        $this->assertSame($expected, array_column((array) $data, 'name'));
     }
 
     /**

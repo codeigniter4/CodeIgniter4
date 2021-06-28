@@ -27,29 +27,29 @@ final class TimeDifferenceTest extends CIUnitTestCase
 
         $obj = $current->difference($test);
 
-        $this->assertEquals(-7, $obj->getYears());
-        $this->assertEquals(-84, $obj->getMonths());
-        $this->assertEquals(-365, $obj->getWeeks());
-        $this->assertEquals(-2557, $obj->getDays());
-        $this->assertEquals(-61368, $obj->getHours());
-        $this->assertEquals(-3682080, $obj->getMinutes());
-        $this->assertEquals(-220924800, $obj->getSeconds());
+        $this->assertSame(-7, $obj->getYears());
+        $this->assertSame(-84, $obj->getMonths());
+        $this->assertSame(-365, $obj->getWeeks());
+        $this->assertSame(-2557, $obj->getDays());
+        $this->assertSame(-61368, $obj->getHours());
+        $this->assertSame(-3682080, $obj->getMinutes());
+        $this->assertSame(-220924800, $obj->getSeconds());
 
-        $this->assertEquals(-7, $obj->years);
-        $this->assertEquals(-84, $obj->months);
-        $this->assertEquals(-365, $obj->weeks);
-        $this->assertEquals(-2557, $obj->days);
-        $this->assertEquals(-61368, $obj->hours);
-        $this->assertEquals(-3682080, $obj->minutes);
-        $this->assertEquals(-220924800, $obj->seconds);
+        $this->assertSame(-7, $obj->years);
+        $this->assertSame(-84, $obj->months);
+        $this->assertSame(-365, $obj->weeks);
+        $this->assertSame(-2557, $obj->days);
+        $this->assertSame(-61368, $obj->hours);
+        $this->assertSame(-3682080, $obj->minutes);
+        $this->assertSame(-220924800, $obj->seconds);
 
-        $this->assertEquals($diff / YEAR, $obj->getYears(true));
-        $this->assertEquals($diff / MONTH, $obj->getMonths(true));
-        $this->assertEquals($diff / WEEK, $obj->getWeeks(true));
-        $this->assertEquals($diff / DAY, $obj->getDays(true));
-        $this->assertEquals($diff / HOUR, $obj->getHours(true));
-        $this->assertEquals($diff / MINUTE, $obj->getMinutes(true));
-        $this->assertEquals($diff / SECOND, $obj->getSeconds(true));
+        $this->assertSame($diff / YEAR, $obj->getYears(true));
+        $this->assertSame($diff / MONTH, $obj->getMonths(true));
+        $this->assertSame($diff / WEEK, $obj->getWeeks(true));
+        $this->assertSame($diff / DAY, $obj->getDays(true));
+        $this->assertSame($diff / HOUR, $obj->getHours(true));
+        $this->assertSame($diff / MINUTE, $obj->getMinutes(true));
+        $this->assertSame($diff / SECOND, $obj->getSeconds(true));
     }
 
     public function testHumanizeYearsSingle()
@@ -58,7 +58,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
 
         $diff = $current->difference('March 9, 2016 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('1 year ago', $diff->humanize('en'));
+        $this->assertSame('1 year ago', $diff->humanize('en'));
     }
 
     public function testHumanizeYearsPlural()
@@ -66,7 +66,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 9, 2014 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('3 years ago', $diff->humanize('en'));
+        $this->assertSame('3 years ago', $diff->humanize('en'));
     }
 
     public function testHumanizeYearsForward()
@@ -74,7 +74,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('January 1, 2017', 'America/Chicago');
         $diff    = $current->difference('January 1, 2018 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('in 1 year', $diff->humanize('en'));
+        $this->assertSame('in 1 year', $diff->humanize('en'));
     }
 
     public function testHumanizeMonthsSingle()
@@ -82,7 +82,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('February 9, 2017', 'America/Chicago');
 
-        $this->assertEquals('1 month ago', $diff->humanize('en'));
+        $this->assertSame('1 month ago', $diff->humanize('en'));
     }
 
     public function testHumanizeMonthsPlural()
@@ -90,7 +90,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 1, 2017', 'America/Chicago');
         $diff    = $current->difference('January 1, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 months ago', $diff->humanize('en'));
+        $this->assertSame('2 months ago', $diff->humanize('en'));
     }
 
     public function testHumanizeMonthsForward()
@@ -98,7 +98,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 1, 2017', 'America/Chicago');
         $diff    = $current->difference('May 1, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 1 month', $diff->humanize('en'));
+        $this->assertSame('in 1 month', $diff->humanize('en'));
     }
 
     public function testHumanizeDaysSingle()
@@ -106,7 +106,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 9, 2017', 'America/Chicago');
 
-        $this->assertEquals('1 day ago', $diff->humanize('en'));
+        $this->assertSame('1 day ago', $diff->humanize('en'));
     }
 
     public function testHumanizeDaysPlural()
@@ -114,7 +114,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 8, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 days ago', $diff->humanize('en'));
+        $this->assertSame('2 days ago', $diff->humanize('en'));
     }
 
     public function testHumanizeDaysForward()
@@ -122,7 +122,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 11, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 1 day', $diff->humanize('en'));
+        $this->assertSame('in 1 day', $diff->humanize('en'));
     }
 
     public function testHumanizeHoursSingle()
@@ -130,7 +130,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:00', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 11:00', 'America/Chicago');
 
-        $this->assertEquals('1 hour ago', $diff->humanize('en'));
+        $this->assertSame('1 hour ago', $diff->humanize('en'));
     }
 
     public function testHumanizeHoursPlural()
@@ -138,7 +138,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:00', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 10:00', 'America/Chicago');
 
-        $this->assertEquals('2 hours ago', $diff->humanize('en'));
+        $this->assertSame('2 hours ago', $diff->humanize('en'));
     }
 
     public function testHumanizeHoursForward()
@@ -146,7 +146,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:00', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 13:00', 'America/Chicago');
 
-        $this->assertEquals('in 1 hour', $diff->humanize('en'));
+        $this->assertSame('in 1 hour', $diff->humanize('en'));
     }
 
     public function testHumanizeMinutesSingle()
@@ -154,7 +154,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:30', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 12:29', 'America/Chicago');
 
-        $this->assertEquals('1 minute ago', $diff->humanize('en'));
+        $this->assertSame('1 minute ago', $diff->humanize('en'));
     }
 
     public function testHumanizeMinutesPlural()
@@ -162,7 +162,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:30', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 12:28', 'America/Chicago');
 
-        $this->assertEquals('2 minutes ago', $diff->humanize('en'));
+        $this->assertSame('2 minutes ago', $diff->humanize('en'));
     }
 
     public function testHumanizeMinutesForward()
@@ -170,7 +170,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017 12:30', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017 12:31', 'America/Chicago');
 
-        $this->assertEquals('in 1 minute', $diff->humanize('en'));
+        $this->assertSame('in 1 minute', $diff->humanize('en'));
     }
 
     public function testHumanizeWeeksSingle()
@@ -178,7 +178,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 2, 2017', 'America/Chicago');
 
-        $this->assertEquals('1 week ago', $diff->humanize('en'));
+        $this->assertSame('1 week ago', $diff->humanize('en'));
     }
 
     public function testHumanizeWeeksPlural()
@@ -186,7 +186,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 30, 2017', 'America/Chicago');
         $diff    = $current->difference('March 15, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 weeks ago', $diff->humanize('en'));
+        $this->assertSame('2 weeks ago', $diff->humanize('en'));
     }
 
     public function testHumanizeWeeksForward()
@@ -194,7 +194,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 1 week', $diff->humanize('en'));
+        $this->assertSame('in 1 week', $diff->humanize('en'));
     }
 
     public function testHumanizeNoDifference()
@@ -202,7 +202,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'America/Chicago');
         $diff    = $current->difference('March 10, 2017', 'America/Chicago');
 
-        $this->assertEquals('Just now', $diff->humanize('en'));
+        $this->assertSame('Just now', $diff->humanize('en'));
     }
 
     public function testGetterUTC()
@@ -210,9 +210,9 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $current = Time::parse('March 10, 2017', 'UTC');
         $diff    = $current->difference('March 18, 2017', 'UTC');
 
-        $this->assertEquals(8, $diff->getDays());
-        $this->assertEquals(8, $diff->days);
-        $this->assertEquals(-8, (int) round($diff->getDays(true)));
+        $this->assertSame(8, $diff->getDays());
+        $this->assertSame(8, $diff->days);
+        $this->assertSame(-8, (int) round($diff->getDays(true)));
         $this->assertNull($diff->nonsense);
     }
 
@@ -222,11 +222,11 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $diff    = $current->difference('March 18, 2017', 'America/Chicago');
 
         // Daylight Saving Time had begun since Sun, 12 Mar, 02:00.
-        $this->assertEquals(7, $diff->getDays());
-        $this->assertEquals(7, $diff->days);
+        $this->assertSame(7, $diff->getDays());
+        $this->assertSame(7, $diff->days);
 
         // The raw value does not take Daylight Saving Time into account.
-        $this->assertEquals(-8, (int) round($diff->getDays(true)));
+        $this->assertSame(-8, (int) round($diff->getDays(true)));
         $this->assertNull($diff->nonsense);
     }
 

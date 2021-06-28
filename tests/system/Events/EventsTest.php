@@ -52,15 +52,15 @@ final class EventsTest extends CIUnitTestCase
         $default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
         $this->manager->unInitialize();
         MockEvents::initialize();
-        $this->assertEquals($default, $this->manager->getFiles());
+        $this->assertSame($default, $this->manager->getFiles());
 
         // but we should be able to change it through the backdoor
         MockEvents::setFiles(['/peanuts']);
-        $this->assertEquals(['/peanuts'], $this->manager->getFiles());
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
 
         // re-initializing should have no effect
         MockEvents::initialize();
-        $this->assertEquals(['/peanuts'], $this->manager->getFiles());
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
     }
 
     public function testPerformance()
@@ -86,7 +86,7 @@ final class EventsTest extends CIUnitTestCase
         Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
         Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
 
-        $this->assertEquals([$callback2, $callback1], Events::listeners('foo'));
+        $this->assertSame([$callback1, $callback2], Events::listeners('foo'));
     }
 
     public function testHandleEvent()
@@ -99,7 +99,7 @@ final class EventsTest extends CIUnitTestCase
 
         $this->assertTrue(Events::trigger('foo', 'bar'));
 
-        $this->assertEquals('bar', $result);
+        $this->assertSame('bar', $result);
     }
 
     public function testCancelEvent()
@@ -118,7 +118,7 @@ final class EventsTest extends CIUnitTestCase
         });
 
         $this->assertFalse(Events::trigger('foo', 'bar'));
-        $this->assertEquals(1, $result);
+        $this->assertSame(1, $result);
     }
 
     public function testPriority()
@@ -139,7 +139,7 @@ final class EventsTest extends CIUnitTestCase
         }, EVENT_PRIORITY_HIGH);
 
         $this->assertFalse(Events::trigger('foo', 'bar'));
-        $this->assertEquals(2, $result);
+        $this->assertSame(2, $result);
     }
 
     public function testPriorityWithMultiple()
@@ -163,7 +163,7 @@ final class EventsTest extends CIUnitTestCase
         }, 75);
 
         Events::trigger('foo');
-        $this->assertEquals(['c', 'd', 'a', 'b'], $result);
+        $this->assertSame(['c', 'd', 'a', 'b'], $result);
     }
 
     public function testRemoveListener()
@@ -241,7 +241,7 @@ final class EventsTest extends CIUnitTestCase
 
         $listeners = Events::listeners('foo');
 
-        $this->assertEquals([], $listeners);
+        $this->assertSame([], $listeners);
     }
 
     public function testRemoveAllListenersWithMultipleEvents()
@@ -257,8 +257,8 @@ final class EventsTest extends CIUnitTestCase
 
         Events::removeAllListeners();
 
-        $this->assertEquals([], Events::listeners('foo'));
-        $this->assertEquals([], Events::listeners('bar'));
+        $this->assertSame([], Events::listeners('foo'));
+        $this->assertSame([], Events::listeners('bar'));
     }
 
     // Basically if it doesn't crash this should be good...
@@ -284,7 +284,7 @@ final class EventsTest extends CIUnitTestCase
 
         $this->assertTrue(Events::trigger('foo', 'bar'));
 
-        $this->assertEquals('bar', $box->logged);
+        $this->assertSame('bar', $box->logged);
     }
 
     public function testSimulate()
@@ -300,6 +300,6 @@ final class EventsTest extends CIUnitTestCase
         Events::simulate(true);
         Events::trigger('foo');
 
-        $this->assertEquals(0, $result);
+        $this->assertSame(0, $result);
     }
 }

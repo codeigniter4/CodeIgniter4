@@ -171,20 +171,20 @@ final class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::language();
         $this->assertInstanceOf(Language::class, $actual);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
 
         Services::language('la');
-        $this->assertEquals('la', $actual->getLocale());
+        $this->assertSame('la', $actual->getLocale());
     }
 
     public function testNewUnsharedLanguage()
     {
         $actual = Services::language(null, false);
         $this->assertInstanceOf(Language::class, $actual);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
 
         Services::language('la', false);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
     }
 
     public function testNewPager()
@@ -294,7 +294,12 @@ final class ServicesTest extends CIUnitTestCase
         $response2 = service('response');
         $this->assertInstanceOf(MockResponse::class, $response2);
 
-        $this->assertEquals($response, $response2);
+        Services::injectMock('response', $response);
+        $response3 = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response3);
+
+        $this->assertNotSame($response, $response2);
+        $this->assertSame($response, $response3);
     }
 
     /**

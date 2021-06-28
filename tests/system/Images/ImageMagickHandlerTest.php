@@ -61,15 +61,15 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $file  = $this->handler->getFile();
         $props = $file->getProperties(true);
 
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(155, $props['width']);
-        $this->assertEquals(155, $file->origWidth);
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(155, $props['width']);
+        $this->assertSame(155, $file->origWidth);
 
-        $this->assertEquals(200, $this->handler->getHeight());
-        $this->assertEquals(200, $props['height']);
-        $this->assertEquals(200, $file->origHeight);
+        $this->assertSame(200, $this->handler->getHeight());
+        $this->assertSame(200, $props['height']);
+        $this->assertSame(200, $file->origHeight);
 
-        $this->assertEquals('width="155" height="200"', $props['size_str']);
+        $this->assertSame('width="155" height="200"', $props['size_str']);
     }
 
     public function testImageTypeProperties()
@@ -78,8 +78,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $file  = $this->handler->getFile();
         $props = $file->getProperties(true);
 
-        $this->assertEquals(IMAGETYPE_PNG, $props['image_type']);
-        $this->assertEquals('image/png', $props['mime_type']);
+        $this->assertSame(IMAGETYPE_PNG, $props['image_type']);
+        $this->assertSame('image/png', $props['mime_type']);
     }
 
     //--------------------------------------------------------------------
@@ -88,40 +88,40 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->resize(155, 200); // 155x200 result
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     public function testResizeAbsolute()
     {
         $this->handler->withFile($this->path);
         $this->handler->resize(123, 456, false); // 123x456 result
-        $this->assertEquals(123, $this->handler->getWidth());
-        $this->assertEquals(456, $this->handler->getHeight());
+        $this->assertSame(123, $this->handler->getWidth());
+        $this->assertSame(456, $this->handler->getHeight());
     }
 
     public function testResizeAspect()
     {
         $this->handler->withFile($this->path);
         $this->handler->resize(123, 456, true); // 123x159 result
-        $this->assertEquals(123, $this->handler->getWidth());
-        $this->assertEquals(159, $this->handler->getHeight());
+        $this->assertSame(123, $this->handler->getWidth());
+        $this->assertSame(159, $this->handler->getHeight());
     }
 
     public function testResizeAspectWidth()
     {
         $this->handler->withFile($this->path);
         $this->handler->resize(123, 0, true); // 123x159 result
-        $this->assertEquals(123, $this->handler->getWidth());
-        $this->assertEquals(159, $this->handler->getHeight());
+        $this->assertSame(123, $this->handler->getWidth());
+        $this->assertSame(159, $this->handler->getHeight());
     }
 
     public function testResizeAspectHeight()
     {
         $this->handler->withFile($this->path);
         $this->handler->resize(0, 456, true); // 353x456 result
-        $this->assertEquals(353, $this->handler->getWidth());
-        $this->assertEquals(456, $this->handler->getHeight());
+        $this->assertSame(353, $this->handler->getWidth());
+        $this->assertSame(456, $this->handler->getHeight());
     }
 
     //--------------------------------------------------------------------
@@ -130,48 +130,48 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(100, 100); // 100x100 result
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     public function testCropMiddle()
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(100, 100, 50, 50, false); // 100x100 result
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     public function testCropMiddlePreserved()
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(100, 100, 50, 50, true); // 78x100 result
-        $this->assertEquals(78, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(78, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     public function testCropTopLeftPreserveAspect()
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(100, 100); // 100x100 result
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     public function testCropNothing()
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(155, 200); // 155x200 result
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     public function testCropOutOfBounds()
     {
         $this->handler->withFile($this->path);
         $this->handler->crop(100, 100, 100); // 55x100 result in 100x100
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     //--------------------------------------------------------------------
@@ -179,16 +179,16 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testRotate()
     {
         $this->handler->withFile($this->path); // 155x200
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
 
         // first rotation
         $this->handler->rotate(90); // 200x155
-        $this->assertEquals(200, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getWidth());
 
         // check image size again after another rotation
         $this->handler->rotate(180); // 200x155
-        $this->assertEquals(200, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getWidth());
     }
 
     public function testRotateBadAngle()
@@ -204,8 +204,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->flatten();
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     //--------------------------------------------------------------------
@@ -214,24 +214,24 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->flip();
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     public function testHorizontal()
     {
         $this->handler->withFile($this->path);
         $this->handler->flip('horizontal');
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     public function testFlipVertical()
     {
         $this->handler->withFile($this->path);
         $this->handler->flip('vertical');
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     public function testFlipUnknown()
@@ -246,24 +246,24 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->fit(100, 100);
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(100, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(100, $this->handler->getHeight());
     }
 
     public function testFitTaller()
     {
         $this->handler->withFile($this->path);
         $this->handler->fit(100, 400);
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(400, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(400, $this->handler->getHeight());
     }
 
     public function testFitAutoHeight()
     {
         $this->handler->withFile($this->path);
         $this->handler->fit(100);
-        $this->assertEquals(100, $this->handler->getWidth());
-        $this->assertEquals(129, $this->handler->getHeight());
+        $this->assertSame(100, $this->handler->getWidth());
+        $this->assertSame(129, $this->handler->getHeight());
     }
 
     public function testFitPositions()
@@ -283,8 +283,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
         foreach ($choices as $position) {
             $this->handler->fit(100, 100, $position);
-            $this->assertEquals(100, $this->handler->getWidth(), 'Position ' . $position . ' failed');
-            $this->assertEquals(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
+            $this->assertSame(100, $this->handler->getWidth(), 'Position ' . $position . ' failed');
+            $this->assertSame(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
         }
     }
 
@@ -294,8 +294,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->text('vertical', ['hAlign' => 'right', 'vAlign' => 'bottom']);
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     //--------------------------------------------------------------------
@@ -304,8 +304,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         $this->handler->withFile($this->path);
         $this->handler->text('vertical', ['vAlign' => 'middle', 'withShadow' => 'sure', 'shadowOffset' => 3]);
-        $this->assertEquals(155, $this->handler->getWidth());
-        $this->assertEquals(200, $this->handler->getHeight());
+        $this->assertSame(155, $this->handler->getWidth());
+        $this->assertSame(200, $this->handler->getHeight());
     }
 
     //--------------------------------------------------------------------
@@ -320,8 +320,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->handler->withFile($this->origin . 'ci-logo.' . $type);
             $this->handler->text('vertical');
-            $this->assertEquals(155, $this->handler->getWidth());
-            $this->assertEquals(200, $this->handler->getHeight());
+            $this->assertSame(155, $this->handler->getWidth());
+            $this->assertSame(200, $this->handler->getHeight());
         }
     }
 
@@ -339,7 +339,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
             $this->handler->save($this->root . 'ci-logo.' . $type);
             $this->assertFileExists($this->root . 'ci-logo.' . $type);
 
-            $this->assertNotEquals(
+            $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
                 file_get_contents($this->root . 'ci-logo.' . $type)
             );
@@ -353,7 +353,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
             $this->handler->save(null, 100);
             $this->assertFileExists($this->origin . 'ci-logo.' . $type);
 
-            $this->assertEquals(
+            $this->assertSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
                 file_get_contents($this->origin . 'ci-logo.' . $type)
             );
@@ -373,7 +373,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
             $this->handler->save($this->root . 'ci-logo.' . $type);
             $this->assertFileExists($this->root . 'ci-logo.' . $type);
 
-            $this->assertNotEquals(
+            $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
                 file_get_contents($this->root . 'ci-logo.' . $type)
             );
@@ -394,7 +394,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->assertFileExists($this->root . 'ci-logo.' . $type);
 
-            $this->assertNotEquals(
+            $this->assertNotSame(
                 file_get_contents($this->origin . 'ci-logo.' . $type),
                 file_get_contents($this->root . 'ci-logo.' . $type)
             );
@@ -407,7 +407,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         $this->handler->getResource(); // make sure resource is loaded
         $this->handler->convert(IMAGETYPE_PNG);
         $this->handler->save($this->root . 'ci-logo.png');
-        $this->assertEquals(exif_imagetype($this->root . 'ci-logo.png'), IMAGETYPE_PNG);
+        $this->assertSame(exif_imagetype($this->root . 'ci-logo.png'), IMAGETYPE_PNG);
     }
 
     public function testImageReorientLandscape()
@@ -425,7 +425,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->handler->save($result);
 
-            $this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
+            $this->assertSame(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }
     }
 
@@ -444,7 +444,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
             $this->handler->save($result);
 
-            $this->assertEquals(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
+            $this->assertSame(['red' => 62, 'green' => 62, 'blue' => 62, 'alpha' => 0], $rgb);
         }
     }
 }

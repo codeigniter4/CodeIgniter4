@@ -64,8 +64,8 @@ final class BaseHandlerTest extends CIUnitTestCase
 
         $image = $handler->getFile();
         $this->assertTrue($image instanceof Image);
-        $this->assertEquals(155, $image->origWidth);
-        $this->assertEquals($path, $image->getPathname());
+        $this->assertSame(155, $image->origWidth);
+        $this->assertSame($path, $image->getPathname());
     }
 
     public function testMissingFile()
@@ -116,6 +116,6 @@ final class BaseHandlerTest extends CIUnitTestCase
     {
         $handler = Services::image('gd', null, false);
         $handler->withFile($this->path);
-        $this->assertEquals($this->path, $handler->getPathname());
+        $this->assertSame($this->path, $handler->getPathname());
     }
 }

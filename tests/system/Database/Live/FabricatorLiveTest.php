@@ -64,7 +64,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
 
         $fabricator->create();
 
-        $this->assertEquals($count + 1, Fabricator::getCount('user'));
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
     public function testHelperIncrementsCount()
@@ -73,7 +73,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
 
         fake(UserModel::class, ['country' => 'Italy']);
 
-        $this->assertEquals($count + 1, Fabricator::getCount('user'));
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
     public function testCreateThrowsOnFailure()
@@ -88,7 +88,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
     {
         helper('test');
         $result = fake(UserModel::class, ['name' => 'Derek'], false);
-        $this->assertEquals('Derek', $result->name);
+        $this->assertSame('Derek', $result->name);
         $this->dontSeeInDatabase('user', ['name' => 'Derek']);
     }
 }

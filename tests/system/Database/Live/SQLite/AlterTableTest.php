@@ -88,27 +88,27 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertArrayHasKey('id', $fields);
         $this->assertNull($fields['id']['default']);
         $this->assertTrue($fields['id']['null']);
-        $this->assertEquals('integer', strtolower($fields['id']['type']));
+        $this->assertSame('integer', strtolower($fields['id']['type']));
 
         $this->assertArrayHasKey('name', $fields);
         $this->assertNull($fields['name']['default']);
         $this->assertFalse($fields['name']['null']);
-        $this->assertEquals('varchar', strtolower($fields['name']['type']));
+        $this->assertSame('varchar', strtolower($fields['name']['type']));
 
         $this->assertArrayHasKey('email', $fields);
         $this->assertNull($fields['email']['default']);
         $this->assertTrue($fields['email']['null']);
-        $this->assertEquals('varchar', strtolower($fields['email']['type']));
+        $this->assertSame('varchar', strtolower($fields['email']['type']));
 
         $keys = $this->getPrivateProperty($this->table, 'keys');
 
         $this->assertCount(3, $keys);
         $this->assertArrayHasKey('foo_name', $keys);
-        $this->assertEquals(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
+        $this->assertSame(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
         $this->assertArrayHasKey('id', $keys);
-        $this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
+        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
         $this->assertArrayHasKey('id', $keys);
-        $this->assertEquals(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
+        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
     }
 
     public function testDropColumnSuccess()
@@ -179,7 +179,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->createTable('aliens');
 
         $keys = $this->db->getForeignKeyData('aliens');
-        $this->assertEquals('key_id to aliens_fk.id', $keys[0]->constraint_name);
+        $this->assertSame('key_id to aliens_fk.id', $keys[0]->constraint_name);
 
         $result = $this->table
             ->fromTable('aliens')

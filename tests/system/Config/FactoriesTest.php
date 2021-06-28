@@ -52,7 +52,7 @@ final class FactoriesTest extends CIUnitTestCase
         $result = Factories::getOptions('blahblahs');
 
         $this->assertTrue($result['preferApp']);
-        $this->assertEquals('Blahblahs', $result['path']);
+        $this->assertSame('Blahblahs', $result['path']);
     }
 
     public function testSetsOptions()
@@ -61,7 +61,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::getOptions('widgets');
 
-        $this->assertEquals('bar', $result['foo']);
+        $this->assertSame('bar', $result['foo']);
         $this->assertTrue($result['preferApp']);
     }
 
@@ -74,7 +74,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::getOptions('widgets');
 
-        $this->assertEquals('bam', $result['bar']);
+        $this->assertSame('bam', $result['bar']);
     }
 
     public function testSetOptionsResets()
@@ -99,7 +99,7 @@ final class FactoriesTest extends CIUnitTestCase
         Factories::reset();
 
         $result = $this->getFactoriesStaticProperty('options');
-        $this->assertEquals([], $result);
+        $this->assertSame([], $result);
     }
 
     public function testResetsComponentOnly()
@@ -118,22 +118,22 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testGetsBasenameByBasename()
     {
-        $this->assertEquals('SomeWidget', Factories::getBasename('SomeWidget'));
+        $this->assertSame('SomeWidget', Factories::getBasename('SomeWidget'));
     }
 
     public function testGetsBasenameByClassname()
     {
-        $this->assertEquals('SomeWidget', Factories::getBasename(SomeWidget::class));
+        $this->assertSame('SomeWidget', Factories::getBasename(SomeWidget::class));
     }
 
     public function testGetsBasenameByAbsoluteClassname()
     {
-        $this->assertEquals('UserModel', Factories::getBasename('\Tests\Support\Models\UserModel'));
+        $this->assertSame('UserModel', Factories::getBasename('\Tests\Support\Models\UserModel'));
     }
 
     public function testGetsBasenameInvalid()
     {
-        $this->assertEquals('', Factories::getBasename('Tests\\Support\\'));
+        $this->assertSame('', Factories::getBasename('Tests\\Support\\'));
     }
 
     //--------------------------------------------------------------------

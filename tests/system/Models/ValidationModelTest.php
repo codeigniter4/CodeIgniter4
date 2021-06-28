@@ -30,7 +30,7 @@ final class ValidationModelTest extends LiveModelTestCase
         $this->assertIsInt($this->model->insert($data));
 
         $errors = $this->model->errors();
-        $this->assertEquals([], $errors);
+        $this->assertSame([], $errors);
     }
 
     public function testValidationBasics(): void

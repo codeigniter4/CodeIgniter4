@@ -83,7 +83,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
 
         $body = $result->response()->getBody();
-        $this->assertEquals('Hi there', $body);
+        $this->assertSame('Hi there', $body);
     }
 
     public function testPopcornFailure()
@@ -94,7 +94,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('pop');
 
-        $this->assertEquals(567, $result->response()->getStatusCode());
+        $this->assertSame(567, $result->response()->getStatusCode());
     }
 
     public function testPopcornException()
@@ -105,7 +105,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('popper');
 
-        $this->assertEquals(500, $result->response()->getStatusCode());
+        $this->assertSame(500, $result->response()->getStatusCode());
     }
 
     public function testPopcornIndexWithSupport()
@@ -124,7 +124,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
 
         $body = $result->response()->getBody();
-        $this->assertEquals('Hi there', $body);
+        $this->assertSame('Hi there', $body);
     }
 
     public function testRequestPassthrough()
@@ -136,7 +136,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
-        $this->assertEquals('get', $req->getMethod());
+        $this->assertSame('get', $req->getMethod());
     }
 
     public function testFailureResponse()
@@ -148,7 +148,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('oops');
 
         $this->assertFalse($result->isOK());
-        $this->assertEquals(401, $result->response()->getStatusCode());
+        $this->assertSame(401, $result->response()->getStatusCode());
     }
 
     public function testEmptyResponse()
@@ -208,7 +208,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index3');
 
         $response = json_decode($result->response()->getBody());
-        $this->assertEquals('en', $response->lang);
+        $this->assertSame('en', $response->lang);
     }
 
     /**

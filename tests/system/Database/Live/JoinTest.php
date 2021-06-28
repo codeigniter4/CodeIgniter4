@@ -26,11 +26,9 @@ final class JoinTest extends CIUnitTestCase
             ->get()
             ->getRow();
 
-        $this->assertEquals(1, $row->job_id);
-        $this->assertEquals(1, $row->user_id);
-        $this->assertEquals('Derek Jones', $row->user_name);
-        $this->assertEquals('Developer', $row->job_name);
+        $this->assertSame(1, (int) $row->job_id);
+        $this->assertSame(1, (int) $row->user_id);
+        $this->assertSame('Derek Jones', $row->user_name);
+        $this->assertSame('Developer', $row->job_name);
     }
-
-    //--------------------------------------------------------------------
 }

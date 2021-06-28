@@ -69,7 +69,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -103,7 +103,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -122,7 +122,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -141,7 +141,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -160,7 +160,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -178,7 +178,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -198,7 +198,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -255,7 +255,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -272,7 +272,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -289,7 +289,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -306,7 +306,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -323,7 +323,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -340,7 +340,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -357,7 +357,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -374,7 +374,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -391,7 +391,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertEquals($expected, $logs[0]);
+        $this->assertSame($expected, $logs[0]);
     }
 
     //--------------------------------------------------------------------
@@ -420,7 +420,7 @@ final class LoggerTest extends CIUnitTestCase
         $ohoh     = APPPATH . 'LoggerTest';
         $expected = 'APPPATH/LoggerTest';
 
-        $this->assertEquals($expected, $logger->cleanup($ohoh));
+        $this->assertSame($expected, $logger->cleanup($ohoh));
     }
 
     //--------------------------------------------------------------------
@@ -435,6 +435,6 @@ final class LoggerTest extends CIUnitTestCase
             'unknown',
         ];
 
-        $this->assertEquals($expected, $logger->determineFile());
+        $this->assertSame($expected, $logger->determineFile());
     }
 }

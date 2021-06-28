@@ -34,6 +34,6 @@ final class MigrationTest extends CIUnitTestCase
 
         $dbGroup = $migration->getDBGroup();
 
-        $this->assertEquals('tests', $dbGroup);
+        $this->assertSame('tests', $dbGroup);
     }
 }

@@ -22,7 +22,7 @@ final class EmptyTest extends CIUnitTestCase
     {
         $this->db->table('misc')->emptyTable();
 
-        $this->assertEquals(0, $this->db->table('misc')->countAll());
+        $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
     //--------------------------------------------------------------------
@@ -31,7 +31,7 @@ final class EmptyTest extends CIUnitTestCase
     {
         $this->db->table('misc')->truncate();
 
-        $this->assertEquals(0, $this->db->table('misc')->countAll());
+        $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
     //--------------------------------------------------------------------
