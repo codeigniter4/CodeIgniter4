@@ -192,7 +192,7 @@ final class BaseConfigTest extends CIUnitTestCase
 
         $config = new SimpleConfig();
 
-        $this->assertEquals(0, $config->QZERO);
+        $this->assertSame(0, (int) $config->QZERO);
         $this->assertSame('0', $config->QZEROSTR);
         $this->assertSame(' ', $config->QEMPTYSTR);
         $this->assertFalse($config->QFALSE);

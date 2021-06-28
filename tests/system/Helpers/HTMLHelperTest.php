@@ -54,7 +54,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'bar',
         ];
 
-        $this->assertEquals(ltrim($expected), ul($list));
+        $this->assertSame(ltrim($expected), ul($list));
     }
 
     public function testULWithClass()
@@ -73,7 +73,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'bar',
         ];
 
-        $this->assertEquals($expected, ul($list, 'class="test"'));
+        $this->assertSame($expected, ul($list, 'class="test"'));
     }
 
     public function testMultiLevelUL()
@@ -102,7 +102,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(ltrim($expected), ul($list));
+        $this->assertSame(ltrim($expected), ul($list));
     }
 
     //--------------------------------------------------------------------
@@ -123,7 +123,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'bar',
         ];
 
-        $this->assertEquals(ltrim($expected), ol($list));
+        $this->assertSame(ltrim($expected), ol($list));
     }
 
     public function testOLWithClass()
@@ -142,7 +142,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'bar',
         ];
 
-        $this->assertEquals($expected, ol($list, 'class="test"'));
+        $this->assertSame($expected, ol($list, 'class="test"'));
     }
 
     public function testMultiLevelOL()
@@ -171,7 +171,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(ltrim($expected), ol($list));
+        $this->assertSame(ltrim($expected), ol($list));
     }
 
     // ------------------------------------------------------------------------
@@ -180,21 +180,21 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $target   = 'http://site.com/images/picture.jpg';
         $expected = '<img src="http://site.com/images/picture.jpg" alt="" />';
-        $this->assertEquals($expected, img($target));
+        $this->assertSame($expected, img($target));
     }
 
     public function testIMGWithoutProtocol()
     {
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/assets/mugshot.jpg" alt="" />';
-        $this->assertEquals($expected, img($target));
+        $this->assertSame($expected, img($target));
     }
 
     public function testIMGWithIndexpage()
     {
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="" />';
-        $this->assertEquals($expected, img($target, true));
+        $this->assertSame($expected, img($target, true));
     }
 
     // ------------------------------------------------------------------------
@@ -203,14 +203,14 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = 'data:image/gif;base64,' . $this->imgData;
 
-        $this->assertEquals($expected, img_data($this->imgPath));
+        $this->assertSame($expected, img_data($this->imgPath));
     }
 
     public function testImgDataWithMime()
     {
         $expected = 'data:image/png;base64,' . $this->imgData;
 
-        $this->assertEquals($expected, img_data($this->imgPath, 'image/png'));
+        $this->assertSame($expected, img_data($this->imgPath, 'image/png'));
     }
 
     public function testImgDataUnknownMime()
@@ -218,7 +218,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $path   = SUPPORTPATH . 'Validation' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'phpUxc0ty';
         $result = img_data($path);
 
-        $this->assertEquals(0, strpos($result, 'data:image/jpg'));
+        $this->assertSame(0, strpos($result, 'data:image/jpg'));
     }
 
     public function testImgDataNoFile()
@@ -234,21 +234,21 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $target   = 'http://site.com/js/mystyles.js';
         $expected = '<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>';
-        $this->assertEquals($expected, script_tag($target));
+        $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithoutProtocol()
     {
         $target   = 'js/mystyles.js';
         $expected = '<script src="http://example.com/js/mystyles.js" type="text/javascript"></script>';
-        $this->assertEquals($expected, script_tag($target));
+        $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithIndexpage()
     {
         $target   = 'js/mystyles.js';
         $expected = '<script src="http://example.com/index.php/js/mystyles.js" type="text/javascript"></script>';
-        $this->assertEquals($expected, script_tag($target, true));
+        $this->assertSame($expected, script_tag($target, true));
     }
 
     // ------------------------------------------------------------------------
@@ -257,14 +257,14 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $target   = 'css/mystyles.css';
         $expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css" />';
-        $this->assertEquals($expected, link_tag($target));
+        $this->assertSame($expected, link_tag($target));
     }
 
     public function testLinkTagComplete()
     {
         $target   = 'https://styles.com/css/mystyles.css';
         $expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away" />';
-        $this->assertEquals($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
+        $this->assertSame($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
     }
 
     public function testLinkTagArray()
@@ -274,7 +274,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'indexPage' => true,
         ];
         $expected = '<link href="http://example.com/index.php/css/mystyles.css" rel="stylesheet" type="text/css" />';
-        $this->assertEquals($expected, link_tag($parms));
+        $this->assertSame($expected, link_tag($parms));
     }
 
     // ------------------------------------------------------------------------
@@ -283,13 +283,13 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $target   = 'html4-strict';
         $expected = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
-        $this->assertEquals($expected, doctype($target));
+        $this->assertSame($expected, doctype($target));
     }
 
     public function testDocTypeDefault()
     {
         $expected = '<!DOCTYPE html>';
-        $this->assertEquals($expected, doctype());
+        $this->assertSame($expected, doctype());
     }
 
     public function testDocTypeInvalid()
@@ -312,7 +312,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $target  = 'http://www.codeigniter.com/test.mp4';
         $message = 'Your browser does not support the video tag.';
         $video   = video($target, $message, 'controls');
-        $this->assertEquals($expected, $video);
+        $this->assertSame($expected, $video);
     }
 
     public function testVideoWithTracks()
@@ -329,7 +329,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $target  = 'test.mp4';
         $message = 'Your browser does not support the video tag.';
         $video   = video($target, $message, 'controls', $this->tracks);
-        $this->assertEquals($expected, $video);
+        $this->assertSame($expected, $video);
     }
 
     public function testVideoWithTracksAndIndex()
@@ -346,7 +346,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $target  = 'test.mp4';
         $message = 'Your browser does not support the video tag.';
         $video   = video($target, $message, 'controls', $this->tracks, true);
-        $this->assertEquals($expected, $video);
+        $this->assertSame($expected, $video);
     }
 
     public function testVideoMultipleSources()
@@ -373,7 +373,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the video tag.';
         $video   = video($sources, $message, 'class="test" controls', $this->tracks);
 
-        $this->assertEquals($expected, $video);
+        $this->assertSame($expected, $video);
     }
 
     // ------------------------------------------------------------------------
@@ -398,7 +398,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the audio tag.';
         $audio   = audio($sources, $message, 'id="test" controls', $this->tracks);
 
-        $this->assertEquals($expected, $audio);
+        $this->assertSame($expected, $audio);
     }
 
     public function testAudioSimple()
@@ -414,7 +414,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the audio tag.';
         $audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls');
 
-        $this->assertEquals($expected, $audio);
+        $this->assertSame($expected, $audio);
     }
 
     public function testAudioWithSource()
@@ -430,7 +430,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the audio tag.';
         $audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls');
 
-        $this->assertEquals($expected, $audio);
+        $this->assertSame($expected, $audio);
     }
 
     public function testAudioWithIndex()
@@ -446,7 +446,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the audio tag.';
         $audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls', [], true);
 
-        $this->assertEquals($expected, $audio);
+        $this->assertSame($expected, $audio);
     }
 
     public function testAudioWithTracks()
@@ -464,7 +464,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $message = 'Your browser does not support the audio tag.';
         $audio   = audio($source, $message, 'type="audio/mpeg" id="test" controls', $this->tracks);
 
-        $this->assertEquals($expected, $audio);
+        $this->assertSame($expected, $audio);
     }
 
     // ------------------------------------------------------------------------
@@ -476,7 +476,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             </av>
 
             EOH;
-        $this->assertEquals($expected, _media('av'));
+        $this->assertSame($expected, _media('av'));
     }
 
     public function testMediaWithSources()
@@ -492,13 +492,13 @@ final class HTMLHelperTest extends CIUnitTestCase
             source('sound.ogg', 'audio/ogg'),
             source('sound.mpeg', 'audio/mpeg'),
         ];
-        $this->assertEquals($expected, _media('av', $sources));
+        $this->assertSame($expected, _media('av', $sources));
     }
 
     public function testSource()
     {
         $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" />';
-        $this->assertEquals($expected, source('sound.mpeg', 'audio/mpeg', '', true));
+        $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
     }
 
     // ------------------------------------------------------------------------
@@ -512,7 +512,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $type  = 'video/quicktime';
         $embed = embed('movie.mov', $type, 'class="test"');
-        $this->assertEquals($expected, $embed);
+        $this->assertSame($expected, $embed);
     }
 
     public function testEmbedIndexed()
@@ -524,7 +524,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $type  = 'video/quicktime';
         $embed = embed('movie.mov', $type, 'class="test"', true);
-        $this->assertEquals($expected, $embed, '');
+        $this->assertSame($expected, $embed, '');
     }
 
     public function testObject()
@@ -537,7 +537,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $type   = 'application/x-shockwave-flash';
         $object = object('movie.swf', $type, 'class="test"');
 
-        $this->assertEquals($expected, $object);
+        $this->assertSame($expected, $object);
     }
 
     public function testObjectWithParams()
@@ -556,7 +556,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             param('hello', 'world', 'ref', 'class="test"'),
         ];
         $object = object('movie.swf', $type, 'class="test"', $parms);
-        $this->assertEquals($expected, $object);
+        $this->assertSame($expected, $object);
     }
 
     public function testObjectIndexed()
@@ -569,7 +569,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $type   = 'application/x-shockwave-flash';
         $object = object('movie.swf', $type, 'class="test"', [], true);
 
-        $this->assertEquals($expected, $object);
+        $this->assertSame($expected, $object);
     }
 
     // ------------------------------------------------------------------------

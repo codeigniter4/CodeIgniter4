@@ -32,7 +32,7 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -45,7 +45,7 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -58,7 +58,7 @@ final class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

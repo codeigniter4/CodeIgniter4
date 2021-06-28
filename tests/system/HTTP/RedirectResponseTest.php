@@ -49,7 +49,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response = $response->to('http://example.com/foo');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/foo', $response->getHeaderLine('Location'));
     }
 
     //--------------------------------------------------------------------
@@ -63,14 +63,14 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response->route('exampleRoute');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertEquals('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
 
         $this->routes->add('exampleRoute', 'Home::index', ['as' => 'home']);
 
         $response->route('home');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertEquals('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
     }
 
     public function testRedirectRouteBad()
@@ -93,7 +93,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response = $response->to('/foo');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertEquals('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
     }
 
     //--------------------------------------------------------------------
@@ -114,8 +114,8 @@ final class RedirectResponseTest extends CIUnitTestCase
 
         $this->assertSame($response, $returned);
         $this->assertArrayHasKey('_ci_old_input', $_SESSION);
-        $this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
-        $this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
+        $this->assertSame('bar', $_SESSION['_ci_old_input']['get']['foo']);
+        $this->assertSame('baz', $_SESSION['_ci_old_input']['post']['bar']);
     }
 
     //--------------------------------------------------------------------
@@ -173,7 +173,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response = new RedirectResponse(new App());
 
         $returned = $response->back();
-        $this->assertEquals('http://somewhere.com', $returned->header('location')->getValue());
+        $this->assertSame('http://somewhere.com', $returned->header('location')->getValue());
     }
 
     /**
@@ -213,7 +213,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response->route('exampleRoute');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertEquals('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/test/index.php/exampleRoute', $response->getHeaderLine('Location'));
 
         Factories::reset('config');
     }
@@ -260,7 +260,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
         foreach ($baseResponse->headers() as $name => $header) {
             $this->assertTrue($response->hasHeader($name));
-            $this->assertEquals($header->getValue(), $response->header($name)->getValue());
+            $this->assertSame($header->getValue(), $response->header($name)->getValue());
         }
     }
 

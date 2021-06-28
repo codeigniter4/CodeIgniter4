@@ -34,8 +34,6 @@ final class CURLRequestTest extends CIUnitTestCase
         return new MockCURLRequest(($app = new App()), $uri, new Response($app), $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4707
      */
@@ -43,31 +41,25 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         config('App')->baseURL = 'http://example.com/fruit/';
 
-        $request = $this->getRequest([
-            'base_uri' => 'http://example.com/v1/',
-        ]);
+        $request = $this->getRequest(['base_uri' => 'http://example.com/v1/']);
 
         $method = $this->getPrivateMethodInvoker($request, 'prepareURL');
 
-        $this->assertEquals('http://example.com/v1/bananas', $method('bananas'));
+        $this->assertSame('http://example.com/v1/bananas', $method('bananas'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */
     public function testGetRemembersBaseURI()
     {
-        $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ]);
+        $request = $this->getRequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
         $request->get('products');
 
         $options = $request->curl_options;
 
-        $this->assertEquals('http://www.foo.com/api/v1/products', $options[CURLOPT_URL]);
+        $this->assertSame('http://www.foo.com/api/v1/products', $options[CURLOPT_URL]);
     }
 
     /**
@@ -75,94 +67,77 @@ final class CURLRequestTest extends CIUnitTestCase
      */
     public function testGetRemembersBaseURIWithHelperMethod()
     {
-        $request = Services::curlrequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ]);
+        $request = Services::curlrequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
         $uri = $this->getPrivateProperty($request, 'baseURI');
-        $this->assertEquals('www.foo.com', $uri->getHost());
-        $this->assertEquals('/api/v1/', $uri->getPath());
+        $this->assertSame('www.foo.com', $uri->getHost());
+        $this->assertSame('/api/v1/', $uri->getPath());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSendReturnsResponse()
     {
         $output = 'Howdy Stranger.';
 
-        $response = $this->request->setOutput($output)
-            ->send('get', 'http://example.com');
+        $response = $this->request->setOutput($output)->send('get', 'http://example.com');
 
         $this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
-        $this->assertEquals($output, $response->getBody());
+        $this->assertSame($output, $response->getBody());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetSetsCorrectMethod()
     {
         $this->request->get('http://example.com');
 
-        $this->assertEquals('get', $this->request->getMethod());
+        $this->assertSame('get', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('GET', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('GET', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDeleteSetsCorrectMethod()
     {
         $this->request->delete('http://example.com');
 
-        $this->assertEquals('delete', $this->request->getMethod());
+        $this->assertSame('delete', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testHeadSetsCorrectMethod()
     {
         $this->request->head('http://example.com');
 
-        $this->assertEquals('head', $this->request->getMethod());
+        $this->assertSame('head', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOptionsSetsCorrectMethod()
     {
         $this->request->options('http://example.com');
 
-        $this->assertEquals('options', $this->request->getMethod());
+        $this->assertSame('options', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOptionsBaseURIOption()
     {
-        $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ];
+        $options = ['base_uri' => 'http://www.foo.com/api/v1/'];
         $request = $this->getRequest($options);
 
-        $this->assertEquals('http://www.foo.com/api/v1/', $request->getBaseURI());
+        $this->assertSame('http://www.foo.com/api/v1/', $request->getBaseURI()->__toString());
     }
 
     public function testOptionsBaseURIOverride()
@@ -173,10 +148,8 @@ final class CURLRequestTest extends CIUnitTestCase
         ];
         $request = $this->getRequest($options);
 
-        $this->assertEquals('http://bogus/com', $request->getBaseURI());
+        $this->assertSame('http://bogus/com', $request->getBaseURI()->__toString());
     }
-
-    //--------------------------------------------------------------------
 
     public function testOptionsHeaders()
     {
@@ -188,10 +161,8 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertNull($request->header('fruit'));
 
         $request = $this->getRequest($options);
-        $this->assertEquals('apple', $request->header('fruit')->getValue());
+        $this->assertSame('apple', $request->header('fruit')->getValue());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @backupGlobals enabled
@@ -209,7 +180,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $request = $this->getRequest($options);
         $request->get('example');
         // we fill the Accept-Language header from _SERVER when no headers are defined for the request
-        $this->assertEquals('en-US', $request->header('Accept-Language')->getValue());
+        $this->assertSame('en-US', $request->header('Accept-Language')->getValue());
         // but we skip Host header - since it would corrupt the request
         $this->assertNull($request->header('Host'));
         // and Accept-Encoding
@@ -236,11 +207,9 @@ final class CURLRequestTest extends CIUnitTestCase
         $request->get('example');
         // if headers for the request are defined we use them
         $this->assertNull($request->header('Accept-Language'));
-        $this->assertEquals('www.foo.com', $request->header('Host')->getValue());
-        $this->assertEquals('', $request->header('Accept-Encoding')->getValue());
+        $this->assertSame('www.foo.com', $request->header('Host')->getValue());
+        $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
-
-    //--------------------------------------------------------------------
 
     public function testOptionsDelay()
     {
@@ -249,83 +218,71 @@ final class CURLRequestTest extends CIUnitTestCase
             'headers' => ['fruit' => 'apple'],
         ];
         $request = $this->getRequest();
-        $this->assertEquals(0.0, $request->getDelay());
+        $this->assertSame(0.0, $request->getDelay());
 
         $request = $this->getRequest($options);
-        $this->assertEquals(2.0, $request->getDelay());
+        $this->assertSame(2.0, $request->getDelay());
     }
-
-    //--------------------------------------------------------------------
 
     public function testPatchSetsCorrectMethod()
     {
         $this->request->patch('http://example.com');
 
-        $this->assertEquals('patch', $this->request->getMethod());
+        $this->assertSame('patch', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testPostSetsCorrectMethod()
     {
         $this->request->post('http://example.com');
 
-        $this->assertEquals('post', $this->request->getMethod());
+        $this->assertSame('post', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('POST', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('POST', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testPutSetsCorrectMethod()
     {
         $this->request->put('http://example.com');
 
-        $this->assertEquals('put', $this->request->getMethod());
+        $this->assertSame('put', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('PUT', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('PUT', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCustomMethodSetsCorrectMethod()
     {
         $this->request->request('custom', 'http://example.com');
 
-        $this->assertEquals('custom', $this->request->getMethod());
+        $this->assertSame('custom', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRequestMethodGetsSanitized()
     {
         $this->request->request('<script>Custom</script>', 'http://example.com');
 
-        $this->assertEquals('custom', $this->request->getMethod());
+        $this->assertSame('custom', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CUSTOMREQUEST, $options);
-        $this->assertEquals('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
+        $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRequestSetsBasicCurlOptions()
     {
@@ -334,7 +291,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_URL, $options);
-        $this->assertEquals('http://example.com', $options[CURLOPT_URL]);
+        $this->assertSame('http://example.com', $options[CURLOPT_URL]);
 
         $this->assertArrayHasKey(CURLOPT_RETURNTRANSFER, $options);
         $this->assertTrue($options[CURLOPT_RETURNTRANSFER]);
@@ -346,13 +303,11 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
 
         $this->assertArrayHasKey(CURLOPT_TIMEOUT_MS, $options);
-        $this->assertEquals(0.0, $options[CURLOPT_TIMEOUT_MS]);
+        $this->assertSame(0.0, $options[CURLOPT_TIMEOUT_MS]);
 
         $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT_MS, $options);
-        $this->assertEquals(150 * 1000, $options[CURLOPT_CONNECTTIMEOUT_MS]);
+        $this->assertSame(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAuthBasicOption()
     {
@@ -366,13 +321,11 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
-        $this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
+        $this->assertSame('username:password', $options[CURLOPT_USERPWD]);
 
         $this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
-        $this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
+        $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAuthBasicOptionExplicit()
     {
@@ -387,13 +340,11 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
-        $this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
+        $this->assertSame('username:password', $options[CURLOPT_USERPWD]);
 
         $this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
-        $this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
+        $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAuthDigestOption()
     {
@@ -425,17 +376,15 @@ final class CURLRequestTest extends CIUnitTestCase
 
         $options = $this->request->curl_options;
 
-        $this->assertEquals('<title>Update success! config</title>', $response->getBody());
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame('<title>Update success! config</title>', $response->getBody());
+        $this->assertSame(200, $response->getStatusCode());
 
         $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
-        $this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
+        $this->assertSame('username:password', $options[CURLOPT_USERPWD]);
 
         $this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
-        $this->assertEquals(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
+        $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetAuthBasic()
     {
@@ -444,10 +393,10 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
-        $this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
+        $this->assertSame('username:password', $options[CURLOPT_USERPWD]);
 
         $this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
-        $this->assertEquals(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
+        $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
     public function testSetAuthDigest()
@@ -474,17 +423,15 @@ final class CURLRequestTest extends CIUnitTestCase
 
         $options = $this->request->curl_options;
 
-        $this->assertEquals('<title>Update success! config</title>', $response->getBody());
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame('<title>Update success! config</title>', $response->getBody());
+        $this->assertSame(200, $response->getStatusCode());
 
         $this->assertArrayHasKey(CURLOPT_USERPWD, $options);
-        $this->assertEquals('username:password', $options[CURLOPT_USERPWD]);
+        $this->assertSame('username:password', $options[CURLOPT_USERPWD]);
 
         $this->assertArrayHasKey(CURLOPT_HTTPAUTH, $options);
-        $this->assertEquals(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
+        $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCertOption()
     {
@@ -497,7 +444,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_SSLCERT, $options);
-        $this->assertEquals($file, $options[CURLOPT_SSLCERT]);
+        $this->assertSame($file, $options[CURLOPT_SSLCERT]);
     }
 
     public function testCertOptionWithPassword()
@@ -514,10 +461,10 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_SSLCERT, $options);
-        $this->assertEquals($file, $options[CURLOPT_SSLCERT]);
+        $this->assertSame($file, $options[CURLOPT_SSLCERT]);
 
         $this->assertArrayHasKey(CURLOPT_SSLCERTPASSWD, $options);
-        $this->assertEquals('password', $options[CURLOPT_SSLCERTPASSWD]);
+        $this->assertSame('password', $options[CURLOPT_SSLCERTPASSWD]);
     }
 
     public function testMissingCertOption()
@@ -529,8 +476,6 @@ final class CURLRequestTest extends CIUnitTestCase
             'cert' => $file,
         ]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSSLVerification()
     {
@@ -544,10 +489,10 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_CAINFO, $options);
-        $this->assertEquals($file, $options[CURLOPT_CAINFO]);
+        $this->assertSame($file, $options[CURLOPT_CAINFO]);
 
         $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
-        $this->assertEquals(1, $options[CURLOPT_SSL_VERIFYPEER]);
+        $this->assertSame(1, $options[CURLOPT_SSL_VERIFYPEER]);
     }
 
     public function testSSLWithBadKey()
@@ -561,8 +506,6 @@ final class CURLRequestTest extends CIUnitTestCase
         ]);
     }
 
-    //--------------------------------------------------------------------
-
     public function testDebugOptionTrue()
     {
         $this->request->request('get', 'http://example.com', [
@@ -572,7 +515,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_VERBOSE, $options);
-        $this->assertEquals(1, $options[CURLOPT_VERBOSE]);
+        $this->assertSame(1, $options[CURLOPT_VERBOSE]);
 
         $this->assertArrayHasKey(CURLOPT_STDERR, $options);
         $this->assertIsResource($options[CURLOPT_STDERR]);
@@ -601,13 +544,11 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_VERBOSE, $options);
-        $this->assertEquals(1, $options[CURLOPT_VERBOSE]);
+        $this->assertSame(1, $options[CURLOPT_VERBOSE]);
 
         $this->assertArrayHasKey(CURLOPT_STDERR, $options);
         $this->assertIsResource($options[CURLOPT_STDERR]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDecodeContent()
     {
@@ -619,7 +560,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_ENCODING, $options);
-        $this->assertEquals('cobol', $options[CURLOPT_ENCODING]);
+        $this->assertSame('cobol', $options[CURLOPT_ENCODING]);
     }
 
     public function testDecodeContentWithoutAccept()
@@ -632,12 +573,10 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_ENCODING, $options);
-        $this->assertEquals('', $options[CURLOPT_ENCODING]);
+        $this->assertSame('', $options[CURLOPT_ENCODING]);
         $this->assertArrayHasKey(CURLOPT_HTTPHEADER, $options);
-        $this->assertEquals('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
+        $this->assertSame('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAllowRedirectsOptionFalse()
     {
@@ -648,7 +587,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
-        $this->assertEquals(0, $options[CURLOPT_FOLLOWLOCATION]);
+        $this->assertSame(0, $options[CURLOPT_FOLLOWLOCATION]);
 
         $this->assertArrayNotHasKey(CURLOPT_MAXREDIRS, $options);
         $this->assertArrayNotHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
@@ -663,12 +602,12 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
-        $this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
+        $this->assertSame(1, $options[CURLOPT_FOLLOWLOCATION]);
 
         $this->assertArrayHasKey(CURLOPT_MAXREDIRS, $options);
-        $this->assertEquals(5, $options[CURLOPT_MAXREDIRS]);
+        $this->assertSame(5, $options[CURLOPT_MAXREDIRS]);
         $this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
-        $this->assertEquals(CURLPROTO_HTTP | CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
+        $this->assertSame(CURLPROTO_HTTP | CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
     }
 
     public function testAllowRedirectsOptionDefaults()
@@ -680,7 +619,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
-        $this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
+        $this->assertSame(1, $options[CURLOPT_FOLLOWLOCATION]);
 
         $this->assertArrayHasKey(CURLOPT_MAXREDIRS, $options);
         $this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
@@ -695,13 +634,11 @@ final class CURLRequestTest extends CIUnitTestCase
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_FOLLOWLOCATION, $options);
-        $this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
+        $this->assertSame(1, $options[CURLOPT_FOLLOWLOCATION]);
 
         $this->assertArrayHasKey(CURLOPT_MAXREDIRS, $options);
-        $this->assertEquals(2, $options[CURLOPT_MAXREDIRS]);
+        $this->assertSame(2, $options[CURLOPT_MAXREDIRS]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSendWithQuery()
     {
@@ -717,7 +654,7 @@ final class CURLRequestTest extends CIUnitTestCase
 
         $options = $request->curl_options;
 
-        $this->assertEquals('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
+        $this->assertSame('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
     }
 
     //--------------------------------------------------------------------
@@ -731,7 +668,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $request->get('products');
 
         // we still need to check the code coverage to make sure this was done
-        $this->assertEquals(1.0, $request->getDelay());
+        $this->assertSame(1.0, $request->getDelay());
     }
 
     //--------------------------------------------------------------------
@@ -744,7 +681,7 @@ final class CURLRequestTest extends CIUnitTestCase
 
         $request->setOutput("HTTP/1.1 100 Continue\x0d\x0a\x0d\x0aHi there");
         $response = $request->get('answer');
-        $this->assertEquals('Hi there', $response->getBody());
+        $this->assertSame('Hi there', $response->getBody());
     }
 
     /**
@@ -775,7 +712,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $request->setOutput($output);
         $response = $request->get('answer');
 
-        $this->assertEquals('<title>Update success! config</title>', $response->getBody());
+        $this->assertSame('<title>Update success! config</title>', $response->getBody());
 
         $responseHeaderKeys = [
             'Cache-control',
@@ -789,9 +726,9 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'Pragma',
             'Transfer-Encoding',
         ];
-        $this->assertEquals($responseHeaderKeys, array_keys($response->headers()));
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     //--------------------------------------------------------------------
@@ -804,7 +741,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $request->setOutput("Accept: text/html\x0d\x0a\x0d\x0aHi there");
         $response = $request->get('answer');
-        $this->assertEquals('Hi there', $response->getBody());
+        $this->assertSame('Hi there', $response->getBody());
     }
 
     //--------------------------------------------------------------------
@@ -819,8 +756,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $request->setOutput('Hi there');
         $response = $request->post('answer');
 
-        $this->assertEquals('Hi there', $response->getBody());
-        $this->assertEquals('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('Hi there', $response->getBody());
+        $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
     //--------------------------------------------------------------------
@@ -834,8 +771,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $request->setOutput("HTTP/2.0 234 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there");
         $response = $request->get('bogus');
 
-        $this->assertEquals('2.0', $response->getProtocolVersion());
-        $this->assertEquals(234, $response->getStatusCode());
+        $this->assertSame('2.0', $response->getProtocolVersion());
+        $this->assertSame(234, $response->getStatusCode());
     }
 
     public function testResponseHeadersShortProtocol()
@@ -848,11 +785,9 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $request->setOutput("HTTP/2 235 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there shortie");
         $response = $request->get('bogus');
 
-        $this->assertEquals('2.0', $response->getProtocolVersion());
-        $this->assertEquals(235, $response->getStatusCode());
+        $this->assertSame('2.0', $response->getProtocolVersion());
+        $this->assertSame(235, $response->getStatusCode());
     }
-
-    //--------------------------------------------------------------------
 
     public function testPostFormEncoded()
     {
@@ -867,13 +802,13 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'form_params' => $params,
         ]);
 
-        $this->assertEquals('post', $this->request->getMethod());
+        $this->assertSame('post', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $expected = http_build_query($params);
         $this->assertArrayHasKey(CURLOPT_POSTFIELDS, $options);
-        $this->assertEquals($expected, $options[CURLOPT_POSTFIELDS]);
+        $this->assertSame($expected, $options[CURLOPT_POSTFIELDS]);
     }
 
     public function testPostFormMultipart()
@@ -890,15 +825,13 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'multipart' => $params,
         ]);
 
-        $this->assertEquals('post', $this->request->getMethod());
+        $this->assertSame('post', $this->request->getMethod());
 
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_POSTFIELDS, $options);
-        $this->assertEquals($params, $options[CURLOPT_POSTFIELDS]);
+        $this->assertSame($params, $options[CURLOPT_POSTFIELDS]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetForm()
     {
@@ -912,7 +845,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $this->request->setForm($params)->post('/post');
 
-        $this->assertEquals(
+        $this->assertSame(
             http_build_query($params),
             $this->request->curl_options[CURLOPT_POSTFIELDS]
         );
@@ -921,13 +854,11 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
 
         $this->request->setForm($params, true)->post('/post');
 
-        $this->assertEquals(
+        $this->assertSame(
             $params,
             $this->request->curl_options[CURLOPT_POSTFIELDS]
         );
     }
-
-    //--------------------------------------------------------------------
 
     public function testJSONData()
     {
@@ -942,13 +873,11 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
             'json' => $params,
         ]);
 
-        $this->assertEquals('post', $this->request->getMethod());
+        $this->assertSame('post', $this->request->getMethod());
 
         $expected = json_encode($params);
-        $this->assertEquals($expected, $this->request->getBody());
+        $this->assertSame($expected, $this->request->getBody());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetJSON()
     {
@@ -961,11 +890,9 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         ];
         $this->request->setJSON($params)->post('/post');
 
-        $this->assertEquals(json_encode($params), $this->request->getBody());
-        $this->assertEquals('application/json', $this->request->getHeaderLine('Content-Type'));
+        $this->assertSame(json_encode($params), $this->request->getBody());
+        $this->assertSame('application/json', $this->request->getHeaderLine('Content-Type'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHTTPv1()
     {
@@ -976,7 +903,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
-        $this->assertEquals(CURL_HTTP_VERSION_1_0, $options[CURLOPT_HTTP_VERSION]);
+        $this->assertSame(CURL_HTTP_VERSION_1_0, $options[CURLOPT_HTTP_VERSION]);
     }
 
     public function testHTTPv11()
@@ -988,10 +915,8 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
-        $this->assertEquals(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
+        $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCookieOption()
     {
@@ -1003,9 +928,9 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_COOKIEJAR, $options);
-        $this->assertEquals($holder, $options[CURLOPT_COOKIEJAR]);
+        $this->assertSame($holder, $options[CURLOPT_COOKIEJAR]);
         $this->assertArrayHasKey(CURLOPT_COOKIEFILE, $options);
-        $this->assertEquals($holder, $options[CURLOPT_COOKIEFILE]);
+        $this->assertSame($holder, $options[CURLOPT_COOKIEFILE]);
     }
 
     public function testUserAgentOption()
@@ -1019,6 +944,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $options = $this->request->curl_options;
 
         $this->assertArrayHasKey(CURLOPT_USERAGENT, $options);
-        $this->assertEquals($agent, $options[CURLOPT_USERAGENT]);
+        $this->assertSame($agent, $options[CURLOPT_USERAGENT]);
     }
 }

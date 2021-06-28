@@ -30,7 +30,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testFormatXMLWithMultilevelArray()
@@ -45,7 +45,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testFormatXMLWithMultilevelArrayAndNumericKey()
@@ -60,7 +60,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testStringFormatting()
@@ -72,7 +72,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testValidatingXmlTags()
@@ -87,7 +87,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     /**
@@ -104,7 +104,7 @@ final class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expectedXML, $this->xmlFormatter->format($input));
+        $this->assertSame($expectedXML, $this->xmlFormatter->format($input));
     }
 
     public function invalidTagsProvider()
@@ -217,6 +217,6 @@ final class XMLFormatterTest extends CIUnitTestCase
         $dom->formatOutput       = true;
         $dom->loadXML($this->xmlFormatter->format($data));
 
-        $this->assertEquals($expectedXML, $dom->saveXML());
+        $this->assertSame($expectedXML, $dom->saveXML());
     }
 }

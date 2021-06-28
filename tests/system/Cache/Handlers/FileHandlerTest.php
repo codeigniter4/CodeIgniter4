@@ -250,7 +250,7 @@ final class FileHandlerTest extends CIUnitTestCase
 
         $actual = $this->fileHandler->getCacheInfo();
         $this->assertArrayHasKey(self::$key1, $actual);
-        $this->assertEquals(self::$key1, $actual[self::$key1]['name']);
+        $this->assertSame(self::$key1, $actual[self::$key1]['name']);
         $this->assertArrayHasKey('server_path', $actual[self::$key1]);
     }
 
@@ -276,7 +276,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
         $mode = octal_permissions(fileperms($file));
 
-        $this->assertEquals($string, $mode);
+        $this->assertSame($string, $mode);
     }
 
     public function modeProvider()

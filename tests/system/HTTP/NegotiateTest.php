@@ -46,13 +46,13 @@ final class NegotiateTest extends CIUnitTestCase
         $this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
         $this->negotiate->setRequest($this->request);
 
-        $this->assertEquals('text/html', $this->negotiate->media(['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
-        $this->assertEquals('text/x-c', $this->negotiate->media(['text/x-c', 'text/x-dvi', 'text/plain']));
-        $this->assertEquals('text/x-dvi', $this->negotiate->media(['text/plain', 'text/x-dvi']));
-        $this->assertEquals('text/x-dvi', $this->negotiate->media(['text/x-dvi']));
+        $this->assertSame('text/html', $this->negotiate->media(['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+        $this->assertSame('text/x-c', $this->negotiate->media(['text/x-c', 'text/x-dvi', 'text/plain']));
+        $this->assertSame('text/x-dvi', $this->negotiate->media(['text/plain', 'text/x-dvi']));
+        $this->assertSame('text/x-dvi', $this->negotiate->media(['text/x-dvi']));
 
         // No matches? Return the first that we support...
-        $this->assertEquals('text/md', $this->negotiate->media(['text/md']));
+        $this->assertSame('text/md', $this->negotiate->media(['text/md']));
     }
 
     //--------------------------------------------------------------------
@@ -61,10 +61,10 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $header = $this->negotiate->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
 
-        $this->assertEquals('text/plain', $header[0]['value']);
-        $this->assertEquals('flowed', $header[0]['params']['format']);
-        $this->assertEquals('text/plain', $header[1]['value']);
-        $this->assertEquals('*/*', $header[3]['value']);
+        $this->assertSame('text/plain', $header[0]['value']);
+        $this->assertSame('flowed', $header[0]['params']['format']);
+        $this->assertSame('text/plain', $header[1]['value']);
+        $this->assertSame('*/*', $header[3]['value']);
     }
 
     //--------------------------------------------------------------------
@@ -73,7 +73,7 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept', 'image/*, text/*');
 
-        $this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
+        $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
     }
 
     //--------------------------------------------------------------------
@@ -83,7 +83,7 @@ final class NegotiateTest extends CIUnitTestCase
         // Image has a higher specificity, but is the wrong type...
         $this->request->setHeader('Accept', 'text/*, image/jpeg');
 
-        $this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
+        $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
     }
 
     //--------------------------------------------------------------------
@@ -93,8 +93,8 @@ final class NegotiateTest extends CIUnitTestCase
         // Image has a higher specificity, but is the wrong type...
         $this->request->setHeader('Accept', 'text/md, image/jpeg');
 
-        $this->assertEquals('text/plain', $this->negotiate->media(['text/plain']));
-        $this->assertEquals('', $this->negotiate->media(['text/plain'], true));
+        $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
+        $this->assertSame('', $this->negotiate->media(['text/plain'], true));
     }
 
     //--------------------------------------------------------------------
@@ -106,18 +106,18 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-        $this->assertEquals('iso-8859-5', $this->negotiate->charset(['iso-8859-5', 'unicode-1-1']));
-        $this->assertEquals('unicode-1-1', $this->negotiate->charset(['utf-8', 'unicode-1-1']));
+        $this->assertSame('iso-8859-5', $this->negotiate->charset(['iso-8859-5', 'unicode-1-1']));
+        $this->assertSame('unicode-1-1', $this->negotiate->charset(['utf-8', 'unicode-1-1']));
 
         // No match will default to utf-8
-        $this->assertEquals('utf-8', $this->negotiate->charset(['iso-8859', 'unicode-1-2']));
+        $this->assertSame('utf-8', $this->negotiate->charset(['iso-8859', 'unicode-1-2']));
     }
 
     //--------------------------------------------------------------------
 
     public function testNegotiateEncodingReturnsFirstIfNoAcceptHeaderExists()
     {
-        $this->assertEquals('compress', $this->negotiate->encoding(['compress', 'gzip']));
+        $this->assertSame('compress', $this->negotiate->encoding(['compress', 'gzip']));
     }
 
     //--------------------------------------------------------------------
@@ -126,9 +126,9 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept-Encoding', 'gzip;q=1.0, identity; q=0.4, compress;q=0.5');
 
-        $this->assertEquals('gzip', $this->negotiate->encoding(['gzip', 'compress']));
-        $this->assertEquals('compress', $this->negotiate->encoding(['compress']));
-        $this->assertEquals('identity', $this->negotiate->encoding());
+        $this->assertSame('gzip', $this->negotiate->encoding(['gzip', 'compress']));
+        $this->assertSame('compress', $this->negotiate->encoding(['compress']));
+        $this->assertSame('identity', $this->negotiate->encoding());
     }
 
     //--------------------------------------------------------------------
@@ -137,9 +137,9 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
 
-        $this->assertEquals('da', $this->negotiate->language(['da', 'en']));
-        $this->assertEquals('en-gb', $this->negotiate->language(['en-gb', 'en']));
-        $this->assertEquals('en', $this->negotiate->language(['en']));
+        $this->assertSame('da', $this->negotiate->language(['da', 'en']));
+        $this->assertSame('en-gb', $this->negotiate->language(['en-gb', 'en']));
+        $this->assertSame('en', $this->negotiate->language(['en']));
     }
 
     //--------------------------------------------------------------------
@@ -151,7 +151,7 @@ final class NegotiateTest extends CIUnitTestCase
     {
         $this->request->setHeader('Accept-Language', 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7');
 
-        $this->assertEquals('fr', $this->negotiate->language(['fr', 'en']));
+        $this->assertSame('fr', $this->negotiate->language(['fr', 'en']));
     }
 
     public function testBestMatchEmpty()
@@ -163,42 +163,42 @@ final class NegotiateTest extends CIUnitTestCase
     public function testBestMatchNoHeader()
     {
         $this->request->setHeader('Accept', '');
-        $this->assertEquals('', $this->negotiate->media(['apple', 'banana'], true));
-        $this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
+        $this->assertSame('', $this->negotiate->media(['apple', 'banana'], true));
+        $this->assertSame('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
     }
 
     public function testBestMatchNotAcceptable()
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar');
-        $this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
-        $this->assertEquals('banana/yellow', $this->negotiate->media(['banana/yellow', 'apple/mac'], false));
+        $this->assertSame('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
+        $this->assertSame('banana/yellow', $this->negotiate->media(['banana/yellow', 'apple/mac'], false));
     }
 
     public function testBestMatchFirstSupported()
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar, */*');
-        $this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
+        $this->assertSame('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
     }
 
     public function testBestMatchLowQuality()
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar;q=0, apple/mac, */*');
-        $this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
-        $this->assertEquals('apple/mac', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
+        $this->assertSame('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
+        $this->assertSame('apple/mac', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
     }
 
     public function testBestMatchOnlyLowQuality()
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar;q=0');
         // the first supported should be returned, since nothing will make us happy
-        $this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
-        $this->assertEquals('popcorn/cheddar', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
+        $this->assertSame('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'], false));
+        $this->assertSame('popcorn/cheddar', $this->negotiate->media(['popcorn/cheddar', 'apple/mac'], false));
     }
 
     public function testParameterMatching()
     {
         $this->request->setHeader('Accept', 'popcorn/cheddar;a=0;b=1');
-        $this->assertEquals('popcorn/cheddar;a=2', $this->negotiate->media(['popcorn/cheddar;a=2'], false));
-        $this->assertEquals('popcorn/cheddar;a=0', $this->negotiate->media(['popcorn/cheddar;a=0', 'popcorn/cheddar;a=2;b=1'], false));
+        $this->assertSame('popcorn/cheddar;a=2', $this->negotiate->media(['popcorn/cheddar;a=2'], false));
+        $this->assertSame('popcorn/cheddar;a=0', $this->negotiate->media(['popcorn/cheddar;a=0', 'popcorn/cheddar;a=2;b=1'], false));
     }
 }

@@ -26,7 +26,7 @@ final class DOMParserTest extends CIUnitTestCase
         $expected = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">' . "\n"
                 . '<html><body><div><h1>Hello</h1></div></body></html>';
 
-        $this->assertEquals($expected . "\n", $dom->withString($html)->getBody());
+        $this->assertSame($expected . "\n", $dom->withString($html)->getBody());
     }
 
     public function testParseSelectorWithID()
@@ -35,8 +35,8 @@ final class DOMParserTest extends CIUnitTestCase
 
         $selector = $dom->parseSelector('div#row');
 
-        $this->assertEquals('div', $selector['tag']);
-        $this->assertEquals('row', $selector['id']);
+        $this->assertSame('div', $selector['tag']);
+        $this->assertSame('row', $selector['id']);
     }
 
     public function testParseSelectorWithClass()
@@ -45,8 +45,8 @@ final class DOMParserTest extends CIUnitTestCase
 
         $selector = $dom->parseSelector('div.row');
 
-        $this->assertEquals('div', $selector['tag']);
-        $this->assertEquals('row', $selector['class']);
+        $this->assertSame('div', $selector['tag']);
+        $this->assertSame('row', $selector['class']);
     }
 
     public function testParseSelectorWithClassMultiple()
@@ -55,9 +55,9 @@ final class DOMParserTest extends CIUnitTestCase
 
         $selector = $dom->parseSelector('div.row.another');
 
-        $this->assertEquals('div', $selector['tag']);
+        $this->assertSame('div', $selector['tag']);
         // Only parses the first class
-        $this->assertEquals('row', $selector['class']);
+        $this->assertSame('row', $selector['class']);
     }
 
     public function testParseSelectorWithAttribute()
@@ -66,8 +66,8 @@ final class DOMParserTest extends CIUnitTestCase
 
         $selector = $dom->parseSelector('a[ href = http://example.com ]');
 
-        $this->assertEquals('a', $selector['tag']);
-        $this->assertEquals(['href' => 'http://example.com'], $selector['attr']);
+        $this->assertSame('a', $selector['tag']);
+        $this->assertSame(['href' => 'http://example.com'], $selector['attr']);
     }
 
     public function provideText()
@@ -394,7 +394,7 @@ final class DOMParserTest extends CIUnitTestCase
         $path     = '[ name = user ]';
         $selector = $dom->parseSelector($path);
 
-        $this->assertEquals(['name' => 'user'], $selector['attr']);
+        $this->assertSame(['name' => 'user'], $selector['attr']);
 
         $html = '<html><body><div name="user">George</div></body></html>';
         $dom->withString($html);

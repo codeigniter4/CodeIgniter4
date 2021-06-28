@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeIgniter;
+namespace CodeIgniter\Entity;
 
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
@@ -9,6 +9,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use ReflectionException;
+use stdClass;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
@@ -27,10 +28,8 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->foo = 'to wong';
 
-        $this->assertEquals('to wong', $entity->foo);
+        $this->assertSame('to wong', $entity->foo);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetterSetters()
     {
@@ -38,18 +37,18 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->bar = 'thanks';
 
-        $this->assertEquals('bar:thanks:bar', $entity->bar);
+        $this->assertSame('bar:thanks:bar', $entity->bar);
     }
 
     public function testUnsetUnsetsAttribute()
     {
         $entity = $this->getEntity();
 
-        $this->assertEquals('sumfin', $entity->default);
+        $this->assertSame('sumfin', $entity->default);
 
         $entity->default = 'else';
 
-        $this->assertEquals('else', $entity->default);
+        $this->assertSame('else', $entity->default);
 
         unset($entity->default);
 
@@ -67,8 +66,6 @@ final class EntityTest extends CIUnitTestCase
         $this->assertTrue(isset($attributes['default']));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFill()
     {
         $entity = $this->getEntity();
@@ -79,8 +76,8 @@ final class EntityTest extends CIUnitTestCase
             'baz' => 4556,
         ]);
 
-        $this->assertEquals(123, $entity->foo);
-        $this->assertEquals('bar:234:bar', $entity->bar);
+        $this->assertSame(123, $entity->foo);
+        $this->assertSame('bar:234:bar', $entity->bar);
         $this->assertObjectNotHasAttribute('baz', $entity);
     }
 
@@ -97,11 +94,9 @@ final class EntityTest extends CIUnitTestCase
         ];
         $entity->fill($data);
 
-        $this->assertEquals('foo', $entity->bar);
-        $this->assertEquals('oo:simple:oo', $entity->orig);
+        $this->assertSame('foo', $entity->bar);
+        $this->assertSame('oo:simple:oo', $entity->orig);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDataMappingConvertsOriginalName()
     {
@@ -110,11 +105,11 @@ final class EntityTest extends CIUnitTestCase
         $entity->bar = 'made it';
 
         // Check mapped field
-        $this->assertEquals('made it', $entity->foo);
+        $this->assertSame('made it', $entity->foo);
 
         // Should also get from original name
         // since Model's would be looking for the original name
-        $this->assertEquals('made it', $entity->bar);
+        $this->assertSame('made it', $entity->bar);
 
         // But it shouldn't actually set a class property for the original name...
         $this->expectException(ReflectionException::class);
@@ -128,11 +123,11 @@ final class EntityTest extends CIUnitTestCase
         // Will map to "simple"
         $entity->orig = 'first';
 
-        $this->assertEquals('oo:first:oo', $entity->simple);
+        $this->assertSame('oo:first:oo', $entity->simple);
 
         $entity->simple = 'second';
 
-        $this->assertEquals('oo:second:oo', $entity->simple);
+        $this->assertSame('oo:second:oo', $entity->simple);
     }
 
     public function testIssetWorksWithMapping()
@@ -157,8 +152,8 @@ final class EntityTest extends CIUnitTestCase
 
         // doesn't work on original name
         unset($entity->bar);
-        $this->assertEquals('here', $entity->bar);
-        $this->assertEquals('here', $entity->foo);
+        $this->assertSame('here', $entity->bar);
+        $this->assertSame('here', $entity->foo);
 
         // does work on mapped field
         unset($entity->foo);
@@ -166,20 +161,16 @@ final class EntityTest extends CIUnitTestCase
         $this->assertNull($entity->bar);
     }
 
-    //--------------------------------------------------------------------
-
     public function testDateMutationFromString()
     {
         $entity     = $this->getEntity();
-        $attributes = [
-            'created_at' => '2017-07-15 13:23:34',
-        ];
+        $attributes = ['created_at' => '2017-07-15 13:23:34'];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
         $time = $entity->created_at;
 
         $this->assertInstanceOf(Time::class, $time);
-        $this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
+        $this->assertSame('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
     }
 
     public function testDateMutationFromTimestamp()
@@ -187,9 +178,7 @@ final class EntityTest extends CIUnitTestCase
         $stamp = time();
 
         $entity     = $this->getEntity();
-        $attributes = [
-            'created_at' => $stamp,
-        ];
+        $attributes = ['created_at' => $stamp];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
         $time = $entity->created_at;
@@ -202,9 +191,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $dt         = new DateTime('now');
         $entity     = $this->getEntity();
-        $attributes = [
-            'created_at' => $dt,
-        ];
+        $attributes = ['created_at' => $dt];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
         $time = $entity->created_at;
@@ -217,9 +204,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $dt         = Time::now();
         $entity     = $this->getEntity();
-        $attributes = [
-            'created_at' => $dt,
-        ];
+        $attributes = ['created_at' => $dt];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
         $time = $entity->created_at;
@@ -237,7 +222,7 @@ final class EntityTest extends CIUnitTestCase
         $time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
 
         $this->assertInstanceOf(Time::class, $time);
-        $this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
+        $this->assertSame('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
     }
 
     public function testDateMutationTimestampToTime()
@@ -279,18 +264,16 @@ final class EntityTest extends CIUnitTestCase
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testCastInteger()
     {
         $entity = $this->getCastEntity();
 
         $entity->first = 3.1;
         $this->assertIsInt($entity->first);
-        $this->assertEquals(3, $entity->first);
+        $this->assertSame(3, $entity->first);
 
         $entity->first = 3.6;
-        $this->assertEquals(3, $entity->first);
+        $this->assertSame(3, $entity->first);
     }
 
     public function testCastFloat()
@@ -299,11 +282,11 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->second = 3;
         $this->assertIsFloat($entity->second);
-        $this->assertEquals(3.0, $entity->second);
+        $this->assertSame(3.0, $entity->second);
 
         $entity->second = '3.6';
         $this->assertIsFloat($entity->second);
-        $this->assertEquals(3.6, $entity->second);
+        $this->assertSame(3.6, $entity->second);
     }
 
     public function testCastDouble()
@@ -345,20 +328,16 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getCastEntity();
 
-        $data = [
-            'foo',
-            'bar',
-            'bam',
-        ];
+        $data = ['foo', 'bar', 'bam'];
 
         $entity->twelfth = $data;
 
         $result = $entity->toRawArray();
         $this->assertIsString($result['twelfth']);
-        $this->assertEquals('foo,bar,bam', $result['twelfth']);
+        $this->assertSame('foo,bar,bam', $result['twelfth']);
 
         $this->assertIsArray($entity->twelfth);
-        $this->assertEquals($data, $entity->twelfth);
+        $this->assertSame($data, $entity->twelfth);
     }
 
     public function testCastObject()
@@ -369,7 +348,8 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->sixth = $data;
         $this->assertIsObject($entity->sixth);
-        $this->assertEquals((object) $data, $entity->sixth);
+        $this->assertInstanceOf(stdClass::class, $entity->sixth);
+        $this->assertSame($data, (array) $entity->sixth);
     }
 
     public function testCastDateTime()
@@ -378,7 +358,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
         $this->assertInstanceOf('DateTime', $entity->eighth);
-        $this->assertEquals('2017-03-12', $entity->eighth->format('Y-m-d'));
+        $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
     public function testCastTimestamp()
@@ -389,7 +369,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->ninth = $date;
         $this->assertIsInt($entity->ninth);
-        $this->assertEquals(strtotime($date), $entity->ninth);
+        $this->assertSame(strtotime($date), $entity->ninth);
     }
 
     public function testCastTimestampException()
@@ -404,8 +384,6 @@ final class EntityTest extends CIUnitTestCase
         $entity->ninth;
     }
 
-    //--------------------------------------------------------------------
-
     public function testCastArray()
     {
         $entity = $this->getCastEntity();
@@ -413,9 +391,9 @@ final class EntityTest extends CIUnitTestCase
         $entity->seventh = ['foo' => 'bar'];
 
         $check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-        $this->assertEquals(serialize(['foo' => 'bar']), $check);
+        $this->assertSame(serialize(['foo' => 'bar']), $check);
 
-        $this->assertEquals(['foo' => 'bar'], $entity->seventh);
+        $this->assertSame(['foo' => 'bar'], $entity->seventh);
     }
 
     public function testCastArrayByStringSerialize()
@@ -426,9 +404,9 @@ final class EntityTest extends CIUnitTestCase
 
         // Should be a serialized string now...
         $check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-        $this->assertEquals(serialize('foobar'), $check);
+        $this->assertSame(serialize('foobar'), $check);
 
-        $this->assertEquals(['foobar'], $entity->seventh);
+        $this->assertSame(['foobar'], $entity->seventh);
     }
 
     public function testCastArrayByArraySerialize()
@@ -439,54 +417,40 @@ final class EntityTest extends CIUnitTestCase
 
         // Should be a serialized string now...
         $check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-        $this->assertEquals(serialize(['foo' => 'bar']), $check);
+        $this->assertSame(serialize(['foo' => 'bar']), $check);
 
-        $this->assertEquals(['foo' => 'bar'], $entity->seventh);
+        $this->assertSame(['foo' => 'bar'], $entity->seventh);
     }
 
     public function testCastArrayByFill()
     {
         $entity = $this->getCastEntity();
 
-        $data = [
-            'seventh' => [
-                1,
-                2,
-                3,
-            ],
-        ];
+        $data = ['seventh' => [1, 2, 3]];
 
         $entity->fill($data);
 
         // Check if serialiazed
         $check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-        $this->assertEquals(serialize([1, 2, 3]), $check);
+        $this->assertSame(serialize([1, 2, 3]), $check);
 
         // Check if unserialized
-        $this->assertEquals([1, 2, 3], $entity->seventh);
+        $this->assertSame([1, 2, 3], $entity->seventh);
     }
 
     public function testCastArrayByConstructor()
     {
-        $data = [
-            'seventh' => [
-                1,
-                2,
-                3,
-            ],
-        ];
+        $data = ['seventh' => [1, 2, 3]];
 
         $entity = $this->getCastEntity($data);
 
         // Check if serialiazed
         $check = $this->getPrivateProperty($entity, 'attributes')['seventh'];
-        $this->assertEquals(serialize([1, 2, 3]), $check);
+        $this->assertSame(serialize([1, 2, 3]), $check);
 
         // Check if unserialized
-        $this->assertEquals([1, 2, 3], $entity->seventh);
+        $this->assertSame([1, 2, 3], $entity->seventh);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCastNullable()
     {
@@ -498,8 +462,6 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame(0, $entity->integer_0);
         $this->assertSame('value', $entity->string_value_not_null);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCastURI()
     {
@@ -525,8 +487,6 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('/banana', $entity->thirteenth->getPath());
     }
 
-    //--------------------------------------------------------------------
-
     public function testCastAsJSON()
     {
         $entity = $this->getCastEntity();
@@ -535,68 +495,53 @@ final class EntityTest extends CIUnitTestCase
 
         // Should be a JSON-encoded string now...
         $check = $this->getPrivateProperty($entity, 'attributes')['tenth'];
-        $this->assertEquals('{"foo":"bar"}', $check);
+        $this->assertSame('{"foo":"bar"}', $check);
 
-        $this->assertEquals((object) ['foo' => 'bar'], $entity->tenth);
+        $this->assertInstanceOf(stdClass::class, $entity->tenth);
+        $this->assertSame(['foo' => 'bar'], (array) $entity->tenth);
     }
 
     public function testCastAsJSONArray()
     {
         $entity = $this->getCastEntity();
 
-        $data = [
-            'Sun',
-            'Mon',
-            'Tue',
-        ];
+        $data = ['Sun', 'Mon', 'Tue'];
+
         $entity->eleventh = $data;
 
         // Should be a JSON-encoded string now...
         $check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
-        $this->assertEquals('["Sun","Mon","Tue"]', $check);
+        $this->assertSame('["Sun","Mon","Tue"]', $check);
 
-        $this->assertEquals($data, $entity->eleventh);
+        $this->assertSame($data, $entity->eleventh);
     }
 
     public function testCastAsJsonByFill()
     {
         $entity = $this->getCastEntity();
-        $data   = [
-            'eleventh' => [
-                1,
-                2,
-                3,
-            ],
-        ];
+        $data   = ['eleventh' => [1, 2, 3]];
 
         $entity->fill($data);
 
         // Check if serialiazed
         $check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
-        $this->assertEquals(json_encode([1, 2, 3]), $check);
+        $this->assertSame(json_encode([1, 2, 3]), $check);
 
         // Check if unserialized
-        $this->assertEquals([1, 2, 3], $entity->eleventh);
+        $this->assertSame([1, 2, 3], $entity->eleventh);
     }
 
     public function testCastAsJsonByConstructor()
     {
-        $data = [
-            'eleventh' => [
-                1,
-                2,
-                3,
-            ],
-        ];
-
+        $data   = ['eleventh' => [1, 2, 3]];
         $entity = $this->getCastEntity($data);
 
         // Check if serialiazed
         $check = $this->getPrivateProperty($entity, 'attributes')['eleventh'];
-        $this->assertEquals(json_encode([1, 2, 3]), $check);
+        $this->assertSame(json_encode([1, 2, 3]), $check);
 
         // Check if unserialized
-        $this->assertEquals([1, 2, 3], $entity->eleventh);
+        $this->assertSame([1, 2, 3], $entity->eleventh);
     }
 
     public function testCastAsJSONErrorDepth()
@@ -662,7 +607,6 @@ final class EntityTest extends CIUnitTestCase
     public function testCastAsJSONControlCharCheck()
     {
         $entity = new Entity();
-
         $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
 
         $this->expectException(CastException::class);
@@ -676,7 +620,6 @@ final class EntityTest extends CIUnitTestCase
     public function testCastAsJSONStateMismatch()
     {
         $entity = new Entity();
-
         $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
 
         $this->expectException(CastException::class);
@@ -687,8 +630,6 @@ final class EntityTest extends CIUnitTestCase
         $method($string, true);
     }
 
-    //--------------------------------------------------------------------
-
     public function testCastSetter()
     {
         $string = '321 String with numbers 123';
@@ -698,11 +639,11 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->cast(false);
         $this->assertIsString($entity->first);
-        $this->assertEquals($string, $entity->first);
+        $this->assertSame($string, $entity->first);
 
         $entity->cast(true);
         $this->assertIsInt($entity->first);
-        $this->assertEquals((int) $string, $entity->first);
+        $this->assertSame((int) $string, $entity->first);
     }
 
     public function testCastGetter()
@@ -720,9 +661,9 @@ final class EntityTest extends CIUnitTestCase
 
         $fieldValue = $this->getPrivateProperty($entity, 'attributes')['first'];
 
-        $this->assertEquals(base64_encode('base 64'), $fieldValue);
+        $this->assertSame(base64_encode('base 64'), $fieldValue);
 
-        $this->assertEquals('base 64', $entity->first);
+        $this->assertSame('base 64', $entity->first);
     }
 
     public function testCustomCastException()
@@ -730,10 +671,7 @@ final class EntityTest extends CIUnitTestCase
         $entity = $this->getCustomCastEntity();
 
         $this->expectException(CastException::class);
-        $this->expectErrorMessage(
-            'The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class '
-            . 'must inherit the "CodeIgniter\Entity\Cast\BaseCast" class'
-        );
+        $this->expectErrorMessage('The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class must inherit the "CodeIgniter\Entity\Cast\BaseCast" class');
         $entity->second = 'throw Exception';
     }
 
@@ -743,21 +681,18 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->third = 'value';
 
-        $this->assertEquals('value:["param1","param2","param3"]', $entity->third);
+        $this->assertSame('value:["param1","param2","param3"]', $entity->third);
 
         $entity->fourth = 'test_nullable_type';
-        $this->assertEquals('test_nullable_type:["nullable"]', $entity->fourth);
+        $this->assertSame('test_nullable_type:["nullable"]', $entity->fourth);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAsArray()
     {
         $entity = $this->getEntity();
-
         $result = $entity->toArray();
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'foo'       => null,
             'bar'       => ':bar',
             'default'   => 'sumfin',
@@ -772,27 +707,26 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray(false, true, true);
 
-        $this->assertEquals($result, [
-            'foo'       => null,
-            'bar'       => ':bar',
-            'default'   => 'sumfin',
-            'createdAt' => null,
-            'entity'    => [
+        $this->assertSame([
+            'foo'     => null,
+            'bar'     => ':bar',
+            'default' => 'sumfin',
+            'entity'  => [
                 'foo'       => null,
                 'bar'       => ':bar',
                 'default'   => 'sumfin',
                 'createdAt' => null,
             ],
-        ]);
+            'createdAt' => null,
+        ], $result);
     }
 
     public function testAsArrayMapped()
     {
         $entity = $this->getMappedEntity();
-
         $result = $entity->toArray();
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'bar'  => null,
             'orig' => ':oo',
         ]);
@@ -801,10 +735,9 @@ final class EntityTest extends CIUnitTestCase
     public function testAsArraySwapped()
     {
         $entity = $this->getSwappedEntity();
-
         $result = $entity->toArray();
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'bar'          => 'foo',
             'foo'          => 'bar',
             'original_bar' => 'bar',
@@ -822,7 +755,7 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray();
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'bar' => null,
         ]);
     }
@@ -835,7 +768,7 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray(true);
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'bar' => 'bar:foo:bar',
         ]);
     }
@@ -846,7 +779,7 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray();
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'foo'        => null,
             'bar'        => null,
             'default'    => 'sumfin',
@@ -861,7 +794,7 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray(false, true);
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'foo'        => null,
             'bar'        => null,
             'default'    => 'sumfin',
@@ -883,12 +816,10 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray(true);
 
-        $this->assertEquals($result, [
+        $this->assertSame($result, [
             'bar' => 'bar:foo',
         ]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testFilledConstruction()
     {
@@ -898,31 +829,25 @@ final class EntityTest extends CIUnitTestCase
         ];
 
         $something = new SomeEntity($data);
-        $this->assertEquals('bar', $something->foo);
-        $this->assertEquals('baz', $something->bar);
+        $this->assertSame('bar', $something->foo);
+        $this->assertSame('baz', $something->bar);
     }
-
-    //--------------------------------------------------------------------
 
     public function testChangedArray()
     {
-        $data = [
-            'bar' => 'baz',
-        ];
+        $data = ['bar' => 'baz'];
 
         $something = new SomeEntity($data);
-        $whatsnew  = $something->toArray(true);
-        $expected  = $data;
-        $this->assertEquals($expected, $whatsnew);
+        $this->assertSame($data, $something->toArray(true));
 
-        $something->magic  = 'rockin';
-        $expected['magic'] = 'rockin';
-        $expected['foo']   = null;
-        $whatsnew          = $something->toArray(false);
-        $this->assertEquals($expected, $whatsnew);
+        $something->magic = 'rockin';
+
+        $this->assertSame([
+            'foo'   => null,
+            'bar'   => 'baz',
+            'magic' => 'rockin',
+        ], $something->toArray(false));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHasChangedNotExists()
     {
@@ -977,10 +902,10 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getEntity();
         $entity->setBar('foo');
-        $this->assertEquals(json_encode($entity->toArray()), json_encode($entity));
+        $this->assertSame(json_encode($entity->toArray()), json_encode($entity));
     }
 
-    protected function getEntity() : Entity
+    protected function getEntity()
     {
         return new class() extends Entity {
             protected $attributes = [
@@ -1020,7 +945,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getMappedEntity() : Entity
+    protected function getMappedEntity()
     {
         return new class() extends Entity {
             protected $attributes = [
@@ -1051,7 +976,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getSwappedEntity() : Entity
+    protected function getSwappedEntity()
     {
         return new class() extends Entity {
             protected $attributes = [
@@ -1131,7 +1056,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCastNullableEntity() : Entity
+    protected function getCastNullableEntity()
     {
         return new class() extends Entity {
             protected $attributes = [
@@ -1161,7 +1086,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCustomCastEntity() : Entity
+    protected function getCustomCastEntity()
     {
         return new class() extends Entity {
             protected $attributes = [

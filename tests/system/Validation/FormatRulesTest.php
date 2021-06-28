@@ -88,7 +88,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_url',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function urlProvider()
@@ -171,7 +171,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_email',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     /**
@@ -190,7 +190,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_emails',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function emailProviderSingle()
@@ -258,7 +258,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => "valid_ip[{$which}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function ipProvider()
@@ -328,7 +328,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'string',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function stringProvider()
@@ -365,7 +365,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaProvider()
@@ -412,7 +412,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha_space',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaSpaceProvider()
@@ -461,7 +461,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha_numeric',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaNumericProvider()
@@ -502,7 +502,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha_numeric_punct',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaNumericPunctProvider()
@@ -599,7 +599,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha_numeric_space',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaNumericSpaceProvider()
@@ -640,7 +640,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'alpha_dash',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function alphaDashProvider()
@@ -681,7 +681,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'hex',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function hexProvider()
@@ -722,7 +722,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'numeric',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function numericProvider()
@@ -779,7 +779,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'integer',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function integerProvider()
@@ -836,7 +836,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'decimal',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function decimalProvider()
@@ -897,7 +897,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'is_natural',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function naturalProvider()
@@ -942,7 +942,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'is_natural_no_zero',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function naturalZeroProvider()
@@ -987,7 +987,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_base64',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function base64Provider()
@@ -1024,7 +1024,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_json',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function jsonProvider()
@@ -1085,7 +1085,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'timezone',
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function timezoneProvider()
@@ -1127,7 +1127,7 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => "valid_date[{$format}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function validDateProvider()

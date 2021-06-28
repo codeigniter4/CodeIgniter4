@@ -37,8 +37,8 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
 
         $encrypter = $this->encryption->initialize($params);
 
-        $this->assertEquals('AES-256-CTR', $encrypter->cipher);
-        $this->assertEquals('Something other than an empty string', $encrypter->key);
+        $this->assertSame('AES-256-CTR', $encrypter->cipher);
+        $this->assertSame('Something other than an empty string', $encrypter->key);
     }
 
     /**
@@ -56,14 +56,14 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = $this->encryption->initialize($params);
 
         // Was the key properly set?
-        $this->assertEquals($params->key, $encrypter->key);
+        $this->assertSame($params->key, $encrypter->key);
 
         // simple encrypt/decrypt, default parameters
         $message1 = 'This is a plain-text message.';
-        $this->assertEquals($message1, $encrypter->decrypt($encrypter->encrypt($message1)));
+        $this->assertSame($message1, $encrypter->decrypt($encrypter->encrypt($message1)));
         $message2 = 'This is a different plain-text message.';
-        $this->assertEquals($message2, $encrypter->decrypt($encrypter->encrypt($message2)));
-        $this->assertNotEquals($message2, $encrypter->decrypt($encrypter->encrypt($message1)));
+        $this->assertSame($message2, $encrypter->decrypt($encrypter->encrypt($message2)));
+        $this->assertNotSame($message2, $encrypter->decrypt($encrypter->encrypt($message1)));
     }
 
     /**
@@ -84,7 +84,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
         $encoded   = $encrypter->encrypt($message1, $key);
-        $this->assertEquals($message1, $encrypter->decrypt($encoded, $key));
+        $this->assertSame($message1, $encrypter->decrypt($encoded, $key));
     }
 
     /**
@@ -98,9 +98,9 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
         $encoded   = $encrypter->encrypt($message1, $key1);
-        $this->assertNotEquals($message1, $encoded);
+        $this->assertNotSame($message1, $encoded);
         $key2 = 'Holy cow, batman!';
-        $this->assertNotEquals($message1, $encrypter->decrypt($encoded, $key2));
+        $this->assertNotSame($message1, $encrypter->decrypt($encoded, $key2));
     }
 
     public function testWithKeyArray()
@@ -109,7 +109,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
         $encoded   = $encrypter->encrypt($message1, ['key' => $key]);
-        $this->assertEquals($message1, $encrypter->decrypt($encoded, ['key' => $key]));
+        $this->assertSame($message1, $encrypter->decrypt($encoded, ['key' => $key]));
     }
 
     /**
@@ -123,8 +123,8 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
         $encoded   = $encrypter->encrypt($message1, ['key' => $key1]);
-        $this->assertNotEquals($message1, $encoded);
+        $this->assertNotSame($message1, $encoded);
         $key2 = 'Holy cow, batman!';
-        $this->assertNotEquals($message1, $encrypter->decrypt($encoded, ['key' => $key2]));
+        $this->assertNotSame($message1, $encrypter->decrypt($encoded, ['key' => $key2]));
     }
 }

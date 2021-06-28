@@ -196,7 +196,7 @@ final class FileMovingTest extends CIUnitTestCase
 
         $this->assertInstanceOf(UploadedFile::class, $file);
         $path = $file->store($destination, $file->getName());
-        $this->assertEquals($destination . '/fileA.txt', $path);
+        $this->assertSame($destination . '/fileA.txt', $path);
     }
 
     //--------------------------------------------------------------------

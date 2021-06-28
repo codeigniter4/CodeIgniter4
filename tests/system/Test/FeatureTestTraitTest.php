@@ -59,8 +59,8 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertInstanceOf(TestResponse::class, $response);
         $this->assertInstanceOf(Response::class, $response->response());
         $this->assertTrue($response->isOK());
-        $this->assertEquals('Hello Earth', $response->response()->getBody());
-        $this->assertEquals(200, $response->response()->getStatusCode());
+        $this->assertSame('Hello Earth', $response->response()->getBody());
+        $this->assertSame(200, $response->response()->getStatusCode());
     }
 
     public function testCallPost()
@@ -369,7 +369,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 <response><foo>bar</foo></response>
 ';
 
-        $this->assertEquals($expectedXml, $request->getBody());
+        $this->assertSame($expectedXml, $request->getBody());
         $this->assertTrue($request->header('Content-Type')->getValue() === 'application/xml');
     }
 
@@ -379,6 +379,6 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
         $request = $this->withBody('test')->setRequestBody($request);
 
-        $this->assertEquals('test', $request->getBody());
+        $this->assertSame('test', $request->getBody());
     }
 }

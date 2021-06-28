@@ -20,7 +20,8 @@ final class ForgeTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+
+    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     /**
      * @var Forge
@@ -155,13 +156,13 @@ final class ForgeTest extends CIUnitTestCase
 
         $fieldsData = $this->db->getFieldData('forge_test_table');
         if ($this->db->DBDriver === 'MySQLi') {
-            $this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+            $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         } elseif ($this->db->DBDriver === 'Postgre') {
-            $this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+            $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         } elseif ($this->db->DBDriver === 'SQLite3') {
-            $this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
+            $this->assertSame(strtolower($fieldsData[0]->type), 'integer');
         } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $this->assertEquals(strtolower($fieldsData[0]->type), 'bigint');
+            $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         }
 
         $this->forge->dropTable('forge_test_table', true);
@@ -207,13 +208,13 @@ final class ForgeTest extends CIUnitTestCase
 
             $fields = $this->db->getFieldData('forge_array_constraint');
 
-            $this->assertEquals('status', $fields[0]->name);
+            $this->assertSame('status', $fields[0]->name);
 
             if ($this->db->DBDriver === 'SQLite3') {
                 // SQLite3 converts array constraints to TEXT CHECK(...)
-                $this->assertEquals('TEXT', $fields[0]->type);
+                $this->assertSame('TEXT', $fields[0]->type);
             } else {
-                $this->assertEquals('enum', $fields[0]->type);
+                $this->assertSame('enum', $fields[0]->type);
             }
 
             $this->forge->dropTable('forge_array_constraint', true);
@@ -403,15 +404,15 @@ final class ForgeTest extends CIUnitTestCase
         $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
 
         if ($this->db->DBDriver === 'SQLite3') {
-            $this->assertEquals($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
-            $this->assertEquals($foreignKeyData[0]->sequence, 0);
+            $this->assertSame($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
+            $this->assertSame($foreignKeyData[0]->sequence, 0);
         } else {
-            $this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
-            $this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
-            $this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
+            $this->assertSame($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_foreign');
+            $this->assertSame($foreignKeyData[0]->column_name, 'users_id');
+            $this->assertSame($foreignKeyData[0]->foreign_column_name, 'id');
         }
-        $this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
-        $this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
+        $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
+        $this->assertSame($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
 
         $this->forge->dropTable('forge_test_invoices', true);
         $this->forge->dropTable('forge_test_users', true);
@@ -543,7 +544,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->dropTable('forge_test_table', true);
 
-        $this->assertEquals('username', $fieldNames[1]);
+        $this->assertSame('username', $fieldNames[1]);
     }
 
     public function testAddFields()
@@ -582,58 +583,50 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->dropTable('forge_test_fields', true);
 
-        // Check field names
+        $this->assertIsArray($fieldsNames);
         $this->assertContains('id', $fieldsNames);
         $this->assertContains('username', $fieldsNames);
         $this->assertContains('name', $fieldsNames);
         $this->assertContains('active', $fieldsNames);
 
-        // Check field data
-        $this->assertContains($fieldsData[0]->name, ['id', 'name', 'username', 'active']);
-        $this->assertContains($fieldsData[1]->name, ['id', 'name', 'username', 'active']);
+        $fields = ['id', 'name', 'username', 'active'];
+        $this->assertContains($fieldsData[0]->name, $fields);
+        $this->assertContains($fieldsData[1]->name, $fields);
+        unset($fields);
 
         if ($this->db->DBDriver === 'MySQLi') {
-            // Check types
-            $this->assertEquals($fieldsData[0]->type, 'int');
-            $this->assertEquals($fieldsData[1]->type, 'varchar');
+            $this->assertSame('int', $fieldsData[0]->type);
+            $this->assertSame('varchar', $fieldsData[1]->type);
 
             if (version_compare($this->db->getVersion(), '8.0.17', '<')) {
                 // As of MySQL 8.0.17, the display width attribute for integer data types
                 // is deprecated and is not reported back anymore.
                 // @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
-                $this->assertEquals($fieldsData[0]->max_length, 11);
+                $this->assertSame(11, $fieldsData[0]->max_length);
             }
 
             $this->assertNull($fieldsData[0]->default);
             $this->assertNull($fieldsData[1]->default);
-
-            $this->assertEquals($fieldsData[0]->primary_key, 1);
-
-            $this->assertEquals($fieldsData[1]->max_length, 255);
+            $this->assertSame(1, (int) $fieldsData[0]->primary_key);
+            $this->assertSame(255, (int) $fieldsData[1]->max_length);
         } elseif ($this->db->DBDriver === 'Postgre') {
-            // Check types
-            $this->assertEquals($fieldsData[0]->type, 'integer', print_r($fieldsData, true));
-            $this->assertEquals($fieldsData[1]->type, 'character varying', print_r($fieldsData, true));
-
-            $this->assertEquals($fieldsData[0]->max_length, 32);
+            $this->assertSame('integer', $fieldsData[0]->type);
+            $this->assertSame('character varying', $fieldsData[1]->type);
+            $this->assertSame(32, (int) $fieldsData[0]->max_length);
             $this->assertNull($fieldsData[1]->default);
-
-            $this->assertEquals($fieldsData[1]->max_length, 255);
+            $this->assertSame(255, (int) $fieldsData[1]->max_length);
         } elseif ($this->db->DBDriver === 'SQLite3') {
-            $this->assertEquals(strtolower($fieldsData[0]->type), 'integer');
-            $this->assertEquals(strtolower($fieldsData[1]->type), 'varchar');
-
-            $this->assertEquals($fieldsData[1]->default, null);
-        } elseif ($this->db->DBDriver === 'SQLSRV') {
-            // Check types
-            $this->assertEquals($fieldsData[0]->type, 'int');
-            $this->assertEquals($fieldsData[0]->max_length, 10);
-
-            $this->assertEquals($fieldsData[1]->type, 'varchar');
+            $this->assertSame('integer', strtolower($fieldsData[0]->type));
+            $this->assertSame('varchar', strtolower($fieldsData[1]->type));
             $this->assertNull($fieldsData[1]->default);
-            $this->assertEquals($fieldsData[1]->max_length, 255);
+        } elseif ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertSame('int', $fieldsData[0]->type);
+            $this->assertSame(10, (int) $fieldsData[0]->max_length);
+            $this->assertSame('varchar', $fieldsData[1]->type);
+            $this->assertNull($fieldsData[1]->default);
+            $this->assertSame(255, (int) $fieldsData[1]->max_length);
         } else {
-            $this->assertTrue(false, 'DB Driver not supported');
+            $this->fail(sprintf('DB driver "%s" is not supported.', $this->db->DBDriver));
         }
     }
 
@@ -669,44 +662,44 @@ final class ForgeTest extends CIUnitTestCase
         $keys = $this->db->getIndexData('forge_test_1');
 
         if ($this->db->DBDriver === 'MySQLi') {
-            $this->assertEquals($keys['PRIMARY']->name, 'PRIMARY');
-            $this->assertEquals($keys['PRIMARY']->fields, ['id']);
-            $this->assertEquals($keys['PRIMARY']->type, 'PRIMARY');
-            $this->assertEquals($keys['code_company']->name, 'code_company');
-            $this->assertEquals($keys['code_company']->fields, ['code', 'company']);
-            $this->assertEquals($keys['code_company']->type, 'INDEX');
-            $this->assertEquals($keys['code_active']->name, 'code_active');
-            $this->assertEquals($keys['code_active']->fields, ['code', 'active']);
-            $this->assertEquals($keys['code_active']->type, 'UNIQUE');
+            $this->assertSame($keys['PRIMARY']->name, 'PRIMARY');
+            $this->assertSame($keys['PRIMARY']->fields, ['id']);
+            $this->assertSame($keys['PRIMARY']->type, 'PRIMARY');
+            $this->assertSame($keys['code_company']->name, 'code_company');
+            $this->assertSame($keys['code_company']->fields, ['code', 'company']);
+            $this->assertSame($keys['code_company']->type, 'INDEX');
+            $this->assertSame($keys['code_active']->name, 'code_active');
+            $this->assertSame($keys['code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'Postgre') {
-            $this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
-            $this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
-            $this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
-            $this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
-            $this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
-            $this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
-            $this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
-            $this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
-            $this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
+            $this->assertSame($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+            $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
+            $this->assertSame($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+            $this->assertSame($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'SQLite3') {
-            $this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
-            $this->assertEquals($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
-            $this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
-            $this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
-            $this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
-            $this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
+            $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
+            $this->assertSame($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
         } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $this->assertEquals($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
-            $this->assertEquals($keys['pk_db_forge_test_1']->fields, ['id']);
-            $this->assertEquals($keys['pk_db_forge_test_1']->type, 'PRIMARY');
+            $this->assertSame($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
+            $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
+            $this->assertSame($keys['pk_db_forge_test_1']->type, 'PRIMARY');
 
-            $this->assertEquals($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
-            $this->assertEquals($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
-            $this->assertEquals($keys['db_forge_test_1_code_company']->type, 'INDEX');
+            $this->assertSame($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
+            $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
+            $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-            $this->assertEquals($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
-            $this->assertEquals($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
-            $this->assertEquals($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         }
 
         $this->forge->dropTable('forge_test_1', true);

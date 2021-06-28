@@ -443,7 +443,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $body = '';
         $this->response->setBody($body);
         $this->csp->finalize($this->response);
-        $this->assertEquals($body, $this->response->getBody());
+        $this->assertSame($body, $this->response->getBody());
     }
 
     /**

@@ -11,14 +11,14 @@ final class ReflectionHelperTest extends CIUnitTestCase
     {
         $obj    = new __TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
-        $this->assertEquals('secret', $actual);
+        $this->assertSame('secret', $actual);
     }
 
     public function testGetPrivatePropertyWithObjectStaticCall()
     {
         $obj    = new __TestForReflectionHelper();
         $actual = CIUnitTestCase::getPrivateProperty($obj, 'private');
-        $this->assertEquals('secret', $actual);
+        $this->assertSame('secret', $actual);
     }
 
     public function testGetPrivatePropertyWithStatic()
@@ -27,7 +27,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
             __TestForReflectionHelper::class,
             'static_private'
         );
-        $this->assertEquals('xyz', $actual);
+        $this->assertSame('xyz', $actual);
     }
 
     public function testSetPrivatePropertyWithObject()
@@ -38,7 +38,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
             'private',
             'open'
         );
-        $this->assertEquals('open', $obj->getPrivate());
+        $this->assertSame('open', $obj->getPrivate());
     }
 
     public function testSetPrivatePropertyWithStatic()
@@ -48,7 +48,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
             'static_private',
             'abc'
         );
-        $this->assertEquals(
+        $this->assertSame(
             'abc',
             __TestForReflectionHelper::getStaticPrivate()
         );
@@ -61,7 +61,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
             $obj,
             'privateMethod'
         );
-        $this->assertEquals(
+        $this->assertSame(
             'private param1param2',
             $method('param1', 'param2')
         );
@@ -73,7 +73,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
             __TestForReflectionHelper::class,
             'privateStaticMethod'
         );
-        $this->assertEquals(
+        $this->assertSame(
             'private_static param1param2',
             $method('param1', 'param2')
         );
