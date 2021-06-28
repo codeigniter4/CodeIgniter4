@@ -95,7 +95,7 @@ class Builder extends BaseBuilder
      */
     protected function _truncate(string $table): string
     {
-        return 'TRUNCATE TABLE ' . $this->getFullName($table);
+        return 'TRUNCATE TABLE ' . $this->getFullName($table, false);
     }
 
     /**
@@ -106,11 +106,11 @@ class Builder extends BaseBuilder
      * @param string $table
      * @param string $cond   The join condition
      * @param string $type   The type of join
-     * @param bool   $escape Whether not to try to escape identifiers
+     * @param bool|null   $escape Whether not to try to escape identifiers
      *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', bool $escape = null)
+    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));
@@ -164,15 +164,15 @@ class Builder extends BaseBuilder
             }
         }
 
-        // Do we want to escape the table name?
-        if ($escape === true) {
-            $table = $this->db->protectIdentifiers($table, true, null, false);
-        }
+     	// Do we want to escape the table name?
+		if ($escape === true) {
+			$table = $this->db->protectIdentifiers($this->getFullName($table), true, null, false);
+		}
 
-        // Assemble the JOIN statement
-        $this->QBJoin[] = $type . 'JOIN ' . $this->getFullName($table) . $cond;
+		// Assemble the JOIN statement
+		$this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
 
-        return $this;
+		return $this;
     }
 
     /**
@@ -276,22 +276,53 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    protected function getFullName(string $table): string
-    {
-        $alias = '';
+    /**
+	 * Get full name of the table
+	 *
+	 * @param string $table
+	 *
+	 * @return string
+	 */
+	protected function getFullName(string $table, bool $includeAlias = True): string
+	{
+		$alias = '';
 
-        if (strpos($table, ' ') !== false) {
-            $alias = explode(' ', $table);
-            $table = array_shift($alias);
-            $alias = ' ' . implode(' ', $alias);
-        }
+		if (strpos($table, ' ') !== false) {
+			$alias = explode(' ', $table);
+			$table = array_shift($alias);
+			$alias = ' ' . implode(' ', $alias);
+		}
 
-        if ($this->db->escapeChar === '"') {
-            return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
-        }
+		if (!$includeAlias) {
+			// Reset the alias to none. It has also been removed from the table name.
+			$alias = '';
+		}
 
-        return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']' . str_replace('"', '', $alias);
-    }
+		// Escape characters for generating the fully qualified table name.
+		$esc = match ($this->db->escapeChar) {
+			'"' => ['start' => '"', 'end' => '"'],
+			default => ['start' => '[', 'end' => ']'],
+		};
+
+		$schema = "";
+		if (empty($this->db->schema)) {
+			if (!str_contains($table, '.')) {
+				// No default schema was set, and user did not specify it in the builder.
+				// Try to fall back to the default sql server schema.
+				$schema = '.' . $esc['start'] . 'dbo' . $esc['end'];
+			}
+		} else {
+			// Use the schema specified in the configuration.
+			$schema =  '.' . $esc['start'] . $this->db->schema . $esc['end'];
+
+			// Escape the table name. We don't do this in case of no schema, because
+			// the user should have escaped the name himself in that case.
+			$table = $esc['start'] . str_replace('"', '', $table) . $esc['end'];
+		}
+
+		$result = $esc['start'] . $this->db->getDatabase() . $esc['end'] . $schema .  '.' . $table . $alias;
+		return $result;
+	}
 
     /**
      * Add permision statements for index value inserts
@@ -490,10 +521,10 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    protected function _delete(string $table): string
-    {
-        return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
-    }
+	protected function _delete(string $table): string
+	{
+		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table, false) . $this->compileWhereHaving('QBWhere');
+	}
 
     /**
      * Delete
