@@ -419,7 +419,7 @@ final class TestResponseTest extends CIUnitTestCase
             $method = 'set' . ucfirst($key);
 
             if (method_exists($this->response, $method)) {
-                $this->response = $this->response->$method($value);
+                $this->response = $this->response->{$method}($value);
             }
         }
 

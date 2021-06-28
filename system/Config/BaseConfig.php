@@ -69,16 +69,15 @@ class BaseConfig
         $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
         foreach ($properties as $property) {
-            $this->initEnvValue($this->$property, $property, $prefix, $shortPrefix);
+            $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
 
             if ($this instanceof Encryption && $property === 'key') {
-                // Handle hex2bin prefix
-                if (strpos($this->$property, 'hex2bin:') === 0) {
-                    $this->$property = hex2bin(substr($this->$property, 8));
-                }
-                // Handle base64 prefix
-                elseif (strpos($this->$property, 'base64:') === 0) {
-                    $this->$property = base64_decode(substr($this->$property, 7), true);
+                if (strpos($this->{$property}, 'hex2bin:') === 0) {
+                    // Handle hex2bin prefix
+                    $this->{$property} = hex2bin(substr($this->{$property}, 8));
+                } elseif (strpos($this->{$property}, 'base64:') === 0) {
+                    // Handle base64 prefix
+                    $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
                 }
             }
         }
@@ -188,10 +187,10 @@ class BaseConfig
             }
 
             foreach ($properties as $property => $value) {
-                if (isset($this->$property) && is_array($this->$property) && is_array($value)) {
-                    $this->$property = array_merge($this->$property, $value);
+                if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
+                    $this->{$property} = array_merge($this->{$property}, $value);
                 } else {
-                    $this->$property = $value;
+                    $this->{$property} = $value;
                 }
             }
         }

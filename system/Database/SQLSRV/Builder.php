@@ -621,7 +621,7 @@ class Builder extends BaseBuilder
         }
 
         foreach ($key as $k => $v) {
-            $prefix = empty($this->$qbKey) ? $this->groupGetType('') : $this->groupGetType($type);
+            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
             if ($v !== null) {
                 $op = $this->getOperator($k, true);

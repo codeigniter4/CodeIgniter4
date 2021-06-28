@@ -113,9 +113,10 @@ final class CodeIgniter4 extends AbstractRuleset
                 'noise_remaining_usages'         => false,
                 'noise_remaining_usages_exclude' => [],
             ],
-            'explicit_string_variable' => true,
-            'final_class'              => false,
-            'final_internal_class'     => [
+            'explicit_indirect_variable' => true,
+            'explicit_string_variable'   => true,
+            'final_class'                => false,
+            'final_internal_class'       => [
                 'annotation_exclude'                         => ['@no-final'],
                 'annotation_include'                         => ['@internal'],
                 'consider_absent_docblock_as_internal_class' => false,

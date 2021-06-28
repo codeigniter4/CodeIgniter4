@@ -420,9 +420,9 @@ class Email
                 $method = 'set' . ucfirst($key);
 
                 if (method_exists($this, $method)) {
-                    $this->$method($config[$key]);
+                    $this->{$method}($config[$key]);
                 } else {
-                    $this->$key = $config[$key];
+                    $this->{$key} = $config[$key];
                 }
             }
         }
@@ -1741,7 +1741,7 @@ class Email
         $method   = 'sendWith' . ucfirst($protocol);
 
         try {
-            $success = $this->$method();
+            $success = $this->{$method}();
         } catch (ErrorException $e) {
             $success = false;
             log_message('error', 'Email: ' . $method . ' throwed ' . $e->getMessage());
