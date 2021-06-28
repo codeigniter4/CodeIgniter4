@@ -280,6 +280,7 @@ class Builder extends BaseBuilder
 	 * Get full name of the table
 	 *
 	 * @param string $table
+     * @param bool $includeAlias
 	 *
 	 * @return string
 	 */
