@@ -126,8 +126,8 @@ class Fabricator
 
         // Determine eligible date fields
         foreach (['createdField', 'updatedField', 'deletedField'] as $field) {
-            if (! empty($this->model->$field)) {
-                $this->dateFields[] = $this->model->$field;
+            if (! empty($this->model->{$field})) {
+                $this->dateFields[] = $this->model->{$field};
             }
         }
 

@@ -26,7 +26,7 @@ final class TestCaseTest extends CIUnitTestCase
     {
         $obj    = new __TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
-        $this->assertEquals('secret', $actual);
+        $this->assertSame('secret', $actual);
     }
 
     //--------------------------------------------------------------------
@@ -58,7 +58,7 @@ final class TestCaseTest extends CIUnitTestCase
         $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
         CLI::write('first.');
         $expected = "first.\n";
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
         stream_filter_remove($this->stream_filter);
     }
 

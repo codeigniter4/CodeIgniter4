@@ -100,13 +100,28 @@ final class CodeIgniter4 extends AbstractRuleset
             'doctrine_annotation_braces'           => false,
             'doctrine_annotation_indentation'      => false,
             'doctrine_annotation_spaces'           => false,
-            'escape_implicit_backslashes'          => [
+            'echo_tag_syntax'                      => [
+                'format'                         => 'short',
+                'long_function'                  => 'echo',
+                'shorten_simple_statements_only' => false,
+            ],
+            'elseif'            => true,
+            'encoding'          => true,
+            'ereg_to_preg'      => true,
+            'error_suppression' => [
+                'mute_deprecation_error'         => true,
+                'noise_remaining_usages'         => false,
+                'noise_remaining_usages_exclude' => [],
+            ],
+            'escape_implicit_backslashes' => [
                 'double_quoted'  => true,
                 'heredoc_syntax' => true,
                 'single_quoted'  => false,
             ],
-            'final_class'          => false,
-            'final_internal_class' => [
+            'explicit_indirect_variable' => true,
+            'explicit_string_variable'   => true,
+            'final_class'                => false,
+            'final_internal_class'       => [
                 'annotation_exclude'                         => ['@no-final'],
                 'annotation_include'                         => ['@internal'],
                 'consider_absent_docblock_as_internal_class' => false,
@@ -170,8 +185,16 @@ final class CodeIgniter4 extends AbstractRuleset
                 'target'          => 'newest',
                 'use_class_const' => true,
             ],
-            'php_unit_set_up_tear_down_visibility'   => true,
-            'php_unit_size_class'                    => false,
+            'php_unit_set_up_tear_down_visibility' => true,
+            'php_unit_size_class'                  => false,
+            'php_unit_strict'                      => [
+                'assertions' => [
+                    'assertAttributeEquals',
+                    'assertAttributeNotEquals',
+                    'assertEquals',
+                    'assertNotEquals',
+                ],
+            ],
             'php_unit_test_annotation'               => ['style' => 'prefix'],
             'php_unit_test_case_static_method_calls' => [
                 'call_type' => 'this',
@@ -254,6 +277,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'psr_autoloading'                     => ['dir' => null],
             'set_type_to_cast'                    => true,
             'short_scalar_cast'                   => true,
+            'simple_to_complex_string_variable'   => true,
             'standardize_increment'               => true,
             'static_lambda'                       => true,
             'switch_case_semicolon_to_colon'      => true,

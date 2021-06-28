@@ -41,7 +41,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send($autoClear));
 
         if (! $autoClear) {
-            $this->assertEquals('foo@foo.com', $email->archive['recipients'][0]);
+            $this->assertSame('foo@foo.com', $email->archive['recipients'][0]);
         }
     }
 
@@ -57,9 +57,9 @@ final class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send());
 
         $this->assertNotEmpty($email->archive);
-        $this->assertEquals(['foo@foo.com'], $email->archive['recipients']);
-        $this->assertEquals('bar@foo.com', $email->archive['fromEmail']);
-        $this->assertEquals('Archive Test', $email->archive['subject']);
+        $this->assertSame(['foo@foo.com'], $email->archive['recipients']);
+        $this->assertSame('bar@foo.com', $email->archive['fromEmail']);
+        $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
     public function testAutoClearLeavesArchive()
@@ -87,8 +87,8 @@ final class EmailTest extends CIUnitTestCase
         $email->setSubject('Archive Test');
         $this->assertTrue($email->send());
 
-        $this->assertEquals('', $email->archive['fromEmail']);
-        $this->assertEquals('Archive Test', $email->archive['subject']);
+        $this->assertSame('', $email->archive['fromEmail']);
+        $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
     public function testSuccessDoesTriggerEvent()
@@ -107,7 +107,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send());
 
         $this->assertIsArray($result);
-        $this->assertEquals(['foo@foo.com'], $result['recipients']);
+        $this->assertSame(['foo@foo.com'], $result['recipients']);
     }
 
     public function testFailureDoesNotTriggerEvent()

@@ -29,7 +29,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -40,7 +40,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -51,7 +51,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -68,7 +68,7 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     /**
@@ -83,6 +83,6 @@ final class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 }

@@ -144,7 +144,7 @@ abstract class BaseResult implements ResultInterface
                 $this->customResultObject[$className][$i] = new $className();
 
                 foreach ($this->{$_data}[$i] as $key => $value) {
-                    $this->customResultObject[$className][$i]->$key = $value;
+                    $this->customResultObject[$className][$i]->{$key} = $value;
                 }
             }
 

@@ -242,7 +242,7 @@ class Factories
             // Handle Config as a special case to prevent logic loops
             ? self::$configOptions
             // Load values from the best Factory configuration (will include Registrars)
-            : config('Factory')->$component ?? [];
+            : config('Factory')->{$component} ?? [];
 
         return self::setOptions($component, $values);
     }

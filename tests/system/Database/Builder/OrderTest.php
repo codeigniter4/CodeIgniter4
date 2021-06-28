@@ -32,7 +32,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -45,7 +45,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -58,7 +58,7 @@ final class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

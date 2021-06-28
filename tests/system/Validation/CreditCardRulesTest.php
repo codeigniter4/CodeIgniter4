@@ -66,7 +66,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
             'cc' => "valid_cc_number[{$type}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------

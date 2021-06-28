@@ -34,7 +34,7 @@ final class EscapeTest extends CIUnitTestCase
      */
     public function testEscapeProtectsNegativeNumbers()
     {
-        $this->assertEquals("'-100'", $this->db->escape(-100));
+        $this->assertSame("'-100'", $this->db->escape(-100));
     }
 
     //--------------------------------------------------------------------
@@ -44,7 +44,7 @@ final class EscapeTest extends CIUnitTestCase
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
         $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
 
-        $this->assertEquals($expected, $sql);
+        $this->assertSame($expected, $sql);
     }
 
     //--------------------------------------------------------------------
@@ -54,7 +54,7 @@ final class EscapeTest extends CIUnitTestCase
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
         $sql      = "SELECT * FROM brands WHERE name = '" . $this->db->escapeString("O'Doules") . "'";
 
-        $this->assertEquals($expected, $sql);
+        $this->assertSame($expected, $sql);
     }
 
     //--------------------------------------------------------------------
@@ -64,7 +64,7 @@ final class EscapeTest extends CIUnitTestCase
         $expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
         $sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
 
-        $this->assertEquals($expected, $sql);
+        $this->assertSame($expected, $sql);
     }
 
     //--------------------------------------------------------------------
@@ -75,7 +75,7 @@ final class EscapeTest extends CIUnitTestCase
             $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
             $sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 
-            $this->assertEquals($expected, $sql);
+            $this->assertSame($expected, $sql);
         } else {
             $this->expectNotToPerformAssertions();
         }

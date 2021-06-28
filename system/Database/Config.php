@@ -64,7 +64,7 @@ class Config extends BaseConfig
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
         }
 
-        if (is_string($group) && ! isset($config->$group) && strpos($group, 'custom-') !== 0) {
+        if (is_string($group) && ! isset($config->{$group}) && strpos($group, 'custom-') !== 0) {
             throw new InvalidArgumentException($group . ' is not a valid database connection group.');
         }
 
@@ -74,8 +74,8 @@ class Config extends BaseConfig
 
         static::ensureFactory();
 
-        if (isset($config->$group)) {
-            $config = $config->$group;
+        if (isset($config->{$group})) {
+            $config = $config->{$group};
         }
 
         $connection = static::$factory->load($config, $group);

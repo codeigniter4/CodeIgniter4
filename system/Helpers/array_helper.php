@@ -169,7 +169,7 @@ if (! function_exists('array_sort_by_multiple_keys')) {
                 if (is_object(reset($carry))) {
                     // Extract the object attribute
                     foreach ($carry as $index => $object) {
-                        $carry[$index] = $object->$keySegment;
+                        $carry[$index] = $object->{$keySegment};
                     }
 
                     continue;

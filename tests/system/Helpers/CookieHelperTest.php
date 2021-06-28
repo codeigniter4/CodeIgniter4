@@ -78,8 +78,8 @@ final class CookieHelperTest extends CIUnitTestCase
     {
         $pre       = 'Hello, I try to';
         $pst       = 'your site';
-        $unsec     = "$pre <script>alert('Hack');</script> $pst";
-        $sec       = "$pre [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] $pst";
+        $unsec     = "{$pre} <script>alert('Hack');</script> {$pst}";
+        $sec       = "{$pre} [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] {$pst}";
         $unsecured = 'unsecured';
         $secured   = 'secured';
 
@@ -102,15 +102,15 @@ final class CookieHelperTest extends CIUnitTestCase
         $cookie = $this->response->getCookie($this->name);
 
         // The cookie is set to be cleared when the request is sent....
-        $this->assertEquals('', $cookie->getValue());
-        $this->assertEquals(0, $cookie->getExpiresTimestamp());
+        $this->assertSame('', $cookie->getValue());
+        $this->assertSame(0, $cookie->getExpiresTimestamp());
     }
 
     public function testGetCookie()
     {
         $_COOKIE['TEST'] = 5;
 
-        $this->assertEquals(5, get_cookie('TEST'));
+        $this->assertSame('5', get_cookie('TEST'));
     }
 
     public function testDeleteCookieAfterLastSet()
@@ -119,7 +119,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
         $cookie = $this->response->getCookie($this->name);
         // The cookie is set to be cleared when the request is sent....
-        $this->assertEquals('', $cookie->getValue());
+        $this->assertSame('', $cookie->getValue());
     }
 
     public function testSameSiteDefault()
@@ -134,7 +134,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
         $this->assertTrue($this->response->hasCookie($this->name));
         $theCookie = $this->response->getCookie($this->name);
-        $this->assertEquals('Lax', $theCookie->getSameSite());
+        $this->assertSame('Lax', $theCookie->getSameSite());
 
         delete_cookie($this->name);
     }
@@ -167,7 +167,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
         $this->assertTrue($this->response->hasCookie($this->name));
         $theCookie = $this->response->getCookie($this->name);
-        $this->assertEquals('Strict', $theCookie->getSameSite());
+        $this->assertSame('Strict', $theCookie->getSameSite());
 
         delete_cookie($this->name);
     }
@@ -178,7 +178,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
         $this->assertTrue($this->response->hasCookie($this->name));
         $theCookie = $this->response->getCookie($this->name);
-        $this->assertEquals('Strict', $theCookie->getSameSite());
+        $this->assertSame('Strict', $theCookie->getSameSite());
 
         delete_cookie($this->name);
     }

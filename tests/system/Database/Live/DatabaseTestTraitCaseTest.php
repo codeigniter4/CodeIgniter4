@@ -39,7 +39,7 @@ final class DatabaseTestTraitCaseTest extends CIUnitTestCase
     {
         $email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
 
-        $this->assertEquals('derek@world.com', $email);
+        $this->assertSame('derek@world.com', $email);
     }
 
     public function testSeeInDatabase()

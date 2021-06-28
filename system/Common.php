@@ -457,7 +457,7 @@ if (! function_exists('esc')) {
                 $escaper = new Escaper($encoding);
             }
 
-            $data = $escaper->$method($data);
+            $data = $escaper->{$method}($data);
         }
 
         return $data;

@@ -22,11 +22,9 @@ final class WhereTest extends CIUnitTestCase
     {
         $row = $this->db->table('job')->where('id', 1)->get()->getRow();
 
-        $this->assertEquals(1, $row->id);
-        $this->assertEquals('Developer', $row->name);
+        $this->assertSame(1, (int) $row->id);
+        $this->assertSame('Developer', $row->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereCustomKeyValue()
     {
@@ -34,8 +32,6 @@ final class WhereTest extends CIUnitTestCase
 
         $this->assertCount(3, $jobs);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereArray()
     {
@@ -47,10 +43,8 @@ final class WhereTest extends CIUnitTestCase
         $this->assertCount(1, $jobs);
 
         $job = current($jobs);
-        $this->assertEquals('Musician', $job->name);
+        $this->assertSame('Musician', $job->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereCustomString()
     {
@@ -61,10 +55,8 @@ final class WhereTest extends CIUnitTestCase
         $this->assertCount(1, $jobs);
 
         $job = current($jobs);
-        $this->assertEquals('Musician', $job->name);
+        $this->assertSame('Musician', $job->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrWhere()
     {
@@ -75,12 +67,10 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(3, $jobs);
-        $this->assertEquals('Developer', $jobs[0]->name);
-        $this->assertEquals('Politician', $jobs[1]->name);
-        $this->assertEquals('Musician', $jobs[2]->name);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Politician', $jobs[1]->name);
+        $this->assertSame('Musician', $jobs[2]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrWhereSameColumn()
     {
@@ -91,11 +81,9 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $jobs);
-        $this->assertEquals('Developer', $jobs[0]->name);
-        $this->assertEquals('Politician', $jobs[1]->name);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Politician', $jobs[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereIn()
     {
@@ -105,11 +93,9 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $jobs);
-        $this->assertEquals('Politician', $jobs[0]->name);
-        $this->assertEquals('Accountant', $jobs[1]->name);
+        $this->assertSame('Politician', $jobs[0]->name);
+        $this->assertSame('Accountant', $jobs[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group single
@@ -122,11 +108,9 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $jobs);
-        $this->assertEquals('Developer', $jobs[0]->name);
-        $this->assertEquals('Musician', $jobs[1]->name);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Musician', $jobs[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSubQuery()
     {
@@ -141,12 +125,10 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(3, $jobs);
-        $this->assertEquals('Politician', $jobs[0]->name);
-        $this->assertEquals('Accountant', $jobs[1]->name);
-        $this->assertEquals('Musician', $jobs[2]->name);
+        $this->assertSame('Politician', $jobs[0]->name);
+        $this->assertSame('Accountant', $jobs[1]->name);
+        $this->assertSame('Musician', $jobs[2]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSubQueryAnotherType()
     {
@@ -161,10 +143,8 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $jobs);
-        $this->assertEquals('Developer', $jobs[0]->name);
+        $this->assertSame('Developer', $jobs[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereNullParam()
     {
@@ -180,10 +160,8 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $jobs);
-        $this->assertEquals('Brewmaster', $jobs[0]->name);
+        $this->assertSame('Brewmaster', $jobs[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereIsNull()
     {
@@ -199,10 +177,8 @@ final class WhereTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $jobs);
-        $this->assertEquals('Brewmaster', $jobs[0]->name);
+        $this->assertSame('Brewmaster', $jobs[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testWhereIsNotNull()
     {

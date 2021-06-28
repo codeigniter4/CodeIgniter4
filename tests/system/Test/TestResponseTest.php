@@ -38,7 +38,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('Hello World');
         $this->response->setStatusCode($code);
 
-        $this->assertEquals($isOk, $this->testResponse->isOK());
+        $this->assertSame($isOk, $this->testResponse->isOK());
     }
 
     /**
@@ -167,7 +167,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertFalse($this->testResponse->response() instanceof RedirectResponse);
         $this->assertTrue($this->testResponse->isRedirect());
         $this->testResponse->assertRedirect();
-        $this->assertEquals('foo/bar', $this->testResponse->getRedirectUrl());
+        $this->assertSame('foo/bar', $this->testResponse->getRedirectUrl());
     }
 
     public function testGetRedirectUrlReturnsUrl()
@@ -176,7 +176,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->setResponse(new RedirectResponse(new App()));
         $this->testResponse->response()->redirect('foo/bar');
 
-        $this->assertEquals('foo/bar', $this->testResponse->getRedirectUrl());
+        $this->assertSame('foo/bar', $this->testResponse->getRedirectUrl());
     }
 
     public function testGetRedirectUrlReturnsNull()
@@ -300,7 +300,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse(['foo' => 'bar']);
         $formatter = Services::format()->getFormatter('application/json');
 
-        $this->assertEquals($formatter->format(['foo' => 'bar']), $this->testResponse->getJSON());
+        $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getJSON());
     }
 
     public function testEmptyJSON()
@@ -309,7 +309,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->response->setJSON('', true);
 
         // this should be "" - json_encode('');
-        $this->assertEquals('""', $this->testResponse->getJSON());
+        $this->assertSame('""', $this->testResponse->getJSON());
     }
 
     public function testFalseJSON()
@@ -318,7 +318,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->response->setJSON(false, true);
 
         // this should be FALSE - json_encode(false)
-        $this->assertEquals('false', $this->testResponse->getJSON());
+        $this->assertSame('false', $this->testResponse->getJSON());
     }
 
     public function testTrueJSON()
@@ -327,7 +327,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->response->setJSON(true, true);
 
         // this should be TRUE - json_encode(true)
-        $this->assertEquals('true', $this->testResponse->getJSON());
+        $this->assertSame('true', $this->testResponse->getJSON());
     }
 
     public function testInvalidJSON()
@@ -345,7 +345,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse(['foo' => 'bar']);
         $formatter = Services::format()->getFormatter('application/xml');
 
-        $this->assertEquals($formatter->format(['foo' => 'bar']), $this->testResponse->getXML());
+        $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getXML());
     }
 
     public function testJsonFragment()
@@ -419,7 +419,7 @@ final class TestResponseTest extends CIUnitTestCase
             $method = 'set' . ucfirst($key);
 
             if (method_exists($this->response, $method)) {
-                $this->response = $this->response->$method($value);
+                $this->response = $this->response->{$method}($value);
             }
         }
 

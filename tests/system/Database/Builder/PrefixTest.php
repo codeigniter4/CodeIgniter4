@@ -27,7 +27,7 @@ final class PrefixTest extends CIUnitTestCase
     {
         $expected = 'ci_users';
 
-        $this->assertEquals($expected, $this->db->prefixTable('users'));
+        $this->assertSame($expected, $this->db->prefixTable('users'));
     }
 
     //--------------------------------------------------------------------
@@ -43,7 +43,7 @@ final class PrefixTest extends CIUnitTestCase
 
         $builder->where($where);
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 }

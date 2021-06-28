@@ -230,7 +230,7 @@ abstract class BaseCommand
      */
     public function __get(string $key)
     {
-        return $this->$key ?? null;
+        return $this->{$key} ?? null;
     }
 
     /**
@@ -242,6 +242,6 @@ abstract class BaseCommand
      */
     public function __isset(string $key): bool
     {
-        return isset($this->$key);
+        return isset($this->{$key});
     }
 }

@@ -27,7 +27,7 @@ final class JSONFormatterTest extends CIUnitTestCase
     "foo": "bar"
 }';
 
-        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
     public function testUnicodeOutput()
@@ -40,7 +40,7 @@ final class JSONFormatterTest extends CIUnitTestCase
     "foo": "База данни грешка"
 }';
 
-        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
     public function testKeepsURLs()
@@ -53,7 +53,7 @@ final class JSONFormatterTest extends CIUnitTestCase
     "foo": "https://www.example.com/foo/bar"
 }';
 
-        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
     public function testJSONError()
@@ -62,6 +62,6 @@ final class JSONFormatterTest extends CIUnitTestCase
 
         $data     = ["\xB1\x31"];
         $expected = 'Boom';
-        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 }
