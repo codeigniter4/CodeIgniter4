@@ -191,7 +191,7 @@ class Builder extends BaseBuilder
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
-        $fullTableName = $this->getFullName($table);
+        $fullTableName = $this->getFullName($table, false);
 
         // insert statement
         $statement = 'INSERT INTO ' . $fullTableName . ' (' . implode(',', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
@@ -217,7 +217,7 @@ class Builder extends BaseBuilder
             $valstr[] = $key . ' = ' . $val;
         }
 
-        $fullTableName = $this->getFullName($table);
+        $fullTableName = $this->getFullName($table, false);
 
         $statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
                 . implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
@@ -474,7 +474,7 @@ class Builder extends BaseBuilder
             $delete->delete();
         }
 
-        return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table), implode(',', $keys), implode(',', $values));
+        return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table, false), implode(',', $keys), implode(',', $values));
     }
 
     /**
