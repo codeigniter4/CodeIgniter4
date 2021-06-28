@@ -345,7 +345,7 @@ class Toolbar
             // then we send headers saying where to find the debug data
             // for this response
             if ($request->isAJAX() || strpos($format, 'html') === false) {
-                $response->setHeader('Debugbar-Time', "$time")
+                $response->setHeader('Debugbar-Time', "{$time}")
                     ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
                     ->getBody();
 

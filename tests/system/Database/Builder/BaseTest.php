@@ -40,7 +40,7 @@ final class BaseTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $result = $builder->getTable();
-        $this->assertEquals('jobs', $result);
+        $this->assertSame('jobs', $result);
     }
 
     public function testGetTableIgnoresFrom()
@@ -49,6 +49,6 @@ final class BaseTest extends CIUnitTestCase
 
         $builder->from('foo');
         $result = $builder->getTable();
-        $this->assertEquals('jobs', $result);
+        $this->assertSame('jobs', $result);
     }
 }

@@ -158,7 +158,7 @@ final class RulesTest extends CIUnitTestCase
     {
         $this->validation->setRules($rules);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -214,7 +214,7 @@ final class RulesTest extends CIUnitTestCase
     {
         $this->validation->setRules($rules);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1167,7 +1167,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "greater_than[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1226,7 +1226,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "greater_than_equal_to[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1290,7 +1290,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "less_than[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1354,7 +1354,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "less_than_equal_to[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1424,7 +1424,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "in_list[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1448,7 +1448,7 @@ final class RulesTest extends CIUnitTestCase
             'foo' => "not_in_list[{$second}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1530,7 +1530,7 @@ final class RulesTest extends CIUnitTestCase
             $field => "required_with[{$check}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -1617,7 +1617,7 @@ final class RulesTest extends CIUnitTestCase
             $field => "required_without[{$check}]",
         ]);
 
-        $this->assertEquals($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     //--------------------------------------------------------------------

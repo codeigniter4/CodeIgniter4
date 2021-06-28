@@ -41,7 +41,7 @@ final class ClearCacheTest extends CIUnitTestCase
     public function testClearCacheWorks()
     {
         cache()->save('foo', 'bar');
-        $this->assertEquals('bar', cache('foo'));
+        $this->assertSame('bar', cache('foo'));
 
         command('cache:clear');
 

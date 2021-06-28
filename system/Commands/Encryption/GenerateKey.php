@@ -190,7 +190,7 @@ class GenerateKey extends BaseCommand
 
         $ret = file_put_contents($envFile, preg_replace(
             $this->keyPattern($oldKey),
-            "\nencryption.key = $newKey",
+            "\nencryption.key = {$newKey}",
             file_get_contents($envFile)
         ));
 
@@ -209,7 +209,7 @@ class GenerateKey extends BaseCommand
         $escaped = preg_quote($oldKey, '/');
 
         if ($escaped !== '') {
-            $escaped = "[$escaped]*";
+            $escaped = "[{$escaped}]*";
         }
 
         return "/^[#\s]*encryption.key[=\s]*{$escaped}$/m";

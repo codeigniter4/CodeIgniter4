@@ -173,13 +173,13 @@ class Builder extends BaseBuilder
         $value = $set[$key];
 
         $builder = $this->db->table($table);
-        $exists  = $builder->where("$key = $value", null, false)->get()->getFirstRow();
+        $exists  = $builder->where("{$key} = {$value}", null, false)->get()->getFirstRow();
 
         if (empty($exists)) {
             $result = $builder->insert($set);
         } else {
             array_pop($set);
-            $result = $builder->update($set, "$key = $value");
+            $result = $builder->update($set, "{$key} = {$value}");
         }
 
         unset($builder);

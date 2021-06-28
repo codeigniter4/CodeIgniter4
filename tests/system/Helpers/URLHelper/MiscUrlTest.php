@@ -66,7 +66,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals($uri2, previous_url());
+        $this->assertSame($uri2, previous_url());
     }
 
     //--------------------------------------------------------------------
@@ -84,7 +84,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals($uri1, previous_url());
+        $this->assertSame($uri1, previous_url());
     }
 
     //--------------------------------------------------------------------
@@ -97,7 +97,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals('index.php', index_page());
+        $this->assertSame('index.php', index_page());
     }
 
     public function testIndexPageAlt()
@@ -108,7 +108,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals('banana.php', index_page($this->config));
+        $this->assertSame('banana.php', index_page($this->config));
     }
 
     //--------------------------------------------------------------------
@@ -166,7 +166,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $request->uri = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
+        $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
     public function anchorNoindexPatterns()
@@ -228,7 +228,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $request->uri            = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
+        $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
     public function anchorSubpagePatterns()
@@ -280,7 +280,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $request->uri            = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
+        $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
     public function anchorExamplePatterns()
@@ -320,7 +320,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $request->uri = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $this->assertEquals($expected, anchor($uri, $title, $attributes, $this->config));
+        $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
     //--------------------------------------------------------------------
@@ -375,7 +375,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $request->uri = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
-        $this->assertEquals($expected, anchor_popup($uri, $title, $attributes, $this->config));
+        $this->assertSame($expected, anchor_popup($uri, $title, $attributes, $this->config));
     }
 
     //--------------------------------------------------------------------
@@ -412,7 +412,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals($expected, mailto($email, $title, $attributes));
+        $this->assertSame($expected, mailto($email, $title, $attributes));
     }
 
     //--------------------------------------------------------------------
@@ -449,7 +449,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertEquals($expected, safe_mailto($email, $title, $attributes));
+        $this->assertSame($expected, safe_mailto($email, $title, $attributes));
     }
 
     //--------------------------------------------------------------------
@@ -498,7 +498,7 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAutoLinkUrl($in, $out)
     {
-        $this->assertEquals($out, auto_link($in, 'url'));
+        $this->assertSame($out, auto_link($in, 'url'));
     }
 
     public function autolinkEmails()
@@ -544,7 +544,7 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAutoLinkEmail($in, $out)
     {
-        $this->assertEquals($out, auto_link($in, 'email'));
+        $this->assertSame($out, auto_link($in, 'email'));
     }
 
     public function autolinkBoth()
@@ -590,7 +590,7 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAutolinkBoth($in, $out)
     {
-        $this->assertEquals($out, auto_link($in));
+        $this->assertSame($out, auto_link($in));
     }
 
     public function autolinkPopup()
@@ -636,7 +636,7 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAutoLinkPopup($in, $out)
     {
-        $this->assertEquals($out, auto_link($in, 'url', true));
+        $this->assertSame($out, auto_link($in, 'url', true));
     }
 
     //--------------------------------------------------------------------
@@ -739,7 +739,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
 
         foreach ($words as $in => $out) {
-            $this->assertEquals($out, url_title($in, '-', true));
+            $this->assertSame($out, url_title($in, '-', true));
         }
     }
 
@@ -752,7 +752,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
 
         foreach ($words as $in => $out) {
-            $this->assertEquals($out, url_title($in, '_'));
+            $this->assertSame($out, url_title($in, '_'));
         }
     }
 
@@ -769,7 +769,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
 
         foreach ($words as $in => $out) {
-            $this->assertEquals($out, mb_url_title($in, '-', true));
+            $this->assertSame($out, mb_url_title($in, '-', true));
         }
     }
 
@@ -783,7 +783,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
 
         foreach ($words as $in => $out) {
-            $this->assertEquals($out, mb_url_title($in, '_'));
+            $this->assertSame($out, mb_url_title($in, '_'));
         }
     }
 
@@ -798,7 +798,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'gotoPage']);
         $routes->add('route/(:any)/to/(:num)', 'myOtherController::goto/$1/$2');
 
-        $this->assertEquals($expected, url_to($input, ...$args));
+        $this->assertSame($expected, url_to($input, ...$args));
     }
 
     /**

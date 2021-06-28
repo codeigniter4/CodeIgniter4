@@ -40,7 +40,7 @@ final class BaseCommandTest extends CIUnitTestCase
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertEquals('demo', $command->group);
+        $this->assertSame('demo', $command->group);
     }
 
     public function testMagicGetMissing()

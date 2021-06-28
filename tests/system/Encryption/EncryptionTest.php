@@ -41,7 +41,7 @@ final class EncryptionTest extends CIUnitTestCase
         $ikm              = 'Secret stuff';
         $config->key      = $ikm;
         $this->encryption = new Encryption($config);
-        $this->assertEquals($ikm, $this->encryption->key);
+        $this->assertSame($ikm, $this->encryption->key);
     }
 
     /**
@@ -77,8 +77,8 @@ final class EncryptionTest extends CIUnitTestCase
     public function testKeyCreation()
     {
         $this->assertNotEmpty($this->encryption->createKey());
-        $this->assertEquals(32, strlen($this->encryption->createKey()));
-        $this->assertEquals(16, strlen($this->encryption->createKey(16)));
+        $this->assertSame(32, strlen($this->encryption->createKey()));
+        $this->assertSame(16, strlen($this->encryption->createKey(16)));
     }
 
     public function testServiceSuccess()
@@ -120,7 +120,7 @@ final class EncryptionTest extends CIUnitTestCase
 
         $config->key = 'Abracadabra';
         $encrypter   = Services::encrypter($config, true);
-        $this->assertEquals('anything', $encrypter->key);
+        $this->assertSame('anything', $encrypter->key);
     }
 
     public function testMagicIssetTrue()
@@ -135,7 +135,7 @@ final class EncryptionTest extends CIUnitTestCase
 
     public function testMagicGet()
     {
-        $this->assertEquals('SHA512', $this->encryption->digest);
+        $this->assertSame('SHA512', $this->encryption->digest);
     }
 
     public function testMagicGetMissing()

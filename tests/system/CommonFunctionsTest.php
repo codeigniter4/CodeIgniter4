@@ -41,48 +41,48 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testStringifyAttributes()
     {
-        $this->assertEquals(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
+        $this->assertSame(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
         $atts        = new stdClass();
         $atts->class = 'foo';
         $atts->id    = 'bar';
-        $this->assertEquals(' class="foo" id="bar"', stringify_attributes($atts));
+        $this->assertSame(' class="foo" id="bar"', stringify_attributes($atts));
 
         $atts = new stdClass();
-        $this->assertEquals('', stringify_attributes($atts));
+        $this->assertSame('', stringify_attributes($atts));
 
-        $this->assertEquals(' class="foo" id="bar"', stringify_attributes('class="foo" id="bar"'));
+        $this->assertSame(' class="foo" id="bar"', stringify_attributes('class="foo" id="bar"'));
 
-        $this->assertEquals('', stringify_attributes([]));
+        $this->assertSame('', stringify_attributes([]));
     }
 
     public function testStringifyJsAttributes()
     {
-        $this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
+        $this->assertSame('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
 
         $atts         = new stdClass();
         $atts->width  = 800;
         $atts->height = 600;
-        $this->assertEquals('width=800,height=600', stringify_attributes($atts, true));
+        $this->assertSame('width=800,height=600', stringify_attributes($atts, true));
     }
 
     public function testEnvReturnsDefault()
     {
-        $this->assertEquals('baz', env('foo', 'baz'));
+        $this->assertSame('baz', env('foo', 'baz'));
     }
 
     public function testEnvGetsFromSERVER()
     {
         $_SERVER['foo'] = 'bar';
 
-        $this->assertEquals('bar', env('foo', 'baz'));
+        $this->assertSame('bar', env('foo', 'baz'));
     }
 
     public function testEnvGetsFromENV()
     {
         $_ENV['foo'] = 'bar';
 
-        $this->assertEquals('bar', env('foo', 'baz'));
+        $this->assertSame('bar', env('foo', 'baz'));
     }
 
     public function testEnvBooleans()
@@ -145,14 +145,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testViewCell()
     {
         $expected = 'Hello';
-        $this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
+        $this->assertSame($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
     }
 
     public function testEscapeWithDifferentEncodings()
     {
-        $this->assertEquals('&lt;x', esc('<x', 'html', 'utf-8'));
-        $this->assertEquals('&lt;x', esc('<x', 'html', 'iso-8859-1'));
-        $this->assertEquals('&lt;x', esc('<x', 'html', 'windows-1251'));
+        $this->assertSame('&lt;x', esc('<x', 'html', 'utf-8'));
+        $this->assertSame('&lt;x', esc('<x', 'html', 'iso-8859-1'));
+        $this->assertSame('&lt;x', esc('<x', 'html', 'windows-1251'));
     }
 
     public function testEscapeBadContext()
@@ -182,7 +182,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $_SESSION['notbogus'] = 'Hi there';
 
-        $this->assertEquals('Hi there', session('notbogus'));
+        $this->assertSame('Hi there', session('notbogus'));
     }
 
     /**
@@ -203,37 +203,37 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $routes = service('routes');
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-        $this->assertEquals('/path/string/to/13', route_to('myController::goto', 'string', 13));
+        $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
     public function testInvisible()
     {
-        $this->assertEquals('Javascript', remove_invisible_characters("Java\0script"));
+        $this->assertSame('Javascript', remove_invisible_characters("Java\0script"));
     }
 
     public function testInvisibleEncoded()
     {
-        $this->assertEquals('Javascript', remove_invisible_characters('Java%0cscript'));
+        $this->assertSame('Javascript', remove_invisible_characters('Java%0cscript'));
     }
 
     public function testAppTimezone()
     {
-        $this->assertEquals('America/Chicago', app_timezone());
+        $this->assertSame('America/Chicago', app_timezone());
     }
 
     public function testCSRFToken()
     {
-        $this->assertEquals('csrf_test_name', csrf_token());
+        $this->assertSame('csrf_test_name', csrf_token());
     }
 
     public function testCSRFHeader()
     {
-        $this->assertEquals('X-CSRF-TOKEN', csrf_header());
+        $this->assertSame('X-CSRF-TOKEN', csrf_header());
     }
 
     public function testHash()
     {
-        $this->assertEquals(32, strlen(csrf_hash()));
+        $this->assertSame(32, strlen(csrf_hash()));
     }
 
     public function testCSRFField()
@@ -296,9 +296,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $response = new RedirectResponse(new App());
         $response->withInput();
 
-        $this->assertEquals('bar', old('foo')); // regular parameter
-        $this->assertEquals('doo', old('yabba dabba', 'doo')); // non-existing parameter
-        $this->assertEquals('fritz', old('zibble')); // serialized parameter
+        $this->assertSame('bar', old('foo')); // regular parameter
+        $this->assertSame('doo', old('yabba dabba', 'doo')); // non-existing parameter
+        $this->assertSame('fritz', old('zibble')); // serialized parameter
     }
 
     /**
@@ -335,7 +335,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $response = new RedirectResponse(new App());
         $response->withInput();
 
-        $this->assertEquals($locations, old('location'));
+        $this->assertSame($locations, old('location'));
     }
 
     public function testReallyWritable()
@@ -346,9 +346,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testSlashItem()
     {
-        $this->assertEquals('/', slash_item('cookiePath')); // slash already there
-        $this->assertEquals('', slash_item('cookieDomain')); // empty, so untouched
-        $this->assertEquals('en/', slash_item('defaultLocale')); // slash appended
+        $this->assertSame('/', slash_item('cookiePath')); // slash already there
+        $this->assertSame('', slash_item('cookieDomain')); // empty, so untouched
+        $this->assertSame('en/', slash_item('defaultLocale')); // slash appended
     }
 
     protected function injectSessionMock()
@@ -425,7 +425,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         force_https();
 
-        $this->assertEquals('https://example.com/', Services::response()->header('Location')->getValue());
+        $this->assertSame('https://example.com/', Services::response()->header('Location')->getValue());
     }
 
     /**
@@ -433,7 +433,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testCleanPathActuallyCleaningThePaths($input, $expected)
     {
-        $this->assertEquals($expected, clean_path($input));
+        $this->assertSame($expected, clean_path($input));
     }
 
     public function dirtyPathsProvider()

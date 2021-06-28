@@ -78,8 +78,8 @@ final class CLITest extends CIUnitTestCase
 
     public function testIsWindows()
     {
-        $this->assertEquals(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());
-        $this->assertEquals(defined('PHP_WINDOWS_VERSION_MAJOR'), CLI::isWindows());
+        $this->assertSame(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), CLI::isWindows());
     }
 
     public function testNewLine()
@@ -110,8 +110,8 @@ final class CLITest extends CIUnitTestCase
         putenv('NO_COLOR=1');
 
         CLI::init(); // force re-check on env
-        $this->assertEquals('test', CLI::color('test', 'white', 'green'));
-        putenv($nocolor ? "NO_COLOR=$nocolor" : 'NO_COLOR');
+        $this->assertSame('test', CLI::color('test', 'white', 'green'));
+        putenv($nocolor ? "NO_COLOR={$nocolor}" : 'NO_COLOR');
     }
 
     public function testColorSupportOnHyperTerminals()
@@ -120,8 +120,8 @@ final class CLITest extends CIUnitTestCase
         putenv('TERM_PROGRAM=Hyper');
 
         CLI::init(); // force re-check on env
-        $this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
-        putenv($termProgram ? "TERM_PROGRAM=$termProgram" : 'TERM_PROGRAM');
+        $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+        putenv($termProgram ? "TERM_PROGRAM={$termProgram}" : 'TERM_PROGRAM');
     }
 
     public function testStreamSupports()
@@ -135,7 +135,7 @@ final class CLITest extends CIUnitTestCase
         // After the tests on NO_COLOR and TERM_PROGRAM above,
         // the $isColored variable is rigged. So we reset this.
         CLI::init();
-        $this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+        $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
     }
 
     public function testPrint()
@@ -143,7 +143,7 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test');
         $expected = 'test';
 
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testPrintForeground()
@@ -151,7 +151,7 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test', 'red');
         $expected = "\033[0;31mtest\033[0m";
 
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testPrintBackground()
@@ -159,42 +159,42 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test', 'red', 'green');
         $expected = "\033[0;31m\033[42mtest\033[0m";
 
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWrite()
     {
         CLI::write('test');
         $expected = PHP_EOL . 'test' . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteForeground()
     {
         CLI::write('test', 'red');
         $expected = "\033[0;31mtest\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteForegroundWithColorBefore()
     {
         CLI::write(CLI::color('green', 'green') . ' red', 'red');
         $expected = "\033[0;31m\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteForegroundWithColorAfter()
     {
         CLI::write('red ' . CLI::color('green', 'green'), 'red');
         $expected = "\033[0;31mred \033[0;32mgreen\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteBackground()
     {
         CLI::write('test', 'red', 'green');
         $expected = "\033[0;31m\033[42mtest\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testError()
@@ -203,7 +203,7 @@ final class CLITest extends CIUnitTestCase
         CLI::error('test');
         // red expected cuz stderr
         $expected = "\033[1;31mtest\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testErrorForeground()
@@ -211,7 +211,7 @@ final class CLITest extends CIUnitTestCase
         $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
         CLI::error('test', 'purple');
         $expected = "\033[0;35mtest\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testErrorBackground()
@@ -219,7 +219,7 @@ final class CLITest extends CIUnitTestCase
         $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
         CLI::error('test', 'purple', 'green');
         $expected = "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testShowProgress()
@@ -245,7 +245,7 @@ final class CLITest extends CIUnitTestCase
                     "\033[1A[\033[32m##########\033[0m] 100% Complete" . PHP_EOL .
                     'third.' . PHP_EOL .
                     "[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL;
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testShowProgressWithoutBar()
@@ -256,15 +256,15 @@ final class CLITest extends CIUnitTestCase
         CLI::showProgress(false, 20);
 
         $expected = 'first.' . PHP_EOL . "\007\007\007";
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWrap()
     {
-        $this->assertEquals('', CLI::wrap(''));
-        $this->assertEquals('1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1));
-        $this->assertEquals('1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2));
-        $this->assertEquals('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321'));
+        $this->assertSame('', CLI::wrap(''));
+        $this->assertSame('1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1));
+        $this->assertSame('1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2));
+        $this->assertSame('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321'));
     }
 
     public function testParseCommand()
@@ -277,12 +277,12 @@ final class CLITest extends CIUnitTestCase
         $_SERVER['argc'] = 3;
         CLI::init();
         $this->assertNull(CLI::getSegment(3));
-        $this->assertEquals('b', CLI::getSegment(1));
-        $this->assertEquals('c', CLI::getSegment(2));
-        $this->assertEquals('b/c', CLI::getURI());
-        $this->assertEquals([], CLI::getOptions());
+        $this->assertSame('b', CLI::getSegment(1));
+        $this->assertSame('c', CLI::getSegment(2));
+        $this->assertSame('b/c', CLI::getURI());
+        $this->assertSame([], CLI::getOptions());
         $this->assertEmpty(CLI::getOptionString());
-        $this->assertEquals(['b', 'c'], CLI::getSegments());
+        $this->assertSame(['b', 'c'], CLI::getSegments());
     }
 
     public function testParseCommandMixed()
@@ -302,15 +302,15 @@ final class CLITest extends CIUnitTestCase
         ];
         CLI::init();
         $this->assertNull(CLI::getSegment(7));
-        $this->assertEquals('b', CLI::getSegment(1));
-        $this->assertEquals('c', CLI::getSegment(2));
-        $this->assertEquals('d', CLI::getSegment(3));
-        $this->assertEquals(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
-        $this->assertEquals(['parm' => 'pvalue', 'fix' => null, 'opt-in' => 'sure'], CLI::getOptions());
-        $this->assertEquals('-parm pvalue -fix -opt-in sure ', CLI::getOptionString());
-        $this->assertEquals('-parm pvalue -fix -opt-in sure', CLI::getOptionString(false, true));
-        $this->assertEquals('--parm pvalue --fix --opt-in sure ', CLI::getOptionString(true));
-        $this->assertEquals('--parm pvalue --fix --opt-in sure', CLI::getOptionString(true, true));
+        $this->assertSame('b', CLI::getSegment(1));
+        $this->assertSame('c', CLI::getSegment(2));
+        $this->assertSame('d', CLI::getSegment(3));
+        $this->assertSame(['b', 'c', 'd', 'd2', 'da-sh'], CLI::getSegments());
+        $this->assertSame(['parm' => 'pvalue', 'fix' => null, 'opt-in' => 'sure'], CLI::getOptions());
+        $this->assertSame('-parm pvalue -fix -opt-in sure ', CLI::getOptionString());
+        $this->assertSame('-parm pvalue -fix -opt-in sure', CLI::getOptionString(false, true));
+        $this->assertSame('--parm pvalue --fix --opt-in sure ', CLI::getOptionString(true));
+        $this->assertSame('--parm pvalue --fix --opt-in sure', CLI::getOptionString(true, true));
     }
 
     public function testParseCommandOption()
@@ -324,14 +324,14 @@ final class CLITest extends CIUnitTestCase
             'd',
         ];
         CLI::init();
-        $this->assertEquals(['parm' => 'pvalue'], CLI::getOptions());
-        $this->assertEquals('pvalue', CLI::getOption('parm'));
-        $this->assertEquals('-parm pvalue ', CLI::getOptionString());
-        $this->assertEquals('-parm pvalue', CLI::getOptionString(false, true));
-        $this->assertEquals('--parm pvalue ', CLI::getOptionString(true));
-        $this->assertEquals('--parm pvalue', CLI::getOptionString(true, true));
+        $this->assertSame(['parm' => 'pvalue'], CLI::getOptions());
+        $this->assertSame('pvalue', CLI::getOption('parm'));
+        $this->assertSame('-parm pvalue ', CLI::getOptionString());
+        $this->assertSame('-parm pvalue', CLI::getOptionString(false, true));
+        $this->assertSame('--parm pvalue ', CLI::getOptionString(true));
+        $this->assertSame('--parm pvalue', CLI::getOptionString(true, true));
         $this->assertNull(CLI::getOption('bogus'));
-        $this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
+        $this->assertSame(['b', 'c', 'd'], CLI::getSegments());
     }
 
     public function testParseCommandMultipleOptions()
@@ -348,13 +348,13 @@ final class CLITest extends CIUnitTestCase
             'value 3',
         ];
         CLI::init();
-        $this->assertEquals(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
-        $this->assertEquals('pvalue', CLI::getOption('parm'));
-        $this->assertEquals('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
-        $this->assertEquals('-parm pvalue -p2 -p3 "value 3"', CLI::getOptionString(false, true));
-        $this->assertEquals('--parm pvalue --p2 --p3 "value 3" ', CLI::getOptionString(true));
-        $this->assertEquals('--parm pvalue --p2 --p3 "value 3"', CLI::getOptionString(true, true));
-        $this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
+        $this->assertSame(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
+        $this->assertSame('pvalue', CLI::getOption('parm'));
+        $this->assertSame('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
+        $this->assertSame('-parm pvalue -p2 -p3 "value 3"', CLI::getOptionString(false, true));
+        $this->assertSame('--parm pvalue --p2 --p3 "value 3" ', CLI::getOptionString(true));
+        $this->assertSame('--parm pvalue --p2 --p3 "value 3"', CLI::getOptionString(true, true));
+        $this->assertSame(['b', 'c', 'd'], CLI::getSegments());
     }
 
     public function testWindow()
@@ -380,7 +380,7 @@ final class CLITest extends CIUnitTestCase
     public function testTable($tbody, $thead, $expected)
     {
         CLI::table($tbody, $thead);
-        $this->assertEquals(CITestStreamFilter::$buffer, $expected);
+        $this->assertSame(CITestStreamFilter::$buffer, $expected);
     }
 
     public function tableProvider()
@@ -470,8 +470,8 @@ final class CLITest extends CIUnitTestCase
 
     public function testStrlen()
     {
-        $this->assertEquals(18, mb_strlen(CLI::color('success', 'green')));
-        $this->assertEquals(7, CLI::strlen(CLI::color('success', 'green')));
-        $this->assertEquals(0, CLI::strlen(null));
+        $this->assertSame(18, mb_strlen(CLI::color('success', 'green')));
+        $this->assertSame(7, CLI::strlen(CLI::color('success', 'green')));
+        $this->assertSame(0, CLI::strlen(null));
     }
 }

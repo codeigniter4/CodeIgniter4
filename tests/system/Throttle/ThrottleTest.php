@@ -22,14 +22,14 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler = new Throttler($this->cache);
 
         // tokenTime should be 0 to start
-        $this->assertEquals(0, $throttler->getTokenTime());
+        $this->assertSame(0, $throttler->getTokenTime());
 
         // set $rate
         $rate = 1;    // allow 1 request per minute
 
         // first check just creates a bucket, so tokenTime should be 0
         $throttler->check('127.0.0.1', $rate, MINUTE);
-        $this->assertEquals(0, $throttler->getTokenTime());
+        $this->assertSame(0, $throttler->getTokenTime());
 
         // additional check affects tokenTime, so tokenTime should be 1 or greater
         $throttler->check('127.0.0.1', $rate, MINUTE);
@@ -41,7 +41,7 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler = new Throttler($this->cache);
 
         $this->assertTrue($throttler->check('127.0.0.1', 60, MINUTE));
-        $this->assertEquals(59, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame(59, $this->cache->get('throttler_127.0.0.1'));
     }
 
     public function testRemove()
@@ -68,7 +68,7 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler->check('127.0.0.1', 60, MINUTE);
         $throttler->check('127.0.0.1', 60, MINUTE);
 
-        $this->assertEquals(57, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame(57, $this->cache->get('throttler_127.0.0.1'));
     }
 
     public function testReturnsFalseIfBucketEmpty()
@@ -87,7 +87,7 @@ final class ThrottleTest extends CIUnitTestCase
         $rate = 60; // allow 1 per second
         $cost = 10;
         $throttler->check('127.0.0.1', $rate, MINUTE, $cost);
-        $this->assertEquals($rate - $cost, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame($rate - $cost, $this->cache->get('throttler_127.0.0.1'));
     }
 
     public function testUnderload()
@@ -96,12 +96,12 @@ final class ThrottleTest extends CIUnitTestCase
 
         $rate = 120; // allow 2 per second, in theory
         $throttler->check('127.0.0.1', $rate, MINUTE);
-        $this->assertEquals($rate - 1, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame($rate - 1, $this->cache->get('throttler_127.0.0.1'));
 
         $throttler->setTestTime(strtotime('+2 seconds')); // should be more tokens available
         $this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE));
         // but the bucket should not be over-filled
-        $this->assertEquals($rate - 1, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame($rate - 1, $this->cache->get('throttler_127.0.0.1'));
     }
 
     public function testOverload()
@@ -130,11 +130,11 @@ final class ThrottleTest extends CIUnitTestCase
 
         // Should be empty now.
         $this->assertFalse($throttler->check('127.0.0.1', $rate, MINUTE, $cost));
-        $this->assertEquals(0, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertSame(0, $this->cache->get('throttler_127.0.0.1'));
 
         $throttler = $throttler->setTestTime(strtotime('+10 seconds'));
 
         $this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE, 0));
-        $this->assertEquals(10, round($this->cache->get('throttler_127.0.0.1')));
+        $this->assertSame(10.0, round($this->cache->get('throttler_127.0.0.1')));
     }
 }

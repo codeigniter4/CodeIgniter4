@@ -18,8 +18,6 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
     }
 
-    //--------------------------------------------------------------------
-
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
     {
         $defaults = [
@@ -52,7 +50,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -69,7 +67,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -86,7 +84,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -105,7 +103,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -122,7 +120,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -137,7 +135,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals([], $routes);
+        $this->assertSame([], $routes);
     }
 
     //--------------------------------------------------------------------
@@ -156,7 +154,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -173,7 +171,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -191,7 +189,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -209,7 +207,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
-        $this->assertEquals($expects, $routes);
+        $this->assertSame($expects, $routes);
     }
 
     //--------------------------------------------------------------------
@@ -219,7 +217,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
         $routes->setDefaultController('godzilla');
 
-        $this->assertEquals('godzilla', $routes->getDefaultController());
+        $this->assertSame('godzilla', $routes->getDefaultController());
     }
 
     //--------------------------------------------------------------------
@@ -229,7 +227,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
         $routes->setDefaultMethod('biggerBox');
 
-        $this->assertEquals('biggerBox', $routes->getDefaultMethod());
+        $this->assertSame('biggerBox', $routes->getDefaultMethod());
     }
 
     //--------------------------------------------------------------------
@@ -269,7 +267,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'admin/users/list' => '\Users::list',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -289,7 +287,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'admin/users/list' => '\Users::list',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -310,7 +308,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'admin/users/list' => '\Admin\Users::list',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -330,7 +328,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'users/list' => '\Users::list',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -360,7 +358,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'admin/delegate/foo' => '\Users::foo',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -378,7 +376,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'from' => '\to',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -397,7 +395,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)'      => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('post');
@@ -407,7 +405,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos' => '\Photos::create',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('put');
@@ -417,7 +415,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)' => '\Photos::update/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('patch');
@@ -427,7 +425,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)' => '\Photos::update/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('delete');
@@ -437,7 +435,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)' => '\Photos::delete/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     // Similar to the above, but with a more typical endpoint
@@ -456,7 +454,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'api/photos/(.*)'      => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('post');
@@ -466,7 +464,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'api/photos' => '\Photos::create',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('put');
@@ -476,7 +474,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'api/photos/(.*)' => '\Photos::update/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('patch');
@@ -486,7 +484,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'api/photos/(.*)' => '\Photos::update/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('delete');
@@ -496,7 +494,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'api/photos/(.*)' => '\Photos::delete/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     public function testPresenterScaffoldsCorrectly()
@@ -515,7 +513,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)'        => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
         $routes->setHTTPVerb('post');
@@ -528,7 +526,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos'             => '\Photos::create',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -547,7 +545,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)'      => '\Gallery::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -566,7 +564,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/([0-9]+)'      => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     public function testResourcesWithDefaultPlaceholder()
@@ -584,7 +582,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/([0-9]+)'      => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     public function testResourcesWithBogusDefaultPlaceholder()
@@ -602,7 +600,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)'      => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -618,7 +616,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos' => '\Photos::index',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -635,7 +633,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'photos/(.*)' => '\Photos::show/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -649,11 +647,11 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expected = [
             'photos'             => '\Photos::create',
-            'photos/(.*)'        => '\Photos::update/$1',
             'photos/(.*)/delete' => '\Photos::delete/$1',
+            'photos/(.*)'        => '\Photos::update/$1',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -666,12 +664,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->match(['get', 'post'], 'here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
 
         Services::request()->setMethod('post');
         $routes = $this->getCollector();
         $routes->match(['get', 'post'], 'here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -684,7 +682,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->get('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -697,7 +695,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->post('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -711,7 +709,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('here', 'there');
         $routes->post('from', 'to');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -724,7 +722,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->put('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -737,7 +735,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->delete('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -750,7 +748,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->head('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -763,7 +761,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->patch('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -776,7 +774,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->options('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -788,7 +786,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->cli('here', 'there');
-        $this->assertEquals($expected, $routes->getRoutes('cli'));
+        $this->assertSame($expected, $routes->getRoutes('cli'));
     }
 
     //--------------------------------------------------------------------
@@ -816,7 +814,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             }
         );
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -829,7 +827,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('myController::goto', 'string', 13);
 
-        $this->assertEquals('/path/string/to/13', $match);
+        $this->assertSame('/path/string/to/13', $match);
     }
 
     //--------------------------------------------------------------------
@@ -842,7 +840,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('myController::goto', 'string', 13);
 
-        $this->assertEquals('/en/path/string/to/13', $match);
+        $this->assertSame('/en/path/string/to/13', $match);
     }
 
     //--------------------------------------------------------------------
@@ -887,7 +885,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->add('{locale}/contact', 'myController::goto');
 
-        $this->assertEquals('/en/contact', $routes->reverseRoute('myController::goto'));
+        $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
     //--------------------------------------------------------------------
@@ -898,7 +896,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->add('users', 'Users::index', ['as' => 'namedRoute']);
 
-        $this->assertEquals('/users', $routes->reverseRoute('namedRoute'));
+        $this->assertSame('/users', $routes->reverseRoute('namedRoute'));
     }
 
     //--------------------------------------------------------------------
@@ -909,7 +907,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->add('{locale}/users', 'Users::index', ['as' => 'namedRoute']);
 
-        $this->assertEquals('/en/users', $routes->reverseRoute('namedRoute'));
+        $this->assertSame('/en/users', $routes->reverseRoute('namedRoute'));
     }
 
     //--------------------------------------------------------------------
@@ -922,7 +920,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('namedRoute', 'string', 13);
 
-        $this->assertEquals('/path/string/to/13', $match);
+        $this->assertSame('/path/string/to/13', $match);
     }
 
     //--------------------------------------------------------------------
@@ -935,7 +933,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('namedRoute', 'string', 13);
 
-        $this->assertEquals('/en/path/string/to/13', $match);
+        $this->assertSame('/en/path/string/to/13', $match);
     }
 
     //--------------------------------------------------------------------
@@ -963,9 +961,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match2 = $routes->reverseRoute('namedRoute2');
         $match3 = $routes->reverseRoute('namedRoute3');
 
-        $this->assertEquals('/user/insert', $match1);
-        $this->assertEquals('/user/insert', $match2);
-        $this->assertEquals('/user/insert', $match3);
+        $this->assertSame('/user/insert', $match1);
+        $this->assertSame('/user/insert', $match2);
+        $this->assertSame('/user/insert', $match3);
     }
 
     //--------------------------------------------------------------------
@@ -995,9 +993,9 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match2 = $routes->reverseRoute('namedRoute2');
         $match3 = $routes->reverseRoute('namedRoute3');
 
-        $this->assertEquals('/en/user/insert', $match1);
-        $this->assertEquals('/en/user/insert', $match2);
-        $this->assertEquals('/en/user/insert', $match3);
+        $this->assertSame('/en/user/insert', $match1);
+        $this->assertSame('/en/user/insert', $match2);
+        $this->assertSame('/en/user/insert', $match3);
     }
 
     //--------------------------------------------------------------------
@@ -1011,8 +1009,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('/system/(this|that)', 'myController::system/$1', ['as' => 'pipedRoute']);
 
-        $this->assertEquals('/system/this', $routes->reverseRoute('pipedRoute', 'this'));
-        $this->assertEquals('/system/that', $routes->reverseRoute('pipedRoute', 'that'));
+        $this->assertSame('/system/this', $routes->reverseRoute('pipedRoute', 'this'));
+        $this->assertSame('/system/that', $routes->reverseRoute('pipedRoute', 'that'));
     }
 
     //--------------------------------------------------------------------
@@ -1025,7 +1023,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('testRouter', 1, 2);
 
-        $this->assertEquals('/test/1/2', $match);
+        $this->assertSame('/test/1/2', $match);
     }
 
     //--------------------------------------------------------------------
@@ -1038,7 +1036,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('testRouter', 1, 2);
 
-        $this->assertEquals('/en/test/1/2', $match);
+        $this->assertSame('/en/test/1/2', $match);
     }
 
     //--------------------------------------------------------------------
@@ -1054,10 +1052,10 @@ final class RouteCollectionTest extends CIUnitTestCase
             'users' => 'users/index',
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
         $this->assertTrue($routes->isRedirect('users'));
-        $this->assertEquals(307, $routes->getRedirectCode('users'));
-        $this->assertEquals(0, $routes->getRedirectCode('bosses'));
+        $this->assertSame(307, $routes->getRedirectCode('users'));
+        $this->assertSame(0, $routes->getRedirectCode('bosses'));
     }
 
     public function testAddRedirectNamed()
@@ -1068,15 +1066,13 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->addRedirect('users', 'namedRoute', 307);
 
         $expected = [
-            'users' => [
-                'zombies' => '\Zombies::index',
-            ],
             'zombies' => '\Zombies::index',
+            'users'   => ['zombies' => '\Zombies::index'],
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
         $this->assertTrue($routes->isRedirect('users'));
-        $this->assertEquals(307, $routes->getRedirectCode('users'));
+        $this->assertSame(307, $routes->getRedirectCode('users'));
     }
 
     public function testAddRedirectGetMethod()
@@ -1087,15 +1083,13 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->addRedirect('users', 'namedRoute', 307);
 
         $expected = [
-            'users' => [
-                'zombies' => '\Zombies::index',
-            ],
             'zombies' => '\Zombies::index',
+            'users'   => ['zombies' => '\Zombies::index'],
         ];
 
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
         $this->assertTrue($routes->isRedirect('users'));
-        $this->assertEquals(307, $routes->getRedirectCode('users'));
+        $this->assertSame(307, $routes->getRedirectCode('users'));
     }
 
     //--------------------------------------------------------------------
@@ -1116,7 +1110,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithSubdomainMissing()
@@ -1132,7 +1126,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithDifferentSubdomain()
@@ -1148,7 +1142,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithWWWSubdomain()
@@ -1164,7 +1158,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithDotCoSubdomain()
@@ -1180,7 +1174,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithDifferentSubdomainMissing()
@@ -1196,7 +1190,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -1217,7 +1211,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
         ];
 
-        $this->assertEquals($expects, $routes->getRoutes());
+        $this->assertSame($expects, $routes->getRoutes());
     }
 
     //--------------------------------------------------------------------
@@ -1234,7 +1228,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $match = $routes->reverseRoute('login');
 
-        $this->assertEquals('/login', $match);
+        $this->assertSame('/login', $match);
     }
 
     public function testReverseRoutingWithClosureNoMatch()
@@ -1251,9 +1245,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWillDiscoverLocal()
     {
-        $config = [
-            'SampleSpace' => TESTPATH . '_support',
-        ];
+        $config = ['SampleSpace' => TESTPATH . '_support'];
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = true;
@@ -1263,7 +1255,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertEquals($match['testing'], '\TestController::index');
+        $this->assertSame($match['testing'], '\TestController::index');
     }
 
     //--------------------------------------------------------------------
@@ -1284,7 +1276,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $match = $routes->getRoutes();
 
         $this->assertArrayHasKey('testing', $match);
-        $this->assertEquals($match['testing'], '\MainRoutes::index');
+        $this->assertSame($match['testing'], '\MainRoutes::index');
     }
 
     //--------------------------------------------------------------------
@@ -1306,7 +1298,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $options = $routes->getRoutesOptions('administrator');
 
-        $this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
+        $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
     public function testRoutesOptionsForDifferentVerbs()
@@ -1343,15 +1335,15 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $options = $routes->getRoutesOptions('administrator');
 
-        $this->assertEquals($options, ['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz']);
+        $this->assertSame($options, ['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz']);
 
         $options = $routes->setHTTPVerb('post')->getRoutesOptions('administrator');
 
-        $this->assertEquals($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
+        $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
 
         $options = $routes->setHTTPVerb('get')->getRoutesOptions('administrator', 'post');
 
-        $this->assertEquals($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
+        $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
     }
 
     public function testRouteGroupWithFilterSimple()
@@ -1369,8 +1361,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertEquals('role', $routes->getFilterForRoute('admin/users'));
-        $this->assertEquals('', $routes->getFilterForRoute('admin/bosses'));
+        $this->assertSame('role', $routes->getFilterForRoute('admin/users'));
+        $this->assertSame('', $routes->getFilterForRoute('admin/bosses'));
     }
 
     public function testRouteGroupWithFilterWithParams()
@@ -1388,7 +1380,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertEquals('role:admin,manager', $routes->getFilterForRoute('admin/users'));
+        $this->assertSame('role:admin,manager', $routes->getFilterForRoute('admin/users'));
     }
 
     //--------------------------------------------------------------------
@@ -1407,7 +1399,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->set404Override('Explode');
-        $this->assertEquals('Explode', $routes->get404Override());
+        $this->assertSame('Explode', $routes->get404Override());
     }
 
     public function test404OverrideCallable()
@@ -1430,7 +1422,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
         $expected = ['users/([0-9]+)' => '\users/show/$2'];
-        $this->assertEquals($expected, $routes->getRoutes());
+        $this->assertSame($expected, $routes->getRoutes());
     }
 
     /**
@@ -1447,7 +1439,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
-        $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithSubdomainMismatch()
@@ -1483,7 +1475,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithGenericSubdomainMismatch()
@@ -1495,7 +1487,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithGenericSubdomainNot()
@@ -1507,7 +1499,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithoutSubdomainMatch()
@@ -1543,7 +1535,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
-        $this->assertEquals('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
     }
 
     /**
@@ -1569,7 +1561,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Site\CDoc';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     public function testRouteOverwritingTwoRules()
@@ -1590,7 +1582,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         // the second rule applies, so overwrites the first
         $expects = '\App\Controllers\Home';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     public function testRouteOverwritingTwoRulesLastApplies()
@@ -1610,7 +1602,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Site\CDoc';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     public function testRouteOverwritingMatchingSubdomain()
@@ -1630,7 +1622,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Site\CDoc';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     public function testRouteOverwritingMatchingHost()
@@ -1650,7 +1642,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Site\CDoc';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     /**
@@ -1669,7 +1661,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Core\Home';
 
-        $this->assertEquals($expects, $router->handle('/'));
+        $this->assertSame($expects, $router->handle('/'));
     }
 
     public function testZeroAsURIPath()
@@ -1683,7 +1675,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = '\App\Controllers\Core\Home';
 
-        $this->assertEquals($expects, $router->handle('/0'));
+        $this->assertSame($expects, $router->handle('/0'));
     }
 
     public function provideRouteDefaultNamespace()
@@ -1706,7 +1698,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $router = new Router($routes, Services::request());
         $router->handle('/product');
 
-        $this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
+        $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
     }
 
     /**
@@ -1722,7 +1714,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $router = new Router($routes, Services::request());
         $router->handle('/product');
 
-        $this->assertEquals('\App\\Controllers\\Product', $router->controllerName());
+        $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
     }
 
     public function testRoutePriorityDetected()
@@ -1745,12 +1737,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection = $this->getCollector();
 
         $collection->add('string', 'Controller::method', ['priority' => 'string']);
-        $this->assertEquals(0, $collection->getRoutesOptions('string')['priority']);
+        $this->assertSame(0, $collection->getRoutesOptions('string')['priority']);
 
         $collection->add('negative-integer', 'Controller::method', ['priority' => -1]);
-        $this->assertEquals(1, $collection->getRoutesOptions('negative-integer')['priority']);
+        $this->assertSame(1, $collection->getRoutesOptions('negative-integer')['priority']);
 
         $collection->add('string-negative-integer', 'Controller::method', ['priority' => '-1']);
-        $this->assertEquals(1, $collection->getRoutesOptions('string-negative-integer')['priority']);
+        $this->assertSame(1, $collection->getRoutesOptions('string-negative-integer')['priority']);
     }
 }

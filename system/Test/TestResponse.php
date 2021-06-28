@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Exception;
+use PHPUnit\Framework\Constraint\IsEqual;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -151,7 +152,7 @@ class TestResponse extends TestCase
      */
     public function assertStatus(int $code)
     {
-        $this->assertEquals($code, $this->response->getStatusCode());
+        $this->assertSame($code, $this->response->getStatusCode());
     }
 
     /**
@@ -275,9 +276,9 @@ class TestResponse extends TestCase
         }
 
         if (is_scalar($value)) {
-            $this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
+            $this->assertSame($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
         } else {
-            $this->assertEquals($value, $_SESSION[$key], "The value of '{$key}' does not match expected value.");
+            $this->assertSame($value, $_SESSION[$key], "The value of '{$key}' does not match expected value.");
         }
     }
 
@@ -310,7 +311,7 @@ class TestResponse extends TestCase
         $this->assertTrue($this->response->hasHeader($key), "'{$key}' is not a valid Response header.");
 
         if ($value !== null) {
-            $this->assertEquals($value, $this->response->getHeaderLine($key), "The value of '{$key}' header ({$this->response->getHeaderLine($key)}) does not match expected value.");
+            $this->assertSame($value, $this->response->getHeaderLine($key), "The value of '{$key}' header ({$this->response->getHeaderLine($key)}) does not match expected value.");
         }
     }
 
@@ -405,7 +406,7 @@ class TestResponse extends TestCase
         if ($strict) {
             $this->assertSame($json, $patched, 'Response does not contain a matching JSON fragment.');
         } else {
-            $this->assertEquals($json, $patched, 'Response does not contain a matching JSON fragment.');
+            $this->assertThat($patched, new IsEqual($json), 'Response does not contain a matching JSON fragment.');
         }
     }
 
