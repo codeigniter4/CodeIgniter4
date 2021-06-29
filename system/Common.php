@@ -1264,3 +1264,24 @@ if (! function_exists('trait_uses_recursive')) {
         return $traits;
     }
 }
+
+if (! function_exists('request_is')) {
+    /**
+     * Check if a request meets the desired type
+     *
+     * @param string $type
+     *
+     * @return boolean
+     */
+    function request_is(string $type): bool
+    {
+        $request = Services::request(null, true);
+
+        if ($type === 'ajax')
+        {
+            return (bool) $request->isAJAX();
+        }
+
+        return (bool) $request->getMethod() === $type;
+    }
+}
