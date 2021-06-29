@@ -17,6 +17,30 @@ use Config\Cookie as CookieConfig;
 use DateTimeInterface;
 use InvalidArgumentException;
 use LogicException;
+use function array_map;
+use function array_shift;
+use function explode;
+use function gettype;
+use function gmdate;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_int;
+use function is_numeric;
+use function is_string;
+use function preg_split;
+use function property_exists;
+use function rawurlencode;
+use function sprintf;
+use function str_replace;
+use function str_split;
+use function strpbrk;
+use function strpos;
+use function strtolower;
+use function strtotime;
+use function time;
+use function ucfirst;
+use function urldecode;
 
 /**
  * A `Cookie` class represents an immutable HTTP cookie value object.

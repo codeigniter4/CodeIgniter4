@@ -13,6 +13,11 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
 use InvalidArgumentException;
+use function is_array;
+use function is_string;
+use function json_encode;
+use function md5;
+use function strpos;
 
 /**
  * Class Config

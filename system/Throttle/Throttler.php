@@ -12,6 +12,8 @@
 namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Cache\CacheInterface;
+use function max;
+use function time;
 
 /**
  * Class Throttler

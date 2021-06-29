@@ -15,6 +15,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use Exception;
+use function time;
 
 /**
  * @internal

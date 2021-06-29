@@ -14,6 +14,10 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use function array_key_exists;
+use function basename;
+use function gmdate;
+use function is_string;
 
 /**
  * Generates a migration file for database sessions.

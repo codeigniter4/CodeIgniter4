@@ -11,6 +11,14 @@
 
 namespace CodeIgniter\HTTP;
 
+use function array_unshift;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function key;
+
 /**
  * Class Header
  *

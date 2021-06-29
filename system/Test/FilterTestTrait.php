@@ -22,6 +22,11 @@ use Config\Filters as FiltersConfig;
 use Config\Services;
 use InvalidArgumentException;
 use RuntimeException;
+use function get_class;
+use function implode;
+use function in_array;
+use function is_string;
+use function strpos;
 
 /**
  * Filter Test Trait

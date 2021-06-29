@@ -18,6 +18,17 @@ use Config\Services;
 use Exception;
 use PHPUnit\Framework\Constraint\IsEqual;
 use PHPUnit\Framework\TestCase;
+use function array_replace_recursive;
+use function is_array;
+use function is_object;
+use function is_scalar;
+use function is_string;
+use function json_decode;
+use function method_exists;
+use function str_replace;
+use function strtolower;
+use function time;
+use function trim;
 
 /**
  * Test Response Class

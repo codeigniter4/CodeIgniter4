@@ -12,6 +12,8 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Validation\FormatRules;
+use function strtolower;
+use function strtoupper;
 
 /**
  * Representation of an HTTP request.

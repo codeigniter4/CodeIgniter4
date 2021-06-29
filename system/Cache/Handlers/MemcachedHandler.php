@@ -16,6 +16,12 @@ use Config\Cache;
 use Exception;
 use Memcache;
 use Memcached;
+use function array_merge;
+use function class_exists;
+use function count;
+use function extension_loaded;
+use function is_array;
+use function time;
 
 /**
  * Mamcached cache handler

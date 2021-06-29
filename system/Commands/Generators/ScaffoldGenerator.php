@@ -14,6 +14,7 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use function array_merge;
 
 /**
  * Generates a complete set of scaffold files.

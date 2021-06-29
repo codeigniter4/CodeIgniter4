@@ -21,6 +21,12 @@ use Config\Services;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Throwable;
+use function class_exists;
+use function is_callable;
+use function is_string;
+use function method_exists;
+use function ob_get_clean;
+use function ob_start;
 
 /**
  * Controller Test Trait

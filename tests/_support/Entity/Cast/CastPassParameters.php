@@ -12,6 +12,7 @@
 namespace Tests\Support\Entity\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
+use function json_encode;
 
 class CastPassParameters extends BaseCast
 {

@@ -13,6 +13,14 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use function file_put_contents;
+use function str_replace;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function time;
+use const DIRECTORY_SEPARATOR;
+use const STDERR;
+use const STDOUT;
 
 /**
  * @internal

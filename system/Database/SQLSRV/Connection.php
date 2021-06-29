@@ -15,6 +15,34 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 use stdClass;
+use function array_map;
+use function array_shift;
+use function count;
+use function defined;
+use function explode;
+use function implode;
+use function in_array;
+use function is_array;
+use function preg_match;
+use function preg_replace;
+use function sprintf;
+use function sqlsrv_begin_transaction;
+use function sqlsrv_close;
+use function sqlsrv_commit;
+use function sqlsrv_configure;
+use function sqlsrv_connect;
+use function sqlsrv_errors;
+use function sqlsrv_query;
+use function sqlsrv_rollback;
+use function sqlsrv_rows_affected;
+use function sqlsrv_server_info;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function trim;
+use const SQLSRV_CURSOR_CLIENT_BUFFERED;
+use const SQLSRV_ENC_CHAR;
+use const SQLSRV_ERR_ERRORS;
 
 /**
  * Connection for SQLSRV

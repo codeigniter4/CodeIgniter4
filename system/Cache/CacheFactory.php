@@ -14,6 +14,8 @@ namespace CodeIgniter\Cache;
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
+use function array_key_exists;
+use function is_array;
 
 /**
  * A factory for loading the desired

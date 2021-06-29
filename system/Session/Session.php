@@ -17,6 +17,30 @@ use Config\Cookie as CookieConfig;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
+use function array_fill_keys;
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function ceil;
+use function in_array;
+use function ini_get;
+use function ini_set;
+use function is_array;
+use function is_int;
+use function is_string;
+use function preg_match;
+use function session_destroy;
+use function session_id;
+use function session_regenerate_id;
+use function session_set_cookie_params;
+use function session_set_save_handler;
+use function session_start;
+use function session_status;
+use function setcookie;
+use function strtolower;
+use function time;
+use function ucfirst;
+use const PHP_SESSION_ACTIVE;
 
 /**
  * Implementation of CodeIgniter session container.

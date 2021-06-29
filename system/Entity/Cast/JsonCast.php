@@ -14,6 +14,15 @@ namespace CodeIgniter\Entity\Cast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use JsonException;
 use stdClass;
+use function function_exists;
+use function in_array;
+use function is_numeric;
+use function is_string;
+use function json_decode;
+use function json_encode;
+use function strlen;
+use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_UNICODE;
 
 /**
  * Class JsonCast

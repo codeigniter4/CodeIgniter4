@@ -17,6 +17,13 @@ use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
+use function date;
+use function date_default_timezone_get;
+use function date_default_timezone_set;
+use function serialize;
+use function strtotime;
+use function time;
+use function unserialize;
 
 /**
  * @internal
@@ -90,7 +97,7 @@ final class TimeTest extends CIUnitTestCase
             'yyyy-MM-dd HH:mm:ss'
         );
 
-        $time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
+        $time = new Time('now', new DateTimeZone('Europe/London'), 'fr_FR');
 
         $this->assertSame($formatter->format($time), (string) $time);
     }
@@ -101,13 +108,13 @@ final class TimeTest extends CIUnitTestCase
 
         $obj = $time->toDateTime();
 
-        $this->assertInstanceOf(\DateTime::class, $obj);
+        $this->assertInstanceOf(DateTime::class, $obj);
     }
 
     public function testNow()
     {
         $time  = Time::now();
-        $time1 = new \DateTime();
+        $time1 = new DateTime();
 
         $this->assertInstanceOf(Time::class, $time);
         $this->assertSame($time->getTimestamp(), $time1->getTimestamp());
@@ -116,7 +123,7 @@ final class TimeTest extends CIUnitTestCase
     public function testParse()
     {
         $time  = Time::parse('next Tuesday', 'America/Chicago');
-        $time1 = new \DateTime('now', new \DateTimeZone('America/Chicago'));
+        $time1 = new DateTime('now', new DateTimeZone('America/Chicago'));
         $time1->modify('next Tuesday');
 
         $this->assertSame($time->getTimestamp(), $time1->getTimestamp());
@@ -134,7 +141,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('2017-01-12 00:00', 'Europe/London');
 
-        $expects = new \DateTime('2017-01-12', new \DateTimeZone('Europe/London'));
+        $expects = new DateTime('2017-01-12', new DateTimeZone('Europe/London'));
 
         $this->assertSame($expects->format('Y-m-d H:i:s'), $time->toDateTimeString());
     }
@@ -204,7 +211,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromFormat()
     {
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
 
         Time::setTestNow($now);
         $time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
@@ -222,7 +229,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromFormatWithTimezoneObject()
     {
-        $tz = new \DateTimeZone('Europe/London');
+        $tz = new DateTimeZone('Europe/London');
 
         $time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
@@ -422,7 +429,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $instance = Time::now()->getTimezone();
 
-        $this->assertInstanceOf(\DateTimeZone::class, $instance);
+        $this->assertInstanceOf(DateTimeZone::class, $instance);
     }
 
     public function testGetTimezonename()
@@ -789,7 +796,7 @@ final class TimeTest extends CIUnitTestCase
     public function testEqualWithDateTime()
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
-        $time2 = new \DateTime('January 11, 2017 03:50:00', new \DateTimeZone('Europe/London'));
+        $time2 = new DateTime('January 11, 2017 03:50:00', new DateTimeZone('Europe/London'));
 
         $this->assertTrue($time1->equals($time2));
     }
@@ -797,7 +804,7 @@ final class TimeTest extends CIUnitTestCase
     public function testEqualWithSameDateTime()
     {
         $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
-        $time2 = new \DateTime('January 10, 2017 21:50:00', new \DateTimeZone('America/Chicago'));
+        $time2 = new DateTime('January 10, 2017 21:50:00', new DateTimeZone('America/Chicago'));
 
         $this->assertTrue($time1->equals($time2));
     }

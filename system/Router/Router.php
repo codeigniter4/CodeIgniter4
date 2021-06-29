@@ -15,6 +15,31 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
+use function array_filter;
+use function array_pad;
+use function array_search;
+use function array_shift;
+use function array_values;
+use function count;
+use function explode;
+use function is_array;
+use function is_callable;
+use function is_dir;
+use function is_file;
+use function is_string;
+use function key;
+use function ltrim;
+use function preg_match;
+use function preg_replace;
+use function preg_split;
+use function sscanf;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function trim;
+use function ucfirst;
+use function urldecode;
 
 /**
  * Request router.

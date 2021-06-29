@@ -13,6 +13,17 @@ namespace CodeIgniter\Language;
 
 use Config\Services;
 use MessageFormatter;
+use function array_key_exists;
+use function array_replace_recursive;
+use function class_exists;
+use function current;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_file;
+use function strlen;
+use function strpos;
+use function substr;
 
 /**
  * Handle system messages and localization.

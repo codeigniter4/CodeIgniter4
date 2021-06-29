@@ -13,6 +13,11 @@ namespace CodeIgniter\HTTP\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
+use function array_pop;
+use function array_shift;
+use function key;
+use const UPLOAD_ERR_INI_SIZE;
+use const UPLOAD_ERR_OK;
 
 /**
  * @internal

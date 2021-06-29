@@ -13,6 +13,10 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use function ob_clean;
+use function ob_end_clean;
+use function ob_get_level;
+use function ob_start;
 
 /**
  * Test the CSP policy directive creation.

@@ -12,6 +12,8 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Debug\Exceptions;
+use function str_replace;
+use function strtolower;
 
 /**
  * Base Toolbar collector

@@ -13,6 +13,11 @@ namespace CodeIgniter\I18n;
 
 use DateTime;
 use IntlCalendar;
+use function abs;
+use function ceil;
+use function method_exists;
+use function strtolower;
+use function ucfirst;
 
 /**
  * Class TimeDifference

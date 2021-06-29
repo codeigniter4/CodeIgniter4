@@ -19,6 +19,8 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
+use function http_build_query;
+use function json_encode;
 
 /**
  * @internal

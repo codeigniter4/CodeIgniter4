@@ -15,6 +15,8 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
+use function array_values;
+use function iterator_to_array;
 
 /**
  * @internal

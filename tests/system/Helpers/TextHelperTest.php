@@ -12,6 +12,10 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use function pack;
+use function strlen;
+use function strpos;
+use function substr_count;
 
 /**
  * @internal

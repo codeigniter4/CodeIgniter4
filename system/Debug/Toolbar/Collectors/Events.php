@@ -13,6 +13,9 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\View\RendererInterface;
 use Config\Services;
+use function array_key_exists;
+use function count;
+use function number_format;
 
 /**
  * Views collector

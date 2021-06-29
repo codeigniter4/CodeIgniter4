@@ -11,6 +11,34 @@
 
 namespace CodeIgniter\Autoloader;
 
+use function array_merge;
+use function array_shift;
+use function array_unique;
+use function class_exists;
+use function explode;
+use function file_get_contents;
+use function implode;
+use function is_dir;
+use function is_file;
+use function ltrim;
+use function mb_strlen;
+use function mb_strpos;
+use function mb_substr;
+use function realpath;
+use function rtrim;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtr;
+use function substr;
+use function token_get_all;
+use function trim;
+use const DIRECTORY_SEPARATOR;
+use const T_CLASS;
+use const T_NS_SEPARATOR;
+use const T_STRING;
+use const T_WHITESPACE;
+
 /**
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.

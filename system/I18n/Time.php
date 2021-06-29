@@ -21,6 +21,19 @@ use Exception;
 use IntlCalendar;
 use IntlDateFormatter;
 use Locale;
+use function abs;
+use function ceil;
+use function date;
+use function date_default_timezone_get;
+use function explode;
+use function gmdate;
+use function is_numeric;
+use function is_string;
+use function max;
+use function method_exists;
+use function preg_match;
+use function strtotime;
+use function ucfirst;
 
 /**
  * Class Time

@@ -12,6 +12,13 @@
 namespace CodeIgniter\Debug;
 
 use Closure;
+use function gc_collect_cycles;
+use function max;
+use function memory_get_usage;
+use function microtime;
+use function number_format;
+use function str_replace;
+use function strtolower;
 
 /**
  * Iterator for debugging.

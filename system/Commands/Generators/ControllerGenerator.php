@@ -14,6 +14,9 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use function in_array;
+use function is_string;
+use function trim;
 
 /**
  * Generates a skeleton controller file.

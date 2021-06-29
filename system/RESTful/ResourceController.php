@@ -12,6 +12,7 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\API\ResponseTrait;
+use function in_array;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.

@@ -16,6 +16,9 @@ use CodeIgniter\Exceptions\ModelException;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
+use function array_column;
+use function date;
+use function is_object;
 
 /**
  * @internal

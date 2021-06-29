@@ -20,6 +20,8 @@ use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
+use function array_merge;
+use function time;
 
 /**
  * @runTestsInSeparateProcesses

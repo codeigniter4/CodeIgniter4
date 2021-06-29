@@ -13,6 +13,8 @@ namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
+use function round;
+use function strtotime;
 
 /**
  * @internal

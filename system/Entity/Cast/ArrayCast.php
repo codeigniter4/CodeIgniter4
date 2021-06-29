@@ -11,6 +11,11 @@
 
 namespace CodeIgniter\Entity\Cast;
 
+use function is_string;
+use function serialize;
+use function strpos;
+use function unserialize;
+
 /**
  * Class ArrayCast
  */

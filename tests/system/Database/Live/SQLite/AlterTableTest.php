@@ -17,6 +17,8 @@ use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use function in_array;
+use function strtolower;
 
 /**
  * @group DatabaseLive

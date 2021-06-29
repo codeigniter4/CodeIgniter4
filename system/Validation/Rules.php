@@ -13,6 +13,19 @@ namespace CodeIgniter\Validation;
 
 use Config\Database;
 use InvalidArgumentException;
+use function array_key_exists;
+use function array_map;
+use function array_pad;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_object;
+use function mb_strlen;
+use function preg_match;
+use function sscanf;
+use function strpos;
+use function trim;
 
 /**
  * Validation Rules.

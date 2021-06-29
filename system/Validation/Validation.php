@@ -17,6 +17,29 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Validation as ValidationConfig;
 use InvalidArgumentException;
+use function array_diff;
+use function array_key_exists;
+use function array_key_first;
+use function array_keys;
+use function array_merge;
+use function array_reduce;
+use function array_unique;
+use function count;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_string;
+use function method_exists;
+use function preg_match;
+use function preg_quote;
+use function preg_split;
+use function sprintf;
+use function str_replace;
+use function strpos;
+use function strtr;
+use function trim;
+use function unserialize;
 
 /**
  * Validator

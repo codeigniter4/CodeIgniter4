@@ -15,6 +15,13 @@ use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 use Redis;
 use RedisException;
+use function array_merge;
+use function extension_loaded;
+use function gettype;
+use function serialize;
+use function settype;
+use function time;
+use function unserialize;
 
 /**
  * Redis cache handler

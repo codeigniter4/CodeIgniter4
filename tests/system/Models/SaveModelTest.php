@@ -22,6 +22,7 @@ use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
+use function time;
 
 /**
  * @internal

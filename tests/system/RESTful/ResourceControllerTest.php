@@ -25,6 +25,11 @@ use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
 use Psr\Log\NullLogger;
 use Tests\Support\Models\UserModel;
+use function count;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_list_handlers;
+use function ob_start;
 
 /**
  * Exercise our ResourceController class.

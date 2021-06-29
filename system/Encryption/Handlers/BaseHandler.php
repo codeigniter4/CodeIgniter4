@@ -14,6 +14,9 @@ namespace CodeIgniter\Encryption\Handlers;
 use CodeIgniter\Encryption\EncrypterInterface;
 use Config\Encryption;
 use Psr\Log\LoggerInterface;
+use function get_object_vars;
+use function mb_substr;
+use function property_exists;
 
 /**
  * Base class for encryption handling

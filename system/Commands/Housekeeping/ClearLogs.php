@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Housekeeping;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use function array_key_exists;
 
 /**
  * ClearLogs command.

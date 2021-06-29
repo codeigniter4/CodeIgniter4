@@ -14,6 +14,13 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Memcached;
+use function in_array;
+use function ini_set;
+use function md5;
+use function preg_match_all;
+use function sleep;
+use function time;
+use const PREG_SET_ORDER;
 
 /**
  * Session handler using Memcache for persistence

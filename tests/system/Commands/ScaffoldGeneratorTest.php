@@ -13,6 +13,17 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use function file_exists;
+use function file_get_contents;
+use function preg_match;
+use function rmdir;
+use function str_replace;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function unlink;
+use const DIRECTORY_SEPARATOR;
+use const STDERR;
+use const STDOUT;
 
 /**
  * @internal

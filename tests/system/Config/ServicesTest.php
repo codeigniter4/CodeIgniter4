@@ -44,6 +44,7 @@ use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
 use Tests\Support\Config\Services as Services;
+use function rename;
 
 /**
  * @internal

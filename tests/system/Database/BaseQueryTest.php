@@ -13,6 +13,9 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use function microtime;
+use function number_format;
+use function round;
 
 /**
  * @internal

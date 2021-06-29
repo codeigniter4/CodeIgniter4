@@ -15,6 +15,8 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 use Throwable;
+use function array_key_exists;
+use function is_string;
 
 /**
  * Runs all of the migrations in reverse order, until they have

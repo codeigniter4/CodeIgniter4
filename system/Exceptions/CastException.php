@@ -11,6 +11,12 @@
 
 namespace CodeIgniter\Exceptions;
 
+use const JSON_ERROR_CTRL_CHAR;
+use const JSON_ERROR_DEPTH;
+use const JSON_ERROR_STATE_MISMATCH;
+use const JSON_ERROR_SYNTAX;
+use const JSON_ERROR_UTF8;
+
 /**
  * Cast Exceptions.
  *

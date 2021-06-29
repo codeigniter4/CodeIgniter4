@@ -14,6 +14,7 @@ namespace CodeIgniter\Encryption\Handlers;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use function extension_loaded;
 
 /**
  * @internal

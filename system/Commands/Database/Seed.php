@@ -16,6 +16,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\Seeder;
 use Config\Database;
 use Throwable;
+use function array_shift;
 
 /**
  * Runs the specified Seeder file to populate the database

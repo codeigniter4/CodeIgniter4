@@ -12,6 +12,14 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\Forge as BaseForge;
+use function array_keys;
+use function count;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function strpos;
+use function strtoupper;
 
 /**
  * Forge for MySQLi

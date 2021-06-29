@@ -13,6 +13,9 @@ namespace CodeIgniter\Cache\Handlers;
 
 use Config\Cache;
 use Exception;
+use function extension_loaded;
+use function ini_get;
+use function time;
 
 /**
  * Cache handler for WinCache from Microsoft & IIS.

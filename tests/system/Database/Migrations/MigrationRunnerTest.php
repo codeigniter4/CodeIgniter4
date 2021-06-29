@@ -22,6 +22,11 @@ use Config\Database;
 use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
+use function array_map;
+use function array_shift;
+use function is_numeric;
+use function str_replace;
+use function time;
 
 /**
  * @group DatabaseLive

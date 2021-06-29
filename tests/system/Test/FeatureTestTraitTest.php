@@ -13,11 +13,12 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use function json_encode;
 
 /**
- * @group                       DatabaseLive
+ * @group DatabaseLive
  * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ * @preserveGlobalState disabled
  *
  * @internal
  */

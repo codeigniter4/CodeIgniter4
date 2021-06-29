@@ -69,6 +69,9 @@ use Config\Services as AppServices;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
+use function is_array;
+use function session_status;
+use const PHP_SESSION_NONE;
 
 /**
  * Services Configuration file.

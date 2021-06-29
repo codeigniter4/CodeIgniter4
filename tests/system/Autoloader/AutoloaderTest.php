@@ -16,6 +16,10 @@ use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use UnnamespacedClass;
+use function defined;
+use function function_exists;
+use function rename;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @internal

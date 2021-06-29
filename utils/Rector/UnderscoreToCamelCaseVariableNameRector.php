@@ -25,6 +25,7 @@ use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\PackageBuilder\Strings\StringFormatConverter;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function sprintf;
 
 /**
  * Adapted from https://github.com/rectorphp/rector/blob/4578e6d8490c1acfbf59bb17c4537a672fa77193/rules/naming/src/Rector/Variable/UnderscoreToCamelCaseVariableNameRector.php

@@ -25,6 +25,32 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
+use function array_merge;
+use function ceil;
+use function class_exists;
+use function explode;
+use function extract;
+use function file_get_contents;
+use function header;
+use function http_response_code;
+use function is_array;
+use function is_dir;
+use function is_file;
+use function is_string;
+use function json_decode;
+use function json_encode;
+use function memory_get_peak_usage;
+use function mkdir;
+use function number_format;
+use function ob_get_clean;
+use function ob_start;
+use function preg_match;
+use function preg_replace;
+use function print_r;
+use function strpos;
+use function substr;
+use function time;
+use const PHP_EOL;
 
 /**
  * Displays a toolbar with bits of stats to aid a developer in debugging.

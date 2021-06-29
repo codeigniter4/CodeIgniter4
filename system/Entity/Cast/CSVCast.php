@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Entity\Cast;
 
+use function explode;
+use function implode;
+
 /**
  * Class CSVCast
  */

@@ -12,6 +12,8 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Database\Query;
+use function array_map;
+use function count;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.

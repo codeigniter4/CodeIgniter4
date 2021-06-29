@@ -14,6 +14,17 @@ namespace CodeIgniter\HTTP\Files;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use function closedir;
+use function copy;
+use function file_exists;
+use function file_put_contents;
+use function is_dir;
+use function mkdir;
+use function opendir;
+use function readdir;
+use function rmdir;
+use function unlink;
+use const UPLOAD_ERR_INI_SIZE;
 
 /**
  * @internal

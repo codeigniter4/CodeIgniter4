@@ -20,6 +20,21 @@ use Config\Services;
 use DateTime;
 use DateTimeZone;
 use InvalidArgumentException;
+use function array_key_exists;
+use function array_keys;
+use function end;
+use function explode;
+use function header;
+use function headers_sent;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function sprintf;
+use function str_replace;
+use function strpos;
+use function time;
+use const DIRECTORY_SEPARATOR;
+use const PHP_SAPI;
 
 /**
  * Request Trait

@@ -15,6 +15,11 @@ use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use Exception;
 use InvalidArgumentException;
+use function is_string;
+use function md5;
+use function strlen;
+use function strpbrk;
+use const PHP_INT_MAX;
 
 /**
  * Base class for cache handling

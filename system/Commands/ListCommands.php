@@ -13,6 +13,13 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use function array_key_exists;
+use function array_key_last;
+use function array_keys;
+use function array_map;
+use function ksort;
+use function max;
+use function strlen;
 
 /**
  * CI Help command for the spark script.

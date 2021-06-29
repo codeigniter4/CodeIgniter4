@@ -17,6 +17,8 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\ContentSecurityPolicy as CSPConfig;
+use function in_array;
+use function strtolower;
 
 /**
  * Representation of an outgoing, getServer-side response.

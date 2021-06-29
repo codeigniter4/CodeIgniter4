@@ -16,6 +16,20 @@ use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Throwable;
+use function array_key_exists;
+use function array_reverse;
+use function array_search;
+use function debug_backtrace;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function preg_match;
+use function print_r;
+use function range;
+use function str_replace;
+use function strpos;
+use function strtr;
 
 /**
  * The CodeIgntier Logger
@@ -390,14 +404,14 @@ class Logger implements LoggerInterface
         ];
 
         // Generate Backtrace info
-        $trace = \debug_backtrace(0);
+        $trace = debug_backtrace(0);
 
         // So we search from the bottom (earliest) of the stack frames
-        $stackFrames = \array_reverse($trace);
+        $stackFrames = array_reverse($trace);
 
         // Find the first reference to a Logger class method
         foreach ($stackFrames as $frame) {
-            if (\in_array($frame['function'], $logFunctions, true)) {
+            if (in_array($frame['function'], $logFunctions, true)) {
                 $file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
                 $line = $frame['line'] ?? 'unknown';
 

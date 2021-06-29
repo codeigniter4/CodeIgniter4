@@ -14,6 +14,19 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
 use stdClass;
+use function is_int;
+use function is_resource;
+use function is_subclass_of;
+use function pg_fetch_assoc;
+use function pg_fetch_object;
+use function pg_field_name;
+use function pg_field_size;
+use function pg_field_type;
+use function pg_field_type_oid;
+use function pg_free_result;
+use function pg_num_fields;
+use function pg_num_rows;
+use function pg_result_seek;
 
 /**
  * Result for Postgre

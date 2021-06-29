@@ -12,6 +12,7 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use function time;
 
 /**
  * @internal

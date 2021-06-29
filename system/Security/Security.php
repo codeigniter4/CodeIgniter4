@@ -17,6 +17,19 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
+use function bin2hex;
+use function hash_equals;
+use function is_string;
+use function json_decode;
+use function json_encode;
+use function json_last_error;
+use function preg_match;
+use function random_bytes;
+use function str_replace;
+use function stripslashes;
+use function strtoupper;
+use function time;
+use const JSON_ERROR_NONE;
 
 /**
  * Class Security

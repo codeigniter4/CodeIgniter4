@@ -13,6 +13,8 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
 use Config\Format as FormatConfig;
+use function array_key_exists;
+use function class_exists;
 
 /**
  * The Format class is a convenient place to create Formatters.

@@ -17,6 +17,12 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use Config\Database;
 use Throwable;
+use function array_shift;
+use function in_array;
+use function is_file;
+use function str_replace;
+use function strpos;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Creates a new database.

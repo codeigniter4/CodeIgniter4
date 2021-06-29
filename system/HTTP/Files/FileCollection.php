@@ -13,6 +13,14 @@ namespace CodeIgniter\HTTP\Files;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use function array_key_exists;
+use function array_key_first;
+use function array_shift;
+use function array_splice;
+use function count;
+use function explode;
+use function is_array;
+use function strpos;
 
 /**
  * Class FileCollection

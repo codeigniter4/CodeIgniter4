@@ -16,6 +16,22 @@ use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use Config\Images;
 use InvalidArgumentException;
+use function array_merge;
+use function ceil;
+use function ctype_digit;
+use function exif_read_data;
+use function floor;
+use function function_exists;
+use function in_array;
+use function is_array;
+use function is_int;
+use function method_exists;
+use function strtolower;
+use function trim;
+use const IMAGETYPE_JPEG;
+use const IMAGETYPE_PNG;
+use const IMAGETYPE_TIFF_II;
+use const IMAGETYPE_WEBP;
 
 /**
  * Base image handling implementation

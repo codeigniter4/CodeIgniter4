@@ -16,6 +16,15 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
 use Imagick;
+use function exif_imagetype;
+use function extension_loaded;
+use function file_get_contents;
+use function imagecolorat;
+use function imagecolorsforindex;
+use function imagecreatefromstring;
+use function in_array;
+use function version_compare;
+use const IMAGETYPE_PNG;
 
 /**
  * Unit testing for the ImageMagick image handler.

@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use Throwable;
+use function microtime;
 
 /**
  * @internal

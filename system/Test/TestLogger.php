@@ -12,6 +12,10 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
+use function basename;
+use function debug_backtrace;
+use function in_array;
+use function strtolower;
 
 class TestLogger extends Logger
 {

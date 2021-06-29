@@ -15,6 +15,18 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Encryption\Encryption;
+use function array_key_exists;
+use function base64_encode;
+use function bin2hex;
+use function copy;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function in_array;
+use function preg_quote;
+use function preg_replace;
+use function putenv;
+use function strlen;
 
 /**
  * Generates a new encryption key.

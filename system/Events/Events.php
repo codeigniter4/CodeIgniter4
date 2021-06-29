@@ -13,6 +13,18 @@ namespace CodeIgniter\Events;
 
 use Config\Modules;
 use Config\Services;
+use function array_filter;
+use function array_map;
+use function array_merge;
+use function array_multisort;
+use function array_unique;
+use function define;
+use function is_file;
+use function microtime;
+use function realpath;
+use function strtolower;
+use const DIRECTORY_SEPARATOR;
+use const SORT_NUMERIC;
 
 define('EVENT_PRIORITY_LOW', 200);
 define('EVENT_PRIORITY_NORMAL', 100);

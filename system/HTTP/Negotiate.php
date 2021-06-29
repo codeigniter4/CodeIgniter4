@@ -12,6 +12,17 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use function array_key_exists;
+use function count;
+use function explode;
+use function is_array;
+use function mb_strpos;
+use function mb_substr;
+use function preg_match;
+use function strtolower;
+use function substr_count;
+use function trim;
+use function usort;
 
 /**
  * Class Negotiate

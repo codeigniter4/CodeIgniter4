@@ -14,6 +14,7 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
+use function base64_encode;
 
 /**
  * @internal

@@ -4,6 +4,8 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\FormatterInterface;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
 
 class Format extends BaseConfig
 {

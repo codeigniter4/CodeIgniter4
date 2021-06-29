@@ -14,6 +14,17 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use function array_merge;
+use function array_slice;
+use function explode;
+use function implode;
+use function in_array;
+use function is_string;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function substr;
+use function trim;
 
 /**
  * Generates a skeleton Model file.

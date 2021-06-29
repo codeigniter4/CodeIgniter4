@@ -14,6 +14,8 @@ namespace CodeIgniter\Session\Handlers;
 use Config\App as AppConfig;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
+use function ini_set;
+use function setcookie;
 
 /**
  * Base class for session handling

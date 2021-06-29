@@ -15,6 +15,15 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use function copy;
+use function is_dir;
+use function mkdir;
+use function rmdir;
+use function rtrim;
+use function sprintf;
+use function strlen;
+use function substr;
+use function unlink;
 
 /**
  * This class is used by Composer during installs and updates

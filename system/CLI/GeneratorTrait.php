@@ -13,6 +13,29 @@ namespace CodeIgniter\CLI;
 
 use Config\Services;
 use Throwable;
+use function array_key_exists;
+use function array_map;
+use function array_slice;
+use function basename;
+use function dirname;
+use function explode;
+use function implode;
+use function is_dir;
+use function is_file;
+use function ltrim;
+use function mkdir;
+use function preg_match;
+use function realpath;
+use function reset;
+use function sort;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function strncmp;
+use function strripos;
+use function trim;
+use function ucfirst;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * GeneratorTrait contains a collection of methods

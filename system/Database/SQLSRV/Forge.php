@@ -12,6 +12,16 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\Forge as BaseForge;
+use function array_intersect;
+use function array_map;
+use function count;
+use function explode;
+use function implode;
+use function in_array;
+use function is_string;
+use function stripos;
+use function strtoupper;
+use function trim;
 
 /**
  * Forge for SQLSRV

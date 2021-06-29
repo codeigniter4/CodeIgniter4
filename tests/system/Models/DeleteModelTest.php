@@ -16,6 +16,8 @@ use CodeIgniter\Exceptions\ModelException;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
+use function date;
+use function time;
 
 /**
  * @internal

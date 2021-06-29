@@ -13,6 +13,14 @@ namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use function array_key_exists;
+use function base64_encode;
+use function debug_backtrace;
+use function end;
+use function get_class;
+use function is_object;
+use function json_encode;
+use function utf8_encode;
 
 /**
  * Class ChromeLoggerHandler

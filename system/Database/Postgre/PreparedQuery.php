@@ -14,6 +14,11 @@ namespace CodeIgniter\Database\Postgre;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use Exception;
+use function pg_execute;
+use function pg_last_error;
+use function pg_prepare;
+use function preg_replace_callback;
+use function random_int;
 
 /**
  * Prepared query for Postgre

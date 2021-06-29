@@ -16,6 +16,20 @@ use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
 use InvalidArgumentException;
+use function array_shift;
+use function basename;
+use function explode;
+use function extension_loaded;
+use function file_get_contents;
+use function is_array;
+use function is_file;
+use function libxml_clear_errors;
+use function libxml_use_internal_errors;
+use function mb_convert_encoding;
+use function mb_strpos;
+use function strpos;
+use function substr;
+use function trim;
 
 /**
  * Load a response into a DOMDocument for testing assertions based on that

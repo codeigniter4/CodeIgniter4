@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Modules;
 
+use function in_array;
+use function strtolower;
+
 /**
  * Modules Class
  *

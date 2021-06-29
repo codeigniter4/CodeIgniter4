@@ -13,6 +13,19 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Model;
 use Config\Services;
+use function array_merge;
+use function array_shift;
+use function class_exists;
+use function get_class;
+use function is_a;
+use function rtrim;
+use function strpos;
+use function strrchr;
+use function strtolower;
+use function substr;
+use function trim;
+use function ucfirst;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Factories for creating instances.

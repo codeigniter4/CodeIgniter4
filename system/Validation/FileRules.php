@@ -14,6 +14,13 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Mimes;
 use Config\Services;
+use function array_shift;
+use function explode;
+use function getimagesize;
+use function in_array;
+use function mb_strpos;
+use const UPLOAD_ERR_INI_SIZE;
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * File validation rules

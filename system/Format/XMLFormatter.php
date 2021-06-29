@@ -14,6 +14,11 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Format\Exceptions\FormatException;
 use Config\Format;
 use SimpleXMLElement;
+use function extension_loaded;
+use function htmlspecialchars;
+use function is_array;
+use function preg_replace;
+use function trim;
 
 /**
  * XML data formatter

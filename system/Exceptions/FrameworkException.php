@@ -12,6 +12,8 @@
 namespace CodeIgniter\Exceptions;
 
 use RuntimeException;
+use function sprintf;
+use function strpos;
 
 /**
  * Class FrameworkException

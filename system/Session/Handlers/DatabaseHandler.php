@@ -16,6 +16,15 @@ use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Config\Database;
 use Exception;
+use function base64_decode;
+use function bin2hex;
+use function get_class;
+use function implode;
+use function is_bool;
+use function md5;
+use function rtrim;
+use function strpos;
+use function strtolower;
 
 /**
  * Session handler using current Database for storage

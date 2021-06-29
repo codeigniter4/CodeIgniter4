@@ -14,6 +14,7 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
+use function md5;
 
 /**
  * @internal

@@ -29,6 +29,16 @@ use Config\Modules;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use function abs;
+use function floor;
+use function function_exists;
+use function method_exists;
+use function sprintf;
+use function stripos;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function substr;
 
 /**
  * Framework test case for PHPUnit.

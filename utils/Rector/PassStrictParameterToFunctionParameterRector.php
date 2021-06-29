@@ -21,6 +21,9 @@ use PhpParser\Node\Name;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function array_keys;
+use function in_array;
+use function method_exists;
 
 /**
  * Pass strict to function parameter on specific position argument when no value provided

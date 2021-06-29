@@ -12,6 +12,8 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use Config\Services;
+use function str_replace;
+use function ucwords;
 
 /**
  * Timers collector

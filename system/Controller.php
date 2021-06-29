@@ -18,6 +18,7 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 use Psr\Log\LoggerInterface;
+use function is_string;
 
 /**
  * Class Controller

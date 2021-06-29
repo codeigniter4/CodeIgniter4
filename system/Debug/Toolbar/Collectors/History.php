@@ -11,6 +11,18 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use function array_reverse;
+use function count;
+use function date;
+use function end;
+use function file_get_contents;
+use function glob;
+use function json_decode;
+use function json_last_error;
+use function preg_match_all;
+use function unlink;
+use const JSON_ERROR_NONE;
+
 /**
  * History collector
  */

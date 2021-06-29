@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use function strpos;
 
 /**
  * @group DatabaseLive

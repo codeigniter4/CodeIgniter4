@@ -11,6 +11,20 @@
 
 namespace CodeIgniter\Test;
 
+use function chmod;
+use function file_exists;
+use function file_put_contents;
+use function is_dir;
+use function mkdir;
+use function ob_get_clean;
+use function ob_start;
+use function realpath;
+use function rmdir;
+use function system;
+use function unlink;
+use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
+
 /**
  * Class BootstrapFCPATHTest
  *

@@ -19,6 +19,11 @@ use CodeIgniter\Test\Mock\MockResourcePresenter;
 use Config\App;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
+use function count;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_list_handlers;
+use function ob_start;
 
 /**
  * Exercise our core ResourcePresenter class.

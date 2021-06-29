@@ -18,6 +18,31 @@ use Config\App;
 use Config\Services;
 use InvalidArgumentException;
 use Locale;
+use function array_shift;
+use function explode;
+use function file_get_contents;
+use function filter_var;
+use function getenv;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function json_decode;
+use function json_encode;
+use function ltrim;
+use function parse_str;
+use function parse_url;
+use function pathinfo;
+use function rtrim;
+use function strncmp;
+use function strpos;
+use function strtolower;
+use function trim;
+use const FILTER_DEFAULT;
+use const PATHINFO_EXTENSION;
+use const PHP_URL_HOST;
+use const PHP_URL_PORT;
+use const PHP_URL_SCHEME;
 
 /**
  * Class IncomingRequest

@@ -14,6 +14,8 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use function is_string;
+use function strtoupper;
 
 /**
  * Lists all of the user-defined routes. This will include any Routes files

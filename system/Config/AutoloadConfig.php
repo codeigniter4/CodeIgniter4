@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Config;
 
+use function array_merge;
+
 /**
  * AUTOLOADER CONFIGURATION
  *

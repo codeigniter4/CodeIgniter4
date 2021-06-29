@@ -15,6 +15,10 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Query;
+use function array_shift;
+use function is_array;
+use function microtime;
+use function str_replace;
 
 class MockConnection extends BaseConnection
 {

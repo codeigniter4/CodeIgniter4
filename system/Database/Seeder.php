@@ -16,6 +16,13 @@ use Config\Database;
 use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
+use function class_exists;
+use function is_dir;
+use function is_file;
+use function rtrim;
+use function str_replace;
+use function strpos;
+use function trim;
 
 /**
  * Class Seeder

@@ -13,6 +13,8 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use function current;
+use function sprintf;
 
 /**
  * @group DatabaseLive

@@ -12,6 +12,25 @@
 namespace CodeIgniter\Config;
 
 use InvalidArgumentException;
+use function array_key_exists;
+use function explode;
+use function file;
+use function getenv;
+use function is_file;
+use function is_readable;
+use function preg_match;
+use function preg_replace;
+use function preg_replace_callback;
+use function putenv;
+use function rtrim;
+use function sprintf;
+use function str_replace;
+use function strpbrk;
+use function strpos;
+use function trim;
+use const DIRECTORY_SEPARATOR;
+use const FILE_IGNORE_NEW_LINES;
+use const FILE_SKIP_EMPTY_LINES;
 
 /**
  * Environment-specific configuration

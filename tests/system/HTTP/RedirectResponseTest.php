@@ -20,6 +20,7 @@ use CodeIgniter\Validation\Validation;
 use Config\App;
 use Config\Modules;
 use Config\Services;
+use function array_keys;
 
 /**
  * @internal

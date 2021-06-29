@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use function str_replace;
 
 /**
  * @group DatabaseLive

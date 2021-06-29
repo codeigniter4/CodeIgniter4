@@ -16,6 +16,11 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\View\RendererInterface;
 use Config\Pager as PagerConfig;
+use function array_flip;
+use function array_intersect_key;
+use function array_key_exists;
+use function ceil;
+use function is_numeric;
 
 /**
  * Class Pager

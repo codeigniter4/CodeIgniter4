@@ -16,6 +16,8 @@ use CodeIgniter\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
+use function array_key_exists;
+use function in_array;
 
 /**
  * @internal

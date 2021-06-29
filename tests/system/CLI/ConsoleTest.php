@@ -18,6 +18,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use function ob_end_clean;
+use function sprintf;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function strpos;
+use const STDOUT;
 
 /**
  * @internal

@@ -12,6 +12,10 @@
 namespace CodeIgniter\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use function copy;
+use function filesize;
+use function number_format;
+use function unlink;
 
 /**
  * @internal

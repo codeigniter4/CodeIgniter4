@@ -14,6 +14,7 @@ namespace CodeIgniter;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Test\CIUnitTestCase;
+use function class_uses;
 
 /**
  * @internal
@@ -24,13 +25,13 @@ final class DebugTraceableTraitTest extends CIUnitTestCase
 {
     public function testFactoryInstanceReturnsWhereItIsRaised(): void
     {
-        $e1 = new FrameworkException('I am on line 27.');
+        $e1 = new FrameworkException('I am on line 28.');
         $e2 = FrameworkException::forEnabledZlibOutputCompression();
 
         $this->assertContainsEquals(DebugTraceableTrait::class, class_uses(FrameworkException::class));
-        $this->assertSame(27, $e1->getLine());
+        $this->assertSame(28, $e1->getLine());
         $this->assertSame(__FILE__, $e1->getFile());
-        $this->assertSame(28, $e2->getLine());
+        $this->assertSame(29, $e2->getLine());
         $this->assertSame(__FILE__, $e2->getFile());
     }
 }

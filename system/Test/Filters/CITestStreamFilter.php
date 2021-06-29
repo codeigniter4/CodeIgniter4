@@ -12,6 +12,9 @@
 namespace CodeIgniter\Test\Filters;
 
 use php_user_filter;
+use function stream_bucket_make_writeable;
+use function stream_filter_register;
+use const PSFS_PASS_ON;
 
 /**
  * Class to extract an output snapshot.

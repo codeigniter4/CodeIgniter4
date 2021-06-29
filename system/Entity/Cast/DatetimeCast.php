@@ -14,6 +14,8 @@ namespace CodeIgniter\Entity\Cast;
 use CodeIgniter\I18n\Time;
 use DateTime;
 use Exception;
+use function is_numeric;
+use function is_string;
 
 /**
  * Class DatetimeCast

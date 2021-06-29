@@ -12,6 +12,8 @@
 namespace Tests\Support\Entity\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
+use function base64_decode;
+use function base64_encode;
 
 class CastBase64 extends BaseCast
 {

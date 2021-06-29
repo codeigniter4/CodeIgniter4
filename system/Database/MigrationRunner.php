@@ -19,6 +19,30 @@ use Config\Migrations as MigrationsConfig;
 use Config\Services;
 use RuntimeException;
 use stdClass;
+use function array_column;
+use function array_keys;
+use function array_map;
+use function array_pop;
+use function array_shift;
+use function basename;
+use function class_exists;
+use function count;
+use function end;
+use function explode;
+use function get_object_vars;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function ksort;
+use function preg_match;
+use function preg_replace;
+use function rtrim;
+use function sprintf;
+use function str_replace;
+use function substr;
+use function time;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Class MigrationRunner

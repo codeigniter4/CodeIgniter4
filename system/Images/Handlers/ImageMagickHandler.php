@@ -15,6 +15,28 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use Config\Images;
 use Exception;
 use Imagick;
+use function basename;
+use function bin2hex;
+use function class_exists;
+use function escapeshellarg;
+use function exec;
+use function extension_loaded;
+use function file_get_contents;
+use function imagecreatefromstring;
+use function imagesx;
+use function imagesy;
+use function in_array;
+use function pathinfo;
+use function preg_match;
+use function random_bytes;
+use function rtrim;
+use function sscanf;
+use function str_replace;
+use function time;
+use function unlink;
+use const IMAGETYPE_WEBP;
+use const PATHINFO_DIRNAME;
+use const PHP_OS_FAMILY;
 
 /**
  * Class ImageMagickHandler

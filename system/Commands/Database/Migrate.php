@@ -15,6 +15,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 use Throwable;
+use function array_key_exists;
 
 /**
  * Runs all new migrations.

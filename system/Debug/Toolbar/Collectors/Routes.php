@@ -15,6 +15,11 @@ use Config\Services;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
+use function count;
+use function is_callable;
+use function is_string;
+use function strtoupper;
+use function var_export;
 
 /**
  * Routes collector

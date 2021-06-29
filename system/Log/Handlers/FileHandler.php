@@ -13,6 +13,24 @@ namespace CodeIgniter\Log\Handlers;
 
 use DateTime;
 use Exception;
+use function chmod;
+use function date;
+use function fclose;
+use function flock;
+use function floor;
+use function fopen;
+use function fwrite;
+use function is_file;
+use function is_int;
+use function ltrim;
+use function microtime;
+use function sprintf;
+use function strlen;
+use function strpos;
+use function strtoupper;
+use function substr;
+use const LOCK_EX;
+use const LOCK_UN;
 
 /**
  * Log error messages to file system

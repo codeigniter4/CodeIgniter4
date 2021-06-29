@@ -13,6 +13,15 @@ namespace CodeIgniter\HTTP;
 
 use Config\App;
 use RuntimeException;
+use function array_shift;
+use function filter_var;
+use function ignore_user_abort;
+use function implode;
+use function ltrim;
+use function mb_strlen;
+use function mb_strpos;
+use function trim;
+use const FILTER_SANITIZE_STRING;
 
 /**
  * Class CLIRequest

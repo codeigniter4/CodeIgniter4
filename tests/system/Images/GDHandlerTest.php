@@ -15,6 +15,13 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use function exif_imagetype;
+use function extension_loaded;
+use function file_get_contents;
+use function function_exists;
+use function imagecolorat;
+use function imagecolorsforindex;
+use const IMAGETYPE_PNG;
 
 /**
  * Unit testing for the GD image handler.

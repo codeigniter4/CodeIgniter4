@@ -16,6 +16,20 @@ use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use ReflectionException;
 use ReflectionMethod;
+use function array_key_exists;
+use function array_keys;
+use function array_values;
+use function class_exists;
+use function count;
+use function explode;
+use function is_array;
+use function is_string;
+use function md5;
+use function method_exists;
+use function serialize;
+use function str_replace;
+use function strpos;
+use function trim;
 
 /**
  * Class Cell

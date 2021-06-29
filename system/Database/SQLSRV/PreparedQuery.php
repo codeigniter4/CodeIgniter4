@@ -14,6 +14,9 @@ namespace CodeIgniter\Database\SQLSRV;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use Exception;
+use function sqlsrv_execute;
+use function sqlsrv_prepare;
+use function substr_count;
 
 /**
  * Prepared query for Postgre

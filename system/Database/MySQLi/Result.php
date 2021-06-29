@@ -14,6 +14,33 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
 use stdClass;
+use function in_array;
+use function is_int;
+use function is_object;
+use function is_subclass_of;
+use const MYSQLI_TYPE_BIT;
+use const MYSQLI_TYPE_BLOB;
+use const MYSQLI_TYPE_DATE;
+use const MYSQLI_TYPE_DATETIME;
+use const MYSQLI_TYPE_DECIMAL;
+use const MYSQLI_TYPE_DOUBLE;
+use const MYSQLI_TYPE_FLOAT;
+use const MYSQLI_TYPE_GEOMETRY;
+use const MYSQLI_TYPE_INT24;
+use const MYSQLI_TYPE_LONG;
+use const MYSQLI_TYPE_LONG_BLOB;
+use const MYSQLI_TYPE_LONGLONG;
+use const MYSQLI_TYPE_MEDIUM_BLOB;
+use const MYSQLI_TYPE_NEWDATE;
+use const MYSQLI_TYPE_NEWDECIMAL;
+use const MYSQLI_TYPE_SET;
+use const MYSQLI_TYPE_SHORT;
+use const MYSQLI_TYPE_STRING;
+use const MYSQLI_TYPE_TIME;
+use const MYSQLI_TYPE_TIMESTAMP;
+use const MYSQLI_TYPE_TINY_BLOB;
+use const MYSQLI_TYPE_VAR_STRING;
+use const MYSQLI_TYPE_YEAR;
 
 /**
  * Result for MySQLi

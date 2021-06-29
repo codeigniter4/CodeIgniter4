@@ -16,6 +16,12 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\App;
+use function ob_end_clean;
+use function ob_start;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function strtotime;
+use const STDOUT;
 
 /**
  * @internal

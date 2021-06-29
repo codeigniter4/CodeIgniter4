@@ -13,6 +13,16 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
 use Config\Format;
+use function in_array;
+use function json_encode;
+use function json_last_error;
+use function json_last_error_msg;
+use const JSON_ERROR_NONE;
+use const JSON_ERROR_RECURSION;
+use const JSON_PARTIAL_OUTPUT_ON_ERROR;
+use const JSON_PRETTY_PRINT;
+use const JSON_UNESCAPED_SLASHES;
+use const JSON_UNESCAPED_UNICODE;
 
 /**
  * JSON data formatter

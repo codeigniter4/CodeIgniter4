@@ -12,6 +12,16 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
+use function is_array;
+use function mb_strlen;
+use function random_bytes;
+use function sodium_crypto_secretbox;
+use function sodium_crypto_secretbox_open;
+use function sodium_memzero;
+use function sodium_pad;
+use function sodium_unpad;
+use const SODIUM_CRYPTO_SECRETBOX_MACBYTES;
+use const SODIUM_CRYPTO_SECRETBOX_NONCEBYTES;
 
 /**
  * SodiumHandler uses libsodium in encryption.

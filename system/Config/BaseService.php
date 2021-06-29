@@ -69,6 +69,10 @@ use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
+use function array_merge;
+use function in_array;
+use function method_exists;
+use function strtolower;
 
 /**
  * Services Configuration file.

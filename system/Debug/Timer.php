@@ -12,6 +12,10 @@
 namespace CodeIgniter\Debug;
 
 use RuntimeException;
+use function array_key_exists;
+use function microtime;
+use function number_format;
+use function strtolower;
 
 /**
  * Class Timer

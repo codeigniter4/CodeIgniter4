@@ -14,6 +14,18 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
+use function array_map;
+use function array_search;
+use function count;
+use function implode;
+use function in_array;
+use function is_file;
+use function stripos;
+use function strpos;
+use function strtolower;
+use function strtoupper;
+use function unlink;
+use function version_compare;
 
 /**
  * Forge for SQLite3

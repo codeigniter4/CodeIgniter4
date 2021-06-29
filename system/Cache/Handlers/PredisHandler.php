@@ -16,6 +16,14 @@ use Config\Cache;
 use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
+use function array_combine;
+use function array_merge;
+use function class_exists;
+use function gettype;
+use function serialize;
+use function settype;
+use function time;
+use function unserialize;
 
 /**
  * Predis cache handler

@@ -15,6 +15,8 @@ use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Honeypot as HoneypotConfig;
+use function str_ireplace;
+use function strpos;
 
 /**
  * class Honeypot

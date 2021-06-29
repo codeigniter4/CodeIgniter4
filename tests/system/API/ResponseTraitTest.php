@@ -20,6 +20,9 @@ use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use stdClass;
+use function array_merge;
+use function get_class;
+use function is_array;
 
 /**
  * @internal

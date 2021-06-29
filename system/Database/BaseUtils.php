@@ -12,6 +12,19 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use function array_keys;
+use function count;
+use function current;
+use function function_exists;
+use function gzencode;
+use function implode;
+use function in_array;
+use function is_bool;
+use function is_string;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function substr;
 
 /**
  * Class BaseUtils

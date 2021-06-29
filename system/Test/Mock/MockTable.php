@@ -13,6 +13,8 @@ namespace CodeIgniter\Test\Mock;
 
 use BadMethodCallException;
 use CodeIgniter\View\Table;
+use function call_user_func_array;
+use function is_callable;
 
 class MockTable extends Table
 {

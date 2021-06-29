@@ -12,6 +12,11 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use function array_column;
+use function version_compare;
+use const PHP_VERSION;
+use const SORT_ASC;
+use const SORT_STRING;
 
 /**
  * @internal

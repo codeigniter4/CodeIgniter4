@@ -12,6 +12,17 @@
 namespace CodeIgniter\Database;
 
 use InvalidArgumentException;
+use function array_merge;
+use function filter_var;
+use function in_array;
+use function is_string;
+use function parse_str;
+use function parse_url;
+use function rawurldecode;
+use function strpos;
+use function strtolower;
+use function substr;
+use const FILTER_VALIDATE_BOOLEAN;
 
 /**
  * Database Connection Factory

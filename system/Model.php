@@ -27,6 +27,13 @@ use Config\Database;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use function array_keys;
+use function array_merge;
+use function get_class;
+use function in_array;
+use function is_array;
+use function is_object;
+use function method_exists;
 
 /**
  * The Model class extends BaseModel and provides additional

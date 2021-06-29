@@ -27,6 +27,25 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use stdClass;
+use function array_column;
+use function array_diff_key;
+use function array_flip;
+use function array_intersect_key;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function date;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_object;
+use function is_string;
+use function method_exists;
+use function property_exists;
+use function sprintf;
+use function strpos;
+use function strtr;
+use function time;
 
 /**
  * The BaseModel class provides a number of convenient features that

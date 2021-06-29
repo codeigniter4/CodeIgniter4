@@ -14,6 +14,20 @@ namespace CodeIgniter\Cache\Handlers;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use function chmod;
+use function fileperms;
+use function function_exists;
+use function is_dir;
+use function is_file;
+use function md5;
+use function mkdir;
+use function rmdir;
+use function str_repeat;
+use function stream_get_meta_data;
+use function time;
+use function tmpfile;
+use function unlink;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @internal

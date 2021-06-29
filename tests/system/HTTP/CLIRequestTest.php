@@ -13,6 +13,8 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use const FILTER_FLAG_STRIP_BACKTICK;
+use const FILTER_SANITIZE_ENCODED;
 
 /**
  * This should be the same as RequestTest,

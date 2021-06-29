@@ -11,6 +11,9 @@
 
 namespace Tests\Support\View;
 
+use function implode;
+use function is_array;
+
 /**
  * Class SampleClass
  *

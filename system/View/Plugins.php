@@ -13,6 +13,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\HTTP\URI;
 use Config\Services;
+use function array_shift;
 
 /**
  * View plugins

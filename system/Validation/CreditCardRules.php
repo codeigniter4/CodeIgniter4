@@ -11,6 +11,14 @@
 
 namespace CodeIgniter\Validation;
 
+use function explode;
+use function in_array;
+use function is_numeric;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtolower;
+
 /**
  * Class CreditCardRules
  *

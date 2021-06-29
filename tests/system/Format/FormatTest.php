@@ -13,6 +13,7 @@ namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
+use function array_merge;
 
 /**
  * @internal

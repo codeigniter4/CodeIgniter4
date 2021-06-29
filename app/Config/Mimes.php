@@ -2,6 +2,13 @@
 
 namespace Config;
 
+use function array_key_exists;
+use function in_array;
+use function is_array;
+use function is_string;
+use function strtolower;
+use function trim;
+
 /**
  * Mimes
  *

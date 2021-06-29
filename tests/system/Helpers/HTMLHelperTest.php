@@ -13,6 +13,9 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use function ltrim;
+use function strpos;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @internal

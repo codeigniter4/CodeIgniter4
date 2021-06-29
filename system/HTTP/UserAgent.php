@@ -12,6 +12,13 @@
 namespace CodeIgniter\HTTP;
 
 use Config\UserAgents;
+use function is_array;
+use function parse_url;
+use function preg_match;
+use function preg_quote;
+use function stripos;
+use function trim;
+use const PHP_URL_HOST;
 
 /**
  * Abstraction for an HTTP user agent
@@ -180,7 +187,7 @@ class UserAgent
                 $this->referrer = false;
             } else {
                 $refererHost = @parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-                $ownHost     = parse_url(\base_url(), PHP_URL_HOST);
+                $ownHost     = parse_url(base_url(), PHP_URL_HOST);
 
                 $this->referrer = ($refererHost && $refererHost !== $ownHost);
             }

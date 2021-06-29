@@ -11,6 +11,22 @@
 
 namespace CodeIgniter\Typography;
 
+use function array_keys;
+use function count;
+use function explode;
+use function in_array;
+use function nl2br;
+use function preg_match;
+use function preg_match_all;
+use function preg_replace;
+use function preg_replace_callback;
+use function preg_split;
+use function rtrim;
+use function str_replace;
+use function strpos;
+use const PREG_SPLIT_DELIM_CAPTURE;
+use const PREG_SPLIT_NO_EMPTY;
+
 /**
  * Typography Class
  */

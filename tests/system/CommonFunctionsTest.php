@@ -32,6 +32,12 @@ use RuntimeException;
 use stdClass;
 use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
+use function ob_get_clean;
+use function ob_start;
+use function serialize;
+use function strlen;
+use function time;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @backupGlobals enabled

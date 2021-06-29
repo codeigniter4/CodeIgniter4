@@ -13,6 +13,16 @@ namespace CodeIgniter\Images;
 
 use CodeIgniter\Files\File;
 use CodeIgniter\Images\Exceptions\ImageException;
+use function chmod;
+use function copy;
+use function getimagesize;
+use function is_dir;
+use function mkdir;
+use function rtrim;
+use const IMAGETYPE_GIF;
+use const IMAGETYPE_JPEG;
+use const IMAGETYPE_PNG;
+use const IMAGETYPE_WEBP;
 
 /**
  * Encapsulation of an Image file

@@ -12,6 +12,17 @@
 namespace CodeIgniter\HTTP;
 
 use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
+use function bin2hex;
+use function get_object_vars;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function preg_replace_callback;
+use function property_exists;
+use function random_bytes;
+use function strpos;
 
 /**
  * Provides tools for working with the Content-Security-Policy header

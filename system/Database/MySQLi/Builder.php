@@ -12,6 +12,8 @@
 namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseBuilder;
+use function count;
+use function implode;
 
 /**
  * Builder for MySQLi

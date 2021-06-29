@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Config;
 
+use function array_merge;
+
 /**
  * View configuration
  */

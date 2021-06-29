@@ -13,6 +13,9 @@ namespace CodeIgniter\Database\MySQLi;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use function is_int;
+use function is_numeric;
+use function rtrim;
 
 /**
  * Prepared query for MySQLi

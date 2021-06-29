@@ -16,6 +16,10 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use function file_put_contents;
+use function mkdir;
+use function rmdir;
+use function unlink;
 
 /**
  * @internal

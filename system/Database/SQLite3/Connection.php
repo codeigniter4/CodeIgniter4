@@ -17,6 +17,14 @@ use ErrorException;
 use Exception;
 use SQLite3;
 use stdClass;
+use function count;
+use function key;
+use function sprintf;
+use function strpos;
+use function strtolower;
+use const DIRECTORY_SEPARATOR;
+use const SQLITE3_OPEN_CREATE;
+use const SQLITE3_OPEN_READWRITE;
 
 /**
  * Connection for SQLite3

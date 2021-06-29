@@ -18,6 +18,10 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
+use function date;
+use function password_hash;
+use function time;
+use const PASSWORD_BCRYPT;
 
 /**
  * @internal

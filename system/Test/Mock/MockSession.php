@@ -13,6 +13,8 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Session\Session;
+use function session_id;
+use function time;
 
 /**
  * Class MockSession

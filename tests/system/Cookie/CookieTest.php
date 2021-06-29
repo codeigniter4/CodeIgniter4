@@ -18,6 +18,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use InvalidArgumentException;
 use LogicException;
+use function array_merge;
 
 /**
  * @internal

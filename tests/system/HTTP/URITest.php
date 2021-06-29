@@ -16,6 +16,9 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use function str_replace;
+use function trim;
+use function urlencode;
 
 /**
  * @backupGlobals enabled

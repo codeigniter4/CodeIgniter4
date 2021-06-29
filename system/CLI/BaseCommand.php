@@ -14,6 +14,12 @@ namespace CodeIgniter\CLI;
 use Psr\Log\LoggerInterface;
 use ReflectionException;
 use Throwable;
+use function array_keys;
+use function array_map;
+use function max;
+use function str_pad;
+use function str_repeat;
+use function strlen;
 
 /**
  * BaseCommand is the base class used in creating CLI commands.

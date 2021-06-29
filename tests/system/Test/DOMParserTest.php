@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use InvalidArgumentException;
+use function extension_loaded;
 
 /**
  * @internal

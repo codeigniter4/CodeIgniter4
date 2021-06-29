@@ -19,6 +19,7 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Use_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use function preg_match;
 
 final class CheckUseStatementsAfterLicenseRule implements Rule
 {

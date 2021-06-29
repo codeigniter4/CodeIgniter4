@@ -16,6 +16,8 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use function rtrim;
+use function str_replace;
 
 /**
  * Since base_url() only slightly modifies

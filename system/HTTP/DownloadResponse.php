@@ -14,6 +14,19 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
+use function count;
+use function end;
+use function explode;
+use function implode;
+use function is_string;
+use function mb_convert_encoding;
+use function preg_match;
+use function rawurlencode;
+use function sprintf;
+use function strlen;
+use function strrpos;
+use function strtoupper;
+use function substr;
 
 /**
  * HTTP response when a download is requested.

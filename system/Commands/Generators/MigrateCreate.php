@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use function array_key_exists;
 
 /**
  * Deprecated class for the migration creation command.

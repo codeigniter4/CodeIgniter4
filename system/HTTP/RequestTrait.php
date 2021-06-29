@@ -12,6 +12,25 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Validation\FormatRules;
+use function array_walk_recursive;
+use function count;
+use function explode;
+use function filter_var;
+use function intval;
+use function is_array;
+use function is_numeric;
+use function is_object;
+use function preg_match_all;
+use function sscanf;
+use function str_repeat;
+use function str_replace;
+use function strncmp;
+use function strpos;
+use function strtolower;
+use function substr_count;
+use function trim;
+use function vsprintf;
+use const FILTER_DEFAULT;
 
 /**
  * Request Trait

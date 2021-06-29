@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use function in_array;
 
 /**
  * @group DatabaseLive

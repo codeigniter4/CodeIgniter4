@@ -15,6 +15,10 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use function array_shift;
+use function json_encode;
+use function strtolower;
+use const FILTER_VALIDATE_INT;
 
 /**
  * @backupGlobals enabled

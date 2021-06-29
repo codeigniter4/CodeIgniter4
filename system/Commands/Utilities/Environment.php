@@ -14,6 +14,18 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\DotEnv;
+use function array_shift;
+use function copy;
+use function file_get_contents;
+use function file_put_contents;
+use function implode;
+use function in_array;
+use function is_file;
+use function preg_quote;
+use function preg_replace;
+use function putenv;
+use function sprintf;
+use function strtolower;
 
 /**
  * Command to display the current environment,

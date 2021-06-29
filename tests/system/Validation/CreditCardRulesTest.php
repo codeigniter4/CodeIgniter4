@@ -14,6 +14,11 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
+use function array_pad;
+use function implode;
+use function mb_strlen;
+use function random_int;
+use function str_split;
 
 /**
  * @internal

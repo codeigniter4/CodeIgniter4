@@ -12,6 +12,16 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use function array_merge;
+use function count;
+use function explode;
+use function implode;
+use function is_array;
+use function is_string;
+use function strlen;
+use function strpos;
+use function substr;
+use function trim;
 
 /**
  * Class Table

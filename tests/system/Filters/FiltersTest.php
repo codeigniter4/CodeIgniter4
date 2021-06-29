@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use function in_array;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';

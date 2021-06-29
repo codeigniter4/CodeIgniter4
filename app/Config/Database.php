@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Database\Config;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Database Configuration

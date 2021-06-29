@@ -12,6 +12,14 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Entity\Entity;
+use function array_key_exists;
+use function count;
+use function is_array;
+use function is_bool;
+use function is_int;
+use function is_numeric;
+use function is_subclass_of;
+use function method_exists;
 
 /**
  * Class BaseResult

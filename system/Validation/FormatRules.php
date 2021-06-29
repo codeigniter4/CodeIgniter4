@@ -12,6 +12,36 @@
 namespace CodeIgniter\Validation;
 
 use DateTime;
+use function base64_decode;
+use function base64_encode;
+use function ctype_alnum;
+use function ctype_alpha;
+use function ctype_digit;
+use function ctype_print;
+use function ctype_xdigit;
+use function defined;
+use function explode;
+use function filter_var;
+use function function_exists;
+use function idn_to_ascii;
+use function in_array;
+use function inet_ntop;
+use function is_string;
+use function json_decode;
+use function json_last_error;
+use function preg_match;
+use function strpos;
+use function strtolower;
+use function strtotime;
+use function timezone_identifiers_list;
+use function trim;
+use const FILTER_FLAG_IPV4;
+use const FILTER_FLAG_IPV6;
+use const FILTER_VALIDATE_EMAIL;
+use const FILTER_VALIDATE_IP;
+use const FILTER_VALIDATE_URL;
+use const INTL_IDNA_VARIANT_UTS46;
+use const JSON_ERROR_NONE;
 
 /**
  * Format validation Rules.

@@ -14,6 +14,9 @@ namespace CodeIgniter\View;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\View;
+use function date;
+use function strtotime;
+use function time;
 
 /**
  * @internal

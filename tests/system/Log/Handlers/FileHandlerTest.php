@@ -15,6 +15,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
+use function date;
+use function fclose;
+use function fgets;
+use function fopen;
 
 /**
  * @internal

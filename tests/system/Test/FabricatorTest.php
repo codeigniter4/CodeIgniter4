@@ -18,6 +18,9 @@ use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
+use function filter_var;
+use const FILTER_VALIDATE_EMAIL;
+use const FILTER_VALIDATE_IP;
 
 /**
  * @internal

@@ -14,6 +14,9 @@ namespace CodeIgniter\Encryption\Handlers;
 use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
+use function extension_loaded;
+use function mb_substr;
+use function sodium_crypto_secretbox_keygen;
 
 /**
  * @internal

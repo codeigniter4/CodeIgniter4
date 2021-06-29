@@ -16,6 +16,13 @@ use Config\App as AppConfig;
 use Exception;
 use Redis;
 use RedisException;
+use function ini_get;
+use function is_string;
+use function md5;
+use function preg_match;
+use function sleep;
+use function time;
+use function var_export;
 
 /**
  * Session handler using Redis for persistence

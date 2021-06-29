@@ -13,6 +13,8 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
 use Exception;
+use function date;
+use function sprintf;
 
 /**
  * Console

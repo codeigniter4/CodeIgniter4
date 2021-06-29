@@ -14,6 +14,7 @@ namespace CodeIgniter\Commands\Cache;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use function array_key_exists;
 
 /**
  * Clears current cache.

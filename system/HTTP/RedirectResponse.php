@@ -14,6 +14,8 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
+use function serialize;
+use function strpos;
 
 /**
  * Handle a redirect response

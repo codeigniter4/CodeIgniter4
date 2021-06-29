@@ -27,6 +27,25 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
 use JsonSerializable;
+use function array_diff;
+use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_unique;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_subclass_of;
+use function method_exists;
+use function preg_match;
+use function str_replace;
+use function strpos;
+use function substr;
+use function trim;
+use function ucwords;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model

@@ -17,6 +17,31 @@ use Config\Mimes;
 use Exception;
 use InvalidArgumentException;
 use RuntimeException;
+use function basename;
+use function chmod;
+use function date;
+use function error_get_last;
+use function fclose;
+use function fopen;
+use function is_dir;
+use function is_file;
+use function is_uploaded_file;
+use function mkdir;
+use function move_uploaded_file;
+use function pathinfo;
+use function rtrim;
+use function sprintf;
+use function strip_tags;
+use function umask;
+use const PATHINFO_EXTENSION;
+use const UPLOAD_ERR_CANT_WRITE;
+use const UPLOAD_ERR_EXTENSION;
+use const UPLOAD_ERR_FORM_SIZE;
+use const UPLOAD_ERR_INI_SIZE;
+use const UPLOAD_ERR_NO_FILE;
+use const UPLOAD_ERR_NO_TMP_DIR;
+use const UPLOAD_ERR_OK;
+use const UPLOAD_ERR_PARTIAL;
 
 /**
  * Value object representing a single file uploaded through an

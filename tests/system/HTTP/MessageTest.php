@@ -13,6 +13,9 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
+use function count;
+use function getenv;
+use function putenv;
 
 /**
  * @internal

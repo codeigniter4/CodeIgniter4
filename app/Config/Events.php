@@ -4,6 +4,10 @@ namespace Config;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use function ini_get;
+use function ob_end_flush;
+use function ob_get_level;
+use function ob_start;
 
 /*
  * --------------------------------------------------------------------

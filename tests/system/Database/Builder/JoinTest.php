@@ -16,6 +16,7 @@ use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use function str_replace;
 
 /**
  * @internal

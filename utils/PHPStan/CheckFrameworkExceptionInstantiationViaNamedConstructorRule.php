@@ -19,6 +19,7 @@ use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use function is_a;
 
 final class CheckFrameworkExceptionInstantiationViaNamedConstructorRule implements Rule
 {

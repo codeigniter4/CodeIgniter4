@@ -12,6 +12,10 @@
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\Forge as BaseForge;
+use function in_array;
+use function stripos;
+use function strtoupper;
+use function version_compare;
 
 /**
  * Forge for Postgre

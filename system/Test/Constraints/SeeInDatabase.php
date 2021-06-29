@@ -13,6 +13,10 @@ namespace CodeIgniter\Test\Constraints;
 
 use CodeIgniter\Database\ConnectionInterface;
 use PHPUnit\Framework\Constraint\Constraint;
+use function array_key_first;
+use function json_encode;
+use function sprintf;
+use const JSON_PRETTY_PRINT;
 
 class SeeInDatabase extends Constraint
 {

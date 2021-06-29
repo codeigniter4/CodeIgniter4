@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Log\Handlers;
 
+use function in_array;
+
 /**
  * Base class for logging
  */

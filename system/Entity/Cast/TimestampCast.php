@@ -12,6 +12,7 @@
 namespace CodeIgniter\Entity\Cast;
 
 use CodeIgniter\Entity\Exceptions\CastException;
+use function strtotime;
 
 /**
  * Class TimestampCast

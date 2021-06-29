@@ -16,6 +16,12 @@ use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;
+use function file_exists;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function unlink;
+use const STDERR;
+use const STDOUT;
 
 /**
  * @internal

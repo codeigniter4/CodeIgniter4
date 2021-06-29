@@ -23,6 +23,15 @@ use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
 use Tests\Support\SomeEntity;
+use function base64_encode;
+use function date;
+use function explode;
+use function json_encode;
+use function rtrim;
+use function serialize;
+use function str_repeat;
+use function strtotime;
+use function time;
 
 /**
  * @internal

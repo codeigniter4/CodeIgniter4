@@ -14,6 +14,8 @@ namespace CodeIgniter\Filters\fixtures;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use function implode;
+use function is_array;
 
 class Role implements FilterInterface
 {

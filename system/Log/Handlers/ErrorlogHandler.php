@@ -12,6 +12,11 @@
 namespace CodeIgniter\Log\Handlers;
 
 use CodeIgniter\Log\Exceptions\LogException;
+use function error_log;
+use function in_array;
+use function is_int;
+use function print_r;
+use function strtoupper;
 
 /**
  * Log handler that writes to PHP's `error_log()`

@@ -12,6 +12,10 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use function ob_end_clean;
+use function ob_get_level;
+use function ob_start;
+use function time;
 
 /**
  * @internal

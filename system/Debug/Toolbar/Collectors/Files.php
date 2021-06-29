@@ -11,6 +11,12 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use function basename;
+use function count;
+use function get_included_files;
+use function sort;
+use function strpos;
+
 /**
  * Files collector
  */

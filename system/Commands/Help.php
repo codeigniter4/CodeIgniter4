@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
+use function array_shift;
 
 /**
  * CI Help command for the spark script.

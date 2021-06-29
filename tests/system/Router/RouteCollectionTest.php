@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use function array_merge;
 
 /**
  * @backupGlobals enabled

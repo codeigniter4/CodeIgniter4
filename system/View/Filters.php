@@ -13,6 +13,16 @@ namespace CodeIgniter\View;
 
 use Config\Services;
 use NumberFormatter;
+use function ceil;
+use function date;
+use function floor;
+use function is_numeric;
+use function is_string;
+use function round;
+use function strtolower;
+use function strtotime;
+use function ucfirst;
+use function ucwords;
 
 /**
  * View filters

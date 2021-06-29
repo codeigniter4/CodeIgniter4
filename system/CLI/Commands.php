@@ -15,6 +15,17 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Log\Logger;
 use ReflectionClass;
 use ReflectionException;
+use function array_keys;
+use function asort;
+use function class_exists;
+use function count;
+use function implode;
+use function ksort;
+use function levenshtein;
+use function strlen;
+use function strpos;
+use const SORT_FLAG_CASE;
+use const SORT_NATURAL;
 
 /**
  * Core functionality for running, listing, etc commands.

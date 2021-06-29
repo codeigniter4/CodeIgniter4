@@ -18,6 +18,8 @@ use stdClass;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
+use function strtotime;
+use function time;
 
 /**
  * @internal

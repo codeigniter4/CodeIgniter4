@@ -15,6 +15,8 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use ReflectionMethod;
+use function get_class;
+use function in_array;
 
 /**
  * @internal

@@ -17,6 +17,25 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Services;
+use function array_key_exists;
+use function array_merge;
+use function array_search;
+use function array_splice;
+use function array_unique;
+use function array_walk;
+use function count;
+use function explode;
+use function get_class;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function is_string;
+use function md5;
+use function preg_match;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function trim;
 
 /**
  * Filters

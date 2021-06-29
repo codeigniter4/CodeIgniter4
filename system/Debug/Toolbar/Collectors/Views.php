@@ -13,6 +13,7 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\View\RendererInterface;
 use Config\Services;
+use function count;
 
 /**
  * Views collector

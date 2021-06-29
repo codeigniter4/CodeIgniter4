@@ -14,6 +14,17 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use ReflectionProperty;
+use function defined;
+use function getenv;
+use function mb_strlen;
+use function putenv;
+use function stream_filter_append;
+use function stream_filter_remove;
+use function time;
+use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
+use const STDERR;
+use const STDOUT;
 
 /**
  * @internal

@@ -16,6 +16,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config;
 use RuntimeException;
+use function strpos;
+use function substr_count;
 
 /**
  * @internal

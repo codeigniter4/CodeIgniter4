@@ -13,6 +13,9 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use const FILTER_FLAG_STRIP_BACKTICK;
+use const FILTER_SANITIZE_ENCODED;
+use const FILTER_VALIDATE_INT;
 
 /**
  * @backupGlobals enabled

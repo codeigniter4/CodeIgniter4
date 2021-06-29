@@ -15,6 +15,20 @@ use Composer\Autoload\ClassLoader;
 use Config\Autoload;
 use Config\Modules;
 use InvalidArgumentException;
+use function array_merge;
+use function is_array;
+use function is_file;
+use function is_string;
+use function preg_replace;
+use function rtrim;
+use function spl_autoload_register;
+use function str_ireplace;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function substr;
+use function trim;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.

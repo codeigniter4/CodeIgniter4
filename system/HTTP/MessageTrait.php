@@ -12,6 +12,20 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use function array_key_exists;
+use function array_keys;
+use function getenv;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function number_format;
+use function sscanf;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function substr;
+use function ucwords;
 
 /**
  * Message Trait

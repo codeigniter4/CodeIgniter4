@@ -18,6 +18,9 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\TestLogger;
 use Exception;
 use Tests\Support\Log\Handlers\TestHandler;
+use function date;
+use function print_r;
+use function strpos;
 
 /**
  * @internal

@@ -14,6 +14,8 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use function in_array;
+use function is_string;
 
 /**
  * Generates a skeleton command file.

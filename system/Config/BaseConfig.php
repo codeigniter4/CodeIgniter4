@@ -17,6 +17,22 @@ use Config\Services;
 use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function base64_decode;
+use function get_object_vars;
+use function getenv;
+use function hex2bin;
+use function is_array;
+use function is_bool;
+use function ltrim;
+use function method_exists;
+use function strpos;
+use function strrpos;
+use function strtolower;
+use function substr;
+use function trim;
 
 /**
  * Class BaseConfig

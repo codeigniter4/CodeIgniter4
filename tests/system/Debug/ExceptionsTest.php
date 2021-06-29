@@ -13,6 +13,7 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @internal

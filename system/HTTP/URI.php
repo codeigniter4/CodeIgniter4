@@ -13,6 +13,31 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use InvalidArgumentException;
+use function array_key_exists;
+use function array_map;
+use function array_pop;
+use function array_values;
+use function bin2hex;
+use function count;
+use function explode;
+use function hex2bin;
+use function http_build_query;
+use function implode;
+use function in_array;
+use function is_array;
+use function ltrim;
+use function parse_str;
+use function parse_url;
+use function preg_replace;
+use function preg_replace_callback;
+use function rawurlencode;
+use function rtrim;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function substr;
+use function trim;
+use function urldecode;
 
 /**
  * Abstraction for a uniform resource identifier (URI).

@@ -14,6 +14,13 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use function array_keys;
+use function date;
+use function in_array;
+use function ksort;
+use function mb_strpos;
+use function mb_substr;
+use function str_replace;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.

@@ -14,6 +14,12 @@ namespace CodeIgniter\Cache;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
+use function chmod;
+use function is_dir;
+use function mkdir;
+use function php_uname;
+use function rmdir;
+use function stripos;
 
 /**
  * @internal

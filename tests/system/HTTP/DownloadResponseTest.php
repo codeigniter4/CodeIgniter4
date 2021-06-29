@@ -16,6 +16,13 @@ use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
+use function file_get_contents;
+use function filesize;
+use function mb_convert_encoding;
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_get_level;
+use function ob_start;
 
 /**
  * @internal

@@ -14,6 +14,8 @@ namespace CodeIgniter\Debug\Toolbar\Collectors;
 use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
+use const PHP_SAPI;
+use const PHP_VERSION;
 
 /**
  * Debug toolbar configuration

@@ -13,6 +13,10 @@ namespace CodeIgniter\Database;
 
 use BadMethodCallException;
 use CodeIgniter\Events\Events;
+use function is_object;
+use function microtime;
+use function preg_replace;
+use function str_replace;
 
 /**
  * Base prepared query

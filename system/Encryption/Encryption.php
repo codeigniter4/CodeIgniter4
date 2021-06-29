@@ -13,6 +13,14 @@ namespace CodeIgniter\Encryption;
 
 use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use Config\Encryption as EncryptionConfig;
+use function array_key_exists;
+use function bin2hex;
+use function extension_loaded;
+use function hash_hkdf;
+use function in_array;
+use function random_bytes;
+use function version_compare;
+use const SODIUM_LIBRARY_VERSION;
 
 /**
  * CodeIgniter Encryption Manager
@@ -124,7 +132,7 @@ class Encryption
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        $this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
+        $this->hmacKey = bin2hex(hash_hkdf($this->digest, $this->key));
 
         $handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
         $this->encrypter = new $handlerName($config);

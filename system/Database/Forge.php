@@ -15,6 +15,30 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use InvalidArgumentException;
 use RuntimeException;
 use Throwable;
+use function array_change_key_case;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_search;
+use function count;
+use function explode;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_bool;
+use function is_int;
+use function is_string;
+use function sprintf;
+use function strcasecmp;
+use function stripos;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function strtoupper;
+use function substr;
+use function trim;
+use const CASE_UPPER;
 
 /**
  * The Forge class transforms migrations to executable

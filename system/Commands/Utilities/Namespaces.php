@@ -14,6 +14,8 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
+use function is_dir;
+use function realpath;
 
 /**
  * Lists namespaces set in Config\Autoload with their

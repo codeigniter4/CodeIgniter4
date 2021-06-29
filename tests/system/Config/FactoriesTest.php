@@ -16,6 +16,9 @@ use ReflectionClass;
 use stdClass;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
+use function array_shift;
+use function class_alias;
+use function class_exists;
 
 /**
  * @internal

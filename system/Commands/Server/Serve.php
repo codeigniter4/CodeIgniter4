@@ -13,6 +13,9 @@ namespace CodeIgniter\Commands\Server;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use function escapeshellarg;
+use function passthru;
+use const PHP_BINARY;
 
 /**
  * Launch the PHP development server

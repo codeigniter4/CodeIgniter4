@@ -17,6 +17,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Modules;
+use function count;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_list_handlers;
+use function ob_start;
+use function unlink;
 
 /**
  * @backupGlobals enabled

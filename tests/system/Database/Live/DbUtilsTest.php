@@ -15,6 +15,10 @@ use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use function array_filter;
+use function in_array;
+use function preg_replace;
+use function preg_split;
 
 /**
  * @group DatabaseLive

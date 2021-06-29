@@ -15,6 +15,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
 use Tests\Support\Language\SecondMockLanguage;
+use function class_exists;
+use function count;
+use function in_array;
 
 /**
  * @internal

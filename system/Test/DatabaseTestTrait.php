@@ -17,6 +17,10 @@ use CodeIgniter\Test\Constraints\SeeInDatabase;
 use Config\Database;
 use Config\Migrations;
 use Config\Services;
+use function get_class;
+use function is_array;
+use function rtrim;
+use function str_replace;
 
 /**
  * DatabaseTestTrait

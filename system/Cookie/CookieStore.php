@@ -16,6 +16,16 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use Countable;
 use IteratorAggregate;
 use Traversable;
+use function array_filter;
+use function array_keys;
+use function array_map;
+use function count;
+use function get_class;
+use function gettype;
+use function implode;
+use function is_object;
+use function setcookie;
+use function setrawcookie;
 
 /**
  * The CookieStore object represents an immutable collection of `Cookie` value objects.

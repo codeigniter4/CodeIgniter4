@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use function array_key_exists;
+
 /**
  * An HTTP message
  */

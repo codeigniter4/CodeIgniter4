@@ -13,6 +13,9 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\Response;
 use Config\App;
+use function ob_end_clean;
+use function ob_get_level;
+use function ob_start;
 
 /**
  * This test suite has been created separately from

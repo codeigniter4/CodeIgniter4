@@ -18,6 +18,24 @@ use MySQLi;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
+use function count;
+use function defined;
+use function is_array;
+use function mysqli_init;
+use function mysqli_report;
+use function preg_match;
+use function sscanf;
+use function str_replace;
+use function trim;
+use function version_compare;
+use const MYSQLI_CLIENT_COMPRESS;
+use const MYSQLI_CLIENT_SSL;
+use const MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
+use const MYSQLI_INIT_COMMAND;
+use const MYSQLI_OPT_CONNECT_TIMEOUT;
+use const MYSQLI_OPT_SSL_VERIFY_SERVER_CERT;
+use const MYSQLI_REPORT_ALL;
+use const MYSQLI_REPORT_INDEX;
 
 /**
  * Connection for MySQLi

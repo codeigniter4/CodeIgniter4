@@ -11,6 +11,28 @@
 
 namespace CodeIgniter\Database;
 
+use function array_reverse;
+use function array_slice;
+use function array_walk;
+use function count;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function key;
+use function microtime;
+use function number_format;
+use function preg_match;
+use function preg_match_all;
+use function preg_quote;
+use function preg_replace;
+use function str_repeat;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strtr;
+use function substr_replace;
+use const PREG_OFFSET_CAPTURE;
+
 /**
  * Query builder
  */

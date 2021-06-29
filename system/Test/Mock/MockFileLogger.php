@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\Log\Handlers\FileHandler;
+use function date;
 
 /**
  * Class MockFileLogger

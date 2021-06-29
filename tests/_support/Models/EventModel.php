@@ -12,6 +12,7 @@
 namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
+use function in_array;
 
 class EventModel extends Model
 {

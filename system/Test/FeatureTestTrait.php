@@ -22,6 +22,11 @@ use Config\App;
 use Config\Services;
 use Exception;
 use ReflectionException;
+use function explode;
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_get_level;
+use function ob_start;
 
 /**
  * Trait FeatureTestTrait
@@ -145,13 +150,13 @@ trait FeatureTestTrait
      */
     public function call(string $method, string $path, ?array $params = null)
     {
-        $buffer = \ob_get_level();
+        $buffer = ob_get_level();
 
         // Clean up any open output buffers
         // not relevant to unit testing
         // @codeCoverageIgnoreStart
-        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
-            \ob_end_clean();
+        if (ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
+            ob_end_clean();
         }
         // @codeCoverageIgnoreEnd
 
@@ -187,7 +192,7 @@ trait FeatureTestTrait
             ->setRequest($request)
             ->run($routes, true);
 
-        $output = \ob_get_contents();
+        $output = ob_get_contents();
         if (empty($response->getBody()) && ! empty($output)) {
             $response->setBody($output);
         }
@@ -197,12 +202,12 @@ trait FeatureTestTrait
 
         // Ensure the output buffer is identical so no tests are risky
         // @codeCoverageIgnoreStart
-        while (\ob_get_level() > $buffer) {
-            \ob_end_clean();
+        while (ob_get_level() > $buffer) {
+            ob_end_clean();
         }
 
-        while (\ob_get_level() < $buffer) {
-            \ob_start();
+        while (ob_get_level() < $buffer) {
+            ob_start();
         }
         // @codeCoverageIgnoreEnd
 

@@ -16,6 +16,16 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Entity;
 use stdClass;
+use function array_keys;
+use function is_object;
+use function is_subclass_of;
+use const SQLITE3_ASSOC;
+use const SQLITE3_BLOB;
+use const SQLITE3_FLOAT;
+use const SQLITE3_INTEGER;
+use const SQLITE3_NULL;
+use const SQLITE3_NUM;
+use const SQLITE3_TEXT;
 
 /**
  * Result for SQLite3

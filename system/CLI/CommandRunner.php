@@ -14,6 +14,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Controller;
 use Config\Services;
 use ReflectionException;
+use function array_shift;
 
 /**
  * Command runner

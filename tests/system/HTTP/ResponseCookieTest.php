@@ -17,6 +17,7 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Cookie as CookieConfig;
+use function time;
 
 /**
  * @internal

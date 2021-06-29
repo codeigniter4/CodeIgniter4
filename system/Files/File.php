@@ -15,6 +15,31 @@ use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Config\Mimes;
 use SplFileInfo;
+use function array_pop;
+use function bin2hex;
+use function chmod;
+use function end;
+use function error_get_last;
+use function explode;
+use function finfo_close;
+use function finfo_file;
+use function finfo_open;
+use function function_exists;
+use function implode;
+use function is_file;
+use function is_numeric;
+use function number_format;
+use function pathinfo;
+use function random_bytes;
+use function rename;
+use function rtrim;
+use function strip_tags;
+use function strpos;
+use function strtolower;
+use function time;
+use function umask;
+use const DIRECTORY_SEPARATOR;
+use const FILEINFO_MIME_TYPE;
 
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.

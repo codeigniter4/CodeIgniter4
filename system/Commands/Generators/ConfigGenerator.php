@@ -13,6 +13,8 @@ namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\GeneratorTrait;
+use function strlen;
+use function substr;
 
 /**
  * Generates a skeleton config file.

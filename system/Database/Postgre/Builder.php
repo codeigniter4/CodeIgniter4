@@ -13,6 +13,18 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use function array_key_first;
+use function array_keys;
+use function array_merge;
+use function array_pop;
+use function ctype_digit;
+use function implode;
+use function in_array;
+use function is_float;
+use function sprintf;
+use function strtoupper;
+use function substr;
+use function trim;
 
 /**
  * Builder for Postgre

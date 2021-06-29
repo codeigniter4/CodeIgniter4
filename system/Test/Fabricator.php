@@ -17,6 +17,17 @@ use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
 use RuntimeException;
+use function array_merge;
+use function date;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_object;
+use function is_string;
+use function method_exists;
+use function reset;
+use function stripos;
+use function time;
 
 /**
  * Fabricator

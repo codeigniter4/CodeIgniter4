@@ -13,6 +13,11 @@ namespace CodeIgniter\Database\SQLite3;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use function is_float;
+use function is_int;
+use const SQLITE3_FLOAT;
+use const SQLITE3_INTEGER;
+use const SQLITE3_TEXT;
 
 /**
  * Prepared query for SQLite3

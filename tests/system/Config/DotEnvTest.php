@@ -13,6 +13,10 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use function chmod;
+use function getenv;
+use function rtrim;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @backupGlobals enabled
