@@ -400,6 +400,13 @@ Miscellaneous Functions
 
     Helper function used to convert a string, array, or object of attributes to a string.
 
+.. php:function:: request_is ( $type )
+
+    :param   string    $type: The type needed to be compared
+    :rtype: bool
+
+    Helper function used to easily compare if the HTTP method matches the need.
+
 ================
 Global Constants
 ================
