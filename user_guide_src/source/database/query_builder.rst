@@ -244,7 +244,10 @@ This function enables you to set **WHERE** clauses using one of four
 methods:
 
 .. note:: All values passed to this function are escaped automatically,
-    producing safer queries.
+    producing safer queries, except when using a custom string.
+
+.. note:: ``$builder->where()`` accepts an optional third parameter. If you set it to
+    ``false``, CodeIgniter will not try to protect your field or table names.
 
 #. **Simple key/value method:**
 
@@ -294,15 +297,18 @@ methods:
 #. **Custom string:**
     You can write your own clauses manually::
 
+
         $where = "name='Joe' AND status='boss' OR status='active'";
         $builder->where($where);
 
-    ``$builder->where()`` accepts an optional third parameter. If you set it to
-    ``false``, CodeIgniter will not try to protect your field or table names.
+    If you are using user-supplied data within the string, you MUST escape the
+    data manually. Failure to do so could result in SQL injections.
+::
 
-    ::
+        $name = $builder->db->escape('Joe');
+        $where = "name={$name} AND status='boss' OR status='active'";
+        $builder->where($where);
 
-        $builder->where('MATCH (field) AGAINST ("value")', null, false);
 
 #. **Subqueries:**
     You can use an anonymous function to create a subquery.
