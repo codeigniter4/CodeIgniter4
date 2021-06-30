@@ -19,7 +19,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Wherever you use the Session Library replace ``$this->load->library('session');`` with ``$session = \Config\Services::session();``.
+1. Wherever you use the Session Library replace ``$this->load->library('session');`` with ``$session = session();``.
 2. From that on you have to replace every line starting with ``$this->session`` with ``$session`` followed by the new method name.
 
 - To access session data use the syntax ``$session->item`` or ``$session->get('item')`` instead of the CI3 syntax ``$this->session->name``.
@@ -44,7 +44,7 @@ Codeigniter Version 4.x
 -----------------------
 ::
 
-    $session = \Config\Services::session();
+    $session = session();
 
     $_SESSION['item'];
     $session->get('item');
