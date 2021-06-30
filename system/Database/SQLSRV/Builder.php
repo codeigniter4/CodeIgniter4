@@ -166,7 +166,7 @@ class Builder extends BaseBuilder
 
      	// Do we want to escape the table name?
 		if ($escape === true) {
-			$table = $this->db->protectIdentifiers($this->getFullName($table), true, null, false);
+            $table = $this->db->protectIdentifiers($this->getFullName($table), true, null, false);
 		}
 
 		// Assemble the JOIN statement
@@ -270,25 +270,22 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Get full name of the table
-     *
-     * @param string $table
-     *
-     * @return string
-     */
-    /**
 	 * Get full name of the table
 	 *
 	 * @param string $table
-     * @param bool $includeAlias
+	 * @param bool $includeAlias
 	 *
 	 * @return string
 	 */
-	protected function getFullName(string $table, bool $includeAlias = True): string
+    protected function getFullName(string $table, bool $includeAlias = True): string
 	{
-		$alias = '';
+		if ($this->db->escapeChar === '"') {
+			$table = str_replace('"', '', $table);
+		}
 
+		$alias = '';
 		if (strpos($table, ' ') !== false) {
+			// Extract alias from the table string.
 			$alias = explode(' ', $table);
 			$table = array_shift($alias);
 			$alias = ' ' . implode(' ', $alias);
@@ -299,29 +296,24 @@ class Builder extends BaseBuilder
 			$alias = '';
 		}
 
-		// Escape characters for generating the fully qualified table name.
-		$esc = match ($this->db->escapeChar) {
-			'"' => ['start' => '"', 'end' => '"'],
-			default => ['start' => '[', 'end' => ']'],
-		};
-
 		$schema = "";
-		if (empty($this->db->schema)) {
-			if (!str_contains($table, '.')) {
-				// No default schema was set, and user did not specify it in the builder.
-				// Try to fall back to the default sql server schema.
-				$schema = '.' . $esc['start'] . 'dbo' . $esc['end'];
-			}
+		if (strpos($table, '.') === False) {
+			// No schema information in query builder. Try to use the schema specified
+			// in the configuration. If none specified, fall back to 'dbo'.
+			$schema = empty($this->db->schema) ? 'dbo' : $this->db->schema;
 		} else {
-			// Use the schema specified in the configuration.
-			$schema =  '.' . $esc['start'] . $this->db->schema . $esc['end'];
-
-			// Escape the table name. We don't do this in case of no schema, because
-			// the user should have escaped the name himself in that case.
-			$table = $esc['start'] . str_replace('"', '', $table) . $esc['end'];
+			// User supplied schema information in the query builder. Use that instead.
+			[$schema, $table] = explode('.', $table);
 		}
 
-		$result = $esc['start'] . $this->db->getDatabase() . $esc['end'] . $schema .  '.' . $table . $alias;
+		$result = sprintf(
+			"%s.%s.%s%s",
+			$this->db->getDatabase(),
+			$schema,
+			$table,
+			$alias
+		);
+
 		return $result;
 	}
 
