@@ -167,7 +167,7 @@ class Database
         $class = $driver . '\\' . $class;
 
         if (strpos($driver, '\\') === false) {
-            $class = "CodeIgniter\Database\\{$class}";
+            $class = "CodeIgniter\\Database\\{$class}";
         }
 
         return new $class($argument);

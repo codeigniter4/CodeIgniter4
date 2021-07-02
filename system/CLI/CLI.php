@@ -506,7 +506,7 @@ class CLI
         if (strpos($text, "\033[0m") !== false) {
             // Split the text into parts so that we can see
             // if any part missing the color definition
-            $chunks = mb_split("\\033\[0m", $text);
+            $chunks = mb_split("\\033\\[0m", $text);
             // Reset text
             $text = '';
 

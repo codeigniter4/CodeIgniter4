@@ -72,7 +72,7 @@ final class EscapeTest extends CIUnitTestCase
     public function testEscapeLikeStringDirect()
     {
         if ($this->db->DBDriver === 'MySQLi') {
-            $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\_chars%'";
+            $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
             $sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 
             $this->assertSame($expected, $sql);

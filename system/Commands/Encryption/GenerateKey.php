@@ -212,6 +212,6 @@ class GenerateKey extends BaseCommand
             $escaped = "[{$escaped}]*";
         }
 
-        return "/^[#\s]*encryption.key[=\s]*{$escaped}$/m";
+        return "/^[#\\s]*encryption.key[=\\s]*{$escaped}$/m";
     }
 }

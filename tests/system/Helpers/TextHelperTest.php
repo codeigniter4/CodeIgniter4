@@ -27,8 +27,8 @@ final class TextHelperTest extends CIUnitTestCase
             "No, my name is O'connor.",
         ];
         $str = [
-            "Is your name O\'reilly?",
-            "No, my name is O\'connor.",
+            "Is your name O\\'reilly?",
+            "No, my name is O\\'connor.",
         ];
         $this->assertSame($expected, strip_slashes($str));
     }
