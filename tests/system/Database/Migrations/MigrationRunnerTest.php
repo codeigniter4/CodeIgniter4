@@ -93,7 +93,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         ];
 
         if ($this->db->DBDriver === 'SQLSRV') {
-            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' ON');
+            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->prefixTable('migrations') . ' ON');
         }
 
         $this->hasInDatabase('migrations', $expected);
@@ -110,8 +110,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame($expected, $history);
 
         if ($this->db->DBDriver === 'SQLSRV') {
-            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->prefixTable('migrations') . ' OFF');
-
+            $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->prefixTable('migrations') . ' OFF');
             $db = $this->getPrivateProperty($runner, 'db');
             $db->table('migrations')->delete(['id' => 4]);
         }

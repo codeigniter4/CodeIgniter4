@@ -50,7 +50,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'SQLSRV') {
             $database = $this->db->getDatabase();
-            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}dbo{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
+            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}{$this->db->schema}{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
         } else {
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
@@ -106,6 +106,10 @@ final class PreparedQueryTest extends CIUnitTestCase
     {
         $query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+
+            if ($db->DBDriver === 'SQLSRV') {
+                $sql = "INSERT INTO {$db->schema}.{$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+            }
 
             return (new Query($db))->setQuery($sql);
         });
