@@ -56,7 +56,7 @@ final class FileHandlerTest extends CIUnitTestCase
         vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('This is a test log');
         $logger->handle('warning', 'This is a test log');
 
-        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
         $line = fgets($fp);
         fclose($fp);
 
@@ -75,7 +75,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $expected = 'log-' . date('Y-m-d') . '.log';
         vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('Test message');
         $logger->handle('debug', 'Test message');
-        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'r');
+        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
         $line = fgets($fp); // and get the second line
         fclose($fp);
 
