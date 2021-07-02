@@ -216,7 +216,7 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
     }
 
     //--------------------------------------------------------------------
@@ -241,7 +241,11 @@ class Builder extends BaseBuilder
 
         $fullTableName = $this->getFullName($table);
 
-        $statement = sprintf('UPDATE %s%s SET', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName, );
+        $statement = sprintf('UPDATE %s%s SET ', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName);
+
+        $statement .= implode(', ', $valstr)
+            . $this->compileWhereHaving('QBWhere')
+            . $this->compileOrderBy();
 
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
@@ -284,7 +288,7 @@ class Builder extends BaseBuilder
 
         $this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
 
-        return 'UPDATE ' . $this->compileIgnore('update') . ' ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+        return 'UPDATE ' . $this->compileIgnore('update') . ' ' . $this->getFullName($table) . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
     }
 
     //--------------------------------------------------------------------
@@ -428,9 +432,9 @@ class Builder extends BaseBuilder
             return $sql;
         }
 
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' ON');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' ON');
         $result = $this->db->query($sql, $this->binds, false);
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' OFF');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' OFF');
 
         return $result;
     }
@@ -563,8 +567,7 @@ class Builder extends BaseBuilder
     {
         $table = $this->QBFrom[0];
 
-        $sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM '
-            . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->protectIdentifiers($table, true, null, false);
+        $sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM ' . $this->getFullName($table);
 
         if ($this->testMode) {
             return $sql;
