@@ -379,7 +379,7 @@ abstract class BaseModel
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      */
-    abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
+    abstract protected function doInsertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false);
 
     /**
      * Updates a single record in the database.
@@ -788,7 +788,7 @@ abstract class BaseModel
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      */
-    public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
+    public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
@@ -1173,7 +1173,7 @@ abstract class BaseModel
      *
      * @return mixed
      */
-    protected function setDate(?int $userData = null)
+    protected function setDate(int $userData = null)
     {
         $currentDate = $userData ?? time();
 

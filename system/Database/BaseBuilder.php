@@ -1617,7 +1617,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function limit(?int $value = null, ?int $offset = 0)
+    public function limit(int $value = null, ?int $offset = 0)
     {
         if (! is_null($value)) {
             $this->QBLimit = $value;

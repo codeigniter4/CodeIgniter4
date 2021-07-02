@@ -576,7 +576,7 @@ class IncomingRequest extends Request
      *
      * @return mixed
      */
-    public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
+    public function getJsonVar(string $index, bool $assoc = false, int $filter = null, $flags = null)
     {
         helper('array');
 

@@ -25,7 +25,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function alpha(?string $str = null): bool
+    public function alpha(string $str = null): bool
     {
         return ctype_alpha($str);
     }
@@ -37,7 +37,7 @@ class FormatRules
      *
      * @return bool True if alpha with spaces, else false.
      */
-    public function alpha_space(?string $value = null): bool
+    public function alpha_space(string $value = null): bool
     {
         if ($value === null) {
             return true;
@@ -54,7 +54,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function alpha_dash(?string $str = null): bool
+    public function alpha_dash(string $str = null): bool
     {
         // @see https://regex101.com/r/XfVY3d/1
         return (bool) preg_match('/\A[a-z0-9_-]+\z/i', $str);
@@ -84,7 +84,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function alpha_numeric(?string $str = null): bool
+    public function alpha_numeric(string $str = null): bool
     {
         return ctype_alnum($str);
     }
@@ -96,7 +96,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function alpha_numeric_space(?string $str = null): bool
+    public function alpha_numeric_space(string $str = null): bool
     {
         // @see https://regex101.com/r/0AZDME/1
         return (bool) preg_match('/\A[A-Z0-9 ]+\z/i', $str);
@@ -124,7 +124,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function decimal(?string $str = null): bool
+    public function decimal(string $str = null): bool
     {
         // @see https://regex101.com/r/HULifl/2/
         return (bool) preg_match('/\A[-+]?\d{0,}\.?\d+\z/', $str);
@@ -137,7 +137,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function hex(?string $str = null): bool
+    public function hex(string $str = null): bool
     {
         return ctype_xdigit($str);
     }
@@ -149,7 +149,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function integer(?string $str = null): bool
+    public function integer(string $str = null): bool
     {
         return (bool) preg_match('/\A[\-+]?\d+\z/', $str);
     }
@@ -161,7 +161,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function is_natural(?string $str = null): bool
+    public function is_natural(string $str = null): bool
     {
         return ctype_digit($str);
     }
@@ -173,7 +173,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function is_natural_no_zero(?string $str = null): bool
+    public function is_natural_no_zero(string $str = null): bool
     {
         return $str !== '0' && ctype_digit($str);
     }
@@ -185,7 +185,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function numeric(?string $str = null): bool
+    public function numeric(string $str = null): bool
     {
         // @see https://regex101.com/r/bb9wtr/2
         return (bool) preg_match('/\A[\-+]?\d*\.?\d+\z/', $str);

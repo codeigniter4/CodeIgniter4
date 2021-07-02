@@ -265,7 +265,7 @@ class Model extends BaseModel
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      */
-    protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
+    protected function doInsertBatch(array $set = null, bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
         if (is_array($set)) {
             foreach ($set as $row) {
@@ -538,7 +538,7 @@ class Model extends BaseModel
      *
      * @return BaseBuilder
      */
-    public function builder(?string $table = null)
+    public function builder(string $table = null)
     {
         // Check for an existing Builder
         if ($this->builder instanceof BaseBuilder) {
@@ -585,7 +585,7 @@ class Model extends BaseModel
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', ?bool $escape = null)
+    public function set($key, ?string $value = '', bool $escape = null)
     {
         $data = is_array($key) ? $key : [$key => $value];
 

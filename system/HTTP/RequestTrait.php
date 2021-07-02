@@ -223,7 +223,7 @@ trait RequestTrait
      *
      * @return mixed
      */
-    public function fetchGlobal(string $method, $index = null, ?int $filter = null, $flags = null)
+    public function fetchGlobal(string $method, $index = null, int $filter = null, $flags = null)
     {
         $method = strtolower($method);
 
