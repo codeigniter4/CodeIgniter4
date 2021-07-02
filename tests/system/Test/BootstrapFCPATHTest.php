@@ -14,7 +14,6 @@ namespace CodeIgniter\Test;
  *
  * @internal
  */
-
 final class BootstrapFCPATHTest extends CIUnitTestCase
 {
     private $currentDir = __DIR__;

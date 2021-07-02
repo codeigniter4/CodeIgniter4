@@ -164,6 +164,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_alias_functions'                      => ['sets' => ['@all']],
             'no_alias_language_construct_call'        => true,
             'no_blank_lines_after_class_opening'      => true,
+            'no_blank_lines_after_phpdoc'             => false, // @todo enable fully when `header_comment` is required
             'no_short_bool_cast'                      => true,
             'no_trailing_comma_in_singleline_array'   => true,
             'no_unset_cast'                           => true,
