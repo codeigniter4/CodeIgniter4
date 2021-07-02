@@ -23,7 +23,7 @@ class Kint extends BaseConfig
     |--------------------------------------------------------------------------
     */
 
-    public $plugins = null;
+    public $plugins;
 
     public $maxDepth = 6;
 
@@ -42,9 +42,9 @@ class Kint extends BaseConfig
 
     public $richSort = Renderer::SORT_FULL;
 
-    public $richObjectPlugins = null;
+    public $richObjectPlugins;
 
-    public $richTabPlugins = null;
+    public $richTabPlugins;
 
     /*
     |--------------------------------------------------------------------------

@@ -33,7 +33,7 @@ class Security implements SecurityInterface
      *
      * @var string|null
      */
-    protected $hash = null;
+    protected $hash;
 
     /**
      * CSRF Token Name

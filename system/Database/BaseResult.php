@@ -65,7 +65,7 @@ abstract class BaseResult implements ResultInterface
      *
      * @var int|null
      */
-    protected $numRows = null;
+    protected $numRows;
 
     /**
      * Row data
