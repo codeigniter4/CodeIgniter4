@@ -4,9 +4,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
-use CodeIgniter\Test\TestResponse;
 
 /**
  * @group                       DatabaseLive

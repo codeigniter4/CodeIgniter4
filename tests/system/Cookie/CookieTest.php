@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Cookie;
 
-use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;

@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Models;
 
-use CodeIgniter\Database\BaseBuilder;
 use Tests\Support\Models\UserModel;
 
 /**

@@ -6,9 +6,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
-
 /**
  * @internal
  */

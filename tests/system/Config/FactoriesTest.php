@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Config;
 
-use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use stdClass;

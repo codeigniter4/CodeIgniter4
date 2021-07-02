@@ -198,6 +198,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_unreachable_default_argument_value'       => true,
             'no_unset_cast'                               => true,
             'no_unset_on_property'                        => false,
+            'no_unused_imports'                           => true,
             'no_useless_else'                             => true,
             'no_useless_return'                           => true,
             'no_useless_sprintf'                          => true,
@@ -205,6 +206,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_whitespace_in_blank_line'                 => true,
             'not_operator_with_space'                     => false,
             'not_operator_with_successor_space'           => true,
+            'non_printable_character'                     => ['use_escape_sequences_in_strings' => true],
             'normalize_index_brace'                       => true,
             'ordered_imports'                             => ['sort_algorithm' => 'alpha'],
             'php_unit_construct'                          => [
