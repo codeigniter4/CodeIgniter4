@@ -669,7 +669,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $filters = $filters->getFilters();
 
-        $this->assertTrue(in_array('some_alias', $filters['before'], true));
+        $this->assertTrue(\in_array('some_alias', $filters['before'], true));
     }
 
     public function testAddFilterSection()
@@ -686,7 +686,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $list = $filters->getFilters();
 
-        $this->assertTrue(in_array('another', $list['before'], true));
+        $this->assertTrue(\in_array('another', $list['before'], true));
     }
 
     public function testInitializeTwice()
@@ -704,7 +704,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $list = $filters->getFilters();
 
-        $this->assertTrue(in_array('another', $list['before'], true));
+        $this->assertTrue(\in_array('another', $list['before'], true));
     }
 
     public function testEnableFilter()
@@ -727,7 +727,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $filters = $filters->getFilters();
 
-        $this->assertTrue(in_array('google', $filters['before'], true));
+        $this->assertTrue(\in_array('google', $filters['before'], true));
     }
 
     public function testEnableFilterWithArguments()
@@ -750,7 +750,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $found = $filters->getFilters();
 
-        $this->assertTrue(in_array('role', $found['before'], true));
+        $this->assertTrue(\in_array('role', $found['before'], true));
         $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
         $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
 
@@ -782,7 +782,7 @@ final class FiltersTest extends CIUnitTestCase
 
         $found = $filters->getFilters();
 
-        $this->assertTrue(in_array('role', $found['before'], true));
+        $this->assertTrue(\in_array('role', $found['before'], true));
 
         $response = $filters->run('admin/foo/bar', 'before');
         $this->assertSame('Is null', $response);

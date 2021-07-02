@@ -25,15 +25,15 @@ class JsonCast extends BaseCast
      */
     public static function get($value, array $params = [])
     {
-        $associative = in_array('array', $params, true);
+        $associative = \in_array('array', $params, true);
 
         $tmp = $value !== null ? ($associative ? [] : new stdClass()) : null;
 
-        if (function_exists('json_decode')
+        if (\function_exists('json_decode')
             && (
-                (is_string($value)
-                    && strlen($value) > 1
-                    && in_array($value[0], ['[', '{', '"'], true))
+                (\is_string($value)
+                    && \strlen($value) > 1
+                    && \in_array($value[0], ['[', '{', '"'], true))
                 || is_numeric($value)
             )
         ) {
@@ -52,7 +52,7 @@ class JsonCast extends BaseCast
      */
     public static function set($value, array $params = []): string
     {
-        if (function_exists('json_encode')) {
+        if (\function_exists('json_encode')) {
             try {
                 $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
             } catch (JsonException $e) {

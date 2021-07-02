@@ -102,9 +102,9 @@ class ControllerGenerator extends BaseCommand
                 $useStatement = 'CodeIgniter\Controller';
                 $extends      = 'Controller';
             } elseif ($rest) {
-                $rest = is_string($rest) ? $rest : 'controller';
+                $rest = \is_string($rest) ? $rest : 'controller';
 
-                if (! in_array($rest, ['controller', 'presenter'], true)) {
+                if (! \in_array($rest, ['controller', 'presenter'], true)) {
                     // @codeCoverageIgnoreStart
                     $rest = CLI::prompt(lang('CLI.generator.parentClass'), ['controller', 'presenter'], 'required');
                     CLI::newLine();

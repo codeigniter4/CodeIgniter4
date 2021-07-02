@@ -127,7 +127,7 @@ trait DatabaseTestTrait
 
         // Regress each specified namespace
         else {
-            $namespaces = is_array($this->namespace) ? $this->namespace : [$this->namespace];
+            $namespaces = \is_array($this->namespace) ? $this->namespace : [$this->namespace];
 
             foreach ($namespaces as $namespace) {
                 $this->migrations->setNamespace($namespace);
@@ -153,7 +153,7 @@ trait DatabaseTestTrait
         }
         // Run migrations for each specified namespace
         else {
-            $namespaces = is_array($this->namespace) ? $this->namespace : [$this->namespace];
+            $namespaces = \is_array($this->namespace) ? $this->namespace : [$this->namespace];
 
             foreach ($namespaces as $namespace) {
                 $this->migrations->setNamespace($namespace);
@@ -187,7 +187,7 @@ trait DatabaseTestTrait
                 $this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
             }
 
-            $seeds = is_array($this->seed) ? $this->seed : [$this->seed];
+            $seeds = \is_array($this->seed) ? $this->seed : [$this->seed];
 
             foreach ($seeds as $seed) {
                 $this->seed($seed);
@@ -241,7 +241,7 @@ trait DatabaseTestTrait
      */
     public function loadBuilder(string $tableName)
     {
-        $builderClass = str_replace('Connection', 'Builder', get_class($this->db));
+        $builderClass = str_replace('Connection', 'Builder', \get_class($this->db));
 
         return new $builderClass($tableName, $this->db);
     }

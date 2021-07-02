@@ -38,7 +38,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     public function dirtyPathsProvider()
     {
-        $ds = DIRECTORY_SEPARATOR;
+        $ds = \DIRECTORY_SEPARATOR;
 
         return [
             [

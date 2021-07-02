@@ -67,20 +67,20 @@ class GenerateKey extends BaseCommand
     public function run(array $params)
     {
         $prefix = $params['prefix'] ?? CLI::getOption('prefix');
-        if (in_array($prefix, [null, true], true)) {
+        if (\in_array($prefix, [null, true], true)) {
             $prefix = 'hex2bin';
-        } elseif (! in_array($prefix, ['hex2bin', 'base64'], true)) {
+        } elseif (! \in_array($prefix, ['hex2bin', 'base64'], true)) {
             $prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required'); // @codeCoverageIgnore
         }
 
         $length = $params['length'] ?? CLI::getOption('length');
-        if (in_array($length, [null, true], true)) {
+        if (\in_array($length, [null, true], true)) {
             $length = 32;
         }
 
         $encodedKey = $this->generateRandomKey($prefix, $length);
 
-        if (array_key_exists('show', $params) || (bool) CLI::getOption('show')) {
+        if (\array_key_exists('show', $params) || (bool) CLI::getOption('show')) {
             CLI::write($encodedKey, 'yellow');
             CLI::newLine();
 
@@ -125,7 +125,7 @@ class GenerateKey extends BaseCommand
     {
         $currentKey = env('encryption.key', '');
 
-        if (strlen($currentKey) !== 0 && ! $this->confirmOverwrite($params)) {
+        if (\strlen($currentKey) !== 0 && ! $this->confirmOverwrite($params)) {
             // Not yet testable since it requires keyboard input
             // @codeCoverageIgnoreStart
             return false;
@@ -140,7 +140,7 @@ class GenerateKey extends BaseCommand
      */
     protected function confirmOverwrite(array $params): bool
     {
-        return (array_key_exists('force', $params) || CLI::getOption('force')) || CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y';
+        return (\array_key_exists('force', $params) || CLI::getOption('force')) || CLI::prompt('Overwrite existing key?', ['n', 'y']) === 'y';
     }
 
     /**

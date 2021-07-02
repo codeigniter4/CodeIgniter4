@@ -92,7 +92,7 @@ class BaseConfig
      */
     protected function initEnvValue(&$property, string $name, string $prefix, string $shortPrefix)
     {
-        if (is_array($property)) {
+        if (\is_array($property)) {
             foreach (array_keys($property) as $key) {
                 $this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
             }
@@ -102,7 +102,7 @@ class BaseConfig
             } elseif ($value === 'true') {
                 $value = true;
             }
-            $property = is_bool($value) ? $value : trim($value, '\'"');
+            $property = \is_bool($value) ? $value : trim($value, '\'"');
         }
 
         return $property;
@@ -118,16 +118,16 @@ class BaseConfig
         $shortPrefix = ltrim($shortPrefix, '\\');
 
         switch (true) {
-            case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
+            case \array_key_exists("{$shortPrefix}.{$property}", $_ENV):
                 return $_ENV["{$shortPrefix}.{$property}"];
 
-            case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
+            case \array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
                 return $_SERVER["{$shortPrefix}.{$property}"];
 
-            case array_key_exists("{$prefix}.{$property}", $_ENV):
+            case \array_key_exists("{$prefix}.{$property}", $_ENV):
                 return $_ENV["{$prefix}.{$property}"];
 
-            case array_key_exists("{$prefix}.{$property}", $_SERVER):
+            case \array_key_exists("{$prefix}.{$property}", $_SERVER):
                 return $_SERVER["{$prefix}.{$property}"];
 
             default:
@@ -173,12 +173,12 @@ class BaseConfig
 
             $properties = $callable::$shortName();
 
-            if (! is_array($properties)) {
+            if (! \is_array($properties)) {
                 throw new RuntimeException('Registrars must return an array of properties and their values.');
             }
 
             foreach ($properties as $property => $value) {
-                if (isset($this->{$property}) && is_array($this->{$property}) && is_array($value)) {
+                if (isset($this->{$property}) && \is_array($this->{$property}) && \is_array($value)) {
                     $this->{$property} = array_merge($this->{$property}, $value);
                 } else {
                     $this->{$property} = $value;

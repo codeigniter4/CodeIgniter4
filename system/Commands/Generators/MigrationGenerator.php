@@ -81,7 +81,7 @@ class MigrationGenerator extends BaseCommand
         $this->directory = 'Database\Migrations';
         $this->template  = 'migration.tpl.php';
 
-        if (array_key_exists('session', $params) || CLI::getOption('session')) {
+        if (\array_key_exists('session', $params) || CLI::getOption('session')) {
             $table     = $params['table'] ?? CLI::getOption('table') ?? 'ci_sessions';
             $params[0] = "_create_{$table}_table";
         }
@@ -102,8 +102,8 @@ class MigrationGenerator extends BaseCommand
             $DBGroup = $this->getOption('dbgroup');
 
             $data['session'] = true;
-            $data['table']   = is_string($table) ? $table : 'ci_sessions';
-            $data['DBGroup'] = is_string($DBGroup) ? $DBGroup : 'default';
+            $data['table']   = \is_string($table) ? $table : 'ci_sessions';
+            $data['DBGroup'] = \is_string($DBGroup) ? $DBGroup : 'default';
             $data['matchIP'] = config('App')->sessionMatchIP;
         }
 

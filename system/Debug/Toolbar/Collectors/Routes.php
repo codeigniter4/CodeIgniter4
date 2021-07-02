@@ -60,7 +60,7 @@ class Routes extends BaseCollector
 
         // Get our parameters
         // Closure routes
-        if (is_callable($router->controllerName())) {
+        if (\is_callable($router->controllerName())) {
             $method = new ReflectionFunction($router->controllerName());
         } else {
             try {
@@ -89,8 +89,8 @@ class Routes extends BaseCollector
                 'directory'  => $router->directory(),
                 'controller' => $router->controllerName(),
                 'method'     => $router->methodName(),
-                'paramCount' => count($router->params()),
-                'truePCount' => count($params),
+                'paramCount' => \count($router->params()),
+                'truePCount' => \count($params),
                 'params'     => $params,
             ],
         ];
@@ -115,7 +115,7 @@ class Routes extends BaseCollector
 
             foreach ($raw as $route => $handler) {
                 // filter for strings, as callbacks aren't displayable
-                if (is_string($handler)) {
+                if (\is_string($handler)) {
                     $routes[] = [
                         'method'  => strtoupper($method),
                         'route'   => $route,
@@ -138,7 +138,7 @@ class Routes extends BaseCollector
     {
         $rawRoutes = Services::routes(true);
 
-        return count($rawRoutes->getRoutes());
+        return \count($rawRoutes->getRoutes());
     }
 
     /**

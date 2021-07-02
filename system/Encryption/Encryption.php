@@ -87,12 +87,12 @@ class Encryption
         $this->digest = $config->digest ?? 'SHA512';
 
         $this->handlers = [
-            'OpenSSL' => extension_loaded('openssl'),
+            'OpenSSL' => \extension_loaded('openssl'),
             // the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
-            'Sodium' => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
+            'Sodium' => \extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
         ];
 
-        if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver])) {
+        if (! \in_array($this->driver, $this->drivers, true) || (\array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver])) {
             throw EncryptionException::forNoHandlerAvailable($this->driver);
         }
     }
@@ -116,7 +116,7 @@ class Encryption
             throw EncryptionException::forNoDriverRequested();
         }
 
-        if (! in_array($this->driver, $this->drivers, true)) {
+        if (! \in_array($this->driver, $this->drivers, true)) {
             throw EncryptionException::forUnKnownHandler($this->driver);
         }
 
@@ -124,7 +124,7 @@ class Encryption
             throw EncryptionException::forNeedsStarterKey();
         }
 
-        $this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
+        $this->hmacKey = bin2hex(hash_hkdf($this->digest, $this->key));
 
         $handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
         $this->encrypter = new $handlerName($config);
@@ -167,6 +167,6 @@ class Encryption
      */
     public function __isset($key): bool
     {
-        return in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
+        return \in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
     }
 }

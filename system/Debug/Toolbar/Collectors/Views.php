@@ -132,7 +132,7 @@ class Views extends BaseCollector
      */
     public function getBadgeValue(): int
     {
-        return count($this->viewer->getPerformanceData()); // @phpstan-ignore-line
+        return \count($this->viewer->getPerformanceData()); // @phpstan-ignore-line
     }
 
     /**

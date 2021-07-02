@@ -78,7 +78,7 @@ class DatabaseHandler extends BaseHandler
         $this->db = Database::connect($this->DBGroup);
 
         // Determine Database type
-        $driver = strtolower(get_class($this->db));
+        $driver = strtolower(\get_class($this->db));
         if (strpos($driver, 'mysql') !== false) {
             $this->platform = 'mysql';
         } elseif (strpos($driver, 'postgre') !== false) {
@@ -147,7 +147,7 @@ class DatabaseHandler extends BaseHandler
             return '';
         }
 
-        if (is_bool($result)) {
+        if (\is_bool($result)) {
             $result = '';
         } else {
             $result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data), true) : $result->data;

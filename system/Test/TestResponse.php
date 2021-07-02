@@ -87,7 +87,7 @@ class TestResponse extends TestCase
         $this->domParser = new DOMParser();
 
         $body = $response->getBody();
-        if (is_string($body) && $body !== '') {
+        if (\is_string($body) && $body !== '') {
             $this->domParser->withString($body);
         }
 
@@ -390,11 +390,11 @@ class TestResponse extends TestCase
     {
         $json = $this->getJSON();
 
-        if (is_object($test)) {
+        if (\is_object($test)) {
             $test = method_exists($test, 'toArray') ? $test->toArray() : (array) $test;
         }
 
-        if (is_array($test)) {
+        if (\is_array($test)) {
             $test = Services::format()->getFormatter('application/json')->format($test);
         }
 

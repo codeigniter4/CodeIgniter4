@@ -45,7 +45,7 @@ class FileLocator
 
         // Clears the folder name if it is at the beginning of the filename
         if (! empty($folder) && strpos($file, $folder) === 0) {
-            $file = substr($file, strlen($folder . '/'));
+            $file = substr($file, \strlen($folder . '/'));
         }
 
         // Is not namespaced? Try the application folder.
@@ -203,7 +203,7 @@ class FileLocator
         if ($ext) {
             $ext = '.' . $ext;
 
-            if (substr($path, -strlen($ext)) !== $ext) {
+            if (substr($path, -\strlen($ext)) !== $ext) {
                 $path .= $ext;
             }
         }
@@ -228,7 +228,7 @@ class FileLocator
                 if ($prefix === 'CodeIgniter') {
                     $system = [
                         'prefix' => $prefix,
-                        'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
+                        'path'   => rtrim($path, '\\/') . \DIRECTORY_SEPARATOR,
                     ];
 
                     continue;
@@ -236,7 +236,7 @@ class FileLocator
 
                 $namespaces[] = [
                     'prefix' => $prefix,
-                    'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
+                    'path'   => rtrim($path, '\\/') . \DIRECTORY_SEPARATOR,
                 ];
             }
         }

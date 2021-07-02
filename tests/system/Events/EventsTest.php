@@ -58,7 +58,7 @@ final class EventsTest extends CIUnitTestCase
         $this->assertEmpty($this->manager->getFiles());
 
         // make sure we have a default events file
-        $default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
+        $default = [APPPATH . 'Config' . \DIRECTORY_SEPARATOR . 'Events.php'];
         $this->manager->unInitialize();
         MockEvents::initialize();
         $this->assertSame($default, $this->manager->getFiles());
@@ -82,7 +82,7 @@ final class EventsTest extends CIUnitTestCase
 
         $logged = Events::getPerformanceLogs();
         // there should be some event activity logged
-        $this->assertGreaterThan(0, count($logged));
+        $this->assertGreaterThan(0, \count($logged));
     }
 
     public function testListeners()

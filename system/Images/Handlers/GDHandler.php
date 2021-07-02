@@ -30,7 +30,7 @@ class GDHandler extends BaseHandler
     {
         parent::__construct($config);
 
-        if (! extension_loaded('gd')) {
+        if (! \extension_loaded('gd')) {
             throw ImageException::forMissingExtension('GD'); // @codeCoverageIgnore
         }
     }
@@ -71,7 +71,7 @@ class GDHandler extends BaseHandler
     {
         $srcImg = $this->createImage();
 
-        if (function_exists('imagecreatetruecolor')) {
+        if (\function_exists('imagecreatetruecolor')) {
             $create = 'imagecreatetruecolor';
             $copy   = 'imagecopyresampled';
         } else {
@@ -118,7 +118,7 @@ class GDHandler extends BaseHandler
      */
     public function getVersion()
     {
-        if (function_exists('gd_info')) {
+        if (\function_exists('gd_info')) {
             $gdVersion = @gd_info();
 
             return preg_replace('/\D/', '', $gdVersion['GD Version']);
@@ -172,7 +172,7 @@ class GDHandler extends BaseHandler
         // Create the image handle
         $src = $this->createImage();
 
-        if (function_exists('imagecreatetruecolor')) {
+        if (\function_exists('imagecreatetruecolor')) {
             $create = 'imagecreatetruecolor';
             $copy   = 'imagecopyresampled';
         } else {
@@ -183,7 +183,7 @@ class GDHandler extends BaseHandler
         $dest = $create($this->width, $this->height);
 
         // for png and webp we can actually preserve transparency
-        if (in_array($this->image()->imageType, $this->supportTransparency, true)) {
+        if (\in_array($this->image()->imageType, $this->supportTransparency, true)) {
             imagealphablending($dest, false);
             imagesavealpha($dest, true);
         }
@@ -227,7 +227,7 @@ class GDHandler extends BaseHandler
 
         switch ($this->image()->imageType) {
             case IMAGETYPE_GIF:
-                if (! function_exists('imagegif')) {
+                if (! \function_exists('imagegif')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
                 }
 
@@ -237,7 +237,7 @@ class GDHandler extends BaseHandler
                 break;
 
             case IMAGETYPE_JPEG:
-                if (! function_exists('imagejpeg')) {
+                if (! \function_exists('imagejpeg')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
                 }
 
@@ -247,7 +247,7 @@ class GDHandler extends BaseHandler
                 break;
 
             case IMAGETYPE_PNG:
-                if (! function_exists('imagepng')) {
+                if (! \function_exists('imagepng')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
                 }
 
@@ -257,7 +257,7 @@ class GDHandler extends BaseHandler
                 break;
 
             case IMAGETYPE_WEBP:
-                if (! function_exists('imagewebp')) {
+                if (! \function_exists('imagewebp')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
                 }
 
@@ -330,28 +330,28 @@ class GDHandler extends BaseHandler
     {
         switch ($imageType) {
             case IMAGETYPE_GIF:
-                if (! function_exists('imagecreatefromgif')) {
+                if (! \function_exists('imagecreatefromgif')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.gifNotSupported'));
                 }
 
                 return imagecreatefromgif($path);
 
             case IMAGETYPE_JPEG:
-                if (! function_exists('imagecreatefromjpeg')) {
+                if (! \function_exists('imagecreatefromjpeg')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.jpgNotSupported'));
                 }
 
                 return imagecreatefromjpeg($path);
 
             case IMAGETYPE_PNG:
-                if (! function_exists('imagecreatefrompng')) {
+                if (! \function_exists('imagecreatefrompng')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
                 }
 
                 return imagecreatefrompng($path);
 
             case IMAGETYPE_WEBP:
-                if (! function_exists('imagecreatefromwebp')) {
+                if (! \function_exists('imagecreatefromwebp')) {
                     throw ImageException::forInvalidImageCreate(lang('Images.webpNotSupported'));
                 }
 
@@ -386,11 +386,11 @@ class GDHandler extends BaseHandler
         // These are calculated differently depending on
         // whether we are using the true type font or not
         if (! empty($options['fontPath'])) {
-            if (function_exists('imagettfbbox')) {
+            if (\function_exists('imagettfbbox')) {
                 $temp = imagettfbbox($options['fontSize'], 0, $options['fontPath'], $text);
                 $temp = $temp[2] - $temp[0];
 
-                $fontwidth = $temp / strlen($text);
+                $fontwidth = $temp / \strlen($text);
             } else {
                 $fontwidth = $options['fontSize'] - ($options['fontSize'] / 4);
             }
@@ -418,9 +418,9 @@ class GDHandler extends BaseHandler
 
         // Set horizontal alignment
         if ($options['hAlign'] === 'right') {
-            $xAxis += ($this->image()->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
+            $xAxis += ($this->image()->origWidth - ($fontwidth * \strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
         } elseif ($options['hAlign'] === 'center') {
-            $xAxis += floor(($this->image()->origWidth - ($fontwidth * strlen($text))) / 2);
+            $xAxis += floor(($this->image()->origWidth - ($fontwidth * \strlen($text))) / 2);
         }
 
         $options['xAxis'] = $xAxis;
@@ -459,7 +459,7 @@ class GDHandler extends BaseHandler
         $color = $isShadow ? $options['shadowColor'] : $options['color'];
 
         // shorthand hex, #f00
-        if (strlen($color) === 3) {
+        if (\strlen($color) === 3) {
             $color = implode('', array_map('str_repeat', str_split($color), [2, 2, 2]));
         }
 

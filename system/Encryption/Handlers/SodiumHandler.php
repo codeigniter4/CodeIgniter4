@@ -120,7 +120,7 @@ class SodiumHandler extends BaseHandler
             return;
         }
 
-        if (is_array($params)) {
+        if (\is_array($params)) {
             if (isset($params['key'])) {
                 $this->key = $params['key'];
             }

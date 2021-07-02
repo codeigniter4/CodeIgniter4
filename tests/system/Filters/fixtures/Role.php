@@ -19,7 +19,7 @@ class Role implements FilterInterface
 {
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (is_array($arguments)) {
+        if (\is_array($arguments)) {
             $response->setBody(implode(';', $arguments));
         } elseif ($arguments === null) {
             $response->setBody('Is null');
@@ -32,7 +32,7 @@ class Role implements FilterInterface
 
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (is_array($arguments)) {
+        if (\is_array($arguments)) {
             return implode(';', $arguments);
         }
         if ($arguments === null) {

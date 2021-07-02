@@ -32,7 +32,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        if (! extension_loaded('imagick')) {
+        if (! \extension_loaded('imagick')) {
             $this->markTestSkipped('The ImageMagick extension is not available.');
 
             return;
@@ -305,7 +305,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageCreation()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            if ($type === 'webp' && ! \in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -320,7 +320,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageCopy()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            if ($type === 'webp' && ! \in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -353,7 +353,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageCompressionGetResource()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            if ($type === 'webp' && ! \in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -373,7 +373,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageCompressionWithResource()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! in_array('WEBP', Imagick::queryFormats(), true)) {
+            if ($type === 'webp' && ! \in_array('WEBP', Imagick::queryFormats(), true)) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }

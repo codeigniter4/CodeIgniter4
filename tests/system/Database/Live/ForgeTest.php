@@ -201,7 +201,7 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateTableWithArrayFieldConstraints()
     {
-        if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true)) {
+        if (\in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true)) {
             $this->forge->dropTable('forge_array_constraint', true);
             $this->forge->addField([
                 'status' => [

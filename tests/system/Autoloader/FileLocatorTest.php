@@ -199,7 +199,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $expectedWin = APPPATH . 'Config\App.php';
         $expectedLin = APPPATH . 'Config/App.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $this->assertTrue(\in_array($expectedWin, $files, true) || \in_array($expectedLin, $files, true));
     }
 
     public function testListFilesWithFileAsInput()
@@ -215,11 +215,11 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $expectedWin = SYSTEMPATH . 'Filters\DebugToolbar.php';
         $expectedLin = SYSTEMPATH . 'Filters/DebugToolbar.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $this->assertTrue(\in_array($expectedWin, $files, true) || \in_array($expectedLin, $files, true));
 
         $expectedWin = SYSTEMPATH . 'Filters\Filters.php';
         $expectedLin = SYSTEMPATH . 'Filters/Filters.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $this->assertTrue(\in_array($expectedWin, $files, true) || \in_array($expectedLin, $files, true));
     }
 
     public function testListFilesWithPathNotExist()

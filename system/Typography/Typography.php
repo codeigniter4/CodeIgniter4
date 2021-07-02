@@ -91,7 +91,7 @@ class Typography
         // HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
         $htmlComments = [];
         if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches)) {
-            for ($i = 0, $total = count($matches[0]); $i < $total; $i++) {
+            for ($i = 0, $total = \count($matches[0]); $i < $total; $i++) {
                 $htmlComments[] = $matches[0][$i];
                 $str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
             }
@@ -132,7 +132,7 @@ class Typography
         $str     = '';
         $process = true;
 
-        for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i++) {
+        for ($i = 0, $c = \count($chunks) - 1; $i <= $c; $i++) {
             // Are we dealing with a tag? If so, we'll skip the processing for this cycle.
             // Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
             if (preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match)) {
@@ -279,7 +279,7 @@ class Typography
      */
     protected function formatNewLines(string $str): string
     {
-        if ($str === '' || (strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true))) {
+        if ($str === '' || (strpos($str, "\n") === false && ! \in_array($this->lastBlockElement, $this->innerBlockRequired, true))) {
             return $str;
         }
 
@@ -322,7 +322,7 @@ class Typography
     {
         $newstr = '';
 
-        for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i++) {
+        for ($ex = explode('pre>', $str), $ct = \count($ex), $i = 0; $i < $ct; $i++) {
             $newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];
 
             if ($ct - 1 !== $i) {

@@ -105,7 +105,7 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        switch ($dataType = gettype($value)) {
+        switch ($dataType = \gettype($value)) {
             case 'array':
             case 'object':
                 $value = serialize($value);

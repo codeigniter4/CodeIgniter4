@@ -241,14 +241,14 @@ class MigrationRunner
         $batches = $this->getBatches();
 
         if ($targetBatch < 0) {
-            $targetBatch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
+            $targetBatch = $batches[\count($batches) - 1 + $targetBatch] ?? 0;
         }
 
         if (empty($batches) && $targetBatch === 0) {
             return true;
         }
 
-        if ($targetBatch !== 0 && ! in_array($targetBatch, $batches, true)) {
+        if ($targetBatch !== 0 && ! \in_array($targetBatch, $batches, true)) {
             $message = lang('Migrations.batchNotFound') . $targetBatch;
 
             if ($this->silent) {
@@ -422,7 +422,7 @@ class MigrationRunner
 
         if (! empty($this->path)) {
             helper('filesystem');
-            $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
+            $dir   = rtrim($this->path, \DIRECTORY_SEPARATOR) . '/';
             $files = get_filenames($dir, true);
         } else {
             $files = $locator->listNamespaceFiles($namespace, '/Database/Migrations/');
@@ -524,7 +524,7 @@ class MigrationRunner
     {
         preg_match('/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}/', $migration, $matches);
 
-        return count($matches) ? $matches[0] : '0';
+        return \count($matches) ? $matches[0] : '0';
     }
 
     /**
@@ -696,7 +696,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        $batch = is_array($batch) && count($batch)
+        $batch = \is_array($batch) && \count($batch)
             ? end($batch)->batch
             : 0;
 
@@ -711,7 +711,7 @@ class MigrationRunner
     {
         if ($batch < 0) {
             $batches = $this->getBatches();
-            $batch   = $batches[count($batches) - 1] ?? 0;
+            $batch   = $batches[\count($batches) - 1] ?? 0;
         }
 
         $migration = $this->db->table($this->table)
@@ -721,7 +721,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        return count($migration) ? $migration[0]->version : '0';
+        return \count($migration) ? $migration[0]->version : '0';
     }
 
     /**
@@ -732,7 +732,7 @@ class MigrationRunner
     {
         if ($batch < 0) {
             $batches = $this->getBatches();
-            $batch   = $batches[count($batches) - 1] ?? 0;
+            $batch   = $batches[\count($batches) - 1] ?? 0;
         }
 
         $migration = $this->db->table($this->table)
@@ -742,7 +742,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        return count($migration) ? $migration[0]->version : 0;
+        return \count($migration) ? $migration[0]->version : 0;
     }
 
     /**
@@ -848,7 +848,7 @@ class MigrationRunner
 
         $this->setGroup($group);
 
-        if (! is_callable([$instance, $direction])) {
+        if (! \is_callable([$instance, $direction])) {
             $message = sprintf(lang('Migrations.missingMethod'), $direction);
 
             if ($this->silent) {

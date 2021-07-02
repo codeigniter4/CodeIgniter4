@@ -87,7 +87,7 @@ class Result extends BaseResult
             $retVal[$i]              = new stdClass();
             $retVal[$i]->name        = $data->name;
             $retVal[$i]->type        = $data->type;
-            $retVal[$i]->type_name   = in_array($data->type, [1, 247], true) ? 'char' : ($dataTypes[$data->type] ?? null);
+            $retVal[$i]->type_name   = \in_array($data->type, [1, 247], true) ? 'char' : ($dataTypes[$data->type] ?? null);
             $retVal[$i]->max_length  = $data->max_length;
             $retVal[$i]->primary_key = (int) ($data->flags & 2);
             $retVal[$i]->length      = $data->length;
@@ -102,7 +102,7 @@ class Result extends BaseResult
      */
     public function freeResult()
     {
-        if (is_object($this->resultID)) {
+        if (\is_object($this->resultID)) {
             $this->resultID->free();
             $this->resultID = false;
         }
@@ -153,7 +153,7 @@ class Result extends BaseResult
      */
     public function getNumRows(): int
     {
-        if (! is_int($this->numRows)) {
+        if (! \is_int($this->numRows)) {
             $this->numRows = $this->resultID->num_rows;
         }
 

@@ -101,7 +101,7 @@ class MemcachedHandler extends BaseHandler
 
         foreach ($matches as $match) {
             // If Memcached already has this server (or if the port is invalid), skip it
-            if (in_array($match[1] . ':' . $match[2], $serverList, true)) {
+            if (\in_array($match[1] . ':' . $match[2], $serverList, true)) {
                 $this->logger->debug('Session: Memcached server pool already has ' . $match[1] . ':' . $match[2]);
 
                 continue;

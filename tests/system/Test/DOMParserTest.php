@@ -22,7 +22,7 @@ final class DOMParserTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        if (! extension_loaded('DOM')) {
+        if (! \extension_loaded('DOM')) {
             $this->markTestSkipped('DOM extension not loaded.');
         }
     }

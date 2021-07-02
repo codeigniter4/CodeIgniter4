@@ -103,11 +103,11 @@ class Header
             return $this;
         }
 
-        if (! is_array($this->value)) {
+        if (! \is_array($this->value)) {
             $this->value = [$this->value];
         }
 
-        if (! in_array($value, $this->value, true)) {
+        if (! \in_array($value, $this->value, true)) {
             $this->value[] = $value;
         }
 
@@ -128,7 +128,7 @@ class Header
             return $this;
         }
 
-        if (! is_array($this->value)) {
+        if (! \is_array($this->value)) {
             $this->value = [$this->value];
         }
 
@@ -148,19 +148,19 @@ class Header
      */
     public function getValueLine(): string
     {
-        if (is_string($this->value)) {
+        if (\is_string($this->value)) {
             return $this->value;
         }
-        if (! is_array($this->value)) {
+        if (! \is_array($this->value)) {
             return '';
         }
 
         $options = [];
 
         foreach ($this->value as $key => $value) {
-            if (is_string($key) && ! is_array($value)) {
+            if (\is_string($key) && ! \is_array($value)) {
                 $options[] = $key . '=' . $value;
-            } elseif (is_array($value)) {
+            } elseif (\is_array($value)) {
                 $key       = key($value);
                 $options[] = $key . '=' . $value[$key];
             } elseif (is_numeric($key)) {

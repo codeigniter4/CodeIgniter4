@@ -193,7 +193,7 @@ abstract class BaseHandler implements ImageHandlerInterface
         }
 
         // File::__construct has verified the file exists - make sure it is an image
-        if (! is_int($this->image->imageType)) {
+        if (! \is_int($this->image->imageType)) {
             throw ImageException::forFileNotSupported();
         }
 
@@ -315,7 +315,7 @@ abstract class BaseHandler implements ImageHandlerInterface
             270.0,
         ];
 
-        if (! in_array($angle, $degs, true)) {
+        if (! \in_array($angle, $degs, true)) {
             throw ImageException::forMissingAngle();
         }
 
@@ -507,7 +507,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function getEXIF(?string $key = null, bool $silent = false)
     {
-        if (! function_exists('exif_read_data')) {
+        if (! \function_exists('exif_read_data')) {
             if ($silent) {
                 return null;
             }
@@ -521,7 +521,7 @@ abstract class BaseHandler implements ImageHandlerInterface
             case IMAGETYPE_JPEG:
             case IMAGETYPE_TIFF_II:
                 $exif = @exif_read_data($this->image()->getPathname());
-                if ($key !== null && is_array($exif)) {
+                if ($key !== null && \is_array($exif)) {
                     $exif = $exif[$key] ?? false;
                 }
         }

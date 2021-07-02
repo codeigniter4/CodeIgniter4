@@ -119,6 +119,6 @@ class EventModel extends Model
 
     public function hasToken(string $token)
     {
-        return in_array($token, $this->tokens, true);
+        return \in_array($token, $this->tokens, true);
     }
 }

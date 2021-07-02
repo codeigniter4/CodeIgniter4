@@ -64,7 +64,7 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
         $functions           = array_keys(self::FUNCTION_WITH_ARG_POSITION);
         $currentFunctionName = $name->toString();
 
-        if (! in_array($currentFunctionName, $functions, true)) {
+        if (! \in_array($currentFunctionName, $functions, true)) {
             return null;
         }
 

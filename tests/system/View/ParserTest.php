@@ -411,7 +411,7 @@ final class ParserTest extends CIUnitTestCase
         if ($expected === null) {
             $expected = $value;
         }
-        $this->assertSame($expected, \esc($value));
+        $this->assertSame($expected, esc($value));
     }
 
     /**

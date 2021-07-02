@@ -46,8 +46,8 @@ abstract class BaseResource extends Controller
     public function setModel($which = null)
     {
         if ($which) {
-            $this->model     = is_object($which) ? $which : null;
-            $this->modelName = is_object($which) ? null : $which;
+            $this->model     = \is_object($which) ? $which : null;
+            $this->modelName = \is_object($which) ? null : $which;
         }
 
         if (empty($this->model) && ! empty($this->modelName) && class_exists($this->modelName)) {
@@ -55,7 +55,7 @@ abstract class BaseResource extends Controller
         }
 
         if (! empty($this->model) && empty($this->modelName)) {
-            $this->modelName = get_class($this->model);
+            $this->modelName = \get_class($this->model);
         }
     }
 }

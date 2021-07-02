@@ -36,7 +36,7 @@ class DOMParser
      */
     public function __construct()
     {
-        if (! extension_loaded('DOM')) {
+        if (! \extension_loaded('DOM')) {
             // always there in travis-ci
             // @codeCoverageIgnoreStart
             throw new BadMethodCallException('DOM extension is required, but not currently loaded.');
@@ -216,7 +216,7 @@ class DOMParser
 
         // $paths might contain a number of different
         // ready to go xpath portions to tack on.
-        if (! empty($paths) && is_array($paths)) {
+        if (! empty($paths) && \is_array($paths)) {
             foreach ($paths as $extra) {
                 $path .= $extra;
             }

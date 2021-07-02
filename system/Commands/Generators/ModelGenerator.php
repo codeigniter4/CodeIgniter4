@@ -95,14 +95,14 @@ class ModelGenerator extends BaseCommand
         $DBGroup = $this->getOption('dbgroup');
         $return  = $this->getOption('return');
 
-        $baseClass = strtolower(str_replace(trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\') . '\\', '', $class));
+        $baseClass = strtolower(str_replace(trim(implode('\\', \array_slice(explode('\\', $class), 0, -1)), '\\') . '\\', '', $class));
         $baseClass = strpos($baseClass, 'model') ? str_replace('model', '', $baseClass) : $baseClass;
 
-        $table   = is_string($table) ? $table : plural($baseClass);
-        $DBGroup = is_string($DBGroup) ? $DBGroup : 'default';
-        $return  = is_string($return) ? $return : 'array';
+        $table   = \is_string($table) ? $table : plural($baseClass);
+        $DBGroup = \is_string($DBGroup) ? $DBGroup : 'default';
+        $return  = \is_string($return) ? $return : 'array';
 
-        if (! in_array($return, ['array', 'object', 'entity'], true)) {
+        if (! \in_array($return, ['array', 'object', 'entity'], true)) {
             // @codeCoverageIgnoreStart
             $return = CLI::prompt(lang('CLI.generator.returnType'), ['array', 'object', 'entity'], 'required');
             CLI::newLine();

@@ -136,7 +136,7 @@ class Language
             }
 
             $output = $current[$row] ?? null;
-            if (is_array($output)) {
+            if (\is_array($output)) {
                 $current = $output;
             }
         }
@@ -146,7 +146,7 @@ class Language
         }
 
         $row = current(explode('.', $parsedLine));
-        $key = substr($parsedLine, strlen($row) + 1);
+        $key = substr($parsedLine, \strlen($row) + 1);
 
         return $this->language[$locale][$file][$row][$key] ?? null;
     }
@@ -158,9 +158,9 @@ class Language
     protected function parseLine(string $line, string $locale): array
     {
         $file = substr($line, 0, strpos($line, '.'));
-        $line = substr($line, strlen($file) + 1);
+        $line = substr($line, \strlen($file) + 1);
 
-        if (! isset($this->language[$locale][$file]) || ! array_key_exists($line, $this->language[$locale][$file])) {
+        if (! isset($this->language[$locale][$file]) || ! \array_key_exists($line, $this->language[$locale][$file])) {
             $this->load($file, $locale);
         }
 
@@ -181,7 +181,7 @@ class Language
             return $message;
         }
 
-        if (is_array($message)) {
+        if (\is_array($message)) {
             foreach ($message as $index => $value) {
                 $message[$index] = $this->formatMessage($value, $args);
             }
@@ -201,20 +201,20 @@ class Language
      */
     protected function load(string $file, string $locale, bool $return = false)
     {
-        if (! array_key_exists($locale, $this->loadedFiles)) {
+        if (! \array_key_exists($locale, $this->loadedFiles)) {
             $this->loadedFiles[$locale] = [];
         }
 
-        if (in_array($file, $this->loadedFiles[$locale], true)) {
+        if (\in_array($file, $this->loadedFiles[$locale], true)) {
             // Don't load it more than once.
             return [];
         }
 
-        if (! array_key_exists($locale, $this->language)) {
+        if (! \array_key_exists($locale, $this->language)) {
             $this->language[$locale] = [];
         }
 
-        if (! array_key_exists($file, $this->language[$locale])) {
+        if (! \array_key_exists($file, $this->language[$locale])) {
             $this->language[$locale][$file] = [];
         }
 

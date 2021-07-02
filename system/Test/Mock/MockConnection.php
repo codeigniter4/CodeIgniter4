@@ -92,7 +92,7 @@ class MockConnection extends BaseConnection
     {
         $return = $this->returnValues['connect'] ?? true;
 
-        if (is_array($return)) {
+        if (\is_array($return)) {
             // By removing the top item here, we can
             // get a different value for, say, testing failover connections.
             $return = array_shift($this->returnValues['connect']);

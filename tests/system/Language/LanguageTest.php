@@ -165,7 +165,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang = new SecondMockLanguage('en');
 
         $this->lang->loadem('More', 'en');
-        $this->assertTrue(in_array('More', $this->lang->loaded(), true));
+        $this->assertTrue(\in_array('More', $this->lang->loaded(), true));
 
         $this->lang->loadem('More', 'en');
         $this->assertCount(1, $this->lang->loaded()); // should only be there once
@@ -176,11 +176,11 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang = new SecondMockLanguage('en');
 
         $result = $this->lang->loadem('More', 'en', true);
-        $this->assertFalse(in_array('More', $this->lang->loaded(), true));
+        $this->assertFalse(\in_array('More', $this->lang->loaded(), true));
         $this->assertCount(3, $result);
 
         $result = $this->lang->loadem('More', 'en');
-        $this->assertTrue(in_array('More', $this->lang->loaded(), true));
+        $this->assertTrue(\in_array('More', $this->lang->loaded(), true));
         $this->assertCount(1, $this->lang->loaded());
     }
 
@@ -250,7 +250,7 @@ final class LanguageTest extends CIUnitTestCase
     public function testBundleUniqueKeys($bundle)
     {
         $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';
-        $this->assertGreaterThan(0, count($messages));
+        $this->assertGreaterThan(0, \count($messages));
     }
 
     // Testing base locale vs variants

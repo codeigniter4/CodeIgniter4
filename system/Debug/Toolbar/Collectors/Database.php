@@ -82,7 +82,7 @@ class Database extends BaseCollector
         // Provide default in case it's not set
         $max = $config->maxQueries ?: 100;
 
-        if (count(static::$queries) < $max) {
+        if (\count(static::$queries) < $max) {
             static::$queries[] = $query;
         }
     }
@@ -138,7 +138,7 @@ class Database extends BaseCollector
      */
     public function getBadgeValue(): int
     {
-        return count(static::$queries);
+        return \count(static::$queries);
     }
 
     /**
@@ -148,7 +148,7 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
-        return '(' . count(static::$queries) . ' Queries across ' . ($countConnection = count($this->connections)) . ' Connection' .
+        return '(' . \count(static::$queries) . ' Queries across ' . ($countConnection = \count($this->connections)) . ' Connection' .
                 ($countConnection > 1 ? 's' : '') . ')';
     }
 

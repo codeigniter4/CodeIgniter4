@@ -438,7 +438,7 @@ class IncomingRequest extends Request
     {
         // If it's not a valid locale, set it
         // to the default locale for the site.
-        if (! in_array($locale, $this->validLocales, true)) {
+        if (! \in_array($locale, $this->validLocales, true)) {
             $locale = $this->defaultLocale;
         }
 
@@ -483,7 +483,7 @@ class IncomingRequest extends Request
                 return $this->getJSON();
             }
 
-            if (is_array($index)) {
+            if (\is_array($index)) {
                 $output = [];
 
                 foreach ($index as $key) {
@@ -535,9 +535,9 @@ class IncomingRequest extends Request
 
         $data = dot_array_search($index, $this->getJSON(true));
 
-        if (! is_array($data)) {
+        if (! \is_array($data)) {
             $filter = $filter ?? FILTER_DEFAULT;
-            $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+            $flags  = \is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
             return filter_var($data, $filter, $flags);
         }

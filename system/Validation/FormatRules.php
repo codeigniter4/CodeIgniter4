@@ -96,7 +96,7 @@ class FormatRules
      */
     public function string($str = null): bool
     {
-        return is_string($str);
+        return \is_string($str);
     }
 
     /**
@@ -171,7 +171,7 @@ class FormatRules
      */
     public function timezone(?string $str = null): bool
     {
-        return in_array($str, timezone_identifiers_list(), true);
+        return \in_array($str, timezone_identifiers_list(), true);
     }
 
     /**
@@ -207,7 +207,7 @@ class FormatRules
     public function valid_email(?string $str = null): bool
     {
         // @see https://regex101.com/r/wlJG1t/1/
-        if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches)) {
+        if (\function_exists('idn_to_ascii') && \defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches)) {
             $str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
         }
 
@@ -279,7 +279,7 @@ class FormatRules
         }
 
         if (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches)) {
-            if (! in_array($matches[1], ['http', 'https'], true)) {
+            if (! \in_array($matches[1], ['http', 'https'], true)) {
                 return false;
             }
 

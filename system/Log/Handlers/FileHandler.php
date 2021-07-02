@@ -101,7 +101,7 @@ class FileHandler extends BaseHandler
 
         $result = null;
 
-        for ($written = 0, $length = strlen($msg); $written < $length; $written += $result) {
+        for ($written = 0, $length = \strlen($msg); $written < $length; $written += $result) {
             if (($result = fwrite($fp, substr($msg, $written))) === false) {
                 // if we get this far, we'll never see this during travis-ci
                 // @codeCoverageIgnoreStart
@@ -117,6 +117,6 @@ class FileHandler extends BaseHandler
             chmod($filepath, $this->filePermissions);
         }
 
-        return is_int($result);
+        return \is_int($result);
     }
 }

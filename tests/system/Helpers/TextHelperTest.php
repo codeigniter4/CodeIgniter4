@@ -99,18 +99,18 @@ final class TextHelperTest extends CIUnitTestCase
 
     public function testRandomString()
     {
-        $this->assertSame(16, strlen(random_string('alnum', 16)));
-        $this->assertSame(16, strlen(random_string('alpha', 16)));
-        $this->assertSame(16, strlen(random_string('nozero', 16)));
-        $this->assertSame(16, strlen(random_string('numeric', 16)));
-        $this->assertSame(8, strlen(random_string('numeric')));
+        $this->assertSame(16, \strlen(random_string('alnum', 16)));
+        $this->assertSame(16, \strlen(random_string('alpha', 16)));
+        $this->assertSame(16, \strlen(random_string('nozero', 16)));
+        $this->assertSame(16, \strlen(random_string('numeric', 16)));
+        $this->assertSame(8, \strlen(random_string('numeric')));
 
         $this->assertIsString(random_string('basic'));
-        $this->assertSame(16, strlen($random = random_string('crypto', 16)));
+        $this->assertSame(16, \strlen($random = random_string('crypto', 16)));
         $this->assertIsString($random);
 
-        $this->assertSame(32, strlen($random = random_string('md5')));
-        $this->assertSame(40, strlen($random = random_string('sha1')));
+        $this->assertSame(32, \strlen($random = random_string('md5')));
+        $this->assertSame(40, \strlen($random = random_string('sha1')));
     }
 
     public function testIncrementString()

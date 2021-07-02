@@ -124,6 +124,6 @@ class Timer
      */
     public function has(string $name): bool
     {
-        return array_key_exists(strtolower($name), $this->timers);
+        return \array_key_exists(strtolower($name), $this->timers);
     }
 }

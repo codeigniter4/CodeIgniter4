@@ -145,8 +145,8 @@ class RedisHandler extends BaseHandler
                 $this->sessionID = $sessionID;
             }
 
-            $sessionData                               = $this->redis->get($this->keyPrefix . $sessionID);
-            is_string($sessionData) ? $this->keyExists = true : $sessionData = '';
+            $sessionData                                = $this->redis->get($this->keyPrefix . $sessionID);
+            \is_string($sessionData) ? $this->keyExists = true : $sessionData = '';
 
             $this->fingerprint = md5($sessionData);
 

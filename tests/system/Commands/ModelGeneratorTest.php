@@ -34,7 +34,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         stream_filter_remove($this->streamFilter);
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        $file   = str_replace('APPPATH' . \DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
             unlink($file);
         }
@@ -109,7 +109,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         }
         $file = APPPATH . 'Entities/User.php';
         $this->assertFileExists($file);
-        $dir = dirname($file);
+        $dir = \dirname($file);
         if (is_file($file)) {
             unlink($file);
         }
@@ -129,6 +129,6 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertFileExists($entity);
         unlink($model);
         unlink($entity);
-        rmdir(dirname($entity));
+        rmdir(\dirname($entity));
     }
 }

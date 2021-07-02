@@ -124,8 +124,8 @@ class DownloadResponse extends Response
      */
     public function getContentLength(): int
     {
-        if (is_string($this->binary)) {
-            return strlen($this->binary);
+        if (\is_string($this->binary)) {
+            return \strlen($this->binary);
         }
 
         if ($this->file instanceof File) {
@@ -148,7 +148,7 @@ class DownloadResponse extends Response
             $charset = $this->charset;
         }
 
-        if (! is_string($mime)) {
+        if (! \is_string($mime)) {
             // Set the default MIME type to send
             $mime    = 'application/octet-stream';
             $charset = '';
@@ -173,10 +173,10 @@ class DownloadResponse extends Response
          * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
          */
         // @todo: depend super global
-        if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
+        if (\count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT'])
                 && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT'])) {
-            $x[count($x) - 1] = strtoupper($extension);
-            $filename         = implode('.', $x);
+            $x[\count($x) - 1] = strtoupper($extension);
+            $filename          = implode('.', $x);
         }
 
         return $filename;

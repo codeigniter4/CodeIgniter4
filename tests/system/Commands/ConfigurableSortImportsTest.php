@@ -60,7 +60,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         if (is_file($file)) {
             unlink($file);
         }
-        $dir = dirname($file);
+        $dir = \dirname($file);
         if (is_dir($dir)) {
             rmdir($dir);
         }
@@ -77,7 +77,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         if (is_file($file)) {
             unlink($file);
         }
-        $dir = dirname($file);
+        $dir = \dirname($file);
         if (is_dir($dir)) {
             rmdir($dir);
         }

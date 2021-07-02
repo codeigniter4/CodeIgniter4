@@ -40,7 +40,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
     protected function createDummyDebugbarJson()
     {
         $time = $this->time;
-        $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
+        $path = WRITEPATH . 'debugbar' . \DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
 
         // create 10 dummy debugbar json files
         for ($i = 0; $i < 10; $i++) {
@@ -54,17 +54,17 @@ final class ClearDebugbarTest extends CIUnitTestCase
     public function testClearDebugbarWorks()
     {
         // test clean debugbar dir
-        $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
+        $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . \DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
         // test dir is now populated with json
         $this->createDummyDebugbarJson();
-        $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
+        $this->assertFileExists(WRITEPATH . 'debugbar' . \DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
         command('debugbar:clear');
         $result = CITestStreamFilter::$buffer;
 
-        $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
-        $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . '.gitkeep');
+        $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . \DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
+        $this->assertFileExists(WRITEPATH . 'debugbar' . \DIRECTORY_SEPARATOR . '.gitkeep');
         $this->assertStringContainsString('Debugbar cleared.', $result);
     }
 }

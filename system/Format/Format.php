@@ -51,7 +51,7 @@ class Format
      */
     public function getFormatter(string $mime): FormatterInterface
     {
-        if (! array_key_exists($mime, $this->config->formatters)) {
+        if (! \array_key_exists($mime, $this->config->formatters)) {
             throw FormatException::forInvalidMime($mime);
         }
 

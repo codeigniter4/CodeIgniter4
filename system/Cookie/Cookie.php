@@ -140,7 +140,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
                 'samesite' => $config->samesite,
                 'raw'      => $config->raw,
             ];
-        } elseif (is_array($config)) {
+        } elseif (\is_array($config)) {
             $newDefaults = $config;
         }
 
@@ -701,8 +701,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
             $expires = $expires->format('U');
         }
 
-        if (! is_string($expires) && ! is_int($expires)) {
-            throw CookieException::forInvalidExpiresTime(gettype($expires));
+        if (! \is_string($expires) && ! \is_int($expires)) {
+            throw CookieException::forInvalidExpiresTime(\gettype($expires));
         }
 
         if (! is_numeric($expires)) {
@@ -772,7 +772,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
             $samesite = self::SAMESITE_LAX;
         }
 
-        if (! in_array(strtolower($samesite), self::ALLOWED_SAMESITE_VALUES, true)) {
+        if (! \in_array(strtolower($samesite), self::ALLOWED_SAMESITE_VALUES, true)) {
             throw CookieException::forInvalidSameSite($samesite);
         }
 

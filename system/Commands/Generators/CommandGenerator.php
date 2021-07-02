@@ -95,17 +95,17 @@ class CommandGenerator extends BaseCommand
         $group   = $this->getOption('group');
         $type    = $this->getOption('type');
 
-        $command = is_string($command) ? $command : 'command:name';
-        $type    = is_string($type) ? $type : 'basic';
+        $command = \is_string($command) ? $command : 'command:name';
+        $type    = \is_string($type) ? $type : 'basic';
 
-        if (! in_array($type, ['basic', 'generator'], true)) {
+        if (! \in_array($type, ['basic', 'generator'], true)) {
             // @codeCoverageIgnoreStart
             $type = CLI::prompt(lang('CLI.generator.commandType'), ['basic', 'generator'], 'required');
             CLI::newLine();
             // @codeCoverageIgnoreEnd
         }
 
-        if (! is_string($group)) {
+        if (! \is_string($group)) {
             $group = $type === 'generator' ? 'Generators' : 'CodeIgniter';
         }
 

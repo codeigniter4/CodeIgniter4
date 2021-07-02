@@ -36,7 +36,7 @@ final class SessionsCommandsTest extends CIUnitTestCase
         stream_filter_remove($this->streamFilter);
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        $file   = str_replace('APPPATH' . \DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (file_exists($file)) {
             unlink($file);
         }
@@ -62,7 +62,7 @@ final class SessionsCommandsTest extends CIUnitTestCase
 
     public function testCannotWriteFileOnCreateMigrationCommand()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ('\\' === \DIRECTORY_SEPARATOR) {
             $this->markTestSkipped('chmod does not work as expected on Windows');
         }
 

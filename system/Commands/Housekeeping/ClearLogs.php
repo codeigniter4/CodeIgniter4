@@ -62,7 +62,7 @@ class ClearLogs extends BaseCommand
      */
     public function run(array $params)
     {
-        $force = array_key_exists('force', $params) || CLI::getOption('force');
+        $force = \array_key_exists('force', $params) || CLI::getOption('force');
 
         if (! $force && CLI::prompt('Are you sure you want to delete the logs?', ['n', 'y']) === 'n') {
             // @codeCoverageIgnoreStart

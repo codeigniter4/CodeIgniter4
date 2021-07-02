@@ -123,7 +123,7 @@ trait ResponseTrait
      */
     public function fail($messages, int $status = 400, ?string $code = null, string $customMessage = '')
     {
-        if (! is_array($messages)) {
+        if (! \is_array($messages)) {
             $messages = ['error' => $messages];
         }
 
@@ -305,7 +305,7 @@ trait ResponseTrait
     protected function format($data = null)
     {
         // If the data is a string, there's not much we can do to it...
-        if (is_string($data)) {
+        if (\is_string($data)) {
             // The content type should be text/... and not application/...
             $contentType = $this->response->getHeaderLine('Content-Type');
             $contentType = str_replace('application/json', 'text/html', $contentType);
@@ -320,7 +320,7 @@ trait ResponseTrait
         $mime   = "application/{$this->format}";
 
         // Determine correct response type through content negotiation if not explicitly declared
-        if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true)) {
+        if (empty($this->format) || ! \in_array($this->format, ['json', 'xml'], true)) {
             $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
         }
 

@@ -49,7 +49,7 @@ class ErrorlogHandler extends BaseHandler
 
         $messageType = $config['messageType'] ?? self::TYPE_OS;
 
-        if (! is_int($messageType) || ! in_array($messageType, [self::TYPE_OS, self::TYPE_SAPI], true)) {
+        if (! \is_int($messageType) || ! \in_array($messageType, [self::TYPE_OS, self::TYPE_SAPI], true)) {
             throw LogException::forInvalidMessageType(print_r($messageType, true));
         }
 

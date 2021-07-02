@@ -48,6 +48,6 @@ class Modules
             return false;
         }
 
-        return in_array(strtolower($alias), $this->aliases, true);
+        return \in_array(strtolower($alias), $this->aliases, true);
     }
 }

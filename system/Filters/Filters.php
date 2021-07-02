@@ -162,7 +162,7 @@ class Filters
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
+                throw FilterException::forIncorrectInterface(\get_class($class));
             }
 
             if ($position === 'before') {
@@ -234,8 +234,8 @@ class Filters
         $this->processFilters($uri);
 
         // Set the toolbar filter to the last position to be executed
-        if (in_array('toolbar', $this->filters['after'], true)
-            && ($count = count($this->filters['after'])) > 1
+        if (\in_array('toolbar', $this->filters['after'], true)
+            && ($count = \count($this->filters['after'])) > 1
             && $this->filters['after'][$count - 1] !== 'toolbar'
         ) {
             array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
@@ -336,7 +336,7 @@ class Filters
             $this->arguments[$name] = $params;
         }
 
-        if (! array_key_exists($name, $this->config->aliases)) {
+        if (! \array_key_exists($name, $this->config->aliases)) {
             throw FilterException::forNoAlias($name);
         }
 
@@ -375,7 +375,7 @@ class Filters
      */
     protected function processGlobals(?string $uri = null)
     {
-        if (! isset($this->config->globals) || ! is_array($this->config->globals)) {
+        if (! isset($this->config->globals) || ! \is_array($this->config->globals)) {
             return;
         }
 
@@ -392,7 +392,7 @@ class Filters
                 // look at each alias in the group
                 foreach ($this->config->globals[$set] as $alias => $rules) {
                     $keep = true;
-                    if (is_array($rules)) {
+                    if (\is_array($rules)) {
                         // see if it should be excluded
                         if (isset($rules['except'])) {
                             // grab the exclusion rules
@@ -418,14 +418,14 @@ class Filters
      */
     protected function processMethods()
     {
-        if (! isset($this->config->methods) || ! is_array($this->config->methods)) {
+        if (! isset($this->config->methods) || ! \is_array($this->config->methods)) {
             return;
         }
 
         // Request method won't be set for CLI-based requests
         $method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
-        if (array_key_exists($method, $this->config->methods)) {
+        if (\array_key_exists($method, $this->config->methods)) {
             $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
 
             return;
@@ -472,15 +472,15 @@ class Filters
     protected function processAliasesToClass(string $position)
     {
         foreach ($this->filters[$position] as $alias => $rules) {
-            if (is_numeric($alias) && is_string($rules)) {
+            if (is_numeric($alias) && \is_string($rules)) {
                 $alias = $rules;
             }
 
-            if (! array_key_exists($alias, $this->config->aliases)) {
+            if (! \array_key_exists($alias, $this->config->aliases)) {
                 throw FilterException::forNoAlias($alias);
             }
 
-            if (is_array($this->config->aliases[$alias])) {
+            if (\is_array($this->config->aliases[$alias])) {
                 $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
             } else {
                 $this->filtersClass[$position][] = $this->config->aliases[$alias];
@@ -509,7 +509,7 @@ class Filters
         }
 
         // make sure the paths are iterable
-        if (is_string($paths)) {
+        if (\is_string($paths)) {
             $paths = [$paths];
         }
 

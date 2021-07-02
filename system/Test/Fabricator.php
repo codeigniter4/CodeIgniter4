@@ -100,12 +100,12 @@ class Fabricator
      */
     public function __construct($model, ?array $formatters = null, ?string $locale = null)
     {
-        if (is_string($model)) {
+        if (\is_string($model)) {
             // Create a new model instance
             $model = model($model, false);
         }
 
-        if (! is_object($model)) {
+        if (! \is_object($model)) {
             throw new InvalidArgumentException(lang('Fabricator.invalidModel'));
         }
 
@@ -312,7 +312,7 @@ class Fabricator
         }
 
         // Next look for known model fields
-        if (in_array($field, $this->dateFields, true)) {
+        if (\in_array($field, $this->dateFields, true)) {
             switch ($this->model->dateFormat) {
                 case 'datetime':
                 case 'date':
@@ -387,7 +387,7 @@ class Fabricator
         elseif (method_exists($this->model, 'fake')) {
             $result = $this->model->fake($this->faker);
 
-            $result = is_object($result) && method_exists($result, 'toArray')
+            $result = \is_object($result) && method_exists($result, 'toArray')
                 // This should cover entities
                 ? $result->toArray()
                 // Try to cast it
@@ -532,7 +532,7 @@ class Fabricator
             $fields[$this->model->primaryKey] = $i;
 
             // Merge fields
-            if (is_array($result)) {
+            if (\is_array($result)) {
                 $result = array_merge($result, $fields);
             } else {
                 foreach ($fields as $key => $value) {

@@ -60,7 +60,7 @@ trait RequestTrait
          * @deprecated $this->proxyIPs property will be removed in the future
          */
         $proxyIPs = $this->proxyIPs ?? config('App')->proxyIPs;
-        if (! empty($proxyIPs) && ! is_array($proxyIPs)) {
+        if (! empty($proxyIPs) && ! \is_array($proxyIPs)) {
             $proxyIPs = explode(',', str_replace(' ', '', $proxyIPs));
         }
 
@@ -113,7 +113,7 @@ trait RequestTrait
                             $ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress));
 
                             for ($j = 0; $j < 8; $j++) {
-                                $ip[$j] = intval($ip[$j], 16);
+                                $ip[$j] = \intval($ip[$j], 16);
                             }
 
                             $sprintf = '%016b%016b%016b%016b%016b%016b%016b%016b';
@@ -133,7 +133,7 @@ trait RequestTrait
                         $netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
 
                         for ($i = 0; $i < 8; $i++) {
-                            $netaddr[$i] = intval($netaddr[$i], 16);
+                            $netaddr[$i] = \intval($netaddr[$i], 16);
                         }
                     } else {
                         $netaddr = explode('.', $netaddr);
@@ -224,14 +224,14 @@ trait RequestTrait
 
         // Null filters cause null values to return.
         $filter = $filter ?? FILTER_DEFAULT;
-        $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+        $flags  = \is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
         if ($index === null) {
             $values = [];
 
             foreach ($this->globals[$method] as $key => $value) {
-                $values[$key] = is_array($value)
+                $values[$key] = \is_array($value)
                     ? $this->fetchGlobal($method, $key, $filter, $flags)
                     : filter_var($value, $filter, $flags);
             }
@@ -240,7 +240,7 @@ trait RequestTrait
         }
 
         // allow fetching multiple keys at once
-        if (is_array($index)) {
+        if (\is_array($index)) {
             $output = [];
 
             foreach ($index as $key) {
@@ -274,12 +274,12 @@ trait RequestTrait
         }
 
         // @phpstan-ignore-next-line
-        if (is_array($value)
+        if (\is_array($value)
             && (
                 $filter !== FILTER_DEFAULT
                 || (
                     (is_numeric($flags) && $flags !== 0)
-                    || is_array($flags) && count($flags) > 0
+                    || \is_array($flags) && \count($flags) > 0
                 )
             )
         ) {
@@ -292,7 +292,7 @@ trait RequestTrait
         }
 
         // Cannot filter these types of data automatically...
-        if (is_array($value) || is_object($value) || $value === null) {
+        if (\is_array($value) || \is_object($value) || $value === null) {
             return $value;
         }
 

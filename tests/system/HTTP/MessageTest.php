@@ -47,7 +47,7 @@ final class MessageTest extends CIUnitTestCase
         $headers = $this->message->headers();
 
         // Content-Type is likely set...
-        $this->assertGreaterThanOrEqual(2, count($headers));
+        $this->assertGreaterThanOrEqual(2, \count($headers));
 
         $this->assertSame('daisyduke.com', $headers['Host']->getValue());
         $this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());

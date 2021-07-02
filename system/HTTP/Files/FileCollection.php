@@ -62,7 +62,7 @@ class FileCollection
                 return $uploadedFile instanceof UploadedFile ? $uploadedFile : null;
             }
 
-            if (array_key_exists($name, $this->files)) {
+            if (\array_key_exists($name, $this->files)) {
                 $uploadedFile = $this->files[$name];
 
                 return $uploadedFile instanceof UploadedFile ? $uploadedFile : null;
@@ -86,14 +86,14 @@ class FileCollection
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
-                return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
+                return (\is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
                     $uploadedFile : null;
             }
 
-            if (array_key_exists($name, $this->files)) {
+            if (\array_key_exists($name, $this->files)) {
                 $uploadedFile = $this->files[$name];
 
-                return (is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
+                return (\is_array($uploadedFile) && ($uploadedFile[array_key_first($uploadedFile)] instanceof UploadedFile)) ?
                     $uploadedFile : null;
             }
         }
@@ -117,7 +117,7 @@ class FileCollection
             $el = $this->files;
 
             foreach ($segments as $segment) {
-                if (! array_key_exists($segment, $el)) {
+                if (! \array_key_exists($segment, $el)) {
                     return false;
                 }
 
@@ -138,7 +138,7 @@ class FileCollection
      */
     protected function populateFiles()
     {
-        if (is_array($this->files)) {
+        if (\is_array($this->files)) {
             return;
         }
 
@@ -167,7 +167,7 @@ class FileCollection
             $output = [];
 
             foreach ($array as $key => $values) {
-                if (! is_array($values)) {
+                if (! \is_array($values)) {
                     continue;
                 }
 
@@ -203,7 +203,7 @@ class FileCollection
             foreach ($array as $field => $value) {
                 $pointer = &$output[$name];
 
-                if (! is_array($value)) {
+                if (! \is_array($value)) {
                     $pointer[$field] = $value;
 
                     continue;
@@ -217,7 +217,7 @@ class FileCollection
 
                 foreach ($iterator as $key => $val) {
                     array_splice($stack, $iterator->getDepth() + 1);
-                    $pointer = &$stack[count($stack) - 1];
+                    $pointer = &$stack[\count($stack) - 1];
                     $pointer = &$pointer[$key];
                     $stack[] = &$pointer;
                     if (! $iterator->hasChildren()) {
@@ -242,7 +242,7 @@ class FileCollection
     {
         $currentIndex = array_shift($index);
 
-        if (isset($currentIndex) && is_array($index) && $index && is_array($value[$currentIndex]) && $value[$currentIndex]) {
+        if (isset($currentIndex) && \is_array($index) && $index && \is_array($value[$currentIndex]) && $value[$currentIndex]) {
             return $this->getValueDotNotationSyntax($index, $value[$currentIndex]);
         }
 

@@ -149,7 +149,7 @@ class CLI
             // Readline is an extension for PHP that makes interactivity with PHP
             // much more bash-like.
             // http://www.php.net/manual/en/readline.installation.php
-            static::$readline_support = extension_loaded('readline');
+            static::$readline_support = \extension_loaded('readline');
 
             // clear segments & options to keep testing clean
             static::$segments = [];
@@ -164,7 +164,7 @@ class CLI
         } else {
             // If the command is being called from a controller
             // we need to define STDOUT ourselves
-            define('STDOUT', 'php://output'); // @codeCoverageIgnore
+            \define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
     }
 
@@ -219,20 +219,20 @@ class CLI
         $extraOutput = '';
         $default     = '';
 
-        if ($validation && ! is_array($validation) && ! is_string($validation)) {
+        if ($validation && ! \is_array($validation) && ! \is_string($validation)) {
             throw new InvalidArgumentException('$rules can only be of type string|array');
         }
 
-        if (! is_array($validation)) {
+        if (! \is_array($validation)) {
             $validation = $validation ? explode('|', $validation) : [];
         }
 
-        if (is_string($options)) {
+        if (\is_string($options)) {
             $extraOutput = ' [' . static::color($options, 'white') . ']';
             $default     = $options;
         }
 
-        if (is_array($options) && $options) {
+        if (\is_array($options) && $options) {
             $opts               = $options;
             $extraOutputDefault = static::color($opts[0], 'white');
 
@@ -434,11 +434,11 @@ class CLI
             return $text;
         }
 
-        if (! array_key_exists($foreground, static::$foreground_colors)) {
+        if (! \array_key_exists($foreground, static::$foreground_colors)) {
             throw CLIException::forInvalidColor('foreground', $foreground);
         }
 
-        if ($background !== null && ! array_key_exists($background, static::$background_colors)) {
+        if ($background !== null && ! \array_key_exists($background, static::$background_colors)) {
             throw CLIException::forInvalidColor('background', $background);
         }
 
@@ -514,10 +514,10 @@ class CLI
             // In the current setup of the tests we cannot fully check
             // if the stream supports the function since we are using
             // filtered streams.
-            return function_exists($function);
+            return \function_exists($function);
         }
 
-        return function_exists($function) && @$function($resource); // @codeCoverageIgnore
+        return \function_exists($function) && @$function($resource); // @codeCoverageIgnore
     }
 
     /**
@@ -785,7 +785,7 @@ class CLI
      */
     public static function getOption(string $name)
     {
-        if (! array_key_exists($name, static::$options)) {
+        if (! \array_key_exists($name, static::$options)) {
             return null;
         }
 
@@ -859,7 +859,7 @@ class CLI
         }
 
         // Yes, it really is necessary to know this count
-        $totalRows = count($tableRows);
+        $totalRows = \count($tableRows);
 
         // Store all columns lengths
         // $all_cols_lengths[row][column] = length

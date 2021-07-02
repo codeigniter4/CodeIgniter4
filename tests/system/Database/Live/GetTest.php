@@ -79,8 +79,8 @@ final class GetTest extends CIUnitTestCase
     {
         $jobs = $this->db->table('job')->get()->getFieldNames();
 
-        $this->assertTrue(in_array('name', $jobs, true));
-        $this->assertTrue(in_array('description', $jobs, true));
+        $this->assertTrue(\in_array('name', $jobs, true));
+        $this->assertTrue(\in_array('description', $jobs, true));
     }
 
     public function testGetFieldData()
@@ -229,7 +229,7 @@ final class GetTest extends CIUnitTestCase
     {
         $testClass = new class() {};
 
-        $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
+        $user = $this->db->table('user')->get()->getRow(0, \get_class($testClass));
 
         $this->assertSame('Derek Jones', $user->name);
     }

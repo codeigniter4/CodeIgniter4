@@ -31,7 +31,7 @@ final class GDHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        if (! extension_loaded('gd')) {
+        if (! \extension_loaded('gd')) {
             $this->markTestSkipped('The GD extension is not available.');
 
             return;
@@ -307,7 +307,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageCreation()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
+            if ($type === 'webp' && ! \function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -322,7 +322,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageCopy()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
+            if ($type === 'webp' && ! \function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -355,7 +355,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageCompressionGetResource()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
+            if ($type === 'webp' && ! \function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }
@@ -375,7 +375,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageCompressionWithResource()
     {
         foreach (['gif', 'jpeg', 'png', 'webp'] as $type) {
-            if ($type === 'webp' && ! function_exists('imagecreatefromwebp')) {
+            if ($type === 'webp' && ! \function_exists('imagecreatefromwebp')) {
                 $this->expectException(ImageException::class);
                 $this->expectExceptionMessage('Your server does not support the GD function required to process this type of image.');
             }

@@ -151,7 +151,7 @@ trait ResponseTrait
         }
 
         // Unknown and no message?
-        if (! array_key_exists($code, static::$statusCodes) && empty($reason)) {
+        if (! \array_key_exists($code, static::$statusCodes) && empty($reason)) {
             throw HTTPException::forUnkownStatusCode($code);
         }
 
@@ -313,7 +313,7 @@ trait ResponseTrait
         $this->setContentType($mime);
 
         // Nothing much to do for a string...
-        if (! is_string($body) || $format === 'json-unencoded') {
+        if (! \is_string($body) || $format === 'json-unencoded') {
             $body = Services::format()->getFormatter($mime)->format($body);
         }
 
@@ -412,7 +412,7 @@ trait ResponseTrait
         if ($date instanceof DateTime) {
             $date->setTimezone(new DateTimeZone('UTC'));
             $this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
-        } elseif (is_string($date)) {
+        } elseif (\is_string($date)) {
             $this->setHeader('Last-Modified', $date);
         }
 
@@ -459,7 +459,7 @@ trait ResponseTrait
 
         // Per spec, MUST be sent with each request, if possible.
         // http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
-        if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server') {
+        if (! isset($this->headers['Date']) && \PHP_SAPI !== 'cli-server') {
             $this->setDate(DateTime::createFromFormat('U', (string) time()));
         }
 
@@ -558,7 +558,7 @@ trait ResponseTrait
         $httponly = false,
         $samesite = null
     ) {
-        if (is_array($name)) {
+        if (\is_array($name)) {
             // always leave 'name' in last place, as the loop will break otherwise, due to $$item
             foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item) {
                 if (isset($name[$item])) {
@@ -713,7 +713,7 @@ trait ResponseTrait
         $filepath = '';
         if ($data === null) {
             $filepath = $filename;
-            $filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
+            $filename = explode('/', str_replace(\DIRECTORY_SEPARATOR, '/', $filename));
             $filename = end($filename);
         }
 

@@ -14,9 +14,9 @@ namespace CodeIgniter\Events;
 use Config\Modules;
 use Config\Services;
 
-define('EVENT_PRIORITY_LOW', 200);
-define('EVENT_PRIORITY_NORMAL', 100);
-define('EVENT_PRIORITY_HIGH', 10);
+\define('EVENT_PRIORITY_LOW', 200);
+\define('EVENT_PRIORITY_NORMAL', 100);
+\define('EVENT_PRIORITY_HIGH', 10);
 
 /**
  * Events
@@ -75,7 +75,7 @@ class Events
          * @var Modules
          */
         $config = config('Modules');
-        $events = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php';
+        $events = APPPATH . 'Config' . \DIRECTORY_SEPARATOR . 'Events.php';
         $files  = [];
 
         if ($config->shouldDiscover('events')) {

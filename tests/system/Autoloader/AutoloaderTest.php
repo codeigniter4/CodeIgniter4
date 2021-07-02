@@ -75,7 +75,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader = Services::autoloader();
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass('App\Controllers\Home');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $expected = APPPATH . 'Controllers' . \DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
 
@@ -86,32 +86,32 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader->register();
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass('App\Controllers\Home');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $expected = APPPATH . 'Controllers' . \DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
 
     public function testExistingFile()
     {
         $actual   = $this->loader->loadClass('App\Controllers\Home');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $expected = APPPATH . 'Controllers' . \DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
 
         $actual   = $this->loader->loadClass('CodeIgniter\Helpers\array_helper');
-        $expected = SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'array_helper.php';
+        $expected = SYSTEMPATH . 'Helpers' . \DIRECTORY_SEPARATOR . 'array_helper.php';
         $this->assertSame($expected, $actual);
     }
 
     public function testMatchesWithPrecedingSlash()
     {
         $actual   = $this->loader->loadClass('\App\Controllers\Home');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $expected = APPPATH . 'Controllers' . \DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
 
     public function testMatchesWithFileExtension()
     {
         $actual   = $this->loader->loadClass('\App\Controllers\Home.php');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
+        $expected = APPPATH . 'Controllers' . \DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
 
@@ -142,7 +142,7 @@ final class AutoloaderTest extends CIUnitTestCase
         ]);
 
         $actual   = $this->loader->loadClass('My\App\App');
-        $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
+        $expected = APPPATH . 'Config' . \DIRECTORY_SEPARATOR . 'App.php';
         $this->assertSame($expected, $actual);
 
         $actual   = $this->loader->loadClass('My\App\AutoloaderTest');
@@ -249,9 +249,9 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->loader->initialize($config, new Modules());
         $this->loader->register();
 
-        $this->assertTrue(function_exists('autoload_foo'));
+        $this->assertTrue(\function_exists('autoload_foo'));
         $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
-        $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
+        $this->assertTrue(\defined('AUTOLOAD_CONSTANT'));
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
     }
 }

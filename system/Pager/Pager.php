@@ -116,7 +116,7 @@ class Pager implements PagerInterface
      */
     protected function displayLinks(string $group, string $template): string
     {
-        if (! array_key_exists($template, $this->config->templates)) {
+        if (! \array_key_exists($template, $this->config->templates)) {
             throw PagerException::forInvalidTemplate($template);
         }
 
@@ -348,7 +348,7 @@ class Pager implements PagerInterface
      */
     public function getDetails(string $group = 'default'): array
     {
-        if (! array_key_exists($group, $this->groups)) {
+        if (! \array_key_exists($group, $this->groups)) {
             throw PagerException::forInvalidPaginationGroup($group);
         }
 
@@ -380,7 +380,7 @@ class Pager implements PagerInterface
      */
     protected function ensureGroup(string $group, ?int $perPage = null)
     {
-        if (array_key_exists($group, $this->groups)) {
+        if (\array_key_exists($group, $this->groups)) {
             return;
         }
 
@@ -405,7 +405,7 @@ class Pager implements PagerInterface
      */
     protected function calculateCurrentPage(string $group)
     {
-        if (array_key_exists($group, $this->segment)) {
+        if (\array_key_exists($group, $this->segment)) {
             try {
                 $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
             } catch (HTTPException $e) {

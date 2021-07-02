@@ -151,7 +151,7 @@ trait ControllerTester
      */
     public function execute(string $method, ...$params)
     {
-        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method])) {
+        if (! method_exists($this->controller, $method) || ! \is_callable([$this->controller, $method])) {
             throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
         }
 
@@ -187,7 +187,7 @@ trait ControllerTester
             }
 
             // check if controller returned a view rather than echoing it
-            if (is_string($response)) {
+            if (\is_string($response)) {
                 $output = $response;
                 $result->response()->setBody($output);
                 $result->setBody($output);

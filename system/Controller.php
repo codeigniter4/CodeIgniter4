@@ -139,7 +139,7 @@ class Controller
         $this->validator = Services::validation();
 
         // If you replace the $rules array with the name of the group
-        if (is_string($rules)) {
+        if (\is_string($rules)) {
             $validation = config('Validation');
 
             // If the rule wasn't found in the \Config\Validation, we

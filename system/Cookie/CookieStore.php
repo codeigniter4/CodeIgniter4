@@ -199,7 +199,7 @@ class CookieStore implements Countable, IteratorAggregate
      */
     public function count(): int
     {
-        return count($this->cookies);
+        return \count($this->cookies);
     }
 
     /**
@@ -220,7 +220,7 @@ class CookieStore implements Countable, IteratorAggregate
     protected function validateCookies(array $cookies): void
     {
         foreach ($cookies as $index => $cookie) {
-            $type = is_object($cookie) ? get_class($cookie) : gettype($cookie);
+            $type = \is_object($cookie) ? \get_class($cookie) : \gettype($cookie);
 
             if (! $cookie instanceof Cookie) {
                 throw CookieException::forInvalidCookieInstance([static::class, Cookie::class, $type, $index]);

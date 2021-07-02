@@ -30,6 +30,6 @@ class SampleClassWithInitController
 
     public function index()
     {
-        return get_class($this->response);
+        return \get_class($this->response);
     }
 }

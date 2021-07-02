@@ -151,7 +151,7 @@ trait ControllerTestTrait
      */
     public function execute(string $method, ...$params)
     {
-        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method])) {
+        if (! method_exists($this->controller, $method) || ! \is_callable([$this->controller, $method])) {
             throw new InvalidArgumentException('Method does not exist or is not callable in controller: ' . $method);
         }
 
@@ -172,8 +172,8 @@ trait ControllerTestTrait
         }
 
         // If the controller returned a view then add it to the output
-        if (is_string($response)) {
-            $output = is_string($output) ? $output . $response : $response;
+        if (\is_string($response)) {
+            $output = \is_string($output) ? $output . $response : $response;
         }
 
         // If the controller did not return a response then start one
@@ -183,8 +183,8 @@ trait ControllerTestTrait
 
         // Check for output to set or prepend
         // @see \CodeIgniter\CodeIgniter::gatherOutput()
-        if (is_string($output)) {
-            if (is_string($response->getBody())) {
+        if (\is_string($output)) {
+            if (\is_string($response->getBody())) {
                 $response->setBody($output . $response->getBody());
             } else {
                 $response->setBody($output);

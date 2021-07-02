@@ -68,7 +68,7 @@ class Result extends BaseResult
      */
     public function freeResult()
     {
-        if (is_resource($this->resultID)) {
+        if (\is_resource($this->resultID)) {
             pg_free_result($this->resultID);
             $this->resultID = false;
         }
@@ -119,7 +119,7 @@ class Result extends BaseResult
      */
     public function getNumRows(): int
     {
-        if (! is_int($this->numRows)) {
+        if (! \is_int($this->numRows)) {
             $this->numRows = pg_num_rows($this->resultID);
         }
 

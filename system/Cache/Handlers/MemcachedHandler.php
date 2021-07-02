@@ -146,7 +146,7 @@ class MemcachedHandler extends BaseHandler
             }
         }
 
-        return is_array($data) ? $data[0] : $data; // @phpstan-ignore-line
+        return \is_array($data) ? $data[0] : $data; // @phpstan-ignore-line
     }
 
     /**
@@ -250,7 +250,7 @@ class MemcachedHandler extends BaseHandler
         $stored = $this->memcached->get($key);
 
         // if not an array, don't try to count for PHP7.2
-        if (! is_array($stored) || count($stored) !== 3) {
+        if (! \is_array($stored) || \count($stored) !== 3) {
             return false; // This will return null in a future release
         }
 
@@ -268,6 +268,6 @@ class MemcachedHandler extends BaseHandler
      */
     public function isSupported(): bool
     {
-        return extension_loaded('memcached') || extension_loaded('memcache');
+        return \extension_loaded('memcached') || \extension_loaded('memcache');
     }
 }

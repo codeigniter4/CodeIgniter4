@@ -134,12 +134,12 @@ class Validation implements ValidationInterface
             // Blast $rSetup apart, unless it's already an array.
             $rules = $setup['rules'] ?? $setup;
 
-            if (is_string($rules)) {
+            if (\is_string($rules)) {
                 $rules = $this->splitRules($rules);
             }
 
             $values = dot_array_search($field, $data);
-            $values = is_array($values) ? $values : [$values];
+            $values = \is_array($values) ? $values : [$values];
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
@@ -185,7 +185,7 @@ class Validation implements ValidationInterface
             throw new InvalidArgumentException('You must supply the parameter: data.');
         }
 
-        if (in_array('if_exist', $rules, true)) {
+        if (\in_array('if_exist', $rules, true)) {
             $flattenedData = array_flatten_with_dots($data);
             $ifExistField  = $field;
 
@@ -200,7 +200,7 @@ class Validation implements ValidationInterface
                     return $carry || preg_match($pattern, $item) === 1;
                 }, false);
             } else {
-                $dataIsExisting = array_key_exists($ifExistField, $flattenedData);
+                $dataIsExisting = \array_key_exists($ifExistField, $flattenedData);
             }
 
             unset($ifExistField, $flattenedData);
@@ -214,8 +214,8 @@ class Validation implements ValidationInterface
             $rules = array_diff($rules, ['if_exist']);
         }
 
-        if (in_array('permit_empty', $rules, true)) {
-            if (! in_array('required', $rules, true) && (is_array($value) ? empty($value) : (trim($value) === ''))) {
+        if (\in_array('permit_empty', $rules, true)) {
+            if (! \in_array('required', $rules, true) && (\is_array($value) ? empty($value) : (trim($value) === ''))) {
                 $passed = true;
 
                 foreach ($rules as $rule) {
@@ -223,7 +223,7 @@ class Validation implements ValidationInterface
                         $rule  = $match[1];
                         $param = $match[2];
 
-                        if (! in_array($rule, ['required_with', 'required_without'], true)) {
+                        if (! \in_array($rule, ['required_with', 'required_without'], true)) {
                             continue;
                         }
 
@@ -248,7 +248,7 @@ class Validation implements ValidationInterface
         }
 
         foreach ($rules as $rule) {
-            $isCallable = is_callable($rule);
+            $isCallable = \is_callable($rule);
 
             $passed = false;
             $param  = false;
@@ -289,7 +289,7 @@ class Validation implements ValidationInterface
             // Set the error message if we didn't survive.
             if ($passed === false) {
                 // if the $value is an array, convert it to as string representation
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     $value = '[' . implode(', ', $value) . ']';
                 }
 
@@ -317,7 +317,7 @@ class Validation implements ValidationInterface
             return $this;
         }
 
-        if (in_array($request->getMethod(), ['put', 'patch', 'delete'], true)
+        if (\in_array($request->getMethod(), ['put', 'patch', 'delete'], true)
             && strpos($request->getHeaderLine('Content-Type'), 'multipart/form-data') === false
         ) {
             $this->data = $request->getRawInput();
@@ -378,11 +378,11 @@ class Validation implements ValidationInterface
         $this->customErrors = $errors;
 
         foreach ($rules as $field => &$rule) {
-            if (! is_array($rule)) {
+            if (! \is_array($rule)) {
                 continue;
             }
 
-            if (! array_key_exists('errors', $rule)) {
+            if (! \array_key_exists('errors', $rule)) {
                 continue;
             }
 
@@ -408,7 +408,7 @@ class Validation implements ValidationInterface
      */
     public function hasRule(string $field): bool
     {
-        return array_key_exists($field, $this->rules);
+        return \array_key_exists($field, $this->rules);
     }
 
     /**
@@ -426,7 +426,7 @@ class Validation implements ValidationInterface
             throw ValidationException::forGroupNotFound($group);
         }
 
-        if (! is_array($this->config->{$group})) {
+        if (! \is_array($this->config->{$group})) {
             throw ValidationException::forGroupNotArray($group);
         }
 
@@ -456,7 +456,7 @@ class Validation implements ValidationInterface
      */
     public function listErrors(string $template = 'list'): string
     {
-        if (! array_key_exists($template, $this->config->templates)) {
+        if (! \array_key_exists($template, $this->config->templates)) {
             throw ValidationException::forInvalidTemplate($template);
         }
 
@@ -470,11 +470,11 @@ class Validation implements ValidationInterface
      */
     public function showError(string $field, string $template = 'single'): string
     {
-        if (! array_key_exists($field, $this->getErrors())) {
+        if (! \array_key_exists($field, $this->getErrors())) {
             return '';
         }
 
-        if (! array_key_exists($template, $this->config->templates)) {
+        if (! \array_key_exists($template, $this->config->templates)) {
             throw ValidationException::forInvalidTemplate($template);
         }
 
@@ -518,7 +518,7 @@ class Validation implements ValidationInterface
             throw ValidationException::forGroupNotFound($group);
         }
 
-        if (! is_array($this->config->{$group})) {
+        if (! \is_array($this->config->{$group})) {
             throw ValidationException::forGroupNotArray($group);
         }
 
@@ -560,11 +560,11 @@ class Validation implements ValidationInterface
 
         if (! empty($replacements)) {
             foreach ($rules as &$rule) {
-                if (is_array($rule)) {
+                if (\is_array($rule)) {
                     foreach ($rule as &$row) {
                         // Should only be an `errors` array
                         // which doesn't take placeholders.
-                        if (is_array($row)) {
+                        if (\is_array($row)) {
                             continue;
                         }
 
@@ -586,7 +586,7 @@ class Validation implements ValidationInterface
      */
     public function hasError(string $field): bool
     {
-        return array_key_exists($field, $this->getErrors());
+        return \array_key_exists($field, $this->getErrors());
     }
 
     /**
@@ -599,11 +599,11 @@ class Validation implements ValidationInterface
      */
     public function getError(?string $field = null): string
     {
-        if ($field === null && count($this->rules) === 1) {
+        if ($field === null && \count($this->rules) === 1) {
             $field = array_key_first($this->rules);
         }
 
-        return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
+        return \array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
     }
 
     /**

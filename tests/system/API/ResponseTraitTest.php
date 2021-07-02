@@ -76,7 +76,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);
-            if (($key === 'Accept') && ! is_array($value)) {
+            if (($key === 'Accept') && ! \is_array($value)) {
                 $this->response->setContentType($value);
             }
         }
@@ -488,7 +488,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
 
-        $this->assertSame('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
+        $this->assertSame('CodeIgniter\Format\XMLFormatter', \get_class($this->formatter));
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
         $expected = <<<'EOH'

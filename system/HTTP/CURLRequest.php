@@ -83,7 +83,7 @@ class CURLRequest extends Request
      */
     public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {
-        if (! function_exists('curl_version')) {
+        if (! \function_exists('curl_version')) {
             // we won't see this during travis-CI
             // @codeCoverageIgnoreStart
             throw HTTPException::forMissingCurl();
@@ -229,12 +229,12 @@ class CURLRequest extends Request
      */
     protected function parseOptions(array $options)
     {
-        if (array_key_exists('baseURI', $options)) {
+        if (\array_key_exists('baseURI', $options)) {
             $this->baseURI = $this->baseURI->setURI($options['baseURI']);
             unset($options['baseURI']);
         }
 
-        if (array_key_exists('headers', $options) && is_array($options['headers'])) {
+        if (\array_key_exists('headers', $options) && \is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
                 $this->setHeader($name, $value);
             }
@@ -242,7 +242,7 @@ class CURLRequest extends Request
             unset($options['headers']);
         }
 
-        if (array_key_exists('delay', $options)) {
+        if (\array_key_exists('delay', $options)) {
             // Convert from the milliseconds passed in
             // to the seconds that sleep requires.
             $this->delay = (float) $options['delay'] / 1000;
@@ -292,7 +292,7 @@ class CURLRequest extends Request
         // Reset our curl options so we're on a fresh slate.
         $curlOptions = [];
 
-        if (! empty($this->config['query']) && is_array($this->config['query'])) {
+        if (! empty($this->config['query']) && \is_array($this->config['query'])) {
             // This is likely too naive a solution.
             // Should look into handling when $url already
             // has query vars on it.
@@ -389,7 +389,7 @@ class CURLRequest extends Request
         $this->method                       = $method;
         $curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
 
-        $size = strlen($this->body);
+        $size = \strlen($this->body);
 
         // Have content?
         if ($size > 0) {
@@ -470,7 +470,7 @@ class CURLRequest extends Request
         if (! empty($config['cert'])) {
             $cert = $config['cert'];
 
-            if (is_array($cert)) {
+            if (\is_array($cert)) {
                 $curlOptions[CURLOPT_SSLCERTPASSWD] = $cert[1];
                 $cert                               = $cert[0];
             }
@@ -484,7 +484,7 @@ class CURLRequest extends Request
 
         // SSL Verification
         if (isset($config['verify'])) {
-            if (is_string($config['verify'])) {
+            if (\is_string($config['verify'])) {
                 $file = realpath($config['ssl_key']) ?: $config['ssl_key'];
 
                 if (! is_file($file)) {
@@ -493,7 +493,7 @@ class CURLRequest extends Request
 
                 $curlOptions[CURLOPT_CAINFO]         = $file;
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
-            } elseif (is_bool($config['verify'])) {
+            } elseif (\is_bool($config['verify'])) {
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
             }
         }
@@ -501,7 +501,7 @@ class CURLRequest extends Request
         // Debug
         if ($config['debug']) {
             $curlOptions[CURLOPT_VERBOSE] = 1;
-            $curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
+            $curlOptions[CURLOPT_STDERR]  = \is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
         }
 
         // Decode Content
@@ -517,10 +517,10 @@ class CURLRequest extends Request
         }
 
         // Allow Redirects
-        if (array_key_exists('allow_redirects', $config)) {
+        if (\array_key_exists('allow_redirects', $config)) {
             $settings = $this->redirectDefaults;
 
-            if (is_array($config['allow_redirects'])) {
+            if (\is_array($config['allow_redirects'])) {
                 $settings = array_merge($settings, $config['allow_redirects']);
             }
 
@@ -537,7 +537,7 @@ class CURLRequest extends Request
                 $protocols = 0;
 
                 foreach ($settings['protocols'] as $proto) {
-                    $protocols += constant('CURLPROTO_' . strtoupper($proto));
+                    $protocols += \constant('CURLPROTO_' . strtoupper($proto));
                 }
 
                 $curlOptions[CURLOPT_REDIR_PROTOCOLS] = $protocols;
@@ -551,24 +551,24 @@ class CURLRequest extends Request
         $curlOptions[CURLOPT_CONNECTTIMEOUT_MS] = (float) $config['connect_timeout'] * 1000;
 
         // Post Data - application/x-www-form-urlencoded
-        if (! empty($config['form_params']) && is_array($config['form_params'])) {
+        if (! empty($config['form_params']) && \is_array($config['form_params'])) {
             $postFields                      = http_build_query($config['form_params']);
             $curlOptions[CURLOPT_POSTFIELDS] = $postFields;
 
             // Ensure content-length is set, since CURL doesn't seem to
             // calculate it when HTTPHEADER is set.
-            $this->setHeader('Content-Length', (string) strlen($postFields));
+            $this->setHeader('Content-Length', (string) \strlen($postFields));
             $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
 
         // Post Data - multipart/form-data
-        if (! empty($config['multipart']) && is_array($config['multipart'])) {
+        if (! empty($config['multipart']) && \is_array($config['multipart'])) {
             // setting the POSTFIELDS option automatically sets multipart
             $curlOptions[CURLOPT_POSTFIELDS] = $config['multipart'];
         }
 
         // HTTP Errors
-        $curlOptions[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config) ? (bool) $config['http_errors'] : true;
+        $curlOptions[CURLOPT_FAILONERROR] = \array_key_exists('http_errors', $config) ? (bool) $config['http_errors'] : true;
 
         // JSON
         if (isset($config['json'])) {
@@ -576,7 +576,7 @@ class CURLRequest extends Request
             $json = json_encode($config['json']);
             $this->setBody($json);
             $this->setHeader('Content-Type', 'application/json');
-            $this->setHeader('Content-Length', (string) strlen($json));
+            $this->setHeader('Content-Length', (string) \strlen($json));
         }
 
         // version

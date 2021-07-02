@@ -117,15 +117,15 @@ abstract class BaseResult implements ResultInterface
             return $this->customResultObject[$className];
         }
 
-        if (is_bool($this->resultID) || ! $this->resultID) {
+        if (\is_bool($this->resultID) || ! $this->resultID) {
             return [];
         }
 
         // Don't fetch the result set again if we already have it
         $_data = null;
-        if (($c = count($this->resultArray)) > 0) {
+        if (($c = \count($this->resultArray)) > 0) {
             $_data = 'resultArray';
-        } elseif (($c = count($this->resultObject)) > 0) {
+        } elseif (($c = \count($this->resultObject)) > 0) {
             $_data = 'resultObject';
         }
 
@@ -144,6 +144,7 @@ abstract class BaseResult implements ResultInterface
         if ($this->rowData !== null) {
             $this->dataSeek();
         }
+
         $this->customResultObject[$className] = [];
 
         while ($row = $this->fetchObject($className)) {
@@ -172,7 +173,7 @@ abstract class BaseResult implements ResultInterface
         // In the event that query caching is on, the result_id variable
         // will not be a valid resource so we'll simply return an empty
         // array.
-        if (is_bool($this->resultID) || ! $this->resultID) {
+        if (\is_bool($this->resultID) || ! $this->resultID) {
             return [];
         }
 
@@ -209,7 +210,7 @@ abstract class BaseResult implements ResultInterface
         // In the event that query caching is on, the result_id variable
         // will not be a valid resource so we'll simply return an empty
         // array.
-        if (is_bool($this->resultID) || ! $this->resultID) {
+        if (\is_bool($this->resultID) || ! $this->resultID) {
             return [];
         }
 
@@ -252,12 +253,12 @@ abstract class BaseResult implements ResultInterface
     {
         if (! is_numeric($n)) {
             // We cache the row data for subsequent uses
-            if (! is_array($this->rowData)) {
+            if (! \is_array($this->rowData)) {
                 $this->rowData = $this->getRowArray();
             }
 
             // array_key_exists() instead of isset() to allow for NULL values
-            if (empty($this->rowData) || ! array_key_exists($n, $this->rowData)) {
+            if (empty($this->rowData) || ! \array_key_exists($n, $this->rowData)) {
                 return null;
             }
 
@@ -352,11 +353,11 @@ abstract class BaseResult implements ResultInterface
     public function setRow($key, $value = null)
     {
         // We cache the row data for subsequent uses
-        if (! is_array($this->rowData)) {
+        if (! \is_array($this->rowData)) {
             $this->rowData = $this->getRowArray();
         }
 
-        if (is_array($key)) {
+        if (\is_array($key)) {
             foreach ($key as $k => $v) {
                 $this->rowData[$k] = $v;
             }
@@ -390,7 +391,7 @@ abstract class BaseResult implements ResultInterface
     {
         $result = $this->getResult($type);
 
-        return (empty($result)) ? null : $result[count($result) - 1];
+        return (empty($result)) ? null : $result[\count($result) - 1];
     }
 
     /**
@@ -452,17 +453,17 @@ abstract class BaseResult implements ResultInterface
      */
     public function getNumRows(): int
     {
-        if (is_int($this->numRows)) {
+        if (\is_int($this->numRows)) {
             return $this->numRows;
         }
         if ($this->resultArray !== []) {
-            return $this->numRows = count($this->resultArray);
+            return $this->numRows = \count($this->resultArray);
         }
         if ($this->resultObject !== []) {
-            return $this->numRows = count($this->resultObject);
+            return $this->numRows = \count($this->resultObject);
         }
 
-        return $this->numRows = count($this->getResultArray());
+        return $this->numRows = \count($this->getResultArray());
     }
 
     /**

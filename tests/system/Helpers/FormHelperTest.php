@@ -40,7 +40,7 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
+        if (\in_array('csrf', $before, true) || \array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -96,7 +96,7 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
+        if (\in_array('csrf', $before, true) || \array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -129,7 +129,7 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
+        if (\in_array('csrf', $before, true) || \array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -162,7 +162,7 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
+        if (\in_array('csrf', $before, true) || \array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH
@@ -202,7 +202,7 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
-        if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
+        if (\in_array('csrf', $before, true) || \array_key_exists('csrf', $before)) {
             $Value    = csrf_hash();
             $Name     = csrf_token();
             $expected = <<<EOH

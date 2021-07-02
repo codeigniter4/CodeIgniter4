@@ -554,11 +554,11 @@ class ContentSecurityPolicy
     protected function addOption($options, string $target, ?bool $explicitReporting = null)
     {
         // Ensure we have an array to work with...
-        if (is_string($this->{$target})) {
+        if (\is_string($this->{$target})) {
             $this->{$target} = [$this->{$target}];
         }
 
-        if (is_array($options)) {
+        if (\is_array($options)) {
             foreach ($options as $opt) {
                 $this->{$target}[$opt] = $explicitReporting ?? $this->reportOnly;
             }
@@ -580,11 +580,11 @@ class ContentSecurityPolicy
             return;
         }
 
-        if (! is_array($this->styleSrc)) {
+        if (! \is_array($this->styleSrc)) {
             $this->styleSrc = [$this->styleSrc];
         }
 
-        if (! is_array($this->scriptSrc)) {
+        if (! \is_array($this->scriptSrc)) {
             $this->scriptSrc = [$this->scriptSrc];
         }
 
@@ -700,7 +700,7 @@ class ContentSecurityPolicy
      */
     protected function addToHeader(string $name, $values = null)
     {
-        if (is_string($values)) {
+        if (\is_string($values)) {
             $values = [$values => 0];
         }
 
@@ -708,17 +708,17 @@ class ContentSecurityPolicy
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
-            if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly)) {
+            if (is_numeric($value) && \is_string($reportOnly) && ! empty($reportOnly)) {
                 $value      = $reportOnly;
                 $reportOnly = 0;
             }
 
             if ($reportOnly === true) {
-                $reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
+                $reportSources[] = \in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
             } elseif (strpos($value, 'nonce-') === 0) {
                 $sources[] = "'{$value}'";
             } else {
-                $sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
+                $sources[] = \in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
             }
         }
 

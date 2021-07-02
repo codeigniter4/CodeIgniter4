@@ -137,7 +137,7 @@ class View implements RendererInterface
     public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         $this->config   = $config;
-        $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+        $this->viewPath = rtrim($viewPath, '\\/ ') . \DIRECTORY_SEPARATOR;
         $this->loader   = $loader ?? Services::locator();
         $this->logger   = $logger ?? Services::logger();
         $this->debug    = $debug ?? CI_DEBUG;
@@ -235,11 +235,11 @@ class View implements RendererInterface
         $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
         if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true)
+            && \in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 
-            if (in_array(Views::class, $toolbarCollectors, true)) {
+            if (\in_array(Views::class, $toolbarCollectors, true)) {
                 // Clean up our path names to make them a little cleaner
                 $this->renderVars['file'] = clean_path($this->renderVars['file']);
                 $this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
@@ -302,7 +302,7 @@ class View implements RendererInterface
      */
     public function excerpt(string $string, int $length = 20): string
     {
-        return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
+        return (\strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
     }
 
     /**
@@ -314,7 +314,7 @@ class View implements RendererInterface
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
         if ($context) {
-            $data = \esc($data, $context);
+            $data = esc($data, $context);
         }
 
         $this->tempData = $this->tempData ?? $this->data;
@@ -398,7 +398,7 @@ class View implements RendererInterface
         $section = array_pop($this->sectionStack);
 
         // Ensure an array exists so we can store multiple entries for this.
-        if (! array_key_exists($section, $this->sections)) {
+        if (! \array_key_exists($section, $this->sections)) {
             $this->sections[$section] = [];
         }
 

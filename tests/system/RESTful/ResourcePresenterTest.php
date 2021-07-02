@@ -64,7 +64,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (count(ob_list_handlers()) > 1) {
+        if (\count(ob_list_handlers()) > 1) {
             ob_end_clean();
         }
     }

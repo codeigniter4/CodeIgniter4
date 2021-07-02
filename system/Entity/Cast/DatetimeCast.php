@@ -39,7 +39,7 @@ class DatetimeCast extends BaseCast
             return Time::createFromTimestamp($value);
         }
 
-        if (is_string($value)) {
+        if (\is_string($value)) {
             return Time::parse($value);
         }
 

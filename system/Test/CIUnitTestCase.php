@@ -399,7 +399,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $found = false;
 
-        if (! function_exists('xdebug_get_headers')) {
+        if (! \function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 
@@ -427,7 +427,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $found = false;
 
-        if (! function_exists('xdebug_get_headers')) {
+        if (! \function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 
@@ -478,7 +478,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $expected = (string) $expected;
         $actual   = (string) $actual;
-        if (strlen($expected) !== strlen($actual)) {
+        if (\strlen($expected) !== \strlen($actual)) {
             return false;
         }
 
@@ -523,7 +523,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
     {
-        if (! function_exists('xdebug_get_headers')) {
+        if (! \function_exists('xdebug_get_headers')) {
             $this->markTestSkipped('XDebug not found.');
         }
 

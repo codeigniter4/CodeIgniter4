@@ -96,7 +96,7 @@ class Table
         $prefix = $this->db->DBPrefix;
 
         if (! empty($prefix) && strpos($table, $prefix) === 0) {
-            $table = substr($table, strlen($prefix));
+            $table = substr($table, \strlen($prefix));
         }
 
         if (! $this->db->tableExists($this->prefixedTableName)) {
@@ -154,7 +154,7 @@ class Table
      */
     public function dropColumn($columns)
     {
-        if (is_string($columns)) {
+        if (\is_string($columns)) {
             $columns = explode(',', $columns);
         }
 
@@ -198,7 +198,7 @@ class Table
             return $this;
         }
 
-        for ($i = 0; $i < count($this->foreignKeys); $i++) {
+        for ($i = 0; $i < \count($this->foreignKeys); $i++) {
             if ($this->foreignKeys[$i]->table_name !== $this->tableName) {
                 continue;
             }
@@ -240,7 +240,7 @@ class Table
         $this->forge->addField($fields);
 
         // Unique/Index keys
-        if (is_array($this->keys)) {
+        if (\is_array($this->keys)) {
             foreach ($this->keys as $key) {
                 switch ($key['type']) {
                     case 'primary':
@@ -292,7 +292,7 @@ class Table
      */
     protected function formatFields($fields)
     {
-        if (! is_array($fields)) {
+        if (! \is_array($fields)) {
             return $fields;
         }
 
@@ -326,7 +326,7 @@ class Table
      */
     protected function formatKeys($keys)
     {
-        if (! is_array($keys)) {
+        if (! \is_array($keys)) {
             return $keys;
         }
 
@@ -348,7 +348,7 @@ class Table
      */
     protected function dropIndexes()
     {
-        if (! is_array($this->keys) || $this->keys === []) {
+        if (! \is_array($this->keys) || $this->keys === []) {
             return;
         }
 

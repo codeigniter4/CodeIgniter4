@@ -296,7 +296,7 @@ class Forge
             $this->keys[] = $key;
 
             if ($unique) {
-                $this->uniqueKeys[] = count($this->keys) - 1;
+                $this->uniqueKeys[] = \count($this->keys) - 1;
             }
         }
 
@@ -336,7 +336,7 @@ class Forge
      */
     public function addField($field)
     {
-        if (is_string($field)) {
+        if (\is_string($field)) {
             if ($field === 'id') {
                 $this->addField([
                     'id' => [
@@ -355,7 +355,7 @@ class Forge
             }
         }
 
-        if (is_array($field)) {
+        if (\is_array($field)) {
             $this->fields = array_merge($this->fields, $field);
         }
 
@@ -428,7 +428,7 @@ class Forge
 
         $sql = $this->_createTable($table, $ifNotExists, $attributes);
 
-        if (is_bool($sql)) {
+        if (\is_bool($sql)) {
             $this->reset();
             if ($sql === false) {
                 if ($this->db->DBDebug) {
@@ -440,13 +440,13 @@ class Forge
         }
 
         if (($result = $this->db->query($sql)) !== false) {
-            if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true)) {
+            if (isset($this->db->dataCache['table_names']) && ! \in_array($table, $this->db->dataCache['table_names'], true)) {
                 $this->db->dataCache['table_names'][] = $table;
             }
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
             if (! empty($this->keys)) {
-                for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++) {
+                for ($i = 0, $sqls = $this->_processIndexes($table), $c = \count($sqls); $i < $c; $i++) {
                     $this->db->query($sqls[$i]);
                 }
             }
@@ -476,7 +476,7 @@ class Forge
 
         $columns = $this->_processFields(true);
 
-        for ($i = 0, $c = count($columns); $i < $c; $i++) {
+        for ($i = 0, $c = \count($columns); $i < $c; $i++) {
             $columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
                 : "\n\t" . $this->_processColumn($columns[$i]);
         }
@@ -488,7 +488,7 @@ class Forge
 
         if ($this->createTableKeys === true) {
             $indexes = $this->_processIndexes($table);
-            if (is_string($indexes)) {
+            if (\is_string($indexes)) {
                 $columns .= $indexes;
             }
         }
@@ -507,7 +507,7 @@ class Forge
         $sql = '';
 
         foreach (array_keys($attributes) as $key) {
-            if (is_string($key)) {
+            if (\is_string($key)) {
                 $sql .= ' ' . strtoupper($key) . ' ' . $this->db->escape($attributes[$key]);
             }
         }
@@ -531,7 +531,7 @@ class Forge
         }
 
         if ($this->db->DBPrefix && strpos($tableName, $this->db->DBPrefix) === 0) {
-            $tableName = substr($tableName, strlen($this->db->DBPrefix));
+            $tableName = substr($tableName, \strlen($this->db->DBPrefix));
         }
 
         if (($query = $this->_dropTable($this->db->DBPrefix . $tableName, $ifExists, $cascade)) === true) {
@@ -629,7 +629,7 @@ class Forge
     public function addColumn(string $table, $field): bool
     {
         // Work-around for literal column definitions
-        if (! is_array($field)) {
+        if (! \is_array($field)) {
             $field = [$field];
         }
 
@@ -685,7 +685,7 @@ class Forge
     public function modifyColumn(string $table, $field): bool
     {
         // Work-around for literal column definitions
-        if (! is_array($field)) {
+        if (! \is_array($field)) {
             $field = [$field];
         }
 
@@ -729,7 +729,7 @@ class Forge
 
         // DROP has everything it needs now.
         if ($alterType === 'DROP') {
-            if (is_string($fields)) {
+            if (\is_string($fields)) {
                 $fields = explode(',', $fields);
             }
 
@@ -761,7 +761,7 @@ class Forge
         $fields = [];
 
         foreach ($this->fields as $key => $attributes) {
-            if (is_int($key) && ! is_array($attributes)) {
+            if (\is_int($key) && ! \is_array($attributes)) {
                 $fields[] = ['_literal' => $attributes];
 
                 continue;
@@ -822,7 +822,7 @@ class Forge
             }
 
             if (isset($attributes['TYPE']) && ! empty($attributes['CONSTRAINT'])) {
-                if (is_array($attributes['CONSTRAINT'])) {
+                if (\is_array($attributes['CONSTRAINT'])) {
                     $attributes['CONSTRAINT'] = $this->db->escape($attributes['CONSTRAINT']);
                     $attributes['CONSTRAINT'] = implode(',', $attributes['CONSTRAINT']);
                 }
@@ -877,15 +877,15 @@ class Forge
         // Reset the attribute in order to avoid issues if we do type conversion
         $attributes['UNSIGNED'] = false;
 
-        if (is_array($this->unsigned)) {
+        if (\is_array($this->unsigned)) {
             foreach (array_keys($this->unsigned) as $key) {
-                if (is_int($key) && strcasecmp($attributes['TYPE'], $this->unsigned[$key]) === 0) {
+                if (\is_int($key) && strcasecmp($attributes['TYPE'], $this->unsigned[$key]) === 0) {
                     $field['unsigned'] = ' UNSIGNED';
 
                     return;
                 }
 
-                if (is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0) {
+                if (\is_string($key) && strcasecmp($attributes['TYPE'], $key) === 0) {
                     $field['type'] = $key;
 
                     return;
@@ -904,7 +904,7 @@ class Forge
             return;
         }
 
-        if (array_key_exists('DEFAULT', $attributes)) {
+        if (\array_key_exists('DEFAULT', $attributes)) {
             if ($attributes['DEFAULT'] === null) {
                 $field['default'] = empty($this->null) ? '' : $this->default . $this->null;
 
@@ -937,7 +937,7 @@ class Forge
     {
         $sql = '';
 
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
+        for ($i = 0, $c = \count($this->primaryKeys); $i < $c; $i++) {
             if (! isset($this->fields[$this->primaryKeys[$i]])) {
                 unset($this->primaryKeys[$i]);
             }
@@ -955,20 +955,20 @@ class Forge
     {
         $sqls = [];
 
-        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
+        for ($i = 0, $c = \count($this->keys); $i < $c; $i++) {
             $this->keys[$i] = (array) $this->keys[$i];
 
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
+            for ($i2 = 0, $c2 = \count($this->keys[$i]); $i2 < $c2; $i2++) {
                 if (! isset($this->fields[$this->keys[$i][$i2]])) {
                     unset($this->keys[$i][$i2]);
                 }
             }
 
-            if (count($this->keys[$i]) <= 0) {
+            if (\count($this->keys[$i]) <= 0) {
                 continue;
             }
 
-            if (in_array($i, $this->uniqueKeys, true)) {
+            if (\in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
                     . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                     . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
@@ -1003,11 +1003,11 @@ class Forge
                 $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
                     . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+                if ($fkey['onDelete'] !== false && \in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
                 }
 
-                if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
+                if ($fkey['onUpdate'] !== false && \in_array($fkey['onUpdate'], $allowActions, true)) {
                     $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
                 }
             }

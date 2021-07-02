@@ -99,7 +99,7 @@ final class Environment extends BaseCommand
             return;
         }
 
-        if (! in_array($env, self::$knownTypes, true)) {
+        if (! \in_array($env, self::$knownTypes, true)) {
             CLI::error(sprintf('Invalid environment type "%s". Expected one of "%s".', $env, implode('" and "', self::$knownTypes)), 'light_gray', 'red');
             CLI::newLine();
 

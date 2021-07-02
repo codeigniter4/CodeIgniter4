@@ -118,7 +118,7 @@ class Logger implements LoggerInterface
      */
     public function __construct($config, bool $debug = CI_DEBUG)
     {
-        $this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
+        $this->loggableLevels = \is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
 
         // Now convert loggable levels to strings.
         // We only use numbers to make the threshold setting convenient for users.
@@ -135,7 +135,7 @@ class Logger implements LoggerInterface
 
         $this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-        if (! is_array($config->handlers) || empty($config->handlers)) {
+        if (! \is_array($config->handlers) || empty($config->handlers)) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 
@@ -253,19 +253,19 @@ class Logger implements LoggerInterface
         }
 
         // Is the level a valid level?
-        if (! array_key_exists($level, $this->logLevels)) {
+        if (! \array_key_exists($level, $this->logLevels)) {
             throw LogException::forInvalidLogLevel($level);
         }
 
         // Does the app want to log this right now?
-        if (! in_array($level, $this->loggableLevels, true)) {
+        if (! \in_array($level, $this->loggableLevels, true)) {
             return false;
         }
 
         // Parse our placeholders
         $message = $this->interpolate($message, $context);
 
-        if (! is_string($message)) {
+        if (! \is_string($message)) {
             $message = print_r($message, true);
         }
 
@@ -277,7 +277,7 @@ class Logger implements LoggerInterface
         }
 
         foreach ($this->handlerConfig as $className => $config) {
-            if (! array_key_exists($className, $this->handlers)) {
+            if (! \array_key_exists($className, $this->handlers)) {
                 $this->handlers[$className] = new $className($config);
             }
 
@@ -318,7 +318,7 @@ class Logger implements LoggerInterface
      */
     protected function interpolate($message, array $context = [])
     {
-        if (! is_string($message)) {
+        if (! \is_string($message)) {
             return $message;
         }
 
@@ -390,10 +390,10 @@ class Logger implements LoggerInterface
         ];
 
         // Generate Backtrace info
-        $trace = \debug_backtrace(0);
+        $trace = debug_backtrace(0);
 
         // So we search from the bottom (earliest) of the stack frames
-        $stackFrames = \array_reverse($trace);
+        $stackFrames = array_reverse($trace);
 
         // Find the first reference to a Logger class method
         foreach ($stackFrames as $frame) {

@@ -31,7 +31,7 @@ class Rules
             return $str !== dot_array_search($field, $data);
         }
 
-        return array_key_exists($field, $data) && $str !== $data[$field];
+        return \array_key_exists($field, $data) && $str !== $data[$field];
     }
 
     /**
@@ -125,7 +125,7 @@ class Rules
     {
         $list = array_map('trim', explode(',', $list));
 
-        return in_array($value, $list, true);
+        return \in_array($value, $list, true);
     }
 
     /**
@@ -193,7 +193,7 @@ class Rules
             return $str === dot_array_search($field, $data);
         }
 
-        return array_key_exists($field, $data) && $str === $data[$field];
+        return \array_key_exists($field, $data) && $str === $data[$field];
     }
 
     /**
@@ -245,11 +245,11 @@ class Rules
      */
     public function required($str = null): bool
     {
-        if (is_object($str)) {
+        if (\is_object($str)) {
             return true;
         }
 
-        return is_array($str) ? ! empty($str) : (trim($str) !== '');
+        return \is_array($str) ? ! empty($str) : (trim($str) !== '');
     }
 
     /**
@@ -287,7 +287,7 @@ class Rules
         $requiredFields = [];
 
         foreach ($fields as $field) {
-            if ((array_key_exists($field, $data) && ! empty($data[$field])) || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))) {
+            if ((\array_key_exists($field, $data) && ! empty($data[$field])) || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))) {
                 $requiredFields[] = $field;
             }
         }
@@ -325,7 +325,7 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach ($fields as $field) {
-            if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) || (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))) {
+            if ((strpos($field, '.') === false && (! \array_key_exists($field, $data) || empty($data[$field]))) || (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))) {
                 return false;
             }
         }

@@ -42,18 +42,18 @@ final class FilesystemHelperTest extends CIUnitTestCase
     public function testDirectoryMapDefaults()
     {
         helper('filesystem');
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo' . \DIRECTORY_SEPARATOR => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo' . \DIRECTORY_SEPARATOR => [
                 'far',
                 'faz',
             ],
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'AnEmptyFolder' . \DIRECTORY_SEPARATOR => [],
             'simpleFile',
         ];
 
@@ -66,18 +66,18 @@ final class FilesystemHelperTest extends CIUnitTestCase
     public function testDirectoryMapShowsHiddenFiles()
     {
         helper('filesystem');
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo' . \DIRECTORY_SEPARATOR => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo' . \DIRECTORY_SEPARATOR => [
                 'far',
                 'faz',
             ],
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'AnEmptyFolder' . \DIRECTORY_SEPARATOR => [],
             'simpleFile',
             '.hidden',
         ];
@@ -90,12 +90,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMapLimitsRecursion()
     {
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR,
-            'boo' . DIRECTORY_SEPARATOR,
-            'AnEmptyFolder' . DIRECTORY_SEPARATOR,
+            'foo' . \DIRECTORY_SEPARATOR,
+            'boo' . \DIRECTORY_SEPARATOR,
+            'AnEmptyFolder' . \DIRECTORY_SEPARATOR,
             'simpleFile',
             '.hidden',
         ];
@@ -113,13 +113,13 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMirror()
     {
-        $this->assertTrue(function_exists('directory_mirror'));
+        $this->assertTrue(\function_exists('directory_mirror'));
 
         // Create a subdirectory
         $this->structure['foo']['bam'] = ['zab' => 'A deep file'];
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo');
 
@@ -129,14 +129,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMirrorOverwrites()
     {
-        $this->assertTrue(function_exists('directory_mirror'));
+        $this->assertTrue(\function_exists('directory_mirror'));
 
         // Create duplicate files
         $this->structure['foo']['far'] = 'all your base';
         $this->structure['foo']['faz'] = 'are belong to us';
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo', true);
         $result = file_get_contents($root . 'boo/faz');
@@ -146,14 +146,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMirrorNotOverwrites()
     {
-        $this->assertTrue(function_exists('directory_mirror'));
+        $this->assertTrue(\function_exists('directory_mirror'));
 
         // Create duplicate files
         $this->structure['foo']['far'] = 'all your base';
         $this->structure['foo']['faz'] = 'are belong to us';
 
         vfsStream::setup('root', null, $this->structure);
-        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $root = rtrim(vfsStream::url('root') . \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 
         directory_mirror($root . 'foo', $root . 'boo', false);
         $result = file_get_contents($root . 'boo/faz');
@@ -178,7 +178,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDeleteFilesDefaultsToOneLevelDeep()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $vfs = vfsStream::setup('root', null, $this->structure);
 
@@ -193,7 +193,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDeleteFilesHandlesRecursion()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $vfs = vfsStream::setup('root', null, $this->structure);
 
@@ -257,7 +257,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenames()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -279,7 +279,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenamesWithHidden()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -302,7 +302,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenamesWithRelativeSource()
     {
-        $this->assertTrue(function_exists('get_filenames'));
+        $this->assertTrue(\function_exists('get_filenames'));
 
         $expected = [
             'AnEmptyFolder',
@@ -322,19 +322,19 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenamesWithFullSource()
     {
-        $this->assertTrue(function_exists('get_filenames'));
+        $this->assertTrue(\function_exists('get_filenames'));
 
         $vfs = vfsStream::setup('root', null, $this->structure);
 
         $expected = [
-            $vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'AnEmptyFolder',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'boo',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'boo/far',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'boo/faz',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'foo',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'foo/bar',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'foo/baz',
+            $vfs->url() . \DIRECTORY_SEPARATOR . 'simpleFile',
         ];
 
         $this->assertSame($expected, get_filenames($vfs->url(), true));

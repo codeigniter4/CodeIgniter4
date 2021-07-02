@@ -24,7 +24,7 @@ final class HTMLHelperTest extends CIUnitTestCase
     /**
      * @var string Path to the test file for img_data
      */
-    private $imgPath = SUPPORTPATH . 'Images' . DIRECTORY_SEPARATOR . 'ci-logo.gif';
+    private $imgPath = SUPPORTPATH . 'Images' . \DIRECTORY_SEPARATOR . 'ci-logo.gif';
 
     /**
      * @var string Expected base64 encoding of img path
@@ -216,7 +216,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testImgDataUnknownMime()
     {
-        $path   = SUPPORTPATH . 'Validation' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'phpUxc0ty';
+        $path   = SUPPORTPATH . 'Validation' . \DIRECTORY_SEPARATOR . 'uploads' . \DIRECTORY_SEPARATOR . 'phpUxc0ty';
         $result = img_data($path);
 
         $this->assertSame(0, strpos($result, 'data:image/jpg'));

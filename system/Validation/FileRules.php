@@ -166,7 +166,7 @@ class FileRules
                 return true;
             }
 
-            if (! in_array($file->getMimeType(), $params, true)) {
+            if (! \in_array($file->getMimeType(), $params, true)) {
                 return false;
             }
         }
@@ -197,7 +197,7 @@ class FileRules
                 return true;
             }
 
-            if (! in_array($file->guessExtension(), $params, true)) {
+            if (! \in_array($file->guessExtension(), $params, true)) {
                 return false;
             }
         }

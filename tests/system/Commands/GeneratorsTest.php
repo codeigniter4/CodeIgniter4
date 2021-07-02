@@ -72,7 +72,7 @@ final class GeneratorsTest extends CIUnitTestCase
 
     public function testGenerateFileFailsOnUnwritableDirectory()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ('\\' === \DIRECTORY_SEPARATOR) {
             $this->markTestSkipped('chmod does not work as expected on Windows');
         }
 
@@ -94,7 +94,7 @@ final class GeneratorsTest extends CIUnitTestCase
     {
         command('make:controller admin/user');
         $file = APPPATH . 'Controllers/Admin/User.php';
-        $dir  = dirname($file);
+        $dir  = \dirname($file);
         $this->assertFileExists($file);
         $this->assertDirectoryExists($dir);
         if (is_file($file)) {
@@ -110,7 +110,7 @@ final class GeneratorsTest extends CIUnitTestCase
         command('make:foo bar --suffix');
         $file1 = APPPATH . 'Commands/Bar.php';
         $file2 = APPPATH . 'Commands/BarCommand.php';
-        $dir   = dirname($file1);
+        $dir   = \dirname($file1);
 
         $this->assertFileExists($file1);
         $this->assertFileDoesNotExist($file2);

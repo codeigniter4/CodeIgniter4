@@ -85,8 +85,8 @@ final class EncryptionTest extends CIUnitTestCase
     public function testKeyCreation()
     {
         $this->assertNotEmpty($this->encryption->createKey());
-        $this->assertSame(32, strlen($this->encryption->createKey()));
-        $this->assertSame(16, strlen($this->encryption->createKey(16)));
+        $this->assertSame(32, \strlen($this->encryption->createKey()));
+        $this->assertSame(16, \strlen($this->encryption->createKey(16)));
     }
 
     public function testServiceSuccess()

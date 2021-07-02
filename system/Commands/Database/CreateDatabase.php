@@ -98,7 +98,7 @@ class CreateDatabase extends BaseCommand
             if ($db instanceof Connection) {
                 $ext = $params['ext'] ?? CLI::getOption('ext') ?? 'db';
 
-                if (! in_array($ext, ['db', 'sqlite'], true)) {
+                if (! \in_array($ext, ['db', 'sqlite'], true)) {
                     $ext = CLI::prompt('Please choose a valid file extension', ['db', 'sqlite']); // @codeCoverageIgnore
                 }
 
@@ -110,7 +110,7 @@ class CreateDatabase extends BaseCommand
                 $config->{$group}['database'] = $name;
 
                 if ($name !== ':memory:') {
-                    $dbName = strpos($name, DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
+                    $dbName = strpos($name, \DIRECTORY_SEPARATOR) === false ? WRITEPATH . $name : $name;
 
                     if (is_file($dbName)) {
                         CLI::error("Database \"{$dbName}\" already exists.", 'light_gray', 'red');

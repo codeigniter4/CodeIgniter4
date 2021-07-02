@@ -203,7 +203,7 @@ class Negotiate
 
             $quality = 1.0;
 
-            if (array_key_exists('q', $parameters)) {
+            if (\array_key_exists('q', $parameters)) {
                 $quality = $parameters['q'];
                 unset($parameters['q']);
             }
@@ -238,7 +238,7 @@ class Negotiate
                 // due to the way PHP7 handles ordering or array
                 // elements created by reference.
                 if ($aAst === $bAst) {
-                    return count($b['params']) - count($a['params']);
+                    return \count($b['params']) - \count($a['params']);
                 }
 
                 return 0;
@@ -259,7 +259,7 @@ class Negotiate
     protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
     {
         $supported = $this->parseHeader($supported);
-        if (is_array($supported) && count($supported) === 1) {
+        if (\is_array($supported) && \count($supported) === 1) {
             $supported = $supported[0];
         }
 
@@ -288,7 +288,7 @@ class Negotiate
      */
     protected function matchParameters(array $acceptable, array $supported): bool
     {
-        if (count($acceptable['params']) !== count($supported['params'])) {
+        if (\count($acceptable['params']) !== \count($supported['params'])) {
             return false;
         }
 

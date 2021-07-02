@@ -147,7 +147,7 @@ class CodeIgniter
     {
         if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<')) {
             // @codeCoverageIgnoreStart
-            $message = extension_loaded('intl')
+            $message = \extension_loaded('intl')
                 ? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
                 : sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
 
@@ -209,7 +209,7 @@ class CodeIgniter
         $missingExtensions = [];
 
         foreach ($requiredExtensions as $extension) {
-            if (! extension_loaded($extension)) {
+            if (! \extension_loaded($extension)) {
                 $missingExtensions[] = $extension;
             }
         }
@@ -225,7 +225,7 @@ class CodeIgniter
     protected function initializeKint()
     {
         // If we have KINT_DIR it means it's already loaded via composer
-        if (! defined('KINT_DIR')) {
+        if (! \defined('KINT_DIR')) {
             spl_autoload_register(function ($class) {
                 $class = explode('\\', $class);
 
@@ -252,17 +252,17 @@ class CodeIgniter
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
 
-        if (! empty($config->plugins) && is_array($config->plugins)) {
+        if (! empty($config->plugins) && \is_array($config->plugins)) {
             Kint::$plugins = $config->plugins;
         }
 
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
         RichRenderer::$sort   = $config->richSort;
-        if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
+        if (! empty($config->richObjectPlugins) && \is_array($config->richObjectPlugins)) {
             RichRenderer::$object_plugins = $config->richObjectPlugins;
         }
-        if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins)) {
+        if (! empty($config->richTabPlugins) && \is_array($config->richTabPlugins)) {
             RichRenderer::$tab_plugins = $config->richTabPlugins;
         }
 
@@ -370,7 +370,7 @@ class CodeIgniter
         $uri = $this->determinePath();
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! \defined('SPARKED')) {
             $possibleResponse = $filters->run($uri, 'before');
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
@@ -386,10 +386,10 @@ class CodeIgniter
         $returned = $this->startController();
 
         // Closure controller has run in startController().
-        if (! is_callable($this->controller)) {
+        if (! \is_callable($this->controller)) {
             $controller = $this->createController();
 
-            if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
+            if (! method_exists($controller, '_remap') && ! \is_callable([$controller, $this->method], false)) {
                 throw PageNotFoundException::forMethodNotFound($this->method);
             }
 
@@ -408,7 +408,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! \defined('SPARKED')) {
             $filters->setResponse($this->response);
             // Run "after" filters
             $response = $filters->run($uri, 'after');
@@ -457,8 +457,8 @@ class CodeIgniter
     protected function detectEnvironment()
     {
         // Make sure ENVIRONMENT isn't already set by other means.
-        if (! defined('ENVIRONMENT')) {
-            define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+        if (! \defined('ENVIRONMENT')) {
+            \define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
         }
     }
 
@@ -579,7 +579,7 @@ class CodeIgniter
     {
         if ($cachedResponse = cache()->get($this->generateCacheName($config))) {
             $cachedResponse = unserialize($cachedResponse);
-            if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers'])) {
+            if (! \is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers'])) {
                 throw new Exception('Error unserializing page cache');
             }
 
@@ -752,7 +752,7 @@ class CodeIgniter
         $this->benchmark->start('controller_constructor');
 
         // Is it routed to a Closure?
-        if (is_object($this->controller) && (get_class($this->controller) === 'Closure')) {
+        if (\is_object($this->controller) && (\get_class($this->controller) === 'Closure')) {
             $controller = $this->controller;
 
             return $controller(...$this->router->params());
@@ -794,7 +794,7 @@ class CodeIgniter
     protected function runController($class)
     {
         // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
+        $params = \defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
 
         if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
@@ -817,7 +817,7 @@ class CodeIgniter
         if ($override = $this->router->get404Override()) {
             if ($override instanceof Closure) {
                 echo $override($e->getMessage());
-            } elseif (is_array($override)) {
+            } elseif (\is_array($override)) {
                 $this->benchmark->start('controller');
                 $this->benchmark->start('controller_constructor');
 
@@ -886,7 +886,7 @@ class CodeIgniter
             $returned       = $returned->getBody();
         }
 
-        if (is_string($returned)) {
+        if (\is_string($returned)) {
             $this->output .= $returned;
         }
 
@@ -922,7 +922,7 @@ class CodeIgniter
         }
 
         // This is mainly needed during testing...
-        if (is_string($uri)) {
+        if (\is_string($uri)) {
             $uri = new URI($uri);
         }
 

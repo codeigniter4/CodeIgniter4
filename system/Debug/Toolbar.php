@@ -96,9 +96,9 @@ class Toolbar
         foreach ($this->collectVarData() as $heading => $items) {
             $varData = [];
 
-            if (is_array($items)) {
+            if (\is_array($items)) {
                 foreach ($items as $key => $value) {
-                    if (is_string($value)) {
+                    if (\is_string($value)) {
                         $varData[esc($key)] = esc($value);
                     } else {
                         $oldKintMode       = Kint::$mode_default;
@@ -124,20 +124,20 @@ class Toolbar
         if (! empty($_SESSION)) {
             foreach ($_SESSION as $key => $value) {
                 // Replace the binary data with string to avoid json_encode failure.
-                if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value)) {
+                if (\is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value)) {
                     $value = 'binary data';
                 }
 
-                $data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
+                $data['vars']['session'][esc($key)] = \is_string($value) ? esc($value) : '<pre>' . esc(print_r($value, true)) . '</pre>';
             }
         }
 
         foreach ($request->getGet() as $name => $value) {
-            $data['vars']['get'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
+            $data['vars']['get'][esc($name)] = \is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
         foreach ($request->getPost() as $name => $value) {
-            $data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
+            $data['vars']['post'][esc($name)] = \is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
         foreach ($request->headers() as $header) {

@@ -36,7 +36,7 @@ class TestLogger extends Logger
         $file  = null;
 
         foreach ($trace as $row) {
-            if (! in_array($row['function'], ['log', 'log_message'], true)) {
+            if (! \in_array($row['function'], ['log', 'log_message'], true)) {
                 $file = basename($row['file'] ?? '');
                 break;
             }

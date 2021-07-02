@@ -93,7 +93,7 @@ final class FindModelTest extends LiveModelTestCase
         $this->assertEmpty($user);
 
         $user  = $this->model->withDeleted()->find(4);
-        $count = is_object($user) ? 1 : 0;
+        $count = \is_object($user) ? 1 : 0;
         $this->assertSame(1, $count);
     }
 
@@ -149,7 +149,7 @@ final class FindModelTest extends LiveModelTestCase
     public function testFirst(): void
     {
         $user  = $this->createModel(UserModel::class)->where('id >', 2)->first();
-        $count = is_object($user) ? 1 : 0;
+        $count = \is_object($user) ? 1 : 0;
         $this->assertSame(1, $count);
         $this->assertSame(3, (int) $user->id);
     }
@@ -205,7 +205,7 @@ final class FindModelTest extends LiveModelTestCase
         $user = $this->model->first();
 
         if (! $aggregate || $groupBy) {
-            $count = is_object($user) ? 1 : 0;
+            $count = \is_object($user) ? 1 : 0;
             $this->assertSame(1, $count);
             $this->assertSame(2, (int) $user->id);
         } else {

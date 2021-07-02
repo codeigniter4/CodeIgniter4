@@ -75,7 +75,7 @@ class Migrate extends BaseCommand
         $group     = $params['g'] ?? CLI::getOption('g');
 
         try {
-            if (array_key_exists('all', $params) || CLI::getOption('all')) {
+            if (\array_key_exists('all', $params) || CLI::getOption('all')) {
                 $runner->setNamespace(null);
             } elseif ($namespace) {
                 $runner->setNamespace($namespace);

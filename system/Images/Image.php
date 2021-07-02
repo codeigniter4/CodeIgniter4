@@ -68,7 +68,6 @@ class Image extends File
     public function copy(string $targetPath, ?string $targetName = null, int $perms = 0644): bool
     {
         $targetPath = rtrim($targetPath, '/ ') . '/';
-
         $targetName = $targetName ?? $this->getFilename();
 
         if (empty($targetName)) {

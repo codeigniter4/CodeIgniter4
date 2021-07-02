@@ -104,9 +104,9 @@ class Cell
 
             $output = $instance->{$method}();
         } elseif (($paramCount === 1)
-            && ((! array_key_exists($refParams[0]->name, $paramArray))
-            || (array_key_exists($refParams[0]->name, $paramArray)
-            && count($paramArray) !== 1))
+            && ((! \array_key_exists($refParams[0]->name, $paramArray))
+            || (\array_key_exists($refParams[0]->name, $paramArray)
+            && \count($paramArray) !== 1))
         ) {
             $output = $instance->{$method}($paramArray);
         } else {
@@ -115,7 +115,7 @@ class Cell
 
             foreach ($refParams as $arg) {
                 $methodParams[$arg->name] = true;
-                if (array_key_exists($arg->name, $paramArray)) {
+                if (\array_key_exists($arg->name, $paramArray)) {
                     $fireArgs[$arg->name] = $paramArray[$arg->name];
                 }
             }
@@ -147,11 +147,11 @@ class Cell
      */
     public function prepareParams($params)
     {
-        if (empty($params) || (! is_string($params) && ! is_array($params))) {
+        if (empty($params) || (! \is_string($params) && ! \is_array($params))) {
             return [];
         }
 
-        if (is_string($params)) {
+        if (\is_string($params)) {
             $newParams = [];
             $separator = ' ';
 
@@ -174,7 +174,7 @@ class Cell
             unset($newParams);
         }
 
-        if (is_array($params) && empty($params)) {
+        if (\is_array($params) && empty($params)) {
             return [];
         }
 

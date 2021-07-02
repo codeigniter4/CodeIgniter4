@@ -50,7 +50,7 @@ class Config extends BaseConfig
             return $group;
         }
 
-        if (is_array($group)) {
+        if (\is_array($group)) {
             $config = $group;
             $group  = 'custom-' . md5(json_encode($config));
         }
@@ -61,7 +61,7 @@ class Config extends BaseConfig
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
         }
 
-        if (is_string($group) && ! isset($config->{$group}) && strpos($group, 'custom-') !== 0) {
+        if (\is_string($group) && ! isset($config->{$group}) && strpos($group, 'custom-') !== 0) {
             throw new InvalidArgumentException($group . ' is not a valid database connection group.');
         }
 

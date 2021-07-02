@@ -143,7 +143,7 @@ class Commands
         $message = lang('CLI.commandNotFound', [$command]);
 
         if ($alternatives = $this->getCommandAlternatives($command, $commands)) {
-            if (count($alternatives) === 1) {
+            if (\count($alternatives) === 1) {
                 $message .= "\n\n" . lang('CLI.altCommandSingular') . "\n    ";
             } else {
                 $message .= "\n\n" . lang('CLI.altCommandPlural') . "\n    ";
@@ -169,7 +169,7 @@ class Commands
         foreach (array_keys($collection) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
-            if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false) {
+            if ($lev <= \strlen($commandName) / 3 || strpos($commandName, $name) !== false) {
                 $alternatives[$commandName] = $lev;
             }
         }

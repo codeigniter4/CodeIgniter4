@@ -154,7 +154,7 @@ class Factories
         }
         // No namespace? Search for it
         // Check all namespaces, prioritizing App and modules
-        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name)) {
+        elseif (! $files = $locator->search($options['path'] . \DIRECTORY_SEPARATOR . $name)) {
             return null;
         }
 
@@ -294,7 +294,7 @@ class Factories
         $component = strtolower($component);
         self::getOptions($component);
 
-        $class    = get_class($instance);
+        $class    = \get_class($instance);
         $basename = self::getBasename($name);
 
         self::$instances[$component][$class]    = $instance;

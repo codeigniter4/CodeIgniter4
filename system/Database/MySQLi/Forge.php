@@ -103,10 +103,10 @@ class Forge extends BaseForge
         $sql = '';
 
         foreach (array_keys($attributes) as $key) {
-            if (is_string($key)) {
+            if (\is_string($key)) {
                 $sql .= ' ' . strtoupper($key) . ' = ';
 
-                if (in_array(strtoupper($key), $this->_quoted_table_options, true)) {
+                if (\in_array(strtoupper($key), $this->_quoted_table_options, true)) {
                     $sql .= $this->db->escape($attributes[$key]);
                 } else {
                     $sql .= $this->db->escapeString($attributes[$key]);
@@ -191,9 +191,9 @@ class Forge extends BaseForge
     {
         $sql = '';
 
-        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            if (is_array($this->keys[$i])) {
-                for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
+        for ($i = 0, $c = \count($this->keys); $i < $c; $i++) {
+            if (\is_array($this->keys[$i])) {
+                for ($i2 = 0, $c2 = \count($this->keys[$i]); $i2 < $c2; $i2++) {
                     if (! isset($this->fields[$this->keys[$i][$i2]])) {
                         unset($this->keys[$i][$i2]);
 
@@ -206,11 +206,11 @@ class Forge extends BaseForge
                 continue;
             }
 
-            if (! is_array($this->keys[$i])) {
+            if (! \is_array($this->keys[$i])) {
                 $this->keys[$i] = [$this->keys[$i]];
             }
 
-            $unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
+            $unique = \in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 
             $sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
                 . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';

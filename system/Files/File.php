@@ -99,7 +99,7 @@ class File extends SplFileInfo
      */
     public function getMimeType(): string
     {
-        if (! function_exists('finfo_open')) {
+        if (! \function_exists('finfo_open')) {
             return $this->originalMimeType ?? 'application/octet-stream'; // @codeCoverageIgnore
         }
 
@@ -170,12 +170,12 @@ class File extends SplFileInfo
                     $i = end($parts);
                     array_pop($parts);
                     $parts[]     = ++$i;
-                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . implode($delimiter, $parts) . $extension;
+                    $destination = $info['dirname'] . \DIRECTORY_SEPARATOR . implode($delimiter, $parts) . $extension;
                 } else {
-                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
+                    $destination = $info['dirname'] . \DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
                 }
             } else {
-                $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
+                $destination = $info['dirname'] . \DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
             }
         }
 

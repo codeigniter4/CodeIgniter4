@@ -46,7 +46,7 @@ class OpenSSLHandler extends BaseHandler
     {
         // Allow key override
         if ($params) {
-            $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
+            $this->key = \is_array($params) && isset($params['key']) ? $params['key'] : $params;
         }
 
         if (empty($this->key)) {
@@ -54,12 +54,12 @@ class OpenSSLHandler extends BaseHandler
         }
 
         // derive a secret key
-        $secret = \hash_hkdf($this->digest, $this->key);
+        $secret = hash_hkdf($this->digest, $this->key);
 
         // basic encryption
-        $iv = ($ivSize = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($ivSize) : null;
+        $iv = ($ivSize = openssl_cipher_iv_length($this->cipher)) ? openssl_random_pseudo_bytes($ivSize) : null;
 
-        $data = \openssl_encrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
+        $data = openssl_encrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
 
         if ($data === false) {
             throw EncryptionException::forEncryptionFailed();
@@ -67,7 +67,7 @@ class OpenSSLHandler extends BaseHandler
 
         $result = $iv . $data;
 
-        $hmacKey = \hash_hmac($this->digest, $result, $secret, true);
+        $hmacKey = hash_hmac($this->digest, $result, $secret, true);
 
         return $hmacKey . $result;
     }
@@ -79,7 +79,7 @@ class OpenSSLHandler extends BaseHandler
     {
         // Allow key override
         if ($params) {
-            $this->key = is_array($params) && isset($params['key']) ? $params['key'] : $params;
+            $this->key = \is_array($params) && isset($params['key']) ? $params['key'] : $params;
         }
 
         if (empty($this->key)) {
@@ -87,24 +87,24 @@ class OpenSSLHandler extends BaseHandler
         }
 
         // derive a secret key
-        $secret = \hash_hkdf($this->digest, $this->key);
+        $secret = hash_hkdf($this->digest, $this->key);
 
         $hmacLength = self::substr($this->digest, 3) / 8;
         $hmacKey    = self::substr($data, 0, $hmacLength);
         $data       = self::substr($data, $hmacLength);
-        $hmacCalc   = \hash_hmac($this->digest, $data, $secret, true);
+        $hmacCalc   = hash_hmac($this->digest, $data, $secret, true);
 
         if (! hash_equals($hmacKey, $hmacCalc)) {
             throw EncryptionException::forAuthenticationFailed();
         }
 
-        if ($ivSize = \openssl_cipher_iv_length($this->cipher)) {
+        if ($ivSize = openssl_cipher_iv_length($this->cipher)) {
             $iv   = self::substr($data, 0, $ivSize);
             $data = self::substr($data, $ivSize);
         } else {
             $iv = null;
         }
 
-        return \openssl_decrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
+        return openssl_decrypt($data, $this->cipher, $secret, OPENSSL_RAW_DATA, $iv);
     }
 }

@@ -72,7 +72,7 @@ class Builder extends BaseBuilder
                 $orderBy = (float) ($orderBy > 1 ? "0.{$orderBy}" : $orderBy);
             }
 
-            if (is_float($orderBy)) {
+            if (\is_float($orderBy)) {
                 $this->db->simpleQuery("SET SEED {$orderBy}");
             }
 
@@ -299,7 +299,7 @@ class Builder extends BaseBuilder
      */
     public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
-        if (! in_array('FULL OUTER', $this->joinTypes, true)) {
+        if (! \in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);
         }
 

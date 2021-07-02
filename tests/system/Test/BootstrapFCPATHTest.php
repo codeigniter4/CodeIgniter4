@@ -54,7 +54,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function correctFCPATH()
     {
-        return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
+        return realpath(__DIR__ . '/../../../public') . \DIRECTORY_SEPARATOR;
     }
 
     private function buildDirectories(): void

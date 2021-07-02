@@ -94,7 +94,7 @@ class Time extends DateTime
         // If the time string was a relative string (i.e. 'next Tuesday')
         // then we need to adjust the time going in so that we have a current
         // timezone to work with.
-        if (! empty($time) && (is_string($time) && static::hasRelativeKeywords($time))) {
+        if (! empty($time) && (\is_string($time) && static::hasRelativeKeywords($time))) {
             $instance = new DateTime('now', $this->timezone);
             $instance->modify($time);
             $time = $instance->format('Y-m-d H:i:s');
@@ -329,7 +329,7 @@ class Time extends DateTime
         }
 
         // Convert to a Time instance
-        if (is_string($datetime)) {
+        if (\is_string($datetime)) {
             $datetime = new self($datetime, $timezone, $locale);
         } elseif ($datetime instanceof DateTimeInterface && ! $datetime instanceof self) {
             $datetime = new self($datetime->format('Y-m-d H:i:s'), $timezone);
@@ -558,7 +558,7 @@ class Time extends DateTime
             throw I18nException::forInvalidMonth($value);
         }
 
-        if (is_string($value) && ! is_numeric($value)) {
+        if (\is_string($value) && ! is_numeric($value)) {
             $value = date('m', strtotime("{$value} 1 2017"));
         }
 
@@ -954,7 +954,7 @@ class Time extends DateTime
     {
         if ($testTime instanceof DateTimeInterface) {
             $testTime = $testTime->format('Y-m-d H:i:s');
-        } elseif (is_string($testTime)) {
+        } elseif (\is_string($testTime)) {
             $timezone = $timezone ?: $this->timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $testTime = new DateTime($testTime, $timezone);
@@ -1091,7 +1091,7 @@ class Time extends DateTime
     {
         if ($time instanceof self) {
             $time = $time->toDateTime();
-        } elseif (is_string($time)) {
+        } elseif (\is_string($time)) {
             $timezone = $timezone ?: $this->timezone;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $time     = new DateTime($time, $timezone);

@@ -193,7 +193,7 @@ abstract class BaseCommand
         $max = 0;
 
         foreach (array_keys($array) as $key) {
-            $max = max($max, strlen($key));
+            $max = max($max, \strlen($key));
         }
 
         return $max + $pad;

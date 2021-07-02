@@ -75,7 +75,7 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-        if (in_array($alterType, ['DROP', 'ADD'], true)) {
+        if (\in_array($alterType, ['DROP', 'ADD'], true)) {
             return parent::_alterTable($alterType, $table, $field);
         }
 

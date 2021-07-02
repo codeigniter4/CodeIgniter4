@@ -133,9 +133,9 @@ final class AlterTableTest extends CIUnitTestCase
 
         $columns = $this->db->getFieldNames('foo');
 
-        $this->assertFalse(in_array('name', $columns, true));
-        $this->assertTrue(in_array('id', $columns, true));
-        $this->assertTrue(in_array('email', $columns, true));
+        $this->assertFalse(\in_array('name', $columns, true));
+        $this->assertTrue(\in_array('id', $columns, true));
+        $this->assertTrue(\in_array('email', $columns, true));
     }
 
     public function testDropColumnMaintainsKeys()

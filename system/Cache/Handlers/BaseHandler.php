@@ -52,7 +52,7 @@ abstract class BaseHandler implements CacheInterface
      */
     public static function validateKey($key, $prefix = ''): string
     {
-        if (! is_string($key)) {
+        if (! \is_string($key)) {
             throw new InvalidArgumentException('Cache key must be a string');
         }
         if ($key === '') {
@@ -63,7 +63,7 @@ abstract class BaseHandler implements CacheInterface
         }
 
         // If the key with prefix exceeds the length then return the hashed version
-        return strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
+        return \strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
     }
 
     /**

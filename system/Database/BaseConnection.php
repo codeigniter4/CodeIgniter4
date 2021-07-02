@@ -370,7 +370,7 @@ abstract class BaseConnection implements ConnectionInterface
         // No connection resource? Check if there is a failover else throw an error
         if (! $this->connID) {
             // Check if there is a failover set
-            if (! empty($this->failover) && is_array($this->failover)) {
+            if (! empty($this->failover) && \is_array($this->failover)) {
                 // Go over all the failovers
                 foreach ($this->failover as $index => $failover) {
                     // Replace the current settings with those of the failover
@@ -534,7 +534,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function addTableAlias(string $table)
     {
-        if (! in_array($table, $this->aliasedTables, true)) {
+        if (! \in_array($table, $this->aliasedTables, true)) {
             $this->aliasedTables[] = $table;
         }
 
@@ -953,11 +953,11 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
     {
-        if (! is_bool($protectIdentifiers)) {
+        if (! \is_bool($protectIdentifiers)) {
             $protectIdentifiers = $this->protectIdentifiers;
         }
 
-        if (is_array($item)) {
+        if (\is_array($item)) {
             $escapedArray = [];
 
             foreach ($item as $k => $v) {
@@ -974,7 +974,7 @@ abstract class BaseConnection implements ConnectionInterface
         //
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
-        if (strcspn($item, "()'") !== strlen($item)) {
+        if (strcspn($item, "()'") !== \strlen($item)) {
             return $item;
         }
 
@@ -1005,10 +1005,10 @@ abstract class BaseConnection implements ConnectionInterface
             //
             // NOTE: The ! empty() condition prevents this method
             //       from breaking when QB isn't enabled.
-            if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
+            if (! empty($this->aliasedTables) && \in_array($parts[0], $this->aliasedTables, true)) {
                 if ($protectIdentifiers === true) {
                     foreach ($parts as $key => $val) {
-                        if (! in_array($val, $this->reservedIdentifiers, true)) {
+                        if (! \in_array($val, $this->reservedIdentifiers, true)) {
                             $parts[$key] = $this->escapeIdentifiers($val);
                         }
                     }
@@ -1081,7 +1081,7 @@ abstract class BaseConnection implements ConnectionInterface
             }
         }
 
-        if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers, true)) {
+        if ($protectIdentifiers === true && ! \in_array($item, $this->reservedIdentifiers, true)) {
             $item = $this->escapeIdentifiers($item);
         }
 
@@ -1099,11 +1099,11 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escapeIdentifiers($item)
     {
-        if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers, true)) {
+        if ($this->escapeChar === '' || empty($item) || \in_array($item, $this->reservedIdentifiers, true)) {
             return $item;
         }
 
-        if (is_array($item)) {
+        if (\is_array($item)) {
             foreach ($item as $key => $value) {
                 $item[$key] = $this->escapeIdentifiers($value);
             }
@@ -1122,7 +1122,7 @@ abstract class BaseConnection implements ConnectionInterface
         static $pregEc = [];
 
         if (empty($pregEc)) {
-            if (is_array($this->escapeChar)) {
+            if (\is_array($this->escapeChar)) {
                 $pregEc = [
                     preg_quote($this->escapeChar[0], '/'),
                     preg_quote($this->escapeChar[1], '/'),
@@ -1175,15 +1175,15 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escape($str)
     {
-        if (is_array($str)) {
+        if (\is_array($str)) {
             return array_map([&$this, 'escape'], $str);
         }
 
-        if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+        if (\is_string($str) || (\is_object($str) && method_exists($str, '__toString'))) {
             return "'" . $this->escapeString($str) . "'";
         }
 
-        if (is_bool($str)) {
+        if (\is_bool($str)) {
             return ($str === false) ? 0 : 1;
         }
 
@@ -1204,7 +1204,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function escapeString($str, bool $like = false)
     {
-        if (is_array($str)) {
+        if (\is_array($str)) {
             foreach ($str as $key => $val) {
                 $str[$key] = $this->escapeString($val, $like);
             }
@@ -1276,7 +1276,7 @@ abstract class BaseConnection implements ConnectionInterface
             $functionName = $driver . $functionName;
         }
 
-        if (! function_exists($functionName)) {
+        if (! \function_exists($functionName)) {
             if ($this->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
@@ -1348,7 +1348,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function tableExists(string $tableName): bool
     {
-        return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+        return \in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
     }
 
     /**
@@ -1405,7 +1405,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function fieldExists(string $fieldName, string $tableName): bool
     {
-        return in_array($fieldName, $this->getFieldNames($tableName), true);
+        return \in_array($fieldName, $this->getFieldNames($tableName), true);
     }
 
     /**

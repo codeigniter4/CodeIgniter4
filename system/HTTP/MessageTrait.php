@@ -142,8 +142,8 @@ trait MessageTrait
     {
         $origName = $this->getHeaderName($name);
 
-        if (isset($this->headers[$origName]) && is_array($this->headers[$origName]->getValue())) {
-            if (! is_array($value)) {
+        if (isset($this->headers[$origName]) && \is_array($this->headers[$origName]->getValue())) {
+            if (! \is_array($value)) {
                 $value = [$value];
             }
 
@@ -181,7 +181,7 @@ trait MessageTrait
     {
         $origName = $this->getHeaderName($name);
 
-        array_key_exists($origName, $this->headers)
+        \array_key_exists($origName, $this->headers)
             ? $this->headers[$origName]->appendValue($value)
             : $this->setHeader($name, $value);
 
@@ -228,7 +228,7 @@ trait MessageTrait
         // Make sure that version is in the correct format
         $version = number_format((float) $version, 1);
 
-        if (! in_array($version, $this->validProtocolVersions, true)) {
+        if (! \in_array($version, $this->validProtocolVersions, true)) {
             throw HTTPException::forInvalidHTTPProtocol(implode(', ', $this->validProtocolVersions));
         }
 

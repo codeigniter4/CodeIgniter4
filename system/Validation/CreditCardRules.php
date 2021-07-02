@@ -189,7 +189,7 @@ class CreditCardRules
         }
 
         // Make sure we have a valid length
-        if (strlen($ccNumber) === 0) {
+        if (\strlen($ccNumber) === 0) {
             return false;
         }
 
@@ -204,7 +204,7 @@ class CreditCardRules
         // Make sure it's a valid length for this card
         $lengths = explode(',', $info['length']);
 
-        if (! in_array((string) strlen($ccNumber), $lengths, true)) {
+        if (! \in_array((string) \strlen($ccNumber), $lengths, true)) {
             return false;
         }
 
@@ -273,7 +273,7 @@ class CreditCardRules
         $sum  = 0;
         $flip = 0;
 
-        for ($i = strlen($number) - 1; $i >= 0; $i--) {
+        for ($i = \strlen($number) - 1; $i >= 0; $i--) {
             $sum += $sumTable[$flip++ & 0x1][$number[$i]];
         }
 

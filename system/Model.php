@@ -133,7 +133,7 @@ class Model extends BaseModel
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        if (is_array($id)) {
+        if (\is_array($id)) {
             $row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getResult($this->tempReturnType);
@@ -259,7 +259,7 @@ class Model extends BaseModel
      */
     protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if (is_array($set)) {
+        if (\is_array($set)) {
             foreach ($set as $row) {
                 // Require non empty primaryKey when
                 // not using auto-increment feature
@@ -414,7 +414,7 @@ class Model extends BaseModel
             return [];
         }
 
-        return [get_class($this->db) => $error['message']];
+        return [\get_class($this->db) => $error['message']];
     }
 
     /**
@@ -440,11 +440,11 @@ class Model extends BaseModel
      */
     public function getIdValue($data)
     {
-        if (is_object($data) && isset($data->{$this->primaryKey})) {
+        if (\is_object($data) && isset($data->{$this->primaryKey})) {
             return $data->{$this->primaryKey};
         }
 
-        if (is_array($data) && ! empty($data[$this->primaryKey])) {
+        if (\is_array($data) && ! empty($data[$this->primaryKey])) {
             return $data[$this->primaryKey];
         }
 
@@ -565,7 +565,7 @@ class Model extends BaseModel
      */
     public function set($key, ?string $value = '', ?bool $escape = null)
     {
-        $data = is_array($key) ? $key : [$key => $value];
+        $data = \is_array($key) ? $key : [$key => $value];
 
         foreach (array_keys($data) as $k) {
             $this->tempData['escape'][$k] = $escape;
@@ -663,7 +663,7 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! \in_array($this->primaryKey, $properties, true)
             && ! empty($data->{$this->primaryKey}))
         ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
@@ -756,7 +756,7 @@ class Model extends BaseModel
             $properties = $data->toRawArray($onlyChanged);
 
             // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
+            if (! empty($properties) && ! empty($primaryKey) && ! \in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
                 $properties[$primaryKey] = $data->{$primaryKey};
             }
         } else {

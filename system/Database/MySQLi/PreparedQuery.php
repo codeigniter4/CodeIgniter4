@@ -60,7 +60,7 @@ class PreparedQuery extends BasePreparedQuery
 
         // Determine the type string
         foreach ($data as $item) {
-            if (is_int($item)) {
+            if (\is_int($item)) {
                 $bindTypes .= 'i';
             } elseif (is_numeric($item)) {
                 $bindTypes .= 'd';

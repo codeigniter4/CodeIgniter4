@@ -491,11 +491,11 @@ class Mimes
     {
         $extension = trim(strtolower($extension), '. ');
 
-        if (! array_key_exists($extension, static::$mimes)) {
+        if (! \array_key_exists($extension, static::$mimes)) {
             return null;
         }
 
-        return is_array(static::$mimes[$extension]) ? static::$mimes[$extension][0] : static::$mimes[$extension];
+        return \is_array(static::$mimes[$extension]) ? static::$mimes[$extension][0] : static::$mimes[$extension];
     }
 
     /**
@@ -512,7 +512,7 @@ class Mimes
         $proposedExtension = trim(strtolower($proposedExtension));
 
         if ($proposedExtension !== '') {
-            if (array_key_exists($proposedExtension, static::$mimes) && in_array($type, is_string(static::$mimes[$proposedExtension]) ? [static::$mimes[$proposedExtension]] : static::$mimes[$proposedExtension], true)) {
+            if (\array_key_exists($proposedExtension, static::$mimes) && \in_array($type, \is_string(static::$mimes[$proposedExtension]) ? [static::$mimes[$proposedExtension]] : static::$mimes[$proposedExtension], true)) {
                 // The detected mime type matches with the proposed extension.
                 return $proposedExtension;
             }
@@ -524,7 +524,7 @@ class Mimes
         // Reverse check the mime type list if no extension was proposed.
         // This search is order sensitive!
         foreach (static::$mimes as $ext => $types) {
-            if ((is_string($types) && $types === $type) || (is_array($types) && in_array($type, $types, true))) {
+            if ((\is_string($types) && $types === $type) || (\is_array($types) && \in_array($type, $types, true))) {
                 return $ext;
             }
         }

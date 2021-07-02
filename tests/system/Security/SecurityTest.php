@@ -45,7 +45,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $hash = $security->getHash();
 
-        $this->assertSame(32, strlen($hash));
+        $this->assertSame(32, \strlen($hash));
         $this->assertSame('csrf_test_name', $security->getTokenName());
     }
 
@@ -95,7 +95,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
 
-        $this->assertTrue(count($_POST) === 1);
+        $this->assertTrue(\count($_POST) === 1);
     }
 
     public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()

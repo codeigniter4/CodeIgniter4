@@ -75,7 +75,7 @@ class SessionMigrationGenerator extends BaseCommand
 
         $table = 'ci_sessions';
 
-        if (array_key_exists('t', $params) || CLI::getOption('t')) {
+        if (\array_key_exists('t', $params) || CLI::getOption('t')) {
             $table = $params['t'] ?? CLI::getOption('t');
         }
 
@@ -94,8 +94,8 @@ class SessionMigrationGenerator extends BaseCommand
         $data['DBGroup'] = $this->getOption('g');
         $data['matchIP'] = config('App')->sessionMatchIP ?? false;
 
-        $data['table']   = is_string($data['table']) ? $data['table'] : 'ci_sessions';
-        $data['DBGroup'] = is_string($data['DBGroup']) ? $data['DBGroup'] : 'default';
+        $data['table']   = \is_string($data['table']) ? $data['table'] : 'ci_sessions';
+        $data['DBGroup'] = \is_string($data['DBGroup']) ? $data['DBGroup'] : 'default';
 
         return $this->parseTemplate($class, [], [], $data);
     }
