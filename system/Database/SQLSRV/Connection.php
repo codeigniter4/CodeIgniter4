@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -14,6 +18,9 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
+use function lang;
+use function log_message;
+use function remove_invisible_characters;
 use stdClass;
 
 /**
@@ -215,7 +222,7 @@ class Connection extends BaseConnection
      */
     protected function _indexData(string $table): array
     {
-        $sql = 'EXEC sp_helpindex ' . $this->escape($table);
+        $sql = 'EXEC sp_helpindex ' . $this->escape($this->schema . '.' . $table);
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
