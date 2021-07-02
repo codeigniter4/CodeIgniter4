@@ -13,7 +13,6 @@ use Config\Modules;
  */
 final class RouterTest extends CIUnitTestCase
 {
-
     /**
      * @var RouteCollection
      */

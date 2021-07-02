@@ -16,7 +16,6 @@ use Config\Services;
  */
 final class PagerTest extends CIUnitTestCase
 {
-
     /**
      * @var \CodeIgniter\Pager\Pager
      */

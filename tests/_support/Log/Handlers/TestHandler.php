@@ -11,7 +11,6 @@ namespace Tests\Support\Log\Handlers;
 
 class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 {
-
     /**
      * Local storage for logs.
      *

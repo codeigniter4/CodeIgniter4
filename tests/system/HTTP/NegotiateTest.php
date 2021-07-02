@@ -11,7 +11,6 @@ use Config\App;
  */
 final class NegotiateTest extends CIUnitTestCase
 {
-
     /**
      * @var Request
      */
