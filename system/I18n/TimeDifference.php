@@ -129,7 +129,7 @@ class TimeDifference
             return $this->difference / YEAR;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_YEAR);
     }
@@ -147,7 +147,7 @@ class TimeDifference
             return $this->difference / MONTH;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MONTH);
     }
@@ -165,7 +165,7 @@ class TimeDifference
             return $this->difference / WEEK;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return (int) ($time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR) / 7);
     }
@@ -183,7 +183,7 @@ class TimeDifference
             return $this->difference / DAY;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_DAY_OF_YEAR);
     }
@@ -201,7 +201,7 @@ class TimeDifference
             return $this->difference / HOUR;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_HOUR_OF_DAY);
     }
@@ -219,7 +219,7 @@ class TimeDifference
             return $this->difference / MINUTE;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_MINUTE);
     }
@@ -237,7 +237,7 @@ class TimeDifference
             return $this->difference;
         }
 
-        $time = clone($this->currentTime);
+        $time = clone $this->currentTime;
 
         return $time->fieldDifference($this->testTime, IntlCalendar::FIELD_SECOND);
     }
@@ -251,7 +251,7 @@ class TimeDifference
      */
     public function humanize(string $locale = null): string
     {
-        $current = clone($this->currentTime);
+        $current = clone $this->currentTime;
 
         $years   = $current->fieldDifference($this->testTime, IntlCalendar::FIELD_YEAR);
         $months  = $current->fieldDifference($this->testTime, IntlCalendar::FIELD_MONTH);

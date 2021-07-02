@@ -135,7 +135,7 @@ class UserAgent
         }
 
         // Check for a specific browser
-        return (isset($this->config->browsers[$key]) && $this->browser === $this->config->browsers[$key]);
+        return isset($this->config->browsers[$key]) && $this->browser === $this->config->browsers[$key];
     }
 
     //--------------------------------------------------------------------
@@ -159,7 +159,7 @@ class UserAgent
         }
 
         // Check for a specific robot
-        return (isset($this->config->robots[$key]) && $this->robot === $this->config->robots[$key]);
+        return isset($this->config->robots[$key]) && $this->robot === $this->config->robots[$key];
     }
 
     //--------------------------------------------------------------------
@@ -183,7 +183,7 @@ class UserAgent
         }
 
         // Check for a specific robot
-        return (isset($this->config->mobiles[$key]) && $this->mobile === $this->config->mobiles[$key]);
+        return isset($this->config->mobiles[$key]) && $this->mobile === $this->config->mobiles[$key];
     }
 
     //--------------------------------------------------------------------

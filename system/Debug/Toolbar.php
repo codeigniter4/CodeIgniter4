@@ -286,7 +286,7 @@ class Toolbar
     {
         $increments = 1 / $increments;
 
-        return (ceil($number * $increments) / $increments);
+        return ceil($number * $increments) / $increments;
     }
 
     //--------------------------------------------------------------------
