@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
@@ -26,7 +27,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
+    protected $dropConstraintStr;
 
     /**
      * CREATE DATABASE IF statement
@@ -64,7 +65,7 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $renameTableStr = 'EXEC sp_rename %s , %s ;';
+    protected $renameTableStr;
 
     /**
      * UNSIGNED support
@@ -83,21 +84,14 @@ class Forge extends BaseForge
      *
      * @var string
      */
-    protected $createTableIfStr = "IF NOT EXISTS(SELECT t.name, s.name as schema_name, t.type_desc FROM sys.tables t INNER JOIN sys.schemas s on s.schema_id = t.schema_id WHERE s.name=N'%s' AND t.name=REPLACE(N'%s', '\"', '') AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
+    protected $createTableIfStr;
 
     /**
      * CREATE TABLE statement
      *
      * @var string
      */
-    protected $createTableStr = "%s %s (%s\n) ";
-
-    /**
-     * DROP TABLE IF statement
-     *
-     * @var string
-     */
-    protected $_drop_table_if = "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
+    protected $createTableStr;
 
     //--------------------------------------------------------------------
 
