@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestTraitCaseTest extends CIUnitTestCase
+final class DatabaseTestTraitCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -37,7 +39,7 @@ class DatabaseTestTraitCaseTest extends CIUnitTestCase
     {
         $email = $this->grabFromDatabase('user', 'email', ['name' => 'Derek Jones']);
 
-        $this->assertEquals('derek@world.com', $email);
+        $this->assertSame('derek@world.com', $email);
     }
 
     public function testSeeInDatabase()

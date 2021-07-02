@@ -7,7 +7,10 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 use Tests\Support\Commands\ParamsReveal;
 
-class CommandTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CommandTest extends CIUnitTestCase
 {
     private $streamFilter;
     protected $logger;
@@ -18,8 +21,9 @@ class CommandTest extends CIUnitTestCase
         parent::setUp();
 
         CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         $this->logger   = Services::logger();
         $this->commands = Services::commands();
@@ -134,7 +138,7 @@ class CommandTest extends CIUnitTestCase
         ParamsReveal::$args = null;
         command($input);
 
-        $this->assertEquals($expected, ParamsReveal::$args);
+        $this->assertSame($expected, ParamsReveal::$args);
     }
 
     public function commandArgsProvider(): array
@@ -142,10 +146,7 @@ class CommandTest extends CIUnitTestCase
         return [
             [
                 'reveal as df',
-                [
-                    'as',
-                    'df',
-                ],
+                ['as', 'df'],
             ],
             [
                 'reveal',
@@ -153,50 +154,23 @@ class CommandTest extends CIUnitTestCase
             ],
             [
                 'reveal seg1 seg2 -opt1 -opt2',
-                [
-                    'seg1',
-                    'seg2',
-                    'opt1' => null,
-                    'opt2' => null,
-                ],
+                ['seg1', 'seg2', 'opt1' => null, 'opt2' => null],
             ],
             [
                 'reveal seg1 seg2 -opt1 val1 seg3',
-                [
-                    'seg1',
-                    'seg2',
-                    'opt1' => 'val1',
-                    'seg3',
-                ],
+                ['seg1', 'seg2', 'opt1' => 'val1', 'seg3'],
             ],
             [
                 'reveal as df -gh -jk -qw 12 zx cv',
-                [
-                    'as',
-                    'df',
-                    'gh' => null,
-                    'jk' => null,
-                    'qw' => 12,
-                    'zx',
-                    'cv',
-                ],
+                ['as', 'df', 'gh' => null, 'jk' => null, 'qw' => '12', 'zx', 'cv'],
             ],
             [
                 'reveal as -df "some stuff" -jk 12 -sd "Some longer stuff" -fg \'using single quotes\'',
-                [
-                    'as',
-                    'df' => 'some stuff',
-                    'jk' => 12,
-                    'sd' => 'Some longer stuff',
-                    'fg' => 'using single quotes',
-                ],
+                ['as', 'df' => 'some stuff', 'jk' => '12', 'sd' => 'Some longer stuff', 'fg' => 'using single quotes'],
             ],
             [
                 'reveal as -df "using mixed \'quotes\'\" here\""',
-                [
-                    'as',
-                    'df' => 'using mixed \'quotes\'" here"',
-                ],
+                ['as', 'df' => 'using mixed \'quotes\'" here"'],
             ],
         ];
     }

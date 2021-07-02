@@ -25,8 +25,10 @@ use Tests\Support\Models\UserModel;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ResourceControllerTest extends CIUnitTestCase
+final class ResourceControllerTest extends CIUnitTestCase
 {
 
     /**
@@ -58,7 +60,7 @@ class ResourceControllerTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -234,7 +236,7 @@ class ResourceControllerTest extends CIUnitTestCase
 
         $resource->setModel('Something');
         $this->assertEmpty($resource->getModel());
-        $this->assertEquals('Something', $resource->getModelName());
+        $this->assertSame('Something', $resource->getModelName());
     }
 
     public function testModelByName()
@@ -242,7 +244,7 @@ class ResourceControllerTest extends CIUnitTestCase
         $resource = new MockResourceController();
         $resource->setModel('\Tests\Support\Models\UserModel');
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
     public function testModelByObject()
@@ -253,20 +255,20 @@ class ResourceControllerTest extends CIUnitTestCase
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
-        $this->assertEquals('Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
     //--------------------------------------------------------------------
     public function testFormat()
     {
         $resource = new MockResourceController();
-        $this->assertEquals('json', $resource->getFormat());
+        $this->assertSame('json', $resource->getFormat());
 
         $resource->setFormat('Nonsense');
-        $this->assertEquals('json', $resource->getFormat());
+        $this->assertSame('json', $resource->getFormat());
 
         $resource->setFormat('xml');
-        $this->assertEquals('xml', $resource->getFormat());
+        $this->assertSame('xml', $resource->getFormat());
     }
 
     //--------------------------------------------------------------------
@@ -295,7 +297,7 @@ class ResourceControllerTest extends CIUnitTestCase
         $JSONFormatter = new JSONFormatter();
         $expected      = $JSONFormatter->format($data);
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     //--------------------------------------------------------------------
@@ -324,6 +326,6 @@ class ResourceControllerTest extends CIUnitTestCase
         $XMLFormatter = new XMLFormatter();
         $expected     = $XMLFormatter->format($data);
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 }

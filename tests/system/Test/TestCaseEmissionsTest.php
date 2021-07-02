@@ -10,8 +10,10 @@ use Config\App;
  * TestCaseTest because it messes with output
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
+ *
+ * @internal
  */
-class TestCaseEmissionsTest extends CIUnitTestCase
+final class TestCaseEmissionsTest extends CIUnitTestCase
 {
 
     /**
@@ -49,8 +51,6 @@ class TestCaseEmissionsTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }
@@ -81,8 +81,7 @@ class TestCaseEmissionsTest extends CIUnitTestCase
 
         // send it
         ob_start();
-        $response->send();
-        $output = ob_clean(); // what really was sent
+        $response->send(); // what really was sent
         if (ob_get_level() > 0) {
             ob_end_clean();
         }

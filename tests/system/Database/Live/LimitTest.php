@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class LimitTest extends CIUnitTestCase
+final class LimitTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     protected $refresh = true;
@@ -23,8 +25,8 @@ class LimitTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $jobs);
-        $this->assertEquals('Developer', $jobs[0]->name);
-        $this->assertEquals('Politician', $jobs[1]->name);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Politician', $jobs[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -37,8 +39,8 @@ class LimitTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $jobs);
-        $this->assertEquals('Accountant', $jobs[0]->name);
-        $this->assertEquals('Musician', $jobs[1]->name);
+        $this->assertSame('Accountant', $jobs[0]->name);
+        $this->assertSame('Musician', $jobs[1]->name);
     }
 
     //--------------------------------------------------------------------

@@ -6,7 +6,10 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
 
-class EmailTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EmailTest extends CIUnitTestCase
 {
     public function testEmailValidation()
     {
@@ -38,7 +41,7 @@ class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send($autoClear));
 
         if (! $autoClear) {
-            $this->assertEquals('foo@foo.com', $email->archive['recipients'][0]);
+            $this->assertSame('foo@foo.com', $email->archive['recipients'][0]);
         }
     }
 
@@ -54,9 +57,9 @@ class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send());
 
         $this->assertNotEmpty($email->archive);
-        $this->assertEquals(['foo@foo.com'], $email->archive['recipients']);
-        $this->assertEquals('bar@foo.com', $email->archive['fromEmail']);
-        $this->assertEquals('Archive Test', $email->archive['subject']);
+        $this->assertSame(['foo@foo.com'], $email->archive['recipients']);
+        $this->assertSame('bar@foo.com', $email->archive['fromEmail']);
+        $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
     public function testAutoClearLeavesArchive()
@@ -84,8 +87,8 @@ class EmailTest extends CIUnitTestCase
         $email->setSubject('Archive Test');
         $this->assertTrue($email->send());
 
-        $this->assertEquals('', $email->archive['fromEmail']);
-        $this->assertEquals('Archive Test', $email->archive['subject']);
+        $this->assertSame('', $email->archive['fromEmail']);
+        $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
     public function testSuccessDoesTriggerEvent()
@@ -104,7 +107,7 @@ class EmailTest extends CIUnitTestCase
         $this->assertTrue($email->send());
 
         $this->assertIsArray($result);
-        $this->assertEquals(['foo@foo.com'], $result['recipients']);
+        $this->assertSame(['foo@foo.com'], $result['recipients']);
     }
 
     public function testFailureDoesNotTriggerEvent()

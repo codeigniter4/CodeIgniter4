@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Commands\AppInfo;
 
-class BaseCommandTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseCommandTest extends CIUnitTestCase
 {
     protected $logger;
     protected $runner;
@@ -37,7 +40,7 @@ class BaseCommandTest extends CIUnitTestCase
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertEquals('demo', $command->group);
+        $this->assertSame('demo', $command->group);
     }
 
     public function testMagicGetMissing()

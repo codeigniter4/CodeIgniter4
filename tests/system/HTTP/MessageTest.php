@@ -5,7 +5,10 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 
-class MessageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MessageTest extends CIUnitTestCase
 {
 
     /**
@@ -22,7 +25,7 @@ class MessageTest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->message = null;
         unset($this->message);
@@ -54,7 +57,7 @@ class MessageTest extends CIUnitTestCase
         $header = $this->message->header('Host');
 
         $this->assertInstanceOf(Header::class, $header);
-        $this->assertEquals('daisyduke.com', $header->getValue());
+        $this->assertSame('daisyduke.com', $header->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -63,8 +66,8 @@ class MessageTest extends CIUnitTestCase
     {
         $this->message->setHeader('Host', 'daisyduke.com');
 
-        $this->assertEquals('daisyduke.com', $this->message->header('host')->getValue());
-        $this->assertEquals('daisyduke.com', $this->message->header('HOST')->getValue());
+        $this->assertSame('daisyduke.com', $this->message->header('host')->getValue());
+        $this->assertSame('daisyduke.com', $this->message->header('HOST')->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -74,8 +77,8 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('first', 'kiss');
         $this->message->setHeader('second', ['black', 'book']);
 
-        $this->assertEquals('kiss', $this->message->header('FIRST')->getValue());
-        $this->assertEquals(['black', 'book'], $this->message->header('Second')->getValue());
+        $this->assertSame('kiss', $this->message->header('FIRST')->getValue());
+        $this->assertSame(['black', 'book'], $this->message->header('Second')->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -85,7 +88,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Pragma', 'cache');
         $this->message->setHeader('Pragma', 'no-cache');
 
-        $this->assertEquals('no-cache', $this->message->header('Pragma')->getValue());
+        $this->assertSame('no-cache', $this->message->header('Pragma')->getValue());
     }
 
     public function testHeaderLineIsReadable()
@@ -93,8 +96,8 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', ['json', 'html']);
         $this->message->setHeader('Host', 'daisyduke.com');
 
-        $this->assertEquals('json, html', $this->message->header('Accept')->getValueLine());
-        $this->assertEquals('daisyduke.com', $this->message->header('Host')->getValueLine());
+        $this->assertSame('json, html', $this->message->header('Accept')->getValueLine());
+        $this->assertSame('daisyduke.com', $this->message->header('Host')->getValueLine());
     }
 
     //--------------------------------------------------------------------
@@ -105,7 +108,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->removeHeader('host');
 
-        $this->assertEquals('', $this->message->header('host'));
+        $this->assertNull($this->message->header('host'));
     }
 
     //--------------------------------------------------------------------
@@ -116,7 +119,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->appendHeader('Accept', 'xml');
 
-        $this->assertEquals(['json', 'html', 'xml'], $this->message->header('accept')->getValue());
+        $this->assertSame(['json', 'html', 'xml'], $this->message->header('accept')->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -127,7 +130,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->prependHeader('Accept', 'xml');
 
-        $this->assertEquals(['xml', 'json', 'html'], $this->message->header('accept')->getValue());
+        $this->assertSame(['xml', 'json', 'html'], $this->message->header('accept')->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -136,7 +139,7 @@ class MessageTest extends CIUnitTestCase
     {
         $this->message->setProtocolVersion('1.1');
 
-        $this->assertEquals('1.1', $this->message->getProtocolVersion());
+        $this->assertSame('1.1', $this->message->getProtocolVersion());
     }
 
     //--------------------------------------------------------------------
@@ -145,7 +148,7 @@ class MessageTest extends CIUnitTestCase
     {
         $this->message->setProtocolVersion('HTTP/1.1');
 
-        $this->assertEquals('1.1', $this->message->getProtocolVersion());
+        $this->assertSame('1.1', $this->message->getProtocolVersion());
     }
 
     //--------------------------------------------------------------------
@@ -164,7 +167,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->setBody($body);
 
-        $this->assertEquals($body, $this->message->getBody());
+        $this->assertSame($body, $this->message->getBody());
     }
 
     //--------------------------------------------------------------------
@@ -175,7 +178,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->appendBody('\n');
 
-        $this->assertEquals('moo' . '\n', $this->message->getBody());
+        $this->assertSame('moo' . '\n', $this->message->getBody());
     }
 
     //--------------------------------------------------------------------
@@ -184,7 +187,7 @@ class MessageTest extends CIUnitTestCase
     {
         $this->message->setHeader('Accept', 'json');
 
-        $this->assertEquals('json', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('json', $this->message->getHeaderLine('Accept'));
     }
 
     public function testSetHeaderDuplicateSettings()
@@ -192,7 +195,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', 'json');
         $this->message->setHeader('Accept', 'xml');
 
-        $this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
     }
 
     public function testSetHeaderDuplicateSettingsInsensitive()
@@ -200,14 +203,14 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', 'json');
         $this->message->setHeader('accept', 'xml');
 
-        $this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
     }
 
     public function testSetHeaderArrayValues()
     {
         $this->message->setHeader('Accept', ['json', 'html', 'xml']);
 
-        $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
     public function provideArrayHeaderValue()
@@ -237,7 +240,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', $arrayHeaderValue);
         $this->message->setHeader('Accept', 'xml');
 
-        $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
     /**
@@ -248,7 +251,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', $arrayHeaderValue);
         $this->message->setHeader('Accept', ['xml']);
 
-        $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
     public function testSetHeaderWithExistingArrayValuesAppendNullValue()
@@ -256,7 +259,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->setHeader('Accept', ['json', 'html', 'xml']);
         $this->message->setHeader('Accept', null);
 
-        $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
     //--------------------------------------------------------------------
@@ -272,7 +275,7 @@ class MessageTest extends CIUnitTestCase
         $this->message->populateHeaders();
 
         $this->assertNull($this->message->header('content-type'));
-        putenv("CONTENT_TYPE=$originalEnv");
+        putenv("CONTENT_TYPE={$originalEnv}");
         $this->message->removeHeader('accept-language');
         $_SERVER = $original; // restore so code coverage doesn't break
     }
@@ -308,7 +311,7 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->populateHeaders();
 
-        $this->assertEquals('', $this->message->header('accept-charset')->getValue());
+        $this->assertSame('', $this->message->header('accept-charset')->getValue());
         $this->message->removeHeader('accept-charset');
         $_SERVER = $original; // restore so code coverage doesn't break
     }
@@ -326,8 +329,8 @@ class MessageTest extends CIUnitTestCase
 
         $this->message->populateHeaders();
 
-        $this->assertEquals('text/html; charset=utf-8', $this->message->header('content-type')->getValue());
-        $this->assertEquals('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
+        $this->assertSame('text/html; charset=utf-8', $this->message->header('content-type')->getValue());
+        $this->assertSame('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
         $this->message->removeHeader('content-type');
         $this->message->removeHeader('accept-language');
         $_SERVER = $original; // restore so code coverage doesn't break

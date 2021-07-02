@@ -4,7 +4,10 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class DummyHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DummyHandlerTest extends CIUnitTestCase
 {
     private $dummyHandler;
 

@@ -4,7 +4,10 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class ArrayHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ArrayHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
@@ -20,7 +23,7 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar', $data));
+        $this->assertSame(23, dot_array_search('foo.bar', $data));
     }
 
     public function testArrayDotTooManyLevels()
@@ -31,7 +34,7 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
     }
 
     public function testArrayDotEscape()
@@ -45,8 +48,8 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.bar\.baz', $data));
-        $this->assertEquals(42, dot_array_search('foo\.bar.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.bar\.baz', $data));
+        $this->assertSame(42, dot_array_search('foo\.bar.baz', $data));
     }
 
     public function testArraySearchDotMultiLevels()
@@ -100,7 +103,7 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(['bar' => 23], dot_array_search('foo', $data));
+        $this->assertSame(['bar' => 23], dot_array_search('foo', $data));
     }
 
     public function testArrayDotWildcard()
@@ -113,7 +116,7 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(23, dot_array_search('foo.*.baz', $data));
+        $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
     public function testArrayDotWildcardWithMultipleChoices()
@@ -129,8 +132,8 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(11, dot_array_search('foo.*.fizz', $data));
-        $this->assertEquals(23, dot_array_search('foo.*.baz', $data));
+        $this->assertSame(11, dot_array_search('foo.*.fizz', $data));
+        $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
     public function testArrayDotNestedNotFound()
@@ -159,7 +162,7 @@ class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals(['baz' => 23], dot_array_search('foo.bar.*', $data));
+        $this->assertSame(['baz' => 23], dot_array_search('foo.bar.*', $data));
     }
 
     /**
@@ -188,7 +191,7 @@ class ArrayHelperTest extends CIUnitTestCase
 
         $result = array_deep_search($key, $data);
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testArrayDeepSearchReturnNullEmptyArray()
@@ -206,7 +209,7 @@ class ArrayHelperTest extends CIUnitTestCase
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
         $this->assertTrue($success);
-        $this->assertEquals($expected, array_column($data, 'name'));
+        $this->assertSame($expected, array_column($data, 'name'));
     }
 
     /**
@@ -222,7 +225,7 @@ class ArrayHelperTest extends CIUnitTestCase
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
         $this->assertTrue($success);
-        $this->assertEquals($expected, array_column((array) $data, 'name'));
+        $this->assertSame($expected, array_column((array) $data, 'name'));
     }
 
     /**

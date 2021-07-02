@@ -8,9 +8,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 use DateTimeZone;
 
-class DownloadResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DownloadResponseTest extends CIUnitTestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             unset($_SERVER['HTTP_USER_AGENT']);
@@ -43,7 +46,7 @@ class DownloadResponseTest extends CIUnitTestCase
 
         $header = $response->getHeaderLine('Date');
 
-        $this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
+        $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
     public function testSetLastModifiedWithDateTimeObject()
@@ -57,7 +60,7 @@ class DownloadResponseTest extends CIUnitTestCase
 
         $header = $response->getHeaderLine('Last-Modified');
 
-        $this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
+        $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
     public function testSetLastModifiedWithString()
@@ -68,7 +71,7 @@ class DownloadResponseTest extends CIUnitTestCase
 
         $header = $response->getHeaderLine('Last-Modified');
 
-        $this->assertEquals('2000-03-10 10:23:45', $header);
+        $this->assertSame('2000-03-10 10:23:45', $header);
     }
 
     public function testsentMethodSouldReturnRedirectResponse()
@@ -84,7 +87,7 @@ class DownloadResponseTest extends CIUnitTestCase
 
         $response->setContentType('text/json');
 
-        $this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
     public function testSetContentTypeNoCharSet()
@@ -93,7 +96,7 @@ class DownloadResponseTest extends CIUnitTestCase
 
         $response->setContentType('application/octet-stream', '');
 
-        $this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
     }
 
     public function testSetFileName()
@@ -173,11 +176,11 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->setBinary('test');
         $response->buildHeaders();
 
-        $this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-        $this->assertEquals('attachment; filename="unit test.txt"; filename*=UTF-8\'\'unit%20test.txt', $response->getHeaderLine('Content-Disposition'));
-        $this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
-        $this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
-        $this->assertEquals('4', $response->getHeaderLine('Content-Length'));
+        $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('attachment; filename="unit test.txt"; filename*=UTF-8\'\'unit%20test.txt', $response->getHeaderLine('Content-Disposition'));
+        $this->assertSame('0', $response->getHeaderLine('Expires-Disposition'));
+        $this->assertSame('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
+        $this->assertSame('4', $response->getHeaderLine('Content-Length'));
     }
 
     public function testIsSetDownloadableHeadlersFromFile()
@@ -187,11 +190,11 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->setFilePath(__FILE__);
         $response->buildHeaders();
 
-        $this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
-        $this->assertEquals('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
-        $this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
-        $this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
-        $this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
+        $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('attachment; filename="unit-test.php"; filename*=UTF-8\'\'unit-test.php', $response->getHeaderLine('Content-Disposition'));
+        $this->assertSame('0', $response->getHeaderLine('Expires-Disposition'));
+        $this->assertSame('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
+        $this->assertSame(filesize(__FILE__), (int) $response->getHeaderLine('Content-Length'));
     }
 
     public function testIfTheCharacterCodeIsOtherThanUtf8ReplaceItWithUtf8AndRawurlencode()
@@ -202,7 +205,7 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->setContentType('application/octet-stream', 'Shift-JIS');
         $response->buildHeaders();
 
-        $this->assertEquals('attachment; filename="' . mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8') . '"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
+        $this->assertSame('attachment; filename="' . mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8') . '"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
     }
 
     public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
@@ -213,7 +216,7 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->setFilePath(__FILE__);
         $response->buildHeaders();
 
-        $this->assertEquals('attachment; filename="unit-test.PHP"; filename*=UTF-8\'\'unit-test.PHP', $response->getHeaderLine('Content-Disposition'));
+        $this->assertSame('attachment; filename="unit-test.PHP"; filename*=UTF-8\'\'unit-test.PHP', $response->getHeaderLine('Content-Disposition'));
     }
 
     public function testIsSetContentTypeFromFilename()
@@ -223,7 +226,7 @@ class DownloadResponseTest extends CIUnitTestCase
         $response->setBinary('test');
         $response->buildHeaders();
 
-        $this->assertEquals('text/plain; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('text/plain; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
     public function testCanOutputFileBodyFromBinary()
@@ -266,7 +269,7 @@ class DownloadResponseTest extends CIUnitTestCase
     public function testGetReason()
     {
         $response = new DownloadResponse('unit-test.php', false);
-        $this->assertEquals('OK', $response->getReason());
+        $this->assertSame('OK', $response->getReason());
     }
 
     //--------------------------------------------------------------------
@@ -300,8 +303,6 @@ class DownloadResponseTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }

@@ -6,7 +6,10 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -37,7 +40,7 @@ class BaseTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $result = $builder->getTable();
-        $this->assertEquals('jobs', $result);
+        $this->assertSame('jobs', $result);
     }
 
     public function testGetTableIgnoresFrom()
@@ -46,6 +49,6 @@ class BaseTest extends CIUnitTestCase
 
         $builder->from('foo');
         $result = $builder->getTable();
-        $this->assertEquals('jobs', $result);
+        $this->assertSame('jobs', $result);
     }
 }

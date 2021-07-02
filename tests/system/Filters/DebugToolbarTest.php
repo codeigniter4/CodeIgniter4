@@ -8,8 +8,10 @@ use Config\Filters as FilterConfig;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class DebugToolbarTest extends CIUnitTestCase
+final class DebugToolbarTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;
@@ -41,10 +43,10 @@ class DebugToolbarTest extends CIUnitTestCase
 
         // nothing should change here, since we have no before logic
         $filter->before($this->request);
-        $this->assertEquals($expectedBefore, $this->request);
+        $this->assertSame($expectedBefore, $this->request);
 
         // nothing should change here, since we are running in the CLI
         $filter->after($this->request, $this->response);
-        $this->assertEquals($expectedAfter, $this->response);
+        $this->assertSame($expectedAfter, $this->response);
     }
 }

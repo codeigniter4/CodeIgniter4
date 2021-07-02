@@ -11,7 +11,10 @@ use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
 
-class FabricatorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FabricatorTest extends CIUnitTestCase
 {
     /**
      * Default formatters to use for UserModel. Should match detected version.
@@ -55,28 +58,28 @@ class FabricatorTest extends CIUnitTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
-        $fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
+        new Fabricator('SillyRabbit\Models\AreForKids');
     }
 
     public function testConstructorSetsFormatters()
     {
         $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-        $this->assertEquals($this->formatters, $fabricator->getFormatters());
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
     }
 
     public function testConstructorGuessesFormatters()
     {
         $fabricator = new Fabricator(UserModel::class, null);
 
-        $this->assertEquals($this->formatters, $fabricator->getFormatters());
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
     }
 
     public function testConstructorDefaultsToAppLocale()
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $this->assertEquals(config('App')->defaultLocale, $fabricator->getLocale());
+        $this->assertSame(config('App')->defaultLocale, $fabricator->getLocale());
     }
 
     public function testConstructorUsesProvidedLocale()
@@ -85,7 +88,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $fabricator = new Fabricator(UserModel::class, null, $locale);
 
-        $this->assertEquals($locale, $fabricator->getLocale());
+        $this->assertSame($locale, $fabricator->getLocale());
     }
 
     //--------------------------------------------------------------------
@@ -128,7 +131,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $fabricator->setFormatters($formatters);
 
-        $this->assertEquals($formatters, $fabricator->getFormatters());
+        $this->assertSame($formatters, $fabricator->getFormatters());
     }
 
     public function testSetFormattersDetectsFormatters()
@@ -138,7 +141,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $fabricator->setFormatters();
 
-        $this->assertEquals($this->formatters, $fabricator->getFormatters());
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
     }
 
     public function testDetectFormattersDetectsFormatters()
@@ -150,7 +153,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $method();
 
-        $this->assertEquals($this->formatters, $fabricator->getFormatters());
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
     }
 
     //--------------------------------------------------------------------
@@ -162,7 +165,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $fabricator->setOverrides($overrides);
 
-        $this->assertEquals($overrides, $fabricator->getOverrides());
+        $this->assertSame($overrides, $fabricator->getOverrides());
     }
 
     public function testSetOverridesDefaultPersists()
@@ -173,7 +176,7 @@ class FabricatorTest extends CIUnitTestCase
         $fabricator->setOverrides($overrides);
         $fabricator->getOverrides();
 
-        $this->assertEquals($overrides, $fabricator->getOverrides());
+        $this->assertSame($overrides, $fabricator->getOverrides());
     }
 
     public function testSetOverridesOnce()
@@ -184,7 +187,7 @@ class FabricatorTest extends CIUnitTestCase
         $fabricator->setOverrides($overrides, false);
         $fabricator->getOverrides();
 
-        $this->assertEquals([], $fabricator->getOverrides());
+        $this->assertSame([], $fabricator->getOverrides());
     }
 
     //--------------------------------------------------------------------
@@ -198,7 +201,7 @@ class FabricatorTest extends CIUnitTestCase
         $field     = 'catchPhrase';
         $formatter = $method($field);
 
-        $this->assertEquals($field, $formatter);
+        $this->assertSame($field, $formatter);
     }
 
     public function testGuessFormattersFieldReturnsDateFormat()
@@ -210,7 +213,7 @@ class FabricatorTest extends CIUnitTestCase
         $field     = 'created_at';
         $formatter = $method($field);
 
-        $this->assertEquals('date', $formatter);
+        $this->assertSame('date', $formatter);
     }
 
     public function testGuessFormattersPrimaryReturnsNumberBetween()
@@ -222,7 +225,7 @@ class FabricatorTest extends CIUnitTestCase
         $field     = 'id';
         $formatter = $method($field);
 
-        $this->assertEquals('numberBetween', $formatter);
+        $this->assertSame('numberBetween', $formatter);
     }
 
     public function testGuessFormattersMatchesPartial()
@@ -234,7 +237,7 @@ class FabricatorTest extends CIUnitTestCase
         $field     = 'business_email';
         $formatter = $method($field);
 
-        $this->assertEquals('email', $formatter);
+        $this->assertSame('email', $formatter);
     }
 
     public function testGuessFormattersFallback()
@@ -246,7 +249,7 @@ class FabricatorTest extends CIUnitTestCase
         $field     = 'zaboomafoo';
         $formatter = $method($field);
 
-        $this->assertEquals($fabricator->defaultFormatter, $formatter);
+        $this->assertSame($fabricator->defaultFormatter, $formatter);
     }
 
     //--------------------------------------------------------------------
@@ -269,7 +272,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeArray();
 
-        $this->assertEquals($overrides['name'], $result['name']);
+        $this->assertSame($overrides['name'], $result['name']);
     }
 
     public function testMakeArrayReturnsValidData()
@@ -278,7 +281,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeArray();
 
-        $this->assertEquals($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
+        $this->assertSame($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
     }
 
     public function testMakeArrayUsesFakeMethod()
@@ -287,7 +290,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeArray();
 
-        $this->assertEquals($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
+        $this->assertSame($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
     }
 
     //--------------------------------------------------------------------
@@ -339,7 +342,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeObject();
 
-        $this->assertEquals($overrides['name'], $result->name);
+        $this->assertSame($overrides['name'], $result->name);
     }
 
     public function testMakeObjectReturnsValidData()
@@ -348,7 +351,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeObject();
 
-        $this->assertEquals($result->email, filter_var($result->email, FILTER_VALIDATE_EMAIL));
+        $this->assertSame($result->email, filter_var($result->email, FILTER_VALIDATE_EMAIL));
     }
 
     public function testMakeObjectUsesFakeMethod()
@@ -357,7 +360,7 @@ class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeObject();
 
-        $this->assertEquals($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
+        $this->assertSame($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
     }
 
     //--------------------------------------------------------------------
@@ -424,7 +427,7 @@ class FabricatorTest extends CIUnitTestCase
     {
         $result = Fabricator::setCount('goblins', 42);
 
-        $this->assertEquals(42, $result);
+        $this->assertSame(42, $result);
     }
 
     public function testSetCountSetsValue()
@@ -432,14 +435,14 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('trolls', 3);
         $result = Fabricator::getCount('trolls');
 
-        $this->assertEquals(3, $result);
+        $this->assertSame(3, $result);
     }
 
     public function testGetCountNewTableReturnsZero()
     {
         $result = Fabricator::getCount('gremlins');
 
-        $this->assertEquals(0, $result);
+        $this->assertSame(0, $result);
     }
 
     public function testUpCountIncrementsValue()
@@ -447,7 +450,7 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('orcs', 12);
         Fabricator::upCount('orcs');
 
-        $this->assertEquals(13, Fabricator::getCount('orcs'));
+        $this->assertSame(13, Fabricator::getCount('orcs'));
     }
 
     public function testUpCountReturnsValue()
@@ -455,14 +458,14 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('hobgoblins', 12);
         $result = Fabricator::upCount('hobgoblins');
 
-        $this->assertEquals(13, $result);
+        $this->assertSame(13, $result);
     }
 
     public function testUpCountNewTableReturnsOne()
     {
         $result = Fabricator::upCount('ogres');
 
-        $this->assertEquals(1, $result);
+        $this->assertSame(1, $result);
     }
 
     public function testDownCountDecrementsValue()
@@ -470,7 +473,7 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('orcs', 12);
         Fabricator::downCount('orcs');
 
-        $this->assertEquals(11, Fabricator::getCount('orcs'));
+        $this->assertSame(11, Fabricator::getCount('orcs'));
     }
 
     public function testDownCountReturnsValue()
@@ -478,14 +481,14 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('hobgoblins', 12);
         $result = Fabricator::downCount('hobgoblins');
 
-        $this->assertEquals(11, $result);
+        $this->assertSame(11, $result);
     }
 
     public function testDownCountNewTableReturnsNegativeOne()
     {
         $result = Fabricator::downCount('ogres');
 
-        $this->assertEquals(-1, $result);
+        $this->assertSame(-1, $result);
     }
 
     public function testResetClearsValue()
@@ -493,6 +496,6 @@ class FabricatorTest extends CIUnitTestCase
         Fabricator::setCount('giants', 1000);
         Fabricator::resetCounts();
 
-        $this->assertEquals(0, Fabricator::getCount('giants'));
+        $this->assertSame(0, Fabricator::getCount('giants'));
     }
 }

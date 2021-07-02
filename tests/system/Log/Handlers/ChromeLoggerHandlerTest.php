@@ -9,7 +9,10 @@ use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
 use stdClass;
 
-class ChromeLoggerHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
     public function testCanHandleLogLevel()
     {
@@ -72,7 +75,7 @@ class ChromeLoggerHandlerTest extends CIUnitTestCase
         $data              = new stdClass();
         $data->code        = 123;
         $data->explanation = "That's no moon, it's a pumpkin";
-        $result            = $logger->setDateFormat('F j, Y');
+        $logger->setDateFormat('F j, Y');
 
         $logger->handle('warning', $data);
 

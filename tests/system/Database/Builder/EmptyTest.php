@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class EmptyTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EmptyTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -29,7 +32,7 @@ class EmptyTest extends CIUnitTestCase
 
         $expectedSQL = 'DELETE FROM "jobs"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
     }
 
     //--------------------------------------------------------------------

@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class TruncateTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TruncateTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -27,7 +30,7 @@ class TruncateTest extends CIUnitTestCase
 
         $expectedSQL = 'TRUNCATE "user"';
 
-        $this->assertEquals($expectedSQL, $builder->testMode()->truncate());
+        $this->assertSame($expectedSQL, $builder->testMode()->truncate());
     }
 
     //--------------------------------------------------------------------

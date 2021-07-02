@@ -167,7 +167,7 @@ final class CookieTest extends CIUnitTestCase
     {
         $cookie = Cookie::fromHeaderString($header);
         $cookie = $cookie->toArray();
-        $this->assertEquals($changed + $cookie, $cookie);
+        $this->assertSame(array_merge($cookie, $changed), $cookie);
     }
 
     public static function setCookieHeaderProvider(): iterable

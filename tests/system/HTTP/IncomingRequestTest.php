@@ -9,10 +9,11 @@ use Config\App;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class IncomingRequestTest extends CIUnitTestCase
+final class IncomingRequestTest extends CIUnitTestCase
 {
-
     /**
      * @var IncomingRequest
      */
@@ -33,7 +34,7 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $_REQUEST['TEST'] = 5;
 
-        $this->assertEquals(5, $this->request->getVar('TEST'));
+        $this->assertSame('5', $this->request->getVar('TEST'));
         $this->assertNull($this->request->getVar('TESTY'));
     }
 
@@ -41,7 +42,7 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $_GET['TEST'] = 5;
 
-        $this->assertEquals(5, $this->request->getGet('TEST'));
+        $this->assertSame('5', $this->request->getGet('TEST'));
         $this->assertNull($this->request->getGet('TESTY'));
     }
 
@@ -49,7 +50,7 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $_POST['TEST'] = 5;
 
-        $this->assertEquals(5, $this->request->getPost('TEST'));
+        $this->assertSame('5', $this->request->getPost('TEST'));
         $this->assertNull($this->request->getPost('TESTY'));
     }
 
@@ -58,8 +59,8 @@ class IncomingRequestTest extends CIUnitTestCase
         $_POST['TEST'] = 5;
         $_GET['TEST']  = 3;
 
-        $this->assertEquals(5, $this->request->getPostGet('TEST'));
-        $this->assertEquals(3, $this->request->getGetPost('TEST'));
+        $this->assertSame('5', $this->request->getPostGet('TEST'));
+        $this->assertSame('3', $this->request->getGetPost('TEST'));
     }
 
     //--------------------------------------------------------------------
@@ -76,8 +77,8 @@ class IncomingRequestTest extends CIUnitTestCase
             'post' => ['name' => 'foo'],
         ];
 
-        $this->assertEquals('foo', $this->request->getOldInput('name'));
-        $this->assertEquals('two', $this->request->getOldInput('one'));
+        $this->assertSame('foo', $this->request->getOldInput('name'));
+        $this->assertSame('two', $this->request->getOldInput('one'));
     }
 
     public function testCanGetOldInputDotted()
@@ -87,8 +88,8 @@ class IncomingRequestTest extends CIUnitTestCase
             'post' => ['banana' => ['name' => 'foo']],
         ];
 
-        $this->assertEquals('foo', $this->request->getOldInput('banana.name'));
-        $this->assertEquals('two', $this->request->getOldInput('apple.name'));
+        $this->assertSame('foo', $this->request->getOldInput('banana.name'));
+        $this->assertSame('two', $this->request->getOldInput('apple.name'));
     }
 
     public function testMissingOldInput()
@@ -109,8 +110,8 @@ class IncomingRequestTest extends CIUnitTestCase
             'post' => ['banana' => ['name' => 'foo']],
         ];
 
-        $this->assertEquals(['name' => 'two'], $this->request->getOldInput('apple'));
-        $this->assertEquals(['name' => 'foo'], $this->request->getOldInput('banana'));
+        $this->assertSame(['name' => 'two'], $this->request->getOldInput('apple'));
+        $this->assertSame(['name' => 'foo'], $this->request->getOldInput('banana'));
     }
 
     // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
@@ -129,7 +130,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $session = service('session');
         $session->set(['_ci_old_input' => ['post' => ['location' => $locations]]]);
 
-        $this->assertEquals($locations, $this->request->getOldInput('location'));
+        $this->assertSame($locations, $this->request->getOldInput('location'));
     }
 
     //--------------------------------------------------------------------
@@ -140,7 +141,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $server['server']['TEST'] = 5;
         $this->setPrivateProperty($this->request, 'globals', $server);
 
-        $this->assertEquals(5, $this->request->getServer('TEST'));
+        $this->assertSame('5', $this->request->getServer('TEST'));
         $this->assertNull($this->request->getServer('TESTY'));
     }
 
@@ -150,7 +151,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $server['env']['TEST'] = 5;
         $this->setPrivateProperty($this->request, 'globals', $server);
 
-        $this->assertEquals(5, $this->request->getEnv('TEST'));
+        $this->assertSame('5', $this->request->getEnv('TEST'));
         $this->assertNull($this->request->getEnv('TESTY'));
     }
 
@@ -158,7 +159,7 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $_COOKIE['TEST'] = 5;
 
-        $this->assertEquals(5, $this->request->getCookie('TEST'));
+        $this->assertSame('5', $this->request->getCookie('TEST'));
         $this->assertNull($this->request->getCookie('TESTY'));
     }
 
@@ -168,40 +169,34 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $config = new App();
 
-        $this->assertEquals($config->defaultLocale, $this->request->getDefaultLocale());
-        $this->assertEquals($config->defaultLocale, $this->request->getLocale());
+        $this->assertSame($config->defaultLocale, $this->request->getDefaultLocale());
+        $this->assertSame($config->defaultLocale, $this->request->getLocale());
     }
 
     public function testSetLocaleSaves()
     {
         $config                   = new App();
-        $config->supportedLocales = [
-            'en',
-            'es',
-        ];
-        $config->defaultLocale = 'es';
-        $config->baseURL       = 'http://example.com/';
+        $config->supportedLocales = ['en', 'es'];
+        $config->defaultLocale    = 'es';
+        $config->baseURL          = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
         $request->setLocale('en');
-        $this->assertEquals('en', $request->getLocale());
+        $this->assertSame('en', $request->getLocale());
     }
 
     public function testSetBadLocale()
     {
         $config                   = new App();
-        $config->supportedLocales = [
-            'en',
-            'es',
-        ];
-        $config->defaultLocale = 'es';
-        $config->baseURL       = 'http://example.com/';
+        $config->supportedLocales = ['en', 'es'];
+        $config->defaultLocale    = 'es';
+        $config->baseURL          = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
         $request->setLocale('xx');
-        $this->assertEquals('es', $request->getLocale());
+        $this->assertSame('es', $request->getLocale());
     }
 
     //--------------------------------------------------------------------
@@ -215,16 +210,13 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $config                   = new App();
         $config->negotiateLocale  = true;
-        $config->supportedLocales = [
-            'fr',
-            'en',
-        ];
-        $config->baseURL = 'http://example.com/';
+        $config->supportedLocales = ['fr', 'en'];
+        $config->baseURL          = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
-        $this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
-        $this->assertEquals('fr', $request->getLocale());
+        $this->assertSame($config->defaultLocale, $request->getDefaultLocale());
+        $this->assertSame('fr', $request->getLocale());
     }
 
     public function testNegotiatesLocaleOnlyBroad()
@@ -233,16 +225,13 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $config                   = new App();
         $config->negotiateLocale  = true;
-        $config->supportedLocales = [
-            'fr',
-            'en',
-        ];
-        $config->baseURL = 'http://example.com/';
+        $config->supportedLocales = ['fr', 'en'];
+        $config->baseURL          = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
-        $this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
-        $this->assertEquals('fr', $request->getLocale());
+        $this->assertSame($config->defaultLocale, $request->getDefaultLocale());
+        $this->assertSame('fr', $request->getLocale());
     }
 
     // The negotiation tests below are not intended to exercise the HTTP\Negotiate class -
@@ -262,25 +251,25 @@ class IncomingRequestTest extends CIUnitTestCase
         //      $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-        $this->assertEquals(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
+        $this->assertSame(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
     }
 
     public function testNegotiatesMedia()
     {
         $this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
-        $this->assertEquals('text/html', $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+        $this->assertSame('text/html', $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
     }
 
     public function testNegotiatesEncoding()
     {
         $this->request->setHeader('Accept-Encoding', 'gzip;q=1.0, identity; q=0.4, compress;q=0.5');
-        $this->assertEquals('gzip', $this->request->negotiate('encoding', ['gzip', 'compress']));
+        $this->assertSame('gzip', $this->request->negotiate('encoding', ['gzip', 'compress']));
     }
 
     public function testNegotiatesLanguage()
     {
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
-        $this->assertEquals('en', $this->request->negotiate('language', ['en', 'da']));
+        $this->assertSame('en', $this->request->negotiate('language', ['en', 'da']));
     }
 
     //--------------------------------------------------------------------
@@ -289,26 +278,21 @@ class IncomingRequestTest extends CIUnitTestCase
     {
         $json = '{"code":1, "message":"ok"}';
 
-        $expected = [
-            'code'    => 1,
-            'message' => 'ok',
-        ];
+        $expected = ['code' => 1, 'message' => 'ok'];
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
-        $this->assertEquals($expected, $request->getJSON(true));
+        $this->assertSame($expected, $request->getJSON(true));
     }
 
     public function testCanGetAVariableFromJson()
     {
         $jsonObj = [
             'foo' => 'bar',
-            'baz' => [
-                'fizz' => 'buzz',
-            ],
+            'baz' => ['fizz' => 'buzz'],
         ];
         $json = json_encode($jsonObj);
 
@@ -317,11 +301,11 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
-        $this->assertEquals('bar', $request->getJsonVar('foo'));
+        $this->assertSame('bar', $request->getJsonVar('foo'));
         $jsonVar = $request->getJsonVar('baz');
         $this->assertIsObject($jsonVar);
-        $this->assertEquals('buzz', $jsonVar->fizz);
-        $this->assertEquals('buzz', $request->getJsonVar('baz.fizz'));
+        $this->assertSame('buzz', $jsonVar->fizz);
+        $this->assertSame('buzz', $request->getJsonVar('baz.fizz'));
     }
 
     public function testGetJsonVarAsArray()
@@ -341,8 +325,8 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $jsonVar = $request->getJsonVar('baz', true);
         $this->assertIsArray($jsonVar);
-        $this->assertEquals('buzz', $jsonVar['fizz']);
-        $this->assertEquals('bar', $jsonVar['foo']);
+        $this->assertSame('buzz', $jsonVar['fizz']);
+        $this->assertSame('bar', $jsonVar['foo']);
     }
 
     public function testGetJsonVarCanFilter()
@@ -371,18 +355,18 @@ class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
         $request->setHeader('Content-Type', 'application/json');
 
-        $this->assertEquals('bar', $request->getVar('foo'));
-        $this->assertEquals('buzz', $request->getVar('fizz'));
+        $this->assertSame('bar', $request->getVar('foo'));
+        $this->assertSame('buzz', $request->getVar('fizz'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
-        $this->assertEquals('bar', $multiple['foo']);
-        $this->assertEquals('buzz', $multiple['fizz']);
+        $this->assertSame('bar', $multiple['foo']);
+        $this->assertSame('buzz', $multiple['fizz']);
 
         $all = $request->getVar();
         $this->assertIsObject($all);
-        $this->assertEquals('bar', $all->foo);
-        $this->assertEquals('buzz', $all->fizz);
+        $this->assertSame('bar', $all->foo);
+        $this->assertSame('buzz', $all->fizz);
     }
 
     public function testGetVarWorksWithJsonAndGetParams()
@@ -400,18 +384,18 @@ class IncomingRequestTest extends CIUnitTestCase
         // JSON type
         $request->setHeader('Content-Type', 'application/json');
 
-        $this->assertEquals('bar', $request->getVar('foo'));
-        $this->assertEquals('buzz', $request->getVar('fizz'));
+        $this->assertSame('bar', $request->getVar('foo'));
+        $this->assertSame('buzz', $request->getVar('fizz'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
-        $this->assertEquals('bar', $multiple['foo']);
-        $this->assertEquals('buzz', $multiple['fizz']);
+        $this->assertSame('bar', $multiple['foo']);
+        $this->assertSame('buzz', $multiple['fizz']);
 
         $all = $request->getVar();
         $this->assertIsArray($all);
-        $this->assertEquals('bar', $all['foo']);
-        $this->assertEquals('buzz', $all['fizz']);
+        $this->assertSame('bar', $all['foo']);
+        $this->assertSame('buzz', $all['fizz']);
     }
 
     public function testCanGrabGetRawInput()
@@ -421,7 +405,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $expected = [
             'username' => 'admin001',
             'role'     => 'administrator',
-            'usepass'  => 0,
+            'usepass'  => '0',
         ];
 
         $config          = new App();
@@ -429,7 +413,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
-        $this->assertEquals($expected, $request->getRawInput());
+        $this->assertSame($expected, $request->getRawInput());
     }
 
     //--------------------------------------------------------------------
@@ -471,9 +455,11 @@ class IncomingRequestTest extends CIUnitTestCase
     public function testUserAgent()
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
-        $config                     = new App();
-        $request                    = new IncomingRequest($config, new URI(), null, new UserAgent());
-        $this->assertEquals('Mozilla', $request->getUserAgent());
+
+        $config  = new App();
+        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+
+        $this->assertSame('Mozilla', $request->getUserAgent()->__toString());
     }
 
     //--------------------------------------------------------------------
@@ -496,8 +482,8 @@ class IncomingRequestTest extends CIUnitTestCase
         $file = array_shift($files);
         $this->assertInstanceOf(UploadedFile::class, $file);
 
-        $this->assertEquals('someFile.txt', $file->getName());
-        $this->assertEquals(124, $file->getSize());
+        $this->assertSame('someFile.txt', $file->getName());
+        $this->assertSame(124, $file->getSize());
     }
 
     //--------------------------------------------------------------------
@@ -530,8 +516,8 @@ class IncomingRequestTest extends CIUnitTestCase
         ];
 
         $gotit = $this->request->getFileMultiple('userfile');
-        $this->assertEquals(124, $gotit[0]->getSize());
-        $this->assertEquals(125, $gotit[1]->getSize());
+        $this->assertSame(124, $gotit[0]->getSize());
+        $this->assertSame(125, $gotit[1]->getSize());
     }
 
     //--------------------------------------------------------------------
@@ -549,7 +535,7 @@ class IncomingRequestTest extends CIUnitTestCase
         ];
 
         $gotit = $this->request->getFile('userfile');
-        $this->assertEquals(124, $gotit->getSize());
+        $this->assertSame(124, $gotit->getSize());
     }
 
     //--------------------------------------------------------------------
@@ -557,7 +543,7 @@ class IncomingRequestTest extends CIUnitTestCase
     public function testSpoofing()
     {
         $this->request->setMethod('WINK');
-        $this->assertEquals('wink', $this->request->getMethod());
+        $this->assertSame('wink', $this->request->getMethod());
     }
 
     /**
@@ -565,10 +551,10 @@ class IncomingRequestTest extends CIUnitTestCase
      */
     public function testGetPostEmpty()
     {
-        $_POST['TEST'] = 5;
-        $_GET['TEST']  = 3;
-        $this->assertEquals($_POST, $this->request->getPostGet());
-        $this->assertEquals($_GET, $this->request->getGetPost());
+        $_POST['TEST'] = '5';
+        $_GET['TEST']  = '3';
+        $this->assertSame($_POST, $this->request->getPostGet());
+        $this->assertSame($_GET, $this->request->getGetPost());
     }
 
     public function testWithFalseBody()
@@ -616,7 +602,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = $path;
         $_SERVER['SCRIPT_NAME'] = $path;
         $request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
-        $this->assertEquals($detectPath, $request->detectPath());
+        $this->assertSame($detectPath, $request->detectPath());
     }
 
     //--------------------------------------------------------------------
@@ -628,7 +614,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
 
-        $this->assertEquals('fruits/banana', $request->getPath());
+        $this->assertSame('fruits/banana', $request->getPath());
     }
 
     public function testGetPathIsRelative()
@@ -638,7 +624,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
 
-        $this->assertEquals('fruits/banana', $request->getPath());
+        $this->assertSame('fruits/banana', $request->getPath());
     }
 
     public function testGetPathStoresDetectedValue()
@@ -650,7 +636,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI'] = '/candy/snickers';
 
-        $this->assertEquals('fruits/banana', $request->getPath());
+        $this->assertSame('fruits/banana', $request->getPath());
     }
 
     public function testGetPathIsRediscovered()
@@ -663,7 +649,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/candy/snickers';
         $request->detectPath();
 
-        $this->assertEquals('candy/snickers', $request->getPath());
+        $this->assertSame('candy/snickers', $request->getPath());
     }
 
     //--------------------------------------------------------------------
@@ -671,10 +657,10 @@ class IncomingRequestTest extends CIUnitTestCase
     public function testSetPath()
     {
         $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-        $this->assertEquals('', $request->getPath());
+        $this->assertSame('', $request->getPath());
 
         $request->setPath('foobar');
-        $this->assertEquals('foobar', $request->getPath());
+        $this->assertSame('foobar', $request->getPath());
     }
 
     public function testSetPathUpdatesURI()
@@ -683,6 +669,6 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $request->setPath('apples');
 
-        $this->assertEquals('apples', $request->uri->getPath());
+        $this->assertSame('apples', $request->uri->getPath());
     }
 }

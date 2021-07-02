@@ -5,7 +5,10 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Test\CIUnitTestCase;
 use DOMDocument;
 
-class XMLFormatterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class XMLFormatterTest extends CIUnitTestCase
 {
     protected $xmlFormatter;
 
@@ -27,7 +30,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testFormatXMLWithMultilevelArray()
@@ -42,7 +45,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testFormatXMLWithMultilevelArrayAndNumericKey()
@@ -57,7 +60,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testStringFormatting()
@@ -69,7 +72,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     public function testValidatingXmlTags()
@@ -84,7 +87,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expected, $this->xmlFormatter->format($data));
+        $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
     /**
@@ -101,7 +104,7 @@ class XMLFormatterTest extends CIUnitTestCase
 
             EOH;
 
-        $this->assertEquals($expectedXML, $this->xmlFormatter->format($input));
+        $this->assertSame($expectedXML, $this->xmlFormatter->format($input));
     }
 
     public function invalidTagsProvider()
@@ -214,6 +217,6 @@ class XMLFormatterTest extends CIUnitTestCase
         $dom->formatOutput       = true;
         $dom->loadXML($this->xmlFormatter->format($data));
 
-        $this->assertEquals($expectedXML, $dom->saveXML());
+        $this->assertSame($expectedXML, $dom->saveXML());
     }
 }

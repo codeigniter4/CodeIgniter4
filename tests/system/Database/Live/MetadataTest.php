@@ -8,8 +8,10 @@ use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class MetadataTest extends CIUnitTestCase
+final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -47,7 +49,7 @@ class MetadataTest extends CIUnitTestCase
     {
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
     }
 
     //--------------------------------------------------------------------
@@ -56,7 +58,7 @@ class MetadataTest extends CIUnitTestCase
     {
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
     }
 
     //--------------------------------------------------------------------
@@ -87,7 +89,7 @@ class MetadataTest extends CIUnitTestCase
         $this->db->setPrefix($DBPrefix);
         $result = $this->db->listTables(true);
 
-        $this->assertEquals($this->expectedTables, array_values($result));
+        $this->assertSame($this->expectedTables, array_values($result));
 
         // Clean up temporary table
         $this->db->setPrefix('tmp_');

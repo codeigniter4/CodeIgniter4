@@ -4,7 +4,10 @@ namespace CodeIgniter\Typography;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class TypographyTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TypographyTest extends CIUnitTestCase
 {
     protected $typography;
 
@@ -16,7 +19,7 @@ class TypographyTest extends CIUnitTestCase
 
     public function testAutoTypographyEmptyString()
     {
-        $this->assertEquals('', $this->typography->autoTypography(''));
+        $this->assertSame('', $this->typography->autoTypography(''));
     }
 
     public function testAutoTypographyNormalString()
@@ -27,7 +30,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -39,7 +42,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -59,7 +62,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -79,7 +82,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str, true));
+            $this->assertSame($expect, $this->typography->autoTypography($str, true));
         }
     }
 
@@ -92,7 +95,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -107,7 +110,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -120,7 +123,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->autoTypography($str));
+            $this->assertSame($expect, $this->typography->autoTypography($str));
         }
     }
 
@@ -133,7 +136,7 @@ class TypographyTest extends CIUnitTestCase
         ];
 
         foreach ($strs as $str => $expect) {
-            $this->assertEquals($expect, $this->typography->nl2brExceptPre($str));
+            $this->assertSame($expect, $this->typography->nl2brExceptPre($str));
         }
     }
 }

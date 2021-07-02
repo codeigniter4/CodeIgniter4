@@ -5,7 +5,10 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 
-class HeaderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class HeaderTest extends CIUnitTestCase
 {
     public function testHeaderStoresBasics()
     {
@@ -14,8 +17,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($value, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
     }
 
     public function testHeaderStoresBasicsWithNull()
@@ -25,8 +28,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals('', $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame('', $header->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -41,8 +44,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($value, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -56,15 +59,15 @@ class HeaderTest extends CIUnitTestCase
         ];
 
         $header = new Header($name);
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals(null, $header->getValue());
-        $this->assertEquals($name . ': ', (string) $header);
+        $this->assertSame($name, $header->getName());
+        $this->assertEmpty($header->getValue());
+        $this->assertSame($name . ': ', (string) $header);
 
         $name = 'foo2';
         $header->setName($name)->setValue($value);
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($value, $header->getValue());
-        $this->assertEquals($name . ': bar, baz', (string) $header);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+        $this->assertSame($name . ': bar, baz', (string) $header);
     }
 
     //--------------------------------------------------------------------
@@ -79,8 +82,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header->appendValue(null);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
     }
 
     public function testHeaderConvertsSingleToArray()
@@ -97,8 +100,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header->appendValue('baz');
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -113,8 +116,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header->prependValue(null);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
     }
 
     public function testHeaderPrependsValue()
@@ -131,8 +134,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header->prependValue('baz');
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValue());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
     }
 
     //--------------------------------------------------------------------
@@ -149,8 +152,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValueLine());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
     }
 
     public function testHeaderLineValueNotStringOrArray()
@@ -162,8 +165,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header = new Header($name, $value);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValueLine());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
     }
 
     //--------------------------------------------------------------------
@@ -176,8 +179,8 @@ class HeaderTest extends CIUnitTestCase
         $header = new Header($name);
         $header->setValue('bar')->setValue(null);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValueLine());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
     }
 
     public function testHeaderLineWithArrayValues()
@@ -190,8 +193,8 @@ class HeaderTest extends CIUnitTestCase
 
         $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
-        $this->assertEquals($name, $header->getName());
-        $this->assertEquals($expected, $header->getValueLine());
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
     }
 
     //--------------------------------------------------------------------
@@ -206,6 +209,6 @@ class HeaderTest extends CIUnitTestCase
 
         $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
-        $this->assertEquals($expected, (string) $header);
+        $this->assertSame($expected, (string) $header);
     }
 }

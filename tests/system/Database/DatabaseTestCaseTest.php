@@ -8,8 +8,10 @@ use Config\Services;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseTest extends CIUnitTestCase
+final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -47,7 +49,7 @@ class DatabaseTestCaseTest extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         if (! self::$loaded) {
             Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');

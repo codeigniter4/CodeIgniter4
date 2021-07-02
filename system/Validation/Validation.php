@@ -243,7 +243,7 @@ class Validation implements ValidationInterface
                                 continue;
                             }
 
-                            $passed = $passed && $set->$rule($value, $param, $data);
+                            $passed = $passed && $set->{$rule}($value, $param, $data);
                             break;
                         }
                     }
@@ -284,7 +284,7 @@ class Validation implements ValidationInterface
                     }
 
                     $found  = true;
-                    $passed = $param === false ? $set->$rule($value, $error) : $set->$rule($value, $param, $data, $error);
+                    $passed = $param === false ? $set->{$rule}($value, $error) : $set->{$rule}($value, $param, $data, $error);
 
                     break;
                 }
@@ -450,15 +450,15 @@ class Validation implements ValidationInterface
      */
     public function getRuleGroup(string $group): array
     {
-        if (! isset($this->config->$group)) {
+        if (! isset($this->config->{$group})) {
             throw ValidationException::forGroupNotFound($group);
         }
 
-        if (! is_array($this->config->$group)) {
+        if (! is_array($this->config->{$group})) {
             throw ValidationException::forGroupNotArray($group);
         }
 
-        return $this->config->$group;
+        return $this->config->{$group};
     }
 
     /**
@@ -474,8 +474,8 @@ class Validation implements ValidationInterface
         $this->setRules($rules);
 
         $errorName = $group . '_errors';
-        if (isset($this->config->$errorName)) {
-            $this->customErrors = $this->config->$errorName;
+        if (isset($this->config->{$errorName})) {
+            $this->customErrors = $this->config->{$errorName};
         }
     }
 
@@ -553,22 +553,22 @@ class Validation implements ValidationInterface
             return null;
         }
 
-        if (! isset($this->config->$group)) {
+        if (! isset($this->config->{$group})) {
             throw ValidationException::forGroupNotFound($group);
         }
 
-        if (! is_array($this->config->$group)) {
+        if (! is_array($this->config->{$group})) {
             throw ValidationException::forGroupNotArray($group);
         }
 
-        $this->setRules($this->config->$group);
+        $this->setRules($this->config->{$group});
 
         // If {group}_errors exists in the config file,
         // then override our custom errors with them.
         $errorName = $group . '_errors';
 
-        if (isset($this->config->$errorName)) {
-            $this->customErrors = $this->config->$errorName;
+        if (isset($this->config->{$errorName})) {
+            $this->customErrors = $this->config->{$errorName};
         }
 
         return $this->rules;

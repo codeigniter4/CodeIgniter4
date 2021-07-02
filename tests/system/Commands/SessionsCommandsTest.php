@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class SessionsCommandsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SessionsCommandsTest extends CIUnitTestCase
 {
     private $streamFilter;
 
@@ -19,7 +22,7 @@ class SessionsCommandsTest extends CIUnitTestCase
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
 

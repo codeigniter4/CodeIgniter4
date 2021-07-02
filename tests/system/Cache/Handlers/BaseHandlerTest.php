@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
 
-class BaseHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
      * @dataProvider invalidTypeProvider

@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Validation\TestRules;
 
-class FileRulesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileRulesTest extends CIUnitTestCase
 {
 
     /**

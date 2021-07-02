@@ -9,7 +9,10 @@ use DateTimeZone;
 use IntlDateFormatter;
 use Locale;
 
-class TimeTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class TimeTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
@@ -32,7 +35,7 @@ class TimeTest extends CIUnitTestCase
 
         $time = new Time(null, 'America/Chicago');
 
-        $this->assertEquals($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), (string) $time);
     }
 
     public function testTimeWithTimezone()
@@ -48,7 +51,7 @@ class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London');
 
-        $this->assertEquals($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), (string) $time);
     }
 
     public function testTimeWithTimezoneAndLocale()
@@ -64,7 +67,7 @@ class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London', 'fr_FR');
 
-        $this->assertEquals($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), (string) $time);
     }
 
     public function testTimeWithDateTimeZone()
@@ -80,7 +83,7 @@ class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', new \DateTimeZone('Europe/London'), 'fr_FR');
 
-        $this->assertEquals($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), (string) $time);
     }
 
     public function testToDateTime()
@@ -98,7 +101,7 @@ class TimeTest extends CIUnitTestCase
         $time1 = new \DateTime();
 
         $this->assertInstanceOf(Time::class, $time);
-        $this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
+        $this->assertSame($time->getTimestamp(), $time1->getTimestamp());
     }
 
     public function testParse()
@@ -107,15 +110,15 @@ class TimeTest extends CIUnitTestCase
         $time1 = new \DateTime('now', new \DateTimeZone('America/Chicago'));
         $time1->modify('next Tuesday');
 
-        $this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
+        $this->assertSame($time->getTimestamp(), $time1->getTimestamp());
     }
 
     public function testToDateTimeString()
     {
         $time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-        $this->assertEquals('2017-01-12 00:00:00', (string) $time);
-        $this->assertEquals('2017-01-12 00:00:00', $time->toDateTimeString());
+        $this->assertSame('2017-01-12 00:00:00', (string) $time);
+        $this->assertSame('2017-01-12 00:00:00', $time->toDateTimeString());
     }
 
     public function testToDateTimeStringWithTimeZone()
@@ -124,63 +127,63 @@ class TimeTest extends CIUnitTestCase
 
         $expects = new \DateTime('2017-01-12', new \DateTimeZone('Europe/London'));
 
-        $this->assertEquals($expects->format('Y-m-d H:i:s'), $time->toDateTimeString());
+        $this->assertSame($expects->format('Y-m-d H:i:s'), $time->toDateTimeString());
     }
 
     public function testToday()
     {
         $time = Time::today();
 
-        $this->assertEquals(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00'), $time->toDateTimeString());
     }
 
     public function testTodayLocalized()
     {
         $time = Time::today('Europe/London');
 
-        $this->assertEquals(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00'), $time->toDateTimeString());
     }
 
     public function testYesterday()
     {
         $time = Time::yesterday();
 
-        $this->assertEquals(date('Y-m-d 00:00:00', strtotime('-1 day')), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00', strtotime('-1 day')), $time->toDateTimeString());
     }
 
     public function testTomorrow()
     {
         $time = Time::tomorrow();
 
-        $this->assertEquals(date('Y-m-d 00:00:00', strtotime('+1 day')), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00', strtotime('+1 day')), $time->toDateTimeString());
     }
 
     public function testCreateFromDate()
     {
         $time = Time::createFromDate(2017, 03, 05, 'America/Chicago');
 
-        $this->assertEquals(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
     }
 
     public function testCreateFromDateLocalized()
     {
         $time = Time::createFromDate(2017, 03, 05, 'Europe/London');
 
-        $this->assertEquals(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
     }
 
     public function testCreateFromTime()
     {
         $time = Time::createFromTime(10, 03, 05, 'America/Chicago');
 
-        $this->assertEquals(date('Y-m-d 10:03:05'), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 10:03:05'), $time->toDateTimeString());
     }
 
     public function testCreateFromTimeEvening()
     {
         $time = Time::createFromTime(20, 03, 05, 'America/Chicago');
 
-        $this->assertEquals(date('Y-m-d 20:03:05'), $time->toDateTimeString());
+        $this->assertSame(date('Y-m-d 20:03:05'), $time->toDateTimeString());
     }
 
     public function testCreateFromTimeLocalized()
@@ -239,7 +242,7 @@ class TimeTest extends CIUnitTestCase
 
         $time = Time::createFromTimestamp($timestamp);
 
-        $this->assertEquals(date('2017-03-18 00:00:00'), $time->toDateTimeString());
+        $this->assertSame(date('2017-03-18 00:00:00'), $time->toDateTimeString());
     }
 
     public function testTestNow()
@@ -251,7 +254,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow($t);
 
         $this->assertTrue(Time::hasTestNow());
-        $this->assertEquals('2000-01-02 00:00:00', Time::now()->toDateTimeString());
+        $this->assertSame('2000-01-02 00:00:00', Time::now()->toDateTimeString());
 
         Time::setTestNow();
         $this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
@@ -280,71 +283,71 @@ class TimeTest extends CIUnitTestCase
         $time  = Time::parse('January 1, 2016');
         $time2 = Time::parse('December 31, 2019');
 
-        $this->assertEquals(2016, $time->year);
-        $this->assertEquals(2019, $time2->year);
+        $this->assertSame('2016', $time->year);
+        $this->assertSame('2019', $time2->year);
     }
 
     public function testGetMonth()
     {
         $time = Time::parse('August 1, 2016');
 
-        $this->assertEquals(8, $time->month);
+        $this->assertSame('8', $time->month);
     }
 
     public function testGetDay()
     {
         $time = Time::parse('August 12, 2016');
 
-        $this->assertEquals(12, $time->day);
+        $this->assertSame('12', $time->day);
     }
 
     public function testGetHour()
     {
         $time = Time::parse('August 12, 2016 4:15pm');
 
-        $this->assertEquals(16, $time->hour);
+        $this->assertSame('16', $time->hour);
     }
 
     public function testGetMinute()
     {
         $time = Time::parse('August 12, 2016 4:15pm');
 
-        $this->assertEquals(15, $time->minute);
+        $this->assertSame('15', $time->minute);
     }
 
     public function testGetSecond()
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals(23, $time->second);
+        $this->assertSame('23', $time->second);
     }
 
     public function testGetDayOfWeek()
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals(6, $time->dayOfWeek);
+        $this->assertSame('6', $time->dayOfWeek);
     }
 
     public function testGetDayOfYear()
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals(225, $time->dayOfYear);
+        $this->assertSame('225', $time->dayOfYear);
     }
 
     public function testGetWeekOfMonth()
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals(2, $time->weekOfMonth);
+        $this->assertSame('2', $time->weekOfMonth);
     }
 
     public function testGetWeekOfYear()
     {
         $time = Time::parse('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals(33, $time->weekOfYear);
+        $this->assertSame('33', $time->weekOfYear);
     }
 
     public function testGetTimestamp()
@@ -352,32 +355,32 @@ class TimeTest extends CIUnitTestCase
         $time     = Time::parse('August 12, 2016 4:15:23pm');
         $expected = strtotime('August 12, 2016 4:15:23pm');
 
-        $this->assertEquals($expected, $time->timestamp);
+        $this->assertSame($expected, $time->timestamp);
     }
 
     public function testGetAge()
     {
         $time = Time::parse('5 years ago');
-        $this->assertEquals(5, $time->age);
+        $this->assertSame(5, $time->age);
     }
 
     public function testAgeNow()
     {
         $time = new Time();
-        $this->assertEquals(0, $time->age);
+        $this->assertSame(0, $time->age);
     }
 
     public function testAgeFuture()
     {
         $time = Time::parse('August 12, 2116 4:15:23pm');
-        $this->assertEquals(0, $time->age);
+        $this->assertSame(0, $time->age);
     }
 
     public function testGetQuarter()
     {
         $time = Time::parse('April 15, 2015');
 
-        $this->assertEquals(2, $time->quarter);
+        $this->assertSame('2', $time->quarter);
     }
 
     public function testGetDST()
@@ -419,8 +422,8 @@ class TimeTest extends CIUnitTestCase
 
     public function testGetTimezonename()
     {
-        $this->assertEquals('America/Chicago', Time::now('America/Chicago')->getTimezoneName());
-        $this->assertEquals('Europe/London', Time::now('Europe/London')->timezoneName);
+        $this->assertSame('America/Chicago', Time::now('America/Chicago')->getTimezoneName());
+        $this->assertSame('Europe/London', Time::now('Europe/London')->timezoneName);
     }
 
     public function testSetYear()
@@ -430,7 +433,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2015-05-10 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2015-05-10 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetMonthNumber()
@@ -440,7 +443,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-04-10 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetMonthLongName()
@@ -450,7 +453,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-04-10 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetMonthShortName()
@@ -460,7 +463,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-02-10 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-02-10 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetDay()
@@ -470,7 +473,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-05-15 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetDayOverMaxInCurrentMonth()
@@ -488,7 +491,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2012-02-29 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2012-02-29 00:00:00', $time2->toDateTimeString());
     }
 
     public function testSetHour()
@@ -498,7 +501,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-05-10 15:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-05-10 15:00:00', $time2->toDateTimeString());
     }
 
     public function testSetMinute()
@@ -508,7 +511,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-05-10 00:30:00', $time2->toDateTimeString());
+        $this->assertSame('2017-05-10 00:30:00', $time2->toDateTimeString());
     }
 
     public function testSetSecond()
@@ -518,7 +521,7 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-05-10 00:00:20', $time2->toDateTimeString());
+        $this->assertSame('2017-05-10 00:00:20', $time2->toDateTimeString());
     }
 
     public function testSetMonthTooSmall()
@@ -608,8 +611,8 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('America/Chicago', $time->getTimezoneName());
-        $this->assertEquals('Europe/London', $time2->getTimezoneName());
+        $this->assertSame('America/Chicago', $time->getTimezoneName());
+        $this->assertSame('Europe/London', $time2->getTimezoneName());
     }
 
     public function testSetTimestamp()
@@ -620,19 +623,19 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertNotSame($time, $time2);
-        $this->assertEquals('2017-04-01 00:00:00', $time2->toDateTimeString());
+        $this->assertSame('2017-04-01 00:00:00', $time2->toDateTimeString());
     }
 
     public function testToDateString()
     {
         $time = Time::parse('May 10, 2017', 'America/Chicago');
-        $this->assertEquals('2017-05-10', $time->toDateString());
+        $this->assertSame('2017-05-10', $time->toDateString());
     }
 
     public function testToFormattedDateString()
     {
         $time = Time::parse('2017-05-10', 'America/Chicago');
-        $this->assertEquals('May 10, 2017', $time->toFormattedDateString());
+        $this->assertSame('May 10, 2017', $time->toFormattedDateString());
     }
 
     /**
@@ -651,7 +654,7 @@ class TimeTest extends CIUnitTestCase
     public function testToTimeString()
     {
         $time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
-        $this->assertEquals('13:20:33', $time->toTimeString());
+        $this->assertSame('13:20:33', $time->toTimeString());
     }
 
     //--------------------------------------------------------------------
@@ -662,104 +665,104 @@ class TimeTest extends CIUnitTestCase
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addSeconds(10);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 13:20:43', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:43', $newTime->toDateTimeString());
     }
 
     public function testCanAddMinutes()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addMinutes(10);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 13:30:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 13:30:33', $newTime->toDateTimeString());
     }
 
     public function testCanAddHours()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addHours(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 16:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 16:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanAddDays()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addDays(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-13 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-13 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanAddMonths()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addMonths(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-04-10 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-04-10 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanAddMonthsOverYearBoundary()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addMonths(13);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2018-02-10 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2018-02-10 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanAddYears()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->addYears(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2020-01-10 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2020-01-10 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractSeconds()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subSeconds(10);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 13:20:23', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:23', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractMinutes()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subMinutes(10);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 13:10:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 13:10:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractHours()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subHours(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-10 10:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-10 10:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractDays()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subDays(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2017-01-07 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2017-01-07 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractMonths()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subMonths(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2016-10-10 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2016-10-10 13:20:33', $newTime->toDateTimeString());
     }
 
     public function testCanSubtractYears()
     {
         $time    = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
         $newTime = $time->subYears(3);
-        $this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
-        $this->assertEquals('2014-01-10 13:20:33', $newTime->toDateTimeString());
+        $this->assertSame('2017-01-10 13:20:33', $time->toDateTimeString());
+        $this->assertSame('2014-01-10 13:20:33', $newTime->toDateTimeString());
     }
 
     //--------------------------------------------------------------------
@@ -865,7 +868,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('1 year ago', $time->humanize());
+        $this->assertSame('1 year ago', $time->humanize());
     }
 
     public function testHumanizeYearsPlural()
@@ -873,7 +876,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 9, 2014 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('3 years ago', $time->humanize());
+        $this->assertSame('3 years ago', $time->humanize());
     }
 
     public function testHumanizeYearsForward()
@@ -881,7 +884,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('January 1, 2017', 'America/Chicago');
         $time = Time::parse('January 1, 2018 12:00:00', 'America/Chicago');
 
-        $this->assertEquals('in 1 year', $time->humanize());
+        $this->assertSame('in 1 year', $time->humanize());
     }
 
     public function testHumanizeMonthsSingle()
@@ -889,7 +892,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('February 9, 2017', 'America/Chicago');
 
-        $this->assertEquals('1 month ago', $time->humanize());
+        $this->assertSame('1 month ago', $time->humanize());
     }
 
     public function testHumanizeMonthsPlural()
@@ -897,7 +900,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 1, 2017', 'America/Chicago');
         $time = Time::parse('January 1, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 months ago', $time->humanize());
+        $this->assertSame('2 months ago', $time->humanize());
     }
 
     public function testHumanizeMonthsForward()
@@ -905,7 +908,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 1, 2017', 'America/Chicago');
         $time = Time::parse('April 1, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 1 month', $time->humanize());
+        $this->assertSame('in 1 month', $time->humanize());
     }
 
     public function testHumanizeDaysSingle()
@@ -913,7 +916,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 8, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 days ago', $time->humanize());
+        $this->assertSame('2 days ago', $time->humanize());
     }
 
     public function testHumanizeDaysPlural()
@@ -921,7 +924,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 8, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 days ago', $time->humanize());
+        $this->assertSame('2 days ago', $time->humanize());
     }
 
     public function testHumanizeDaysForward()
@@ -929,7 +932,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 12, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 2 days', $time->humanize());
+        $this->assertSame('in 2 days', $time->humanize());
     }
 
     public function testHumanizeDaysTomorrow()
@@ -937,7 +940,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 11, 2017', 'America/Chicago');
 
-        $this->assertEquals('Tomorrow', $time->humanize());
+        $this->assertSame('Tomorrow', $time->humanize());
     }
 
     public function testHumanizeDaysYesterday()
@@ -945,7 +948,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 9, 2017', 'America/Chicago');
 
-        $this->assertEquals('Yesterday', $time->humanize());
+        $this->assertSame('Yesterday', $time->humanize());
     }
 
     public function testHumanizeHoursAsTime()
@@ -953,7 +956,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
         $time = Time::parse('March 10, 2017 14:00', 'America/Chicago');
 
-        $this->assertEquals('in 2 hours', $time->humanize());
+        $this->assertSame('in 2 hours', $time->humanize());
     }
 
     public function testHumanizeHoursAWhileAgo()
@@ -961,7 +964,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
         $time = Time::parse('March 10, 2017 8:00', 'America/Chicago');
 
-        $this->assertEquals('4 hours ago', $time->humanize());
+        $this->assertSame('4 hours ago', $time->humanize());
     }
 
     public function testHumanizeMinutesSingle()
@@ -969,7 +972,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
         $time = Time::parse('March 10, 2017 12:29', 'America/Chicago');
 
-        $this->assertEquals('1 minute ago', $time->humanize());
+        $this->assertSame('1 minute ago', $time->humanize());
     }
 
     public function testHumanizeMinutesPlural()
@@ -977,7 +980,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
         $time = Time::parse('March 10, 2017 12:28', 'America/Chicago');
 
-        $this->assertEquals('2 minutes ago', $time->humanize());
+        $this->assertSame('2 minutes ago', $time->humanize());
     }
 
     public function testHumanizeMinutesForward()
@@ -985,7 +988,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
         $time = Time::parse('March 10, 2017 12:31', 'America/Chicago');
 
-        $this->assertEquals('in 1 minute', $time->humanize());
+        $this->assertSame('in 1 minute', $time->humanize());
     }
 
     public function testHumanizeWeeksSingle()
@@ -993,7 +996,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 2, 2017', 'America/Chicago');
 
-        $this->assertEquals('1 week ago', $time->humanize());
+        $this->assertSame('1 week ago', $time->humanize());
     }
 
     public function testHumanizeWeeksPlural()
@@ -1001,7 +1004,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 30, 2017', 'America/Chicago');
         $time = Time::parse('March 15, 2017', 'America/Chicago');
 
-        $this->assertEquals('2 weeks ago', $time->humanize());
+        $this->assertSame('2 weeks ago', $time->humanize());
     }
 
     public function testHumanizeWeeksForward()
@@ -1009,7 +1012,7 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 18, 2017', 'America/Chicago');
 
-        $this->assertEquals('in 2 weeks', $time->humanize());
+        $this->assertSame('in 2 weeks', $time->humanize());
     }
 
     public function testHumanizeNow()
@@ -1017,18 +1020,16 @@ class TimeTest extends CIUnitTestCase
         Time::setTestNow('March 10, 2017', 'America/Chicago');
         $time = Time::parse('March 10, 2017', 'America/Chicago');
 
-        $this->assertEquals('Just now', $time->humanize());
+        $this->assertSame('Just now', $time->humanize());
     }
 
     public function testSetTimezoneDate()
     {
         $time  = Time::parse('13 May 2020 10:00', 'GMT');
         $time2 = $time->setTimezone('GMT+8');
-        $this->assertEquals('2020-05-13 10:00:00', $time->toDateTimeString());
-        $this->assertEquals('2020-05-13 18:00:00', $time2->toDateTimeString());
+        $this->assertSame('2020-05-13 10:00:00', $time->toDateTimeString());
+        $this->assertSame('2020-05-13 18:00:00', $time2->toDateTimeString());
     }
-
-    //--------------------------------------------------------------------
 
     public function testCreateFromInstance()
     {
@@ -1053,6 +1054,6 @@ class TimeTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertTrue($time2->equals($time1));
-        $this->assertEquals($time1, $time2);
+        $this->assertNotSame($time1, $time2);
     }
 }

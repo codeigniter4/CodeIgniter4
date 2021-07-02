@@ -12,6 +12,9 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
+/**
+ * @internal
+ */
 final class UpdateModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithUpdate(): void

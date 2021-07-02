@@ -313,8 +313,8 @@ class Exceptions
             if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0) {
                 if (is_array($trace) && array_key_exists($index, $trace)) {
                     $trace[$index] = '******************';
-                } elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->$index)) {
-                    $trace->$index = '******************';
+                } elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->{$index})) {
+                    $trace->{$index} = '******************';
                 }
             }
         }

@@ -5,7 +5,10 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Mimes;
 
-class MimesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MimesTest extends CIUnitTestCase
 {
     public function extensionsList()
     {
@@ -43,7 +46,7 @@ class MimesTest extends CIUnitTestCase
      */
     public function testGuessExtensionFromType($expected, $mime)
     {
-        $this->assertEquals($expected, Mimes::guessExtensionFromType($mime));
+        $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
     }
 
     //--------------------------------------------------------------------
@@ -81,7 +84,7 @@ class MimesTest extends CIUnitTestCase
      */
     public function testGuessTypeFromExtension($expected, $ext)
     {
-        $this->assertEquals($expected, Mimes::guessTypeFromExtension($ext));
+        $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }
 
     //--------------------------------------------------------------------

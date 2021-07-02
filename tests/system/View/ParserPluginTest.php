@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
 
-class ParserPluginTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ParserPluginTest extends CIUnitTestCase
 {
     /**
      * @var Parser
@@ -32,7 +35,7 @@ class ParserPluginTest extends CIUnitTestCase
         helper('url');
         $template = '{+ current_url +}';
 
-        $this->assertEquals(current_url(), $this->parser->renderString($template));
+        $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
     public function testPreviousURL()
@@ -43,7 +46,7 @@ class ParserPluginTest extends CIUnitTestCase
         // Ensure a previous URL exists to work with.
         $_SESSION['_ci_previous_url'] = 'http://example.com/foo';
 
-        $this->assertEquals(previous_url(), $this->parser->renderString($template));
+        $this->assertSame(previous_url(), $this->parser->renderString($template));
     }
 
     public function testMailto()
@@ -51,7 +54,7 @@ class ParserPluginTest extends CIUnitTestCase
         helper('url');
         $template = '{+ mailto email=foo@example.com title=Silly +}';
 
-        $this->assertEquals(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
+        $this->assertSame(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
     }
 
     /**
@@ -70,14 +73,14 @@ class ParserPluginTest extends CIUnitTestCase
         helper('url');
         $template = '{+ safe_mailto email=foo@example.com title=Silly +}';
 
-        $this->assertEquals(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
+        $this->assertSame(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
     }
 
     public function testLang()
     {
         $template = '{+ lang Number.terabyteAbbr +}';
 
-        $this->assertEquals('TB', $this->parser->renderString($template));
+        $this->assertSame('TB', $this->parser->renderString($template));
     }
 
     public function testValidationErrors()
@@ -86,7 +89,7 @@ class ParserPluginTest extends CIUnitTestCase
 
         $template = '{+ validation_errors field=email +}';
 
-        $this->assertEquals($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
+        $this->assertSame($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
     }
 
     public function testRoute()
@@ -97,14 +100,14 @@ class ParserPluginTest extends CIUnitTestCase
 
         $template = '{+ route myController::goto string 13 +}';
 
-        $this->assertEquals('/path/string/to/13', $this->parser->renderString($template));
+        $this->assertSame('/path/string/to/13', $this->parser->renderString($template));
     }
 
     public function testSiteURL()
     {
         $template = '{+ siteURL +}';
 
-        $this->assertEquals('http://example.com/index.php', $this->parser->renderString($template));
+        $this->assertSame('http://example.com/index.php', $this->parser->renderString($template));
     }
 
     public function testValidationErrorsList()
@@ -113,7 +116,7 @@ class ParserPluginTest extends CIUnitTestCase
         $this->validator->setError('username', 'User name must be unique');
         $template = '{+ validation_errors +}';
 
-        $this->assertEquals($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
+        $this->assertSame($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
     }
 
     public function setHints($output)

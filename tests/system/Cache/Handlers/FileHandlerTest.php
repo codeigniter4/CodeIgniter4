@@ -6,6 +6,9 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
+/**
+ * @internal
+ */
 final class FileHandlerTest extends CIUnitTestCase
 {
     private static $directory = 'FileHandler';
@@ -46,7 +49,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->fileHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -160,14 +163,14 @@ final class FileHandlerTest extends CIUnitTestCase
         }
 
         // check that there are 101 items is cache store
-        $this->assertSame(101, count($this->fileHandler->getCacheInfo()));
+        $this->assertCount(101, $this->fileHandler->getCacheInfo());
 
         // Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
         // (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
         $this->assertSame(13, $this->fileHandler->deleteMatching('key_1*'));
 
         // check that there remains (101 - 13) = 88 items is cache store
-        $this->assertSame(88, count($this->fileHandler->getCacheInfo()));
+        $this->assertCount(88, $this->fileHandler->getCacheInfo());
 
         // Clear all files
         $this->fileHandler->clean();
@@ -181,14 +184,14 @@ final class FileHandlerTest extends CIUnitTestCase
         }
 
         // check that there are 101 items is cache store
-        $this->assertSame(101, count($this->fileHandler->getCacheInfo()));
+        $this->assertCount(101, $this->fileHandler->getCacheInfo());
 
         // Checking that given the suffix "1", deleteMatching deletes 11 keys:
         // (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
         $this->assertSame(11, $this->fileHandler->deleteMatching('*1'));
 
         // check that there remains (101 - 13) = 88 items is cache store
-        $this->assertSame(90, count($this->fileHandler->getCacheInfo()));
+        $this->assertCount(90, $this->fileHandler->getCacheInfo());
 
         // Clear all files
         $this->fileHandler->clean();
@@ -243,12 +246,11 @@ final class FileHandlerTest extends CIUnitTestCase
 
     public function testGetCacheInfo()
     {
-        $time = time();
         $this->fileHandler->save(self::$key1, 'value');
 
         $actual = $this->fileHandler->getCacheInfo();
         $this->assertArrayHasKey(self::$key1, $actual);
-        $this->assertEquals(self::$key1, $actual[self::$key1]['name']);
+        $this->assertSame(self::$key1, $actual[self::$key1]['name']);
         $this->assertArrayHasKey('server_path', $actual[self::$key1]);
     }
 
@@ -274,7 +276,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $file = $config->file['storePath'] . DIRECTORY_SEPARATOR . self::$key1;
         $mode = octal_permissions(fileperms($file));
 
-        $this->assertEquals($string, $mode);
+        $this->assertSame($string, $mode);
     }
 
     public function modeProvider()

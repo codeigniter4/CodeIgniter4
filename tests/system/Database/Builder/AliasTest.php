@@ -5,7 +5,10 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class AliasTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class AliasTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -26,7 +29,7 @@ class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -37,7 +40,7 @@ class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -48,7 +51,7 @@ class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" "j", "users" "u"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -65,7 +68,7 @@ class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "u"."id" = "db_jobs"."id"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     /**
@@ -80,6 +83,6 @@ class AliasTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "db_jobs" LEFT JOIN "db_users" as "u" ON "db_users"."id" = "db_jobs"."id"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 }

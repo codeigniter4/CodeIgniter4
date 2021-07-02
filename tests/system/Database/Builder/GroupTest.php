@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class GroupTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class GroupTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -29,7 +32,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -44,7 +47,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 2';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -60,7 +63,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" > 3 OR SUM(id) > 2';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -75,7 +78,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -92,7 +95,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -108,7 +111,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (1,2) OR "group_id" IN (5,6)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -128,7 +131,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -143,7 +146,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -160,7 +163,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -176,7 +179,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (1,2) OR "group_id" NOT IN (5,6)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -196,7 +199,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" NOT IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -211,7 +214,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -226,7 +229,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -241,7 +244,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -256,7 +259,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -271,7 +274,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'%a\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -286,7 +289,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" NOT LIKE \'a%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -302,7 +305,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -318,7 +321,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" LIKE \'%b\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -334,7 +337,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" LIKE \'b%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -350,7 +353,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -366,7 +369,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'%a\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'%b\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -382,7 +385,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "pet_name" LIKE \'a%\' ESCAPE \'!\' OR  "pet_color" NOT LIKE \'b%\' ESCAPE \'!\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -401,7 +404,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -420,7 +423,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) > 3 OR   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -439,7 +442,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 AND NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -458,7 +461,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING SUM(id) < 3 OR NOT   ( SUM(id) = 2 AND "name" = \'adam\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -475,7 +478,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE   ( "id" > 3 AND "name" != \'Luke\'  ) AND "name" = \'Darth\'';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -492,7 +495,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -509,7 +512,7 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' AND NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -526,6 +529,6 @@ class GroupTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" WHERE "name" = \'Darth\' OR NOT   ( "id" > 3 AND "name" != \'Luke\'  )';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 }

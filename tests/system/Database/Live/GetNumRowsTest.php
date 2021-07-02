@@ -5,7 +5,10 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-class GetNumRowsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class GetNumRowsTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -19,7 +22,7 @@ class GetNumRowsTest extends CIUnitTestCase
      *
      * @see \CodeIgniter\Test\CIDatabaseTestCase::setUp()
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -30,7 +33,7 @@ class GetNumRowsTest extends CIUnitTestCase
      *
      * @see \CodeIgniter\Test\CIDatabaseTestCase::tearDown()
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -41,6 +44,6 @@ class GetNumRowsTest extends CIUnitTestCase
     public function testGetRowNum()
     {
         $query = $this->db->table('job')->get();
-        $this->assertEquals(4, $query->getNumRows());
+        $this->assertSame(4, $query->getNumRows());
     }
 }

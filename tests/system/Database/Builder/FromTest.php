@@ -7,7 +7,10 @@ use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class FromTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FromTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -30,7 +33,7 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -43,7 +46,7 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -56,7 +59,7 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -69,7 +72,7 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -82,23 +85,23 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user", "jobs", "roles"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
         $expectedSQL = 'SELECT * FROM "user"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
         $expectedSQL = 'SELECT *';
 
         $builder->from(null, true);
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
         $expectedSQL = 'SELECT * FROM "jobs"';
 
         $builder->from('jobs');
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -113,7 +116,7 @@ class FromTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."user", "test"."dbo"."jobs", "test"."dbo"."roles"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

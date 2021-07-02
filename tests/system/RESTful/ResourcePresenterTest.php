@@ -19,8 +19,10 @@ use Tests\Support\Models\UserModel;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ResourcePresenterTest extends CIUnitTestCase
+final class ResourcePresenterTest extends CIUnitTestCase
 {
 
     /**
@@ -52,7 +54,7 @@ class ResourcePresenterTest extends CIUnitTestCase
         $this->codeigniter = new MockCodeIgniter($config);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -78,7 +80,7 @@ class ResourcePresenterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertEquals(lang('RESTful.notImplemented', ['index']), $output);
+        $this->assertSame(lang('RESTful.notImplemented', ['index']), $output);
     }
 
     public function testResourceShow()
@@ -235,7 +237,7 @@ class ResourcePresenterTest extends CIUnitTestCase
 
         $resource->setModel('Something');
         $this->assertEmpty($resource->getModel());
-        $this->assertEquals('Something', $resource->getModelName());
+        $this->assertSame('Something', $resource->getModelName());
     }
 
     public function testModelByName()
@@ -243,7 +245,7 @@ class ResourcePresenterTest extends CIUnitTestCase
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
     public function testModelByObject()
@@ -254,7 +256,7 @@ class ResourcePresenterTest extends CIUnitTestCase
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
-        $this->assertEquals('Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
     public function testChangeSetModelByObject()
@@ -262,12 +264,12 @@ class ResourcePresenterTest extends CIUnitTestCase
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
 
         $model = new EntityModel();
         $resource->setModel($model);
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('Tests\Support\Models\EntityModel', $resource->getModelName());
+        $this->assertSame('Tests\Support\Models\EntityModel', $resource->getModelName());
     }
 
     public function testChangeSetModelByName()
@@ -275,10 +277,10 @@ class ResourcePresenterTest extends CIUnitTestCase
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
 
         $resource->setModel('\Tests\Support\Models\EntityModel');
         $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertEquals('\Tests\Support\Models\EntityModel', $resource->getModelName());
+        $this->assertSame('\Tests\Support\Models\EntityModel', $resource->getModelName());
     }
 }

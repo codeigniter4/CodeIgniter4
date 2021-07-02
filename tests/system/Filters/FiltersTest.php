@@ -18,8 +18,10 @@ require_once __DIR__ . '/fixtures/Role.php';
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class FiltersTest extends CIUnitTestCase
+final class FiltersTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;
@@ -56,7 +58,7 @@ class FiltersTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->assertEquals($expected, $filters->initialize()->getFilters());
+        $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
     public function testProcessMethodDetectsGetRequests()
@@ -76,7 +78,7 @@ class FiltersTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->assertEquals($expected, $filters->initialize()->getFilters());
+        $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
     public function testProcessMethodRespectsMethod()
@@ -100,7 +102,7 @@ class FiltersTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->assertEquals($expected, $filters->initialize()->getFilters());
+        $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
     public function testProcessMethodIgnoresMethod()
@@ -124,7 +126,7 @@ class FiltersTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->assertEquals($expected, $filters->initialize()->getFilters());
+        $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
     public function testProcessMethodProcessGlobals()
@@ -158,7 +160,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize()->getFilters());
+        $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
     public function provideExcept()
@@ -206,7 +208,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testProcessMethodProcessesFiltersBefore()
@@ -234,7 +236,7 @@ class FiltersTest extends CIUnitTestCase
             'after'  => [],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testProcessMethodProcessesFiltersAfter()
@@ -264,7 +266,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testProcessMethodProcessesCombined()
@@ -312,7 +314,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['bazg'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testProcessMethodProcessesCombinedAfterForToolbar()
@@ -353,7 +355,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testRunThrowsWithInvalidAlias()
@@ -393,7 +395,7 @@ class FiltersTest extends CIUnitTestCase
 
         $request = $filters->run($uri, 'before');
 
-        $this->assertEquals('http://hellowworld.com', $request->url);
+        $this->assertSame('http://hellowworld.com', $request->url);
     }
 
     public function testRunThrowsWithInvalidClassType()
@@ -433,7 +435,7 @@ class FiltersTest extends CIUnitTestCase
 
         $request = $filters->run($uri, 'before');
 
-        $this->assertEquals('http://google.com', $request->url);
+        $this->assertSame('http://google.com', $request->url);
     }
 
     public function testRunDoesAfter()
@@ -453,7 +455,7 @@ class FiltersTest extends CIUnitTestCase
 
         $response = $filters->run($uri, 'after');
 
-        $this->assertEquals('http://google.com', $response->csp);
+        $this->assertSame('http://google.com', $response->csp);
     }
 
     public function testShortCircuit()
@@ -473,7 +475,7 @@ class FiltersTest extends CIUnitTestCase
 
         $response = $filters->run($uri, 'before');
         $this->assertTrue($response instanceof ResponseInterface);
-        $this->assertEquals('http://google.com', $response->csp);
+        $this->assertSame('http://google.com', $response->csp);
     }
 
     public function testOtherResult()
@@ -499,7 +501,7 @@ class FiltersTest extends CIUnitTestCase
 
         $response = $filters->run($uri, 'before');
 
-        $this->assertEquals('This is curious', $response);
+        $this->assertSame('This is curious', $response);
     }
 
     public function testBeforeExceptString()
@@ -532,7 +534,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testBeforeExceptInapplicable()
@@ -566,7 +568,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testAfterExceptString()
@@ -599,7 +601,7 @@ class FiltersTest extends CIUnitTestCase
             'after' => ['baz'],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testAfterExceptInapplicable()
@@ -635,7 +637,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testAddFilter()
@@ -740,14 +742,14 @@ class FiltersTest extends CIUnitTestCase
         $found = $filters->getFilters();
 
         $this->assertTrue(in_array('role', $found['before'], true));
-        $this->assertEquals(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertEquals(['role' => ['admin', 'super']], $filters->getArguments());
+        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
+        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
 
         $response = $filters->run('admin/foo/bar', 'before');
-        $this->assertEquals('admin;super', $response);
+        $this->assertSame('admin;super', $response);
 
         $response = $filters->run('admin/foo/bar', 'after');
-        $this->assertEquals('admin;super', $response->getBody());
+        $this->assertSame('admin;super', $response->getBody());
     }
 
     public function testEnableFilterWithNoArguments()
@@ -774,10 +776,10 @@ class FiltersTest extends CIUnitTestCase
         $this->assertTrue(in_array('role', $found['before'], true));
 
         $response = $filters->run('admin/foo/bar', 'before');
-        $this->assertEquals('Is null', $response);
+        $this->assertSame('Is null', $response);
 
         $response = $filters->run('admin/foo/bar', 'after');
-        $this->assertEquals('Is null', $response->getBody());
+        $this->assertSame('Is null', $response->getBody());
     }
 
     public function testEnableNonFilter()
@@ -846,7 +848,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     /**
@@ -881,7 +883,7 @@ class FiltersTest extends CIUnitTestCase
         ];
 
         $actual = $filters->initialize($uri)->getFilters();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -923,7 +925,7 @@ class FiltersTest extends CIUnitTestCase
         ];
 
         $actual = $filters->initialize($uri)->getFilters();
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -972,7 +974,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     /**
@@ -1016,7 +1018,7 @@ class FiltersTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     /**
@@ -1041,8 +1043,8 @@ class FiltersTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $request = $filters->run($uri, 'before');
-        $this->assertEquals('http://exampleMultipleURL.com', $request->url);
-        $this->assertEquals('http://exampleMultipleCSP.com', $request->csp);
+        $this->assertSame('http://exampleMultipleURL.com', $request->url);
+        $this->assertSame('http://exampleMultipleCSP.com', $request->csp);
     }
 
     public function testFilterClass()
@@ -1064,13 +1066,13 @@ class FiltersTest extends CIUnitTestCase
 
         $filters->run('admin/foo/bar', 'before');
         $expected = [
-            'after' => [
+            'before' => [],
+            'after'  => [
                 'CodeIgniter\Filters\fixtures\Multiple1',
                 'CodeIgniter\Filters\fixtures\Multiple2',
             ],
-            'before' => [],
         ];
-        $this->assertEquals($expected, $filters->getFiltersClass());
+        $this->assertSame($expected, $filters->getFiltersClass());
     }
 
     public function testReset()
@@ -1091,7 +1093,7 @@ class FiltersTest extends CIUnitTestCase
         $filters = new Filters((object) $config, $this->request, $this->response);
         $uri     = 'admin';
 
-        $this->assertEquals(['foo'], $filters->initialize($uri)->getFilters()['before']);
+        $this->assertSame(['foo'], $filters->initialize($uri)->getFilters()['before']);
         $this->assertSame([], $filters->reset()->getFilters()['before']);
     }
 }

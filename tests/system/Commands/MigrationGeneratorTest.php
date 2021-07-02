@@ -5,7 +5,10 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class MigrationGeneratorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MigrationGeneratorTest extends CIUnitTestCase
 {
     protected $streamFilter;
 

@@ -11,8 +11,10 @@ use Config\Modules;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class CodeIgniterTest extends CIUnitTestCase
+final class CodeIgniterTest extends CIUnitTestCase
 {
     /**
      * @var CodeIgniter
@@ -26,20 +28,18 @@ class CodeIgniterTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         Services::reset();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
-        $config            = new App();
-        $this->codeigniter = new MockCodeIgniter($config);
+        $this->codeigniter = new MockCodeIgniter(new App());
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
-        if (count( ob_list_handlers() ) > 1) {
+        if (count(ob_list_handlers()) > 1) {
             ob_end_clean();
         }
     }
@@ -48,9 +48,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunEmptyDefaultRoute()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-        ];
+        $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
 
         ob_start();
@@ -64,10 +62,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunClosureRoute()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'pages/about',
-        ];
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
@@ -91,10 +86,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404Override()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         // Inject mock router.
@@ -115,10 +107,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404OverrideByClosure()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         // Inject mock router.
@@ -141,11 +130,9 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnString()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'pages/about',
-        ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/pages/about';
 
         // Inject mock router.
@@ -167,11 +154,9 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testControllersCanReturnResponseObject()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'pages/about',
-        ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/pages/about';
 
         // Inject mock router.
@@ -196,10 +181,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testResponseConfigEmpty()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         $response = Services::response(null, false);
@@ -211,10 +193,7 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRoutesIsEmpty()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         // Inject mock router.
@@ -230,28 +209,23 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testTransfersCorrectHTTPVersion()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
-        $_SERVER['argc']            = 2;
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/2.0';
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
-        $output = ob_get_clean();
+        ob_get_clean();
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
 
-        $this->assertEquals(2, $response->getProtocolVersion());
+        $this->assertSame('2.0', $response->getProtocolVersion());
     }
 
     public function testIgnoringErrorSuppressedByAt()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         ob_start();
@@ -266,15 +240,14 @@ class CodeIgniterTest extends CIUnitTestCase
 
     public function testRunForceSecure()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
-        $config                            = new App();
+        $config = new App();
+
         $config->forceGlobalSecureRequests = true;
-        $codeigniter                       = new MockCodeIgniter($config);
+
+        $codeigniter = new MockCodeIgniter($config);
 
         $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
         $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
@@ -284,18 +257,16 @@ class CodeIgniterTest extends CIUnitTestCase
 
         ob_start();
         $codeigniter->useSafeOutput(true)->run();
-        $output = ob_get_clean();
+        ob_get_clean();
 
-        $this->assertEquals('https://example.com/', $response->header('Location')->getValue());
+        $this->assertSame('https://example.com/', $response->header('Location')->getValue());
     }
 
     public function testRunRedirectionWithNamed()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'example',
-        ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/example';
 
         // Inject mock router.
@@ -311,16 +282,14 @@ class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertEquals('http://example.com/pages/named', $response->header('Location')->getValue());
+        $this->assertSame('http://example.com/pages/named', $response->header('Location')->getValue());
     }
 
     public function testRunRedirectionWithURI()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'example',
-        ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/example';
 
         // Inject mock router.
@@ -336,7 +305,7 @@ class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertEquals('http://example.com/pages/uri', $response->header('Location')->getValue());
+        $this->assertSame('http://example.com/pages/uri', $response->header('Location')->getValue());
     }
 
     /**
@@ -344,11 +313,9 @@ class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunRedirectionWithURINotSet()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'example',
-        ];
-        $_SERVER['argc']        = 2;
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI'] = '/example';
 
         // Inject mock router.
@@ -362,16 +329,14 @@ class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertEquals('http://example.com/pages/notset', $response->header('Location')->getValue());
+        $this->assertSame('http://example.com/pages/notset', $response->header('Location')->getValue());
     }
 
     public function testRunRedirectionWithHTTPCode303()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'example',
-        ];
-        $_SERVER['argc']            = 2;
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI']     = '/example';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
@@ -386,17 +351,16 @@ class CodeIgniterTest extends CIUnitTestCase
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
+
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertEquals('303', $response->getStatusCode());
+        $this->assertSame(303, $response->getStatusCode());
     }
 
     public function testRunRedirectionWithHTTPCode301()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            'example',
-        ];
-        $_SERVER['argc']            = 2;
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
         $_SERVER['REQUEST_URI']     = '/example';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'GET';
@@ -412,7 +376,7 @@ class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertEquals('301', $response->getStatusCode());
+        $this->assertSame(301, $response->getStatusCode());
     }
 
     /**
@@ -422,10 +386,7 @@ class CodeIgniterTest extends CIUnitTestCase
      */
     public function testRunDefaultRoute()
     {
-        $_SERVER['argv'] = [
-            'index.php',
-            '/',
-        ];
+        $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
         ob_start();

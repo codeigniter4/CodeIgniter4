@@ -8,7 +8,10 @@ use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
 
-class BaseConfigTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseConfigTest extends CIUnitTestCase
 {
     protected $fixturesFolder;
 
@@ -189,7 +192,7 @@ class BaseConfigTest extends CIUnitTestCase
 
         $config = new SimpleConfig();
 
-        $this->assertEquals(0, $config->QZERO);
+        $this->assertSame(0, (int) $config->QZERO);
         $this->assertSame('0', $config->QZEROSTR);
         $this->assertSame(' ', $config->QEMPTYSTR);
         $this->assertFalse($config->QFALSE);
@@ -254,6 +257,6 @@ class BaseConfigTest extends CIUnitTestCase
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
-        $this->assertSame(true, $this->getPrivateProperty($config, 'didDiscovery'));
+        $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
     }
 }

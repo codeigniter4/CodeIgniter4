@@ -9,8 +9,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class HoneypotTest extends CIUnitTestCase
+final class HoneypotTest extends CIUnitTestCase
 {
     protected $config;
     protected $honeypot;
@@ -52,13 +54,13 @@ class HoneypotTest extends CIUnitTestCase
         $this->response->setBody('<form></form>');
         $this->honeypot->attachHoneypot($this->response);
         $expected = '<form><div style="display:none"><label>Fill This Field</label><input type="text" name="honeypot" value=""/></div></form>';
-        $this->assertEquals($expected, $this->response->getBody());
+        $this->assertSame($expected, $this->response->getBody());
 
         $this->config->container = '<div class="hidden">{template}</div>';
         $this->response->setBody('<form></form>');
         $this->honeypot->attachHoneypot($this->response);
         $expected = '<form><div class="hidden"><label>Fill This Field</label><input type="text" name="honeypot" value=""/></div></form>';
-        $this->assertEquals($expected, $this->response->getBody());
+        $this->assertSame($expected, $this->response->getBody());
     }
 
     //--------------------------------------------------------------------
@@ -68,12 +70,12 @@ class HoneypotTest extends CIUnitTestCase
         unset($_POST[$this->config->name]);
         $this->request = Services::request();
 
-        $this->assertEquals(false, $this->honeypot->hasContent($this->request));
+        $this->assertFalse($this->honeypot->hasContent($this->request));
     }
 
     public function testHasContent()
     {
-        $this->assertEquals(true, $this->honeypot->hasContent($this->request));
+        $this->assertTrue($this->honeypot->hasContent($this->request));
     }
 
     //--------------------------------------------------------------------
@@ -141,7 +143,7 @@ class HoneypotTest extends CIUnitTestCase
         $config->container = '';
         $honeypot          = new Honeypot($config);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<div style="display:none">{template}</div>',
             $this->getPrivateProperty($honeypot, 'config')->container
         );
@@ -153,7 +155,7 @@ class HoneypotTest extends CIUnitTestCase
         $config->container = '<div></div>';
         $honeypot          = new Honeypot($config);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<div style="display:none">{template}</div>',
             $this->getPrivateProperty($honeypot, 'config')->container
         );

@@ -5,7 +5,10 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class BaseQueryTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseQueryTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -23,7 +26,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $query->setQuery($sql);
 
-        $this->assertEquals($sql, $query->getQuery());
+        $this->assertSame($sql, $query->getQuery());
     }
 
     public function testStoresDuration()
@@ -34,7 +37,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $query->setDuration($start, $start + 5);
 
-        $this->assertEquals(5, $query->getDuration());
+        $this->assertSame(5, (int) $query->getDuration());
     }
 
     public function testGetStartTime()
@@ -45,7 +48,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $query->setDuration($start, $start + 5);
 
-        $this->assertEquals($start, $query->getStartTime(true));
+        $this->assertSame($start, $query->getStartTime(true));
     }
 
     public function testGetStartTimeNumberFormat()
@@ -56,7 +59,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $query->setDuration($start, $start + 5);
 
-        $this->assertEquals(number_format($start, 6), $query->getStartTime());
+        $this->assertSame(number_format($start, 6), $query->getStartTime());
     }
 
     public function testsStoresErrorInformation()
@@ -70,8 +73,8 @@ class BaseQueryTest extends CIUnitTestCase
 
         $query->setError($code, $msg);
         $this->assertTrue($query->hasError());
-        $this->assertEquals($code, $query->getErrorCode());
-        $this->assertEquals($msg, $query->getErrorMessage());
+        $this->assertSame($code, $query->getErrorCode());
+        $this->assertSame($msg, $query->getErrorMessage());
     }
 
     public function testSwapPrefix()
@@ -87,7 +90,7 @@ class BaseQueryTest extends CIUnitTestCase
         $query->setQuery($origSQL);
         $query->swapPrefix($origPrefix, $newPrefix);
 
-        $this->assertEquals($newSQL, $query->getQuery());
+        $this->assertSame($newSQL, $query->getQuery());
     }
 
     public function queryTypes()
@@ -187,7 +190,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM users WHERE id = 13';
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     public function testBindingSingleElementInArray()
@@ -198,7 +201,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM users WHERE id = 13';
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     public function testBindingMultipleItems()
@@ -209,7 +212,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = "SELECT * FROM users WHERE id = 13 OR name = 'Vader'";
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     public function testBindingAutoEscapesParameters()
@@ -220,7 +223,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = "SELECT * FROM users WHERE name = 'O''Reilly'";
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     public function testNamedBinds()
@@ -231,7 +234,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = "SELECT * FROM users WHERE id = 13 OR name = 'Geoffrey'";
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     /**
@@ -259,7 +262,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = "SELECT * FROM users WHERE sitemap = 'sitemap' OR site = 'site'";
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     /**
@@ -273,7 +276,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = 'UPDATE user_table SET `x` = NOW() WHERE `id` = 22';
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     /**
@@ -296,7 +299,7 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = 'UPDATE user_table SET `x` = NOW() WHERE `id` = 22';
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 
     /**
@@ -315,6 +318,6 @@ class BaseQueryTest extends CIUnitTestCase
 
         $expected = 'SELECT @factorA := 1, @factorB := 2';
 
-        $this->assertEquals($expected, $query->getQuery());
+        $this->assertSame($expected, $query->getQuery());
     }
 }

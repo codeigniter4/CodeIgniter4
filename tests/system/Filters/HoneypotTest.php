@@ -9,8 +9,10 @@ use Config\Honeypot;
 
 /**
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class HoneypotTest extends CIUnitTestCase
+final class HoneypotTest extends CIUnitTestCase
 {
     protected $config;
     protected $honey;
@@ -64,7 +66,7 @@ class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $request = $filters->run($uri, 'before');
-        $this->assertEquals($expected, $request);
+        $this->assertSame($expected, $request);
     }
 
     //--------------------------------------------------------------------

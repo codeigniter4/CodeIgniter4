@@ -10,8 +10,10 @@ use Config\App;
  *
  * See https://apimirror.com/http/headers/content-security-policy
  * See https://cspvalidator.org/
+ *
+ * @internal
  */
-class ContentSecurityPolicyTest extends CIUnitTestCase
+final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)
@@ -48,7 +50,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     public function testExistence()
     {
         $this->prepare();
-        $result = $this->work();
+        $this->work();
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
@@ -63,7 +65,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->prepare();
         $this->csp->reportOnly(false);
-        $result = $this->work();
+        $this->work();
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
@@ -441,7 +443,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
         $body = '';
         $this->response->setBody($body);
         $this->csp->finalize($this->response);
-        $this->assertEquals($body, $this->response->getBody());
+        $this->assertSame($body, $this->response->getBody());
     }
 
     /**
@@ -515,7 +517,7 @@ class ContentSecurityPolicyTest extends CIUnitTestCase
     public function testCSPDisabled()
     {
         $this->prepare(false);
-        $result = $this->work();
+        $this->work();
         $this->response->CSP->addStyleSrc('https://example.com');
 
         $this->assertHeaderNotEmitted('content-security-policy', true);

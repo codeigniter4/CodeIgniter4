@@ -7,16 +7,16 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class SelectTest extends CIUnitTestCase
+final class SelectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
     protected $refresh = true;
 
     protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
-
-    //--------------------------------------------------------------------
 
     public function testSelectAllByDefault()
     {
@@ -27,8 +27,6 @@ class SelectTest extends CIUnitTestCase
         $this->assertArrayHasKey('description', $row);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSelectSingleColumn()
     {
         $row = $this->db->table('job')->select('name')->get()->getRowArray();
@@ -37,8 +35,6 @@ class SelectTest extends CIUnitTestCase
         $this->assertArrayHasKey('name', $row);
         $this->assertArrayNotHasKey('description', $row);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectMultipleColumns()
     {
@@ -49,97 +45,75 @@ class SelectTest extends CIUnitTestCase
         $this->assertArrayHasKey('description', $row);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSelectMax()
     {
         $result = $this->db->table('job')->selectMax('id')->get()->getRow();
 
-        $this->assertEquals(4, $result->id);
+        $this->assertSame(4, (int) $result->id);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectMaxWithAlias()
     {
         $result = $this->db->table('job')->selectMax('id', 'xam')->get()->getRow();
 
-        $this->assertEquals(4, $result->xam);
+        $this->assertSame(4, (int) $result->xam);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectMin()
     {
         $result = $this->db->table('job')->selectMin('id')->get()->getRow();
 
-        $this->assertEquals(1, $result->id);
+        $this->assertSame(1, (int) $result->id);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectMinWithAlias()
     {
         $result = $this->db->table('job')->selectMin('id', 'xam')->get()->getRow();
 
-        $this->assertEquals(1, $result->xam);
+        $this->assertSame(1, (int) $result->xam);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectAvg()
     {
         $result = $this->db->table('job')->selectAvg('id')->get()->getRow();
 
-        $this->assertEquals(2.5, $result->id);
+        $this->assertSame(2.5, (float) $result->id);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectAvgWithAlias()
     {
         $result = $this->db->table('job')->selectAvg('id', 'xam')->get()->getRow();
 
-        $this->assertEquals(2.5, $result->xam);
+        $this->assertSame(2.5, (float) $result->xam);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectSum()
     {
         $result = $this->db->table('job')->selectSum('id')->get()->getRow();
 
-        $this->assertEquals(10, $result->id);
+        $this->assertSame(10, (int) $result->id);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectSumWithAlias()
     {
         $result = $this->db->table('job')->selectSum('id', 'xam')->get()->getRow();
 
-        $this->assertEquals(10, $result->xam);
+        $this->assertSame(10, (int) $result->xam);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectCount()
     {
         $result = $this->db->table('job')->selectCount('id')->get()->getRow();
 
-        $this->assertEquals(4, $result->id);
+        $this->assertSame(4, (int) $result->id);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectCountWithAlias()
     {
         $result = $this->db->table('job')->selectCount('id', 'xam')->get()->getRow();
 
-        $this->assertEquals(4, $result->xam);
+        $this->assertSame(4, (int) $result->xam);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSelectDistinctWorkTogether()
     {
@@ -148,16 +122,12 @@ class SelectTest extends CIUnitTestCase
         $this->assertCount(3, $users);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSelectDistinctCanBeTurnedOff()
     {
         $users = $this->db->table('user')->select('country')->distinct(false)->get()->getResult();
 
         $this->assertCount(4, $users);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1226

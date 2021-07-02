@@ -6,7 +6,10 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class ImageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ImageTest extends CIUnitTestCase
 {
     protected $path = 'tests/_support/ci-logo.png';
 
@@ -24,7 +27,7 @@ class ImageTest extends CIUnitTestCase
         ];
         vfsStream::create($structure);
         // with one of them read only
-        $wont = $this->root->getChild('wontwork')->chmod(0400);
+        $this->root->getChild('wontwork')->chmod(0400);
 
         $this->start = $this->root->url() . '/';
 
@@ -33,10 +36,10 @@ class ImageTest extends CIUnitTestCase
 
     public function testBasicPropertiesInherited()
     {
-        $this->assertEquals('ci-logo.png', $this->image->getFilename());
-        $this->assertEquals($this->start . 'ci-logo.png', $this->image->getPathname());
-        $this->assertEquals($this->root->url(), $this->image->getPath());
-        $this->assertEquals('ci-logo.png', $this->image->getBasename());
+        $this->assertSame('ci-logo.png', $this->image->getFilename());
+        $this->assertSame($this->start . 'ci-logo.png', $this->image->getPathname());
+        $this->assertSame($this->root->url(), $this->image->getPath());
+        $this->assertSame('ci-logo.png', $this->image->getBasename());
     }
 
     public function testGetProperties()
@@ -49,7 +52,7 @@ class ImageTest extends CIUnitTestCase
             'mime_type'  => 'image/png',
         ];
 
-        $this->assertEquals($expected, $this->image->getProperties(true));
+        $this->assertSame($expected, $this->image->getProperties(true));
     }
 
     public function testExtractProperties()
@@ -57,11 +60,11 @@ class ImageTest extends CIUnitTestCase
         // extract properties from the image
         $this->assertTrue($this->image->getProperties(false));
 
-        $this->assertEquals(155, $this->image->origWidth);
-        $this->assertEquals(200, $this->image->origHeight);
-        $this->assertEquals(IMAGETYPE_PNG, $this->image->imageType);
-        $this->assertEquals('width="155" height="200"', $this->image->sizeStr);
-        $this->assertEquals('image/png', $this->image->mime);
+        $this->assertSame(155, $this->image->origWidth);
+        $this->assertSame(200, $this->image->origHeight);
+        $this->assertSame(IMAGETYPE_PNG, $this->image->imageType);
+        $this->assertSame('width="155" height="200"', $this->image->sizeStr);
+        $this->assertSame('image/png', $this->image->mime);
     }
 
     public function testCopyDefaultName()

@@ -8,8 +8,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class UpdateTest extends CIUnitTestCase
+final class UpdateTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -23,10 +25,10 @@ class UpdateTest extends CIUnitTestCase
 
         $result = $this->db->table('user')->get()->getResult();
 
-        $this->assertEquals('Bobby', $result[0]->name);
-        $this->assertEquals('Bobby', $result[1]->name);
-        $this->assertEquals('Bobby', $result[2]->name);
-        $this->assertEquals('Bobby', $result[3]->name);
+        $this->assertSame('Bobby', $result[0]->name);
+        $this->assertSame('Bobby', $result[1]->name);
+        $this->assertSame('Bobby', $result[2]->name);
+        $this->assertSame('Bobby', $result[3]->name);
     }
 
     //--------------------------------------------------------------------
@@ -41,10 +43,10 @@ class UpdateTest extends CIUnitTestCase
                 ->get()
                 ->getResult();
 
-            $this->assertEquals('Bobby', $result[0]->name);
-            $this->assertEquals('Ahmadinejad', $result[1]->name);
-            $this->assertEquals('Richard A Causey', $result[2]->name);
-            $this->assertEquals('Chris Martin', $result[3]->name);
+            $this->assertSame('Bobby', $result[0]->name);
+            $this->assertSame('Ahmadinejad', $result[1]->name);
+            $this->assertSame('Richard A Causey', $result[2]->name);
+            $this->assertSame('Chris Martin', $result[3]->name);
         } catch (DatabaseException $e) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
@@ -82,10 +84,10 @@ class UpdateTest extends CIUnitTestCase
 
             $result = $this->db->table('user')->get()->getResult();
 
-            $this->assertEquals('Bobby', $result[0]->name);
-            $this->assertEquals('Ahmadinejad', $result[1]->name);
-            $this->assertEquals('Richard A Causey', $result[2]->name);
-            $this->assertEquals('Chris Martin', $result[3]->name);
+            $this->assertSame('Bobby', $result[0]->name);
+            $this->assertSame('Ahmadinejad', $result[1]->name);
+            $this->assertSame('Richard A Causey', $result[2]->name);
+            $this->assertSame('Chris Martin', $result[3]->name);
         } catch (DatabaseException $e) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
@@ -216,8 +218,6 @@ class UpdateTest extends CIUnitTestCase
         $this->db->table('job')
             ->set('description', 'name', false)
             ->update();
-
-        $result = $this->db->table('user')->get()->getResultArray();
 
         $this->seeInDatabase('job', [
             'name'        => 'Developer',

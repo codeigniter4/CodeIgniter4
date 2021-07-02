@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class LimitTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class LimitTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -29,7 +32,7 @@ class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -42,7 +45,7 @@ class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -55,7 +58,7 @@ class LimitTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user"  LIMIT 1, 5';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

@@ -164,7 +164,7 @@ class Result extends BaseResult
         }
 
         $classSet = Closure::bind(function ($key, $value) {
-            $this->$key = $value;
+            $this->{$key} = $value;
         }, $classObj, $className);
 
         foreach (array_keys($row) as $key) {

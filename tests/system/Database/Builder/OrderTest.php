@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class OrderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class OrderTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -29,7 +32,7 @@ class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -42,7 +45,7 @@ class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------
@@ -55,7 +58,7 @@ class OrderTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

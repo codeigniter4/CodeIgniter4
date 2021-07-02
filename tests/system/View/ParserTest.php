@@ -10,7 +10,10 @@ use Config\Services;
 use Config\View as ViewConfig;
 use stdClass;
 
-class ParserTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ParserTest extends CIUnitTestCase
 {
     /**
      * @var FileLocator
@@ -47,22 +50,22 @@ class ParserTest extends CIUnitTestCase
     public function testSetDelimiters()
     {
         // Make sure default delimiters are there
-        $this->assertEquals('{', $this->parser->leftDelimiter);
-        $this->assertEquals('}', $this->parser->rightDelimiter);
+        $this->assertSame('{', $this->parser->leftDelimiter);
+        $this->assertSame('}', $this->parser->rightDelimiter);
 
         // Change them to square brackets
         $this->parser->setDelimiters('[', ']');
 
         // Make sure they changed
-        $this->assertEquals('[', $this->parser->leftDelimiter);
-        $this->assertEquals(']', $this->parser->rightDelimiter);
+        $this->assertSame('[', $this->parser->leftDelimiter);
+        $this->assertSame(']', $this->parser->rightDelimiter);
 
         // Reset them
         $this->parser->setDelimiters();
 
         // Make sure default delimiters are there
-        $this->assertEquals('{', $this->parser->leftDelimiter);
-        $this->assertEquals('}', $this->parser->rightDelimiter);
+        $this->assertSame('{', $this->parser->leftDelimiter);
+        $this->assertSame('}', $this->parser->rightDelimiter);
     }
 
     // --------------------------------------------------------------------
@@ -70,7 +73,7 @@ class ParserTest extends CIUnitTestCase
     public function testParseSimple()
     {
         $this->parser->setVar('teststring', 'Hello World');
-        $this->assertEquals("<h1>Hello World</h1>\n", $this->parser->render('template1'));
+        $this->assertSame("<h1>Hello World</h1>\n", $this->parser->render('template1'));
     }
 
     // --------------------------------------------------------------------
@@ -87,7 +90,7 @@ class ParserTest extends CIUnitTestCase
         $result = implode("\n", $data);
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -104,7 +107,7 @@ class ParserTest extends CIUnitTestCase
         $result = implode("\n", $data) . "\n{name}";
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -122,14 +125,14 @@ class ParserTest extends CIUnitTestCase
         $result = "Page Title\nLorem ipsum dolor sit amet.";
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
 
     public function testParseNoTemplate()
     {
-        $this->assertEquals('', $this->parser->renderString(''));
+        $this->assertSame('', $this->parser->renderString(''));
     }
 
     // --------------------------------------------------------------------
@@ -149,7 +152,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers}{invisibility}\n{flying}{/powers}";
 
         $this->parser->setData($data);
-        $this->assertEquals("Super Heroes\nyes\nno", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\nyes\nno", $this->parser->renderString($template));
     }
 
     public function testParseArrayMulti()
@@ -166,7 +169,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{powers}{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{ /powers}";
 
         $this->parser->setData($data);
-        $this->assertEquals("yes\nno\nsecond: yes no", $this->parser->renderString($template));
+        $this->assertSame("yes\nno\nsecond: yes no", $this->parser->renderString($template));
     }
 
     public function testParseArrayNested()
@@ -190,7 +193,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers}{invisibility}\n{flying}{by} {with}{/flying}{/powers}";
 
         $this->parser->setData($data);
-        $this->assertEquals("Super Heroes\nyes\nplane broomstick", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\nyes\nplane broomstick", $this->parser->renderString($template));
     }
 
     public function testParseArrayNestedObject()
@@ -217,7 +220,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{birds}{mom} and {pop} work at {home}{/birds}';
 
         $this->parser->setData($data);
-        $this->assertEquals('Owl and Class: stdClass work at Resource', $this->parser->renderString($template));
+        $this->assertSame('Owl and Class: stdClass work at Resource', $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -236,7 +239,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers}{name} {/powers}";
 
         $this->parser->setData($data);
-        $this->assertEquals("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
     public function testParseLoopObjectProperties()
@@ -261,7 +264,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers}{name} {/powers}";
 
         $this->parser->setData($data, 'html');
-        $this->assertEquals("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -293,7 +296,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
 
         $this->parser->setData($data);
-        $this->assertEquals("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
     }
 
     public function testParseLoopEntityObjectProperties()
@@ -330,7 +333,7 @@ class ParserTest extends CIUnitTestCase
         $template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
 
         $this->parser->setData($data, 'html');
-        $this->assertEquals("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
+        $this->assertSame("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -351,7 +354,7 @@ class ParserTest extends CIUnitTestCase
         $result   = "Super Heroes\n{powers}{invisibility}\n{flying}";
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     public function escValueTypes()
@@ -416,7 +419,7 @@ class ParserTest extends CIUnitTestCase
         if ($expected === null) {
             $expected = $value;
         }
-        $this->assertEquals($expected, \esc($value));
+        $this->assertSame($expected, \esc($value));
     }
 
     //------------------------------------------------------------------------
@@ -429,7 +432,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{foo} {foo_bar}';
 
         $this->parser->setData(['foo' => 'bar', 'foo_bar' => 'foo-bar'], 'raw');
-        $this->assertEquals('bar foo-bar', $this->parser->renderString($template));
+        $this->assertSame('bar foo-bar', $this->parser->renderString($template));
     }
 
     public function testParsePairSimilarVariableNames()
@@ -446,7 +449,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{title} {powers}{link} {link_second}{/powers}';
         $this->parser->setData($data);
-        $this->assertEquals('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt; &lt;a href=&#039;test2&#039;&gt;Link second&lt;/a&gt;', $this->parser->renderString($template));
+        $this->assertSame('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt; &lt;a href=&#039;test2&#039;&gt;Link second&lt;/a&gt;', $this->parser->renderString($template));
     }
 
     //------------------------------------------------------------------------
@@ -459,7 +462,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{ foo }';
 
         $this->parser->setData(['foo' => '<script>'], 'raw');
-        $this->assertEquals('<script>', $this->parser->renderString($template));
+        $this->assertSame('<script>', $this->parser->renderString($template));
     }
 
     public function testEscapingSetDataWithOtherContext()
@@ -467,7 +470,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{ foo }';
 
         $this->parser->setData(['foo' => 'http://foo.com'], 'url');
-        $this->assertEquals('http%3A%2F%2Ffoo.com', $this->parser->renderString($template));
+        $this->assertSame('http%3A%2F%2Ffoo.com', $this->parser->renderString($template));
     }
 
     public function testNoEscapingSetData()
@@ -475,14 +478,14 @@ class ParserTest extends CIUnitTestCase
         $template = '{ foo | noescape}';
 
         $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
-        $this->assertEquals('http://foo.com', $this->parser->renderString($template));
+        $this->assertSame('http://foo.com', $this->parser->renderString($template));
     }
 
     public function testAutoEscaping()
     {
         $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
 
-        $this->assertEquals('html', $this->parser->shouldAddEscaping('{ foo | this | that }'));
+        $this->assertSame('html', $this->parser->shouldAddEscaping('{ foo | this | that }'));
     }
 
     public function testAutoEscapingNot()
@@ -502,7 +505,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{ that_thing|esc }';
 
         $this->parser->setData($data);
-        $this->assertEquals('&lt;script&gt;alert(&quot;ci4&quot;)&lt;/script&gt;', $this->parser->renderString($template));
+        $this->assertSame('&lt;script&gt;alert(&quot;ci4&quot;)&lt;/script&gt;', $this->parser->renderString($template));
     }
 
     public function testFilterWithArgument()
@@ -516,7 +519,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{ my_date| date(Y-m-d ) }';
 
         $this->parser->setData($data);
-        $this->assertEquals(date('Y-m-d', $date), $this->parser->renderString($template));
+        $this->assertSame(date('Y-m-d', $date), $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -532,7 +535,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{title} {powers}{link}{/powers}';
         $this->parser->setData($data);
-        $this->assertEquals('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt;', $this->parser->renderString($template));
+        $this->assertSame('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt;', $this->parser->renderString($template));
     }
 
     public function testParserNoEscape()
@@ -543,7 +546,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{! title!}';
         $this->parser->setData($data);
-        $this->assertEquals('<script>Heroes</script>', $this->parser->renderString($template));
+        $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -564,7 +567,7 @@ class ParserTest extends CIUnitTestCase
         $result   = "Super Heroes\n{powers}{invisibility}\n{flying}";
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -585,7 +588,7 @@ class ParserTest extends CIUnitTestCase
         $result   = "{title}\n{powers}{invisibility}\n{flying}";
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -600,7 +603,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{if $doit}Howdy{endif}{ if $dontdoit === false}Welcome{ endif }';
         $this->parser->setData($data);
 
-        $this->assertEquals('HowdyWelcome', $this->parser->renderString($template));
+        $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
     public function testElseConditionalFalse()
@@ -612,7 +615,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{if $doit}Howdy{else}Welcome{ endif }';
         $this->parser->setData($data);
 
-        $this->assertEquals('Howdy', $this->parser->renderString($template));
+        $this->assertSame('Howdy', $this->parser->renderString($template));
     }
 
     public function testElseConditionalTrue()
@@ -624,7 +627,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{if $doit}Howdy{else}Welcome{ endif }';
         $this->parser->setData($data);
 
-        $this->assertEquals('Welcome', $this->parser->renderString($template));
+        $this->assertSame('Welcome', $this->parser->renderString($template));
     }
 
     public function testElseifConditionalTrue()
@@ -637,7 +640,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{if $doit}Howdy{elseif $dontdoit}Welcome{ endif }';
         $this->parser->setData($data);
 
-        $this->assertEquals('Welcome', $this->parser->renderString($template));
+        $this->assertSame('Welcome', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -654,7 +657,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{if doit}Howdy{elseif doit}Welcome{ endif )}';
 
         $this->parser->setData($data);
-        $this->assertEquals('HowdyWelcome', $this->parser->renderString($template));
+        $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -662,7 +665,7 @@ class ParserTest extends CIUnitTestCase
     public function testWontParsePHP()
     {
         $template = "<?php echo 'Foo' ?> - <?= 'Bar' ?>";
-        $this->assertEquals('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $this->parser->renderString($template));
+        $this->assertSame('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -679,7 +682,7 @@ class ParserTest extends CIUnitTestCase
         $result = implode("\n", $data);
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     // --------------------------------------------------------------------
@@ -696,7 +699,7 @@ class ParserTest extends CIUnitTestCase
         $result = implode("\n", $data);
 
         $this->parser->setData($data);
-        $this->assertEquals($result, $this->parser->renderString($template));
+        $this->assertSame($result, $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -730,7 +733,7 @@ class ParserTest extends CIUnitTestCase
     {
         $template = 'hit:it';
 
-        $this->assertEquals('hit:it', $this->parser->renderString($template));
+        $this->assertSame('hit:it', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -746,7 +749,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ hit:it +} stuff here {+ /hit:it +}';
 
-        $this->assertEquals(' stuff Hip to the Hop ', $this->parser->renderString($template));
+        $this->assertSame(' stuff Hip to the Hop ', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -765,7 +768,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ hello world +}';
 
-        $this->assertEquals('Hello, world', $this->parser->renderString($template));
+        $this->assertSame('Hello, world', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -790,7 +793,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ growth step=2 count=4 +}  {+ /growth +}';
 
-        $this->assertEquals(' 2 4 6 8', $this->parser->renderString($template));
+        $this->assertSame(' 2 4 6 8', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -806,7 +809,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ hit:it +}';
 
-        $this->assertEquals('Hip to the Hop', $this->parser->renderString($template));
+        $this->assertSame('Hip to the Hop', $this->parser->renderString($template));
     }
 
     /**
@@ -820,7 +823,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ hit:it first=foo last=bar +}';
 
-        $this->assertEquals('foo to the bar', $this->parser->renderString($template));
+        $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
     /**
@@ -834,7 +837,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ hit:it foo bar +}';
 
-        $this->assertEquals('foo to the bar', $this->parser->renderString($template));
+        $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
     /**
@@ -854,7 +857,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ count "foo bar" baz "foo bar" +}';
 
-        $this->assertEquals('0. foo bar 1. baz 2. foo bar ', $this->parser->renderString($template));
+        $this->assertSame('0. foo bar 1. baz 2. foo bar ', $this->parser->renderString($template));
     }
 
     /**
@@ -874,7 +877,7 @@ class ParserTest extends CIUnitTestCase
 
         $template = '{+ read_params title="Hello world" page=5 email=test@test.net +}';
 
-        $this->assertEquals('title: Hello world. page: 5. email: test@test.net. ', $this->parser->renderString($template));
+        $this->assertSame('title: Hello world. page: 5. email: test@test.net. ', $this->parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
@@ -893,7 +896,7 @@ class ParserTest extends CIUnitTestCase
         $template = '{books}<p>Price $: {price}</p>{/books}';
 
         $this->parser->setData($data);
-        $this->assertEquals('<p>Price $: 12.50</p>', $this->parser->renderString($template));
+        $this->assertSame('<p>Price $: 12.50</p>', $this->parser->renderString($template));
     }
 
     /**
@@ -955,9 +958,9 @@ class ParserTest extends CIUnitTestCase
         $this->parser->setVar('teststring', 'Hello World');
 
         $expected = "<h1>Hello World</h1>\n";
-        $this->assertEquals($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
+        $this->assertSame($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
         // this second renderings should go thru the cache
-        $this->assertEquals($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
+        $this->assertSame($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
     }
 
     //--------------------------------------------------------------------
@@ -965,7 +968,7 @@ class ParserTest extends CIUnitTestCase
     public function testRenderFindsView()
     {
         $this->parser->setData(['testString' => 'Hello World']);
-        $this->assertEquals("<h1>Hello World</h1>\n", $this->parser->render('Simpler'));
+        $this->assertSame("<h1>Hello World</h1>\n", $this->parser->render('Simpler'));
     }
 
     public function testRenderCannotFindView()
@@ -984,11 +987,11 @@ class ParserTest extends CIUnitTestCase
         $expected = "<h1>Hello World</h1>\n";
 
         $this->parser->setData(['testString' => 'Hello World']);
-        $this->assertEquals($expected, $this->parser->render('Simpler', [], false));
+        $this->assertSame($expected, $this->parser->render('Simpler', [], false));
         $this->assertArrayNotHasKey('testString', $this->parser->getData());
 
         $this->parser->setData(['testString' => 'Hello World']);
-        $this->assertEquals($expected, $this->parser->render('Simpler', [], true));
+        $this->assertSame($expected, $this->parser->render('Simpler', [], true));
         $this->assertArrayHasKey('testString', $this->parser->getData());
     }
 
@@ -998,11 +1001,11 @@ class ParserTest extends CIUnitTestCase
         $pattern  = '<h1>{testString}</h1>';
 
         $this->parser->setData(['testString' => 'Hello World']);
-        $this->assertEquals($expected, $this->parser->renderString($pattern, [], false));
+        $this->assertSame($expected, $this->parser->renderString($pattern, [], false));
         $this->assertArrayNotHasKey('testString', $this->parser->getData());
         //last set data is not saved
         $this->parser->setData(['testString' => 'Hello World']);
-        $this->assertEquals($expected, $this->parser->renderString($pattern, [], true));
+        $this->assertSame($expected, $this->parser->renderString($pattern, [], true));
         $this->assertArrayHasKey('testString', $this->parser->getData());
     }
 
@@ -1010,6 +1013,6 @@ class ParserTest extends CIUnitTestCase
     {
         $this->parser->setData(['testString' => 'Hello World']);
         $expected = '<h1>Hello World</h1>';
-        $this->assertEquals($expected, $this->parser->render('Simpler.html'));
+        $this->assertSame($expected, $this->parser->render('Simpler.html'));
     }
 }

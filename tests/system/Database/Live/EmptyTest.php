@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class EmptyTest extends CIUnitTestCase
+final class EmptyTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -20,7 +22,7 @@ class EmptyTest extends CIUnitTestCase
     {
         $this->db->table('misc')->emptyTable();
 
-        $this->assertEquals(0, $this->db->table('misc')->countAll());
+        $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
     //--------------------------------------------------------------------
@@ -29,7 +31,7 @@ class EmptyTest extends CIUnitTestCase
     {
         $this->db->table('misc')->truncate();
 
-        $this->assertEquals(0, $this->db->table('misc')->countAll());
+        $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
     //--------------------------------------------------------------------

@@ -107,7 +107,7 @@ class DotEnv
     protected function setVariable(string $name, string $value = '')
     {
         if (! getenv($name, true)) {
-            putenv("$name=$value");
+            putenv("{$name}={$value}");
         }
 
         if (empty($_ENV[$name])) {
@@ -192,7 +192,7 @@ class DotEnv
             );
 
             $value = preg_replace($regexPattern, '$1', $value);
-            $value = str_replace("\\$quote", $quote, $value);
+            $value = str_replace("\\{$quote}", $quote, $value);
             $value = str_replace('\\\\', '\\', $value);
         } else {
             $parts = explode(' #', $value, 2);

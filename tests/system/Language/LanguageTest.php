@@ -7,7 +7,10 @@ use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
 use Tests\Support\Language\SecondMockLanguage;
 
-class LanguageTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class LanguageTest extends CIUnitTestCase
 {
     /**
      * @var MockLanguage
@@ -21,7 +24,7 @@ class LanguageTest extends CIUnitTestCase
 
     public function testReturnsStringWithNoFileInMessage()
     {
-        $this->assertEquals('something', $this->lang->getLine('something'));
+        $this->assertSame('something', $this->lang->getLine('something'));
     }
 
     /**
@@ -46,7 +49,7 @@ class LanguageTest extends CIUnitTestCase
             'booksSaved' => 'We saved some more',
         ]);
 
-        $this->assertEquals('We saved some more', $this->lang->getLine('books.booksSaved'));
+        $this->assertSame('We saved some more', $this->lang->getLine('books.booksSaved'));
     }
 
     //--------------------------------------------------------------------
@@ -66,11 +69,11 @@ class LanguageTest extends CIUnitTestCase
                 'slowcoach' => 'slowpoke',
             ], 'en-US');
 
-        $this->assertEquals('lay of the land', $this->lang->getLine('equivalent.lieOfLand'));
-        $this->assertEquals('slowpoke', $this->lang->getLine('equivalent.slowcoach'));
-        $this->assertEquals('a new lease of life', $this->lang->getLine('equivalent.leaseOfLife'));
-        $this->assertEquals('touch wood', $this->lang->getLine('equivalent.touchWood'));
-        $this->assertEquals('equivalent.unknown', $this->lang->getLine('equivalent.unknown'));
+        $this->assertSame('lay of the land', $this->lang->getLine('equivalent.lieOfLand'));
+        $this->assertSame('slowpoke', $this->lang->getLine('equivalent.slowcoach'));
+        $this->assertSame('a new lease of life', $this->lang->getLine('equivalent.leaseOfLife'));
+        $this->assertSame('touch wood', $this->lang->getLine('equivalent.touchWood'));
+        $this->assertSame('equivalent.unknown', $this->lang->getLine('equivalent.unknown'));
     }
 
     //--------------------------------------------------------------------
@@ -84,7 +87,7 @@ class LanguageTest extends CIUnitTestCase
             ],
         ]);
 
-        $this->assertEquals([
+        $this->assertSame([
             'The Boogeyman',
             'We Saved',
         ], $this->lang->getLine('books.booksList'));
@@ -103,7 +106,7 @@ class LanguageTest extends CIUnitTestCase
             'bookCount' => '{0, number, integer} books have been saved.',
         ]);
 
-        $this->assertEquals('45 books have been saved.', $this->lang->getLine('books.bookCount', [91 / 2]));
+        $this->assertSame('45 books have been saved.', $this->lang->getLine('books.bookCount', [91 / 2]));
     }
 
     //--------------------------------------------------------------------
@@ -121,7 +124,7 @@ class LanguageTest extends CIUnitTestCase
             ],
         ]);
 
-        $this->assertEquals(['45 related books.'], $this->lang->getLine('books.bookList', [91 / 2]));
+        $this->assertSame(['45 related books.'], $this->lang->getLine('books.bookList', [91 / 2]));
     }
 
     //--------------------------------------------------------------------
@@ -134,8 +137,8 @@ class LanguageTest extends CIUnitTestCase
         $str1 = lang('Language.languageGetLineInvalidArgumentException', [], 'en');
         $str2 = lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
 
-        $this->assertEquals('Get line must be a string or array of strings.', $str1);
-        $this->assertEquals('Whatever this would be, translated', $str2);
+        $this->assertSame('Get line must be a string or array of strings.', $str1);
+        $this->assertSame('Whatever this would be, translated', $str2);
     }
 
     //--------------------------------------------------------------------
@@ -150,7 +153,7 @@ class LanguageTest extends CIUnitTestCase
             ],
         ]);
 
-        $this->assertEquals(['{0, number, integer} related books.'], $this->lang->getLine('books.bookList', [15]));
+        $this->assertSame(['{0, number, integer} related books.'], $this->lang->getLine('books.bookList', [15]));
     }
 
     //--------------------------------------------------------------------
@@ -158,10 +161,10 @@ class LanguageTest extends CIUnitTestCase
     public function testLanguageDuplicateKey()
     {
         $this->lang = new Language('en');
-        $this->assertEquals('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
-        $this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
-        $this->assertEquals('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
-        $this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
+        $this->assertSame('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
+        $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
+        $this->assertSame('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
+        $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
     }
 
     //--------------------------------------------------------------------
@@ -174,7 +177,7 @@ class LanguageTest extends CIUnitTestCase
         $this->assertTrue(in_array('More', $this->lang->loaded(), true));
 
         $this->lang->loadem('More', 'en');
-        $this->assertEquals(1, count($this->lang->loaded())); // should only be there once
+        $this->assertCount(1, $this->lang->loaded()); // should only be there once
     }
 
     //--------------------------------------------------------------------
@@ -185,11 +188,11 @@ class LanguageTest extends CIUnitTestCase
 
         $result = $this->lang->loadem('More', 'en', true);
         $this->assertFalse(in_array('More', $this->lang->loaded(), true));
-        $this->assertEquals(3, count($result));
+        $this->assertCount(3, $result);
 
         $result = $this->lang->loadem('More', 'en');
         $this->assertTrue(in_array('More', $this->lang->loaded(), true));
-        $this->assertEquals(1, count($this->lang->loaded()));
+        $this->assertCount(1, $this->lang->loaded());
     }
 
     //--------------------------------------------------------------------
@@ -200,12 +203,12 @@ class LanguageTest extends CIUnitTestCase
         $this->lang->setData('example', ['message' => 'This is an example message']);
 
         // force loading data into file Example
-        $this->assertEquals('This is an example message', $this->lang->getLine('example.message'));
+        $this->assertSame('This is an example message', $this->lang->getLine('example.message'));
 
         // second file data | another.example
         $this->lang->setData('another', ['example' => 'Another example']);
 
-        $this->assertEquals('Another example', $this->lang->getLine('another.example'));
+        $this->assertSame('Another example', $this->lang->getLine('another.example'));
     }
 
     //--------------------------------------------------------------------
@@ -213,7 +216,7 @@ class LanguageTest extends CIUnitTestCase
     public function testGetLocale()
     {
         $this->lang = Services::language('en', false);
-        $this->assertEquals('en', $this->lang->getLocale());
+        $this->assertSame('en', $this->lang->getLocale());
     }
 
     //--------------------------------------------------------------------
@@ -222,9 +225,9 @@ class LanguageTest extends CIUnitTestCase
     {
         // this should load the replacement bundle of messages
         $message = lang('Core.missingExtension', [], 'en');
-        $this->assertEquals('The framework needs the following extension(s) installed and loaded: {0}.', $message);
+        $this->assertSame('The framework needs the following extension(s) installed and loaded: {0}.', $message);
         // and we should have our new message too
-        $this->assertEquals('billions and billions', lang('Core.bazillion', [], 'en'));
+        $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }
 
     //--------------------------------------------------------------------
@@ -274,16 +277,16 @@ class LanguageTest extends CIUnitTestCase
     {
         $this->lang = Services::language('en-ZZ', false);
         // key is in both base and variant; should pick variant
-        $this->assertEquals("It's made of cheese", $this->lang->getLine('More.notaMoon'));
+        $this->assertSame("It's made of cheese", $this->lang->getLine('More.notaMoon'));
 
         // key is in base but not variant; should pick base
-        $this->assertEquals('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove'));
+        $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove'));
 
         // key is in variant but not base; should pick variant
-        $this->assertEquals('There is no try', $this->lang->getLine('More.wisdom'));
+        $this->assertSame('There is no try', $this->lang->getLine('More.wisdom'));
 
         // key isn't in either base or variant; should return bad key
-        $this->assertEquals('More.shootMe', $this->lang->getLine('More.shootMe'));
+        $this->assertSame('More.shootMe', $this->lang->getLine('More.shootMe'));
     }
 
     //--------------------------------------------------------------------
@@ -304,14 +307,14 @@ class LanguageTest extends CIUnitTestCase
     public function testAllTheWayFallbacks()
     {
         $this->lang = Services::language('ab-CD', false);
-        $this->assertEquals('Allin.none', $this->lang->getLine('Allin.none'));
-        $this->assertEquals('Pyramid of Giza', $this->lang->getLine('Allin.one'));
-        $this->assertEquals('gluttony', $this->lang->getLine('Allin.two'));
-        $this->assertEquals('Colossus of Rhodes', $this->lang->getLine('Allin.tre'));
-        $this->assertEquals('four calling birds', $this->lang->getLine('Allin.for'));
-        $this->assertEquals('Temple of Artemis', $this->lang->getLine('Allin.fiv'));
-        $this->assertEquals('envy', $this->lang->getLine('Allin.six'));
-        $this->assertEquals('Hanging Gardens of Babylon', $this->lang->getLine('Allin.sev'));
+        $this->assertSame('Allin.none', $this->lang->getLine('Allin.none'));
+        $this->assertSame('Pyramid of Giza', $this->lang->getLine('Allin.one'));
+        $this->assertSame('gluttony', $this->lang->getLine('Allin.two'));
+        $this->assertSame('Colossus of Rhodes', $this->lang->getLine('Allin.tre'));
+        $this->assertSame('four calling birds', $this->lang->getLine('Allin.for'));
+        $this->assertSame('Temple of Artemis', $this->lang->getLine('Allin.fiv'));
+        $this->assertSame('envy', $this->lang->getLine('Allin.six'));
+        $this->assertSame('Hanging Gardens of Babylon', $this->lang->getLine('Allin.sev'));
     }
 
     public function testLanguageNestedArrayDefinition()
@@ -319,7 +322,7 @@ class LanguageTest extends CIUnitTestCase
         $this->lang = new SecondMockLanguage('en');
         $this->lang->loadem('Nested', 'en');
 
-        $this->assertEquals('e', $this->lang->getLine('Nested.a.b.c.d'));
+        $this->assertSame('e', $this->lang->getLine('Nested.a.b.c.d'));
     }
 
     public function testLanguageKeySeparatedByDot()
@@ -327,7 +330,7 @@ class LanguageTest extends CIUnitTestCase
         $this->lang = new SecondMockLanguage('en');
         $this->lang->loadem('Foo', 'en');
 
-        $this->assertEquals('The fieldname field is very short.', $this->lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
-        $this->assertEquals('The fieldname field is very short.', $this->lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
+        $this->assertSame('The fieldname field is very short.', $this->lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
+        $this->assertSame('The fieldname field is very short.', $this->lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
     }
 }

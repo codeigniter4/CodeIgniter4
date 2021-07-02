@@ -10,8 +10,10 @@ use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class ConnectTest extends CIUnitTestCase
+final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -39,7 +41,7 @@ class ConnectTest extends CIUnitTestCase
     {
         // We should have our test database connection already.
         $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertEquals(1, count($instances));
+        $this->assertCount(1, $instances);
 
         $db1 = Database::connect($this->group1);
         $db2 = Database::connect($this->group2);
@@ -47,7 +49,7 @@ class ConnectTest extends CIUnitTestCase
         $this->assertNotSame($db1, $db2);
 
         $instances = $this->getPrivateProperty(Database::class, 'instances');
-        $this->assertEquals(3, count($instances));
+        $this->assertCount(3, $instances);
     }
 
     public function testConnectReturnsProvidedConnection()
@@ -56,11 +58,11 @@ class ConnectTest extends CIUnitTestCase
 
         // This will be the tests database
         $db = Database::connect();
-        $this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
+        $this->assertSame($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
         // Get an instance of the system's default db so we have something to test with.
         $db1 = Database::connect($this->group1);
-        $this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
+        $this->assertSame('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
 
         // If a connection is passed into connect, it should simply be returned to us...
         $db2 = Database::connect($db1);
@@ -72,7 +74,7 @@ class ConnectTest extends CIUnitTestCase
         $config = config('Database');
 
         $db = Database::connect('tests');
-        $this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
+        $this->assertSame($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
         $config                      = config('Database');
         $config->default['DBDriver'] = 'MySQLi';
@@ -80,7 +82,7 @@ class ConnectTest extends CIUnitTestCase
 
         $db1 = Database::connect('default');
         $this->assertNotInstanceOf(Connection::class, $db1);
-        $this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
+        $this->assertSame('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
     }
 
     public function testConnectWithFailover()
@@ -93,7 +95,7 @@ class ConnectTest extends CIUnitTestCase
 
         $db1 = Database::connect($this->tests);
 
-        $this->assertEquals($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
+        $this->assertSame($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
         $this->assertTrue(count($db1->listTables()) >= 0);
     }
 }

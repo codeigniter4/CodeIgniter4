@@ -162,17 +162,17 @@ class Controller
 
             // If the rule wasn't found in the \Config\Validation, we
             // should throw an exception so the developer can find it.
-            if (! isset($validation->$rules)) {
+            if (! isset($validation->{$rules})) {
                 throw ValidationException::forRuleNotFound($rules);
             }
 
             // If no error message is defined, use the error message in the Config\Validation file
             if (! $messages) {
                 $errorName = $rules . '_errors';
-                $messages  = $validation->$errorName ?? [];
+                $messages  = $validation->{$errorName} ?? [];
             }
 
-            $rules = $validation->$rules;
+            $rules = $validation->{$rules};
         }
 
         return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();

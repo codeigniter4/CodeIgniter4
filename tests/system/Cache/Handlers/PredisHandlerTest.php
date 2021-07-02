@@ -6,6 +6,9 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
+/**
+ * @internal
+ */
 final class PredisHandlerTest extends CIUnitTestCase
 {
     private $PredisHandler;
@@ -36,7 +39,7 @@ final class PredisHandlerTest extends CIUnitTestCase
         $this->PredisHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         foreach (self::getKeyArray() as $key) {
             $this->PredisHandler->delete($key);

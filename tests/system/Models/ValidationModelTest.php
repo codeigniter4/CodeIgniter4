@@ -9,6 +9,9 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
+/**
+ * @internal
+ */
 final class ValidationModelTest extends LiveModelTestCase
 {
     protected function setUp(): void
@@ -27,7 +30,7 @@ final class ValidationModelTest extends LiveModelTestCase
         $this->assertIsInt($this->model->insert($data));
 
         $errors = $this->model->errors();
-        $this->assertEquals([], $errors);
+        $this->assertSame([], $errors);
     }
 
     public function testValidationBasics(): void

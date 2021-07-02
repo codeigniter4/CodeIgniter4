@@ -4,6 +4,9 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class InflectorHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -48,7 +51,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $pluralizedString => $singularizedString) {
             $singular = singular($pluralizedString);
-            $this->assertEquals($singular, $singularizedString);
+            $this->assertSame($singular, $singularizedString);
         }
     }
 
@@ -86,7 +89,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $pluralizedString => $singularizedString) {
             $plural = plural($singularizedString);
-            $this->assertEquals($plural, $pluralizedString);
+            $this->assertSame($plural, $pluralizedString);
         }
     }
 
@@ -144,7 +147,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($triplets as $triplet) {
             $result = counted($triplet[0], $triplet[1]);
-            $this->assertEquals($triplet[2], $result);
+            $this->assertSame($triplet[2], $result);
         }
     }
 
@@ -159,7 +162,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $lowerCasedString => $camelizedString) {
             $camelized = camelize($lowerCasedString);
-            $this->assertEquals($camelized, $camelizedString);
+            $this->assertSame($camelized, $camelizedString);
         }
     }
 
@@ -174,7 +177,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $lowerCasedString => $pascalizedString) {
             $pascalized = pascalize($lowerCasedString);
-            $this->assertEquals($pascalized, $pascalizedString);
+            $this->assertSame($pascalized, $pascalizedString);
         }
     }
 
@@ -189,7 +192,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $spaced => $underscore) {
             $underscored = underscore($spaced);
-            $this->assertEquals($underscored, $underscore);
+            $this->assertSame($underscored, $underscore);
         }
     }
 
@@ -209,8 +212,8 @@ final class InflectorHelperTest extends CIUnitTestCase
         $humanizedUnderscore = humanize($underscored[0]);
         $humanizedDash       = humanize($dashed[0], '-');
 
-        $this->assertEquals($humanizedUnderscore, $underscored[1]);
-        $this->assertEquals($humanizedDash, $dashed[1]);
+        $this->assertSame($humanizedUnderscore, $underscored[1]);
+        $this->assertSame($humanizedDash, $dashed[1]);
     }
 
     //--------------------------------------------------------------------
@@ -243,7 +246,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($strings as $underscored => $dashed) {
             $dasherized = dasherize($underscored);
-            $this->assertEquals($dasherized, $dashed);
+            $this->assertSame($dasherized, $dashed);
         }
     }
 
@@ -266,7 +269,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($suffixes as $suffix => $number) {
             $ordinal = ordinal($number);
-            $this->assertEquals($suffix, $ordinal);
+            $this->assertSame($suffix, $ordinal);
         }
     }
 
@@ -289,7 +292,7 @@ final class InflectorHelperTest extends CIUnitTestCase
 
         foreach ($suffixedNumbers as $suffixed => $number) {
             $ordinalized = ordinalize($number);
-            $this->assertEquals($suffixed, $ordinalized);
+            $this->assertSame($suffixed, $ordinalized);
         }
     }
 }

@@ -16,8 +16,10 @@ use org\bovigo\vfs\vfsStream;
  * with vfsStream, so the support files are used directly for
  * most work, and the virtual file system will be used for
  * testing saving only.
+ *
+ * @internal
  */
-class BaseHandlerTest extends CIUnitTestCase
+final class BaseHandlerTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
@@ -39,7 +41,7 @@ class BaseHandlerTest extends CIUnitTestCase
         ];
         vfsStream::create($structure);
         // with one of them read only
-        $wont = $this->root->getChild('wontwork')->chmod(0400);
+        $this->root->getChild('wontwork')->chmod(0400);
 
         // for VFS tests
         $this->start = $this->root->url() . '/';
@@ -62,8 +64,8 @@ class BaseHandlerTest extends CIUnitTestCase
 
         $image = $handler->getFile();
         $this->assertTrue($image instanceof Image);
-        $this->assertEquals(155, $image->origWidth);
-        $this->assertEquals($path, $image->getPathname());
+        $this->assertSame(155, $image->origWidth);
+        $this->assertSame($path, $image->getPathname());
     }
 
     public function testMissingFile()
@@ -114,6 +116,6 @@ class BaseHandlerTest extends CIUnitTestCase
     {
         $handler = Services::image('gd', null, false);
         $handler->withFile($this->path);
-        $this->assertEquals($this->path, $handler->getPathname());
+        $this->assertSame($this->path, $handler->getPathname());
     }
 }

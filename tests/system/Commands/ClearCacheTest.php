@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 
-class ClearCacheTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ClearCacheTest extends CIUnitTestCase
 {
     protected $streamFilter;
 
@@ -23,7 +26,7 @@ class ClearCacheTest extends CIUnitTestCase
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
     }
@@ -38,7 +41,7 @@ class ClearCacheTest extends CIUnitTestCase
     public function testClearCacheWorks()
     {
         cache()->save('foo', 'bar');
-        $this->assertEquals('bar', cache('foo'));
+        $this->assertSame('bar', cache('foo'));
 
         command('cache:clear');
 

@@ -1,8 +1,11 @@
 <?php
 
-class ExampleSessionTest extends \Tests\Support\SessionTestCase
+/**
+ * @internal
+ */
+final class ExampleSessionTest extends \Tests\Support\SessionTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -13,6 +16,6 @@ class ExampleSessionTest extends \Tests\Support\SessionTestCase
 
         $value = $this->session->get('logged_in');
 
-        $this->assertEquals(123, $value);
+        $this->assertSame(123, $value);
     }
 }

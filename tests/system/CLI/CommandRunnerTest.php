@@ -7,6 +7,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 
+/**
+ * @internal
+ */
 final class CommandRunnerTest extends CIUnitTestCase
 {
     /**
@@ -42,7 +45,7 @@ final class CommandRunnerTest extends CIUnitTestCase
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
     }

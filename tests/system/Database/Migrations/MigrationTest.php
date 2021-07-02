@@ -6,11 +6,14 @@ use CodeIgniter\Database\Migration;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-class MigrationTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class MigrationTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -31,6 +34,6 @@ class MigrationTest extends CIUnitTestCase
 
         $dbGroup = $migration->getDBGroup();
 
-        $this->assertEquals('tests', $dbGroup);
+        $this->assertSame('tests', $dbGroup);
     }
 }

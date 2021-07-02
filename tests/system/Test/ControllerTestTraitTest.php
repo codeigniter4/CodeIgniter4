@@ -16,8 +16,10 @@ use Tests\Support\Controllers\Popcorn;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState         disabled
+ *
+ * @internal
  */
-class ControllerTestTraitTest extends CIUnitTestCase
+final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 
@@ -25,7 +27,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $this->withURI('http://example.com')
             ->withLogger($logger)
             ->controller(NeverHeardOfIt::class)
             ->execute('index');
@@ -35,7 +37,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $logger = new Logger(new LoggerConfig());
-        $result = $this->withURI('http://example.com')
+        $this->withURI('http://example.com')
             ->withLogger($logger)
             ->controller(Home::class)
             ->execute('nothere');
@@ -49,7 +51,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -59,7 +60,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -71,7 +71,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 
@@ -84,7 +83,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
 
         $body = $result->response()->getBody();
-        $this->assertEquals('Hi there', $body);
+        $this->assertSame('Hi there', $body);
     }
 
     public function testPopcornFailure()
@@ -95,7 +94,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('pop');
 
-        $this->assertEquals(567, $result->response()->getStatusCode());
+        $this->assertSame(567, $result->response()->getStatusCode());
     }
 
     public function testPopcornException()
@@ -106,7 +105,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('popper');
 
-        $this->assertEquals(500, $result->response()->getStatusCode());
+        $this->assertSame(500, $result->response()->getStatusCode());
     }
 
     public function testPopcornIndexWithSupport()
@@ -125,7 +124,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
 
         $body = $result->response()->getBody();
-        $this->assertEquals('Hi there', $body);
+        $this->assertSame('Hi there', $body);
     }
 
     public function testRequestPassthrough()
@@ -137,7 +136,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
-        $this->assertEquals('get', $req->getMethod());
+        $this->assertSame('get', $req->getMethod());
     }
 
     public function testFailureResponse()
@@ -149,7 +148,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('oops');
 
         $this->assertFalse($result->isOK());
-        $this->assertEquals(401, $result->response()->getStatusCode());
+        $this->assertSame(401, $result->response()->getStatusCode());
     }
 
     public function testEmptyResponse()
@@ -209,7 +208,7 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index3');
 
         $response = json_decode($result->response()->getBody());
-        $this->assertEquals('en', $response->lang);
+        $this->assertSame('en', $response->lang);
     }
 
     /**
@@ -222,7 +221,6 @@ class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Home::class)
             ->execute('index');
 
-        $body = $result->response()->getBody();
         $this->assertTrue($result->isOK());
     }
 

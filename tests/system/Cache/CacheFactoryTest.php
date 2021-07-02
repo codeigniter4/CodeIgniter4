@@ -6,7 +6,10 @@ use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
-class CacheFactoryTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class CacheFactoryTest extends CIUnitTestCase
 {
     private static $directory = 'CacheFactory';
     private $cacheFactory;
@@ -23,7 +26,7 @@ class CacheFactoryTest extends CIUnitTestCase
         $this->config->storePath .= self::$directory;
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (is_dir($this->config->storePath)) {
             chmod($this->config->storePath, 0777);

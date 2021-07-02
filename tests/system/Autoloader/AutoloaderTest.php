@@ -8,7 +8,10 @@ use Config\Modules;
 use Config\Services;
 use UnnamespacedClass;
 
-class AutoloaderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class AutoloaderTest extends CIUnitTestCase
 {
     /**
      * @var Autoloader
@@ -184,7 +187,7 @@ class AutoloaderTest extends CIUnitTestCase
         $test     = '${../path}!#/to/some/file.php_';
         $expected = '/path/to/some/file.php';
 
-        $this->assertEquals($expected, $this->loader->sanitizeFilename($test));
+        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
     }
 
     public function testSanitizationAllowUnicodeChars()
@@ -192,14 +195,14 @@ class AutoloaderTest extends CIUnitTestCase
         $test     = 'Ä/path/to/some/file.php_';
         $expected = 'Ä/path/to/some/file.php';
 
-        $this->assertEquals($expected, $this->loader->sanitizeFilename($test));
+        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
     }
 
     public function testSanitizationAllowsWindowsFilepaths()
     {
         $test = 'C:\path\to\some/file.php';
 
-        $this->assertEquals($test, $this->loader->sanitizeFilename($test));
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
     }
 
     public function testFindsComposerRoutes()

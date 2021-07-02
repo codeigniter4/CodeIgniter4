@@ -5,6 +5,9 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
+/**
+ * @internal
+ */
 final class EnvironmentCommandTest extends CIUnitTestCase
 {
     private $streamFilter;

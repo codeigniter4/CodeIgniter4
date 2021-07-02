@@ -6,6 +6,9 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
+/**
+ * @internal
+ */
 final class RedisHandlerTest extends CIUnitTestCase
 {
     private $redisHandler;
@@ -36,7 +39,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->redisHandler->initialize();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         foreach (self::getKeyArray() as $key) {
             $this->redisHandler->delete($key);

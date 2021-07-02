@@ -6,7 +6,10 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class InsertTest extends CIUnitTestCase
 {
     /**
      * @var MockConnection
@@ -42,8 +45,8 @@ class InsertTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
-        $this->assertEquals($expectedBinds, $builder->getBinds());
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
     public function testThrowsExceptionOnNoValuesSet()
@@ -80,10 +83,10 @@ class InsertTest extends CIUnitTestCase
         $this->assertInstanceOf(Query::class, $query);
 
         $raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description:,:id:,:name:), (:description.1:,:id.1:,:name.1:)';
-        $this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 
         $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
-        $this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery()));
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 
     /**

@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class OrderTest extends CIUnitTestCase
+final class OrderTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -24,10 +26,10 @@ class OrderTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(4, $jobs);
-        $this->assertEquals('Accountant', $jobs[0]->name);
-        $this->assertEquals('Developer', $jobs[1]->name);
-        $this->assertEquals('Musician', $jobs[2]->name);
-        $this->assertEquals('Politician', $jobs[3]->name);
+        $this->assertSame('Accountant', $jobs[0]->name);
+        $this->assertSame('Developer', $jobs[1]->name);
+        $this->assertSame('Musician', $jobs[2]->name);
+        $this->assertSame('Politician', $jobs[3]->name);
     }
 
     //--------------------------------------------------------------------
@@ -40,10 +42,10 @@ class OrderTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(4, $jobs);
-        $this->assertEquals('Accountant', $jobs[3]->name);
-        $this->assertEquals('Developer', $jobs[2]->name);
-        $this->assertEquals('Musician', $jobs[1]->name);
-        $this->assertEquals('Politician', $jobs[0]->name);
+        $this->assertSame('Accountant', $jobs[3]->name);
+        $this->assertSame('Developer', $jobs[2]->name);
+        $this->assertSame('Musician', $jobs[1]->name);
+        $this->assertSame('Politician', $jobs[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -57,10 +59,10 @@ class OrderTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(4, $users);
-        $this->assertEquals('Ahmadinejad', $users[0]->name);
-        $this->assertEquals('Chris Martin', $users[1]->name);
-        $this->assertEquals('Richard A Causey', $users[2]->name);
-        $this->assertEquals('Derek Jones', $users[3]->name);
+        $this->assertSame('Ahmadinejad', $users[0]->name);
+        $this->assertSame('Chris Martin', $users[1]->name);
+        $this->assertSame('Richard A Causey', $users[2]->name);
+        $this->assertSame('Derek Jones', $users[3]->name);
     }
 
     //--------------------------------------------------------------------
@@ -83,6 +85,6 @@ class OrderTest extends CIUnitTestCase
 
         $expected = 'SELECT * FROM ' . $table . ' ORDER BY ' . $key;
 
-        $this->assertEquals($expected, str_replace("\n", ' ', $sql));
+        $this->assertSame($expected, str_replace("\n", ' ', $sql));
     }
 }

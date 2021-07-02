@@ -617,7 +617,7 @@ class CURLRequest extends Request
         // Debug
         if ($config['debug']) {
             $curlOptions[CURLOPT_VERBOSE] = 1;
-            $curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+') : fopen('php://stderr', 'w');
+            $curlOptions[CURLOPT_STDERR]  = is_string($config['debug']) ? fopen($config['debug'], 'a+b') : fopen('php://stderr', 'wb');
         }
 
         // Decode Content

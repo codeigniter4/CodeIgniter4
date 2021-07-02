@@ -6,7 +6,10 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class DistinctTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DistinctTest extends CIUnitTestCase
 {
     protected $db;
 
@@ -29,7 +32,7 @@ class DistinctTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT DISTINCT "country" FROM "user"';
 
-        $this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
     //--------------------------------------------------------------------

@@ -7,7 +7,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Services;
 
-class InfoCacheTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class InfoCacheTest extends CIUnitTestCase
 {
     protected $streamFilter;
 
@@ -23,7 +26,7 @@ class InfoCacheTest extends CIUnitTestCase
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
 

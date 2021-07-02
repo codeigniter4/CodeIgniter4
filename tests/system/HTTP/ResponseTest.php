@@ -12,7 +12,10 @@ use Config\Services;
 use DateTime;
 use DateTimeZone;
 
-class ResponseTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ResponseTest extends CIUnitTestCase
 {
     protected $server;
 
@@ -22,7 +25,7 @@ class ResponseTest extends CIUnitTestCase
         $this->server = $_SERVER;
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $_SERVER = $this->server;
         Factories::reset('config');
@@ -34,7 +37,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setStatusCode(200);
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     //--------------------------------------------------------------------
@@ -66,7 +69,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setStatusCode(200);
 
-        $this->assertEquals('OK', $response->getReasonPhrase());
+        $this->assertSame('OK', $response->getReasonPhrase());
     }
 
     //--------------------------------------------------------------------
@@ -77,7 +80,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setStatusCode(200, 'Not the mama');
 
-        $this->assertEquals('Not the mama', $response->getReasonPhrase());
+        $this->assertSame('Not the mama', $response->getReasonPhrase());
     }
 
     //--------------------------------------------------------------------
@@ -121,7 +124,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setStatusCode(300);
 
-        $this->assertEquals('Multiple Choices', $response->getReasonPhrase());
+        $this->assertSame('Multiple Choices', $response->getReasonPhrase());
     }
 
     //--------------------------------------------------------------------
@@ -132,7 +135,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setStatusCode(300, 'My Little Pony');
 
-        $this->assertEquals('My Little Pony', $response->getReasonPhrase());
+        $this->assertSame('My Little Pony', $response->getReasonPhrase());
     }
 
     //--------------------------------------------------------------------
@@ -141,7 +144,7 @@ class ResponseTest extends CIUnitTestCase
     {
         $response = new Response(new App());
 
-        $this->assertEquals('OK', $response->getReasonPhrase());
+        $this->assertSame('OK', $response->getReasonPhrase());
     }
 
     //--------------------------------------------------------------------
@@ -157,7 +160,7 @@ class ResponseTest extends CIUnitTestCase
 
         $header = $response->getHeaderLine('Date');
 
-        $this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
+        $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
     //--------------------------------------------------------------------
@@ -175,7 +178,7 @@ class ResponseTest extends CIUnitTestCase
         $pager->store('default', 3, 10, 200);
         $response->setLink($pager);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=2>; rel="prev",<http://example.com/test/index.php?page=4>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
@@ -183,7 +186,7 @@ class ResponseTest extends CIUnitTestCase
         $pager->store('default', 1, 10, 200);
         $response->setLink($pager);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<http://example.com/test/index.php?page=2>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
@@ -191,7 +194,7 @@ class ResponseTest extends CIUnitTestCase
         $pager->store('default', 20, 10, 200);
         $response->setLink($pager);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=19>; rel="prev"',
             $response->header('Link')->getValue()
         );
@@ -205,7 +208,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setContentType('text/json');
 
-        $this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+        $this->assertSame('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
     //--------------------------------------------------------------------
@@ -216,7 +219,7 @@ class ResponseTest extends CIUnitTestCase
 
         $response->noCache();
 
-        $this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
+        $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
     }
 
     //--------------------------------------------------------------------
@@ -236,22 +239,20 @@ class ResponseTest extends CIUnitTestCase
 
         $response->setCache($options);
 
-        $this->assertEquals('12345678', $response->getHeaderLine('ETag'));
-        $this->assertEquals($date, $response->getHeaderLine('Last-Modified'));
-        $this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
+        $this->assertSame('12345678', $response->getHeaderLine('ETag'));
+        $this->assertSame($date, $response->getHeaderLine('Last-Modified'));
+        $this->assertSame('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
     }
 
     public function testSetCacheNoOptions()
     {
         $response = new Response(new App());
 
-        $date = date('r');
-
         $options = [];
 
         $response->setCache($options);
 
-        $this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
+        $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
     }
 
     //--------------------------------------------------------------------
@@ -267,7 +268,7 @@ class ResponseTest extends CIUnitTestCase
 
         $header = $response->getHeaderLine('Last-Modified');
 
-        $this->assertEquals($date->format('D, d M Y H:i:s') . ' GMT', $header);
+        $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
     //--------------------------------------------------------------------
@@ -279,8 +280,8 @@ class ResponseTest extends CIUnitTestCase
         $response->redirect('example.com');
 
         $this->assertTrue($response->hasHeader('location'));
-        $this->assertEquals('example.com', $response->getHeaderLine('Location'));
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertSame('example.com', $response->getHeaderLine('Location'));
+        $this->assertSame(302, $response->getStatusCode());
     }
 
     //--------------------------------------------------------------------
@@ -292,8 +293,8 @@ class ResponseTest extends CIUnitTestCase
         $response->redirect('example.com', 'auto', 307);
 
         $this->assertTrue($response->hasHeader('location'));
-        $this->assertEquals('example.com', $response->getHeaderLine('Location'));
-        $this->assertEquals(307, $response->getStatusCode());
+        $this->assertSame('example.com', $response->getHeaderLine('Location'));
+        $this->assertSame(307, $response->getStatusCode());
     }
 
     //--------------------------------------------------------------------
@@ -303,7 +304,7 @@ class ResponseTest extends CIUnitTestCase
         $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
         $response                   = new Response(new App());
         $response->redirect('example.com', 'auto', 307);
-        $this->assertEquals('0;url=example.com', $response->getHeaderLine('Refresh'));
+        $this->assertSame('0;url=example.com', $response->getHeaderLine('Refresh'));
     }
 
     //--------------------------------------------------------------------
@@ -358,7 +359,7 @@ class ResponseTest extends CIUnitTestCase
         $response = new Response(new App());
         $response->setJSON($body);
 
-        $this->assertEquals($expected, $response->getJSON());
+        $this->assertSame($expected, $response->getJSON());
         $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
     }
 
@@ -377,7 +378,7 @@ class ResponseTest extends CIUnitTestCase
         $response = new Response(new App());
         $response->setBody($body);
 
-        $this->assertEquals($expected, $response->getJSON());
+        $this->assertSame($expected, $response->getJSON());
     }
 
     //--------------------------------------------------------------------
@@ -397,7 +398,7 @@ class ResponseTest extends CIUnitTestCase
         $response = new Response(new App());
         $response->setXML($body);
 
-        $this->assertEquals($expected, $response->getXML());
+        $this->assertSame($expected, $response->getXML());
         $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
     }
 
@@ -416,7 +417,7 @@ class ResponseTest extends CIUnitTestCase
         $response = new Response(new App());
         $response->setBody($body);
 
-        $this->assertEquals($expected, $response->getXML());
+        $this->assertSame($expected, $response->getXML());
     }
 
     //--------------------------------------------------------------------
@@ -497,7 +498,7 @@ class ResponseTest extends CIUnitTestCase
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
 
-        $this->assertEquals(303, $response->getStatusCode());
+        $this->assertSame(303, $response->getStatusCode());
     }
 
     public function testTemporaryRedirectGet11()
@@ -509,7 +510,7 @@ class ResponseTest extends CIUnitTestCase
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
 
-        $this->assertEquals(307, $response->getStatusCode());
+        $this->assertSame(307, $response->getStatusCode());
     }
 
     //--------------------------------------------------------------------
@@ -544,7 +545,7 @@ class ResponseTest extends CIUnitTestCase
         $actual = ob_get_contents();
         ob_end_clean();
 
-        $this->assertEquals('Happy days', $actual);
+        $this->assertSame('Happy days', $actual);
     }
 
     public function testInvalidSameSiteCookie()

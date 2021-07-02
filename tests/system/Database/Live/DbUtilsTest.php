@@ -9,8 +9,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DbUtilsTest extends CIUnitTestCase
+final class DbUtilsTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -199,7 +201,7 @@ class DbUtilsTest extends CIUnitTestCase
 
         $data = array_filter(preg_split('/(\r\n|\n|\r)/', $data));
 
-        $this->assertEquals('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
+        $this->assertSame('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
     }
 
     //--------------------------------------------------------------------
@@ -217,6 +219,6 @@ class DbUtilsTest extends CIUnitTestCase
         $actual = preg_replace('#\R+#', '', $data);
         $actual = preg_replace('/[ ]{2,}|[\t]/', '', $actual);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

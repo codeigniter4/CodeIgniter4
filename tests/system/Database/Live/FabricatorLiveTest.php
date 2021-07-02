@@ -11,8 +11,10 @@ use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class FabricatorLiveTest extends CIUnitTestCase
+final class FabricatorLiveTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -62,7 +64,7 @@ class FabricatorLiveTest extends CIUnitTestCase
 
         $fabricator->create();
 
-        $this->assertEquals($count + 1, Fabricator::getCount('user'));
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
     public function testHelperIncrementsCount()
@@ -71,7 +73,7 @@ class FabricatorLiveTest extends CIUnitTestCase
 
         fake(UserModel::class, ['country' => 'Italy']);
 
-        $this->assertEquals($count + 1, Fabricator::getCount('user'));
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
     public function testCreateThrowsOnFailure()
@@ -86,7 +88,7 @@ class FabricatorLiveTest extends CIUnitTestCase
     {
         helper('test');
         $result = fake(UserModel::class, ['name' => 'Derek'], false);
-        $this->assertEquals('Derek', $result->name);
+        $this->assertSame('Derek', $result->name);
         $this->dontSeeInDatabase('user', ['name' => 'Derek']);
     }
 }

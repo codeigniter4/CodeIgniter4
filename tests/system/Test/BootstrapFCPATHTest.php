@@ -11,9 +11,11 @@ namespace CodeIgniter\Test;
  * It writes a file in the temp directory that loads the bootstrap file
  * then compares its echo FCPATH; to the correct FCPATH returned
  * from correctFCPATH();
+ *
+ * @internal
  */
 
-class BootstrapFCPATHTest extends CIUnitTestCase
+final class BootstrapFCPATHTest extends CIUnitTestCase
 {
     private $currentDir = __DIR__;
     private $dir1       = '/tmp/dir1';
@@ -28,7 +30,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
         $this->writeFiles();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->deleteFiles();
@@ -39,7 +41,7 @@ class BootstrapFCPATHTest extends CIUnitTestCase
     {
         $result1     = $this->readOutput($this->file1);
         $correctPath = $this->correctFCPATH();
-        self::assertEquals($correctPath, $result1);
+        $this->assertSame($correctPath, $result1);
     }
 
     private function correctFCPATH()

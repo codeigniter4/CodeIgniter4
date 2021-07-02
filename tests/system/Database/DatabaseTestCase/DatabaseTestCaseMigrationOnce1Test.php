@@ -12,8 +12,10 @@ use Config\Services;
  * show $migrateOnce applies per test case file.
  *
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
+final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -43,7 +45,7 @@ class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         'Tests\Support\MigrationTestMigrations',
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
 

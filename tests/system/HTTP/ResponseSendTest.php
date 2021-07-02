@@ -10,8 +10,10 @@ use Config\App;
  * TestCaseTest because it messes with output
  * buffering from PHPUnit, and the individual
  * test cases need to be run as separate processes.
+ *
+ * @internal
  */
-class ResponseSendTest extends CIUnitTestCase
+final class ResponseSendTest extends CIUnitTestCase
 {
 
     /**
@@ -50,8 +52,6 @@ class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }
@@ -86,8 +86,6 @@ class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }
@@ -125,8 +123,6 @@ class ResponseSendTest extends CIUnitTestCase
         // send it
         ob_start();
         $response->send();
-
-        $buffer = ob_clean();
         if (ob_get_level() > 0) {
             ob_end_clean();
         }

@@ -21,8 +21,10 @@ use Tests\Support\Filters\Customfilter;
  * in test/_support/Filters/Customfilter.php:
  *  - alias: test-customfilter
  *  - class: \Tests\Support\Filters\Customfilter::class
+ *
+ * @internal
  */
-class FilterTestTraitTest extends CIUnitTestCase
+final class FilterTestTraitTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
@@ -54,7 +56,7 @@ class FilterTestTraitTest extends CIUnitTestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid filter position passed: banana');
 
-        $caller = $this->getFilterCaller('test-customfilter', 'banana');
+        $this->getFilterCaller('test-customfilter', 'banana');
     }
 
     public function testCallerUsesClonedInstance()
@@ -65,14 +67,14 @@ class FilterTestTraitTest extends CIUnitTestCase
         $this->assertObjectNotHasAttribute('url', $this->request);
 
         $this->assertObjectHasAttribute('url', $result);
-        $this->assertEquals('http://hellowworld.com', $result->url);
+        $this->assertSame('http://hellowworld.com', $result->url);
     }
 
     public function testGetFiltersForRoute()
     {
         $result = $this->getFiltersForRoute('/', 'before');
 
-        $this->assertEquals(['test-customfilter'], $result);
+        $this->assertSame(['test-customfilter'], $result);
     }
 
     public function testAssertFilter()

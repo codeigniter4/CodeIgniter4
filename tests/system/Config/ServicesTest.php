@@ -36,7 +36,10 @@ use Config\App;
 use Config\Exceptions;
 use Tests\Support\Config\Services as Services;
 
-class ServicesTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ServicesTest extends CIUnitTestCase
 {
     protected $config;
     protected $original;
@@ -49,7 +52,7 @@ class ServicesTest extends CIUnitTestCase
         $this->config   = new App();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $_SERVER = $this->original;
         Services::reset();
@@ -168,20 +171,20 @@ class ServicesTest extends CIUnitTestCase
     {
         $actual = Services::language();
         $this->assertInstanceOf(Language::class, $actual);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
 
         Services::language('la');
-        $this->assertEquals('la', $actual->getLocale());
+        $this->assertSame('la', $actual->getLocale());
     }
 
     public function testNewUnsharedLanguage()
     {
         $actual = Services::language(null, false);
         $this->assertInstanceOf(Language::class, $actual);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
 
         Services::language('la', false);
-        $this->assertEquals('en', $actual->getLocale());
+        $this->assertSame('en', $actual->getLocale());
     }
 
     public function testNewPager()
@@ -291,7 +294,12 @@ class ServicesTest extends CIUnitTestCase
         $response2 = service('response');
         $this->assertInstanceOf(MockResponse::class, $response2);
 
-        $this->assertEquals($response, $response2);
+        Services::injectMock('response', $response);
+        $response3 = service('response');
+        $this->assertInstanceOf(MockResponse::class, $response3);
+
+        $this->assertNotSame($response, $response2);
+        $this->assertSame($response, $response3);
     }
 
     /**

@@ -5,6 +5,9 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTime;
 
+/**
+ * @internal
+ */
 final class DateHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
@@ -17,7 +20,6 @@ final class DateHelperTest extends CIUnitTestCase
 
     public function testNowDefault()
     {
-        $time = new DateTime();
         $this->assertCloseEnough(now(), time());  // close enough
     }
 

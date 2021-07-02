@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class AliasTest extends CIUnitTestCase
+final class AliasTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -24,7 +26,7 @@ class AliasTest extends CIUnitTestCase
             ->where('j.name', 'Developer')
             ->get();
 
-        $this->assertEquals(1, count($jobs->getResult()));
+        $this->assertCount(1, $jobs->getResult());
     }
 
     //--------------------------------------------------------------------

@@ -5,7 +5,10 @@ namespace CodeIgniter\Format;
 use CodeIgniter\Format\Exceptions\FormatException;
 use CodeIgniter\Test\CIUnitTestCase;
 
-class FormatTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FormatTest extends CIUnitTestCase
 {
     /**
      * @var Format

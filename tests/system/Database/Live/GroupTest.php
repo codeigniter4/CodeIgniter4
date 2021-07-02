@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class GroupTest extends CIUnitTestCase
+final class GroupTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -69,8 +71,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Developer', $result[0]->name);
-        $this->assertEquals('Politician', $result[1]->name);
+        $this->assertSame('Developer', $result[0]->name);
+        $this->assertSame('Politician', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -87,8 +89,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Developer', $result[0]->name);
-        $this->assertEquals('Politician', $result[1]->name);
+        $this->assertSame('Developer', $result[0]->name);
+        $this->assertSame('Politician', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -104,8 +106,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Musician', $result[1]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Musician', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -122,8 +124,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Musician', $result[1]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Musician', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -138,7 +140,7 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('Developer', $result[0]->name);
+        $this->assertSame('Developer', $result[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -154,8 +156,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Developer', $result[1]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Developer', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -172,8 +174,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Developer', $result[1]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Developer', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -190,9 +192,9 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(3, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Developer', $result[1]->name);
-        $this->assertEquals('Musician', $result[2]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Developer', $result[1]->name);
+        $this->assertSame('Musician', $result[2]->name);
     }
 
     //--------------------------------------------------------------------
@@ -212,7 +214,7 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
+        $this->assertSame('Accountant', $result[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -232,8 +234,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Musician', $result[1]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Musician', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -253,7 +255,7 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('Musician', $result[0]->name);
+        $this->assertSame('Musician', $result[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -273,9 +275,9 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(3, $result);
-        $this->assertEquals('Accountant', $result[0]->name);
-        $this->assertEquals('Musician', $result[1]->name);
-        $this->assertEquals('Politician', $result[2]->name);
+        $this->assertSame('Accountant', $result[0]->name);
+        $this->assertSame('Musician', $result[1]->name);
+        $this->assertSame('Politician', $result[2]->name);
     }
 
     //--------------------------------------------------------------------
@@ -292,7 +294,7 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('Richard A Causey', $result[0]->name);
+        $this->assertSame('Richard A Causey', $result[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -309,8 +311,8 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(2, $result);
-        $this->assertEquals('Ahmadinejad', $result[0]->name);
-        $this->assertEquals('Chris Martin', $result[1]->name);
+        $this->assertSame('Ahmadinejad', $result[0]->name);
+        $this->assertSame('Chris Martin', $result[1]->name);
     }
 
     //--------------------------------------------------------------------
@@ -327,7 +329,7 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('Derek Jones', $result[0]->name);
+        $this->assertSame('Derek Jones', $result[0]->name);
     }
 
     //--------------------------------------------------------------------
@@ -344,9 +346,9 @@ class GroupTest extends CIUnitTestCase
             ->getResult();
 
         $this->assertCount(3, $result);
-        $this->assertEquals('Derek Jones', $result[0]->name);
-        $this->assertEquals('Richard A Causey', $result[1]->name);
-        $this->assertEquals('Chris Martin', $result[2]->name);
+        $this->assertSame('Derek Jones', $result[0]->name);
+        $this->assertSame('Richard A Causey', $result[1]->name);
+        $this->assertSame('Chris Martin', $result[2]->name);
     }
 
     //--------------------------------------------------------------------
@@ -360,6 +362,6 @@ class GroupTest extends CIUnitTestCase
             ->get()
             ->getResult();
 
-        $this->assertEquals(2, $result[0]->count);
+        $this->assertSame(2, (int) $result[0]->count);
     }
 }

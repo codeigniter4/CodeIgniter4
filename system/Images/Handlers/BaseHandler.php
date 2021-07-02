@@ -812,7 +812,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     public function __call(string $name, array $args = [])
     {
         if (method_exists($this->image(), $name)) {
-            return $this->image()->$name(...$args);
+            return $this->image()->{$name}(...$args);
         }
     }
 

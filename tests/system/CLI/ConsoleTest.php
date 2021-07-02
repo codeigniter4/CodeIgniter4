@@ -10,7 +10,10 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 
-class ConsoleTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class ConsoleTest extends CIUnitTestCase
 {
     private $stream_filter;
 
@@ -39,7 +42,7 @@ class ConsoleTest extends CIUnitTestCase
         $this->app = new MockCodeIgniter(new MockCLIConfig());
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         stream_filter_remove($this->stream_filter);
     }

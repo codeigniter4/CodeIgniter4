@@ -7,14 +7,17 @@ use CodeIgniter\Session\SessionInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 
-class SessionTestCase extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SessionTestCase extends CIUnitTestCase
 {
     /**
      * @var SessionInterface
      */
     protected $session;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

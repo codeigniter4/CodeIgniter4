@@ -9,8 +9,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class PreparedQueryTest extends CIUnitTestCase
+final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -45,7 +47,7 @@ class PreparedQueryTest extends CIUnitTestCase
         } else {
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
-        $this->assertEquals($expected, $query->getQueryString());
+        $this->assertSame($expected, $query->getQueryString());
 
         $query->close();
     }
@@ -69,7 +71,7 @@ class PreparedQueryTest extends CIUnitTestCase
         }
 
         $expected = "INSERT INTO {$pre}user (name, email, country) VALUES ({$placeholders})";
-        $this->assertEquals($expected, $query->getQueryString());
+        $this->assertSame($expected, $query->getQueryString());
 
         $query->close();
     }

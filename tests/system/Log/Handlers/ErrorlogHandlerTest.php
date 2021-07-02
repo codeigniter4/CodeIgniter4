@@ -6,6 +6,9 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @internal
+ */
 final class ErrorlogHandlerTest extends CIUnitTestCase
 {
     public function testHandlerThrowsOnInvalidMessageType(): void

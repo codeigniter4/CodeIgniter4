@@ -6,7 +6,10 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 
-class FileLocatorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileLocatorTest extends CIUnitTestCase
 {
     /**
      * @var FileLocator
@@ -44,7 +47,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Controllers/Home.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file));
+        $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
     //--------------------------------------------------------------------
@@ -64,7 +67,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     //--------------------------------------------------------------------
@@ -75,7 +78,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Common.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file));
+        $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
     //--------------------------------------------------------------------
@@ -86,7 +89,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Controllers/Home.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'Controllers'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
     }
 
     //--------------------------------------------------------------------
@@ -97,7 +100,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     //--------------------------------------------------------------------
@@ -108,7 +111,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'Views'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     //--------------------------------------------------------------------
@@ -119,7 +122,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'html'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
 
     //--------------------------------------------------------------------
@@ -130,7 +133,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
-        $this->assertEquals($expected, $this->locator->locateFile($file, 'html'));
+        $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
 
     //--------------------------------------------------------------------
@@ -159,7 +162,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $foundFiles = $this->locator->search('Config/App.php');
 
-        $this->assertEquals($expected, $foundFiles[0]);
+        $this->assertSame($expected, $foundFiles[0]);
     }
 
     //--------------------------------------------------------------------
@@ -170,7 +173,7 @@ class FileLocatorTest extends CIUnitTestCase
 
         $foundFiles = $this->locator->search('Config/App', 'php');
 
-        $this->assertEquals($expected, $foundFiles[0]);
+        $this->assertSame($expected, $foundFiles[0]);
     }
 
     //--------------------------------------------------------------------
@@ -201,7 +204,7 @@ class FileLocatorTest extends CIUnitTestCase
     {
         $foundFiles = $this->locator->search('Language/en/Validation.php', 'php', false);
 
-        $this->assertEquals(
+        $this->assertSame(
             [
                 SYSTEMPATH . 'Language/en/Validation.php',
                 APPPATH . 'Language/en/Validation.php',
@@ -275,7 +278,7 @@ class FileLocatorTest extends CIUnitTestCase
         $ClassName = $this->locator->findQualifiedNameFromPath(SYSTEMPATH . 'HTTP/Header.php');
         $expected  = '\CodeIgniter\HTTP\Header';
 
-        $this->assertEquals($expected, $ClassName);
+        $this->assertSame($expected, $ClassName);
     }
 
     public function testFindQNameFromPathWithFileNotExist()
@@ -294,7 +297,7 @@ class FileLocatorTest extends CIUnitTestCase
 
     public function testGetClassNameFromClassFile()
     {
-        $this->assertEquals(
+        $this->assertSame(
             __CLASS__,
             $this->locator->getClassname(__FILE__)
         );
@@ -302,7 +305,7 @@ class FileLocatorTest extends CIUnitTestCase
 
     public function testGetClassNameFromNonClassFile()
     {
-        $this->assertEquals(
+        $this->assertSame(
             '',
             $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php')
         );

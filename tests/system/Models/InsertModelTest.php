@@ -10,6 +10,9 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
+/**
+ * @internal
+ */
 final class InsertModelTest extends LiveModelTestCase
 {
     public function testSetWorksWithInsert(): void

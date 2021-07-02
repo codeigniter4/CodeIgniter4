@@ -1633,10 +1633,10 @@ abstract class BaseModel
     public function __get(string $name)
     {
         if (property_exists($this, $name)) {
-            return $this->$name;
+            return $this->{$name};
         }
 
-        return $this->db->$name ?? null;
+        return $this->db->{$name} ?? null;
     }
 
     /**
@@ -1652,7 +1652,7 @@ abstract class BaseModel
             return true;
         }
 
-        return isset($this->db->$name);
+        return isset($this->db->{$name});
     }
 
     /**

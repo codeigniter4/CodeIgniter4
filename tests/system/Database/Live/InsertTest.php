@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class InsertTest extends CIUnitTestCase
+final class InsertTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -65,7 +67,7 @@ class InsertTest extends CIUnitTestCase
             ->getwhere(['id' => 5])
             ->getRow();
 
-        $this->assertEquals('Cab Driver', $row->name);
+        $this->assertSame('Cab Driver', $row->name);
     }
 
     //--------------------------------------------------------------------
@@ -84,7 +86,7 @@ class InsertTest extends CIUnitTestCase
             ->getwhere(['id' => 1])
             ->getRow();
 
-        $this->assertEquals('Cab Driver', $row->name);
+        $this->assertSame('Cab Driver', $row->name);
     }
 
     //--------------------------------------------------------------------

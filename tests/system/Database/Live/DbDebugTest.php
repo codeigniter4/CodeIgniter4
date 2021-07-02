@@ -7,8 +7,10 @@ use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DEBugTest extends CIUnitTestCase
+final class DbDebugTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -18,17 +20,17 @@ class DEBugTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->db, 'DBDebug', true);
         $this->expectException('Exception');
-        $result = $this->db->simpleQuery('SELECT * FROM db_error');
+        $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
     public function testDBDebugFalse()
     {
         $this->setPrivateProperty($this->db, 'DBDebug', false);
         $result = $this->db->simpleQuery('SELECT * FROM db_error');
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->setPrivateProperty($this->db, 'DBDebug', true);
         parent::tearDown();

@@ -6,7 +6,10 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
-class FileMovingTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FileMovingTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
@@ -25,7 +28,7 @@ class FileMovingTest extends CIUnitTestCase
         $_FILES = [];
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->root = null;
@@ -193,7 +196,7 @@ class FileMovingTest extends CIUnitTestCase
 
         $this->assertInstanceOf(UploadedFile::class, $file);
         $path = $file->store($destination, $file->getName());
-        $this->assertEquals($destination . '/fileA.txt', $path);
+        $this->assertSame($destination . '/fileA.txt', $path);
     }
 
     //--------------------------------------------------------------------

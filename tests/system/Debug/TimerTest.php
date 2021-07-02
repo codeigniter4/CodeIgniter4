@@ -4,6 +4,9 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
+/**
+ * @internal
+ */
 final class TimerTest extends CIUnitTestCase
 {
     /**
@@ -65,7 +68,7 @@ final class TimerTest extends CIUnitTestCase
 
         $expected = $timers['test1']['duration'];
 
-        $this->assertEquals($expected, $timer->getElapsedTime('test1'));
+        $this->assertSame($expected, $timer->getElapsedTime('test1'));
     }
 
     public function testThrowsExceptionStoppingNonTimer()

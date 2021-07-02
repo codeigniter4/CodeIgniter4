@@ -1,8 +1,11 @@
 <?php
 
-class ExampleTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class ExampleTest extends \CodeIgniter\Test\CIUnitTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }

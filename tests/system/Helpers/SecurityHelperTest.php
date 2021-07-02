@@ -4,7 +4,10 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class SecurityHelperTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SecurityHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
@@ -15,24 +18,24 @@ class SecurityHelperTest extends CIUnitTestCase
 
     public function testSanitizeFilenameSimpleSuccess()
     {
-        $this->assertEquals('hello.doc', sanitize_filename('hello.doc'));
+        $this->assertSame('hello.doc', sanitize_filename('hello.doc'));
     }
 
     public function testSanitizeFilenameStripsExtras()
     {
         $filename = './<!--foo -->';
-        $this->assertEquals('foo ', sanitize_filename($filename));
+        $this->assertSame('foo ', sanitize_filename($filename));
     }
 
     public function testStripImageTags()
     {
-        $this->assertEquals('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
 
-        $this->assertEquals('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
+        $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
     }
 
-    public function test_encode_php_tags()
+    public function testEncodePhpTags()
     {
-        $this->assertEquals('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
+        $this->assertSame('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
     }
 }
