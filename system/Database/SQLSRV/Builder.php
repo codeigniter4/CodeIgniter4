@@ -1,7 +1,5 @@
 <?php
 
-namespace CodeIgniter\Database\SQLSRV;
-
 /**
  * This file is part of the CodeIgniter 4 framework.
  *
@@ -10,6 +8,8 @@ namespace CodeIgniter\Database\SQLSRV;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace CodeIgniter\Database\SQLSRV;
 
 use const CI_DEBUG;
 use Closure;
@@ -241,8 +241,7 @@ class Builder extends BaseBuilder
 
         $fullTableName = $this->getFullName($table);
 
-        $statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
-            . implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
+        $statement = sprintf('UPDATE %s%s SET', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName, );
 
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
@@ -565,7 +564,7 @@ class Builder extends BaseBuilder
         $table = $this->QBFrom[0];
 
         $sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM '
-                . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->protectIdentifiers($table, true, null, false);
+            . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->protectIdentifiers($table, true, null, false);
 
         if ($this->testMode) {
             return $sql;
