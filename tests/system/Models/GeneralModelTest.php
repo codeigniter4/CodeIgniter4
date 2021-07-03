@@ -144,7 +144,6 @@ final class GeneralModelTest extends CIUnitTestCase
     public function testInitialize(): void
     {
         $model = new class() extends Model {
-
             /**
              * @var bool
              */

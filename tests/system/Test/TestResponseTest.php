@@ -5,7 +5,6 @@ namespace CodeIgniter\Test;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Services;
 use PHPUnit\Framework\AssertionFailedError;

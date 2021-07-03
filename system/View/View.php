@@ -109,7 +109,6 @@ class View implements RendererInterface
      */
     protected $layout;
 
-
     /**
      * Holds the sections and their data.
      *

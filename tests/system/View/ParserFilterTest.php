@@ -4,7 +4,6 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\View\Parser;
 use Config\View;
 
 /**
@@ -416,7 +415,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $template = '{ mynum|local_currency(EUR,de_DE,2) }';
 
         $parser->setData($data);
-        $this->assertSame('1.234.567,89 €', $parser->renderString($template));
+        $this->assertSame("1.234.567,89\u{a0}€", $parser->renderString($template));
     }
 
     public function testParsePairWithAbs()

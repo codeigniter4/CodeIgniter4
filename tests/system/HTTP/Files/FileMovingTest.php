@@ -317,7 +317,7 @@ function rrmdir($src)
     $dir = opendir($src);
 
     while (false !== $file = readdir($dir)) {
-        if (( $file !== '.' ) && ( $file !== '..' )) {
+        if (($file !== '.') && ($file !== '..')) {
             $full = $src . '/' . $file;
 
             if (is_dir($full)) {

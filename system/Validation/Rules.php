@@ -265,7 +265,7 @@ class Rules
      */
     public function max_length(string $str = null, string $val): bool
     {
-        return (is_numeric($val) && $val >= mb_strlen($str));
+        return is_numeric($val) && $val >= mb_strlen($str);
     }
 
     //--------------------------------------------------------------------
@@ -280,7 +280,7 @@ class Rules
      */
     public function min_length(string $str = null, string $val): bool
     {
-        return (is_numeric($val) && $val <= mb_strlen($str));
+        return is_numeric($val) && $val <= mb_strlen($str);
     }
 
     //--------------------------------------------------------------------

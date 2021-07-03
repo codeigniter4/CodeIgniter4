@@ -122,7 +122,7 @@ class Toolbar
                         Kint::$display_called_from = false;
 
                         $kint = @Kint::dump($value);
-                        $kint = substr($kint, strpos($kint, '</style>') + 8 );
+                        $kint = substr($kint, strpos($kint, '</style>') + 8);
 
                         Kint::$mode_default        = $oldKintMode;
                         Kint::$display_called_from = $oldKintCalledFrom;
@@ -286,7 +286,7 @@ class Toolbar
     {
         $increments = 1 / $increments;
 
-        return (ceil($number * $increments) / $increments);
+        return ceil($number * $increments) / $increments;
     }
 
     //--------------------------------------------------------------------
@@ -356,7 +356,7 @@ class Toolbar
             Kint::$mode_default = Kint::MODE_RICH;
             $kintScript         = @Kint::dump('');
             Kint::$mode_default = $oldKintMode;
-            $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8 );
+            $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8);
 
             $script = PHP_EOL
                     . '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '

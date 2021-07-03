@@ -30,7 +30,6 @@ use Tests\Support\Models\UserModel;
  */
 final class ResourceControllerTest extends CIUnitTestCase
 {
-
     /**
      * @var CodeIgniter
      */

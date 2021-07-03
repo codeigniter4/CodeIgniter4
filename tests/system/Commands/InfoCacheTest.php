@@ -71,6 +71,6 @@ final class InfoCacheTest extends CIUnitTestCase
         cache()->delete('foo');
         command('cache:info');
 
-        $this->assertStringNotContainsString ('foo', $this->getBuffer());
+        $this->assertStringNotContainsString('foo', $this->getBuffer());
     }
 }

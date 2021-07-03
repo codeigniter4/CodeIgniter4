@@ -837,7 +837,7 @@ class Time extends DateTime
      */
     public function addSeconds(int $seconds)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$seconds} seconds"));
     }
@@ -851,7 +851,7 @@ class Time extends DateTime
      */
     public function addMinutes(int $minutes)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$minutes} minutes"));
     }
@@ -865,7 +865,7 @@ class Time extends DateTime
      */
     public function addHours(int $hours)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$hours} hours"));
     }
@@ -879,7 +879,7 @@ class Time extends DateTime
      */
     public function addDays(int $days)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$days} days"));
     }
@@ -893,7 +893,7 @@ class Time extends DateTime
      */
     public function addMonths(int $months)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$months} months"));
     }
@@ -907,7 +907,7 @@ class Time extends DateTime
      */
     public function addYears(int $years)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->add(DateInterval::createFromDateString("{$years} years"));
     }
@@ -921,7 +921,7 @@ class Time extends DateTime
      */
     public function subSeconds(int $seconds)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$seconds} seconds"));
     }
@@ -935,7 +935,7 @@ class Time extends DateTime
      */
     public function subMinutes(int $minutes)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$minutes} minutes"));
     }
@@ -949,7 +949,7 @@ class Time extends DateTime
      */
     public function subHours(int $hours)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$hours} hours"));
     }
@@ -963,7 +963,7 @@ class Time extends DateTime
      */
     public function subDays(int $days)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$days} days"));
     }
@@ -977,7 +977,7 @@ class Time extends DateTime
      */
     public function subMonths(int $months)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$months} months"));
     }
@@ -991,7 +991,7 @@ class Time extends DateTime
      */
     public function subYears(int $years)
     {
-        $time = clone($this);
+        $time = clone $this;
 
         return $time->sub(DateInterval::createFromDateString("{$years} years"));
     }

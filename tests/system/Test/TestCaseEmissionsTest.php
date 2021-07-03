@@ -15,7 +15,6 @@ use Config\App;
  */
 final class TestCaseEmissionsTest extends CIUnitTestCase
 {
-
     /**
      * These need to be run as a separate process, since phpunit
      * has already captured the "normal" output, and we will get

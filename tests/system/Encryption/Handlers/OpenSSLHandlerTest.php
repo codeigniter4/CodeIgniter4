@@ -3,7 +3,6 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
-use CodeIgniter\Encryption\Handlers\OpenSSLHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 

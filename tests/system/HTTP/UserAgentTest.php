@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
