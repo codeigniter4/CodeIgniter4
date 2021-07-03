@@ -4,8 +4,6 @@ namespace Tests\Support\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Security\Exceptions\SecurityException;
-use Config\Services;
 
 class Customfilter implements \CodeIgniter\Filters\FilterInterface
 {
@@ -19,6 +17,4 @@ class Customfilter implements \CodeIgniter\Filters\FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
     }
-
-    //--------------------------------------------------------------------
 }

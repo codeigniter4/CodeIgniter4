@@ -12,7 +12,6 @@ use Config\App;
  */
 final class RequestTest extends CIUnitTestCase
 {
-
     /**
      * @var Request
      */

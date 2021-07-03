@@ -2,15 +2,8 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Filters\Exceptions\FilterException;
-use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\Router\RouteCollection;
-use Config\Filters as FiltersConfig;
-use Config\Services;
-use InvalidArgumentException;
-use RuntimeException;
 use Tests\Support\Filters\Customfilter;
 
 /**

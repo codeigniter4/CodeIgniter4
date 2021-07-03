@@ -175,7 +175,7 @@ class FormatRules
      */
     public function is_natural_no_zero(?string $str = null): bool
     {
-        return ($str !== '0' && ctype_digit($str));
+        return $str !== '0' && ctype_digit($str);
     }
 
     /**
@@ -235,7 +235,7 @@ class FormatRules
      */
     public function valid_base64(string $str = null): bool
     {
-        return (base64_encode(base64_decode($str, true)) === $str);
+        return base64_encode(base64_decode($str, true)) === $str;
     }
 
     /**
@@ -349,7 +349,7 @@ class FormatRules
 
         $str = 'http://' . $str;
 
-        return (filter_var($str, FILTER_VALIDATE_URL) !== false);
+        return filter_var($str, FILTER_VALIDATE_URL) !== false;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\ModelFactory;
-use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Models\EntityModel;

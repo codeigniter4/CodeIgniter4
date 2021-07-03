@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Encryption;
 
-use CodeIgniter\Encryption\Encryption;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;

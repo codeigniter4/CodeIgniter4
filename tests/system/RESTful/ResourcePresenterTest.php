@@ -24,7 +24,6 @@ use Tests\Support\Models\UserModel;
  */
 final class ResourcePresenterTest extends CIUnitTestCase
 {
-
     /**
      * @var CodeIgniter
      */

@@ -8,10 +8,8 @@ namespace Tests\Support\Log\Handlers;
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
-
 class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 {
-
     /**
      * Local storage for logs.
      *

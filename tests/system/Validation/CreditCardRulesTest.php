@@ -11,7 +11,6 @@ use Tests\Support\Validation\TestRules;
  */
 final class CreditCardRulesTest extends CIUnitTestCase
 {
-
     /**
      * @var Validation
      */

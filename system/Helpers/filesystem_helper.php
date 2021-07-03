@@ -275,14 +275,14 @@ if (! function_exists('get_dir_file_info')) {
 
         try {
             $fp = opendir($sourceDir);
-            {
-                // reset the array and make sure $source_dir has a trailing slash on the initial call
+
+            // reset the array and make sure $source_dir has a trailing slash on the initial call
             if ($recursion === false) {
                 $fileData  = [];
                 $sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
-                // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
+            // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
             while (false !== ($file = readdir($fp))) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     get_dir_file_info($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
@@ -292,10 +292,9 @@ if (! function_exists('get_dir_file_info')) {
                 }
             }
 
-                closedir($fp);
+            closedir($fp);
 
-                return $fileData;
-            }
+            return $fileData;
         } catch (Throwable $fe) {
             return [];
         }

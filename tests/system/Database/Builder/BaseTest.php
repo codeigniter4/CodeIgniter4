@@ -2,7 +2,6 @@
 
 namespace CodeIgniter\Database\Builder;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 

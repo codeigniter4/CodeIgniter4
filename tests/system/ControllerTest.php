@@ -24,7 +24,6 @@ use Psr\Log\LoggerInterface;
  */
 final class ControllerTest extends CIUnitTestCase
 {
-
     /**
      * @var CodeIgniter
      */

@@ -149,7 +149,7 @@ final class UpdateTest extends CIUnitTestCase
             WHERE "id" IN(2,3)
             EOF;
 
-        $this->assertSame($expected, $query->getQuery() );
+        $this->assertSame($expected, $query->getQuery());
     }
 
     public function testUpdateBatchThrowsExceptionWithNoData()

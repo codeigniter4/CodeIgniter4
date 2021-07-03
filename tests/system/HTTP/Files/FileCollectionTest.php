@@ -711,7 +711,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $files = $collection->getFileMultiple('userfiletest');
 
-        $this->assertNull( $files);
+        $this->assertNull($files);
     }
 
     //--------------------------------------------------------------------
@@ -766,7 +766,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new FileCollection();
 
         $files = $collection->getFileMultiple('my-form.details.avatars');
-        $this->assertIsArray( $files);
+        $this->assertIsArray($files);
         $this->assertCount(2, $files);
 
         $this->assertInstanceOf(UploadedFile::class, $files[0]);
@@ -821,7 +821,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new FileCollection();
 
         $files = $collection->getFileMultiple('my-form.details.avatars');
-        $this->assertNull( $files);
+        $this->assertNull($files);
     }
 
     //--------------------------------------------------------------------
@@ -854,7 +854,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $files = $collection->getFileMultiple('userfile');
         $this->assertCount(2, $files);
-        $this->assertIsArray( $files);
+        $this->assertIsArray($files);
 
         $this->assertInstanceOf(UploadedFile::class, $files[0]);
         $this->assertSame(124, $files[0]->getSize());
@@ -888,7 +888,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new FileCollection();
 
         $files = $collection->getFileMultiple('userfile');
-        $this->assertNull( $files);
+        $this->assertNull($files);
     }
 
     //--------------------------------------------------------------------

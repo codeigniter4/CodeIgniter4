@@ -10,7 +10,6 @@ use org\bovigo\vfs\vfsStream;
  */
 final class FileWithVfsTest extends CIUnitTestCase
 {
-
     // For VFS stuff
     protected $root;
     protected $path;

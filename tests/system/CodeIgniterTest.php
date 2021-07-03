@@ -2,7 +2,7 @@
 
 namespace CodeIgniter;
 
-use \CodeIgniter\Config\Services;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;

@@ -333,7 +333,7 @@ class FeatureTestCase extends CIUnitTestCase
         $config = config(App::class);
         $uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
 
-        $request      = new IncomingRequest($config, clone($uri), null, new UserAgent());
+        $request      = new IncomingRequest($config, clone $uri, null, new UserAgent());
         $request->uri = $uri;
 
         $request->setMethod($method);

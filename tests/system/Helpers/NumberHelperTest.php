@@ -119,7 +119,7 @@ final class NumberHelperTest extends CIUnitTestCase
     {
         $this->assertSame('$1,234.56', number_to_currency(1234.56, 'USD', 'en_US', 2));
         $this->assertSame('£1,234.56', number_to_currency(1234.56, 'GBP', 'en_GB', 2));
-        $this->assertSame('1.234,56 RSD', number_to_currency(1234.56, 'RSD', 'sr_RS', 2));
+        $this->assertSame("1.234,56\u{a0}RSD", number_to_currency(1234.56, 'RSD', 'sr_RS', 2));
     }
 
     public function testNumbersThatArent()

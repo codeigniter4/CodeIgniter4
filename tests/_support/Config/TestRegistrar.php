@@ -7,7 +7,6 @@ namespace Tests\Support\Config;
  *
  * Provides a basic registrar class for testing BaseConfig registration functions.
  */
-
 class TestRegistrar
 {
     public static function RegistrarConfig()
