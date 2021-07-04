@@ -1673,12 +1673,12 @@ class BaseBuilder
      * Allows key/value pairs to be set for insert(), update() or replace().
      *
      * @param string|array|object $key    Field name, or an array of field/value pairs
-     * @param string              $value  Field value, if $key is a single field
+     * @param mixed               $value  Field value, if $key is a single field
      * @param bool                $escape Whether to escape values and identifiers
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', bool $escape = null)
+    public function set($key, $value = '', bool $escape = null)
     {
         $key = $this->objectToArray($key);
 

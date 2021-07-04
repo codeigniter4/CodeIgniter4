@@ -230,4 +230,23 @@ class UpdateTest extends CIUnitTestCase
             'description' => 'Developer',
         ]);
     }
+
+    public function testSetWithBoolean()
+    {
+        $this->db->table('type_test')
+            ->set('type_boolean', false)
+            ->update();
+
+        $this->seeInDatabase('type_test', [
+            'type_boolean' => false,
+        ]);
+
+        $this->db->table('type_test')
+            ->set('type_boolean', true)
+            ->update();
+
+        $this->seeInDatabase('type_test', [
+            'type_boolean' => true,
+        ]);
+    }
 }
