@@ -374,7 +374,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertEquals('bar', $request->getVar('foo'));
         $this->assertEquals('buzz', $request->getVar('fizz'));
-        $this->assertSame(null, $request->getVar('notExists'));
+        $this->assertNull($request->getVar('notExists'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
