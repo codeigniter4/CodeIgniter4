@@ -99,6 +99,80 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testUpdateWithSetAsInt()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set('age', 22)->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "age" = 22 WHERE "id" = 1';
+        $expectedBinds = [
+            'age' => [
+                22,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateWithSetAsBoolean()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set('manager', true)->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "manager" = 1 WHERE "id" = 1';
+        $expectedBinds = [
+            'manager' => [
+                true,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateWithSetAsArray()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set(['name' => 'Programmer', 'age' => 22, 'manager' => true])->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\', "age" = 22, "manager" = 1 WHERE "id" = 1';
+        $expectedBinds = [
+            'name' => [
+                'Programmer',
+                true,
+            ],
+            'age' => [
+                22,
+                true,
+            ],
+            'manager' => [
+                true,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testUpdateThrowsExceptionWithNoData()
     {
         $builder = new BaseBuilder('jobs', $this->db);

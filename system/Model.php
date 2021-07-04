@@ -563,7 +563,7 @@ class Model extends BaseModel
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', ?bool $escape = null)
+    public function set($key, $value = '', ?bool $escape = null)
     {
         $data = is_array($key) ? $key : [$key => $value];
 

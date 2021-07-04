@@ -70,6 +70,7 @@ class Migration_Create_test_tables extends Migration
             'type_double'     => ['type' => 'DOUBLE', 'null' => true],
             'type_decimal'    => ['type' => 'DECIMAL', 'constraint' => '18,4', 'null' => true],
             'type_blob'       => ['type' => 'BLOB', 'null' => true],
+            'type_boolean'    => ['type' => 'BOOLEAN', 'null' => true],
         ];
 
         if ($this->db->DBDriver === 'Postgre') {

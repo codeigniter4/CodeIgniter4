@@ -198,6 +198,10 @@ class Forge extends BaseForge
                 $attributes['TYPE'] = 'TEXT';
                 break;
 
+            case 'BOOLEAN':
+                $attributes['TYPE'] = 'INT';
+                break;
+
             default:
                 break;
         }

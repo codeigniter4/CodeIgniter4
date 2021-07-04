@@ -1344,7 +1344,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', ?bool $escape = null)
+    public function set($key, $value = '', bool $escape = null)
     {
         $key = $this->objectToArray($key);
 
