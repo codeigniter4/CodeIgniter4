@@ -342,11 +342,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetVarWorksWithJson()
     {
-        $jsonObj = [
-            'foo'  => 'bar',
-            'fizz' => 'buzz',
-        ];
-        $json = json_encode($jsonObj);
+        $json = json_encode(['foo' => 'bar', 'fizz' => 'buzz']);
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
