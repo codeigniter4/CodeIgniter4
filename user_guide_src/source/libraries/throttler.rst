@@ -79,7 +79,7 @@ along the lines of::
             // Restrict an IP address to no more
             // than 1 request per second across the
             // entire site.
-            if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
+            if ($throttler->check(md5($request->getIPAddress()), 60, MINUTE) === false)
             {
                 return Services::response()->setStatusCode(429);
             }
