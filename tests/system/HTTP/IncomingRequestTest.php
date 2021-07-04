@@ -300,6 +300,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('bar', $request->getJsonVar('foo'));
         $this->assertNull($request->getJsonVar('notExists'));
+
         $jsonVar = $request->getJsonVar('baz');
         $this->assertIsObject($jsonVar);
         $this->assertSame('buzz', $jsonVar->fizz);
