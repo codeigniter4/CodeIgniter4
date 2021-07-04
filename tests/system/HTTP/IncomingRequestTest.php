@@ -353,14 +353,10 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
         $request->setHeader('Content-Type', 'application/json');
 
-<<<<<<< HEAD
         $this->assertSame('bar', $request->getVar('foo'));
         $this->assertSame('buzz', $request->getVar('fizz'));
-=======
-        $this->assertEquals('bar', $request->getVar('foo'));
-        $this->assertEquals('buzz', $request->getVar('fizz'));
         $this->assertSame(null, $request->getVar('notExists'));
->>>>>>> 016380add... Fix getVar method when trying to get variable that does not exists
+        $this->assertNull($request->getVar('notExists'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
