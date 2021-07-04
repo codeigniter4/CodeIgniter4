@@ -535,6 +535,10 @@ class IncomingRequest extends Request
 
         $data = dot_array_search($index, $this->getJSON(true));
 
+        if ($data === null) {
+            return null;
+        }
+
         if (! is_array($data)) {
             $filter = $filter ?? FILTER_DEFAULT;
             $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);

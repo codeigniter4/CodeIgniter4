@@ -299,6 +299,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $this->assertSame('bar', $request->getJsonVar('foo'));
+        $this->assertNull($request->getJsonVar('notExists'));
         $jsonVar = $request->getJsonVar('baz');
         $this->assertIsObject($jsonVar);
         $this->assertSame('buzz', $jsonVar->fizz);
@@ -352,8 +353,14 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
         $request->setHeader('Content-Type', 'application/json');
 
+<<<<<<< HEAD
         $this->assertSame('bar', $request->getVar('foo'));
         $this->assertSame('buzz', $request->getVar('fizz'));
+=======
+        $this->assertEquals('bar', $request->getVar('foo'));
+        $this->assertEquals('buzz', $request->getVar('fizz'));
+        $this->assertSame(null, $request->getVar('notExists'));
+>>>>>>> 016380add... Fix getVar method when trying to get variable that does not exists
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
