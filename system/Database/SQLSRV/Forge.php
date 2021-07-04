@@ -349,6 +349,10 @@ class Forge extends BaseForge
                 $attributes['TYPE'] = 'DATETIME';
                 break;
 
+            case 'BOOLEAN':
+                $attributes['TYPE'] = 'BIT';
+                break;
+
             default:
                 break;
         }
