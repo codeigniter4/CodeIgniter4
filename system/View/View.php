@@ -35,7 +35,7 @@ class View implements RendererInterface
     /**
      * Merge savedData and userData
      */
-    protected $tempData = null;
+    protected $tempData;
 
     /**
      * The base directory to look in for our Views.

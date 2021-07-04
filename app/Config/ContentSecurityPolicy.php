@@ -32,7 +32,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|null
      */
-    public $reportURI = null;
+    public $reportURI;
 
     /**
      * Instructs user agents to rewrite URL schemes, changing
@@ -53,7 +53,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]|null
      */
-    public $defaultSrc = null;
+    public $defaultSrc;
 
     /**
      * Lists allowed scripts' URLs.
@@ -83,7 +83,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]|null
      */
-    public $baseURI = null;
+    public $baseURI;
 
     /**
      * Lists the URLs for workers and embedded frame contents
@@ -105,7 +105,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]
      */
-    public $fontSrc = null;
+    public $fontSrc;
 
     /**
      * Lists valid endpoints for submission from `<form>` tags.
@@ -122,7 +122,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]|null
      */
-    public $frameAncestors = null;
+    public $frameAncestors;
 
     /**
      * The frame-src directive restricts the URLs which may
@@ -130,14 +130,14 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var array|string|null
      */
-    public $frameSrc = null;
+    public $frameSrc;
 
     /**
      * Restricts the origins allowed to deliver video and audio.
      *
      * @var string|string[]|null
      */
-    public $mediaSrc = null;
+    public $mediaSrc;
 
     /**
      * Allows control over Flash and other plugins.
@@ -149,19 +149,19 @@ class ContentSecurityPolicy extends BaseConfig
     /**
      * @var string|string[]|null
      */
-    public $manifestSrc = null;
+    public $manifestSrc;
 
     /**
      * Limits the kinds of plugins a page may invoke.
      *
      * @var string|string[]|null
      */
-    public $pluginTypes = null;
+    public $pluginTypes;
 
     /**
      * List of actions allowed.
      *
      * @var string|string[]|null
      */
-    public $sandbox = null;
+    public $sandbox;
 }

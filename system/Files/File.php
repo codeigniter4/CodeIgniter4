@@ -33,7 +33,7 @@ class File extends SplFileInfo
      *
      * @var string|null
      */
-    protected $originalMimeType = null;
+    protected $originalMimeType;
 
     //--------------------------------------------------------------------
 
