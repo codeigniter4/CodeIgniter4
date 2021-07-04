@@ -1726,7 +1726,7 @@ Class Reference
     .. php:method:: set($key[, $value = ''[, $escape = null]])
 
         :param mixed $key: Field name, or an array of field/value pairs
-        :param string $value: Field value, if $key is a single field
+        :param mixed $value: Field value, if $key is a single field
         :param bool	$escape: Whether to escape values and identifiers
         :returns: ``BaseBuilder`` instance (method chaining)
         :rtype:	``BaseBuilder``
