@@ -309,7 +309,9 @@ class CURLRequest extends Request
 
         if (array_key_exists('headers', $options) && is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
-                $this->setHeader($name, $value);
+                if (is_scalar($value)) {
+                    $this->setHeader($name, $value);
+                }
             }
 
             unset($options['headers']);
@@ -705,9 +707,16 @@ class CURLRequest extends Request
         }
 
         // Cookie
-        if (isset($config['cookie'])) {
-            $curlOptions[CURLOPT_COOKIEJAR]  = $config['cookie'];
-            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie'];
+        if ($cookie = ($config['cookie_jar'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEJAR] = $cookie;
+        }
+
+        if ($cookie = ($config['cookie_file'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEFILE] = $cookie;
+        }
+
+        if ($cookie = ($config['cookie_session'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIESESSION] = $cookie;
         }
 
         // User Agent
