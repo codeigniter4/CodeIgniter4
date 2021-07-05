@@ -698,7 +698,6 @@ class CURLRequest extends Request
         }
 
         // version
-        // version
         if (! empty($config['version'])) {
             if ($config['version'] === 1.0) {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
