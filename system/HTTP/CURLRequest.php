@@ -716,16 +716,12 @@ class CURLRequest extends Request
         }
 
         // Cookie
-        if (isset($config['cookie_jar'])) {
-            $curlOptions[CURLOPT_COOKIEJAR] = $config['cookie_jar'];
-        } elseif ($config['cookie']) {
-            $curlOptions[CURLOPT_COOKIEJAR] = $config['cookie'];
+        if ($cookieJar = ($config['cookie_jar'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEJAR] = $cookieJar;
         }
 
-        if (isset($config['cookie_file'])) {
-            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie_file'];
-        } elseif ($config['cookie']) {
-            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie'];
+        if ($cookieFile = ($config['cookie_file'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEFILE] = $cookieFile;
         }
 
         // false - libcurl default value; true - to mark query as new cookie "session"
