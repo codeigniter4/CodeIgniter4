@@ -318,6 +318,7 @@ class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $this->assertEquals('bar', $request->getJsonVar('foo'));
+        $this->assertNull($request->getJsonVar('notExists'));
         $jsonVar = $request->getJsonVar('baz');
         $this->assertIsObject($jsonVar);
         $this->assertEquals('buzz', $jsonVar->fizz);
@@ -373,6 +374,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertEquals('bar', $request->getVar('foo'));
         $this->assertEquals('buzz', $request->getVar('fizz'));
+        $this->assertNull($request->getVar('notExists'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);
