@@ -698,25 +698,39 @@ class CURLRequest extends Request
         }
 
         // version
+        // version
         if (! empty($config['version'])) {
             if ($config['version'] === 1.0) {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
             } elseif ($config['version'] === 1.1) {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+            } elseif ($config['version'] === 2) {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2;
+            } elseif ($config['version'] === 2.0) {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
+            } elseif ($config['version'] === '2TLS') {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2TLS;
+            } elseif ($config['version'] === '2PK') {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE;
             }
         }
 
         // Cookie
-        if ($cookie = ($config['cookie_jar'] ?? $config['cookie'] ?? false)) {
-            $curlOptions[CURLOPT_COOKIEJAR] = $cookie;
+        if (isset($config['cookie_jar'])) {
+            $curlOptions[CURLOPT_COOKIEJAR] = $config['cookie_jar'];
+        } elseif ($config['cookie']) {
+            $curlOptions[CURLOPT_COOKIEJAR] = $config['cookie'];
         }
 
-        if ($cookie = ($config['cookie_file'] ?? $config['cookie'] ?? false)) {
-            $curlOptions[CURLOPT_COOKIEFILE] = $cookie;
+        if (isset($config['cookie_file'])) {
+            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie_file'];
+        } elseif ($config['cookie']) {
+            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie'];
         }
 
-        if ($cookie = ($config['cookie_session'] ?? false)) {
-            $curlOptions[CURLOPT_COOKIESESSION] = $cookie;
+        // false - libcurl default value; true - to mark query as new cookie "session"
+        if (isset($config['cookie_session'])) {
+            $curlOptions[CURLOPT_COOKIESESSION] = (bool) $config['cookie_session'];
         }
 
         // User Agent
