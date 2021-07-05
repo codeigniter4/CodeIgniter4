@@ -186,22 +186,6 @@
   #debug-bar .timeline {
     margin-left: 0;
     width: 100%; }
-    #debug-bar .timeline tr.timeline-parent {
-      cursor: pointer; }
-      #debug-bar .timeline tr.timeline-parent td:first-child nav {
-        background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
-        background-position: 0 25%;
-        display: inline-block;
-        height: 15px;
-        width: 15px;
-        margin-right: 3px;
-        vertical-align: middle; }
-      #debug-bar .timeline tr.timeline-parent.timeline-parent-open td:first-child nav {
-        background-position: 0 75%; }
-    #debug-bar .timeline tr.timeline-parent.timeline-parent-open {
-      background-color: #DFDFDF; }
-    #debug-bar .timeline tr.child-row:hover {
-      background: transparent; }
     #debug-bar .timeline th {
       border-left: 1px solid;
       font-size: 12px;
@@ -220,9 +204,9 @@
         max-width: none; }
       #debug-bar .timeline td.child-container {
         padding: 0px; }
-        #debug-bar .timeline td.child-container .timeline{
+        #debug-bar .timeline td.child-container .timeline {
           margin: 0px; }
-          #debug-bar .timeline td.child-container td:first-child:not(.child-container){
+          #debug-bar .timeline td.child-container .timeline td:first-child:not(.child-container) {
             padding-left: calc(5px + 10px * var(--level)); }
     #debug-bar .timeline .timer {
       border-radius: 4px;
@@ -232,6 +216,22 @@
       padding: 5px;
       position: absolute;
       top: 30%; }
+    #debug-bar .timeline .timeline-parent {
+      cursor: pointer; }
+      #debug-bar .timeline .timeline-parent td:first-child nav {
+        background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
+        background-position: 0 25%;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin-right: 3px;
+        vertical-align: middle; }
+    #debug-bar .timeline .timeline-parent-open {
+      background-color: #DFDFDF; }
+      #debug-bar .timeline .timeline-parent-open td:first-child nav {
+        background-position: 0 75%; }
+    #debug-bar .timeline .child-row:hover {
+      background: transparent; }
   #debug-bar .route-params,
   #debug-bar .route-params-item {
     vertical-align: top; }

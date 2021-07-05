@@ -326,6 +326,23 @@
 
 			&:first-child {
 				border-left: 0;
+				max-width: none;
+			}
+
+			&.child-container {
+				padding: 0px;
+
+				.timeline {
+					margin: 0px;
+
+					td {
+						&:first-child {
+							&:not(.child-container) {
+								padding-left: calc(5px + 10px * var(--level));
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -335,6 +352,42 @@
 			padding: 5px;
 			position: absolute;
 			top: 30%;
+		}
+
+		.timeline-parent{
+			cursor: pointer;
+
+			td {
+				&:first-child {
+					nav {
+						background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
+						background-position: 0 25%;
+						display: inline-block;
+						height: 15px;
+						width: 15px;
+						margin-right: 3px;
+						vertical-align: middle;
+					}
+				}
+			}
+		}
+
+		.timeline-parent-open {
+			background-color: #DFDFDF;
+
+			td {
+				&:first-child {
+					nav {
+						background-position: 0 75%;
+					}
+				}
+			}
+		}
+
+		.child-row {
+			&:hover {
+				background: transparent;
+			}
 		}
 	}
 
