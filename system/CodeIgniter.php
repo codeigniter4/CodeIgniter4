@@ -490,7 +490,9 @@ class CodeIgniter
      */
     protected function startBenchmark()
     {
-        $this->startTime = microtime(true);
+        if($this->startTime === null) {
+            $this->startTime = microtime(true);
+        }
 
         $this->benchmark = Services::timer();
         $this->benchmark->start('total_execution', $this->startTime);
