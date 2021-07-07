@@ -1,8 +1,8 @@
 /*! CodeIgniter 4 - Debug bar
  * ============================================================================
- * Forum: 	https://forum.codeigniter.com
- * Github:	https://github.com/codeigniter4/codeigniter4
- * Slack: 	https://codeigniterchat.slack.com
+ * Forum:     https://forum.codeigniter.com
+ * Github:    https://github.com/codeigniter4/codeigniter4
+ * Slack:     https://codeigniterchat.slack.com
  * Website: https://codeigniter.com
  */
 #debug-icon {
@@ -117,7 +117,6 @@
     overflow: hidden;
     overflow-y: auto;
     padding: 0 12px 0 12px;
-    /* give room for OS X scrollbar */
     white-space: nowrap;
     z-index: 10000; }
   #debug-bar.fixed-top {
@@ -267,7 +266,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #debug-icon a:active, #debug-icon a:link, #debug-icon a:visited {
+  #debug-icon a:active,
+  #debug-icon a:link,
+  #debug-icon a:visited {
     color: #DD8615; }
 
 #debug-bar {
@@ -353,7 +354,9 @@
     box-shadow: 0 0 4px #DFDFDF;
     -moz-box-shadow: 0 0 4px #DFDFDF;
     -webkit-box-shadow: 0 0 4px #DFDFDF; }
-    #debug-icon a:active, #debug-icon a:link, #debug-icon a:visited {
+    #debug-icon a:active,
+    #debug-icon a:link,
+    #debug-icon a:visited {
       color: #DD8615; }
   #debug-bar {
     background-color: #252525;
@@ -437,7 +440,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #toolbarContainer.dark #debug-icon a:active, #toolbarContainer.dark #debug-icon a:link, #toolbarContainer.dark #debug-icon a:visited {
+  #toolbarContainer.dark #debug-icon a:active,
+  #toolbarContainer.dark #debug-icon a:link,
+  #toolbarContainer.dark #debug-icon a:visited {
     color: #DD8615; }
 
 #toolbarContainer.dark #debug-bar {
@@ -528,7 +533,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #toolbarContainer.light #debug-icon a:active, #toolbarContainer.light #debug-icon a:link, #toolbarContainer.light #debug-icon a:visited {
+  #toolbarContainer.light #debug-icon a:active,
+  #toolbarContainer.light #debug-icon a:link,
+  #toolbarContainer.light #debug-icon a:visited {
     color: #DD8615; }
 
 #toolbarContainer.light #debug-bar {
