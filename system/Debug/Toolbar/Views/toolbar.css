@@ -1,9 +1,10 @@
-/*! CodeIgniter 4 - Debug bar
- * ============================================================================
- * Forum:     https://forum.codeigniter.com
- * Github:    https://github.com/codeigniter4/codeigniter4
- * Slack:     https://codeigniterchat.slack.com
- * Website: https://codeigniter.com
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 #debug-icon {
   bottom: 0;
