@@ -147,7 +147,7 @@ class MemcachedHandler extends BaseHandler
     {
         if (isset($this->memcached) && $this->lockSession($sessionID)) {
             // Needed by write() to detect session_regenerate_id() calls
-            if (is_null($this->sessionID)) { // @phpstan-ignore-line
+            if (! isset($this->sessionID)) {
                 $this->sessionID = $sessionID;
             }
 

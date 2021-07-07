@@ -141,7 +141,7 @@ class UploadedFile extends File implements UploadedFileInterface
             throw HTTPException::forInvalidFile();
         }
 
-        $name        = is_null($name) ? $this->getName() : $name;
+        $name        = $name === null ? $this->getName() : $name;
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         try {

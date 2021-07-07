@@ -321,7 +321,7 @@ class ImageMagickHandler extends BaseHandler
      */
     protected function getResourcePath()
     {
-        if (! is_null($this->resource)) {
+        if ($this->resource !== null) {
             return $this->resource;
         }
 

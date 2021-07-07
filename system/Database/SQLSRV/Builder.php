@@ -682,7 +682,7 @@ class Builder extends BaseBuilder
      */
     public function get(int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (! is_null($limit)) {
+        if ($limit !== null) {
             $this->limit($limit, $offset);
         }
 

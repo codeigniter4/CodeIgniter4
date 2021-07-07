@@ -82,7 +82,7 @@ class Time extends DateTime
         $this->locale = ! empty($locale) ? $locale : Locale::getDefault();
 
         // If a test instance has been provided, use it instead.
-        if (is_null($time) && static::$testNow instanceof Time) {
+        if ($time === null && static::$testNow instanceof Time) {
             if (empty($timezone)) {
                 $timezone = static::$testNow->getTimezone();
             }
@@ -255,9 +255,9 @@ class Time extends DateTime
      */
     public static function create(int $year = null, int $month = null, int $day = null, int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
     {
-        $year    = is_null($year) ? date('Y') : $year;
-        $month   = is_null($month) ? date('m') : $month;
-        $day     = is_null($day) ? date('d') : $day;
+        $year    = $year === null ? date('Y') : $year;
+        $month   = $month === null ? date('m') : $month;
+        $day     = $day === null ? date('d') : $day;
         $hour    = empty($hour) ? 0 : $hour;
         $minutes = empty($minutes) ? 0 : $minutes;
         $seconds = empty($seconds) ? 0 : $seconds;
@@ -380,7 +380,7 @@ class Time extends DateTime
     public static function setTestNow($datetime = null, $timezone = null, string $locale = null)
     {
         // Reset the test instance
-        if (is_null($datetime)) {
+        if ($datetime === null) {
             static::$testNow = null;
 
             return;
@@ -405,7 +405,7 @@ class Time extends DateTime
      */
     public static function hasTestNow(): bool
     {
-        return ! is_null(static::$testNow);
+        return static::$testNow !== null;
     }
 
     //--------------------------------------------------------------------

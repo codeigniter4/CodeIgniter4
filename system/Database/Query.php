@@ -107,7 +107,7 @@ class Query implements QueryInterface
     {
         $this->originalQueryString = $sql;
 
-        if (! is_null($binds)) {
+        if ($binds !== null) {
             if (! is_array($binds)) {
                 $binds = [$binds];
             }
@@ -181,7 +181,7 @@ class Query implements QueryInterface
     {
         $this->startTime = $start;
 
-        if (is_null($end)) {
+        if ($end === null) {
             $end = microtime(true);
         }
 

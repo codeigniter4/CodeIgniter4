@@ -230,7 +230,7 @@ class DotEnv
                 function ($matchedPatterns) {
                     $nestedVariable = $this->getVariable($matchedPatterns[1]);
 
-                    if (is_null($nestedVariable)) {
+                    if ($nestedVariable === null) {
                         return $matchedPatterns[0];
                     }
 

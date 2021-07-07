@@ -275,7 +275,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     private function callTraitMethods(string $stage): void
     {
-        if (is_null($this->traits)) {
+        if ($this->traits === null) {
             $this->traits = class_uses_recursive($this);
         }
 

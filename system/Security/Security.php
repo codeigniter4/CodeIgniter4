@@ -394,7 +394,7 @@ class Security implements SecurityInterface
      */
     protected function generateHash(): string
     {
-        if (is_null($this->hash)) {
+        if ($this->hash === null) {
             // If the cookie exists we will use its value.
             // We don't necessarily want to regenerate it with
             // each page load since a page could contain embedded

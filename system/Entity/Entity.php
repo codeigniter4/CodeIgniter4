@@ -263,7 +263,7 @@ class Entity implements JsonSerializable
     public function hasChanged(string $key = null): bool
     {
         // If no parameter was given then check all attributes
-        if (is_null($key)) {
+        if ($key === null) {
             return $this->original !== $this->attributes;
         }
 
@@ -358,7 +358,7 @@ class Entity implements JsonSerializable
         if (strpos($type, '?') === 0) {
             $isNullable = true;
 
-            if (is_null($value)) {
+            if ($value === null) {
                 return null;
             }
 
@@ -435,7 +435,7 @@ class Entity implements JsonSerializable
      */
     public function cast(bool $cast = null)
     {
-        if (is_null($cast)) {
+        if ($cast === null) {
             return $this->_cast;
         }
 

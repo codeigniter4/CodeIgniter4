@@ -1316,7 +1316,7 @@ class RouteCollection implements RouteCollectionInterface
     protected function create(string $verb, string $from, $to, array $options = null)
     {
         $overwrite = false;
-        $prefix    = is_null($this->group) ? '' : $this->group . '/';
+        $prefix    = $this->group === null ? '' : $this->group . '/';
 
         $from = filter_var($prefix . $from, FILTER_SANITIZE_STRING);
 
@@ -1435,7 +1435,7 @@ class RouteCollection implements RouteCollectionInterface
             return false;
         }
 
-        if (is_null($this->currentSubdomain)) {
+        if ($this->currentSubdomain === null) {
             $this->currentSubdomain = $this->determineCurrentSubdomain();
         }
 

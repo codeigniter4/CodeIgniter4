@@ -12,7 +12,7 @@ class Role implements FilterInterface
     {
         if (is_array($arguments)) {
             $response->setBody(implode(';', $arguments));
-        } elseif (is_null($arguments)) {
+        } elseif ($arguments === null) {
             $response->setBody('Is null');
         } else {
             $response->setBody('Something else');
@@ -26,7 +26,7 @@ class Role implements FilterInterface
         if (is_array($arguments)) {
             return implode(';', $arguments);
         }
-        if (is_null($arguments)) {
+        if ($arguments === null) {
             return 'Is null';
         }
 

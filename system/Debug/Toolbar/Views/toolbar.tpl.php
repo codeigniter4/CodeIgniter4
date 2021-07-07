@@ -49,7 +49,7 @@
 						<img src="<?= $c['icon'] ?>">
 						<span class="hide-sm">
 							<?= $c['title'] ?>
-							<?php if (! is_null($c['badgeValue'])) : ?>
+							<?php if ($c['badgeValue'] !== null) : ?>
 								<span class="badge"><?= $c['badgeValue'] ?></span>
 							<?php endif ?>
 						</span>

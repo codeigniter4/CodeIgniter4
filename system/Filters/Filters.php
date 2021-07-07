@@ -383,7 +383,7 @@ class Filters
      */
     public function getArguments(string $key = null)
     {
-        return is_null($key) ? $this->arguments : $this->arguments[$key];
+        return $key === null ? $this->arguments : $this->arguments[$key];
     }
 
     //--------------------------------------------------------------------

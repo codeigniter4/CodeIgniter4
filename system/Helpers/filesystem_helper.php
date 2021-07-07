@@ -235,7 +235,7 @@ if (! function_exists('get_filenames')) {
 
                 if ($includePath === false) {
                     $files[] = $basename;
-                } elseif (is_null($includePath)) {
+                } elseif ($includePath === null) {
                     $files[] = str_replace($sourceDir, '', $name);
                 } else {
                     $files[] = $name;

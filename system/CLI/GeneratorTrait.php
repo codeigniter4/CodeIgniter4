@@ -201,7 +201,7 @@ trait GeneratorTrait
         // Gets the class name from input.
         $class = $this->params[0] ?? CLI::getSegment(2);
 
-        if (is_null($class) && $this->hasClassName) {
+        if ($class === null && $this->hasClassName) {
             // @codeCoverageIgnoreStart
             $nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
             $class    = CLI::prompt(lang($nameLang), null, 'required');
@@ -388,6 +388,6 @@ trait GeneratorTrait
             return CLI::getOption($name);
         }
 
-        return is_null($this->params[$name]) ? true : $this->params[$name];
+        return $this->params[$name] === null ? true : $this->params[$name];
     }
 }

@@ -340,7 +340,7 @@ class IncomingRequest extends Request
      */
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
-        if (is_null($this->negotiator)) {
+        if ($this->negotiator === null) {
             $this->negotiator = Services::negotiator($this, true);
         }
 
@@ -457,7 +457,7 @@ class IncomingRequest extends Request
      */
     public function getPath(): string
     {
-        if (is_null($this->path)) {
+        if ($this->path === null) {
             $this->detectPath($this->config->uriProtocol);
         }
 
@@ -523,8 +523,8 @@ class IncomingRequest extends Request
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
-        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && ! is_null($this->body)) {
-            if (is_null($index)) {
+        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && $this->body !== null) {
+            if ($index === null) {
                 return $this->getJSON();
             }
 
@@ -743,7 +743,7 @@ class IncomingRequest extends Request
         // Check for an array value in POST.
         if (isset($_SESSION['_ci_old_input']['post'])) {
             $value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
-            if (! is_null($value)) {
+            if ($value !== null) {
                 return $value;
             }
         }
@@ -751,7 +751,7 @@ class IncomingRequest extends Request
         // Check for an array value in GET.
         if (isset($_SESSION['_ci_old_input']['get'])) {
             $value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
-            if (! is_null($value)) {
+            if ($value !== null) {
                 return $value;
             }
         }
@@ -770,7 +770,7 @@ class IncomingRequest extends Request
      */
     public function getFiles(): array
     {
-        if (is_null($this->files)) {
+        if ($this->files === null) {
             $this->files = new FileCollection();
         }
 
@@ -787,7 +787,7 @@ class IncomingRequest extends Request
      */
     public function getFileMultiple(string $fileID)
     {
-        if (is_null($this->files)) {
+        if ($this->files === null) {
             $this->files = new FileCollection();
         }
 
@@ -804,7 +804,7 @@ class IncomingRequest extends Request
      */
     public function getFile(string $fileID)
     {
-        if (is_null($this->files)) {
+        if ($this->files === null) {
             $this->files = new FileCollection();
         }
 

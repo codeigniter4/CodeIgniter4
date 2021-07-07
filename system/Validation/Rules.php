@@ -349,7 +349,7 @@ class Rules
      */
     public function required_with($str = null, string $fields = null, array $data = []): bool
     {
-        if (is_null($fields) || empty($data)) {
+        if ($fields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
@@ -396,7 +396,7 @@ class Rules
      */
     public function required_without($str = null, string $fields = null, array $data = []): bool
     {
-        if (is_null($fields) || empty($data)) {
+        if ($fields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 

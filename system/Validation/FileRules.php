@@ -36,7 +36,7 @@ class FileRules
      */
     public function __construct(RequestInterface $request = null)
     {
-        if (is_null($request)) {
+        if ($request === null) {
             $request = Services::request();
         }
 
@@ -60,7 +60,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 
@@ -103,7 +103,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 
@@ -146,7 +146,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 
@@ -188,7 +188,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 
@@ -226,7 +226,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 
@@ -265,7 +265,7 @@ class FileRules
         }
 
         foreach ($files as $file) {
-            if (is_null($file)) {
+            if ($file === null) {
                 return false;
             }
 

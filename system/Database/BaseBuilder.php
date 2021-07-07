@@ -1619,7 +1619,7 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
-        if (! is_null($value)) {
+        if ($value !== null) {
             $this->QBLimit = $value;
         }
 
@@ -1778,7 +1778,7 @@ class BaseBuilder
      */
     public function get(int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (! is_null($limit)) {
+        if ($limit !== null) {
             $this->limit($limit, $offset);
         }
 

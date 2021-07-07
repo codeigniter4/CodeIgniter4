@@ -114,7 +114,7 @@ class Fabricator
         $this->model = $model;
 
         // If no locale was specified then use the App default
-        if (is_null($locale)) {
+        if ($locale === null) {
             $locale = config('App')->defaultLocale;
         }
 
@@ -284,7 +284,7 @@ class Fabricator
      */
     public function setFormatters(array $formatters = null): self
     {
-        if (! is_null($formatters)) {
+        if ($formatters !== null) {
             $this->formatters = $formatters;
         } elseif (method_exists($this->model, 'fake')) {
             $this->formatters = null;
@@ -372,7 +372,7 @@ class Fabricator
     public function make(int $count = null)
     {
         // If a singleton was requested then go straight to it
-        if (is_null($count)) {
+        if ($count === null) {
             return $this->model->returnType === 'array'
                 ? $this->makeArray()
                 : $this->makeObject();
@@ -398,7 +398,7 @@ class Fabricator
      */
     public function makeArray()
     {
-        if (! is_null($this->formatters)) {
+        if ($this->formatters !== null) {
             $result = [];
 
             foreach ($this->formatters as $field => $formatter) {
@@ -435,7 +435,7 @@ class Fabricator
      */
     public function makeObject(string $className = null): object
     {
-        if (is_null($className)) {
+        if ($className === null) {
             if ($this->model->returnType === 'object' || $this->model->returnType === 'array') {
                 $className = 'stdClass';
             } else {
@@ -444,7 +444,7 @@ class Fabricator
         }
 
         // If using the model's fake() method then check it for the correct return type
-        if (is_null($this->formatters) && method_exists($this->model, 'fake')) {
+        if ($this->formatters === null && method_exists($this->model, 'fake')) {
             $result = $this->model->fake($this->faker);
 
             if ($result instanceof $className) {
@@ -511,7 +511,7 @@ class Fabricator
             $this->model->withDeleted();
         }
 
-        return $this->model->find(is_null($count) ? reset($ids) : $ids);
+        return $this->model->find($count === null ? reset($ids) : $ids);
     }
 
     /**
@@ -567,6 +567,6 @@ class Fabricator
             $return[] = $result;
         }
 
-        return is_null($count) ? reset($return) : $return;
+        return $count === null ? reset($return) : $return;
     }
 }
