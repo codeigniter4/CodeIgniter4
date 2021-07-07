@@ -70,7 +70,7 @@ trait FeatureTestTrait
      */
     public function withSession(array $values = null)
     {
-        $this->session = $values === null ? $_SESSION : $values;
+        $this->session = $values ?? $_SESSION;
 
         return $this;
     }

@@ -71,7 +71,7 @@ class Image extends File
     {
         $targetPath = rtrim($targetPath, '/ ') . '/';
 
-        $targetName = $targetName === null ? $this->getFilename() : $targetName;
+        $targetName = $targetName ?? $this->getFilename();
 
         if (empty($targetName)) {
             throw ImageException::forInvalidFile($targetName);

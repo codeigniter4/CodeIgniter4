@@ -303,9 +303,7 @@ class Validation implements ValidationInterface
                     $value = '[' . implode(', ', $value) . ']';
                 }
 
-                $this->errors[$field] = $error === null
-                    ? $this->getErrorMessage($rule, $field, $label, $param, $value)
-                    : $error; // @phpstan-ignore-line
+                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
 
                 return false;
             }

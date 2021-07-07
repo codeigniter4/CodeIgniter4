@@ -255,9 +255,9 @@ class Time extends DateTime
      */
     public static function create(int $year = null, int $month = null, int $day = null, int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
     {
-        $year    = $year === null ? date('Y') : $year;
-        $month   = $month === null ? date('m') : $month;
-        $day     = $day === null ? date('d') : $day;
+        $year    = $year ?? date('Y');
+        $month   = $month ?? date('m');
+        $day     = $day ?? date('d');
         $hour    = empty($hour) ? 0 : $hour;
         $minutes = empty($minutes) ? 0 : $minutes;
         $seconds = empty($seconds) ? 0 : $seconds;

@@ -388,6 +388,6 @@ trait GeneratorTrait
             return CLI::getOption($name);
         }
 
-        return $this->params[$name] === null ? true : $this->params[$name];
+        return $this->params[$name] ?? true;
     }
 }
