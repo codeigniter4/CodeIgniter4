@@ -242,6 +242,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'normalize_index_brace'                 => true,
             'not_operator_with_space'               => false,
             'not_operator_with_successor_space'     => true,
+            'object_operator_without_whitespace'    => true,
             'ordered_imports'                       => [
                 'imports_order'  => null,
                 'sort_algorithm' => 'alpha',
