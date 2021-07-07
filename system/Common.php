@@ -674,7 +674,7 @@ if (! function_exists('helper')) {
         // Now actually include all of the files
         if (! empty($includes)) {
             foreach ($includes as $path) {
-                include_once($path);
+                include_once $path;
             }
         }
     }

@@ -398,7 +398,7 @@ class Toolbar
             header('Content-Type: application/javascript');
 
             ob_start();
-            include($this->config->viewsPath . 'toolbarloader.js.php');
+            include $this->config->viewsPath . 'toolbarloader.js.php';
             $output = ob_get_clean();
 
             exit($output);
@@ -465,7 +465,7 @@ class Toolbar
                 extract($data);
                 $parser = Services::parser($this->config->viewsPath, null, false);
                 ob_start();
-                include($this->config->viewsPath . 'toolbar.tpl.php');
+                include $this->config->viewsPath . 'toolbar.tpl.php';
                 $output = ob_get_clean();
                 break;
 

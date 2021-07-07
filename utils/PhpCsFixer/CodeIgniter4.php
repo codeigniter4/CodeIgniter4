@@ -159,6 +159,8 @@ final class CodeIgniter4 extends AbstractRuleset
             'group_import'                => false,
             'heredoc_indentation'         => ['indentation' => 'start_plus_one'],
             'heredoc_to_nowdoc'           => true,
+            'implode_call'                => true,
+            'include'                     => true,
             'increment_style'             => ['style' => 'post'],
             'indentation_type'            => true,
             'lambda_not_used_import'      => true,
