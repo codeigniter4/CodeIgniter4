@@ -2891,8 +2891,8 @@ class BaseBuilder
      */
     protected function compileIgnore(string $statement)
     {
-        if ($this->QBIgnore &&
-            isset($this->supportedIgnoreStatements[$statement])
+        if ($this->QBIgnore
+            && isset($this->supportedIgnoreStatements[$statement])
         ) {
             return trim($this->supportedIgnoreStatements[$statement]) . ' ';
         }

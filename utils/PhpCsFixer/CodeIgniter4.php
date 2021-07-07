@@ -243,6 +243,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'not_operator_with_space'               => false,
             'not_operator_with_successor_space'     => true,
             'object_operator_without_whitespace'    => true,
+            'operator_linebreak'                    => ['only_booleans' => true, 'position' => 'beginning'],
             'ordered_imports'                       => [
                 'imports_order'  => null,
                 'sort_algorithm' => 'alpha',
