@@ -17,9 +17,9 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
-use function error_reporting;
 use ErrorException;
 use Throwable;
+use function error_reporting;
 
 /**
  * Exceptions manager
