@@ -393,6 +393,8 @@ final class CodeIgniter4 extends AbstractRuleset
             'set_type_to_cast'                   => true,
             'short_scalar_cast'                  => true,
             'simple_to_complex_string_variable'  => true,
+            'simplified_if_return'               => true,
+            'simplified_null_return'             => false,
             'single_blank_line_at_eof'           => true,
             'single_blank_line_before_namespace' => true,
             'single_class_element_per_statement' => ['elements' => ['const', 'property']],
