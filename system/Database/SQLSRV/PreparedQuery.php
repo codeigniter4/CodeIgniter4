@@ -50,12 +50,12 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _prepare(string $sql, array $options = [])
     {
-        /* Prepare parameters for the query */
+        // Prepare parameters for the query
         $queryString = $this->getQueryString();
 
         $parameters = $this->parameterize($queryString);
 
-        /* Prepare  the query */
+        // Prepare the query
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
         if (! $this->statement) {

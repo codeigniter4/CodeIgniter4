@@ -394,6 +394,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'single_class_element_per_statement' => ['elements' => ['const', 'property']],
             'single_import_per_statement'        => true,
             'single_line_after_imports'          => true,
+            'single_line_comment_style'          => true,
             'standardize_increment'              => true,
             'static_lambda'                      => true,
             'switch_case_semicolon_to_colon'     => true,

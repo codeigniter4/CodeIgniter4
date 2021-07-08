@@ -85,9 +85,7 @@ class MockLogger
         //--------------------------------------------------------------------
 
         'Tests\Support\Log\Handlers\TestHandler' => [
-            /*
-             * The log levels that this handler will handle.
-             */
+            // The log levels that this handler will handle.
             'handles' => [
                 'critical',
                 'alert',
@@ -99,9 +97,7 @@ class MockLogger
                 'warning',
             ],
 
-            /*
-             * Logging Directory Path
-             */
+            // Logging Directory Path
             'path' => '',
         ],
     ];
