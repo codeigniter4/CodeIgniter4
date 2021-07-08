@@ -481,7 +481,7 @@ class Pager implements PagerInterface
      *
      * @return Pager
      */
-    public function only(array $queries):Pager
+    public function only(array $queries): Pager
     {
         $this->only = $queries;
 

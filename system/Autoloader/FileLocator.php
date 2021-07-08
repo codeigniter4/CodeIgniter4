@@ -123,7 +123,7 @@ class FileLocator
      *
      * @return string
      */
-    public function getClassname(string $file) : string
+    public function getClassname(string $file): string
     {
         $php       = file_get_contents($file);
         $tokens    = token_get_all($php);

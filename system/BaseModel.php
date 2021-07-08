@@ -688,7 +688,7 @@ abstract class BaseModel
      *
      * @return bool
      */
-    protected function shouldUpdate($data) : bool
+    protected function shouldUpdate($data): bool
     {
         return ! empty($this->getIdValue($data));
     }

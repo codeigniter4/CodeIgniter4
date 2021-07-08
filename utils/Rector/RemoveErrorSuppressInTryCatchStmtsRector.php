@@ -51,7 +51,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
             return null;
         }
 
-        $inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static function (Node $n) use ($node) : bool {
+        $inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static function (Node $n) use ($node): bool {
             return $n === $node;
         });
 

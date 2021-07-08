@@ -133,7 +133,7 @@ class DownloadResponse extends Response
      *
      * @return int
      */
-    public function getContentLength() : int
+    public function getContentLength(): int
     {
         if (is_string($this->binary)) {
             return strlen($this->binary);
@@ -200,7 +200,7 @@ class DownloadResponse extends Response
      *
      * @return string
      */
-    private function getContentDisposition() : string
+    private function getContentDisposition(): string
     {
         $downloadFilename = $this->getDownloadFileName();
 

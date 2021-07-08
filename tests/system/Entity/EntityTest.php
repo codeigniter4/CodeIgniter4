@@ -997,7 +997,7 @@ final class EntityTest extends CIUnitTestCase
         };
     }
 
-    protected function getCastEntity($data = null) : Entity
+    protected function getCastEntity($data = null): Entity
     {
         return new class($data) extends Entity {
             protected $attributes = [

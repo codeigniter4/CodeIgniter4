@@ -606,7 +606,7 @@ class Model extends BaseModel
      *
      * @return bool
      */
-    protected function shouldUpdate($data) : bool
+    protected function shouldUpdate($data): bool
     {
         // When useAutoIncrement feature is disabled check
         // in the database if given record already exists
