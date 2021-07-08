@@ -209,9 +209,7 @@ class FileLocator
         }
 
         // Remove any duplicates
-        $foundPaths = array_unique($foundPaths);
-
-        return $foundPaths;
+        return array_unique($foundPaths);
     }
 
     /**

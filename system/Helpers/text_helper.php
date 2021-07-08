@@ -448,9 +448,7 @@ if (! function_exists('word_wrap')) {
         }
 
         // remove any trailing newline
-        $output = rtrim($output);
-
-        return $output;
+        return rtrim($output);
     }
 }
 

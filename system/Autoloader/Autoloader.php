@@ -305,9 +305,7 @@ class Autoloader
         $filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
 
         // Clean up our filename edges.
-        $filename = trim($filename, '.-_');
-
-        return $filename;
+        return trim($filename, '.-_');
     }
 
     /**
