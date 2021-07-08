@@ -157,7 +157,7 @@ class FileHandler extends BaseHandler
             }
 
             // Needed by write() to detect session_regenerate_id() calls
-            if (is_null($this->sessionID)) { // @phpstan-ignore-line
+            if (! isset($this->sessionID)) {
                 $this->sessionID = $sessionID;
             }
 

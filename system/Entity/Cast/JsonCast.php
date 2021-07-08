@@ -27,7 +27,7 @@ class JsonCast extends BaseCast
     {
         $associative = in_array('array', $params, true);
 
-        $tmp = ! is_null($value) ? ($associative ? [] : new stdClass()) : null;
+        $tmp = $value !== null ? ($associative ? [] : new stdClass()) : null;
 
         if (function_exists('json_decode')
             && (

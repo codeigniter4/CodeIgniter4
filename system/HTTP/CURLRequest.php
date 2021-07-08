@@ -499,7 +499,7 @@ class CURLRequest extends Request
 
         if ($method === 'PUT' || $method === 'POST') {
             // See http://tools.ietf.org/html/rfc7230#section-3.3.2
-            if (is_null($this->header('content-length')) && ! isset($this->config['multipart'])) {
+            if ($this->header('content-length') === null && ! isset($this->config['multipart'])) {
                 $this->setHeader('Content-Length', '0');
             }
         } elseif ($method === 'HEAD') {

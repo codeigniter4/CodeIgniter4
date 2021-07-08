@@ -103,7 +103,7 @@ trait FilterTestTrait
         $this->filtersConfig = $this->filtersConfig ?? config('Filters');
         $this->filters       = $this->filters ?? new Filters($this->filtersConfig, $this->request, $this->response);
 
-        if (is_null($this->collection)) {
+        if ($this->collection === null) {
             // Load the RouteCollection from Config to gather App route info
             // (creates $routes using the Service as a starting point)
             require APPPATH . 'Config/Routes.php';

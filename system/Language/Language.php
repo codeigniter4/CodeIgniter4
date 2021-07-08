@@ -75,7 +75,7 @@ class Language
      */
     public function setLocale(string $locale = null)
     {
-        if (! is_null($locale)) {
+        if ($locale !== null) {
             $this->locale = $locale;
         }
 

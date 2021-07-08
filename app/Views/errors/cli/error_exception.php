@@ -49,7 +49,7 @@ if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) {
                 case is_array($value):
                     return count($value) ? '[...]' : '[]';
 
-                case is_null($value):
+                case $value === null:
                     return 'null'; // return the lowercased version
 
                 default:

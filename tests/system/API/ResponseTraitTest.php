@@ -54,7 +54,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             $config->{$key} = $value;
         }
 
-        if (is_null($this->request)) {
+        if ($this->request === null) {
             $this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
             $this->response = new MockResponse((object) $config);
         }

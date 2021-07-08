@@ -541,7 +541,7 @@ class CLI
      */
     public static function strlen(?string $string): int
     {
-        if (is_null($string)) {
+        if ($string === null) {
             return 0;
         }
 
@@ -632,7 +632,7 @@ class CLI
      */
     public static function getWidth(int $default = 80): int
     {
-        if (\is_null(static::$width)) {
+        if (static::$width === null) {
             static::generateDimensions();
         }
 
@@ -650,7 +650,7 @@ class CLI
      */
     public static function getHeight(int $default = 32): int
     {
-        if (\is_null(static::$height)) {
+        if (static::$height === null) {
             static::generateDimensions();
         }
 

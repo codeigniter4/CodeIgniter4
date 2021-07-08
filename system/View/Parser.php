@@ -93,7 +93,7 @@ class Parser extends View
     public function render(string $view, array $options = null, bool $saveData = null): string
     {
         $start = microtime(true);
-        if (is_null($saveData)) {
+        if ($saveData === null) {
             $saveData = $this->config->saveData;
         }
 
@@ -121,7 +121,7 @@ class Parser extends View
             }
         }
 
-        if (is_null($this->tempData)) {
+        if ($this->tempData === null) {
             $this->tempData = $this->data;
         }
 
@@ -158,11 +158,11 @@ class Parser extends View
     public function renderString(string $template, array $options = null, bool $saveData = null): string
     {
         $start = microtime(true);
-        if (is_null($saveData)) {
+        if ($saveData === null) {
             $saveData = $this->config->saveData;
         }
 
-        if (is_null($this->tempData)) {
+        if ($this->tempData === null) {
             $this->tempData = $this->data;
         }
 
@@ -488,7 +488,7 @@ class Parser extends View
         // Parse the PHP itself, or insert an error so they can debug
         ob_start();
 
-        if (is_null($this->tempData)) {
+        if ($this->tempData === null) {
             $this->tempData = $this->data;
         }
 

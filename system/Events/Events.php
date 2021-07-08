@@ -241,7 +241,7 @@ class Events
      */
     public static function removeAllListeners($eventName = null)
     {
-        if (! is_null($eventName)) {
+        if ($eventName !== null) {
             unset(static::$listeners[$eventName]);
         } else {
             static::$listeners = [];

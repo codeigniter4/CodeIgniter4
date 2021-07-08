@@ -379,7 +379,7 @@ class CodeIgniter
 
         // If any filters were specified within the routes file,
         // we need to ensure it's active for the current request
-        if (! is_null($routeFilter)) {
+        if ($routeFilter !== null) {
             $filters->enableFilter($routeFilter, 'before');
             $filters->enableFilter($routeFilter, 'after');
         }

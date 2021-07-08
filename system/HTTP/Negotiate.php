@@ -40,7 +40,7 @@ class Negotiate
      */
     public function __construct(RequestInterface $request = null)
     {
-        if (! is_null($request)) {
+        if ($request !== null) {
             $this->request = $request;
         }
     }

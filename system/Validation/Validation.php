@@ -191,7 +191,7 @@ class Validation implements ValidationInterface
      */
     protected function processRules(string $field, string $label = null, $value, $rules = null, array $data = null): bool
     {
-        if (is_null($data)) {
+        if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
         }
 
@@ -303,9 +303,7 @@ class Validation implements ValidationInterface
                     $value = '[' . implode(', ', $value) . ']';
                 }
 
-                $this->errors[$field] = is_null($error)
-                    ? $this->getErrorMessage($rule, $field, $label, $param, $value)
-                    : $error; // @phpstan-ignore-line
+                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
 
                 return false;
             }

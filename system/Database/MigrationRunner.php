@@ -171,7 +171,7 @@ class MigrationRunner
         $this->ensureTable();
 
         // Set database group if not null
-        if (! is_null($group)) {
+        if ($group !== null) {
             $this->groupFilter = $group;
             $this->setGroup($group);
         }
@@ -248,7 +248,7 @@ class MigrationRunner
         }
 
         // Set database group if not null
-        if (! is_null($group)) {
+        if ($group !== null) {
             $this->setGroup($group);
         }
 
@@ -370,7 +370,7 @@ class MigrationRunner
         $this->ensureTable();
 
         // Set database group if not null
-        if (! is_null($group)) {
+        if ($group !== null) {
             $this->groupFilter = $group;
             $this->setGroup($group);
         }
@@ -1006,7 +1006,7 @@ class MigrationRunner
         }
 
         // Skip migration if group filtering was set
-        if ($direction === 'up' && ! is_null($this->groupFilter) && $this->groupFilter !== $group) {
+        if ($direction === 'up' && $this->groupFilter !== null && $this->groupFilter !== $group) {
             $this->groupSkip = true;
 
             return true;

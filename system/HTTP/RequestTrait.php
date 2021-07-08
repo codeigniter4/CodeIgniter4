@@ -236,7 +236,7 @@ trait RequestTrait
         $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
-        if (is_null($index)) {
+        if ($index === null) {
             $values = [];
 
             foreach ($this->globals[$method] as $key => $value) {
@@ -301,7 +301,7 @@ trait RequestTrait
         }
 
         // Cannot filter these types of data automatically...
-        if (is_array($value) || is_object($value) || is_null($value)) {
+        if (is_array($value) || is_object($value) || $value === null) {
             return $value;
         }
 

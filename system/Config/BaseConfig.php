@@ -99,7 +99,7 @@ class BaseConfig
             foreach (array_keys($property) as $key) {
                 $this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
             }
-        } elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && ! is_null($value)) {
+        } elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && $value !== null) {
             if ($value === 'false') {
                 $value = false;
             } elseif ($value === 'true') {

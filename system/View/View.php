@@ -233,7 +233,7 @@ class View implements RendererInterface
         // When using layouts, the data has already been stored
         // in $this->sections, and no other valid output
         // is allowed in $output so we'll overwrite it.
-        if (! is_null($this->layout) && $this->sectionStack === []) {
+        if ($this->layout !== null && $this->sectionStack === []) {
             $layoutView   = $this->layout;
             $this->layout = null;
             // Save current vars

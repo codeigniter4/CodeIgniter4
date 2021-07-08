@@ -271,7 +271,7 @@ class TestResponse extends TestCase
     {
         $this->assertArrayHasKey($key, $_SESSION, "'{$key}' is not in the current \$_SESSION");
 
-        if (is_null($value)) {
+        if ($value === null) {
             return;
         }
 
@@ -382,7 +382,7 @@ class TestResponse extends TestCase
     {
         $response = $this->response->getJSON();
 
-        if (is_null($response)) {
+        if ($response === null) {
             return false;
         }
 

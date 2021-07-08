@@ -71,7 +71,7 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         $value = $this->get($key);
 
-        if (! is_null($value)) {
+        if ($value !== null) {
             return $value;
         }
 

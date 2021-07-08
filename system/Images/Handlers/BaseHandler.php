@@ -598,7 +598,7 @@ abstract class BaseHandler implements ImageHandlerInterface
             case IMAGETYPE_JPEG:
             case IMAGETYPE_TIFF_II:
                 $exif = @exif_read_data($this->image()->getPathname());
-                if (! is_null($key) && is_array($exif)) {
+                if ($key !== null && is_array($exif)) {
                     $exif = $exif[$key] ?? false;
                 }
         }
@@ -635,7 +635,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         [$cropWidth, $cropHeight] = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
-        if (is_null($height)) {
+        if ($height === null) {
             $height = ceil(($width / $cropWidth) * $cropHeight);
         }
 
@@ -664,7 +664,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         // If $height is null, then we have it easy.
         // Calc based on full image size and be done.
-        if (is_null($height)) {
+        if ($height === null) {
             $height = ($width / $origWidth) * $origHeight;
 
             return [

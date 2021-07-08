@@ -241,7 +241,7 @@ class URI
      */
     public function __construct(string $uri = null)
     {
-        if (! is_null($uri)) {
+        if ($uri !== null) {
             $this->setURI($uri);
         }
     }
@@ -291,7 +291,7 @@ class URI
      */
     public function setURI(string $uri = null)
     {
-        if (! is_null($uri)) {
+        if ($uri !== null) {
             $parts = parse_url($uri);
 
             if ($parts === false) {
@@ -771,7 +771,7 @@ class URI
      */
     public function setPort(int $port = null)
     {
-        if (is_null($port)) {
+        if ($port === null) {
             return $this;
         }
 
@@ -1030,7 +1030,7 @@ class URI
         }
 
         // Port
-        if (isset($parts['port']) && ! is_null($parts['port'])) {
+        if (isset($parts['port']) && $parts['port'] !== null) {
             // Valid port numbers are enforced by earlier parse_url or setPort()
             $port       = $parts['port'];
             $this->port = $port;

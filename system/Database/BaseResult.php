@@ -151,7 +151,7 @@ abstract class BaseResult implements ResultInterface
             return $this->customResultObject[$className];
         }
 
-        is_null($this->rowData) || $this->dataSeek();
+        $this->rowData === null || $this->dataSeek();
         $this->customResultObject[$className] = [];
 
         while ($row = $this->fetchObject($className)) {
@@ -196,7 +196,7 @@ abstract class BaseResult implements ResultInterface
             return $this->resultArray;
         }
 
-        is_null($this->rowData) || $this->dataSeek();
+        $this->rowData === null || $this->dataSeek();
 
         while ($row = $this->fetchAssoc()) {
             $this->resultArray[] = $row;
@@ -235,7 +235,7 @@ abstract class BaseResult implements ResultInterface
             return $this->resultObject;
         }
 
-        is_null($this->rowData) || $this->dataSeek();
+        $this->rowData === null || $this->dataSeek();
 
         while ($row = $this->fetchObject()) {
             if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal')) {

@@ -116,7 +116,7 @@ class DOMParser
     public function see(string $search = null, string $element = null): bool
     {
         // If Element is null, we're just scanning for text
-        if (is_null($element)) {
+        if ($element === null) {
             $content = $this->dom->saveHTML($this->dom->documentElement);
 
             return mb_strpos($content, $search) !== false;
@@ -261,7 +261,7 @@ class DOMParser
             }
         }
 
-        if (! is_null($search)) {
+        if ($search !== null) {
             $path .= "[contains(., \"{$search}\")]";
         }
 

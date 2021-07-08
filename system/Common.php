@@ -72,7 +72,7 @@ if (! function_exists('cache')) {
         $cache = Services::cache();
 
         // No params - return cache object
-        if (is_null($key)) {
+        if ($key === null) {
             return $cache;
         }
 
@@ -482,10 +482,10 @@ if (! function_exists('force_https')) {
      */
     function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
     {
-        if (is_null($request)) {
+        if ($request === null) {
             $request = Services::request(null, true);
         }
-        if (is_null($response)) {
+        if ($response === null) {
             $response = Services::response(null, true);
         }
 
@@ -674,7 +674,7 @@ if (! function_exists('helper')) {
         // Now actually include all of the files
         if (! empty($includes)) {
             foreach ($includes as $path) {
-                include_once($path);
+                include_once $path;
             }
         }
     }
@@ -861,7 +861,7 @@ if (! function_exists('old')) {
 
         // Return the default value if nothing
         // found in the old input.
-        if (is_null($value)) {
+        if ($value === null) {
             return $default;
         }
 
