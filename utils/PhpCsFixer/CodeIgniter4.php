@@ -389,6 +389,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'return_type_declaration'            => ['space_before' => 'none'],
             'self_accessor'                      => false,
             'self_static_accessor'               => true,
+            'semicolon_after_instruction'        => false,
             'set_type_to_cast'                   => true,
             'short_scalar_cast'                  => true,
             'simple_to_complex_string_variable'  => true,
