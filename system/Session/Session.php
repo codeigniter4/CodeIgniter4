@@ -646,8 +646,8 @@ class Session implements SessionInterface
     public function getFlashdata(string $key = null)
     {
         if (isset($key)) {
-            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key]) &&
-                    ! is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
+            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])
+                && ! is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
         }
 
         $flashdata = [];
@@ -782,8 +782,8 @@ class Session implements SessionInterface
     public function getTempdata(string $key = null)
     {
         if (isset($key)) {
-            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key]) &&
-                    is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
+            return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])
+                    && is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
         }
 
         $tempdata = [];

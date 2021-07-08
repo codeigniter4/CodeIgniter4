@@ -333,8 +333,9 @@ class MemcachedHandler extends BaseHandler
     protected function releaseLock(): bool
     {
         if (isset($this->memcached, $this->lockKey) && $this->lock) {
-            if (! $this->memcached->delete($this->lockKey) &&
-                    $this->memcached->getResultCode() !== Memcached::RES_NOTFOUND
+            if (
+                ! $this->memcached->delete($this->lockKey)
+                && $this->memcached->getResultCode() !== Memcached::RES_NOTFOUND
             ) {
                 $this->logger->error('Session: Error while trying to free lock for ' . $this->lockKey);
 

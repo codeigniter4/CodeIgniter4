@@ -245,10 +245,15 @@ final class CodeIgniter4 extends AbstractRuleset
             'normalize_index_brace'                 => true,
             'not_operator_with_space'               => false,
             'not_operator_with_successor_space'     => true,
+            'object_operator_without_whitespace'    => true,
+            'operator_linebreak'                    => ['only_booleans' => true, 'position' => 'beginning'],
+            'ordered_class_elements'                => false,
             'ordered_imports'                       => [
-                'imports_order'  => null,
                 'sort_algorithm' => 'alpha',
+                'imports_order'  => ['class', 'function', 'const'],
             ],
+            'ordered_interfaces' => false,
+            'ordered_traits'     => false,
             'php_unit_construct' => [
                 'assertions' => [
                     'assertSame',
