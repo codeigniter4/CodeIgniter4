@@ -372,19 +372,19 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         return [
             [
-                FormatRulesTest::ALPHABET,
+                self::ALPHABET,
                 true,
             ],
             [
-                FormatRulesTest::ALPHABET . ' ',
+                self::ALPHABET . ' ',
                 false,
             ],
             [
-                FormatRulesTest::ALPHABET . '1',
+                self::ALPHABET . '1',
                 false,
             ],
             [
-                FormatRulesTest::ALPHABET . '*',
+                self::ALPHABET . '*',
                 false,
             ],
             [
@@ -423,23 +423,23 @@ final class FormatRulesTest extends CIUnitTestCase
                 true,
             ],
             [
-                FormatRulesTest::ALPHABET,
+                self::ALPHABET,
                 true,
             ],
             [
-                FormatRulesTest::ALPHABET . ' ',
+                self::ALPHABET . ' ',
                 true,
             ],
             [
-                FormatRulesTest::ALPHABET . "\n",
+                self::ALPHABET . "\n",
                 false,
             ],
             [
-                FormatRulesTest::ALPHABET . '1',
+                self::ALPHABET . '1',
                 false,
             ],
             [
-                FormatRulesTest::ALPHABET . '*',
+                self::ALPHABET . '*',
                 false,
             ],
         ];
@@ -468,15 +468,15 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         return [
             [
-                FormatRulesTest::ALPHANUMERIC,
+                self::ALPHANUMERIC,
                 true,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '\ ',
+                self::ALPHANUMERIC . '\ ',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '_',
+                self::ALPHANUMERIC . '_',
                 false,
             ],
             [
@@ -509,71 +509,71 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         return [
             [
-                FormatRulesTest::ALPHANUMERIC . ' ~!#$%&*-_+=|:.',
+                self::ALPHANUMERIC . ' ~!#$%&*-_+=|:.',
                 true,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '`',
+                self::ALPHANUMERIC . '`',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . "\n",
+                self::ALPHANUMERIC . "\n",
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '@',
+                self::ALPHANUMERIC . '@',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '^',
+                self::ALPHANUMERIC . '^',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '(',
+                self::ALPHANUMERIC . '(',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . ')',
+                self::ALPHANUMERIC . ')',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '\\',
+                self::ALPHANUMERIC . '\\',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '{',
+                self::ALPHANUMERIC . '{',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '}',
+                self::ALPHANUMERIC . '}',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '[',
+                self::ALPHANUMERIC . '[',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . ']',
+                self::ALPHANUMERIC . ']',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '"',
+                self::ALPHANUMERIC . '"',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . "'",
+                self::ALPHANUMERIC . "'",
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '<',
+                self::ALPHANUMERIC . '<',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '>',
+                self::ALPHANUMERIC . '>',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '/',
+                self::ALPHANUMERIC . '/',
                 false,
             ],
             [
@@ -606,15 +606,15 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         return [
             [
-                ' ' . FormatRulesTest::ALPHANUMERIC,
+                ' ' . self::ALPHANUMERIC,
                 true,
             ],
             [
-                ' ' . FormatRulesTest::ALPHANUMERIC . '-',
+                ' ' . self::ALPHANUMERIC . '-',
                 false,
             ],
             [
-                ' ' . FormatRulesTest::ALPHANUMERIC . "\n",
+                ' ' . self::ALPHANUMERIC . "\n",
                 false,
             ],
             [
@@ -647,15 +647,15 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         return [
             [
-                FormatRulesTest::ALPHANUMERIC . '-',
+                self::ALPHANUMERIC . '-',
                 true,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . '-\ ',
+                self::ALPHANUMERIC . '-\ ',
                 false,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC . "-\n",
+                self::ALPHANUMERIC . "-\n",
                 false,
             ],
             [
@@ -692,7 +692,7 @@ final class FormatRulesTest extends CIUnitTestCase
                 true,
             ],
             [
-                FormatRulesTest::ALPHANUMERIC,
+                self::ALPHANUMERIC,
                 false,
             ],
             [

@@ -319,7 +319,7 @@ class Toolbar
                 return;
             }
 
-            $toolbar = Services::toolbar(config(Toolbar::class));
+            $toolbar = Services::toolbar(config(self::class));
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],

@@ -170,7 +170,7 @@ class File extends SplFileInfo
 
         @chmod($destination, 0777 & ~umask());
 
-        return new File($destination);
+        return new self($destination);
     }
 
     //--------------------------------------------------------------------

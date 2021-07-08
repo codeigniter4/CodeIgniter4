@@ -179,7 +179,7 @@ class Entity implements JsonSerializable
             $return[$key] = $this->__get($key);
 
             if ($recursive) {
-                if ($return[$key] instanceof Entity) {
+                if ($return[$key] instanceof self) {
                     $return[$key] = $return[$key]->toArray($onlyChanged, $cast, $recursive);
                 } elseif (is_callable([$return[$key], 'toArray'])) {
                     $return[$key] = $return[$key]->toArray();
@@ -207,7 +207,7 @@ class Entity implements JsonSerializable
         if (! $onlyChanged) {
             if ($recursive) {
                 return array_map(static function ($value) use ($onlyChanged, $recursive) {
-                    if ($value instanceof Entity) {
+                    if ($value instanceof self) {
                         $value = $value->toRawArray($onlyChanged, $recursive);
                     } elseif (is_callable([$value, 'toRawArray'])) {
                         $value = $value->toRawArray();
@@ -226,7 +226,7 @@ class Entity implements JsonSerializable
             }
 
             if ($recursive) {
-                if ($value instanceof Entity) {
+                if ($value instanceof self) {
                     $value = $value->toRawArray($onlyChanged, $recursive);
                 } elseif (is_callable([$value, 'toRawArray'])) {
                     $value = $value->toRawArray();

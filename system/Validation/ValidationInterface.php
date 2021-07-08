@@ -53,7 +53,7 @@ interface ValidationInterface
      *
      * @return ValidationInterface
      */
-    public function withRequest(RequestInterface $request): ValidationInterface;
+    public function withRequest(RequestInterface $request): self;
 
     //--------------------------------------------------------------------
     // Rules
@@ -67,7 +67,7 @@ interface ValidationInterface
      *
      * @return ValidationInterface
      */
-    public function setRules(array $rules, array $messages = []): ValidationInterface;
+    public function setRules(array $rules, array $messages = []): self;
 
     //--------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ interface ValidationInterface
      *
      * @return ValidationInterface
      */
-    public function setError(string $alias, string $error): ValidationInterface;
+    public function setError(string $alias, string $error): self;
 
     //--------------------------------------------------------------------
     // Misc
@@ -131,7 +131,7 @@ interface ValidationInterface
      *
      * @return ValidationInterface
      */
-    public function reset(): ValidationInterface;
+    public function reset(): self;
 
     //--------------------------------------------------------------------
 }
