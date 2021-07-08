@@ -151,7 +151,7 @@ final class ValidationModelTest extends LiveModelTestCase
             'foo'  => 'bar',
         ];
 
-        $rules = call_user_func($cleaner, $rules, null);
+        $rules = $cleaner($rules, null);
         $this->assertEmpty($rules);
     }
 
@@ -168,7 +168,7 @@ final class ValidationModelTest extends LiveModelTestCase
             'foo' => 'bar',
         ];
 
-        $rules = call_user_func($cleaner, $rules, $data);
+        $rules = $cleaner($rules, $data);
         $this->assertArrayHasKey('foo', $rules);
         $this->assertArrayNotHasKey('name', $rules);
     }
@@ -187,7 +187,7 @@ final class ValidationModelTest extends LiveModelTestCase
             'name' => null,
         ];
 
-        $rules = call_user_func($cleaner, $rules, $data);
+        $rules = $cleaner($rules, $data);
         $this->assertArrayHasKey('foo', $rules);
         $this->assertArrayHasKey('name', $rules);
     }

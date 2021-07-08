@@ -344,7 +344,7 @@ class Table
                     if ($cell === '' || $cell === null) {
                         $out .= $this->emptyCells;
                     } elseif (isset($this->function)) {
-                        $out .= call_user_func($this->function, $cell);
+                        $out .= ($this->function)($cell);
                     } else {
                         $out .= $cell;
                     }

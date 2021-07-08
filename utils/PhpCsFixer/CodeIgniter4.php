@@ -383,6 +383,7 @@ final class CodeIgniter4 extends AbstractRuleset
                     'srand'      => 'mt_srand',
                 ],
             ],
+            'regular_callable_call'              => true,
             'set_type_to_cast'                   => true,
             'short_scalar_cast'                  => true,
             'simple_to_complex_string_variable'  => true,

@@ -154,7 +154,7 @@ class Events
         foreach ($listeners as $listener) {
             $start = microtime(true);
 
-            $result = static::$simulate === false ? call_user_func($listener, ...$arguments) : true;
+            $result = static::$simulate === false ? $listener(...$arguments) : true;
 
             if (CI_DEBUG) {
                 static::$performanceLog[] = [
