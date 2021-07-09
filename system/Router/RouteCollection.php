@@ -1218,7 +1218,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return string
      */
-    protected function localizeRoute(string $route) :string
+    protected function localizeRoute(string $route): string
     {
         return strtr($route, ['{locale}' => Services::request()->getLocale()]);
     }

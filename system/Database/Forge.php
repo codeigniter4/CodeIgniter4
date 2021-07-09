@@ -560,15 +560,13 @@ class Forge
         }
 
         // createTableStr will usually have the following format: "%s %s (%s\n)"
-        $sql = sprintf(
+        return sprintf(
             $this->createTableStr . '%s',
             $sql,
             $this->db->escapeIdentifiers($table),
             $columns,
             $this->_createTableAttributes($attributes)
         );
-
-        return $sql;
     }
 
     //--------------------------------------------------------------------

@@ -48,12 +48,12 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         return realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
     }
 
-    private function buildDirectories() : void
+    private function buildDirectories(): void
     {
         mkdir($this->dir1, 0777, true);
     }
 
-    private function deleteDirectories() : void
+    private function deleteDirectories(): void
     {
         // these need to be executed in reverse order: dir 2 in inside dir1
         if (is_dir($this->dir1)) {
@@ -61,13 +61,13 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         }
     }
 
-    private function writeFiles() : void
+    private function writeFiles(): void
     {
         file_put_contents($this->file1, $this->fileContents());
         chmod($this->file1, 0777);
     }
 
-    private function deleteFiles() : void
+    private function deleteFiles(): void
     {
         if (file_exists($this->file1)) {
             unlink($this->file1);

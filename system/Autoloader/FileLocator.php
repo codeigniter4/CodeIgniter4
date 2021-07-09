@@ -123,7 +123,7 @@ class FileLocator
      *
      * @return string
      */
-    public function getClassname(string $file) : string
+    public function getClassname(string $file): string
     {
         $php       = file_get_contents($file);
         $tokens    = token_get_all($php);
@@ -209,9 +209,7 @@ class FileLocator
         }
 
         // Remove any duplicates
-        $foundPaths = array_unique($foundPaths);
-
-        return $foundPaths;
+        return array_unique($foundPaths);
     }
 
     /**
