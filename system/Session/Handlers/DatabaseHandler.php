@@ -219,7 +219,7 @@ class DatabaseHandler extends BaseHandler
         }
 
         $updateData = [
-            'timestamp' => 'now()',
+            'timestamp' => date('Y-m-d H:i:s'),
         ];
 
         if ($this->fingerprint !== md5($sessionData)) {
