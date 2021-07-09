@@ -472,7 +472,7 @@ class Connection extends BaseConnection
             $this->initialize();
         }
 
-        if ($this->execute('USE ' . $this->_escapeString($databaseName))) {
+        if ($this->execute('USE [' . $this->_escapeString($databaseName). ']')) {
             $this->database  = $databaseName;
             $this->dataCache = [];
 
