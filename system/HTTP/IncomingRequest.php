@@ -145,7 +145,7 @@ class IncomingRequest extends Request
      * @param string|null $body
      * @param UserAgent   $userAgent
      */
-    public function __construct($config, URI $uri = null, $body = 'php://input', UserAgent $userAgent = null)
+    public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
         if (empty($uri) || empty($userAgent)) {
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
@@ -415,7 +415,7 @@ class IncomingRequest extends Request
      *
      * @return $this
      */
-    public function setPath(string $path, App $config = null)
+    public function setPath(string $path, ?App $config = null)
     {
         $this->path = $path;
         $this->uri->setPath($path);

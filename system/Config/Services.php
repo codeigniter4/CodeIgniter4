@@ -98,7 +98,7 @@ class Services extends BaseService
      *
      * @return CacheInterface
      */
-    public static function cache(Cache $config = null, bool $getShared = true)
+    public static function cache(?Cache $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('cache', $config);
@@ -120,7 +120,7 @@ class Services extends BaseService
      *
      * @return CLIRequest
      */
-    public static function clirequest(App $config = null, bool $getShared = true)
+    public static function clirequest(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('clirequest', $config);
@@ -141,7 +141,7 @@ class Services extends BaseService
      *
      * @return CodeIgniter
      */
-    public static function codeigniter(App $config = null, bool $getShared = true)
+    public static function codeigniter(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('codeigniter', $config);
@@ -179,7 +179,7 @@ class Services extends BaseService
      *
      * @return CURLRequest
      */
-    public static function curlrequest(array $options = [], ResponseInterface $response = null, App $config = null, bool $getShared = true)
+    public static function curlrequest(array $options = [], ?ResponseInterface $response = null, ?App $config = null, bool $getShared = true)
     {
         if ($getShared === true) {
             return static::getSharedInstance('curlrequest', $options, $response, $config);
@@ -227,7 +227,7 @@ class Services extends BaseService
      *
      * @return EncrypterInterface Encryption handler
      */
-    public static function encrypter(EncryptionConfig $config = null, $getShared = false)
+    public static function encrypter(?EncryptionConfig $config = null, $getShared = false)
     {
         if ($getShared === true) {
             return static::getSharedInstance('encrypter', $config);
@@ -256,9 +256,9 @@ class Services extends BaseService
      * @return Exceptions
      */
     public static function exceptions(
-        ExceptionsConfig $config = null,
-        IncomingRequest $request = null,
-        Response $response = null,
+        ?ExceptionsConfig $config = null,
+        ?IncomingRequest $request = null,
+        ?Response $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
@@ -285,7 +285,7 @@ class Services extends BaseService
      *
      * @return Filters
      */
-    public static function filters(FiltersConfig $config = null, bool $getShared = true)
+    public static function filters(?FiltersConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('filters', $config);
@@ -306,7 +306,7 @@ class Services extends BaseService
      *
      * @return Format
      */
-    public static function format(FormatConfig $config = null, bool $getShared = true)
+    public static function format(?FormatConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('format', $config);
@@ -328,7 +328,7 @@ class Services extends BaseService
      *
      * @return Honeypot
      */
-    public static function honeypot(HoneypotConfig $config = null, bool $getShared = true)
+    public static function honeypot(?HoneypotConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('honeypot', $config);
@@ -351,7 +351,7 @@ class Services extends BaseService
      *
      * @return BaseHandler
      */
-    public static function image(string $handler = null, Images $config = null, bool $getShared = true)
+    public static function image(?string $handler = null, ?Images $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('image', $handler, $config);
@@ -394,7 +394,7 @@ class Services extends BaseService
      *
      * @return Language
      */
-    public static function language(string $locale = null, bool $getShared = true)
+    public static function language(?string $locale = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('language', $locale)->setLocale($locale);
@@ -436,7 +436,7 @@ class Services extends BaseService
      *
      * @return MigrationRunner
      */
-    public static function migrations(Migrations $config = null, ConnectionInterface $db = null, bool $getShared = true)
+    public static function migrations(?Migrations $config = null, ?ConnectionInterface $db = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('migrations', $config, $db);
@@ -459,7 +459,7 @@ class Services extends BaseService
      *
      * @return Negotiate
      */
-    public static function negotiator(RequestInterface $request = null, bool $getShared = true)
+    public static function negotiator(?RequestInterface $request = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('negotiator', $request);
@@ -481,7 +481,7 @@ class Services extends BaseService
      *
      * @return Pager
      */
-    public static function pager(PagerConfig $config = null, RendererInterface $view = null, bool $getShared = true)
+    public static function pager(?PagerConfig $config = null, ?RendererInterface $view = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('pager', $config, $view);
@@ -504,7 +504,7 @@ class Services extends BaseService
      *
      * @return Parser
      */
-    public static function parser(string $viewPath = null, ViewConfig $config = null, bool $getShared = true)
+    public static function parser(?string $viewPath = null, ?ViewConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('parser', $viewPath, $config);
@@ -529,7 +529,7 @@ class Services extends BaseService
      *
      * @return View
      */
-    public static function renderer(string $viewPath = null, ViewConfig $config = null, bool $getShared = true)
+    public static function renderer(?string $viewPath = null, ?ViewConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('renderer', $viewPath, $config);
@@ -551,7 +551,7 @@ class Services extends BaseService
      *
      * @return IncomingRequest
      */
-    public static function request(App $config = null, bool $getShared = true)
+    public static function request(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('request', $config);
@@ -577,7 +577,7 @@ class Services extends BaseService
      *
      * @return Response
      */
-    public static function response(App $config = null, bool $getShared = true)
+    public static function response(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('response', $config);
@@ -598,7 +598,7 @@ class Services extends BaseService
      *
      * @return RedirectResponse
      */
-    public static function redirectresponse(App $config = null, bool $getShared = true)
+    public static function redirectresponse(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('redirectresponse', $config);
@@ -642,7 +642,7 @@ class Services extends BaseService
      *
      * @return Router
      */
-    public static function router(RouteCollectionInterface $routes = null, Request $request = null, bool $getShared = true)
+    public static function router(?RouteCollectionInterface $routes = null, ?Request $request = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('router', $routes, $request);
@@ -665,7 +665,7 @@ class Services extends BaseService
      *
      * @return Security
      */
-    public static function security(App $config = null, bool $getShared = true)
+    public static function security(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('security', $config);
@@ -686,7 +686,7 @@ class Services extends BaseService
      *
      * @return Session
      */
-    public static function session(App $config = null, bool $getShared = true)
+    public static function session(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('session', $config);
@@ -757,7 +757,7 @@ class Services extends BaseService
      *
      * @return Toolbar
      */
-    public static function toolbar(ToolbarConfig $config = null, bool $getShared = true)
+    public static function toolbar(?ToolbarConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('toolbar', $config);
@@ -778,7 +778,7 @@ class Services extends BaseService
      *
      * @return URI
      */
-    public static function uri(string $uri = null, bool $getShared = true)
+    public static function uri(?string $uri = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('uri', $uri);
@@ -797,7 +797,7 @@ class Services extends BaseService
      *
      * @return Validation
      */
-    public static function validation(ValidationConfig $config = null, bool $getShared = true)
+    public static function validation(?ValidationConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('validation', $config);

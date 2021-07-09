@@ -201,7 +201,7 @@ class Filters
      *
      * @return string
      */
-    public static function local_number($value, string $type = 'decimal', int $precision = 4, string $locale = null): string
+    public static function local_number($value, string $type = 'decimal', int $precision = 4, ?string $locale = null): string
     {
         helper('number');
 
@@ -230,7 +230,7 @@ class Filters
      *
      * @return string
      */
-    public static function local_currency($value, string $currency, string $locale = null, $fraction = null): string
+    public static function local_currency($value, string $currency, ?string $locale = null, $fraction = null): string
     {
         helper('number');
 

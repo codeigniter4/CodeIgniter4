@@ -36,7 +36,7 @@ class MockLanguage extends Language
      *
      * @return $this
      */
-    public function setData(string $file, array $data, string $locale = null)
+    public function setData(string $file, array $data, ?string $locale = null)
     {
         $this->language[$locale ?? $this->locale][$file] = $data;
 

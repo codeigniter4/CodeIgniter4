@@ -30,7 +30,7 @@ class Rules
      *
      * @return bool
      */
-    public function differs(string $str = null, string $field, array $data): bool
+    public function differs(?string $str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str !== dot_array_search($field, $data);
@@ -49,7 +49,7 @@ class Rules
      *
      * @return bool
      */
-    public function equals(string $str = null, string $val): bool
+    public function equals(?string $str, string $val): bool
     {
         return $str === $val;
     }
@@ -65,7 +65,7 @@ class Rules
      *
      * @return bool
      */
-    public function exact_length(string $str = null, string $val): bool
+    public function exact_length(?string $str, string $val): bool
     {
         $val = explode(',', $val);
 
@@ -88,7 +88,7 @@ class Rules
      *
      * @return bool
      */
-    public function greater_than(string $str = null, string $min): bool
+    public function greater_than(?string $str, string $min): bool
     {
         return is_numeric($str) && $str > $min;
     }
@@ -103,7 +103,7 @@ class Rules
      *
      * @return bool
      */
-    public function greater_than_equal_to(string $str = null, string $min): bool
+    public function greater_than_equal_to(?string $str, string $min): bool
     {
         return is_numeric($str) && $str >= $min;
     }
@@ -125,7 +125,7 @@ class Rules
      *
      * @return bool
      */
-    public function is_not_unique(string $str = null, string $field, array $data): bool
+    public function is_not_unique(?string $str, string $field, array $data): bool
     {
         // Grab any data for exclusion of a single row.
         [$field, $whereField, $whereValue] = array_pad(explode(',', $field), 3, null);
@@ -157,7 +157,7 @@ class Rules
      *
      * @return bool
      */
-    public function in_list(string $value = null, string $list): bool
+    public function in_list(?string $value, string $list): bool
     {
         $list = array_map('trim', explode(',', $list));
 
@@ -181,7 +181,7 @@ class Rules
      *
      * @return bool
      */
-    public function is_unique(string $str = null, string $field, array $data): bool
+    public function is_unique(?string $str, string $field, array $data): bool
     {
         // Grab any data for exclusion of a single row.
         [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);
@@ -213,7 +213,7 @@ class Rules
      *
      * @return bool
      */
-    public function less_than(string $str = null, string $max): bool
+    public function less_than(?string $str, string $max): bool
     {
         return is_numeric($str) && $str < $max;
     }
@@ -228,7 +228,7 @@ class Rules
      *
      * @return bool
      */
-    public function less_than_equal_to(string $str = null, string $max): bool
+    public function less_than_equal_to(?string $str, string $max): bool
     {
         return is_numeric($str) && $str <= $max;
     }
@@ -244,7 +244,7 @@ class Rules
      *
      * @return bool
      */
-    public function matches(string $str = null, string $field, array $data): bool
+    public function matches(?string $str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str === dot_array_search($field, $data);
@@ -263,7 +263,7 @@ class Rules
      *
      * @return bool
      */
-    public function max_length(string $str = null, string $val): bool
+    public function max_length(?string $str, string $val): bool
     {
         return is_numeric($val) && $val >= mb_strlen($str);
     }
@@ -278,7 +278,7 @@ class Rules
      *
      * @return bool
      */
-    public function min_length(string $str = null, string $val): bool
+    public function min_length(?string $str, string $val): bool
     {
         return is_numeric($val) && $val <= mb_strlen($str);
     }
@@ -293,7 +293,7 @@ class Rules
      *
      * @return bool
      */
-    public function not_equals(string $str = null, string $val): bool
+    public function not_equals(?string $str, string $val): bool
     {
         return $str !== $val;
     }
@@ -308,7 +308,7 @@ class Rules
      *
      * @return bool
      */
-    public function not_in_list(string $value = null, string $list): bool
+    public function not_in_list(?string $value, string $list): bool
     {
         return ! $this->in_list($value, $list);
     }
@@ -347,7 +347,7 @@ class Rules
      *
      * @return bool
      */
-    public function required_with($str = null, string $fields = null, array $data = []): bool
+    public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
         if ($fields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
@@ -394,7 +394,7 @@ class Rules
      *
      * @return bool
      */
-    public function required_without($str = null, string $fields = null, array $data = []): bool
+    public function required_without($str = null, ?string $fields = null, array $data = []): bool
     {
         if ($fields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');

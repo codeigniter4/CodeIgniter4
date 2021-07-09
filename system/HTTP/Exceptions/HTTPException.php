@@ -212,7 +212,7 @@ class HTTPException extends FrameworkException
      *
      * @return HTTPException
      */
-    public static function forInvalidFile(string $path = null)
+    public static function forInvalidFile(?string $path = null)
     {
         return new static(lang('HTTP.invalidFile'));
     }

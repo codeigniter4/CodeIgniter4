@@ -31,7 +31,7 @@ class CacheFactory
      *
      * @return CacheInterface
      */
-    public static function getHandler(Cache $config, string $handler = null, string $backup = null)
+    public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)
     {
         if (! isset($config->validHandlers) || ! is_array($config->validHandlers)) {
             throw CacheException::forInvalidHandlers();

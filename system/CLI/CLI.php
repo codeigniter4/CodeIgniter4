@@ -186,7 +186,7 @@ class CLI
      *
      * @codeCoverageIgnore
      */
-    public static function input(string $prefix = null): string
+    public static function input(?string $prefix = null): string
     {
         if (static::$readline_support) {
             return readline($prefix);
@@ -317,7 +317,7 @@ class CLI
      * @param string|null $foreground
      * @param string|null $background
      */
-    public static function print(string $text = '', string $foreground = null, string $background = null)
+    public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
         if ($foreground || $background) {
             $text = static::color($text, $foreground, $background);
@@ -335,7 +335,7 @@ class CLI
      * @param string $foreground
      * @param string $background
      */
-    public static function write(string $text = '', string $foreground = null, string $background = null)
+    public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
         if ($foreground || $background) {
             $text = static::color($text, $foreground, $background);
@@ -358,7 +358,7 @@ class CLI
      * @param string      $foreground
      * @param string|null $background
      */
-    public static function error(string $text, string $foreground = 'light_red', string $background = null)
+    public static function error(string $text, string $foreground = 'light_red', ?string $background = null)
     {
         // Check color support for STDERR
         $stdout            = static::$isColored;
@@ -478,7 +478,7 @@ class CLI
      *
      * @return string The color coded string
      */
-    public static function color(string $text, string $foreground, string $background = null, string $format = null): string
+    public static function color(string $text, string $foreground, ?string $background = null, ?string $format = null): string
     {
         if (! static::$isColored) {
             return $text;
@@ -761,7 +761,7 @@ class CLI
      *
      * @return string
      */
-    public static function wrap(string $string = null, int $max = 0, int $padLeft = 0): string
+    public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
         if (empty($string)) {
             return '';

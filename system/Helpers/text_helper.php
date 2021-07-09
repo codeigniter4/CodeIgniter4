@@ -728,7 +728,7 @@ if (! function_exists('excerpt')) {
      * If no $phrase is passed, will generate an excerpt of $radius characters
      * from the beginning of $text.
      */
-    function excerpt(string $text, string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
+    function excerpt(string $text, ?string $phrase = null, int $radius = 100, string $ellipsis = '...'): string
     {
         if (isset($phrase)) {
             $phrasePos = stripos($text, $phrase);

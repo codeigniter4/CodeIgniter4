@@ -30,7 +30,7 @@ class RedirectResponse extends Response
      *
      * @return $this
      */
-    public function to(string $uri, int $code = null, string $method = 'auto')
+    public function to(string $uri, ?int $code = null, string $method = 'auto')
     {
         // If it appears to be a relative URL, then convert to full URL
         // for better security.
@@ -76,7 +76,7 @@ class RedirectResponse extends Response
      *
      * @return $this
      */
-    public function back(int $code = null, string $method = 'auto')
+    public function back(?int $code = null, string $method = 'auto')
     {
         Services::session();
 

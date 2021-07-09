@@ -31,7 +31,7 @@ class ImageException extends FrameworkException implements ExceptionInterface
         return new static(lang('Images.rotationAngleRequired'));
     }
 
-    public static function forInvalidDirection(string $dir = null)
+    public static function forInvalidDirection(?string $dir = null)
     {
         return new static(lang('Images.invalidDirection', [$dir]));
     }
@@ -46,7 +46,7 @@ class ImageException extends FrameworkException implements ExceptionInterface
         return new static(lang('Images.exifNotSupported'));
     }
 
-    public static function forInvalidImageCreate(string $extra = null)
+    public static function forInvalidImageCreate(?string $extra = null)
     {
         return new static(lang('Images.unsupportedImageCreate') . ' ' . $extra);
     }
@@ -56,7 +56,7 @@ class ImageException extends FrameworkException implements ExceptionInterface
         return new static(lang('Images.saveFailed'));
     }
 
-    public static function forInvalidImageLibraryPath(string $path = null)
+    public static function forInvalidImageLibraryPath(?string $path = null)
     {
         return new static(lang('Images.libPathInvalid', [$path]));
     }

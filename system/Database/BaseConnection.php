@@ -461,7 +461,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return mixed
      */
-    public function getConnection(string $alias = null)
+    public function getConnection(?string $alias = null)
     {
         //@todo work with read/write connections
         return $this->connID;
@@ -1071,7 +1071,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return array|string
      */
-    public function protectIdentifiers($item, bool $prefixSingle = false, bool $protectIdentifiers = null, bool $fieldExists = true)
+    public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
     {
         if (! is_bool($protectIdentifiers)) {
             $protectIdentifiers = $this->protectIdentifiers;

@@ -270,7 +270,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return bool
      */
-    public function save(string $target = null, int $quality = 90): bool
+    public function save(?string $target = null, int $quality = 90): bool
     {
         $original = $target;
         $target   = empty($target) ? $this->image()->getPathname() : $target;

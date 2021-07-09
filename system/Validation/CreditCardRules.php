@@ -250,7 +250,7 @@ class CreditCardRules
      *
      * @return bool
      */
-    protected function isValidLuhn(string $number = null): bool
+    protected function isValidLuhn(?string $number = null): bool
     {
         $number = (string) $number;
 

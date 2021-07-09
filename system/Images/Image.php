@@ -67,7 +67,7 @@ class Image extends File
      *
      * @return bool
      */
-    public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
+    public function copy(string $targetPath, ?string $targetName = null, int $perms = 0644): bool
     {
         $targetPath = rtrim($targetPath, '/ ') . '/';
 

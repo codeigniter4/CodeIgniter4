@@ -24,7 +24,7 @@ interface RouterInterface
      * @param RouteCollectionInterface $routes
      * @param Request                  $request
      */
-    public function __construct(RouteCollectionInterface $routes, Request $request = null);
+    public function __construct(RouteCollectionInterface $routes, ?Request $request = null);
 
     //--------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ interface RouterInterface
      *
      * @return mixed
      */
-    public function handle(string $uri = null);
+    public function handle(?string $uri = null);
 
     //--------------------------------------------------------------------
 

@@ -81,7 +81,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
+    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null)
     {
         $this->path             = $path;
         $this->name             = $originalName;
@@ -128,7 +128,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return bool
      */
-    public function move(string $targetPath, string $name = null, bool $overwrite = false)
+    public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
         $targetPath = rtrim($targetPath, '/') . '/';
         $targetPath = $this->setPath($targetPath); //set the target path
@@ -367,7 +367,7 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @return string file full path
      */
-    public function store(string $folderName = null, string $fileName = null): string
+    public function store(?string $folderName = null, ?string $fileName = null): string
     {
         $folderName = rtrim($folderName ?? date('Ymd'), '/') . '/';
         $fileName   = $fileName ?? $this->getRandomName();

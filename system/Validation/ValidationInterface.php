@@ -27,7 +27,7 @@ interface ValidationInterface
      *
      * @return bool
      */
-    public function run(array $data = null, string $group = null): bool;
+    public function run(?array $data = null, ?string $group = null): bool;
 
     //--------------------------------------------------------------------
 

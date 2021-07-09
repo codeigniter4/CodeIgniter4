@@ -72,7 +72,7 @@ class Builder extends BaseBuilder
      *
      * @return BaseBuilder
      */
-    public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
+    public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
         $direction = strtoupper(trim($direction));
         if ($direction === 'RANDOM') {
@@ -152,7 +152,7 @@ class Builder extends BaseBuilder
      *
      * @internal
      */
-    public function replace(array $set = null)
+    public function replace(?array $set = null)
     {
         if ($set !== null) {
             $this->set($set);
@@ -237,7 +237,7 @@ class Builder extends BaseBuilder
      * @internal param the $mixed limit clause
      * @internal param the $mixed where clause
      */
-    public function delete($where = '', int $limit = null, bool $resetData = true)
+    public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         if (! empty($limit) || ! empty($this->QBLimit)) {
             throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
@@ -409,7 +409,7 @@ class Builder extends BaseBuilder
      *
      * @return BaseBuilder
      */
-    public function join(string $table, string $cond, string $type = '', bool $escape = null)
+    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);

@@ -253,7 +253,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addBaseURI($uri, bool $explicitReporting = null)
+    public function addBaseURI($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'baseURI', $explicitReporting ?? $this->reportOnly);
 
@@ -275,7 +275,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addChildSrc($uri, bool $explicitReporting = null)
+    public function addChildSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'childSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -296,7 +296,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addConnectSrc($uri, bool $explicitReporting = null)
+    public function addConnectSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'connectSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -317,7 +317,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function setDefaultSrc($uri, bool $explicitReporting = null)
+    public function setDefaultSrc($uri, ?bool $explicitReporting = null)
     {
         $this->defaultSrc = [(string) $uri => $explicitReporting ?? $this->reportOnly];
 
@@ -337,7 +337,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addFontSrc($uri, bool $explicitReporting = null)
+    public function addFontSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'fontSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -355,7 +355,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addFormAction($uri, bool $explicitReporting = null)
+    public function addFormAction($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'formAction', $explicitReporting ?? $this->reportOnly);
 
@@ -373,7 +373,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addFrameAncestor($uri, bool $explicitReporting = null)
+    public function addFrameAncestor($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'frameAncestors', $explicitReporting ?? $this->reportOnly);
 
@@ -391,7 +391,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addFrameSrc($uri, bool $explicitReporting = null)
+    public function addFrameSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'frameSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -411,7 +411,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addImageSrc($uri, bool $explicitReporting = null)
+    public function addImageSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'imageSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -429,7 +429,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addMediaSrc($uri, bool $explicitReporting = null)
+    public function addMediaSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'mediaSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -447,7 +447,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addManifestSrc($uri, bool $explicitReporting = null)
+    public function addManifestSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'manifestSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -465,7 +465,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addObjectSrc($uri, bool $explicitReporting = null)
+    public function addObjectSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'objectSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -483,7 +483,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addPluginType($mime, bool $explicitReporting = null)
+    public function addPluginType($mime, ?bool $explicitReporting = null)
     {
         $this->addOption($mime, 'pluginTypes', $explicitReporting ?? $this->reportOnly);
 
@@ -518,7 +518,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addSandbox($flags, bool $explicitReporting = null)
+    public function addSandbox($flags, ?bool $explicitReporting = null)
     {
         $this->addOption($flags, 'sandbox', $explicitReporting ?? $this->reportOnly);
 
@@ -536,7 +536,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addScriptSrc($uri, bool $explicitReporting = null)
+    public function addScriptSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'scriptSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -554,7 +554,7 @@ class ContentSecurityPolicy
      *
      * @return $this
      */
-    public function addStyleSrc($uri, bool $explicitReporting = null)
+    public function addStyleSrc($uri, ?bool $explicitReporting = null)
     {
         $this->addOption($uri, 'styleSrc', $explicitReporting ?? $this->reportOnly);
 
@@ -589,7 +589,7 @@ class ContentSecurityPolicy
      *
      * @return void
      */
-    protected function addOption($options, string $target, bool $explicitReporting = null)
+    protected function addOption($options, string $target, ?bool $explicitReporting = null)
     {
         // Ensure we have an array to work with...
         if (is_string($this->{$target})) {

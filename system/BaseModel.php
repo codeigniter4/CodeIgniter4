@@ -293,7 +293,7 @@ abstract class BaseModel
      *
      * @param ValidationInterface|null $validation Validation
      */
-    public function __construct(ValidationInterface $validation = null)
+    public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
         $this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -405,7 +405,7 @@ abstract class BaseModel
      *
      * @return mixed Number of rows affected or FALSE on failure
      */
-    abstract protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false);
+    abstract protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false);
 
     /**
      * Deletes a single record from the database where $id matches
@@ -447,7 +447,7 @@ abstract class BaseModel
      *
      * @return mixed
      */
-    abstract protected function doReplace(array $data = null, bool $returnSQL = false);
+    abstract protected function doReplace(?array $data = null, bool $returnSQL = false);
 
     /**
      * Grabs the last error(s) that occurred from the Database connection.
@@ -906,7 +906,7 @@ abstract class BaseModel
      *
      * @return mixed Number of rows affected or FALSE on failure
      */
-    public function updateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
@@ -1043,7 +1043,7 @@ abstract class BaseModel
      *
      * @return mixed
      */
-    public function replace(array $data = null, bool $returnSQL = false)
+    public function replace(?array $data = null, bool $returnSQL = false)
     {
         // Validate data before saving.
         if ($data && ! $this->skipValidation && ! $this->cleanRules(true)->validate($data)) {
@@ -1086,7 +1086,7 @@ abstract class BaseModel
      *
      * @return array|null
      */
-    public function paginate(int $perPage = null, string $group = 'default', int $page = null, int $segment = 0)
+    public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0)
     {
         $pager = Services::pager(null, null, false);
 
@@ -1414,7 +1414,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    protected function cleanValidationRules(array $rules, array $data = null): array
+    protected function cleanValidationRules(array $rules, ?array $data = null): array
     {
         if (empty($data)) {
             return [];

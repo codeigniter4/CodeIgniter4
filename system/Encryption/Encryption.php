@@ -84,7 +84,7 @@ class Encryption
      *
      * @return void
      */
-    public function __construct(EncryptionConfig $config = null)
+    public function __construct(?EncryptionConfig $config = null)
     {
         $config = $config ?? new EncryptionConfig();
 
@@ -115,7 +115,7 @@ class Encryption
      *
      * @return EncrypterInterface
      */
-    public function initialize(EncryptionConfig $config = null)
+    public function initialize(?EncryptionConfig $config = null)
     {
         // override config?
         if ($config) {

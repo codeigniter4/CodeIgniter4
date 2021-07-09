@@ -218,7 +218,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function timezone(string $str = null): bool
+    public function timezone(?string $str = null): bool
     {
         return in_array($str, timezone_identifiers_list(), true);
     }
@@ -233,7 +233,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_base64(string $str = null): bool
+    public function valid_base64(?string $str = null): bool
     {
         return base64_encode(base64_decode($str, true)) === $str;
     }
@@ -245,7 +245,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_json(string $str = null): bool
+    public function valid_json(?string $str = null): bool
     {
         json_decode($str);
 
@@ -259,7 +259,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_email(string $str = null): bool
+    public function valid_email(?string $str = null): bool
     {
         // @see https://regex101.com/r/wlJG1t/1/
         if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches)) {
@@ -279,7 +279,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_emails(string $str = null): bool
+    public function valid_emails(?string $str = null): bool
     {
         foreach (explode(',', $str) as $email) {
             $email = trim($email);
@@ -303,7 +303,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_ip(string $ip = null, string $which = null): bool
+    public function valid_ip(?string $ip = null, ?string $which = null): bool
     {
         if (empty($ip)) {
             return false;
@@ -333,7 +333,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_url(string $str = null): bool
+    public function valid_url(?string $str = null): bool
     {
         if (empty($str)) {
             return false;
@@ -360,7 +360,7 @@ class FormatRules
      *
      * @return bool
      */
-    public function valid_date(string $str = null, string $format = null): bool
+    public function valid_date(?string $str = null, ?string $format = null): bool
     {
         if (empty($format)) {
             return (bool) strtotime($str);

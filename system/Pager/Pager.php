@@ -341,7 +341,7 @@ class Pager implements PagerInterface
      *
      * @return string|URI
      */
-    public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false)
+    public function getPageURI(?int $page = null, string $group = 'default', bool $returnObject = false)
     {
         $this->ensureGroup($group);
 
@@ -496,7 +496,7 @@ class Pager implements PagerInterface
      * @param string $group
      * @param int    $perPage
      */
-    protected function ensureGroup(string $group, int $perPage = null)
+    protected function ensureGroup(string $group, ?int $perPage = null)
     {
         if (array_key_exists($group, $this->groups)) {
             return;

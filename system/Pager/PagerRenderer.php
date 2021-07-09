@@ -108,7 +108,7 @@ class PagerRenderer
      *
      * @return PagerRenderer
      */
-    public function setSurroundCount(int $count = null)
+    public function setSurroundCount(?int $count = null)
     {
         $this->updatePages($count);
 
@@ -292,7 +292,7 @@ class PagerRenderer
      *
      * @param int|null $count The new "surroundCount"
      */
-    protected function updatePages(int $count = null)
+    protected function updatePages(?int $count = null)
     {
         if ($count === null) {
             return;

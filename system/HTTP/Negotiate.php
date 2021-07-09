@@ -38,7 +38,7 @@ class Negotiate
      *
      * @param RequestInterface|null $request
      */
-    public function __construct(RequestInterface $request = null)
+    public function __construct(?RequestInterface $request = null)
     {
         if ($request !== null) {
             $this->request = $request;
@@ -169,7 +169,7 @@ class Negotiate
      *
      * @return string Best match
      */
-    protected function getBestMatch(array $supported, string $header = null, bool $enforceTypes = false, bool $strictMatch = false, bool $matchLocales = false): string
+    protected function getBestMatch(array $supported, ?string $header = null, bool $enforceTypes = false, bool $strictMatch = false, bool $matchLocales = false): string
     {
         if (empty($supported)) {
             throw HTTPException::forEmptySupportedNegotiations();

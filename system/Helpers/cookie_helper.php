@@ -44,7 +44,7 @@ if (! function_exists('set_cookie')) {
         string $prefix = '',
         bool $secure = false,
         bool $httpOnly = false,
-        string $sameSite = null
+        ?string $sameSite = null
     ) {
         $response = Services::response();
         $response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
@@ -101,7 +101,7 @@ if (! function_exists('has_cookie')) {
      *
      * @return bool
      */
-    function has_cookie(string $name, string $value = null, string $prefix = ''): bool
+    function has_cookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
         return Services::response()->hasCookie($name, $value, $prefix);
     }

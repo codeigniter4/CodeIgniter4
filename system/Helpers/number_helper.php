@@ -25,7 +25,7 @@ if (! function_exists('number_to_size')) {
      *
      * @return bool|string
      */
-    function number_to_size($num, int $precision = 1, string $locale = null)
+    function number_to_size($num, int $precision = 1, ?string $locale = null)
     {
         // Strip any formatting & ensure numeric input
         try {
@@ -80,7 +80,7 @@ if (! function_exists('number_to_amount')) {
      *
      * @return bool|string
      */
-    function number_to_amount($num, int $precision = 0, string $locale = null)
+    function number_to_amount($num, int $precision = 0, ?string $locale = null)
     {
         // Strip any formatting & ensure numeric input
         try {
@@ -129,7 +129,7 @@ if (! function_exists('number_to_currency')) {
      *
      * @return string
      */
-    function number_to_currency(float $num, string $currency, string $locale = null, int $fraction = null): string
+    function number_to_currency(float $num, string $currency, ?string $locale = null, ?int $fraction = null): string
     {
         return format_number($num, 1, $locale, [
             'type'     => NumberFormatter::CURRENCY,
@@ -153,7 +153,7 @@ if (! function_exists('format_number')) {
      *
      * @return string
      */
-    function format_number(float $num, int $precision = 1, string $locale = null, array $options = []): string
+    function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {
         // Locale is either passed in here, negotiated with client, or grabbed from our config file.
         $locale = $locale ?? Services::request()->getLocale();

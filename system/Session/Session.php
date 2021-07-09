@@ -486,7 +486,7 @@ class Session implements SessionInterface
      *
      * @return mixed The property value(s)
      */
-    public function get(string $key = null)
+    public function get(?string $key = null)
     {
         if (! empty($key) && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
             return $value;
@@ -643,7 +643,7 @@ class Session implements SessionInterface
      *
      * @return array|null The requested property value, or an associative array  of them
      */
-    public function getFlashdata(string $key = null)
+    public function getFlashdata(?string $key = null)
     {
         if (isset($key)) {
             return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])
@@ -779,7 +779,7 @@ class Session implements SessionInterface
      *
      * @return mixed Session data value or null if not found.
      */
-    public function getTempdata(string $key = null)
+    public function getTempdata(?string $key = null)
     {
         if (isset($key)) {
             return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key])

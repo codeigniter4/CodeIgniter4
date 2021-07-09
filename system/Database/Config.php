@@ -137,7 +137,7 @@ class Config extends BaseConfig
      *
      * @return Seeder
      */
-    public static function seeder(string $group = null)
+    public static function seeder(?string $group = null)
     {
         $config = config('Database');
 

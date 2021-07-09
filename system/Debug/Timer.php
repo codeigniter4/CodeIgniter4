@@ -41,7 +41,7 @@ class Timer
      *
      * @return Timer
      */
-    public function start(string $name, float $time = null)
+    public function start(string $name, ?float $time = null)
     {
         $this->timers[strtolower($name)] = [
             'start' => ! empty($time) ? $time : microtime(true),

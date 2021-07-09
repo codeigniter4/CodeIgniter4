@@ -46,7 +46,7 @@ abstract class Migration
      *
      * @param Forge $forge
      */
-    public function __construct(Forge $forge = null)
+    public function __construct(?Forge $forge = null)
     {
         $this->forge = $forge ?? Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
 

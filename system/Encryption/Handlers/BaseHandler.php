@@ -32,7 +32,7 @@ abstract class BaseHandler implements EncrypterInterface
      *
      * @param Encryption|null $config
      */
-    public function __construct(Encryption $config = null)
+    public function __construct(?Encryption $config = null)
     {
         $config = $config ?? config('Encryption');
 

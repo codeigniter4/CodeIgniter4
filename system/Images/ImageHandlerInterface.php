@@ -44,7 +44,7 @@ interface ImageHandlerInterface
      *
      * @return $this
      */
-    public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
+    public function crop(?int $width = null, ?int $height = null, ?int $x = null, ?int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
 
     //--------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ interface ImageHandlerInterface
      *
      * @return mixed
      */
-    public function getEXIF(string $key = null);
+    public function getEXIF(?string $key = null);
 
     //--------------------------------------------------------------------
 
@@ -177,5 +177,5 @@ interface ImageHandlerInterface
      *
      * @return bool
      */
-    public function save(string $target = null, int $quality = 90);
+    public function save(?string $target = null, int $quality = 90);
 }

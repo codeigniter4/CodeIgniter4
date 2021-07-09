@@ -148,7 +148,7 @@ class URI
      *
      * @return string
      */
-    public static function createURIString(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null): string
+    public static function createURIString(?string $scheme = null, ?string $authority = null, ?string $path = null, ?string $query = null, ?string $fragment = null): string
     {
         $uri = '';
         if (! empty($scheme)) {
@@ -239,7 +239,7 @@ class URI
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(string $uri = null)
+    public function __construct(?string $uri = null)
     {
         if ($uri !== null) {
             $this->setURI($uri);
@@ -289,7 +289,7 @@ class URI
      *
      * @return URI
      */
-    public function setURI(string $uri = null)
+    public function setURI(?string $uri = null)
     {
         if ($uri !== null) {
             $parts = parse_url($uri);
@@ -769,7 +769,7 @@ class URI
      *
      * @return $this
      */
-    public function setPort(int $port = null)
+    public function setPort(?int $port = null)
     {
         if ($port === null) {
             return $this;
@@ -966,7 +966,7 @@ class URI
      *
      * @return string
      */
-    protected function filterPath(string $path = null): string
+    protected function filterPath(?string $path = null): string
     {
         $orig = $path;
 

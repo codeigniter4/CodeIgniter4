@@ -77,7 +77,7 @@ class Seeder
      * @param Database            $config
      * @param BaseConnection|null $db
      */
-    public function __construct(Database $config, BaseConnection $db = null)
+    public function __construct(Database $config, ?BaseConnection $db = null)
     {
         $this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 

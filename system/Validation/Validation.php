@@ -108,7 +108,7 @@ class Validation implements ValidationInterface
      *
      * @return bool
      */
-    public function run(array $data = null, string $group = null, string $dbGroup = null): bool
+    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
         $data = $data ?? $this->data;
 
@@ -189,7 +189,7 @@ class Validation implements ValidationInterface
      *
      * @return bool
      */
-    protected function processRules(string $field, string $label = null, $value, $rules = null, array $data = null): bool
+    protected function processRules(string $field, ?string $label, $value, $rules = null, ?array $data = null): bool
     {
         if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
@@ -358,7 +358,7 @@ class Validation implements ValidationInterface
      *
      * @return $this
      */
-    public function setRule(string $field, string $label = null, string $rules, array $errors = [])
+    public function setRule(string $field, ?string $label, string $rules, array $errors = [])
     {
         $this->rules[$field] = [
             'label' => $label,
@@ -545,7 +545,7 @@ class Validation implements ValidationInterface
      *
      * @return array|ValidationException|null
      */
-    public function loadRuleGroup(string $group = null)
+    public function loadRuleGroup(?string $group = null)
     {
         if (empty($group)) {
             return null;
@@ -643,7 +643,7 @@ class Validation implements ValidationInterface
      *
      * @return string Error(s).
      */
-    public function getError(string $field = null): string
+    public function getError(?string $field = null): string
     {
         if ($field === null && count($this->rules) === 1) {
             $field = array_key_first($this->rules);
@@ -705,7 +705,7 @@ class Validation implements ValidationInterface
      *
      * @return string
      */
-    protected function getErrorMessage(string $rule, string $field, string $label = null, string $param = null, string $value = null): string
+    protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
     {
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {

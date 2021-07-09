@@ -34,7 +34,7 @@ interface RouteCollectionInterface
      *
      * @return mixed
      */
-    public function add(string $from, $to, array $options = null);
+    public function add(string $from, $to, ?array $options = null);
 
     //--------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ interface RouteCollectionInterface
      *
      * @return mixed
      */
-    public function addPlaceholder($placeholder, string $pattern = null);
+    public function addPlaceholder($placeholder, ?string $pattern = null);
 
     //--------------------------------------------------------------------
 

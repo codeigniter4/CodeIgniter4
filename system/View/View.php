@@ -143,7 +143,7 @@ class View implements RendererInterface
      * @param bool|null        $debug
      * @param LoggerInterface  $logger
      */
-    public function __construct(ViewConfig $config, string $viewPath = null, FileLocator $loader = null, bool $debug = null, LoggerInterface $logger = null)
+    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
@@ -171,7 +171,7 @@ class View implements RendererInterface
      *
      * @return string
      */
-    public function render(string $view, array $options = null, bool $saveData = null): string
+    public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $this->renderVars['start'] = microtime(true);
 
@@ -286,7 +286,7 @@ class View implements RendererInterface
      *
      * @return string
      */
-    public function renderString(string $view, array $options = null, bool $saveData = null): string
+    public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $start          = microtime(true);
         $saveData       = $saveData ?? $this->saveData;
@@ -332,7 +332,7 @@ class View implements RendererInterface
      *
      * @return RendererInterface
      */
-    public function setData(array $data = [], string $context = null): RendererInterface
+    public function setData(array $data = [], ?string $context = null): RendererInterface
     {
         if ($context) {
             $data = \esc($data, $context);
@@ -354,7 +354,7 @@ class View implements RendererInterface
      *
      * @return RendererInterface
      */
-    public function setVar(string $name, $value = null, string $context = null): RendererInterface
+    public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
         if ($context) {
             $value = \esc($value, $context);
@@ -469,7 +469,7 @@ class View implements RendererInterface
      *
      * @return string
      */
-    public function include(string $view, array $options = null, $saveData = true): string
+    public function include(string $view, ?array $options = null, $saveData = true): string
     {
         return $this->render($view, $options, $saveData);
     }

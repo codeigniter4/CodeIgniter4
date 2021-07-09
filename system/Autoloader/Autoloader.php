@@ -140,7 +140,7 @@ class Autoloader
      *
      * @return $this
      */
-    public function addNamespace($namespace, string $path = null)
+    public function addNamespace($namespace, ?string $path = null)
     {
         if (is_array($namespace)) {
             foreach ($namespace as $prefix => $namespacedPath) {
@@ -172,7 +172,7 @@ class Autoloader
      *
      * @return array
      */
-    public function getNamespace(string $prefix = null)
+    public function getNamespace(?string $prefix = null)
     {
         if ($prefix === null) {
             return $this->prefixes;

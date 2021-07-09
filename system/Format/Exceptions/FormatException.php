@@ -42,7 +42,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
      *
      * @return FormatException
      */
-    public static function forInvalidJSON(string $error = null)
+    public static function forInvalidJSON(?string $error = null)
     {
         return new static(lang('Format.invalidJSON', [$error]));
     }

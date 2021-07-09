@@ -104,7 +104,7 @@ class UserAgent
      *
      * @param UserAgents|null $config
      */
-    public function __construct(UserAgents $config = null)
+    public function __construct(?UserAgents $config = null)
     {
         $this->config = $config ?? new UserAgents();
 
@@ -123,7 +123,7 @@ class UserAgent
      *
      * @return bool
      */
-    public function isBrowser(string $key = null): bool
+    public function isBrowser(?string $key = null): bool
     {
         if (! $this->isBrowser) {
             return false;
@@ -147,7 +147,7 @@ class UserAgent
      *
      * @return bool
      */
-    public function isRobot(string $key = null): bool
+    public function isRobot(?string $key = null): bool
     {
         if (! $this->isRobot) {
             return false;
@@ -171,7 +171,7 @@ class UserAgent
      *
      * @return bool
      */
-    public function isMobile(string $key = null): bool
+    public function isMobile(?string $key = null): bool
     {
         if (! $this->isMobile) {
             return false;

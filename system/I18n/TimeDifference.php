@@ -249,7 +249,7 @@ class TimeDifference
      *
      * @return string
      */
-    public function humanize(string $locale = null): string
+    public function humanize(?string $locale = null): string
     {
         $current = clone $this->currentTime;
 

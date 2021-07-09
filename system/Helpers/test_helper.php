@@ -26,7 +26,7 @@ if (! function_exists('fake')) {
      *
      * @return array|object
      */
-    function fake($model, array $overrides = null, $persist = true)
+    function fake($model, ?array $overrides = null, $persist = true)
     {
         // Get a model-appropriate Fabricator instance
         $fabricator = new Fabricator($model);

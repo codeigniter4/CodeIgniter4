@@ -162,7 +162,7 @@ class MigrationRunner
      *
      * @return bool
      */
-    public function latest(string $group = null)
+    public function latest(?string $group = null)
     {
         if (! $this->enabled) {
             throw ConfigException::forDisabledMigrations();
@@ -241,7 +241,7 @@ class MigrationRunner
      *
      * @return mixed Current batch number on success, FALSE on failure or no migrations are found
      */
-    public function regress(int $targetBatch = 0, string $group = null)
+    public function regress(int $targetBatch = 0, ?string $group = null)
     {
         if (! $this->enabled) {
             throw ConfigException::forDisabledMigrations();
@@ -361,7 +361,7 @@ class MigrationRunner
      * @param string      $path  Namespace of the target migration
      * @param string|null $group
      */
-    public function force(string $path, string $namespace, string $group = null)
+    public function force(string $path, string $namespace, ?string $group = null)
     {
         if (! $this->enabled) {
             throw ConfigException::forDisabledMigrations();
