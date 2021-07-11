@@ -403,9 +403,9 @@ class Forge
     /**
      * Add Foreign Key
      *
-     * @param string $fieldName
+	 * @param string|string[] $fieldName
      * @param string $tableName
-     * @param string $tableField
+	 * @param string|string[] $tableField
      * @param string $onUpdate
      * @param string $onDelete
      *
@@ -413,18 +413,38 @@ class Forge
      *
      * @return Forge
      */
-    public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '')
     {
-        if (! isset($this->fields[$fieldName])) {
-            throw new DatabaseException(lang('Database.fieldNotExists', [$fieldName]));
-        }
+        $errorNames = [];
 
-        $this->foreignKeys[$fieldName] = [
-            'table'    => $tableName,
-            'field'    => $tableField,
-            'onDelete' => strtoupper($onDelete),
-            'onUpdate' => strtoupper($onUpdate),
-        ];
+		if(is_array($fieldName))
+		{
+			foreach ($fieldName as $name)
+			{
+				if (! isset($this->fields[$name]))
+				{
+					$errorNames[] = $name;
+				}
+			}
+		} else {
+			if (! isset($this->fields[$fieldName]))
+			{
+				$errorNames[] = $fieldName;
+			}
+		}
+
+		if(! empty($errorNames))
+		{
+			throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+		}
+
+		$this->foreignKeys[] = [
+			'field' => $fieldName,
+			'referenceTable' => $tableName,
+			'referenceField' => $tableField,
+			'onDelete' => strtoupper($onDelete),
+			'onUpdate' => strtoupper($onUpdate),
+		];
 
         return $this;
     }
@@ -1207,22 +1227,48 @@ class Forge
             'SET DEFAULT',
         ];
 
-        if ($this->foreignKeys !== []) {
-            foreach ($this->foreignKeys as $field => $fkey) {
-                $nameIndex = $table . '_' . $field . '_foreign';
+        if ($this->foreignKeys !== [])
+		{
+			foreach ($this->foreignKeys as $fkey)
+			{
+				$nameIndex = '';
+				if (is_array($fkey['field']))
+				{
+					$nameIndex = $table . '_' . implode("_",$fkey['field']) . '_foreign';
+				} else {
+					$nameIndex = $table . '_' . $fkey['field'] . '_foreign';
+				}
 
-                $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                    . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+				$foreignKeyFiled = '';
+				if (is_array($fkey['field']))
+				{
+					$foreignKeyFiled = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+				} else {
+					$foreignKeyFiled = $this->db->escapeIdentifiers($fkey['field']);
+				}
 
-                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                    $sql .= ' ON DELETE ' . $fkey['onDelete'];
-                }
+				$referenceField = '';
+				if (is_array($fkey['referenceField']))
+				{
+					$referenceField = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
+				} else {
+					$referenceField = $this->db->escapeIdentifiers($fkey['referenceField']);
+				}
 
-                if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                    $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
-                }
-            }
-        }
+				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
+					. ' FOREIGN KEY(' . $foreignKeyFiled . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']) . ' (' . $referenceField . ')';
+
+				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true))
+				{
+					$sql .= ' ON DELETE ' . $fkey['onDelete'];
+				}
+
+				if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true))
+				{
+					$sql .= ' ON UPDATE ' . $fkey['onUpdate'];
+				}
+			}
+		}
 
         return $sql;
     }
