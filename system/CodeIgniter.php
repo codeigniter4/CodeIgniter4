@@ -239,7 +239,9 @@ class CodeIgniter
 
                 $file = SYSTEMPATH . 'ThirdParty/Kint/' . implode('/', $class) . '.php';
 
-                file_exists($file) && require_once $file;
+                if (file_exists($file)) {
+                    require_once $file;
+                }
             });
 
             require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
@@ -476,7 +478,9 @@ class CodeIgniter
     protected function detectEnvironment()
     {
         // Make sure ENVIRONMENT isn't already set by other means.
-        defined('ENVIRONMENT') || define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production'); // @codeCoverageIgnore
+        if (!defined('ENVIRONMENT')) {
+            define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+        } // @codeCoverageIgnore
     }
 
     //--------------------------------------------------------------------

@@ -219,7 +219,9 @@ class MemcachedHandler extends BaseHandler
     public function close(): bool
     {
         if (isset($this->memcached)) {
-            isset($this->lockKey) && $this->memcached->delete($this->lockKey);
+            if (isset($this->lockKey)) {
+                $this->memcached->delete($this->lockKey);
+            }
 
             if (! $this->memcached->quit()) {
                 return false;

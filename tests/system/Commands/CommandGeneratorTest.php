@@ -28,8 +28,12 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
 
-        is_file($file) && unlink($file);
-        is_dir($dir) && strpos($dir, 'Commands') !== false && rmdir($dir);
+        if (is_file($file)) {
+            unlink($file);
+        }
+        if (is_dir($dir) && strpos($dir, 'Commands') !== false) {
+            rmdir($dir);
+        }
     }
 
     protected function getFileContents(string $filepath): string

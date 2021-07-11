@@ -26,7 +26,9 @@ final class FilterGeneratorTest extends CIUnitTestCase
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
     }
 
     public function testGenerateFilter()
