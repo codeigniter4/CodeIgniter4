@@ -59,9 +59,7 @@ class Routes extends BaseCollector
         $rawRoutes = Services::routes(true);
         $router    = Services::router(null, null, true);
 
-        /*
-         * Matched Route
-         */
+        // Matched Route
         $route = $router->getMatchedRoute();
 
         // Get our parameters
@@ -101,9 +99,7 @@ class Routes extends BaseCollector
             ],
         ];
 
-        /*
-        * Defined Routes
-        */
+        // Defined Routes
         $routes  = [];
         $methods = [
             'get',
