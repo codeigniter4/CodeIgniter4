@@ -480,7 +480,7 @@ class CodeIgniter
     protected function detectEnvironment()
     {
         // Make sure ENVIRONMENT isn't already set by other means.
-        if (!defined('ENVIRONMENT')) {
+        if (! defined('ENVIRONMENT')) {
             define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
         }
     }

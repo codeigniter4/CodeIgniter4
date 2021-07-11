@@ -309,7 +309,7 @@ abstract class BaseResult implements ResultInterface
      */
     public function getCustomRowObject(int $n, string $className)
     {
-        if (!isset($this->customResultObject[$className])) {
+        if (! isset($this->customResultObject[$className])) {
             $this->getCustomResultObject($className);
         }
 

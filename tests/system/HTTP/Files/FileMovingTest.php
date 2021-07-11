@@ -71,7 +71,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
 
@@ -123,7 +123,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
 
@@ -161,7 +161,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
 
@@ -196,7 +196,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
 
@@ -230,7 +230,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
 
@@ -282,7 +282,7 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination and make it read only
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             mkdir($destination, 0400, true);
         }
 

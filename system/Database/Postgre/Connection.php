@@ -75,7 +75,7 @@ class Connection extends BaseConnection
                 return false;
             }
 
-            if (!empty($this->schema)) {
+            if (! empty($this->schema)) {
                 $this->simpleQuery("SET search_path TO {$this->schema},public");
             }
 
