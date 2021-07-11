@@ -28,7 +28,9 @@ final class SessionsCommandsTest extends CIUnitTestCase
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        file_exists($file) && unlink($file);
+        if (file_exists($file)) {
+            unlink($file);
+        }
     }
 
     public function testCreateMigrationCommand()

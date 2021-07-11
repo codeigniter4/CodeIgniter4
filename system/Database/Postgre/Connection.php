@@ -75,7 +75,9 @@ class Connection extends BaseConnection
                 return false;
             }
 
-            empty($this->schema) || $this->simpleQuery("SET search_path TO {$this->schema},public");
+            if (! empty($this->schema)) {
+                $this->simpleQuery("SET search_path TO {$this->schema},public");
+            }
 
             if ($this->setClientEncoding($this->charset) === false) {
                 return false;

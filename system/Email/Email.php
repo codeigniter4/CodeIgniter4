@@ -2256,7 +2256,9 @@ class Email
      */
     public function __destruct()
     {
-        is_resource($this->SMTPConnect) && $this->sendCommand('quit');
+        if (is_resource($this->SMTPConnect)) {
+            $this->sendCommand('quit');
+        }
     }
 
     /**

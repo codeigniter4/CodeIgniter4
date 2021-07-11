@@ -26,7 +26,9 @@ final class ModelGeneratorTest extends CIUnitTestCase
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
     }
 
     protected function getFileContent(string $filepath): string
@@ -93,12 +95,18 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('protected $returnType           = \'App\Entities\User\';', $this->getFileContent($file));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
         $file = APPPATH . 'Entities/User.php';
         $this->assertFileExists($file);
         $dir = dirname($file);
-        is_file($file) && unlink($file);
-        is_dir($dir) && rmdir($dir);
+        if (is_file($file)) {
+            unlink($file);
+        }
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
     }
 
     public function testGenerateModelWithOptionSuffix()

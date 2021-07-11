@@ -27,8 +27,12 @@ final class EntityGeneratorTest extends CIUnitTestCase
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
-        is_file($file) && unlink($file);
-        is_dir($dir) && rmdir($dir);
+        if (is_file($file)) {
+            unlink($file);
+        }
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
     }
 
     public function testGenerateEntity()

@@ -905,8 +905,9 @@ class Forge
                 continue;
             }
 
-            // @phpstan-ignore-next-line
-            isset($attributes['TYPE']) && $this->_attributeType($attributes);
+            if (isset($attributes['TYPE'])) {
+                $this->_attributeType($attributes);
+            }
 
             $field = [
                 'name'           => $key,
@@ -921,8 +922,9 @@ class Forge
                 '_literal'       => false,
             ];
 
-            // @phpstan-ignore-next-line
-            isset($attributes['TYPE']) && $this->_attributeUnsigned($attributes, $field);
+            if (isset($attributes['TYPE'])) {
+                $this->_attributeUnsigned($attributes, $field);
+            }
 
             if ($createTable === false) {
                 if (isset($attributes['AFTER'])) {

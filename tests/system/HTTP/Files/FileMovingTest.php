@@ -71,7 +71,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
         foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
@@ -121,7 +123,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
         foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
@@ -157,7 +161,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
         $file = $collection->getFile('userfile1');
 
@@ -190,7 +196,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
         $file = $collection->getFile('userfile1');
 
@@ -222,7 +230,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
 
         $this->expectException(HTTPException::class);
 
@@ -272,7 +282,9 @@ final class FileMovingTest extends CIUnitTestCase
         $destination = $this->destination;
 
         // Create the destination and make it read only
-        is_dir($destination) || mkdir($destination, 0400, true);
+        if (! is_dir($destination)) {
+            mkdir($destination, 0400, true);
+        }
 
         $collection = new FileCollection();
         $file       = $collection->getFile('userfile');

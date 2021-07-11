@@ -35,7 +35,9 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
     }
 
     public function testEnabledSortImportsWillDisruptLanguageFilePublish()
@@ -46,9 +48,13 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
         $dir = dirname($file);
-        is_dir($dir) && rmdir($dir);
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
     }
 
     public function testDisabledSortImportsWillNotAffectLanguageFilesPublish()
@@ -59,8 +65,12 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
         $this->assertFileExists($file);
         $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
-        is_file($file) && unlink($file);
+        if (is_file($file)) {
+            unlink($file);
+        }
         $dir = dirname($file);
-        is_dir($dir) && rmdir($dir);
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
     }
 }
