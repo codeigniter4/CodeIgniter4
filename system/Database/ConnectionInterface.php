@@ -65,7 +65,7 @@ interface ConnectionInterface
      *
      * @return mixed
      */
-    public function getConnection(string $alias = null);
+    public function getConnection(?string $alias = null);
 
     //--------------------------------------------------------------------
 

@@ -31,7 +31,7 @@ class ModelFactory
      *
      * @return mixed|null
      */
-    public static function get(string $name, bool $getShared = true, ConnectionInterface $connection = null)
+    public static function get(string $name, bool $getShared = true, ?ConnectionInterface $connection = null)
     {
         return Factories::models($name, ['getShared' => $getShared], $connection);
     }

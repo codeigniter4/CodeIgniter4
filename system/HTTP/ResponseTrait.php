@@ -507,7 +507,7 @@ trait ResponseTrait
      *
      * @return $this
      */
-    public function redirect(string $uri, string $method = 'auto', int $code = null)
+    public function redirect(string $uri, string $method = 'auto', ?int $code = null)
     {
         // Assume 302 status code response; override if needed
         if (empty($code)) {
@@ -616,7 +616,7 @@ trait ResponseTrait
      *
      * @return bool
      */
-    public function hasCookie(string $name, string $value = null, string $prefix = ''): bool
+    public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
         $prefix = $prefix ?: Cookie::setDefaults()['prefix']; // to retain BC
 
@@ -631,7 +631,7 @@ trait ResponseTrait
      *
      * @return Cookie|Cookie[]|null
      */
-    public function getCookie(string $name = null, string $prefix = '')
+    public function getCookie(?string $name = null, string $prefix = '')
     {
         if ((string) $name === '') {
             return $this->cookieStore->display();

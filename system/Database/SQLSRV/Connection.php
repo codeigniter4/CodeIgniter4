@@ -462,7 +462,7 @@ class Connection extends BaseConnection
      *
      * @return mixed
      */
-    public function setDatabase(string $databaseName = null)
+    public function setDatabase(?string $databaseName = null)
     {
         if (empty($databaseName)) {
             $databaseName = $this->database;

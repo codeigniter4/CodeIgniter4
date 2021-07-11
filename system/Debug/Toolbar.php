@@ -301,7 +301,7 @@ class Toolbar
      *
      * @return void
      */
-    public function prepare(RequestInterface $request = null, ResponseInterface $response = null)
+    public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         /**
          * @var IncomingRequest $request

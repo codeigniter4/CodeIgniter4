@@ -33,7 +33,7 @@ if (! function_exists('_get_uri')) {
      *
      * @return URI
      */
-    function _get_uri(string $relativePath = '', App $config = null): URI
+    function _get_uri(string $relativePath = '', ?App $config = null): URI
     {
         $config = $config ?? config('App');
 
@@ -87,7 +87,7 @@ if (! function_exists('site_url')) {
      *
      * @return string
      */
-    function site_url($relativePath = '', string $scheme = null, App $config = null): string
+    function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
         // Convert array of segments to a string
         if (is_array($relativePath)) {
@@ -112,7 +112,7 @@ if (! function_exists('base_url')) {
      *
      * @return string
      */
-    function base_url($relativePath = '', string $scheme = null): string
+    function base_url($relativePath = '', ?string $scheme = null): string
     {
         $config            = clone config('App');
         $config->indexPage = '';
@@ -133,7 +133,7 @@ if (! function_exists('current_url')) {
      *
      * @return string|URI
      */
-    function current_url(bool $returnObject = false, IncomingRequest $request = null)
+    function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
         $request = $request ?? Services::request();
         $path    = $request->getPath();
@@ -210,7 +210,7 @@ if (! function_exists('index_page')) {
      *
      * @return string
      */
-    function index_page(App $altConfig = null): string
+    function index_page(?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
         $config = $altConfig ?? config(App::class);
@@ -234,7 +234,7 @@ if (! function_exists('anchor')) {
      *
      * @return string
      */
-    function anchor($uri = '', string $title = '', $attributes = '', App $altConfig = null): string
+    function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
         $config = $altConfig ?? config(App::class);
@@ -271,7 +271,7 @@ if (! function_exists('anchor_popup')) {
      *
      * @return string
      */
-    function anchor_popup($uri = '', string $title = '', $attributes = false, App $altConfig = null): string
+    function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
         $config = $altConfig ?? config(App::class);

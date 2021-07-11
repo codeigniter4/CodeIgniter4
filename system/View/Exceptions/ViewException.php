@@ -35,7 +35,7 @@ class ViewException extends FrameworkException
         return new static(lang('View.noCellClass'));
     }
 
-    public static function forInvalidCellClass(string $class = null)
+    public static function forInvalidCellClass(?string $class = null)
     {
         return new static(lang('View.invalidCellClass', [$class]));
     }

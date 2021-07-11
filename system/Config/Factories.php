@@ -281,7 +281,7 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      */
-    public static function reset(string $component = null)
+    public static function reset(?string $component = null)
     {
         if ($component) {
             unset(

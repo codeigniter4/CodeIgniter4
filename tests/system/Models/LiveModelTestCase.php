@@ -46,7 +46,7 @@ abstract class LiveModelTestCase extends CIUnitTestCase
      *
      * @return Model
      */
-    protected function createModel(string $modelName, BaseConnection $db = null): Model
+    protected function createModel(string $modelName, ?BaseConnection $db = null): Model
     {
         $this->db    = $db ?? $this->db;
         $this->model = new $modelName($this->db);

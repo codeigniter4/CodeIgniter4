@@ -68,7 +68,7 @@ class Parser extends View
      * @param bool            $debug
      * @param LoggerInterface $logger
      */
-    public function __construct(ViewConfig $config, string $viewPath = null, $loader = null, bool $debug = null, LoggerInterface $logger = null)
+    public function __construct(ViewConfig $config, ?string $viewPath = null, $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins ?? [];
@@ -90,7 +90,7 @@ class Parser extends View
      *
      * @return string
      */
-    public function render(string $view, array $options = null, bool $saveData = null): string
+    public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
         if ($saveData === null) {
@@ -155,7 +155,7 @@ class Parser extends View
      *
      * @return string
      */
-    public function renderString(string $template, array $options = null, bool $saveData = null): string
+    public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
         $start = microtime(true);
         if ($saveData === null) {
@@ -193,7 +193,7 @@ class Parser extends View
      *
      * @return RendererInterface
      */
-    public function setData(array $data = [], string $context = null): RendererInterface
+    public function setData(array $data = [], ?string $context = null): RendererInterface
     {
         if (! empty($context)) {
             foreach ($data as $key => &$value) {
@@ -229,7 +229,7 @@ class Parser extends View
      *
      * @return string
      */
-    protected function parse(string $template, array $data = [], array $options = null): string
+    protected function parse(string $template, array $data = [], ?array $options = null): string
     {
         if ($template === '') {
             return '';

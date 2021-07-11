@@ -43,7 +43,7 @@ final class GeneralModelTest extends CIUnitTestCase
      *
      * @return Model
      */
-    private function createModel(string $modelName, BaseConnection $db = null): Model
+    private function createModel(string $modelName, ?BaseConnection $db = null): Model
     {
         $this->model = new $modelName($db);
 

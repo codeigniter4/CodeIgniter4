@@ -291,7 +291,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return $this
      */
-    public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
+    public function crop(?int $width = null, ?int $height = null, ?int $x = null, ?int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
     {
         $this->width  = $width;
         $this->height = $height;
@@ -582,7 +582,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return mixed
      */
-    public function getEXIF(string $key = null, bool $silent = false)
+    public function getEXIF(?string $key = null, bool $silent = false)
     {
         if (! function_exists('exif_read_data')) {
             if ($silent) {
@@ -628,7 +628,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return BaseHandler
      */
-    public function fit(int $width, int $height = null, string $position = 'center')
+    public function fit(int $width, ?int $height = null, string $position = 'center')
     {
         $origWidth  = $this->image()->origWidth;
         $origHeight = $this->image()->origHeight;
@@ -785,7 +785,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * @return bool
      */
-    abstract public function save(string $target = null, int $quality = 90);
+    abstract public function save(?string $target = null, int $quality = 90);
 
     //--------------------------------------------------------------------
 

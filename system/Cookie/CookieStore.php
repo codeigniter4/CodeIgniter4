@@ -83,7 +83,7 @@ class CookieStore implements Countable, IteratorAggregate
      *
      * @return bool
      */
-    public function has(string $name, string $prefix = '', string $value = null): bool
+    public function has(string $name, string $prefix = '', ?string $value = null): bool
     {
         $name = $prefix . $name;
 

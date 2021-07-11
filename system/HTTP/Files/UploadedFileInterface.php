@@ -32,7 +32,7 @@ interface UploadedFileInterface
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null);
+    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null);
 
     //--------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ interface UploadedFileInterface
      * @throws RuntimeException         on any error during the move operation.
      * @throws RuntimeException         on the second or subsequent call to the method.
      */
-    public function move(string $targetPath, string $name = null);
+    public function move(string $targetPath, ?string $name = null);
 
     //--------------------------------------------------------------------
 

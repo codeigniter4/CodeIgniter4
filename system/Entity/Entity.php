@@ -114,7 +114,7 @@ class Entity implements JsonSerializable
      *
      * @param array|null $data
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         $this->syncOriginal();
 
@@ -130,7 +130,7 @@ class Entity implements JsonSerializable
      *
      * @return $this
      */
-    public function fill(array $data = null)
+    public function fill(?array $data = null)
     {
         if (! is_array($data)) {
             return $this;
@@ -260,7 +260,7 @@ class Entity implements JsonSerializable
      *
      * @return bool
      */
-    public function hasChanged(string $key = null): bool
+    public function hasChanged(?string $key = null): bool
     {
         // If no parameter was given then check all attributes
         if ($key === null) {
@@ -433,7 +433,7 @@ class Entity implements JsonSerializable
      *
      * @return bool|Entity
      */
-    public function cast(bool $cast = null)
+    public function cast(?bool $cast = null)
     {
         if ($cast === null) {
             return $this->_cast;

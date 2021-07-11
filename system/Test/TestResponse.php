@@ -459,7 +459,7 @@ class TestResponse extends TestCase
      *
      * @throws Exception
      */
-    public function assertSee(string $search = null, string $element = null)
+    public function assertSee(?string $search = null, ?string $element = null)
     {
         $this->assertTrue($this->domParser->see($search, $element), "Do not see '{$search}' in response.");
     }
@@ -472,7 +472,7 @@ class TestResponse extends TestCase
      *
      * @throws Exception
      */
-    public function assertDontSee(string $search = null, string $element = null)
+    public function assertDontSee(?string $search = null, ?string $element = null)
     {
         $this->assertTrue($this->domParser->dontSee($search, $element), "I should not see '{$search}' in response.");
     }
@@ -509,7 +509,7 @@ class TestResponse extends TestCase
      *
      * @throws Exception
      */
-    public function assertSeeLink(string $text, string $details = null)
+    public function assertSeeLink(string $text, ?string $details = null)
     {
         $this->assertTrue($this->domParser->seeLink($text, $details), "Do no see anchor tag with the text {$text} in response.");
     }
@@ -522,7 +522,7 @@ class TestResponse extends TestCase
      *
      * @throws Exception
      */
-    public function assertSeeInField(string $field, string $value = null)
+    public function assertSeeInField(string $field, ?string $value = null)
     {
         $this->assertTrue($this->domParser->seeInField($field, $value), "Do no see input named {$field} with value {$value} in response.");
     }

@@ -97,7 +97,7 @@ class Model extends BaseModel
      * @param ConnectionInterface|null $db         DB Connection
      * @param ValidationInterface|null $validation Validation
      */
-    public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
+    public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
         /**
          * @var BaseConnection $db
@@ -321,7 +321,7 @@ class Model extends BaseModel
      *
      * @return mixed Number of rows affected or FALSE on failure
      */
-    protected function doUpdateBatch(array $set = null, string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
         return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
     }
@@ -404,7 +404,7 @@ class Model extends BaseModel
      *
      * @return mixed
      */
-    protected function doReplace(array $data = null, bool $returnSQL = false)
+    protected function doReplace(?array $data = null, bool $returnSQL = false)
     {
         return $this->builder()->testMode($returnSQL)->replace($data);
     }

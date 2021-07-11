@@ -46,7 +46,7 @@ class FileLocator
      *
      * @return false|string The path to the file, or false if not found.
      */
-    public function locateFile(string $file, string $folder = null, string $ext = 'php')
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
     {
         $file = $this->ensureExt($file, $ext);
 
@@ -393,7 +393,7 @@ class FileLocator
      *
      * @return false|string The path to the file, or false if not found.
      */
-    protected function legacyLocate(string $file, string $folder = null)
+    protected function legacyLocate(string $file, ?string $folder = null)
     {
         $path = APPPATH . (empty($folder) ? $file : $folder . '/' . $file);
         $path = realpath($path) ?: $path;

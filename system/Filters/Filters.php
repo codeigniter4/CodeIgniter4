@@ -103,7 +103,7 @@ class Filters
      * @param ResponseInterface $response
      * @param Modules|null      $modules
      */
-    public function __construct($config, RequestInterface $request, ResponseInterface $response, Modules $modules = null)
+    public function __construct($config, RequestInterface $request, ResponseInterface $response, ?Modules $modules = null)
     {
         $this->config  = $config;
         $this->request = &$request;
@@ -227,7 +227,7 @@ class Filters
      *
      * @return Filters
      */
-    public function initialize(string $uri = null)
+    public function initialize(?string $uri = null)
     {
         if ($this->initialized === true) {
             return $this;
@@ -311,7 +311,7 @@ class Filters
      *
      * @return $this
      */
-    public function addFilter(string $class, string $alias = null, string $when = 'before', string $section = 'globals')
+    public function addFilter(string $class, ?string $alias = null, string $when = 'before', string $section = 'globals')
     {
         $alias = $alias ?? md5($class);
 
@@ -381,7 +381,7 @@ class Filters
      *
      * @return mixed
      */
-    public function getArguments(string $key = null)
+    public function getArguments(?string $key = null)
     {
         return $key === null ? $this->arguments : $this->arguments[$key];
     }
@@ -397,7 +397,7 @@ class Filters
      *
      * @return void
      */
-    protected function processGlobals(string $uri = null)
+    protected function processGlobals(?string $uri = null)
     {
         if (! isset($this->config->globals) || ! is_array($this->config->globals)) {
             return;
@@ -465,7 +465,7 @@ class Filters
      *
      * @return void
      */
-    protected function processFilters(string $uri = null)
+    protected function processFilters(?string $uri = null)
     {
         if (! isset($this->config->filters) || ! $this->config->filters) {
             return;

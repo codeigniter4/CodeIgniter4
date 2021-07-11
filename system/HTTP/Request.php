@@ -78,7 +78,7 @@ class Request extends Message implements MessageInterface, RequestInterface
      *
      * @codeCoverageIgnore
      */
-    public function isValidIP(string $ip = null, string $which = null): bool
+    public function isValidIP(?string $ip = null, ?string $which = null): bool
     {
         return (new FormatRules())->valid_ip($ip, $which);
     }

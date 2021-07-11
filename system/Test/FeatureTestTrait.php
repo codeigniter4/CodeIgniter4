@@ -44,7 +44,7 @@ trait FeatureTestTrait
      *
      * @return $this
      */
-    protected function withRoutes(array $routes = null)
+    protected function withRoutes(?array $routes = null)
     {
         $collection = Services::routes();
 
@@ -68,7 +68,7 @@ trait FeatureTestTrait
      *
      * @return $this
      */
-    public function withSession(array $values = null)
+    public function withSession(?array $values = null)
     {
         $this->session = $values ?? $_SESSION;
 
@@ -147,7 +147,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function call(string $method, string $path, array $params = null)
+    public function call(string $method, string $path, ?array $params = null)
     {
         $buffer = \ob_get_level();
 
@@ -224,7 +224,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function get(string $path, array $params = null)
+    public function get(string $path, ?array $params = null)
     {
         return $this->call('get', $path, $params);
     }
@@ -240,7 +240,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function post(string $path, array $params = null)
+    public function post(string $path, ?array $params = null)
     {
         return $this->call('post', $path, $params);
     }
@@ -256,7 +256,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function put(string $path, array $params = null)
+    public function put(string $path, ?array $params = null)
     {
         return $this->call('put', $path, $params);
     }
@@ -272,7 +272,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function patch(string $path, array $params = null)
+    public function patch(string $path, ?array $params = null)
     {
         return $this->call('patch', $path, $params);
     }
@@ -288,7 +288,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function delete(string $path, array $params = null)
+    public function delete(string $path, ?array $params = null)
     {
         return $this->call('delete', $path, $params);
     }
@@ -304,7 +304,7 @@ trait FeatureTestTrait
      *
      * @return TestResponse
      */
-    public function options(string $path, array $params = null)
+    public function options(string $path, ?array $params = null)
     {
         return $this->call('options', $path, $params);
     }
@@ -318,7 +318,7 @@ trait FeatureTestTrait
      *
      * @return IncomingRequest
      */
-    protected function setupRequest(string $method, string $path = null): IncomingRequest
+    protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
         $path    = URI::removeDotSegments($path);
         $config  = config(App::class);
@@ -371,7 +371,7 @@ trait FeatureTestTrait
      *
      * @return Request
      */
-    protected function populateGlobals(string $method, Request $request, array $params = null)
+    protected function populateGlobals(string $method, Request $request, ?array $params = null)
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
@@ -402,7 +402,7 @@ trait FeatureTestTrait
      *
      * @return Request
      */
-    protected function setRequestBody(Request $request, array $params = null): Request
+    protected function setRequestBody(Request $request, ?array $params = null): Request
     {
         if (isset($this->requestBody) && $this->requestBody !== '') {
             $request->setBody($this->requestBody);

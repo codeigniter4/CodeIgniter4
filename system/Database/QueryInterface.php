@@ -52,7 +52,7 @@ interface QueryInterface
      *
      * @return mixed
      */
-    public function setDuration(float $start, float $end = null);
+    public function setDuration(float $start, ?float $end = null);
 
     //--------------------------------------------------------------------
 

@@ -16,7 +16,7 @@ use CodeIgniter\Database\ConnectionInterface;
 
 class MockBuilder extends BaseBuilder
 {
-    public function __construct($tableName, ConnectionInterface &$db, array $options = null)
+    public function __construct($tableName, ConnectionInterface &$db, ?array $options = null)
     {
         parent::__construct($tableName, $db, $options);
     }

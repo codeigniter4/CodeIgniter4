@@ -51,7 +51,7 @@ class EncryptionException extends RuntimeException implements ExceptionInterface
      *
      * @return static
      */
-    public static function forUnKnownHandler(string $driver = null)
+    public static function forUnKnownHandler(?string $driver = null)
     {
         return new static(lang('Encryption.unKnownHandler', [$driver]));
     }

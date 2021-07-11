@@ -110,7 +110,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', bool $escape = null)
+    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));
@@ -340,7 +340,7 @@ class Builder extends BaseBuilder
      *
      * @return mixed
      */
-    public function replace(array $set = null)
+    public function replace(?array $set = null)
     {
         if ($set !== null) {
             $this->set($set);
@@ -508,7 +508,7 @@ class Builder extends BaseBuilder
      *
      * @return mixed
      */
-    public function delete($where = '', int $limit = null, bool $resetData = true)
+    public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         $table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 
@@ -609,7 +609,7 @@ class Builder extends BaseBuilder
      *
      * @return $this
      */
-    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
+    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
     {
         if (! is_array($key)) {
             $key = [$key => $value];
@@ -680,7 +680,7 @@ class Builder extends BaseBuilder
      *
      * @return ResultInterface
      */
-    public function get(int $limit = null, int $offset = 0, bool $reset = true)
+    public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
         if ($limit !== null) {
             $this->limit($limit, $offset);

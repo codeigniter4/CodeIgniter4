@@ -294,7 +294,7 @@ class CodeIgniter
      *
      * @return bool|mixed|RequestInterface|ResponseInterface
      */
-    public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
+    public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
         $this->startBenchmark();
 
@@ -752,7 +752,7 @@ class CodeIgniter
      *
      * @return string|null
      */
-    protected function tryToRouteIt(RouteCollectionInterface $routes = null)
+    protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
         if ($routes === null) {
             require APPPATH . 'Config/Routes.php';
@@ -949,7 +949,7 @@ class CodeIgniter
      * @param Cache|null $cacheConfig
      * @param mixed|null $returned
      */
-    protected function gatherOutput(Cache $cacheConfig = null, $returned = null)
+    protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
         $this->output = ob_get_contents();
         // If buffering is not null.

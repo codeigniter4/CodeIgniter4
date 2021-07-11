@@ -54,7 +54,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return $this
      */
-    protected function withRoutes(array $routes = null)
+    protected function withRoutes(?array $routes = null)
     {
         $collection = Services::routes();
 
@@ -78,7 +78,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return $this
      */
-    public function withSession(array $values = null)
+    public function withSession(?array $values = null)
     {
         $this->session = $values ?? $_SESSION;
 
@@ -157,7 +157,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function call(string $method, string $path, array $params = null)
+    public function call(string $method, string $path, ?array $params = null)
     {
         $buffer = \ob_get_level();
 
@@ -234,7 +234,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function get(string $path, array $params = null)
+    public function get(string $path, ?array $params = null)
     {
         return $this->call('get', $path, $params);
     }
@@ -250,7 +250,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function post(string $path, array $params = null)
+    public function post(string $path, ?array $params = null)
     {
         return $this->call('post', $path, $params);
     }
@@ -266,7 +266,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function put(string $path, array $params = null)
+    public function put(string $path, ?array $params = null)
     {
         return $this->call('put', $path, $params);
     }
@@ -282,7 +282,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function patch(string $path, array $params = null)
+    public function patch(string $path, ?array $params = null)
     {
         return $this->call('patch', $path, $params);
     }
@@ -298,7 +298,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function delete(string $path, array $params = null)
+    public function delete(string $path, ?array $params = null)
     {
         return $this->call('delete', $path, $params);
     }
@@ -314,7 +314,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return FeatureResponse
      */
-    public function options(string $path, array $params = null)
+    public function options(string $path, ?array $params = null)
     {
         return $this->call('options', $path, $params);
     }
@@ -328,7 +328,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return IncomingRequest
      */
-    protected function setupRequest(string $method, string $path = null): IncomingRequest
+    protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
         $config = config(App::class);
         $uri    = new URI(rtrim($config->baseURL, '/') . '/' . trim($path, '/ '));
@@ -378,7 +378,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return Request
      */
-    protected function populateGlobals(string $method, Request $request, array $params = null)
+    protected function populateGlobals(string $method, Request $request, ?array $params = null)
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
@@ -409,7 +409,7 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @return Request
      */
-    protected function setRequestBody(Request $request, array $params = null): Request
+    protected function setRequestBody(Request $request, ?array $params = null): Request
     {
         if (isset($this->requestBody) && $this->requestBody !== '') {
             $request->setBody($this->requestBody);

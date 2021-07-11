@@ -24,7 +24,7 @@ class PageNotFoundException extends OutOfBoundsException implements ExceptionInt
      */
     protected $code = 404;
 
-    public static function forPageNotFound(string $message = null)
+    public static function forPageNotFound(?string $message = null)
     {
         return new static($message ?? lang('HTTP.pageNotFound'));
     }

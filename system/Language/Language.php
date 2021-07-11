@@ -73,7 +73,7 @@ class Language
      *
      * @return $this
      */
-    public function setLocale(string $locale = null)
+    public function setLocale(?string $locale = null)
     {
         if ($locale !== null) {
             $this->locale = $locale;

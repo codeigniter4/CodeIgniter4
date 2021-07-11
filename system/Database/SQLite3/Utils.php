@@ -35,7 +35,7 @@ class Utils extends BaseUtils
      *
      * @return mixed
      */
-    public function _backup(array $prefs = null)
+    public function _backup(?array $prefs = null)
     {
         throw new DatabaseException('Unsupported feature of the database platform you are using.');
     }

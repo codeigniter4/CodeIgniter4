@@ -86,7 +86,7 @@ class CURLRequest extends Request
      * @param ResponseInterface $response
      * @param array             $options
      */
-    public function __construct(App $config, URI $uri, ResponseInterface $response = null, array $options = [])
+    public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {
         if (! function_exists('curl_version')) {
             // we won't see this during travis-CI

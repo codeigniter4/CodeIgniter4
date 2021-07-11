@@ -22,7 +22,7 @@ class Services extends BaseServices
      *
      * @return URI
      */
-    public static function uri(string $uri = null, bool $getShared = true)
+    public static function uri(?string $uri = null, bool $getShared = true)
     {
         // Intercept our test case
         if ($uri === 'testCanReplaceFrameworkServices') {

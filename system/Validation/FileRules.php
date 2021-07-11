@@ -34,7 +34,7 @@ class FileRules
      *
      * @param RequestInterface $request
      */
-    public function __construct(RequestInterface $request = null)
+    public function __construct(?RequestInterface $request = null)
     {
         if ($request === null) {
             $request = Services::request();

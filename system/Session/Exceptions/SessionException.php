@@ -20,12 +20,12 @@ class SessionException extends FrameworkException
         return new static(lang('Session.missingDatabaseTable'));
     }
 
-    public static function forInvalidSavePath(string $path = null)
+    public static function forInvalidSavePath(?string $path = null)
     {
         return new static(lang('Session.invalidSavePath', [$path]));
     }
 
-    public static function forWriteProtectedSavePath(string $path = null)
+    public static function forWriteProtectedSavePath(?string $path = null)
     {
         return new static(lang('Session.writeProtectedSavePath', [$path]));
     }

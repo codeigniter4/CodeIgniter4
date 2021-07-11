@@ -40,7 +40,7 @@ interface RequestInterface
      *
      * @deprecated Use Validation instead
      */
-    public function isValidIP(string $ip, string $which = null): bool;
+    public function isValidIP(string $ip, ?string $which = null): bool;
 
     //--------------------------------------------------------------------
 

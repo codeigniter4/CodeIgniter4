@@ -239,7 +239,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
+    public function addPlaceholder($placeholder, ?string $pattern = null): RouteCollectionInterface
     {
         if (! is_array($placeholder)) {
             $placeholder = [$placeholder => $pattern];
@@ -496,7 +496,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return array
      */
-    public function getRoutes(string $verb = null): array
+    public function getRoutes(?string $verb = null): array
     {
         if (empty($verb)) {
             $verb = $this->getHTTPVerb();
@@ -551,7 +551,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return array
      */
-    public function getRoutesOptions(string $from = null, string $verb = null): array
+    public function getRoutesOptions(?string $from = null, ?string $verb = null): array
     {
         $options = $this->loadRoutesOptions($verb);
 
@@ -597,7 +597,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function map(array $routes = [], array $options = null): RouteCollectionInterface
+    public function map(array $routes = [], ?array $options = null): RouteCollectionInterface
     {
         foreach ($routes as $from => $to) {
             $this->add($from, $to, $options);
@@ -620,7 +620,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function add(string $from, $to, array $options = null): RouteCollectionInterface
+    public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('*', $from, $to, $options);
 
@@ -786,7 +786,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function resource(string $name, array $options = null): RouteCollectionInterface
+    public function resource(string $name, ?array $options = null): RouteCollectionInterface
     {
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
@@ -881,7 +881,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function presenter(string $name, array $options = null): RouteCollectionInterface
+    public function presenter(string $name, ?array $options = null): RouteCollectionInterface
     {
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
@@ -961,7 +961,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function match(array $verbs = [], string $from = '', $to = '', array $options = null): RouteCollectionInterface
+    public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
         if (empty($from) || empty($to)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
@@ -987,7 +987,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function get(string $from, $to, array $options = null): RouteCollectionInterface
+    public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('get', $from, $to, $options);
 
@@ -1005,7 +1005,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function post(string $from, $to, array $options = null): RouteCollectionInterface
+    public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('post', $from, $to, $options);
 
@@ -1023,7 +1023,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function put(string $from, $to, array $options = null): RouteCollectionInterface
+    public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('put', $from, $to, $options);
 
@@ -1041,7 +1041,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function delete(string $from, $to, array $options = null): RouteCollectionInterface
+    public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('delete', $from, $to, $options);
 
@@ -1059,7 +1059,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function head(string $from, $to, array $options = null): RouteCollectionInterface
+    public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('head', $from, $to, $options);
 
@@ -1077,7 +1077,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function patch(string $from, $to, array $options = null): RouteCollectionInterface
+    public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('patch', $from, $to, $options);
 
@@ -1095,7 +1095,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function options(string $from, $to, array $options = null): RouteCollectionInterface
+    public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('options', $from, $to, $options);
 
@@ -1113,7 +1113,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return RouteCollectionInterface
      */
-    public function cli(string $from, $to, array $options = null): RouteCollectionInterface
+    public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
         $this->create('cli', $from, $to, $options);
 
@@ -1233,7 +1233,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return bool
      */
-    public function isFiltered(string $search, string $verb = null): bool
+    public function isFiltered(string $search, ?string $verb = null): bool
     {
         $options = $this->loadRoutesOptions($verb);
 
@@ -1257,7 +1257,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return string
      */
-    public function getFilterForRoute(string $search, string $verb = null): string
+    public function getFilterForRoute(string $search, ?string $verb = null): string
     {
         $options = $this->loadRoutesOptions($verb);
 
@@ -1276,7 +1276,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return string
      */
-    protected function fillRouteParams(string $from, array $params = null): string
+    protected function fillRouteParams(string $from, ?array $params = null): string
     {
         // Find all of our back-references in the original route
         preg_match_all('/\(([^)]+)\)/', $from, $matches);
@@ -1313,7 +1313,7 @@ class RouteCollection implements RouteCollectionInterface
      * @param array|string $to
      * @param array|null   $options
      */
-    protected function create(string $verb, string $from, $to, array $options = null)
+    protected function create(string $verb, string $from, $to, ?array $options = null)
     {
         $overwrite = false;
         $prefix    = $this->group === null ? '' : $this->group . '/';
@@ -1524,7 +1524,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return array
      */
-    protected function loadRoutesOptions(string $verb = null): array
+    protected function loadRoutesOptions(?string $verb = null): array
     {
         $verb = $verb ?: $this->getHTTPVerb();
 

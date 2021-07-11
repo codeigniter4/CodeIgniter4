@@ -19,7 +19,7 @@ class FileException extends RuntimeException implements ExceptionInterface
 {
     use DebugTraceableTrait;
 
-    public static function forUnableToMove(string $from = null, string $to = null, string $error = null)
+    public static function forUnableToMove(?string $from = null, ?string $to = null, ?string $error = null)
     {
         return new static(lang('Files.cannotMove', [$from, $to, $error]));
     }

@@ -255,7 +255,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      */
-    public function __construct($tableName, ConnectionInterface &$db, array $options = null)
+    public function __construct($tableName, ConnectionInterface &$db, ?array $options = null)
     {
         if (empty($tableName)) {
             throw new DatabaseException('A table must be specified when creating a new Query Builder.');
@@ -362,7 +362,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function select($select = '*', bool $escape = null)
+    public function select($select = '*', ?bool $escape = null)
     {
         if (is_string($select)) {
             $select = explode(',', $select);
@@ -622,7 +622,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', bool $escape = null)
+    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));
@@ -700,7 +700,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function where($key, $value = null, bool $escape = null)
+    public function where($key, $value = null, ?bool $escape = null)
     {
         return $this->whereHaving('QBWhere', $key, $value, 'AND ', $escape);
     }
@@ -719,7 +719,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orWhere($key, $value = null, bool $escape = null)
+    public function orWhere($key, $value = null, ?bool $escape = null)
     {
         return $this->whereHaving('QBWhere', $key, $value, 'OR ', $escape);
     }
@@ -742,7 +742,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', bool $escape = null)
+    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
     {
         if (! is_array($key)) {
             $key = [$key => $value];
@@ -815,7 +815,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function whereIn(string $key = null, $values = null, bool $escape = null)
+    public function whereIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, false, 'AND ', $escape);
     }
@@ -834,7 +834,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orWhereIn(string $key = null, $values = null, bool $escape = null)
+    public function orWhereIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, false, 'OR ', $escape);
     }
@@ -853,7 +853,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function whereNotIn(string $key = null, $values = null, bool $escape = null)
+    public function whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, true, 'AND ', $escape);
     }
@@ -872,7 +872,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orWhereNotIn(string $key = null, $values = null, bool $escape = null)
+    public function orWhereNotIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, true, 'OR ', $escape);
     }
@@ -891,7 +891,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function havingIn(string $key = null, $values = null, bool $escape = null)
+    public function havingIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, false, 'AND ', $escape, 'QBHaving');
     }
@@ -910,7 +910,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orHavingIn(string $key = null, $values = null, bool $escape = null)
+    public function orHavingIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, false, 'OR ', $escape, 'QBHaving');
     }
@@ -929,7 +929,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function havingNotIn(string $key = null, $values = null, bool $escape = null)
+    public function havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, true, 'AND ', $escape, 'QBHaving');
     }
@@ -948,7 +948,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orHavingNotIn(string $key = null, $values = null, bool $escape = null)
+    public function orHavingNotIn(?string $key = null, $values = null, ?bool $escape = null)
     {
         return $this->_whereIn($key, $values, true, 'OR ', $escape, 'QBHaving');
     }
@@ -974,7 +974,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    protected function _whereIn(string $key = null, $values = null, bool $not = false, string $type = 'AND ', bool $escape = null, string $clause = 'QBWhere')
+    protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
         if (empty($key) || ! is_string($key)) {
             if (CI_DEBUG) {
@@ -1041,7 +1041,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function like($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
     }
@@ -1062,7 +1062,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function notLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function notLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
     }
@@ -1083,7 +1083,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
     }
@@ -1104,7 +1104,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orNotLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function orNotLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
     }
@@ -1124,7 +1124,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function havingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
     }
@@ -1144,7 +1144,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function notHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function notHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
     }
@@ -1164,7 +1164,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function orHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
     }
@@ -1184,7 +1184,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orNotHavingLike($field, string $match = '', string $side = 'both', bool $escape = null, bool $insensitiveSearch = false)
+    public function orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
     {
         return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
     }
@@ -1214,7 +1214,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', bool $escape = null, bool $insensitiveSearch = false, string $clause = 'QBWhere')
+    protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', ?bool $escape = null, bool $insensitiveSearch = false, string $clause = 'QBWhere')
     {
         if (! is_array($field)) {
             $field = [$field => $match];
@@ -1484,7 +1484,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function groupBy($by, bool $escape = null)
+    public function groupBy($by, ?bool $escape = null)
     {
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
@@ -1523,7 +1523,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function having($key, $value = null, bool $escape = null)
+    public function having($key, $value = null, ?bool $escape = null)
     {
         return $this->whereHaving('QBHaving', $key, $value, 'AND ', $escape);
     }
@@ -1541,7 +1541,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orHaving($key, $value = null, bool $escape = null)
+    public function orHaving($key, $value = null, ?bool $escape = null)
     {
         return $this->whereHaving('QBHaving', $key, $value, 'OR ', $escape);
     }
@@ -1557,7 +1557,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function orderBy(string $orderBy, string $direction = '', bool $escape = null)
+    public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
         $direction = strtoupper(trim($direction));
 
@@ -1677,7 +1677,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', bool $escape = null)
+    public function set($key, ?string $value = '', ?bool $escape = null)
     {
         $key = $this->objectToArray($key);
 
@@ -1776,7 +1776,7 @@ class BaseBuilder
      *
      * @return false|ResultInterface
      */
-    public function get(int $limit = null, int $offset = 0, bool $reset = true)
+    public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
         if ($limit !== null) {
             $this->limit($limit, $offset);
@@ -1927,7 +1927,7 @@ class BaseBuilder
      *
      * @return ResultInterface
      */
-    public function getWhere($where = null, int $limit = null, ?int $offset = 0, bool $reset = true)
+    public function getWhere($where = null, ?int $limit = null, ?int $offset = 0, bool $reset = true)
     {
         if ($where !== null) {
             $this->where($where);
@@ -1966,7 +1966,7 @@ class BaseBuilder
      *
      * @return false|int Number of rows inserted or FALSE on failure
      */
-    public function insertBatch(array $set = null, bool $escape = null, int $batchSize = 100)
+    public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
     {
         if ($set === null) {
             if (empty($this->QBSet)) {
@@ -2041,7 +2041,7 @@ class BaseBuilder
      *
      * @return $this|null
      */
-    public function setInsertBatch($key, string $value = '', bool $escape = null)
+    public function setInsertBatch($key, string $value = '', ?bool $escape = null)
     {
         $key = $this->batchObjectToArray($key);
 
@@ -2132,7 +2132,7 @@ class BaseBuilder
      *
      * @return bool|Query
      */
-    public function insert(array $set = null, bool $escape = null)
+    public function insert(?array $set = null, ?bool $escape = null)
     {
         if ($set !== null) {
             $this->set($set, '', $escape);
@@ -2223,7 +2223,7 @@ class BaseBuilder
      *
      * @return BaseResult|false|Query|string
      */
-    public function replace(array $set = null)
+    public function replace(?array $set = null)
     {
         if ($set !== null) {
             $this->set($set);
@@ -2323,7 +2323,7 @@ class BaseBuilder
      *
      * @return bool TRUE on success, FALSE on failure
      */
-    public function update(array $set = null, $where = null, int $limit = null): bool
+    public function update(?array $set = null, $where = null, ?int $limit = null): bool
     {
         if ($set !== null) {
             $this->set($set);
@@ -2433,7 +2433,7 @@ class BaseBuilder
      *
      * @return mixed Number of rows affected, SQL string, or FALSE on failure
      */
-    public function updateBatch(array $set = null, string $index = null, int $batchSize = 100)
+    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100)
     {
         if ($index === null) {
             if (CI_DEBUG) {
@@ -2549,7 +2549,7 @@ class BaseBuilder
      *
      * @return $this|null
      */
-    public function setUpdateBatch($key, string $index = '', bool $escape = null)
+    public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
     {
         $key = $this->batchObjectToArray($key);
 
@@ -2688,7 +2688,7 @@ class BaseBuilder
      *
      * @return bool|string
      */
-    public function delete($where = '', int $limit = null, bool $resetData = true)
+    public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         $table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 

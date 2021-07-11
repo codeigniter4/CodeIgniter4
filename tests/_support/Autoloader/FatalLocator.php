@@ -23,7 +23,7 @@ class FatalLocator extends FileLocator
      *
      * @return false|string The path to the file, or false if not found.
      */
-    public function locateFile(string $file, string $folder = null, string $ext = 'php')
+    public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
     {
         $folder = $folder ?? 'null';
 

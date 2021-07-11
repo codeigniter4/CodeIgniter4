@@ -20,7 +20,7 @@ if (! function_exists('is_cli')) {
      *
      * @return bool
      */
-    function is_cli(bool $newReturn = null): bool
+    function is_cli(?bool $newReturn = null): bool
     {
         // PHPUnit always runs via CLI.
         static $returnValue = true;

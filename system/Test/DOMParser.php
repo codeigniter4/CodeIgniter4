@@ -113,7 +113,7 @@ class DOMParser
      *
      * @return bool
      */
-    public function see(string $search = null, string $element = null): bool
+    public function see(?string $search = null, ?string $element = null): bool
     {
         // If Element is null, we're just scanning for text
         if ($element === null) {
@@ -135,7 +135,7 @@ class DOMParser
      *
      * @return bool
      */
-    public function dontSee(string $search = null, string $element = null): bool
+    public function dontSee(?string $search = null, ?string $element = null): bool
     {
         return ! $this->see($search, $element);
     }
@@ -174,7 +174,7 @@ class DOMParser
      *
      * @return bool
      */
-    public function seeLink(string $text, string $details = null): bool
+    public function seeLink(string $text, ?string $details = null): bool
     {
         return $this->see($text, 'a' . $details);
     }

@@ -164,7 +164,7 @@ if (! function_exists('img_data')) {
      *
      * @return string
      */
-    function img_data(string $path, string $mime = null): string
+    function img_data(string $path, ?string $mime = null): string
     {
         if (! is_file($path) || ! is_readable($path)) {
             throw FileNotFoundException::forFileNotFound($path);

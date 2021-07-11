@@ -100,7 +100,7 @@ class Fabricator
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($model, array $formatters = null, string $locale = null)
+    public function __construct($model, ?array $formatters = null, ?string $locale = null)
     {
         if (is_string($model)) {
             // Create a new model instance
@@ -282,7 +282,7 @@ class Fabricator
      *
      * @return $this
      */
-    public function setFormatters(array $formatters = null): self
+    public function setFormatters(?array $formatters = null): self
     {
         if ($formatters !== null) {
             $this->formatters = $formatters;
@@ -369,7 +369,7 @@ class Fabricator
      *
      * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
-    public function make(int $count = null)
+    public function make(?int $count = null)
     {
         // If a singleton was requested then go straight to it
         if ($count === null) {
@@ -433,7 +433,7 @@ class Fabricator
      *
      * @return object An instance of the class with faked data
      */
-    public function makeObject(string $className = null): object
+    public function makeObject(?string $className = null): object
     {
         if ($className === null) {
             if ($this->model->returnType === 'object' || $this->model->returnType === 'array') {
@@ -485,7 +485,7 @@ class Fabricator
      *
      * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
-    public function create(int $count = null, bool $mock = false)
+    public function create(?int $count = null, bool $mock = false)
     {
         // Intercept mock requests
         if ($mock) {
@@ -521,7 +521,7 @@ class Fabricator
      *
      * @return array|object An array or object (based on returnType), or an array of returnTypes
      */
-    protected function createMock(int $count = null)
+    protected function createMock(?int $count = null)
     {
         switch ($this->model->dateFormat) {
             case 'datetime':

@@ -177,7 +177,7 @@ class Query implements QueryInterface
      *
      * @return $this
      */
-    public function setDuration(float $start, float $end = null)
+    public function setDuration(float $start, ?float $end = null)
     {
         $this->startTime = $start;
 

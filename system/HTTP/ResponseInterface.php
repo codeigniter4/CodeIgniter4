@@ -350,7 +350,7 @@ interface ResponseInterface
      *
      * @return bool
      */
-    public function hasCookie(string $name, string $value = null, string $prefix = ''): bool;
+    public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool;
 
     /**
      * Returns the cookie
@@ -360,7 +360,7 @@ interface ResponseInterface
      *
      * @return Cookie|Cookie[]|null
      */
-    public function getCookie(string $name = null, string $prefix = '');
+    public function getCookie(?string $name = null, string $prefix = '');
 
     /**
      * Sets a cookie to be deleted when the response is sent.
@@ -396,7 +396,7 @@ interface ResponseInterface
      *
      * @return $this
      */
-    public function redirect(string $uri, string $method = 'auto', int $code = null);
+    public function redirect(string $uri, string $method = 'auto', ?int $code = null);
 
     /**
      * Force a download.

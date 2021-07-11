@@ -110,7 +110,7 @@ class Router implements RouterInterface
      * @param RouteCollectionInterface $routes
      * @param Request                  $request
      */
-    public function __construct(RouteCollectionInterface $routes, Request $request = null)
+    public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
         $this->collection = $routes;
 
@@ -131,7 +131,7 @@ class Router implements RouterInterface
      *
      * @return mixed|string
      */
-    public function handle(string $uri = null)
+    public function handle(?string $uri = null)
     {
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
@@ -624,7 +624,7 @@ class Router implements RouterInterface
      * @param bool        $append
      * @param bool        $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      */
-    public function setDirectory(string $dir = null, bool $append = false, bool $validate = true)
+    public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
         if (empty($dir)) {
             $this->directory = null;

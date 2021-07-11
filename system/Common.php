@@ -67,7 +67,7 @@ if (! function_exists('cache')) {
      *
      * @return CacheInterface|mixed
      */
-    function cache(string $key = null)
+    function cache(?string $key = null)
     {
         $cache = Services::cache();
 
@@ -300,7 +300,7 @@ if (! function_exists('csrf_field')) {
      *
      * @return string
      */
-    function csrf_field(string $id = null): string
+    function csrf_field(?string $id = null): string
     {
         return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
     }
@@ -314,7 +314,7 @@ if (! function_exists('csrf_meta')) {
      *
      * @return string
      */
-    function csrf_meta(string $id = null): string
+    function csrf_meta(?string $id = null): string
     {
         return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
     }
@@ -424,7 +424,7 @@ if (! function_exists('esc')) {
      *
      * @return array|string
      */
-    function esc($data, string $context = 'html', string $encoding = null)
+    function esc($data, string $context = 'html', ?string $encoding = null)
     {
         if (is_array($data)) {
             foreach ($data as &$value) {
@@ -480,7 +480,7 @@ if (! function_exists('force_https')) {
      *
      * @throws HTTPException
      */
-    function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
+    function force_https(int $duration = 31536000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         if ($request === null) {
             $request = Services::request(null, true);
@@ -773,7 +773,7 @@ if (! function_exists('lang')) {
      *
      * @return string
      */
-    function lang(string $line, array $args = [], string $locale = null)
+    function lang(string $line, array $args = [], ?string $locale = null)
     {
         return Services::language($locale)
             ->getLine($line, $args);
@@ -829,7 +829,7 @@ if (! function_exists('model')) {
      *
      * @return mixed
      */
-    function model(string $name, bool $getShared = true, ConnectionInterface &$conn = null)
+    function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
         return Factories::models($name, ['getShared' => $getShared], $conn);
     }
@@ -888,7 +888,7 @@ if (! function_exists('redirect')) {
      *
      * @return RedirectResponse
      */
-    function redirect(string $route = null): RedirectResponse
+    function redirect(?string $route = null): RedirectResponse
     {
         $response = Services::redirectresponse(null, true);
 
@@ -966,7 +966,7 @@ if (! function_exists('session')) {
      *
      * @return mixed|Session|null
      */
-    function session(string $val = null)
+    function session(?string $val = null)
     {
         $session = Services::session();
 
@@ -1110,7 +1110,7 @@ if (! function_exists('timer')) {
      *
      * @return mixed|Timer
      */
-    function timer(string $name = null)
+    function timer(?string $name = null)
     {
         $timer = Services::timer();
 
@@ -1185,7 +1185,7 @@ if (! function_exists('view_cell')) {
      *
      * @return string
      */
-    function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null): string
+    function view_cell(string $library, $params = null, int $ttl = 0, ?string $cacheName = null): string
     {
         return Services::viewcell()
             ->render($library, $params, $ttl, $cacheName);

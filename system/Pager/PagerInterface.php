@@ -115,7 +115,7 @@ interface PagerInterface
      *
      * @return string|URI
      */
-    public function getPageURI(int $page = null, string $group = 'default', bool $returnObject = false);
+    public function getPageURI(?int $page = null, string $group = 'default', bool $returnObject = false);
 
     //--------------------------------------------------------------------
 
