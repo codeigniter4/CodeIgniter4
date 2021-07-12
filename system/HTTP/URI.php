@@ -1123,7 +1123,7 @@ class URI
      *
      * @return string
      */
-    protected function mergePaths(URI $base, URI $reference): string
+    protected function mergePaths(self $base, self $reference): string
     {
         if (! empty($base->getAuthority()) && $base->getPath() === '') {
             return '/' . ltrim($reference->getPath(), '/ ');

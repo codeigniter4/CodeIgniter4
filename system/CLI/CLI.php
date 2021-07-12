@@ -768,11 +768,11 @@ class CLI
         }
 
         if ($max === 0) {
-            $max = CLI::getWidth();
+            $max = self::getWidth();
         }
 
-        if (CLI::getWidth() < $max) {
-            $max = CLI::getWidth();
+        if (self::getWidth() < $max) {
+            $max = self::getWidth();
         }
 
         $max = $max - $padLeft;
