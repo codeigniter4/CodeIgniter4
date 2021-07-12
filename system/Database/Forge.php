@@ -423,10 +423,8 @@ class Forge
                     $errorNames[] = $name;
                 }
             }
-        } else {
-            if (! isset($this->fields[$fieldName])) {
-                $errorNames[] = $fieldName;
-            }
+        } elseif (! isset($this->fields[$fieldName])) {
+            $errorNames[] = $fieldName;
         }
 
         if (! empty($errorNames)) {
@@ -1224,21 +1222,16 @@ class Forge
 
         if ($this->foreignKeys !== []) {
             foreach ($this->foreignKeys as $fkey) {
-                $nameIndex = '';
                 if (is_array($fkey['field'])) {
                     $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_foreign';
                 } else {
                     $nameIndex = $table . '_' . $fkey['field'] . '_foreign';
                 }
-
-                $foreignKeyFiled = '';
                 if (is_array($fkey['field'])) {
                     $foreignKeyFiled = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
                 } else {
                     $foreignKeyFiled = $this->db->escapeIdentifiers($fkey['field']);
                 }
-
-                $referenceField = '';
                 if (is_array($fkey['referenceField'])) {
                     $referenceField = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
                 } else {

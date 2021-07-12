@@ -464,7 +464,7 @@ final class ForgeTest extends CIUnitTestCase
                 'constraint' => 255,
             ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey(['users_id', 'users_second_id'], 'forge_test_users', ['id', 'second_id'], 'CASCADE', 'CASCADE');
 
         $this->forge->createTable('forge_test_invoices', true, $attributes);
@@ -477,15 +477,13 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($foreignKeyData[1]->constraint_name, 'users_second_id to db_forge_test_users.second_id');
             $this->assertSame($foreignKeyData[1]->sequence, 1);
         } else {
+            $haystack = ['users_id', 'users_second_id'];
             $this->assertSame($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
-            $this->assertSame($foreignKeyData[0]->column_name, 'users_id');
-            if ($this->db->DBDriver === 'MySQLi') {
-                $second_id_key = 1;
-            } elseif ($this->db->DBDriver === 'Postgre') {
-                $second_id_key = 2;
-            }
-            $this->assertSame($foreignKeyData[$second_id_key]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
-            $this->assertSame($foreignKeyData[$second_id_key]->column_name, 'users_second_id');
+            $this->assertContains($foreignKeyData[0]->column_name, $haystack);
+
+            $secondIdKey = $this->db->DBDriver === 'Postgre' ? 2 : 1;
+            $this->assertSame($foreignKeyData[$secondIdKey]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
+            $this->assertContains($foreignKeyData[$secondIdKey]->column_name, $haystack);
         }
         $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
         $this->assertSame($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
