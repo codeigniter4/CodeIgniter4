@@ -443,7 +443,7 @@ final class ForgeTest extends CIUnitTestCase
                 'constraint' => 255,
             ],
         ]);
-        $this->forge->addPrimaryKey(['id','second_id']);
+        $this->forge->addPrimaryKey(['id', 'second_id']);
         $this->forge->createTable('forge_test_users', true, $attributes);
 
         $this->forge->addField([
@@ -481,7 +481,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($foreignKeyData[0]->column_name, 'users_id');
             if ($this->db->DBDriver === 'MySQLi') {
                 $second_id_key = 1;
-            }else if($this->db->DBDriver === 'Postgre'){
+            } elseif ($this->db->DBDriver === 'Postgre') {
                 $second_id_key = 2;
             }
             $this->assertSame($foreignKeyData[$second_id_key]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
