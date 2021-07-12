@@ -143,7 +143,7 @@ final class SelectTest extends CIUnitTestCase
         $this->assertCount(3, $users);
 
         foreach ($users as $user) {
-            $this->assertTrue(in_array($user['id'], [1, 2, 3]));
+            $this->assertContains((int) $user['id'], [1, 2, 3]);
         }
     }
 
@@ -161,7 +161,7 @@ final class SelectTest extends CIUnitTestCase
         $this->assertCount(3, $users);
 
         foreach ($users as $user) {
-            $this->assertTrue(in_array($user['id'], [1, 2, 3]));
+            $this->assertContains((int) $user['id'], [1, 2, 3]);
         }
     }
 }
