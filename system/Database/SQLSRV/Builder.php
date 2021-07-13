@@ -75,7 +75,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = $this->getFullName($value);
+            $from[] = $this->getFullName($value, true);
         }
 
         return implode(', ', $from);
@@ -95,7 +95,7 @@ class Builder extends BaseBuilder
      */
     protected function _truncate(string $table): string
     {
-        return 'TRUNCATE TABLE ' . $this->getFullName($table, false);
+        return 'TRUNCATE TABLE ' . $this->getFullName($table);
     }
 
     /**
@@ -166,7 +166,7 @@ class Builder extends BaseBuilder
 
      	// Do we want to escape the table name?
 		if ($escape === true) {
-            $table = $this->db->protectIdentifiers($this->getFullName($table), true, null, false);
+            $table = $this->db->protectIdentifiers($this->getFullName($table, true), true, null, false);
 		}
 
 		// Assemble the JOIN statement
@@ -191,7 +191,7 @@ class Builder extends BaseBuilder
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
-        $fullTableName = $this->getFullName($table, false);
+        $fullTableName = $this->getFullName($table);
 
         // insert statement
         $statement = 'INSERT INTO ' . $fullTableName . ' (' . implode(',', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
@@ -237,7 +237,7 @@ class Builder extends BaseBuilder
             $valstr[] = $key . ' = ' . $val;
         }
 
-        $fullTableName = $this->getFullName($table, false);
+        $fullTableName = $this->getFullName($table);
 
         $statement = sprintf('UPDATE %s%s SET ', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName);
 
@@ -343,7 +343,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string
 	 */
-    protected function getFullName(string $table, bool $includeAlias = True): string
+    protected function getFullName(string $table, bool $includeAlias = False): string
 	{
 		if ($this->db->escapeChar === '"') {
 			$table = str_replace('"', '', $table);
@@ -533,7 +533,7 @@ class Builder extends BaseBuilder
             $delete->delete();
         }
 
-        return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table, false), implode(',', $keys), implode(',', $values));
+        return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table), implode(',', $keys), implode(',', $values));
     }
 
     /**
@@ -621,7 +621,7 @@ class Builder extends BaseBuilder
      */
 	protected function _delete(string $table): string
 	{
-		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table, false) . $this->compileWhereHaving('QBWhere');
+		return 'DELETE' . (empty($this->QBLimit) ? '' : ' TOP (' . $this->QBLimit . ') ') . ' FROM ' . $this->getFullName($table) . $this->compileWhereHaving('QBWhere');
 	}
 
     /**
