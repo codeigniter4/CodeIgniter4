@@ -132,6 +132,9 @@ final class CommandTest extends CIUnitTestCase
 
     /**
      * @dataProvider commandArgsProvider
+     *
+     * @param string $input
+     * @param array  $expected
      */
     public function testCommandParsesArgsCorrectly(string $input, array $expected)
     {

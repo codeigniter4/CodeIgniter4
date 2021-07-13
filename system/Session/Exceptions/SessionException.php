@@ -44,6 +44,8 @@ class SessionException extends FrameworkException
      * @deprecated
      *
      * @codeCoverageIgnore
+     *
+     * @param string $samesite
      */
     public static function forInvalidSameSiteSetting(string $samesite)
     {

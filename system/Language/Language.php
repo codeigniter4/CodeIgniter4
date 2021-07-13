@@ -139,6 +139,10 @@ class Language
     //--------------------------------------------------------------------
 
     /**
+     * @param string $locale
+     * @param string $file
+     * @param string $parsedLine
+     *
      * @return array|string|null
      */
     protected function getTranslationOutput(string $locale, string $file, string $parsedLine)

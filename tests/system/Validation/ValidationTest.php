@@ -329,6 +329,10 @@ final class ValidationTest extends CIUnitTestCase
 
     /**
      * @dataProvider rulesSetupProvider
+     *
+     * @param mixed $rules
+     * @param mixed $expected
+     * @param mixed $errors
      */
     public function testRulesSetup($rules, $expected, $errors = [])
     {
@@ -693,6 +697,10 @@ final class ValidationTest extends CIUnitTestCase
 
     /**
      * @dataProvider arrayFieldDataProvider
+     *
+     * @param mixed $body
+     * @param mixed $rules
+     * @param mixed $results
      */
     public function testRulesForArrayField($body, $rules, $results)
     {

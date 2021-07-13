@@ -216,6 +216,8 @@ final class WhereTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideInvalidKeys
+     *
+     * @param mixed $key
      */
     public function testWhereInvalidKeyThrowInvalidArgumentException($key)
     {
@@ -236,6 +238,8 @@ final class WhereTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideInvalidValues
+     *
+     * @param mixed $values
      */
     public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
     {

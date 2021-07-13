@@ -31,6 +31,9 @@ final class TestResponseTest extends CIUnitTestCase
 
     /**
      * @dataProvider statusCodeProvider
+     *
+     * @param int  $code
+     * @param bool $isOk
      */
     public function testIsOK(int $code, bool $isOk)
     {
@@ -221,6 +224,9 @@ final class TestResponseTest extends CIUnitTestCase
 
     /**
      * @dataProvider statusCodeProvider
+     *
+     * @param int  $code
+     * @param bool $isOk
      */
     public function testAssertIsOK(int $code, bool $isOk)
     {

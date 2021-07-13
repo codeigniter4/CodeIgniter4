@@ -261,6 +261,9 @@ final class FileHandlerTest extends CIUnitTestCase
 
     /**
      * @dataProvider modeProvider
+     *
+     * @param int    $int
+     * @param string $string
      */
     public function testSaveMode($int, $string)
     {

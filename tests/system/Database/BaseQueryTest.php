@@ -173,6 +173,9 @@ final class BaseQueryTest extends CIUnitTestCase
 
     /**
      * @dataProvider queryTypes
+     *
+     * @param mixed $expected
+     * @param mixed $sql
      */
     public function testIsWriteType($expected, $sql)
     {

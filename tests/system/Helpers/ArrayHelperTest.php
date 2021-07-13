@@ -167,6 +167,9 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider deepSearchProvider
+     *
+     * @param mixed $key
+     * @param mixed $expected
      */
     public function testArrayDeepSearch($key, $expected)
     {
@@ -203,6 +206,10 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
+     *
+     * @param mixed $data
+     * @param mixed $sortColumns
+     * @param mixed $expected
      */
     public function testArraySortByMultipleKeysWithArray($data, $sortColumns, $expected)
     {
@@ -214,6 +221,10 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
+     *
+     * @param mixed $data
+     * @param mixed $sortColumns
+     * @param mixed $expected
      */
     public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
     {
@@ -230,6 +241,10 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
+     *
+     * @param mixed $data
+     * @param mixed $sortColumns
+     * @param mixed $expected
      */
     public function testArraySortByMultipleKeysFailsEmptyParameter($data, $sortColumns, $expected)
     {
@@ -252,6 +267,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
+     *
+     * @param mixed $data
      */
     public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data)
     {
