@@ -319,12 +319,15 @@ class Forge extends BaseForge
         ];
 
         if ($this->foreignKeys !== []) {
-            foreach ($this->foreignKeys as $field => $fkey) {
-                $nameIndex = $table . '_' . $field . '_foreign';
+            foreach ($this->foreignKeys as $fkey) {
+                $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+                $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+                $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+                $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+                $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-                $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                    . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-                    . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+                $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+                $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
                 if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
