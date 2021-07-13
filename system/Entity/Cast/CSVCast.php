@@ -17,7 +17,7 @@ namespace CodeIgniter\Entity\Cast;
 class CSVCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): array
     {
@@ -25,7 +25,7 @@ class CSVCast extends BaseCast
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function set($value, array $params = []): string
     {

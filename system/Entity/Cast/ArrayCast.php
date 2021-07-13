@@ -17,7 +17,7 @@ namespace CodeIgniter\Entity\Cast;
 class ArrayCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): array
     {
@@ -29,7 +29,7 @@ class ArrayCast extends BaseCast
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function set($value, array $params = []): string
     {

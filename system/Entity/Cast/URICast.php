@@ -19,7 +19,7 @@ use CodeIgniter\HTTP\URI;
 class URICast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): URI
     {
