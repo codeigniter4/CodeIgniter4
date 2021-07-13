@@ -11,9 +11,7 @@
 
 use Config\Services;
 
-/**
- * CodeIgniter Security Helpers
- */
+// CodeIgniter Security Helpers
 
 if (! function_exists('sanitize_filename')) {
     /**

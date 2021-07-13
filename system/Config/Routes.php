@@ -11,7 +11,7 @@
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-/**
+/*
  * System URI Routing
  *
  * This file contains any routing to system tools, such as command-line

@@ -381,6 +381,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'phpdoc_summary'                                => false,
             'phpdoc_tag_casing'                             => ['tags' => ['inheritDoc']],
             'phpdoc_tag_type'                               => ['tags' => ['inheritDoc' => 'inline']],
+            'phpdoc_to_comment'                             => false,
             'phpdoc_trim'                                   => true,
             'phpdoc_trim_consecutive_blank_line_separation' => true,
             'phpdoc_types'                                  => ['groups' => ['simple', 'alias', 'meta']],

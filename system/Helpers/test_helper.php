@@ -12,9 +12,7 @@
 use CodeIgniter\Model;
 use CodeIgniter\Test\Fabricator;
 
-/**
- * CodeIgniter Test Helpers
- */
+// CodeIgniter Test Helpers
 //--------------------------------------------------------------------
 
 if (! function_exists('fake')) {

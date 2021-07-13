@@ -15,9 +15,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Services;
 
-/**
- * CodeIgniter URL Helpers
- */
+// CodeIgniter URL Helpers
 
 if (! function_exists('_get_uri')) {
     /**

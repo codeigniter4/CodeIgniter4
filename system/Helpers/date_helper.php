@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
- * CodeIgniter Date Helpers
- */
+// CodeIgniter Date Helpers
 
 if (! function_exists('now')) {
     /**

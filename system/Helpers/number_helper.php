@@ -11,9 +11,7 @@
 
 use Config\Services;
 
-/**
- * CodeIgniter Number Helpers
- */
+// CodeIgniter Number Helpers
 
 if (! function_exists('number_to_size')) {
     /**

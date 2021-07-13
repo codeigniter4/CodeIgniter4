@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
- * CodeIgniter Array Helpers
- */
+// CodeIgniter Array Helpers
 
 if (! function_exists('dot_array_search')) {
     /**
