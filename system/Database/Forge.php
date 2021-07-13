@@ -415,19 +415,17 @@ class Forge
      */
     public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '')
     {
+        $fieldName  = (array) $fieldName;
+        $tableField = (array) $tableField;
         $errorNames = [];
 
-        if (is_array($fieldName)) {
-            foreach ($fieldName as $name) {
-                if (! isset($this->fields[$name])) {
-                    $errorNames[] = $name;
-                }
+        foreach ($fieldName as $name) {
+            if (! isset($this->fields[$name])) {
+                $errorNames[] = $name;
             }
-        } elseif (! isset($this->fields[$fieldName])) {
-            $errorNames[] = $fieldName;
         }
 
-        if (! empty($errorNames)) {
+        if ($errorNames !== []) {
             throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
         }
 
@@ -1222,24 +1220,14 @@ class Forge
 
         if ($this->foreignKeys !== []) {
             foreach ($this->foreignKeys as $fkey) {
-                if (is_array($fkey['field'])) {
-                    $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_foreign';
-                } else {
-                    $nameIndex = $table . '_' . $fkey['field'] . '_foreign';
-                }
-                if (is_array($fkey['field'])) {
-                    $foreignKeyFiled = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-                } else {
-                    $foreignKeyFiled = $this->db->escapeIdentifiers($fkey['field']);
-                }
-                if (is_array($fkey['referenceField'])) {
-                    $referenceField = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-                } else {
-                    $referenceField = $this->db->escapeIdentifiers($fkey['referenceField']);
-                }
+                $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+                $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+                $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+                $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+                $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-                $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                    . ' FOREIGN KEY(' . $foreignKeyFiled . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']) . ' (' . $referenceField . ')';
+                $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+                $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
                 if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                     $sql .= ' ON DELETE ' . $fkey['onDelete'];
