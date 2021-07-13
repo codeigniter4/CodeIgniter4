@@ -292,17 +292,14 @@ class Forge extends BaseForge
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
         foreach ($this->foreignKeys as $field => $fkey) {
-            $nameIndex = $table . '_' . $field . '_foreign';
+            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-<<<<<<< HEAD
-            $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-                . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
-=======
-                $sql .= ",\n\t CONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                    . ' FOREIGN KEY (' . $this->db->escapeIdentifiers($field) . ') '
-                    . ' REFERENCES ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($this->db->getPrefix() . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
->>>>>>> cfed0b1cc... Finalize SQLSRV schema support for 4.2
+            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                 $sql .= ' ON DELETE ' . $fkey['onDelete'];
