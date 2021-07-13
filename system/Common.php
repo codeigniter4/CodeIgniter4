@@ -686,19 +686,11 @@ if (! function_exists('is_cli')) {
      *
      * @return bool
      *
-     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
+     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in php-cli
      */
     function is_cli(): bool
     {
-        if (PHP_SAPI === 'cli') {
-            return true;
-        }
-
         if (defined('STDIN')) {
-            return true;
-        }
-
-        if (stristr(PHP_SAPI, 'cgi') && getenv('TERM')) {
             return true;
         }
 
@@ -878,9 +870,7 @@ if (! function_exists('redirect')) {
     /**
      * Convenience method that works with the current global $request and
      * $router instances to redirect using named/reverse-routed routes
-     * to determine the URL to go to. If nothing is found, will treat
-     * as a traditional redirect and pass the string in, letting
-     * $response->redirect() determine the correct method and code.
+     * to determine the URL to go to.
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *

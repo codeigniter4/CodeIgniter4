@@ -198,11 +198,10 @@ class DatabaseHandler extends BaseHandler
             $insertData = [
                 'id'         => $sessionID,
                 'ip_address' => $this->ipAddress,
-                'timestamp'  => 'now()',
                 'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
             ];
 
-            if (! $this->db->table($this->table)->insert($insertData)) {
+            if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
                 return $this->fail();
             }
 
@@ -218,15 +217,13 @@ class DatabaseHandler extends BaseHandler
             $builder = $builder->where('ip_address', $this->ipAddress);
         }
 
-        $updateData = [
-            'timestamp' => 'now()',
-        ];
+        $updateData = [];
 
         if ($this->fingerprint !== md5($sessionData)) {
             $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($sessionData) : $sessionData;
         }
 
-        if (! $builder->update($updateData)) {
+        if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
             return $this->fail();
         }
 
@@ -299,7 +296,7 @@ class DatabaseHandler extends BaseHandler
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
         $interval  = implode($separator, ['', "{$maxlifetime} second", '']);
 
-        return $this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}") ? true : $this->fail();
+        return $this->db->table($this->table)->where("timestamp <", "now() - INTERVAL {$interval}", false)->delete() ? true : $this->fail();
     }
 
     //--------------------------------------------------------------------

@@ -15,6 +15,7 @@ Regular Queries
 
 To submit a query, use the **query** function::
 
+    $db = db_connect();
     $db->query('YOUR QUERY HERE');
 
 The ``query()`` function returns a database result **object** when "read"

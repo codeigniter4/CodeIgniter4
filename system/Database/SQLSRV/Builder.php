@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * This file is part of the CodeIgniter 4 framework.
  *
@@ -16,7 +17,6 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\ResultInterface;
-
 /**
  * Builder for SQLSRV
  *
@@ -199,6 +199,26 @@ class Builder extends BaseBuilder
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
 
+    //--------------------------------------------------------------------
+
+    /**
+     * Insert batch statement
+     *
+     * Generates a platform-specific insert string from the supplied data.
+     *
+     * @param string $table  Table name
+     * @param array  $keys   INSERT keys
+     * @param array  $values INSERT values
+     *
+     * @return string
+     */
+    protected function _insertBatch(string $table, array $keys, array $values): string
+    {
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+    }
+
+    //--------------------------------------------------------------------
+
     /**
      * Update statement
      *
@@ -219,11 +239,57 @@ class Builder extends BaseBuilder
 
         $fullTableName = $this->getFullName($table, false);
 
-        $statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
-                . implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
+        $statement = sprintf('UPDATE %s%s SET ', empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ', $fullTableName);
+
+        $statement .= implode(', ', $valstr)
+            . $this->compileWhereHaving('QBWhere')
+            . $this->compileOrderBy();
 
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Update_Batch statement
+     *
+     * Generates a platform-specific batch update string from the supplied data
+     *
+     * @param string $table  Table name
+     * @param array  $values Update data
+     * @param string $index  WHERE key
+     *
+     * @return string
+     */
+    protected function _updateBatch(string $table, array $values, string $index): string
+    {
+        $ids   = [];
+        $final = [];
+
+        foreach ($values as $val) {
+            $ids[] = $val[$index];
+
+            foreach (array_keys($val) as $field) {
+                if ($field !== $index) {
+                    $final[$field][] = 'WHEN ' . $index . ' = ' . $val[$index] . ' THEN ' . $val[$field];
+                }
+            }
+        }
+
+        $cases = '';
+
+        foreach ($final as $k => $v) {
+            $cases .= $k . " = CASE \n"
+                . implode("\n", $v) . "\n"
+                . 'ELSE ' . $k . ' END, ';
+        }
+
+        $this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
+
+        return 'UPDATE ' . $this->compileIgnore('update') . ' ' . $this->getFullName($table) . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+    }
+
+    //--------------------------------------------------------------------
 
     /**
      * Increments a numeric column by the specified value.
@@ -388,9 +454,10 @@ class Builder extends BaseBuilder
             return $sql;
         }
 
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' ON');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' ON');
+        
         $result = $this->db->query($sql, $this->binds, false);
-        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->db->escapeIdentifiers($table) . ' OFF');
+        $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' OFF');
 
         return $result;
     }
@@ -506,6 +573,44 @@ class Builder extends BaseBuilder
 
         return $this;
     }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * "Count All" query
+     *
+     * Generates a platform-specific query string that counts all records in
+     * the particular table
+     *
+     * @param bool $reset Are we want to clear query builder values?
+     *
+     * @return int|string when $test = true
+     */
+    public function countAll(bool $reset = true)
+    {
+        $table = $this->QBFrom[0];
+
+        $sql = $this->countString . $this->db->escapeIdentifiers('numrows') . ' FROM ' . $this->getFullName($table);
+
+        if ($this->testMode) {
+            return $sql;
+        }
+
+        $query = $this->db->query($sql, null, false);
+        if (empty($query->getResult())) {
+            return 0;
+        }
+
+        $query = $query->getRow();
+
+        if ($reset === true) {
+            $this->resetSelect();
+        }
+
+        return (int) $query->numrows;
+    }
+
+    //--------------------------------------------------------------------
 
     /**
      * Delete statement

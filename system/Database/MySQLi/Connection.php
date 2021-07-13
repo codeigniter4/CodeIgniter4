@@ -65,6 +65,19 @@ class Connection extends BaseConnection
     //--------------------------------------------------------------------
 
     /**
+     * MySQLi constant
+     *
+     * For unbuffered queries use `MYSQLI_USE_RESULT`.
+     *
+     * Default mode for buffered queries uses `MYSQLI_STORE_RESULT`.
+     *
+     * @var int
+     */
+    public $resultMode = MYSQLI_STORE_RESULT;
+
+    //--------------------------------------------------------------------
+
+    /**
      * Connect to the database.
      *
      * @param bool $persistent
@@ -150,7 +163,6 @@ class Connection extends BaseConnection
                     }
                 }
 
-                $clientFlags += MYSQLI_CLIENT_SSL;
                 $this->mysqli->ssl_set(
                     $ssl['key'] ?? null,
                     $ssl['cert'] ?? null,
@@ -159,6 +171,8 @@ class Connection extends BaseConnection
                     $ssl['cipher'] ?? null
                 );
             }
+
+            $clientFlags += MYSQLI_CLIENT_SSL;
         }
 
         try {
@@ -306,7 +320,7 @@ class Connection extends BaseConnection
         }
 
         try {
-            return $this->connID->query($this->prepQuery($sql));
+            return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
             log_message('error', $e->getMessage());
 

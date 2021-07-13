@@ -97,6 +97,18 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertTrue($this->redisHandler->save(self::$key1, 'value'));
     }
 
+    public function testSavePermanent()
+    {
+        $this->assertTrue($this->redisHandler->save(self::$key1, 'value', 0));
+        $metaData = $this->redisHandler->getMetaData(self::$key1);
+
+        $this->assertSame(null, $metaData['expire']);
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertSame('value', $metaData['data']);
+
+        $this->assertTrue($this->redisHandler->delete(self::$key1));
+    }
+
     public function testDelete()
     {
         $this->redisHandler->save(self::$key1, 'value');

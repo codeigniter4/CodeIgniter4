@@ -14,260 +14,325 @@ namespace CodeIgniter\Test\Mock;
 use Closure;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\Handlers\BaseHandler;
+use PHPUnit\Framework\Assert;
 
 class MockCache extends BaseHandler implements CacheInterface
 {
-    /**
-     * Mock cache storage.
-     *
-     * @var array
-     */
-    protected $cache = [];
+	/**
+	 * Mock cache storage.
+	 *
+	 * @var array
+	 */
+	protected $cache = [];
 
-    /**
-     * Expiration times.
-     *
-     * @var ?int[]
-     */
-    protected $expirations = [];
+	/**
+	 * Expiration times.
+	 *
+	 * @var ?int[]
+	 */
+	protected $expirations = [];
 
-    //--------------------------------------------------------------------
+	/**
+	 * If true, will not cache any data.
+	 *
+	 * @var boolean
+	 */
+	protected $bypass = false;
 
-    /**
-     * Takes care of any handler-specific setup that must be done.
-     */
-    public function initialize()
-    {
-    }
+	/**
+	 * Takes care of any handler-specific setup that must be done.
+	 */
+	public function initialize()
+	{
+	}
 
-    //--------------------------------------------------------------------
+	/**
+	 * Attempts to fetch an item from the cache store.
+	 *
+	 * @param string $key Cache item name
+	 *
+	 * @return mixed
+	 */
+	public function get(string $key)
+	{
+		$key = static::validateKey($key, $this->prefix);
 
-    /**
-     * Attempts to fetch an item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return mixed
-     */
-    public function get(string $key)
-    {
-        $key = static::validateKey($key, $this->prefix);
+		return $this->cache[$key] ?? null;
+	}
 
-        return $this->cache[$key] ?? null;
-    }
+	/**
+	 * Get an item from the cache, or execute the given Closure and store the result.
+	 *
+	 * @param string  $key      Cache item name
+	 * @param integer $ttl      Time to live
+	 * @param Closure $callback Callback return value
+	 *
+	 * @return mixed
+	 */
+	public function remember(string $key, int $ttl, Closure $callback)
+	{
+		$value = $this->get($key);
 
-    //--------------------------------------------------------------------
+		if (! is_null($value))
+		{
+			return $value;
+		}
 
-    /**
-     * Get an item from the cache, or execute the given Closure and store the result.
-     *
-     * @param string  $key      Cache item name
-     * @param int     $ttl      Time to live
-     * @param Closure $callback Callback return value
-     *
-     * @return mixed
-     */
-    public function remember(string $key, int $ttl, Closure $callback)
-    {
-        $value = $this->get($key);
+		$this->save($key, $value = $callback(), $ttl);
 
-        if (! is_null($value)) {
-            return $value;
-        }
+		return $value;
+	}
 
-        $this->save($key, $value = $callback(), $ttl);
+	/**
+	 * Saves an item to the cache store.
+	 *
+	 * The $raw parameter is only utilized by Mamcache in order to
+	 * allow usage of increment() and decrement().
+	 *
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value the data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 * @param boolean $raw   Whether to store the raw value.
+	 *
+	 * @return boolean
+	 */
+	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+	{
+		if ($this->bypass)
+		{
+			return true;
+		}
 
-        return $value;
-    }
+		$key = static::validateKey($key, $this->prefix);
 
-    //--------------------------------------------------------------------
+		$this->cache[$key]       = $value;
+		$this->expirations[$key] = $ttl > 0 ? time() + $ttl : null;
 
-    /**
-     * Saves an item to the cache store.
-     *
-     * The $raw parameter is only utilized by Mamcache in order to
-     * allow usage of increment() and decrement().
-     *
-     * @param string $key   Cache item name
-     * @param mixed  $value the data to save
-     * @param int    $ttl   Time To Live, in seconds (default 60)
-     * @param bool   $raw   Whether to store the raw value.
-     *
-     * @return bool
-     */
-    public function save(string $key, $value, int $ttl = 60, bool $raw = false)
-    {
-        $key = static::validateKey($key, $this->prefix);
+		return true;
+	}
 
-        $this->cache[$key]       = $value;
-        $this->expirations[$key] = $ttl > 0 ? time() + $ttl : null;
+	/**
+	 * Deletes a specific item from the cache store.
+	 *
+	 * @param string $key Cache item name
+	 *
+	 * @return boolean
+	 */
+	public function delete(string $key)
+	{
+		$key = static::validateKey($key, $this->prefix);
 
-        return true;
-    }
+		if (! isset($this->cache[$key]))
+		{
+			return false;
+		}
 
-    //--------------------------------------------------------------------
+		unset($this->cache[$key], $this->expirations[$key]);
 
-    /**
-     * Deletes a specific item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return bool
-     */
-    public function delete(string $key)
-    {
-        $key = static::validateKey($key, $this->prefix);
+		return true;
+	}
 
-        if (! isset($this->cache[$key])) {
-            return false;
-        }
+	/**
+	 * Deletes items from the cache store matching a given pattern.
+	 *
+	 * @param string $pattern Cache items glob-style pattern
+	 *
+	 * @return integer
+	 */
+	public function deleteMatching(string $pattern)
+	{
+		$count = 0;
 
-        unset($this->cache[$key], $this->expirations[$key]);
+		foreach (array_keys($this->cache) as $key)
+		{
+			if (fnmatch($pattern, $key))
+			{
+				$count++;
+				unset($this->cache[$key], $this->expirations[$key]);
+			}
+		}
 
-        return true;
-    }
+		return $count;
+	}
 
-    //--------------------------------------------------------------------
+	/**
+	 * Performs atomic incrementation of a raw stored value.
+	 *
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
+	 *
+	 * @return boolean
+	 */
+	public function increment(string $key, int $offset = 1)
+	{
+		$key  = static::validateKey($key, $this->prefix);
+		$data = $this->cache[$key] ?: null;
 
-    /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @return int
-     */
-    public function deleteMatching(string $pattern)
-    {
-        $count = 0;
+		if (empty($data))
+		{
+			$data = 0;
+		}
+		elseif (! is_int($data))
+		{
+			return false;
+		}
 
-        foreach (array_keys($this->cache) as $key) {
-            if (fnmatch($pattern, $key)) {
-                $count++;
-                unset($this->cache[$key], $this->expirations[$key]);
-            }
-        }
+		return $this->save($key, $data + $offset);
+	}
 
-        return $count;
-    }
+	/**
+	 * Performs atomic decrementation of a raw stored value.
+	 *
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
+	 *
+	 * @return boolean
+	 */
+	public function decrement(string $key, int $offset = 1)
+	{
+		$key = static::validateKey($key, $this->prefix);
 
-    //--------------------------------------------------------------------
+		$data = $this->cache[$key] ?: null;
 
-    /**
-     * Performs atomic incrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
-     */
-    public function increment(string $key, int $offset = 1)
-    {
-        $key  = static::validateKey($key, $this->prefix);
-        $data = $this->cache[$key] ?: null;
+		if (empty($data))
+		{
+			$data = 0;
+		}
+		elseif (! is_int($data))
+		{
+			return false;
+		}
 
-        if (empty($data)) {
-            $data = 0;
-        } elseif (! is_int($data)) {
-            return false;
-        }
+		return $this->save($key, $data - $offset);
+	}
 
-        return $this->save($key, $data + $offset);
-    }
+	/**
+	 * Will delete all items in the entire cache.
+	 *
+	 * @return boolean
+	 */
+	public function clean()
+	{
+		$this->cache       = [];
+		$this->expirations = [];
 
-    //--------------------------------------------------------------------
+		return true;
+	}
 
-    /**
-     * Performs atomic decrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
-     */
-    public function decrement(string $key, int $offset = 1)
-    {
-        $key = static::validateKey($key, $this->prefix);
+	/**
+	 * Returns information on the entire cache.
+	 *
+	 * The information returned and the structure of the data
+	 * varies depending on the handler.
+	 *
+	 * @return string[] Keys currently present in the store
+	 */
+	public function getCacheInfo()
+	{
+		return array_keys($this->cache);
+	}
 
-        $data = $this->cache[$key] ?: null;
+	/**
+	 * Returns detailed information about the specific item in the cache.
+	 *
+	 * @param string $key Cache item name.
+	 *
+	 * @return array|null
+	 *                    Returns null if the item does not exist, otherwise array<string, mixed>
+	 *                    with at least the 'expire' key for absolute epoch expiry (or null).
+	 */
+	public function getMetaData(string $key)
+	{
+		// Misses return null
+		if (! array_key_exists($key, $this->expirations))
+		{
+			return null;
+		}
 
-        if (empty($data)) {
-            $data = 0;
-        } elseif (! is_int($data)) {
-            return false;
-        }
+		// Count expired items as a miss
+		if (is_int($this->expirations[$key]) && $this->expirations[$key] > time())
+		{
+			return null;
+		}
 
-        return $this->save($key, $data - $offset);
-    }
+		return [
+			'expire' => $this->expirations[$key],
+		];
+	}
 
-    //--------------------------------------------------------------------
+	/**
+	 * Determines if the driver is supported on this system.
+	 *
+	 * @return boolean
+	 */
+	public function isSupported(): bool
+	{
+		return true;
+	}
 
-    /**
-     * Will delete all items in the entire cache.
-     *
-     * @return bool
-     */
-    public function clean()
-    {
-        $this->cache       = [];
-        $this->expirations = [];
+	//--------------------------------------------------------------------
+	// Test Helpers
+	//--------------------------------------------------------------------
 
-        return true;
-    }
+	/**
+	 * Instructs the class to ignore all
+	 * requests to cache an item, and always "miss"
+	 * when checked for existing data.
+	 *
+	 * @return $this
+	 */
+	public function bypass(bool $bypass = true)
+	{
+		$this->clean();
 
-    //--------------------------------------------------------------------
+		$this->bypass = $bypass;
 
-    /**
-     * Returns information on the entire cache.
-     *
-     * The information returned and the structure of the data
-     * varies depending on the handler.
-     *
-     * @return string[] Keys currently present in the store
-     */
-    public function getCacheInfo()
-    {
-        return array_keys($this->cache);
-    }
+		return $this;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Additional Assertions
+	//--------------------------------------------------------------------
 
-    /**
-     * Returns detailed information about the specific item in the cache.
-     *
-     * @param string $key Cache item name.
-     *
-     * @return array|null
-     *                    Returns null if the item does not exist, otherwise array<string, mixed>
-     *                    with at least the 'expire' key for absolute epoch expiry (or null).
-     */
-    public function getMetaData(string $key)
-    {
-        // Misses return null
-        if (! array_key_exists($key, $this->expirations)) {
-            return null;
-        }
+	/**
+	 * Asserts that the cache has an item named $key.
+	 * The value is not checked since storing false or null
+	 * values is valid.
+	 *
+	 * @param string $key
+	 */
+	public function assertHas(string $key)
+	{
+		Assert::assertNotNull($this->get($key), "The cache does not have an item named: `{$key}`");
+	}
 
-        // Count expired items as a miss
-        if (is_int($this->expirations[$key]) && $this->expirations[$key] > time()) {
-            return null;
-        }
+	/**
+	 * Asserts that the cache has an item named $key with a value matching $value.
+	 *
+	 * @param string $key
+	 * @param null   $value
+	 */
+	public function assertHasValue(string $key, $value = null)
+	{
+		$item = $this->get($key);
 
-        return [
-            'expire' => $this->expirations[$key],
-        ];
-    }
+		// Let assertHas handle throwing the error for consistency
+		// if the key is not found
+		if (empty($item))
+		{
+			$this->assertHas($key);
+		}
 
-    //--------------------------------------------------------------------
+		Assert::assertEquals($value, $this->get($key), "The cached item `{$key}` does not equal match expectation. Found: " . print_r($value, true));
+	}
 
-    /**
-     * Determines if the driver is supported on this system.
-     *
-     * @return bool
-     */
-    public function isSupported(): bool
-    {
-        return true;
-    }
-
-    //--------------------------------------------------------------------
+	/**
+	 * Asserts that the cache does NOT have an item named $key.
+	 *
+	 * @param string $key
+	 */
+	public function assertMissing(string $key)
+	{
+		Assert::assertArrayNotHasKey($key, $this->cache, "The cached item named `{$key}` exists.");
+	}
 }
