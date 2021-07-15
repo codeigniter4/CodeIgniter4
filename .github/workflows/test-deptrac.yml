@@ -26,12 +26,8 @@ on:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Architectural Inspection
+    name: Architectural Inspection
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.4', '8.0']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,12 +35,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
-          tools: composer, pecl, phive, phpunit
+          php-version: '8.0'
+          tools: composer, phive
           extensions: intl, json, mbstring, gd, mysqlnd, xdebug, xml, sqlite3
-
-      - name: Use latest Composer
-        run: composer self-update
 
       - name: Validate composer.json
         run: composer validate --strict
