@@ -186,12 +186,9 @@ ruleset:
   Publisher:
     - Files
     - URI
-  RESTful: # @todo Transitive Dependency
-    - API
-    - Controller
-    - Format
-    - HTTP
-    - Validation
+  RESTful:
+    - +API
+    - +Controller
   Router:
     - HTTP
   Security:
