@@ -231,6 +231,18 @@ class HTTPException extends FrameworkException
         return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
     }
 
+
+    /**
+     * For non scalar value passed to setHeader
+     *
+     * @return HTTPException
+     */
+    public static function forNonScalarHeaderValue()
+    {
+        return new static(lang('HTTP.nonScalarHeaderValue'));
+    }
+
+
     /**
      * For Invalid SameSite attribute setting
      *
