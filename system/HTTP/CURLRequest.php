@@ -311,7 +311,9 @@ class CURLRequest extends Request
             foreach ($options['headers'] as $name => $value) {
                 if (is_scalar($value)) {
                     $this->setHeader($name, $value);
-                }
+                } else {
+					throw HTTPException::forNonScalarHeaderValue();
+				}
             }
 
             unset($options['headers']);
