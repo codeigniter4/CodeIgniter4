@@ -296,6 +296,7 @@ final class CodeIgniter4 extends AbstractRuleset
                 'methods'   => [],
             ],
             'php_unit_test_class_requires_covers' => false,
+            'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
             'phpdoc_align'                        => [
                 'align' => 'vertical',
                 'tags'  => [

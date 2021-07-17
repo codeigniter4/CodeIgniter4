@@ -18,6 +18,9 @@ final class ExceptionsTest extends CIUnitTestCase
 
     /**
      * @dataProvider dirtyPathsProvider
+     *
+     * @param string $file
+     * @param string $expected
      */
     public function testCleanPaths($file, $expected)
     {

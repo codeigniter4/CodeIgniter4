@@ -159,6 +159,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider anchorNormalPatterns
+     *
+     * @param mixed $expected
+     * @param mixed $uri
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testAnchor($expected = '', $uri = '', $title = '', $attributes = '')
     {
@@ -220,6 +225,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider anchorNoindexPatterns
+     *
+     * @param mixed $expected
+     * @param mixed $uri
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = '')
     {
@@ -272,6 +282,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider anchorSubpagePatterns
+     *
+     * @param mixed $expected
+     * @param mixed $uri
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = '')
     {
@@ -313,6 +328,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider anchorExamplePatterns
+     *
+     * @param mixed $expected
+     * @param mixed $uri
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
     {
@@ -368,6 +388,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider anchorPopupPatterns
+     *
+     * @param mixed $expected
+     * @param mixed $uri
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
     {
@@ -404,6 +429,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider mailtoPatterns
+     *
+     * @param mixed $expected
+     * @param mixed $email
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
@@ -441,6 +471,11 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider safeMailtoPatterns
+     *
+     * @param mixed $expected
+     * @param mixed $email
+     * @param mixed $title
+     * @param mixed $attributes
      */
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
@@ -495,6 +530,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider autolinkUrls
+     *
+     * @param mixed $in
+     * @param mixed $out
      */
     public function testAutoLinkUrl($in, $out)
     {
@@ -541,6 +579,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider autolinkEmails
+     *
+     * @param mixed $in
+     * @param mixed $out
      */
     public function testAutoLinkEmail($in, $out)
     {
@@ -587,6 +628,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider autolinkBoth
+     *
+     * @param mixed $in
+     * @param mixed $out
      */
     public function testAutolinkBoth($in, $out)
     {
@@ -633,6 +677,9 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider autolinkPopup
+     *
+     * @param mixed $in
+     * @param mixed $out
      */
     public function testAutoLinkPopup($in, $out)
     {
@@ -721,6 +768,10 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider prepUrlProvider
+     *
+     * @param string $input
+     * @param string $expected
+     * @param bool   $secure
      */
     public function testPrepUrl(string $input, string $expected, bool $secure)
     {
@@ -789,6 +840,10 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlToProvider
+     *
+     * @param string $expected
+     * @param string $input
+     * @param array  $args
      */
     public function testUrlTo(string $expected, string $input, ...$args)
     {
@@ -803,6 +858,8 @@ final class MiscUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlToMissingRoutesProvider
+     *
+     * @param string $route
      */
     public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
     {

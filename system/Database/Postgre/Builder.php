@@ -253,7 +253,8 @@ class Builder extends BaseBuilder
      *
      * Generates a platform-specific LIMIT clause.
      *
-     * @param string $sql SQL Query
+     * @param string $sql          SQL Query
+     * @param bool   $offsetIgnore
      *
      * @return string
      */

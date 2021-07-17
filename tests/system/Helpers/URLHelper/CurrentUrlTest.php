@@ -294,6 +294,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlIsProvider
+     *
+     * @param string $currentPath
+     * @param string $testPath
+     * @param bool   $expected
      */
     public function testUrlIs(string $currentPath, string $testPath, bool $expected)
     {
@@ -309,6 +313,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlIsProvider
+     *
+     * @param string $currentPath
+     * @param string $testPath
+     * @param bool   $expected
      */
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
     {
@@ -325,6 +333,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlIsProvider
+     *
+     * @param string $currentPath
+     * @param string $testPath
+     * @param bool   $expected
      */
     public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
     {

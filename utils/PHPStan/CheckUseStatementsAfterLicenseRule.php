@@ -29,7 +29,8 @@ final class CheckUseStatementsAfterLicenseRule implements Rule
     }
 
     /**
-     * @param Stmt $node
+     * @param Stmt  $node
+     * @param Scope $scope
      */
     public function processNode(Node $node, Scope $scope): array
     {

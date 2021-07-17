@@ -413,6 +413,9 @@ final class ParserTest extends CIUnitTestCase
 
     /**
      * @dataProvider escValueTypes
+     *
+     * @param mixed      $value
+     * @param mixed|null $expected
      */
     public function testEscHandling($value, $expected = null)
     {

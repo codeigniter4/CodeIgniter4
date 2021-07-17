@@ -19,6 +19,8 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 
     /**
      * Where would the log be written?
+     *
+     * @param array $config
      */
     //--------------------------------------------------------------------
 

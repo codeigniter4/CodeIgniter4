@@ -77,6 +77,9 @@ final class FormatRulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider urlProvider
+     *
+     * @param ?string $url
+     * @param bool    $expected
      */
     public function testValidURL(?string $url, bool $expected)
     {
@@ -886,6 +889,7 @@ final class FormatRulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
      */
     public function testNatural($first, $expected)
     {
@@ -931,6 +935,7 @@ final class FormatRulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
      */
     public function testNaturalNoZero($first, $expected)
     {
@@ -976,6 +981,7 @@ final class FormatRulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
      */
     public function testBase64($first, $expected)
     {
@@ -1013,6 +1019,7 @@ final class FormatRulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
      */
     public function testJson($first, $expected)
     {

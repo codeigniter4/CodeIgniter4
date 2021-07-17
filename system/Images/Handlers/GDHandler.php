@@ -153,6 +153,8 @@ class GDHandler extends BaseHandler
     /**
      * Resizes the image.
      *
+     * @param bool $maintainRatio
+     *
      * @return GDHandler
      */
     public function _resize(bool $maintainRatio = false)

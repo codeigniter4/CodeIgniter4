@@ -24,6 +24,8 @@ class SecurityException extends FrameworkException
      * @deprecated Use `CookieException::forInvalidSameSite()` instead.
      *
      * @codeCoverageIgnore
+     *
+     * @param string $samesite
      */
     public static function forInvalidSameSite(string $samesite)
     {
