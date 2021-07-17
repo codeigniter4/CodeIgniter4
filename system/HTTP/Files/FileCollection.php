@@ -48,8 +48,6 @@ class FileCollection
     /**
      * Attempts to get a single file from the collection of uploaded files.
      *
-     * @param string $name
-     *
      * @return UploadedFile|null
      */
     public function getFile(string $name)
@@ -76,8 +74,6 @@ class FileCollection
 
     /**
      * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
-     *
-     * @param string $name
      *
      * @return array|null
      */
@@ -110,8 +106,6 @@ class FileCollection
      * this request.
      *
      * @param string $fileID The name of the uploaded file (from the input)
-     *
-     * @return bool
      */
     public function hasFile(string $fileID): bool
     {
@@ -165,8 +159,6 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @param array $array
-     *
      * @return array|UploadedFile
      */
     protected function createFileObject(array $array)
@@ -202,10 +194,6 @@ class FileCollection
      * of this method.
      *
      * @see http://php.net/manual/en/reserved.variables.files.php#118294
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function fixFilesArray(array $data): array
     {

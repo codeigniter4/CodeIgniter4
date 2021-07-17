@@ -35,7 +35,6 @@ class CookieStore implements Countable, IteratorAggregate
      * Creates a CookieStore from an array of `Set-Cookie` headers.
      *
      * @param string[] $headers
-     * @param bool     $raw
      *
      * @throws CookieException
      *
@@ -76,12 +75,6 @@ class CookieStore implements Countable, IteratorAggregate
     /**
      * Checks if a `Cookie` object identified by name and
      * prefix is present in the collection.
-     *
-     * @param string      $name
-     * @param string      $prefix
-     * @param string|null $value
-     *
-     * @return bool
      */
     public function has(string $name, string $prefix = '', ?string $value = null): bool
     {
@@ -106,12 +99,7 @@ class CookieStore implements Countable, IteratorAggregate
      * Retrieves an instance of `Cookie` identified by a name and prefix.
      * This throws an exception if not found.
      *
-     * @param string $name
-     * @param string $prefix
-     *
      * @throws CookieException
-     *
-     * @return Cookie
      */
     public function get(string $name, string $prefix = ''): Cookie
     {
@@ -129,8 +117,6 @@ class CookieStore implements Countable, IteratorAggregate
     /**
      * Store a new cookie and return a new collection. The original collection
      * is left unchanged.
-     *
-     * @param Cookie $cookie
      *
      * @return static
      */
@@ -150,9 +136,6 @@ class CookieStore implements Countable, IteratorAggregate
      * Removing a cookie from the store **DOES NOT** delete it from the browser.
      * If you intend to delete a cookie *from the browser*, you must put an empty
      * value cookie with the same name to the store.
-     *
-     * @param string $name
-     * @param string $prefix
      *
      * @return static
      */
@@ -175,8 +158,6 @@ class CookieStore implements Countable, IteratorAggregate
 
     /**
      * Dispatches all cookies in store.
-     *
-     * @return void
      */
     public function dispatch(): void
     {
@@ -207,8 +188,6 @@ class CookieStore implements Countable, IteratorAggregate
 
     /**
      * Clears the cookie collection.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -217,8 +196,6 @@ class CookieStore implements Countable, IteratorAggregate
 
     /**
      * Gets the Cookie count in this collection.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -238,11 +215,7 @@ class CookieStore implements Countable, IteratorAggregate
     /**
      * Validates all cookies passed to be instances of Cookie.
      *
-     * @param array $cookies
-     *
      * @throws CookieException
-     *
-     * @return void
      */
     protected function validateCookies(array $cookies): void
     {
@@ -259,12 +232,6 @@ class CookieStore implements Countable, IteratorAggregate
      * Extracted call to `setrawcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
-     *
-     * @param string $name
-     * @param string $value
-     * @param array  $options
-     *
-     * @return void
      */
     protected function setRawCookie(string $name, string $value, array $options): void
     {
@@ -275,12 +242,6 @@ class CookieStore implements Countable, IteratorAggregate
      * Extracted call to `setcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
-     *
-     * @param string $name
-     * @param string $value
-     * @param array  $options
-     *
-     * @return void
      */
     protected function setCookie(string $name, string $value, array $options): void
     {

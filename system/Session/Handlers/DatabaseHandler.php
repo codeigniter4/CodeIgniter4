@@ -59,9 +59,6 @@ class DatabaseHandler extends BaseHandler
 
     /**
      * Constructor
-     *
-     * @param AppConfig $config
-     * @param string    $ipAddress
      */
     public function __construct(AppConfig $config, string $ipAddress)
     {
@@ -98,8 +95,6 @@ class DatabaseHandler extends BaseHandler
      * @param string $name     Session cookie name
      *
      * @throws Exception
-     *
-     * @return bool
      */
     public function open($savePath, $name): bool
     {
@@ -171,8 +166,6 @@ class DatabaseHandler extends BaseHandler
      *
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
-     *
-     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -231,8 +224,6 @@ class DatabaseHandler extends BaseHandler
      * Close
      *
      * Releases locks and closes file descriptor.
-     *
-     * @return bool
      */
     public function close(): bool
     {
@@ -245,8 +236,6 @@ class DatabaseHandler extends BaseHandler
      * Destroys the current session.
      *
      * @param string $sessionID
-     *
-     * @return bool
      */
     public function destroy($sessionID): bool
     {
@@ -277,8 +266,6 @@ class DatabaseHandler extends BaseHandler
      * Deletes expired sessions
      *
      * @param int $maxlifetime Maximum lifetime of sessions
-     *
-     * @return bool
      */
     public function gc($maxlifetime): bool
     {
@@ -290,10 +277,6 @@ class DatabaseHandler extends BaseHandler
 
     /**
      * Lock the session.
-     *
-     * @param string $sessionID
-     *
-     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -325,8 +308,6 @@ class DatabaseHandler extends BaseHandler
 
     /**
      * Releases the lock, if any.
-     *
-     * @return bool
      */
     protected function releaseLock(): bool
     {

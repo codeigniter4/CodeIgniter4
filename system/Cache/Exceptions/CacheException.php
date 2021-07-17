@@ -25,8 +25,6 @@ class CacheException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when handler has no permission to write cache.
      *
-     * @param string $path
-     *
      * @return CacheException
      */
     public static function forUnableToWrite(string $path)

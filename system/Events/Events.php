@@ -139,8 +139,6 @@ class Events
      *
      * @param string $eventName
      * @param mixed  $arguments
-     *
-     * @return bool
      */
     public static function trigger($eventName, ...$arguments): bool
     {
@@ -177,8 +175,6 @@ class Events
      * sorted by priority.
      *
      * @param string $eventName
-     *
-     * @return array
      */
     public static function listeners($eventName): array
     {
@@ -204,10 +200,7 @@ class Events
      * If the listener couldn't be found, returns FALSE, else TRUE if
      * it was removed.
      *
-     * @param string   $eventName
-     * @param callable $listener
-     *
-     * @return bool
+     * @param string $eventName
      */
     public static function removeListener($eventName, callable $listener): bool
     {
@@ -251,8 +244,6 @@ class Events
     /**
      * Sets the path to the file that routes are read from.
      *
-     * @param array $files
-     *
      * @return void
      */
     public static function setFiles(array $files)
@@ -274,8 +265,6 @@ class Events
      * Turns simulation on or off. When on, events will not be triggered,
      * simply logged. Useful during testing when you don't actually want
      * the tests to run.
-     *
-     * @param bool $choice
      *
      * @return void
      */

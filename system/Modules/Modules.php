@@ -41,10 +41,6 @@ class Modules
 
     /**
      * Should the application auto-discover the requested resource.
-     *
-     * @param string $alias
-     *
-     * @return bool
      */
     public function shouldDiscover(string $alias): bool
     {

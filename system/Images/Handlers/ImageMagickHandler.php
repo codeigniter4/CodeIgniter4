@@ -58,8 +58,6 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Handles the actual resizing of the image.
      *
-     * @param bool $maintainRatio
-     *
      * @throws Exception
      *
      * @return ImageMagickHandler
@@ -112,8 +110,6 @@ class ImageMagickHandler extends BaseHandler
      * Handles the rotation of an image resource.
      * Doesn't save the image, but replaces the current resource.
      *
-     * @param int $angle
-     *
      * @throws Exception
      *
      * @return $this
@@ -134,10 +130,6 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Flattens transparencies, default white background
-     *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
      *
      * @throws Exception
      *
@@ -160,8 +152,6 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Flips an image along it's vertical or horizontal axis.
      *
-     * @param string $direction
-     *
      * @throws Exception
      *
      * @return $this
@@ -182,8 +172,6 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Get driver version
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -197,9 +185,6 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Handles all of the grunt work of resizing, etc.
-     *
-     * @param string $action
-     * @param int    $quality
      *
      * @throws Exception
      *
@@ -246,11 +231,6 @@ class ImageMagickHandler extends BaseHandler
      * Example:
      *    $image->resize(100, 200, true)
      *          ->save();
-     *
-     * @param string|null $target
-     * @param int         $quality
-     *
-     * @return bool
      */
     public function save(?string $target = null, int $quality = 90): bool
     {
@@ -345,9 +325,6 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Handler-specific method for overlaying text on an image.
-     *
-     * @param string $text
-     * @param array  $options
      *
      * @throws Exception
      */

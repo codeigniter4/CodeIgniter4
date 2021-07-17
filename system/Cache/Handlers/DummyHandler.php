@@ -152,8 +152,6 @@ class DummyHandler extends BaseHandler
 
     /**
      * Determines if the driver is supported on this system.
-     *
-     * @return bool
      */
     public function isSupported(): bool
     {

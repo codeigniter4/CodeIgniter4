@@ -22,6 +22,8 @@ final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
      * @dataProvider invalidTypeProvider
+     *
+     * @param mixed $input
      */
     public function testValidateKeyInvalidType($input)
     {

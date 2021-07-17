@@ -54,8 +54,6 @@ class ControllerResponse extends TestResponse
     /**
      * Sets the response.
      *
-     * @param ResponseInterface $response
-     *
      * @return $this
      *
      * @deprecated Will revert to parent::setResponse() in a future release (no $body updates)
@@ -71,8 +69,6 @@ class ControllerResponse extends TestResponse
 
     /**
      * Sets the body and updates the DOM.
-     *
-     * @param string $body
      *
      * @return $this
      *

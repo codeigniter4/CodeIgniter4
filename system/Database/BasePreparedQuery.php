@@ -57,8 +57,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Constructor.
-     *
-     * @param BaseConnection $db
      */
     public function __construct(BaseConnection $db)
     {
@@ -72,9 +70,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * NOTE: This version is based on SQL code. Child classes should
      * override this method.
      *
-     * @param string $sql
-     * @param array  $options    Passed to the connection's prepare statement.
-     * @param string $queryClass
+     * @param array $options Passed to the connection's prepare statement.
      *
      * @return mixed
      */
@@ -104,8 +100,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The database-dependent portion of the prepare statement.
      *
-     * @param string $sql
-     * @param array  $options Passed to the connection's prepare statement.
+     * @param array $options Passed to the connection's prepare statement.
      *
      * @return mixed
      */
@@ -145,10 +140,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * The database dependant version of the execute method.
-     *
-     * @param array $data
-     *
-     * @return bool
      */
     abstract public function _execute(array $data): bool;
 
@@ -175,8 +166,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Returns the SQL that has been prepared.
-     *
-     * @return string
      */
     public function getQueryString(): string
     {
@@ -189,8 +178,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * A helper to determine if any error exists.
-     *
-     * @return bool
      */
     public function hasError(): bool
     {
@@ -199,8 +186,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Returns the error code created while executing this statement.
-     *
-     * @return int
      */
     public function getErrorCode(): int
     {
@@ -209,8 +194,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Returns the error message created while executing this statement.
-     *
-     * @return string
      */
     public function getErrorMessage(): string
     {

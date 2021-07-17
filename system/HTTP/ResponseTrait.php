@@ -169,8 +169,6 @@ trait ResponseTrait
     /**
      * Sets the date header
      *
-     * @param DateTime $date
-     *
      * @return Response
      */
     public function setDate(DateTime $date)
@@ -184,8 +182,6 @@ trait ResponseTrait
 
     /**
      * Set the Link Header
-     *
-     * @param PagerInterface $pager
      *
      * @see http://tools.ietf.org/html/rfc5988
      *
@@ -220,9 +216,6 @@ trait ResponseTrait
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
      *
-     * @param string $mime
-     * @param string $charset
-     *
      * @return Response
      */
     public function setContentType(string $mime, string $charset = 'UTF-8')
@@ -242,7 +235,6 @@ trait ResponseTrait
      * Converts the $body into JSON and sets the Content Type header.
      *
      * @param array|string $body
-     * @param bool         $unencoded
      *
      * @return $this
      */
@@ -376,8 +368,6 @@ trait ResponseTrait
      *  - proxy-revalidate
      *  - no-transform
      *
-     * @param array $options
-     *
      * @return Response
      */
     public function setCache(array $options = [])
@@ -499,9 +489,8 @@ trait ResponseTrait
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string $uri    The URI to redirect to
-     * @param string $method
-     * @param int    $code   The type of redirection, defaults to 302
+     * @param string $uri  The URI to redirect to
+     * @param int    $code The type of redirection, defaults to 302
      *
      * @throws HTTPException For invalid status code.
      *
@@ -609,12 +598,6 @@ trait ResponseTrait
 
     /**
      * Checks to see if the Response has a specified cookie or not.
-     *
-     * @param string      $name
-     * @param string|null $value
-     * @param string      $prefix
-     *
-     * @return bool
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
@@ -625,9 +608,6 @@ trait ResponseTrait
 
     /**
      * Returns the cookie
-     *
-     * @param string|null $name
-     * @param string      $prefix
      *
      * @return Cookie|Cookie[]|null
      */
@@ -650,11 +630,6 @@ trait ResponseTrait
 
     /**
      * Sets a cookie to be deleted when the response is sent.
-     *
-     * @param string $name
-     * @param string $domain
-     * @param string $path
-     * @param string $prefix
      *
      * @return $this
      */

@@ -22,8 +22,6 @@ interface SecurityInterface
     /**
      * CSRF Verify
      *
-     * @param RequestInterface $request
-     *
      * @throws SecurityException
      *
      * @return $this|false
@@ -32,36 +30,26 @@ interface SecurityInterface
 
     /**
      * Returns the CSRF Hash.
-     *
-     * @return string|null
      */
     public function getHash(): ?string;
 
     /**
      * Returns the CSRF Token Name.
-     *
-     * @return string
      */
     public function getTokenName(): string;
 
     /**
      * Returns the CSRF Header Name.
-     *
-     * @return string
      */
     public function getHeaderName(): string;
 
     /**
      * Returns the CSRF Cookie Name.
-     *
-     * @return string
      */
     public function getCookieName(): string;
 
     /**
      * Check if CSRF cookie is expired.
-     *
-     * @return bool
      *
      * @deprecated
      */
@@ -69,8 +57,6 @@ interface SecurityInterface
 
     /**
      * Check if request should be redirect on failure.
-     *
-     * @return bool
      */
     public function shouldRedirect(): bool;
 
@@ -87,8 +73,6 @@ interface SecurityInterface
      *
      * @param string $str          Input file name
      * @param bool   $relativePath Whether to preserve paths
-     *
-     * @return string
      */
     public function sanitizeFilename(string $str, bool $relativePath = false): string;
 }

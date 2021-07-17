@@ -1577,6 +1577,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideRouteDefaultNamespace
+     *
+     * @param mixed $namespace
      */
     public function testAutoRoutesControllerNameReturnsFQCN($namespace)
     {
@@ -1592,6 +1594,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideRouteDefaultNamespace
+     *
+     * @param mixed $namespace
      */
     public function testRoutesControllerNameReturnsFQCN($namespace)
     {

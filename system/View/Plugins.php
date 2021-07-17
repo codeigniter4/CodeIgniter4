@@ -41,10 +41,6 @@ class Plugins
 
     /**
      * Wrap helper function to use as view plugin.
-     *
-     * @param array $params
-     *
-     * @return string
      */
     public static function mailto(array $params = []): string
     {
@@ -57,10 +53,6 @@ class Plugins
 
     /**
      * Wrap helper function to use as view plugin.
-     *
-     * @param array $params
-     *
-     * @return string
      */
     public static function safeMailto(array $params = []): string
     {
@@ -73,10 +65,6 @@ class Plugins
 
     /**
      * Wrap helper function to use as view plugin.
-     *
-     * @param array $params
-     *
-     * @return string
      */
     public static function lang(array $params = []): string
     {
@@ -87,10 +75,6 @@ class Plugins
 
     /**
      * Wrap helper function to use as view plugin.
-     *
-     * @param array $params
-     *
-     * @return string
      */
     public static function ValidationErrors(array $params = []): string
     {
@@ -105,8 +89,6 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @param array $params
-     *
      * @return false|string
      */
     public static function route(array $params = [])
@@ -116,10 +98,6 @@ class Plugins
 
     /**
      * Wrap helper function to use as view plugin.
-     *
-     * @param array $params
-     *
-     * @return string
      */
     public static function siteURL(array $params = []): string
     {

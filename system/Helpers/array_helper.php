@@ -16,9 +16,6 @@ if (! function_exists('dot_array_search')) {
      * Searches an array through dot syntax. Supports
      * wildcard searches, like foo.*.bar
      *
-     * @param string $index
-     * @param array  $array
-     *
      * @return mixed
      */
     function dot_array_search(string $index, array $array)
@@ -39,9 +36,6 @@ if (! function_exists('_array_search_dot')) {
      * array with wildcards.
      *
      * @internal This should not be used on its own.
-     *
-     * @param array $indexes
-     * @param array $array
      *
      * @return mixed
      */
@@ -99,7 +93,6 @@ if (! function_exists('array_deep_search')) {
      * Returns the value of an element at a key in an array of uncertain depth.
      *
      * @param mixed $key
-     * @param array $array
      *
      * @return mixed|null
      */
@@ -144,8 +137,6 @@ if (! function_exists('array_sort_by_multiple_keys')) {
      * @param array $array       the reference of the array to be sorted
      * @param array $sortColumns an associative array of columns to sort
      *                           after and their sorting flags
-     *
-     * @return bool
      */
     function array_sort_by_multiple_keys(array &$array, array $sortColumns): bool
     {

@@ -21,10 +21,6 @@ class Filters
 {
     /**
      * Returns $value as all lowercase with the first letter capitalized.
-     *
-     * @param string $value
-     *
-     * @return string
      */
     public static function capitalize(string $value): string
     {
@@ -34,10 +30,7 @@ class Filters
     /**
      * Formats a date into the given $format.
      *
-     * @param mixed  $value
-     * @param string $format
-     *
-     * @return string
+     * @param mixed $value
      */
     public static function date($value, string $format): string
     {
@@ -56,7 +49,6 @@ class Filters
      *      my_date|date_modify(+1 day)
      *
      * @param string $value
-     * @param string $adjustment
      *
      * @return false|int
      */
@@ -70,10 +62,7 @@ class Filters
     /**
      * Returns the given default value if $value is empty or undefined.
      *
-     * @param mixed  $value
-     * @param string $default
-     *
-     * @return string
+     * @param mixed $value
      */
     public static function default($value, string $default): string
     {
@@ -86,9 +75,6 @@ class Filters
      * Escapes the given value with our `esc()` helper function.
      *
      * @param string $value
-     * @param string $context
-     *
-     * @return string
      */
     public static function esc($value, string $context = 'html'): string
     {
@@ -97,12 +83,6 @@ class Filters
 
     /**
      * Returns an excerpt of the given string.
-     *
-     * @param string $value
-     * @param string $phrase
-     * @param int    $radius
-     *
-     * @return string
      */
     public static function excerpt(string $value, string $phrase, int $radius = 100): string
     {
@@ -113,11 +93,6 @@ class Filters
 
     /**
      * Highlights a given phrase within the text using '<mark></mark>' tags.
-     *
-     * @param string $value
-     * @param string $phrase
-     *
-     * @return string
      */
     public static function highlight(string $value, string $phrase): string
     {
@@ -130,8 +105,6 @@ class Filters
      * Highlights code samples with HTML/CSS.
      *
      * @param string $value
-     *
-     * @return string
      */
     public static function highlight_code($value): string
     {
@@ -145,9 +118,6 @@ class Filters
      * Will break at word break so may be more or less than $limit.
      *
      * @param string $value
-     * @param int    $limit
-     *
-     * @return string
      */
     public static function limit_chars($value, int $limit = 500): string
     {
@@ -160,9 +130,6 @@ class Filters
      * Limits the number of words to $limit, and trails of with an ellipsis.
      *
      * @param string $value
-     * @param int    $limit
-     *
-     * @return string
      */
     public static function limit_words($value, int $limit = 100): string
     {
@@ -174,12 +141,7 @@ class Filters
     /**
      * Returns the $value displayed in a localized manner.
      *
-     * @param float|int   $value
-     * @param int         $precision
-     * @param string      $type
-     * @param string|null $locale
-     *
-     * @return string
+     * @param float|int $value
      */
     public static function local_number($value, string $type = 'decimal', int $precision = 4, ?string $locale = null): string
     {
@@ -201,12 +163,8 @@ class Filters
     /**
      * Returns the $value displayed as a currency string.
      *
-     * @param float|int   $value
-     * @param string      $currency
-     * @param string|null $locale
-     * @param int         $fraction
-     *
-     * @return string
+     * @param float|int $value
+     * @param int       $fraction
      */
     public static function local_currency($value, string $currency, ?string $locale = null, $fraction = null): string
     {
@@ -224,10 +182,6 @@ class Filters
     /**
      * Returns a string with all instances of newline character (\n)
      * converted to an HTML <br/> tag.
-     *
-     * @param string $value
-     *
-     * @return string
      */
     public static function nl2br(string $value): string
     {
@@ -239,10 +193,6 @@ class Filters
     /**
      * Takes a body of text and uses the auto_typography() method to
      * turn it into prettier, easier-to-read, prose.
-     *
-     * @param string $value
-     *
-     * @return string
      */
     public static function prose(string $value): string
     {
@@ -258,9 +208,7 @@ class Filters
      *  - ceil      always rounds up
      *  - floor     always rounds down
      *
-     * @param string $value
-     * @param mixed  $precision
-     * @param string $type
+     * @param mixed $precision
      *
      * @return float|string
      */
@@ -288,10 +236,6 @@ class Filters
 
     /**
      * Returns a "title case" version of the string.
-     *
-     * @param string $value
-     *
-     * @return string
      */
     public static function title(string $value): string
     {

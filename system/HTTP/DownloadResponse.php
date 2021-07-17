@@ -71,9 +71,6 @@ class DownloadResponse extends Response
 
     /**
      * Constructor.
-     *
-     * @param string $filename
-     * @param bool   $setMime
      */
     public function __construct(string $filename, bool $setMime)
     {
@@ -88,8 +85,6 @@ class DownloadResponse extends Response
 
     /**
      * set download for binary string.
-     *
-     * @param string $binary
      */
     public function setBinary(string $binary)
     {
@@ -102,8 +97,6 @@ class DownloadResponse extends Response
 
     /**
      * set download for file.
-     *
-     * @param string $filepath
      */
     public function setFilePath(string $filepath)
     {
@@ -117,8 +110,6 @@ class DownloadResponse extends Response
     /**
      * set name for the download.
      *
-     * @param string $filename
-     *
      * @return $this
      */
     public function setFileName(string $filename)
@@ -130,8 +121,6 @@ class DownloadResponse extends Response
 
     /**
      * get content length.
-     *
-     * @return int
      */
     public function getContentLength(): int
     {
@@ -170,8 +159,6 @@ class DownloadResponse extends Response
 
     /**
      * get download filename.
-     *
-     * @return string
      */
     private function getDownloadFileName(): string
     {
@@ -197,8 +184,6 @@ class DownloadResponse extends Response
 
     /**
      * get Content-Disposition Header string.
-     *
-     * @return string
      */
     private function getContentDisposition(): string
     {
@@ -222,9 +207,6 @@ class DownloadResponse extends Response
     /**
      * Disallows status changing.
      *
-     * @param int    $code
-     * @param string $reason
-     *
      * @throws DownloadException
      */
     public function setStatusCode(int $code, string $reason = '')
@@ -235,9 +217,6 @@ class DownloadResponse extends Response
     /**
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
-     *
-     * @param string $mime
-     * @param string $charset
      *
      * @return ResponseInterface
      */
@@ -267,8 +246,6 @@ class DownloadResponse extends Response
 
     /**
      * Disables cache configuration.
-     *
-     * @param array $options
      *
      * @throws DownloadException
      */

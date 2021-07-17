@@ -44,8 +44,6 @@ class Builder extends BaseBuilder
      * Checks if the ignore option is supported by
      * the Database Driver for the specific statement.
      *
-     * @param string $statement
-     *
      * @return string
      */
     protected function compileIgnore(string $statement)
@@ -62,7 +60,6 @@ class Builder extends BaseBuilder
     /**
      * ORDER BY
      *
-     * @param string $orderBy
      * @param string $direction ASC, DESC or RANDOM
      * @param bool   $escape
      *
@@ -91,9 +88,6 @@ class Builder extends BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string $column
-     * @param int    $value
-     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -109,9 +103,6 @@ class Builder extends BaseBuilder
 
     /**
      * Decrements a numeric column by the specified value.
-     *
-     * @param string $column
-     * @param int    $value
      *
      * @throws DatabaseException
      *
@@ -186,8 +177,6 @@ class Builder extends BaseBuilder
      * @param string $table         The table name
      * @param array  $keys          The insert keys
      * @param array  $unescapedKeys The insert values
-     *
-     * @return string
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -202,8 +191,6 @@ class Builder extends BaseBuilder
      * @param string $table  Table name
      * @param array  $keys   INSERT keys
      * @param array  $values INSERT values
-     *
-     * @return string
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -217,7 +204,6 @@ class Builder extends BaseBuilder
      *
      * @param mixed $where
      * @param int   $limit
-     * @param bool  $resetData
      *
      * @throws DatabaseException
      *
@@ -242,8 +228,6 @@ class Builder extends BaseBuilder
      * Generates a platform-specific LIMIT clause.
      *
      * @param string $sql SQL Query
-     *
-     * @return string
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
@@ -255,12 +239,7 @@ class Builder extends BaseBuilder
      *
      * Generates a platform-specific update string from the supplied data
      *
-     * @param string $table
-     * @param array  $values
-     *
      * @throws DatabaseException
-     *
-     * @return string
      *
      * @internal param the $array update data
      * @internal param the $string table name
@@ -284,8 +263,6 @@ class Builder extends BaseBuilder
      * @param string $table  Table name
      * @param array  $values Update data
      * @param string $index  WHERE key
-     *
-     * @return string
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
@@ -323,8 +300,6 @@ class Builder extends BaseBuilder
      * Generates a platform-specific delete string from the supplied data
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _delete(string $table): string
     {
@@ -342,8 +317,6 @@ class Builder extends BaseBuilder
      * then this method maps to 'DELETE FROM table'
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _truncate(string $table): string
     {
@@ -357,12 +330,6 @@ class Builder extends BaseBuilder
      * searches according to the current locale.
      *
      * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
-     *
-     * @param string|null $prefix
-     * @param string      $column
-     * @param string|null $not
-     * @param string      $bind
-     * @param bool        $insensitiveSearch
      *
      * @return string $like_statement
      */
@@ -378,7 +345,6 @@ class Builder extends BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string $table
      * @param string $cond   The join condition
      * @param string $type   The type of join
      * @param bool   $escape Whether not to try to escape identifiers

@@ -28,7 +28,6 @@ interface RouteCollectionInterface
     /**
      * Adds a single route to the collection.
      *
-     * @param string       $from
      * @param array|string $to
      * @param array        $options
      *
@@ -55,8 +54,6 @@ interface RouteCollectionInterface
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
      *
-     * @param string $value
-     *
      * @return mixed
      */
     public function setDefaultNamespace(string $value);
@@ -65,8 +62,6 @@ interface RouteCollectionInterface
      * Sets the default controller to use when no other controller has been
      * specified.
      *
-     * @param string $value
-     *
      * @return mixed
      */
     public function setDefaultController(string $value);
@@ -74,8 +69,6 @@ interface RouteCollectionInterface
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
-     *
-     * @param string $value
      *
      * @return mixed
      */
@@ -88,8 +81,6 @@ interface RouteCollectionInterface
      * find words and meaning in the URI for better SEO. But it
      * doesn't work well with PHP method names....
      *
-     * @param bool $value
-     *
      * @return mixed
      */
     public function setTranslateURIDashes(bool $value);
@@ -101,8 +92,6 @@ interface RouteCollectionInterface
      * defined routes.
      *
      * If FALSE, will stop searching and do NO automatic routing.
-     *
-     * @param bool $value
      *
      * @return RouteCollectionInterface
      */
@@ -184,8 +173,7 @@ interface RouteCollectionInterface
      *      // Equals 'path/$param1/$param2'
      *      reverseRoute('Controller::method', $param1, $param2);
      *
-     * @param string $search
-     * @param array  ...$params
+     * @param array ...$params
      *
      * @return false|string
      */
@@ -193,19 +181,11 @@ interface RouteCollectionInterface
 
     /**
      * Determines if the route is a redirecting route.
-     *
-     * @param string $from
-     *
-     * @return bool
      */
     public function isRedirect(string $from): bool;
 
     /**
      * Grabs the HTTP status code from a redirecting Route.
-     *
-     * @param string $from
-     *
-     * @return int
      */
     public function getRedirectCode(string $from): int;
 }

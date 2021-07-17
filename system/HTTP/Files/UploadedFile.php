@@ -163,8 +163,6 @@ class UploadedFile extends File implements UploadedFileInterface
      * create file target path if
      * the set path does not exist
      *
-     * @param string $path
-     *
      * @return string The path set or created.
      */
     protected function setPath(string $path): string
@@ -185,8 +183,6 @@ class UploadedFile extends File implements UploadedFileInterface
      * Returns whether the file has been moved or not. If it has,
      * the move() method will not work and certain properties, like
      * the tempName, will no longer be available.
-     *
-     * @return bool
      */
     public function hasMoved(): bool
     {
@@ -215,8 +211,6 @@ class UploadedFile extends File implements UploadedFileInterface
 
     /**
      * Get error string
-     *
-     * @return string
      */
     public function getErrorString(): string
     {
@@ -262,8 +256,6 @@ class UploadedFile extends File implements UploadedFileInterface
 
     /**
      * Returns the name of the file as provided by the client during upload.
-     *
-     * @return string
      */
     public function getClientName(): string
     {
@@ -272,8 +264,6 @@ class UploadedFile extends File implements UploadedFileInterface
 
     /**
      * Gets the temporary filename where the file was uploaded to.
-     *
-     * @return string
      */
     public function getTempName(): string
     {
@@ -301,8 +291,6 @@ class UploadedFile extends File implements UploadedFileInterface
      * mime type. In contrast to getExtension, this method will return
      * an empty string if it fails to determine an extension instead of
      * falling back to the unsecure clientExtension.
-     *
-     * @return string
      */
     public function guessExtension(): string
     {
@@ -313,8 +301,6 @@ class UploadedFile extends File implements UploadedFileInterface
      * Returns the original file extension, based on the file name that
      * was uploaded. This is NOT a trusted source.
      * For a trusted version, use guessExtension() instead.
-     *
-     * @return string
      */
     public function getClientExtension(): string
     {
@@ -324,8 +310,6 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
-     *
-     * @return bool
      */
     public function isValid(): bool
     {

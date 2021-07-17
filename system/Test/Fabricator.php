@@ -145,8 +145,6 @@ class Fabricator
      * Get the count for a specific table
      *
      * @param string $table Name of the target table
-     *
-     * @return int
      */
     public static function getCount(string $table): int
     {
@@ -204,8 +202,6 @@ class Fabricator
 
     /**
      * Returns the locale
-     *
-     * @return string
      */
     public function getLocale(): string
     {
@@ -214,8 +210,6 @@ class Fabricator
 
     /**
      * Returns the Faker generator
-     *
-     * @return Generator
      */
     public function getFaker(): Generator
     {
@@ -224,8 +218,6 @@ class Fabricator
 
     /**
      * Return and reset tempOverrides
-     *
-     * @return array
      */
     public function getOverrides(): array
     {
@@ -257,8 +249,6 @@ class Fabricator
 
     /**
      * Returns the current formatters
-     *
-     * @return array|null
      */
     public function getFormatters(): ?array
     {

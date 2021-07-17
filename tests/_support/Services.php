@@ -39,7 +39,6 @@ class Services
     /**
      * Inject mock object for testing.
      *
-     * @param string $name
      * @param $mock
      */
     public static function injectMock(string $name, $mock)
@@ -50,9 +49,6 @@ class Services
 
     /**
      * Returns a service
-     *
-     * @param string $name
-     * @param array  $arguments
      */
     public static function __callStatic(string $name, array $arguments)
     {

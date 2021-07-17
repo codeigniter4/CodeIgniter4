@@ -141,8 +141,6 @@ final class CookieTest extends CIUnitTestCase
      * @dataProvider invalidExpiresProvider
      *
      * @param mixed $expires
-     *
-     * @return void
      */
     public function testInvalidExpires($expires): void
     {
@@ -165,11 +163,6 @@ final class CookieTest extends CIUnitTestCase
 
     /**
      * @dataProvider setCookieHeaderProvider
-     *
-     * @param string $header
-     * @param array  $changed
-     *
-     * @return void
      */
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {

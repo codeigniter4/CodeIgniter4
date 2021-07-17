@@ -387,8 +387,6 @@ abstract class BaseModel
      *
      * @param array|int|string|null $id   ID
      * @param array|null            $data Data
-     *
-     * @return bool
      */
     abstract protected function doUpdate($id = null, $data = null): bool;
 
@@ -658,8 +656,6 @@ abstract class BaseModel
      * @param array|object $data Data
      *
      * @throws ReflectionException
-     *
-     * @return bool
      */
     public function save($data): bool
     {
@@ -685,8 +681,6 @@ abstract class BaseModel
      * If this method return false insert operation will be executed
      *
      * @param array|object $data Data
-     *
-     * @return bool
      */
     protected function shouldUpdate($data): bool
     {
@@ -839,8 +833,6 @@ abstract class BaseModel
      * @param array|object|null     $data Data
      *
      * @throws ReflectionException
-     *
-     * @return bool
      */
     public function update($id = null, $data = null): bool
     {
@@ -1142,8 +1134,6 @@ abstract class BaseModel
      * @param array $data Data
      *
      * @throws DataException
-     *
-     * @return array
      */
     protected function doProtectFields(array $data): array
     {
@@ -1339,8 +1329,6 @@ abstract class BaseModel
      * specified in the class property, $validationRules.
      *
      * @param array|object $data Data
-     *
-     * @return bool
      */
     public function validate($data): bool
     {
@@ -1371,8 +1359,6 @@ abstract class BaseModel
      * can be used elsewhere, if needed.
      *
      * @param array $options Options
-     *
-     * @return array
      */
     public function getValidationRules(array $options = []): array
     {
@@ -1396,8 +1382,6 @@ abstract class BaseModel
     /**
      * Returns the model's define validation messages so they
      * can be used elsewhere, if needed.
-     *
-     * @return array
      */
     public function getValidationMessages(): array
     {
@@ -1411,8 +1395,6 @@ abstract class BaseModel
      *
      * @param array      $rules Array containing field name and rule
      * @param array|null $data  Data
-     *
-     * @return array
      */
     protected function cleanValidationRules(array $rules, ?array $data = null): array
     {
@@ -1588,8 +1570,6 @@ abstract class BaseModel
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
-     *
-     * @return array
      */
     protected function transformDataToArray($data, string $type): array
     {
@@ -1643,8 +1623,6 @@ abstract class BaseModel
      * Checks for the existence of properties across this model, and db connection.
      *
      * @param string $name Name
-     *
-     * @return bool
      */
     public function __isset(string $name): bool
     {
@@ -1693,8 +1671,6 @@ abstract class BaseModel
      * @codeCoverageIgnore
      *
      * @deprecated use fillPlaceholders($rules, $data) from Validation instead
-     *
-     * @return array
      */
     protected function fillPlaceholders(array $rules, array $data): array
     {

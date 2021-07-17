@@ -21,8 +21,6 @@ class CastException extends FrameworkException
     /**
      * Thrown when the cast class does not extends BaseCast.
      *
-     * @param string $class
-     *
      * @return static
      */
     public static function forInvalidInterface(string $class)
@@ -32,8 +30,6 @@ class CastException extends FrameworkException
 
     /**
      * Thrown when the Json format is invalid.
-     *
-     * @param int $error
      *
      * @return static
      */
@@ -62,8 +58,6 @@ class CastException extends FrameworkException
 
     /**
      * Thrown when the cast method is not `get` or `set`.
-     *
-     * @param string $method
      *
      * @return static
      */

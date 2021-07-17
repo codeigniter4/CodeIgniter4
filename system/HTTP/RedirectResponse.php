@@ -24,9 +24,8 @@ class RedirectResponse extends Response
      * Sets the URI to redirect to and, optionally, the HTTP status code to use.
      * If no code is provided it will be automatically determined.
      *
-     * @param string   $uri    The URI to redirect to
-     * @param int|null $code   HTTP status code
-     * @param string   $method
+     * @param string   $uri  The URI to redirect to
+     * @param int|null $code HTTP status code
      *
      * @return $this
      */
@@ -44,11 +43,6 @@ class RedirectResponse extends Response
     /**
      * Sets the URI to redirect to but as a reverse-routed or named route
      * instead of a raw URI.
-     *
-     * @param string $route
-     * @param array  $params
-     * @param int    $code
-     * @param string $method
      *
      * @throws HTTPException
      *
@@ -70,9 +64,6 @@ class RedirectResponse extends Response
      *
      * Example:
      *  return redirect()->back();
-     *
-     * @param int|null $code
-     * @param string   $method
      *
      * @return $this
      */
@@ -115,7 +106,6 @@ class RedirectResponse extends Response
     /**
      * Adds a key and message to the session as Flashdata.
      *
-     * @param string       $key
      * @param array|string $message
      *
      * @return $this

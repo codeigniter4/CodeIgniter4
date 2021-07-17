@@ -33,8 +33,6 @@ class HTTPException extends FrameworkException
     /**
      * For CurlRequest
      *
-     * @param string $cert
-     *
      * @return HTTPException
      */
     public static function forSSLCertNotFound(string $cert)
@@ -45,8 +43,6 @@ class HTTPException extends FrameworkException
     /**
      * For CurlRequest
      *
-     * @param string $key
-     *
      * @return HTTPException
      */
     public static function forInvalidSSLKey(string $key)
@@ -56,9 +52,6 @@ class HTTPException extends FrameworkException
 
     /**
      * For CurlRequest
-     *
-     * @param string $errorNum
-     * @param string $error
      *
      * @return HTTPException
      *
@@ -72,8 +65,6 @@ class HTTPException extends FrameworkException
     /**
      * For IncomingRequest
      *
-     * @param string $type
-     *
      * @return HTTPException
      */
     public static function forInvalidNegotiationType(string $type)
@@ -83,8 +74,6 @@ class HTTPException extends FrameworkException
 
     /**
      * For Message
-     *
-     * @param string $protocols
      *
      * @return HTTPException
      */
@@ -106,8 +95,6 @@ class HTTPException extends FrameworkException
     /**
      * For RedirectResponse
      *
-     * @param string $route
-     *
      * @return HTTPException
      */
     public static function forInvalidRedirectRoute(string $route)
@@ -128,8 +115,6 @@ class HTTPException extends FrameworkException
     /**
      * For Response
      *
-     * @param int $code
-     *
      * @return HTTPException
      */
     public static function forInvalidStatusCode(int $code)
@@ -139,8 +124,6 @@ class HTTPException extends FrameworkException
 
     /**
      * For Response
-     *
-     * @param int $code
      *
      * @return HTTPException
      */
@@ -152,8 +135,6 @@ class HTTPException extends FrameworkException
     /**
      * For URI
      *
-     * @param string $uri
-     *
      * @return HTTPException
      */
     public static function forUnableToParseURI(string $uri)
@@ -164,8 +145,6 @@ class HTTPException extends FrameworkException
     /**
      * For URI
      *
-     * @param int $segment
-     *
      * @return HTTPException
      */
     public static function forURISegmentOutOfRange(int $segment)
@@ -175,8 +154,6 @@ class HTTPException extends FrameworkException
 
     /**
      * For URI
-     *
-     * @param int $port
      *
      * @return HTTPException
      */
@@ -208,8 +185,6 @@ class HTTPException extends FrameworkException
     /**
      * For Uploaded file move
      *
-     * @param string|null $path
-     *
      * @return HTTPException
      */
     public static function forInvalidFile(?string $path = null)
@@ -220,10 +195,6 @@ class HTTPException extends FrameworkException
     /**
      * For Uploaded file move
      *
-     * @param string $source
-     * @param string $target
-     * @param string $error
-     *
      * @return HTTPException
      */
     public static function forMoveFailed(string $source, string $target, string $error)
@@ -233,8 +204,6 @@ class HTTPException extends FrameworkException
 
     /**
      * For Invalid SameSite attribute setting
-     *
-     * @param string $samesite
      *
      * @return HTTPException
      *

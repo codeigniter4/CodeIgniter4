@@ -52,8 +52,6 @@ class CLIRequest extends Request
 
     /**
      * Constructor
-     *
-     * @param App $config
      */
     public function __construct(App $config)
     {
@@ -81,8 +79,6 @@ class CLIRequest extends Request
      *
      *      // Routes to /users/21/profile (index is removed for routing sake)
      *      // with the option foo = bar.
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -94,8 +90,6 @@ class CLIRequest extends Request
     /**
      * Returns an associative array of all CLI options found, with
      * their values.
-     *
-     * @return array
      */
     public function getOptions(): array
     {
@@ -104,8 +98,6 @@ class CLIRequest extends Request
 
     /**
      * Returns the path segments.
-     *
-     * @return array
      */
     public function getSegments(): array
     {
@@ -114,8 +106,6 @@ class CLIRequest extends Request
 
     /**
      * Returns the value for a single CLI option that was passed in.
-     *
-     * @param string $key
      *
      * @return string|null
      */
@@ -135,10 +125,6 @@ class CLIRequest extends Request
      *      ];
      *
      *      getOptionString() = '-foo bar -baz "queue some stuff"'
-     *
-     * @param bool $useLongOpts
-     *
-     * @return string
      */
     public function getOptionString(bool $useLongOpts = false): string
     {
@@ -206,8 +192,6 @@ class CLIRequest extends Request
 
     /**
      * Determines if this request was made from the command line (CLI).
-     *
-     * @return bool
      */
     public function isCLI(): bool
     {

@@ -31,8 +31,6 @@ class Console
 
     /**
      * Console constructor.
-     *
-     * @param CodeIgniter $app
      */
     public function __construct(CodeIgniter $app)
     {
@@ -41,8 +39,6 @@ class Console
 
     /**
      * Runs the current command discovered on the CLI.
-     *
-     * @param bool $useSafeOutput
      *
      * @throws Exception
      *
@@ -60,8 +56,6 @@ class Console
 
     /**
      * Displays basic information about the Console.
-     *
-     * @param bool $suppress
      */
     public function showHeader(bool $suppress = false)
     {

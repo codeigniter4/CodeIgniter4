@@ -84,8 +84,6 @@ class Views extends BaseCollector
     /**
      * Child classes should implement this to return the timeline data
      * formatted for correct usage.
-     *
-     * @return array
      */
     protected function formatTimelineData(): array
     {
@@ -120,8 +118,6 @@ class Views extends BaseCollector
      *          'bar' => 'baz'
      *      ],
      *  ];
-     *
-     * @return array
      */
     public function getVarData(): array
     {
@@ -133,8 +129,6 @@ class Views extends BaseCollector
 
     /**
      * Returns a count of all views.
-     *
-     * @return int
      */
     public function getBadgeValue(): int
     {
@@ -145,8 +139,6 @@ class Views extends BaseCollector
      * Display the icon.
      *
      * Icon from https://icons8.com - 1em package
-     *
-     * @return string
      */
     public function icon(): string
     {

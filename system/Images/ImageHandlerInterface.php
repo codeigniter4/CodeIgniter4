@@ -19,10 +19,7 @@ interface ImageHandlerInterface
     /**
      * Resize the image
      *
-     * @param int    $width
-     * @param int    $height
-     * @param bool   $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-     * @param string $masterDim
+     * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
      *
      * @return $this
      */
@@ -33,12 +30,8 @@ interface ImageHandlerInterface
      * is not provided, that value will be set the appropriate value based on offsets and
      * image dimensions.
      *
-     * @param int|null $width
-     * @param int|null $height
-     * @param int|null $x             X-axis coord to start cropping from the left of image
-     * @param int|null $y             Y-axis coord to start cropping from the top of image
-     * @param bool     $maintainRatio
-     * @param string   $masterDim
+     * @param int|null $x X-axis coord to start cropping from the left of image
+     * @param int|null $y Y-axis coord to start cropping from the top of image
      *
      * @return $this
      */
@@ -57,18 +50,12 @@ interface ImageHandlerInterface
     /**
      * Rotates the image on the current canvas.
      *
-     * @param float $angle
-     *
      * @return $this
      */
     public function rotate(float $angle);
 
     /**
      * Flattens transparencies, default white background
-     *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
      *
      * @return $this
      */
@@ -115,10 +102,6 @@ interface ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param int    $width
-     * @param int    $height
-     * @param string $position
-     *
      * @return $this
      */
     public function fit(int $width, int $height, string $position);
@@ -138,9 +121,6 @@ interface ImageHandlerInterface
      *  - fontSize
      *  - shadowOffset
      *
-     * @param string $text
-     * @param array  $options
-     *
      * @return $this
      */
     public function text(string $text, array $options = []);
@@ -153,7 +133,6 @@ interface ImageHandlerInterface
      *          ->save($target);
      *
      * @param string $target
-     * @param int    $quality
      *
      * @return bool
      */

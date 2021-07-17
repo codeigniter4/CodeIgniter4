@@ -35,8 +35,6 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
     }
 
     /**
-     * @param array $config
-     *
      * @return MockObject&ErrorlogHandler
      */
     private function getMockedHandler(array $config = [])

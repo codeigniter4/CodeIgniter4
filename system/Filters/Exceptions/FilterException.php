@@ -23,8 +23,6 @@ class FilterException extends ConfigException implements ExceptionInterface
      * Thrown when the provided alias is not within
      * the list of configured filter aliases.
      *
-     * @param string $alias
-     *
      * @return static
      */
     public static function forNoAlias(string $alias)
@@ -34,8 +32,6 @@ class FilterException extends ConfigException implements ExceptionInterface
 
     /**
      * Thrown when the filter class does not implement FilterInterface.
-     *
-     * @param string $class
      *
      * @return static
      */

@@ -17,8 +17,6 @@ class MockResult extends BaseResult
 {
     /**
      * Gets the number of fields in the result set.
-     *
-     * @return int
      */
     public function getFieldCount(): int
     {
@@ -27,8 +25,6 @@ class MockResult extends BaseResult
 
     /**
      * Generates an array of column names in the result set.
-     *
-     * @return array
      */
     public function getFieldNames(): array
     {
@@ -37,8 +33,6 @@ class MockResult extends BaseResult
 
     /**
      * Generates an array of objects representing field meta-data.
-     *
-     * @return array
      */
     public function getFieldData(): array
     {
@@ -94,8 +88,6 @@ class MockResult extends BaseResult
 
     /**
      * Gets the number of fields in the result set.
-     *
-     * @return int
      */
     public function getNumRows(): int
     {

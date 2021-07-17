@@ -64,8 +64,6 @@ class ErrorlogHandler extends BaseHandler
      *
      * @param string $level
      * @param string $message
-     *
-     * @return bool
      */
     public function handle($level, $message): bool
     {
@@ -76,11 +74,6 @@ class ErrorlogHandler extends BaseHandler
 
     /**
      * Extracted call to `error_log()` in order to be tested.
-     *
-     * @param string $message
-     * @param int    $messageType
-     *
-     * @return bool
      *
      * @codeCoverageIgnore
      */

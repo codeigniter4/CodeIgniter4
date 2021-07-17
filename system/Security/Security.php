@@ -122,8 +122,6 @@ class Security implements SecurityInterface
      *
      * Stores our configuration and fires off the init() method to setup
      * initial state.
-     *
-     * @param App $config
      */
     public function __construct(App $config)
     {
@@ -153,8 +151,6 @@ class Security implements SecurityInterface
     /**
      * CSRF Verify
      *
-     * @param RequestInterface $request
-     *
      * @throws SecurityException
      *
      * @return $this|false
@@ -171,8 +167,6 @@ class Security implements SecurityInterface
     /**
      * Returns the CSRF Hash.
      *
-     * @return string|null
-     *
      * @deprecated Use `CodeIgniter\Security\Security::getHash()` instead of using this method.
      *
      * @codeCoverageIgnore
@@ -185,8 +179,6 @@ class Security implements SecurityInterface
     /**
      * Returns the CSRF Token Name.
      *
-     * @return string
-     *
      * @deprecated Use `CodeIgniter\Security\Security::getTokenName()` instead of using this method.
      *
      * @codeCoverageIgnore
@@ -198,8 +190,6 @@ class Security implements SecurityInterface
 
     /**
      * CSRF Verify
-     *
-     * @param RequestInterface $request
      *
      * @throws SecurityException
      *
@@ -257,8 +247,6 @@ class Security implements SecurityInterface
 
     /**
      * Returns the CSRF Hash.
-     *
-     * @return string|null
      */
     public function getHash(): ?string
     {
@@ -267,8 +255,6 @@ class Security implements SecurityInterface
 
     /**
      * Returns the CSRF Token Name.
-     *
-     * @return string
      */
     public function getTokenName(): string
     {
@@ -277,8 +263,6 @@ class Security implements SecurityInterface
 
     /**
      * Returns the CSRF Header Name.
-     *
-     * @return string
      */
     public function getHeaderName(): string
     {
@@ -287,8 +271,6 @@ class Security implements SecurityInterface
 
     /**
      * Returns the CSRF Cookie Name.
-     *
-     * @return string
      */
     public function getCookieName(): string
     {
@@ -297,8 +279,6 @@ class Security implements SecurityInterface
 
     /**
      * Check if CSRF cookie is expired.
-     *
-     * @return bool
      *
      * @deprecated
      *
@@ -311,8 +291,6 @@ class Security implements SecurityInterface
 
     /**
      * Check if request should be redirect on failure.
-     *
-     * @return bool
      */
     public function shouldRedirect(): bool
     {
@@ -332,8 +310,6 @@ class Security implements SecurityInterface
      *
      * @param string $str          Input file name
      * @param bool   $relativePath Whether to preserve paths
-     *
-     * @return string
      */
     public function sanitizeFilename(string $str, bool $relativePath = false): string
     {
@@ -389,8 +365,6 @@ class Security implements SecurityInterface
 
     /**
      * Generates the CSRF Hash.
-     *
-     * @return string
      */
     protected function generateHash(): string
     {
@@ -415,8 +389,6 @@ class Security implements SecurityInterface
     /**
      * CSRF Send Cookie
      *
-     * @param RequestInterface $request
-     *
      * @return false|Security
      */
     protected function sendCookie(RequestInterface $request)
@@ -436,8 +408,6 @@ class Security implements SecurityInterface
      * Extracted for this to be unit tested.
      *
      * @codeCoverageIgnore
-     *
-     * @return void
      */
     protected function doSendCookie(): void
     {

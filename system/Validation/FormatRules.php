@@ -20,10 +20,6 @@ class FormatRules
 {
     /**
      * Alpha
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function alpha(?string $str = null): bool
     {
@@ -49,10 +45,6 @@ class FormatRules
 
     /**
      * Alphanumeric with underscores and dashes
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function alpha_dash(?string $str = null): bool
     {
@@ -79,10 +71,6 @@ class FormatRules
 
     /**
      * Alphanumeric
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function alpha_numeric(?string $str = null): bool
     {
@@ -91,10 +79,6 @@ class FormatRules
 
     /**
      * Alphanumeric w/ spaces
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function alpha_numeric_space(?string $str = null): bool
     {
@@ -109,8 +93,6 @@ class FormatRules
      * it doesn't convert numbers into strings.
      *
      * @param string|null $str
-     *
-     * @return bool
      */
     public function string($str = null): bool
     {
@@ -119,10 +101,6 @@ class FormatRules
 
     /**
      * Decimal number
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function decimal(?string $str = null): bool
     {
@@ -132,10 +110,6 @@ class FormatRules
 
     /**
      * String of hexidecimal characters
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function hex(?string $str = null): bool
     {
@@ -144,10 +118,6 @@ class FormatRules
 
     /**
      * Integer
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function integer(?string $str = null): bool
     {
@@ -156,10 +126,6 @@ class FormatRules
 
     /**
      * Is a Natural number  (0,1,2,3, etc.)
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function is_natural(?string $str = null): bool
     {
@@ -168,10 +134,6 @@ class FormatRules
 
     /**
      * Is a Natural number, but not a zero  (1,2,3, etc.)
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function is_natural_no_zero(?string $str = null): bool
     {
@@ -180,10 +142,6 @@ class FormatRules
 
     /**
      * Numeric
-     *
-     * @param string|null $str
-     *
-     * @return bool
      */
     public function numeric(?string $str = null): bool
     {
@@ -193,11 +151,6 @@ class FormatRules
 
     /**
      * Compares value against a regular expression pattern.
-     *
-     * @param string|null $str
-     * @param string      $pattern
-     *
-     * @return bool
      */
     public function regex_match(?string $str, string $pattern): bool
     {
@@ -215,8 +168,6 @@ class FormatRules
      * @see http://php.net/manual/en/datetimezone.listidentifiers.php
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function timezone(?string $str = null): bool
     {
@@ -230,8 +181,6 @@ class FormatRules
      * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function valid_base64(?string $str = null): bool
     {
@@ -242,8 +191,6 @@ class FormatRules
      * Valid JSON
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function valid_json(?string $str = null): bool
     {
@@ -256,8 +203,6 @@ class FormatRules
      * Checks for a correctly formatted email address
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function valid_email(?string $str = null): bool
     {
@@ -276,8 +221,6 @@ class FormatRules
      *     valid_emails[one@example.com,two@example.com]
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function valid_emails(?string $str = null): bool
     {
@@ -300,8 +243,6 @@ class FormatRules
      *
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
-     *
-     * @return bool
      */
     public function valid_ip(?string $ip = null, ?string $which = null): bool
     {
@@ -330,8 +271,6 @@ class FormatRules
      * Checks a URL to ensure it's formed correctly.
      *
      * @param string $str
-     *
-     * @return bool
      */
     public function valid_url(?string $str = null): bool
     {
@@ -357,8 +296,6 @@ class FormatRules
      *
      * @param string $str
      * @param string $format
-     *
-     * @return bool
      */
     public function valid_date(?string $str = null, ?string $format = null): bool
     {

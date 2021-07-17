@@ -111,8 +111,6 @@ class Entity implements JsonSerializable
 
     /**
      * Allows filling in Entity parameters during construction.
-     *
-     * @param array|null $data
      */
     public function __construct(?array $data = null)
     {
@@ -151,8 +149,6 @@ class Entity implements JsonSerializable
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $cast        If true, properties will be casted.
      * @param bool $recursive   If true, inner entities will be casted as array as well.
-     *
-     * @return array
      */
     public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
     {
@@ -197,8 +193,6 @@ class Entity implements JsonSerializable
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $recursive   If true, inner entities will be casted as array as well.
-     *
-     * @return array
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
@@ -257,8 +251,6 @@ class Entity implements JsonSerializable
      * properties have changed.
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function hasChanged(?string $key = null): bool
     {
@@ -283,8 +275,6 @@ class Entity implements JsonSerializable
     /**
      * Set raw data array without any mutations
      *
-     * @param array $data
-     *
      * @return $this
      */
     public function setAttributes(array $data)
@@ -299,8 +289,6 @@ class Entity implements JsonSerializable
     /**
      * Checks the datamap to see if this column name is being mapped,
      * and returns the mapped name, if any, or the original name.
-     *
-     * @param string $key
      *
      * @return mixed|string
      */
@@ -405,7 +393,6 @@ class Entity implements JsonSerializable
      * Cast as JSON
      *
      * @param mixed $value
-     * @param bool  $asArray
      *
      * @throws CastException
      *
@@ -429,8 +416,6 @@ class Entity implements JsonSerializable
     /**
      * Change the value of the private $_cast property
      *
-     * @param bool|null $cast
-     *
      * @return bool|Entity
      */
     public function cast(?bool $cast = null)
@@ -453,7 +438,6 @@ class Entity implements JsonSerializable
      *  $this->my_property = $p;
      *  $this->setMyProperty() = $p;
      *
-     * @param string     $key
      * @param mixed|null $value
      *
      * @throws Exception
@@ -499,8 +483,6 @@ class Entity implements JsonSerializable
      *  $p = $this->my_property
      *  $p = $this->getMyProperty()
      *
-     * @param string $key
-     *
      * @throws Exception
      *
      * @return mixed
@@ -541,10 +523,6 @@ class Entity implements JsonSerializable
     /**
      * Returns true if a property exists names $key, or a getter method
      * exists named like for __get().
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     public function __isset(string $key): bool
     {
@@ -561,10 +539,6 @@ class Entity implements JsonSerializable
 
     /**
      * Unsets an attribute property.
-     *
-     * @param string $key
-     *
-     * @return void
      */
     public function __unset(string $key): void
     {

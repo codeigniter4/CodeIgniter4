@@ -39,8 +39,6 @@ interface ThrottlerInterface
     /**
      * Returns the number of seconds until the next available token will
      * be released for usage.
-     *
-     * @return int
      */
     public function getTokenTime(): int;
 }

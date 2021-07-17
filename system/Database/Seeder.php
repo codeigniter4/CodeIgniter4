@@ -73,9 +73,6 @@ class Seeder
 
     /**
      * Seeder constructor.
-     *
-     * @param Database            $config
-     * @param BaseConnection|null $db
      */
     public function __construct(Database $config, ?BaseConnection $db = null)
     {
@@ -101,8 +98,6 @@ class Seeder
 
     /**
      * Gets the Faker Generator instance.
-     *
-     * @return Generator|null
      */
     public static function faker(): ?Generator
     {
@@ -115,8 +110,6 @@ class Seeder
 
     /**
      * Loads the specified seeder and runs it.
-     *
-     * @param string $class
      *
      * @throws InvalidArgumentException
      *
@@ -163,8 +156,6 @@ class Seeder
     /**
      * Sets the location of the directory that seed files can be located in.
      *
-     * @param string $path
-     *
      * @return $this
      */
     public function setPath(string $path)
@@ -176,8 +167,6 @@ class Seeder
 
     /**
      * Sets the silent treatment.
-     *
-     * @param bool $silent
      *
      * @return $this
      */

@@ -65,8 +65,6 @@ class Language
     /**
      * Sets the current locale to use when performing string lookups.
      *
-     * @param string $locale
-     *
      * @return $this
      */
     public function setLocale(?string $locale = null)
@@ -78,9 +76,6 @@ class Language
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->locale;
@@ -90,10 +85,7 @@ class Language
      * Parses the language string for a file, loads the file, if necessary,
      * getting the line.
      *
-     * @param string $line Line.
-     * @param array  $args Arguments.
-     *
-     * @return string|string[] Returns line.
+     * @return string|string[]
      */
     public function getLine(string $line, array $args = [])
     {
@@ -162,11 +154,6 @@ class Language
     /**
      * Parses the language string which should include the
      * filename as the first segment (separated by period).
-     *
-     * @param string $line
-     * @param string $locale
-     *
-     * @return array
      */
     protected function parseLine(string $line, string $locale): array
     {
@@ -177,19 +164,16 @@ class Language
             $this->load($file, $locale);
         }
 
-        return [
-            $file,
-            $line,
-        ];
+        return [$file, $line];
     }
 
     /**
      * Advanced message formatting.
      *
-     * @param array|string $message Message.
-     * @param array        $args    Arguments.
+     * @param array|string $message
+     * @param string[]     $args
      *
-     * @return array|string Returns formatted message.
+     * @return array|string
      */
     protected function formatMessage($message, array $args = [])
     {
@@ -212,10 +196,6 @@ class Language
      * Loads a language file in the current locale. If $return is true,
      * will return the file's contents, otherwise will merge with
      * the existing language lines.
-     *
-     * @param string $file
-     * @param string $locale
-     * @param bool   $return
      *
      * @return array|void
      */
@@ -255,10 +235,6 @@ class Language
     /**
      * A simple method for including files that can be
      * overridden during testing.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     protected function requireFile(string $path): array
     {

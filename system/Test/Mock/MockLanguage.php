@@ -28,10 +28,6 @@ class MockLanguage extends Language
      * 'requireFile()' method to allow easy overrides
      * during testing.
      *
-     * @param array       $data
-     * @param string      $file
-     * @param string|null $locale
-     *
      * @return $this
      */
     public function setData(string $file, array $data, ?string $locale = null)
@@ -44,10 +40,6 @@ class MockLanguage extends Language
     /**
      * Provides an override that allows us to set custom
      * data to be returned easily during testing.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     protected function requireFile(string $path): array
     {

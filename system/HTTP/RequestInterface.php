@@ -34,8 +34,6 @@ interface RequestInterface
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @return bool
-     *
      * @deprecated Use Validation instead
      */
     public function isValidIP(string $ip, ?string $which = null): bool;
@@ -45,8 +43,6 @@ interface RequestInterface
      * An extension of PSR-7's getMethod to allow casing.
      *
      * @param bool $upper Whether to return in upper or lower case.
-     *
-     * @return string
      *
      * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
      */

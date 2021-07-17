@@ -43,9 +43,8 @@ class PreparedQuery extends BasePreparedQuery
      * NOTE: This version is based on SQL code. Child classes should
      * override this method.
      *
-     * @param string $sql
-     * @param array  $options Passed to the connection's prepare statement.
-     *                        Unused in the MySQLi driver.
+     * @param array $options Passed to the connection's prepare statement.
+     *                       Unused in the MySQLi driver.
      *
      * @throws Exception
      *
@@ -72,10 +71,6 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
-     *
-     * @param array $data
-     *
-     * @return bool
      */
     public function _execute(array $data): bool
     {
@@ -101,10 +96,6 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Replaces the ? placeholders with $1, $2, etc parameters for use
      * within the prepared query.
-     *
-     * @param string $sql
-     *
-     * @return string
      */
     public function parameterize(string $sql): string
     {

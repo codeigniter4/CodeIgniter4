@@ -59,8 +59,6 @@ class ClearCache extends BaseCommand
 
     /**
      * Clears the cache
-     *
-     * @param array $params
      */
     public function run(array $params)
     {

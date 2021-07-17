@@ -60,9 +60,6 @@ class RedisHandler extends BaseHandler
     /**
      * Constructor
      *
-     * @param AppConfig $config
-     * @param string    $ipAddress
-     *
      * @throws Exception
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -107,8 +104,6 @@ class RedisHandler extends BaseHandler
      *
      * @param string $savePath Server path
      * @param string $name     Session cookie name, unused
-     *
-     * @return bool
      */
     public function open($savePath, $name): bool
     {
@@ -168,8 +163,6 @@ class RedisHandler extends BaseHandler
      *
      * @param string $sessionID   Session ID
      * @param string $sessionData Serialized session data
-     *
-     * @return bool
      */
     public function write($sessionID, $sessionData): bool
     {
@@ -211,8 +204,6 @@ class RedisHandler extends BaseHandler
      * Close
      *
      * Releases locks and closes connection.
-     *
-     * @return bool
      */
     public function close(): bool
     {
@@ -247,8 +238,6 @@ class RedisHandler extends BaseHandler
      * Destroys the current session.
      *
      * @param string $sessionID
-     *
-     * @return bool
      */
     public function destroy($sessionID): bool
     {
@@ -269,8 +258,6 @@ class RedisHandler extends BaseHandler
      * Deletes expired sessions
      *
      * @param int $maxlifetime Maximum lifetime of sessions
-     *
-     * @return bool
      */
     public function gc($maxlifetime): bool
     {
@@ -284,8 +271,6 @@ class RedisHandler extends BaseHandler
      * Acquires an (emulated) lock.
      *
      * @param string $sessionID Session ID
-     *
-     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -336,8 +321,6 @@ class RedisHandler extends BaseHandler
      * Release lock
      *
      * Releases a previously acquired lock
-     *
-     * @return bool
      */
     protected function releaseLock(): bool
     {

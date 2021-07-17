@@ -66,8 +66,6 @@ class MigrateRollback extends BaseCommand
      * Runs all of the migrations in reverse order, until they have
      * all been unapplied.
      *
-     * @param array $params
-     *
      * @return void
      */
     public function run(array $params)

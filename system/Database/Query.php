@@ -86,8 +86,6 @@ class Query implements QueryInterface
 
     /**
      * BaseQuery constructor.
-     *
-     * @param ConnectionInterface $db
      */
     public function __construct(ConnectionInterface &$db)
     {
@@ -97,9 +95,7 @@ class Query implements QueryInterface
     /**
      * Sets the raw query string to use for this statement.
      *
-     * @param string $sql
-     * @param mixed  $binds
-     * @param bool   $setEscape
+     * @param mixed $binds
      *
      * @return $this
      */
@@ -129,9 +125,6 @@ class Query implements QueryInterface
     /**
      * Will store the variables to bind into the query later.
      *
-     * @param array $binds
-     * @param bool  $setEscape
-     *
      * @return $this
      */
     public function setBinds(array $binds, bool $setEscape = true)
@@ -153,8 +146,6 @@ class Query implements QueryInterface
     /**
      * Returns the final, processed query string after binding, etal
      * has been performed.
-     *
-     * @return string
      */
     public function getQuery(): string
     {
@@ -172,7 +163,6 @@ class Query implements QueryInterface
      * for it's start and end values. If no end value is present, will
      * use the current time to determine total duration.
      *
-     * @param float $start
      * @param float $end
      *
      * @return $this
@@ -193,9 +183,6 @@ class Query implements QueryInterface
     /**
      * Returns the start time in seconds with microseconds.
      *
-     * @param bool $returnRaw
-     * @param int  $decimals
-     *
      * @return float|string
      */
     public function getStartTime(bool $returnRaw = false, int $decimals = 6)
@@ -212,8 +199,6 @@ class Query implements QueryInterface
      * the query has not been executed yet.
      *
      * @param int $decimals The accuracy of the returned time.
-     *
-     * @return string
      */
     public function getDuration(int $decimals = 6): string
     {
@@ -222,9 +207,6 @@ class Query implements QueryInterface
 
     /**
      * Stores the error description that happened for this query.
-     *
-     * @param int    $code
-     * @param string $error
      *
      * @return $this
      */
@@ -238,8 +220,6 @@ class Query implements QueryInterface
 
     /**
      * Reports whether this statement created an error not.
-     *
-     * @return bool
      */
     public function hasError(): bool
     {
@@ -248,8 +228,6 @@ class Query implements QueryInterface
 
     /**
      * Returns the error code created while executing this statement.
-     *
-     * @return int
      */
     public function getErrorCode(): int
     {
@@ -258,8 +236,6 @@ class Query implements QueryInterface
 
     /**
      * Returns the error message created while executing this statement.
-     *
-     * @return string
      */
     public function getErrorMessage(): string
     {
@@ -268,8 +244,6 @@ class Query implements QueryInterface
 
     /**
      * Determines if the statement is a write-type query or not.
-     *
-     * @return bool
      */
     public function isWriteType(): bool
     {
@@ -278,9 +252,6 @@ class Query implements QueryInterface
 
     /**
      * Swaps out one table prefix for a new one.
-     *
-     * @param string $orig
-     * @param string $swap
      *
      * @return $this
      */
@@ -295,8 +266,6 @@ class Query implements QueryInterface
 
     /**
      * Returns the original SQL that was passed into the system.
-     *
-     * @return string
      */
     public function getOriginalQuery(): string
     {
@@ -347,11 +316,6 @@ class Query implements QueryInterface
 
     /**
      * Match bindings
-     *
-     * @param string $sql
-     * @param array  $binds
-     *
-     * @return string
      */
     protected function matchNamedBinds(string $sql, array $binds): string
     {
@@ -376,13 +340,6 @@ class Query implements QueryInterface
 
     /**
      * Match bindings
-     *
-     * @param string $sql
-     * @param array  $binds
-     * @param int    $bindCount
-     * @param int    $ml
-     *
-     * @return string
      */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
     {
@@ -414,8 +371,6 @@ class Query implements QueryInterface
 
     /**
      * Returns string to display in debug toolbar
-     *
-     * @return string
      */
     public function debugToolbarDisplay(): string
     {
@@ -469,8 +424,6 @@ class Query implements QueryInterface
 
     /**
      * Return text representation of the query
-     *
-     * @return string
      */
     public function __toString(): string
     {

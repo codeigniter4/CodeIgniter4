@@ -53,8 +53,6 @@ class Cell
 
     /**
      * Cell constructor.
-     *
-     * @param CacheInterface $cache
      */
     public function __construct(CacheInterface $cache)
     {
@@ -64,14 +62,9 @@ class Cell
     /**
      * Render a cell, returning its body as a string.
      *
-     * @param string      $library
-     * @param null        $params
-     * @param int         $ttl
-     * @param string|null $cacheName
+     * @param null $params
      *
      * @throws ReflectionException
-     *
-     * @return string
      */
     public function render(string $library, $params = null, int $ttl = 0, ?string $cacheName = null): string
     {
@@ -191,10 +184,6 @@ class Cell
     /**
      * Given the library string, attempts to determine the class and method
      * to call.
-     *
-     * @param string $library
-     *
-     * @return array
      */
     protected function determineClass(string $library): array
     {

@@ -20,6 +20,7 @@ if (! function_exists('fake')) {
      *
      * @param Model|object|string $model     Instance or name of the model
      * @param array|null          $overrides Overriding data to pass to Fabricator::setOverrides()
+     * @param mixed               $persist
      *
      * @return array|object
      */

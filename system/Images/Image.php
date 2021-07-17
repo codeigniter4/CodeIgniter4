@@ -64,8 +64,6 @@ class Image extends File
      * @param string      $targetPath The directory to store the file in
      * @param string|null $targetName The new name of the copied file.
      * @param int         $perms      File permissions to be applied after copy.
-     *
-     * @return bool
      */
     public function copy(string $targetPath, ?string $targetName = null, int $perms = 0644): bool
     {
@@ -94,8 +92,6 @@ class Image extends File
      * Get image properties
      *
      * A helper function that gets info about the file
-     *
-     * @param bool $return
      *
      * @return array|bool
      */

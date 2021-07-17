@@ -17,8 +17,6 @@ if (! function_exists('is_cli')) {
      * You can set the return value for testing.
      *
      * @param bool $newReturn return value to set
-     *
-     * @return bool
      */
     function is_cli(?bool $newReturn = null): bool
     {

@@ -99,8 +99,6 @@ class UserAgent
      * Constructor
      *
      * Sets the User Agent and runs the compilation routine
-     *
-     * @param UserAgents|null $config
      */
     public function __construct(?UserAgents $config = null)
     {
@@ -116,8 +114,6 @@ class UserAgent
      * Is Browser
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function isBrowser(?string $key = null): bool
     {
@@ -138,8 +134,6 @@ class UserAgent
      * Is Robot
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function isRobot(?string $key = null): bool
     {
@@ -160,8 +154,6 @@ class UserAgent
      * Is Mobile
      *
      * @param string $key
-     *
-     * @return bool
      */
     public function isMobile(?string $key = null): bool
     {
@@ -180,8 +172,6 @@ class UserAgent
 
     /**
      * Is this a referral from another site?
-     *
-     * @return bool
      */
     public function isReferral(): bool
     {
@@ -201,8 +191,6 @@ class UserAgent
 
     /**
      * Agent String
-     *
-     * @return string
      */
     public function getAgentString(): string
     {
@@ -211,8 +199,6 @@ class UserAgent
 
     /**
      * Get Platform
-     *
-     * @return string
      */
     public function getPlatform(): string
     {
@@ -221,8 +207,6 @@ class UserAgent
 
     /**
      * Get Browser Name
-     *
-     * @return string
      */
     public function getBrowser(): string
     {
@@ -231,8 +215,6 @@ class UserAgent
 
     /**
      * Get the Browser Version
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -241,8 +223,6 @@ class UserAgent
 
     /**
      * Get The Robot Name
-     *
-     * @return string
      */
     public function getRobot(): string
     {
@@ -251,8 +231,6 @@ class UserAgent
 
     /**
      * Get the Mobile Device
-     *
-     * @return string
      */
     public function getMobile(): string
     {
@@ -261,8 +239,6 @@ class UserAgent
 
     /**
      * Get the referrer
-     *
-     * @return string
      */
     public function getReferrer(): string
     {
@@ -271,8 +247,6 @@ class UserAgent
 
     /**
      * Parse a custom user-agent string
-     *
-     * @param string $string
      *
      * @return void
      */
@@ -313,8 +287,6 @@ class UserAgent
 
     /**
      * Set the Platform
-     *
-     * @return bool
      */
     protected function setPlatform(): bool
     {
@@ -335,8 +307,6 @@ class UserAgent
 
     /**
      * Set the Browser
-     *
-     * @return bool
      */
     protected function setBrowser(): bool
     {
@@ -358,8 +328,6 @@ class UserAgent
 
     /**
      * Set the Robot
-     *
-     * @return bool
      */
     protected function setRobot(): bool
     {
@@ -380,8 +348,6 @@ class UserAgent
 
     /**
      * Set the Mobile Device
-     *
-     * @return bool
      */
     protected function setMobile(): bool
     {
@@ -401,8 +367,6 @@ class UserAgent
 
     /**
      * Outputs the original Agent String when cast as a string.
-     *
-     * @return string
      */
     public function __toString(): string
     {

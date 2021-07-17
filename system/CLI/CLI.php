@@ -178,8 +178,6 @@ class CLI
      *
      * @param string $prefix
      *
-     * @return string
-     *
      * @codeCoverageIgnore
      */
     public static function input(?string $prefix = null): string
@@ -273,8 +271,6 @@ class CLI
      * @param string       $value Input value
      * @param array|string $rules Validation rules
      *
-     * @return bool
-     *
      * @codeCoverageIgnore
      */
     protected static function validate(string $field, string $value, $rules): bool
@@ -302,10 +298,6 @@ class CLI
     /**
      * Outputs a string to the CLI without any surrounding newlines.
      * Useful for showing repeating elements on a single line.
-     *
-     * @param string      $text
-     * @param string|null $foreground
-     * @param string|null $background
      */
     public static function print(string $text = '', ?string $foreground = null, ?string $background = null)
     {
@@ -342,9 +334,7 @@ class CLI
     /**
      * Outputs an error to the CLI using STDERR instead of STDOUT
      *
-     * @param string      $text       The text to output, or array of errors
-     * @param string      $foreground
-     * @param string|null $background
+     * @param string $text The text to output, or array of errors
      */
     public static function error(string $text, string $foreground = 'light_red', ?string $background = null)
     {
@@ -404,8 +394,6 @@ class CLI
 
     /**
      * if operating system === windows
-     *
-     * @return bool
      */
     public static function isWindows(): bool
     {
@@ -510,8 +498,6 @@ class CLI
      * and ignores styles set by the color() function
      *
      * @param string $string
-     *
-     * @return int
      */
     public static function strlen(?string $string): int
     {
@@ -536,10 +522,7 @@ class CLI
      * Checks whether the current stream resource supports or
      * refers to a valid terminal type device.
      *
-     * @param string   $function
      * @param resource $resource
-     *
-     * @return bool
      */
     public static function streamSupports(string $function, $resource): bool
     {
@@ -564,8 +547,6 @@ class CLI
      * Reference: https://github.com/composer/xdebug-handler/blob/master/src/Process.php
      *
      * @param resource $resource
-     *
-     * @return bool
      */
     public static function hasColorSupport($resource): bool
     {
@@ -593,10 +574,6 @@ class CLI
 
     /**
      * Attempts to determine the width of the viewable CLI window.
-     *
-     * @param int $default
-     *
-     * @return int
      */
     public static function getWidth(int $default = 80): int
     {
@@ -609,10 +586,6 @@ class CLI
 
     /**
      * Attempts to determine the height of the viewable CLI window.
-     *
-     * @param int $default
-     *
-     * @return int
      */
     public static function getHeight(int $default = 32): int
     {
@@ -677,7 +650,6 @@ class CLI
      * to update it. Set $thisStep = false to erase the progress bar.
      *
      * @param bool|int $thisStep
-     * @param int      $totalSteps
      */
     public static function showProgress($thisStep = 1, int $totalSteps = 10)
     {
@@ -716,10 +688,6 @@ class CLI
      * short descriptions that need to start on an existing line.
      *
      * @param string $string
-     * @param int    $max
-     * @param int    $padLeft
-     *
-     * @return string
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
@@ -804,8 +772,6 @@ class CLI
      * Returns the command line string portions of the arguments, minus
      * any options, as a string. This is used to pass along to the main
      * CodeIgniter application.
-     *
-     * @return string
      */
     public static function getURI(): string
     {
@@ -823,8 +789,6 @@ class CLI
      *
      * **IMPORTANT:** The index here is one-based instead of zero-based.
      *
-     * @param int $index
-     *
      * @return mixed|null
      */
     public static function getSegment(int $index)
@@ -834,8 +798,6 @@ class CLI
 
     /**
      * Returns the raw array of segments found.
-     *
-     * @return array
      */
     public static function getSegments(): array
     {
@@ -845,8 +807,6 @@ class CLI
     /**
      * Gets a single command-line option. Returns TRUE if the option
      * exists, but doesn't have a value, and is simply acting as a flag.
-     *
-     * @param string $name
      *
      * @return bool|mixed|null
      */
@@ -865,8 +825,6 @@ class CLI
 
     /**
      * Returns the raw array of options found.
-     *
-     * @return array
      */
     public static function getOptions(): array
     {
@@ -879,8 +837,6 @@ class CLI
      *
      * @param bool $useLongOpts Use '--' for long options?
      * @param bool $trim        Trim final string output?
-     *
-     * @return string
      */
     public static function getOptionString(bool $useLongOpts = false, bool $trim = false): string
     {
@@ -1013,7 +969,6 @@ class CLI
      * solution down the road.
      *
      * @param resource $handle
-     * @param string   $string
      *
      * @return void
      */

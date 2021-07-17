@@ -294,6 +294,10 @@ final class ValidationTest extends CIUnitTestCase
 
     /**
      * @dataProvider rulesSetupProvider
+     *
+     * @param mixed $rules
+     * @param mixed $expected
+     * @param mixed $errors
      */
     public function testRulesSetup($rules, $expected, $errors = [])
     {
@@ -626,6 +630,10 @@ final class ValidationTest extends CIUnitTestCase
 
     /**
      * @dataProvider arrayFieldDataProvider
+     *
+     * @param mixed $body
+     * @param mixed $rules
+     * @param mixed $results
      */
     public function testRulesForArrayField($body, $rules, $results)
     {
@@ -865,12 +873,6 @@ final class ValidationTest extends CIUnitTestCase
      * @dataProvider dotNotationForIfExistProvider
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
-     *
-     * @param bool  $expected
-     * @param array $rules
-     * @param array $data
-     *
-     * @return void
      */
     public function testDotNotationOnIfExistRule(bool $expected, array $rules, array $data): void
     {
@@ -937,12 +939,6 @@ final class ValidationTest extends CIUnitTestCase
      * @dataProvider validationArrayDataCaseProvider
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
-     *
-     * @param bool  $expected
-     * @param array $rules
-     * @param array $data
-     *
-     * @return void
      */
     public function testValidationOfArrayData(bool $expected, array $rules, array $data): void
     {

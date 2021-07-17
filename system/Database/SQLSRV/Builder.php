@@ -65,8 +65,6 @@ class Builder extends BaseBuilder
      *
      * Groups tables in FROM clauses if needed, so there is no confusion
      * about operator precedence.
-     *
-     * @return string
      */
     protected function _fromTables(): string
     {
@@ -88,8 +86,6 @@ class Builder extends BaseBuilder
      * then this method maps to 'DELETE FROM table'
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _truncate(string $table): string
     {
@@ -101,7 +97,6 @@ class Builder extends BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string $table
      * @param string $cond   The join condition
      * @param string $type   The type of join
      * @param bool   $escape Whether not to try to escape identifiers
@@ -184,8 +179,6 @@ class Builder extends BaseBuilder
      * @param string $table         The table name
      * @param array  $keys          The insert keys
      * @param array  $unescapedKeys The insert values
-     *
-     * @return string
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -204,8 +197,6 @@ class Builder extends BaseBuilder
      *
      * @param string $table  the Table name
      * @param array  $values the Update data
-     *
-     * @return string
      */
     protected function _update(string $table, array $values): string
     {
@@ -226,9 +217,6 @@ class Builder extends BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string $column
-     * @param int    $value
-     *
      * @return bool
      */
     public function increment(string $column, int $value = 1)
@@ -248,9 +236,6 @@ class Builder extends BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @param string $column
-     * @param int    $value
-     *
      * @return bool
      */
     public function decrement(string $column, int $value = 1)
@@ -269,10 +254,6 @@ class Builder extends BaseBuilder
 
     /**
      * Get full name of the table
-     *
-     * @param string $table
-     *
-     * @return string
      */
     private function getFullName(string $table): string
     {
@@ -296,8 +277,6 @@ class Builder extends BaseBuilder
      *
      * @param string $fullTable full table name
      * @param string $insert    statement
-     *
-     * @return string
      */
     private function addIdentity(string $fullTable, string $insert): string
     {
@@ -306,11 +285,6 @@ class Builder extends BaseBuilder
 
     /**
      * Local implementation of limit
-     *
-     * @param string $sql
-     * @param bool   $offsetIgnore
-     *
-     * @return string
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
@@ -379,8 +353,6 @@ class Builder extends BaseBuilder
      * @param string $table  The table name
      * @param array  $keys   The insert keys
      * @param array  $values The insert values
-     *
-     * @return string
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -449,8 +421,6 @@ class Builder extends BaseBuilder
      * Handle float return value
      *
      * @param string $select Field name
-     * @param string $alias
-     * @param string $type
      *
      * @return BaseBuilder
      */
@@ -485,8 +455,6 @@ class Builder extends BaseBuilder
      * Delete statement
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _delete(string $table): string
     {
@@ -498,9 +466,8 @@ class Builder extends BaseBuilder
      *
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where     The where clause
-     * @param int   $limit     The limit clause
-     * @param bool  $resetData
+     * @param mixed $where The where clause
+     * @param int   $limit The limit clause
      *
      * @throws DatabaseException
      *
@@ -541,8 +508,6 @@ class Builder extends BaseBuilder
      * Generates a query string based on which functions were used.
      *
      * @param mixed $selectOverride
-     *
-     * @return string
      */
     protected function compileSelect($selectOverride = false): string
     {
@@ -602,7 +567,6 @@ class Builder extends BaseBuilder
      * @param string $qbKey  'QBWhere' or 'QBHaving'
      * @param mixed  $key
      * @param mixed  $value
-     * @param string $type
      * @param bool   $escape
      *
      * @return $this

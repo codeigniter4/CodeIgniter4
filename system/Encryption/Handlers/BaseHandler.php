@@ -29,8 +29,6 @@ abstract class BaseHandler implements EncrypterInterface
 
     /**
      * Constructor
-     *
-     * @param Encryption|null $config
      */
     public function __construct(?Encryption $config = null)
     {
@@ -78,8 +76,6 @@ abstract class BaseHandler implements EncrypterInterface
      * __isset() magic, providing checking for some of our properties
      *
      * @param string $key Property name
-     *
-     * @return bool
      */
     public function __isset($key): bool
     {

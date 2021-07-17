@@ -26,8 +26,6 @@ interface ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param bool $persistent
-     *
      * @return mixed
      */
     public function connect(bool $persistent = false);
@@ -53,8 +51,6 @@ interface ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @param string|null $alias
-     *
      * @return mixed
      */
     public function getConnection(?string $alias = null);
@@ -62,16 +58,12 @@ interface ConnectionInterface
     /**
      * Select a specific database table to use.
      *
-     * @param string $databaseName
-     *
      * @return mixed
      */
     public function setDatabase(string $databaseName);
 
     /**
      * Returns the name of the current database being used.
-     *
-     * @return string
      */
     public function getDatabase(): string;
 
@@ -80,21 +72,17 @@ interface ConnectionInterface
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,int|string>
+     * @return array<string, int|string>
      */
     public function error(): array;
 
     /**
      * The name of the platform in use (MySQLi, mssql, etc)
-     *
-     * @return string
      */
     public function getPlatform(): string;
 
     /**
      * Returns a string containing the version of the database being used.
-     *
-     * @return string
      */
     public function getVersion(): string;
 
@@ -106,8 +94,7 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param string $sql
-     * @param mixed  ...$binds
+     * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query
      */
@@ -117,8 +104,6 @@ interface ConnectionInterface
      * Performs a basic query against the database. No binding or caching
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
-     *
-     * @param string $sql
      *
      * @return mixed
      */
@@ -156,8 +141,7 @@ interface ConnectionInterface
      * Allows for custom calls to the database engine that are not
      * supported through our database layer.
      *
-     * @param string $functionName
-     * @param array  ...$params
+     * @param array ...$params
      *
      * @return mixed
      */
@@ -167,8 +151,6 @@ interface ConnectionInterface
      * Determines if the statement is a write-type query or not.
      *
      * @param string $sql
-     *
-     * @return bool
      */
     public function isWriteType($sql): bool;
 }

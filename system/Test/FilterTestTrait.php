@@ -84,8 +84,6 @@ trait FilterTestTrait
 
     /**
      * Initializes dependencies once.
-     *
-     * @return void
      */
     protected function setUpFilterTestTrait(): void
     {
@@ -125,8 +123,6 @@ trait FilterTestTrait
      *
      * @param FilterInterface|string $filter   The filter instance, class, or alias
      * @param string                 $position "before" or "after"
-     *
-     * @return Closure
      */
     protected function getFilterCaller($filter, string $position): Closure
     {
@@ -206,8 +202,6 @@ trait FilterTestTrait
      * @param string $route    The route to test
      * @param string $position "before" or "after"
      * @param string $alias    Alias for the anticipated filter
-     *
-     * @return void
      */
     protected function assertFilter(string $route, string $position, string $alias): void
     {

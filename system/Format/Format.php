@@ -28,8 +28,6 @@ class Format
 
     /**
      * Constructor.
-     *
-     * @param FormatConfig $config
      */
     public function __construct(FormatConfig $config)
     {
@@ -49,11 +47,7 @@ class Format
     /**
      * A Factory method to return the appropriate formatter for the given mime type.
      *
-     * @param string $mime
-     *
      * @throws FormatException
-     *
-     * @return FormatterInterface
      */
     public function getFormatter(string $mime): FormatterInterface
     {

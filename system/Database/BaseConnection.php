@@ -297,8 +297,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Saves our connection settings.
-     *
-     * @param array $params
      */
     public function __construct(array $params)
     {
@@ -387,8 +385,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @param bool $persistent
-     *
      * @return mixed
      */
     abstract public function connect(bool $persistent = false);
@@ -437,8 +433,6 @@ abstract class BaseConnection implements ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @param string|null $alias
-     *
      * @return mixed
      */
     public function getConnection(?string $alias = null)
@@ -450,16 +444,12 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Select a specific database table to use.
      *
-     * @param string $databaseName
-     *
      * @return mixed
      */
     abstract public function setDatabase(string $databaseName);
 
     /**
      * Returns the name of the current database being used.
-     *
-     * @return string
      */
     public function getDatabase(): string
     {
@@ -472,8 +462,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Set's the DB Prefix to something new without needing to reconnect
      *
      * @param string $prefix The prefix
-     *
-     * @return string
      */
     public function setPrefix(string $prefix = ''): string
     {
@@ -482,8 +470,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Returns the database prefix.
-     *
-     * @return string
      */
     public function getPrefix(): string
     {
@@ -492,8 +478,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * The name of the platform in use (MySQLi, mssql, etc)
-     *
-     * @return string
      */
     public function getPlatform(): string
     {
@@ -502,8 +486,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Returns a string containing the version of the database being used.
-     *
-     * @return string
      */
     abstract public function getVersion(): string;
 
@@ -511,8 +493,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Sets the Table Aliases to use. These are typically
      * collected during use of the Builder, and set here
      * so queries are built correctly.
-     *
-     * @param array $aliases
      *
      * @return $this
      */
@@ -525,8 +505,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Add a table alias to our list.
-     *
-     * @param string $table
      *
      * @return $this
      */
@@ -542,8 +520,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @param string $sql
-     *
      * @return mixed
      */
     abstract protected function execute(string $sql);
@@ -556,10 +532,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param string $sql
-     * @param mixed  ...$binds
-     * @param bool   $setEscapeFlags
-     * @param string $queryClass
+     * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query
      *
@@ -655,8 +628,6 @@ abstract class BaseConnection implements ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @param string $sql
-     *
      * @return mixed
      */
     public function simpleQuery(string $sql)
@@ -703,10 +674,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Start Transaction
-     *
-     * @param bool $testMode
-     *
-     * @return bool
      */
     public function transStart(bool $testMode = false): bool
     {
@@ -719,8 +686,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Complete Transaction
-     *
-     * @return bool
      */
     public function transComplete(): bool
     {
@@ -748,8 +713,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Lets you retrieve the transaction flag to determine if it has failed
-     *
-     * @return bool
      */
     public function transStatus(): bool
     {
@@ -758,10 +721,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Begin Transaction
-     *
-     * @param bool $testMode
-     *
-     * @return bool
      */
     public function transBegin(bool $testMode = false): bool
     {
@@ -796,8 +755,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Commit Transaction
-     *
-     * @return bool
      */
     public function transCommit(): bool
     {
@@ -817,8 +774,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Rollback Transaction
-     *
-     * @return bool
      */
     public function transRollback(): bool
     {
@@ -838,22 +793,16 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Begin Transaction
-     *
-     * @return bool
      */
     abstract protected function _transBegin(): bool;
 
     /**
      * Commit Transaction
-     *
-     * @return bool
      */
     abstract protected function _transCommit(): bool;
 
     /**
      * Rollback Transaction
-     *
-     * @return bool
      */
     abstract protected function _transRollback(): bool;
 
@@ -891,8 +840,7 @@ abstract class BaseConnection implements ConnectionInterface
      *                     ->get();
      *           })
      *
-     * @param Closure $func
-     * @param array   $options Passed to the prepare() method
+     * @param array $options Passed to the prepare() method
      *
      * @return BasePreparedQuery|null
      */
@@ -934,8 +882,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Returns a string representation of the last query's statement object.
-     *
-     * @return string
      */
     public function showLastQuery(): string
     {
@@ -947,8 +893,6 @@ abstract class BaseConnection implements ConnectionInterface
      * seconds with microseconds.
      *
      * Used by the Debug Toolbar's timeline.
-     *
-     * @return float|null
      */
     public function getConnectStart(): ?float
     {
@@ -960,10 +904,6 @@ abstract class BaseConnection implements ConnectionInterface
      * to connect to the database.
      *
      * Used by the Debug Toolbar's timeline.
-     *
-     * @param int $decimals
-     *
-     * @return string
      */
     public function getConnectDuration(int $decimals = 6): string
     {
@@ -991,9 +931,7 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param array|string $item
-     * @param bool         $prefixSingle
      * @param bool         $protectIdentifiers
-     * @param bool         $fieldExists
      *
      * @return array|string
      */
@@ -1196,8 +1134,6 @@ abstract class BaseConnection implements ConnectionInterface
      * @param string $table the table
      *
      * @throws DatabaseException
-     *
-     * @return string
      */
     public function prefixTable(string $table = ''): string
     {
@@ -1210,8 +1146,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Returns the total number of rows affected by this query.
-     *
-     * @return int
      */
     abstract public function affectedRows(): int;
 
@@ -1305,10 +1239,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Platform independent string escape.
      *
      * Will likely be overridden in child classes.
-     *
-     * @param string $str
-     *
-     * @return string
      */
     protected function _escapeString(string $str): string
     {
@@ -1319,12 +1249,9 @@ abstract class BaseConnection implements ConnectionInterface
      * This function enables you to call PHP database functions that are not natively included
      * in CodeIgniter, in a platform independent manner.
      *
-     * @param string $functionName
-     * @param array  ...$params
+     * @param array ...$params
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public function callFunction(string $functionName, ...$params): bool
     {
@@ -1405,10 +1332,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Determine if a particular table exists
-     *
-     * @param string $tableName
-     *
-     * @return bool
      */
     public function tableExists(string $tableName): bool
     {
@@ -1467,11 +1390,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Determine if a particular field exists
-     *
-     * @param string $fieldName
-     * @param string $tableName
-     *
-     * @return bool
      */
     public function fieldExists(string $fieldName, string $tableName): bool
     {
@@ -1540,8 +1458,6 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * This is primarily used by the prepared query functionality.
      *
-     * @param bool $pretend
-     *
      * @return $this
      */
     public function pretend(bool $pretend = true)
@@ -1567,8 +1483,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Determines if the statement is a write-type query or not.
      *
      * @param string $sql
-     *
-     * @return bool
      */
     public function isWriteType($sql): bool
     {
@@ -1581,8 +1495,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Must return an array with keys 'code' and 'message':
      *
      *  return ['code' => null, 'message' => null);
-     *
-     * @return array
      */
     abstract public function error(): array;
 
@@ -1596,16 +1508,12 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param bool $constrainByPrefix
-     *
      * @return false|string
      */
     abstract protected function _listTables(bool $constrainByPrefix = false);
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string $table
      *
      * @return false|string
      */
@@ -1614,40 +1522,26 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Platform-specific field data information.
      *
-     * @param string $table
-     *
      * @see    getFieldData()
-     *
-     * @return array
      */
     abstract protected function _fieldData(string $table): array;
 
     /**
      * Platform-specific index data.
      *
-     * @param string $table
-     *
      * @see    getIndexData()
-     *
-     * @return array
      */
     abstract protected function _indexData(string $table): array;
 
     /**
      * Platform-specific foreign keys data.
      *
-     * @param string $table
-     *
      * @see    getForeignKeyData()
-     *
-     * @return array
      */
     abstract protected function _foreignKeyData(string $table): array;
 
     /**
      * Accessor for properties if they exist.
-     *
-     * @param string $key
      *
      * @return mixed
      */
@@ -1662,10 +1556,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Checker for properties existence.
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     public function __isset(string $key): bool
     {

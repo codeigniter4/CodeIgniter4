@@ -69,10 +69,7 @@ class Typography
      *     - Converts double dashes into em-dashes.
      *  - Converts two spaces into entities
      *
-     * @param string $str
-     * @param bool   $reduceLinebreaks whether to reduce more then two consecutive newlines to two
-     *
-     * @return string
+     * @param bool $reduceLinebreaks whether to reduce more then two consecutive newlines to two
      */
     public function autoTypography(string $str, bool $reduceLinebreaks = false): string
     {
@@ -228,10 +225,6 @@ class Typography
      * This function mainly converts double and single quotes
      * to curly entities, but it also converts em-dashes,
      * double spaces, and ampersands
-     *
-     * @param string $str
-     *
-     * @return string
      */
     public function formatCharacters(string $str): string
     {
@@ -283,10 +276,6 @@ class Typography
      * Format Newlines
      *
      * Converts newline characters into either <p> tags or <br />
-     *
-     * @param string $str
-     *
-     * @return string
      */
     protected function formatNewLines(string $str): string
     {
@@ -320,10 +309,6 @@ class Typography
      * We don't want quotes converted within tags so we'll temporarily convert them to {@DQ} and {@SQ}
      * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
      * likewise double spaces are converted to {@NBS} to prevent entity conversion
-     *
-     * @param array $match
-     *
-     * @return string
      */
     protected function protectCharacters(array $match): string
     {
@@ -332,10 +317,6 @@ class Typography
 
     /**
      * Convert newlines to HTML line breaks except within PRE tags
-     *
-     * @param string $str
-     *
-     * @return string
      */
     public function nl2brExceptPre(string $str): string
     {

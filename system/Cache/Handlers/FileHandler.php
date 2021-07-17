@@ -45,8 +45,6 @@ class FileHandler extends BaseHandler
     /**
      * Constructor.
      *
-     * @param Cache $config
-     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
@@ -264,8 +262,6 @@ class FileHandler extends BaseHandler
 
     /**
      * Determines if the driver is supported on this system.
-     *
-     * @return bool
      */
     public function isSupported(): bool
     {
@@ -275,8 +271,6 @@ class FileHandler extends BaseHandler
     /**
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
-     *
-     * @param string $filename
      *
      * @return bool|mixed
      */
@@ -345,8 +339,6 @@ class FileHandler extends BaseHandler
      * @param bool   $delDir Whether to delete any directories found in the path
      * @param bool   $htdocs Whether to skip deleting .htaccess and index page files
      * @param int    $_level Current directory depth level (default: 0; internal use only)
-     *
-     * @return bool
      */
     protected function deleteFiles(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
     {

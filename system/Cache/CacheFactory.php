@@ -25,10 +25,6 @@ class CacheFactory
     /**
      * Attempts to create the desired cache handler, based upon the
      *
-     * @param Cache       $config
-     * @param string|null $handler
-     * @param string|null $backup
-     *
      * @return CacheInterface
      */
     public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)

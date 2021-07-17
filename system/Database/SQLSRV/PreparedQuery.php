@@ -41,8 +41,7 @@ class PreparedQuery extends BasePreparedQuery
      * NOTE: This version is based on SQL code. Child classes should
      * override this method.
      *
-     * @param string $sql
-     * @param array  $options Options takes an associative array;
+     * @param array $options Options takes an associative array;
      *
      * @throws Exception
      *
@@ -70,10 +69,6 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
-     *
-     * @param array $data
-     *
-     * @return bool
      */
     public function _execute(array $data): bool
     {
@@ -102,10 +97,6 @@ class PreparedQuery extends BasePreparedQuery
 
     /**
      * Handle parameters
-     *
-     * @param string $queryString
-     *
-     * @return array
      */
     protected function parameterize(string $queryString): array
     {

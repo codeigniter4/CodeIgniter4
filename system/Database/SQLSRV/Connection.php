@@ -100,8 +100,6 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param bool $persistent
-     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -173,10 +171,6 @@ class Connection extends BaseConnection
 
     /**
      * Platform-dependant string escape
-     *
-     * @param string $str
-     *
-     * @return string
      */
     protected function _escapeString(string $str): string
     {
@@ -185,8 +179,6 @@ class Connection extends BaseConnection
 
     /**
      * Insert ID
-     *
-     * @return int
      */
     public function insertID(): int
     {
@@ -195,10 +187,6 @@ class Connection extends BaseConnection
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param bool $prefixLimit
-     *
-     * @return string
      */
     protected function _listTables(bool $prefixLimit = false): string
     {
@@ -217,10 +205,6 @@ class Connection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string $table
-     *
-     * @return string
      */
     protected function _listColumns(string $table = ''): string
     {
@@ -232,8 +216,6 @@ class Connection extends BaseConnection
 
     /**
      * Returns an array of objects with index data
-     *
-     * @param string $table
      *
      * @throws DatabaseException
      *
@@ -274,8 +256,6 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
-     *
-     * @param string $table
      *
      * @throws DatabaseException
      *
@@ -345,8 +325,6 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @param string $table
-     *
      * @throws DatabaseException
      *
      * @return stdClass[]
@@ -381,8 +359,6 @@ class Connection extends BaseConnection
 
     /**
      * Begin Transaction
-     *
-     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -391,8 +367,6 @@ class Connection extends BaseConnection
 
     /**
      * Commit Transaction
-     *
-     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -401,8 +375,6 @@ class Connection extends BaseConnection
 
     /**
      * Rollback Transaction
-     *
-     * @return bool
      */
     protected function _transRollback(): bool
     {
@@ -445,8 +417,6 @@ class Connection extends BaseConnection
 
     /**
      * Returns the total number of rows affected by this query.
-     *
-     * @return int
      */
     public function affectedRows(): int
     {
@@ -455,8 +425,6 @@ class Connection extends BaseConnection
 
     /**
      * Select a specific database table to use.
-     *
-     * @param string|null $databaseName
      *
      * @return mixed
      */
@@ -482,8 +450,6 @@ class Connection extends BaseConnection
 
     /**
      * Executes the query against the database.
-     *
-     * @param string $sql
      *
      * @return mixed
      */
@@ -539,8 +505,6 @@ class Connection extends BaseConnection
 
     /**
      * The name of the platform in use (MySQLi, mssql, etc)
-     *
-     * @return string
      */
     public function getPlatform(): string
     {
@@ -549,8 +513,6 @@ class Connection extends BaseConnection
 
     /**
      * Returns a string containing the version of the database being used.
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -571,8 +533,6 @@ class Connection extends BaseConnection
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
      * @param string $sql An SQL query string
-     *
-     * @return bool
      */
     public function isWriteType($sql): bool
     {

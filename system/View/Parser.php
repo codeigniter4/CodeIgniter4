@@ -60,7 +60,6 @@ class Parser extends View
     /**
      * Constructor
      *
-     * @param ViewConfig      $config
      * @param string          $viewPath
      * @param mixed           $loader
      * @param bool            $debug
@@ -80,11 +79,8 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified template view,
      * replacing them with any data that has already been set.
      *
-     * @param string $view
-     * @param array  $options
-     * @param bool   $saveData
-     *
-     * @return string
+     * @param array $options
+     * @param bool  $saveData
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -143,11 +139,8 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified string,
      * replacing them with any data that has already been set.
      *
-     * @param string $template
-     * @param array  $options
-     * @param bool   $saveData
-     *
-     * @return string
+     * @param array $options
+     * @param bool  $saveData
      */
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
@@ -179,11 +172,8 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
-     * @param array  $data
      * @param string $context The context to escape it for: html, css, js, url, raw
      *                        If 'raw', no escaping will happen
-     *
-     * @return RendererInterface
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
@@ -213,11 +203,7 @@ class Parser extends View
      * Parses pseudo-variables contained in the specified template,
      * replacing them with the data in the second param
      *
-     * @param string $template
-     * @param array  $data
-     * @param array  $options  Future options
-     *
-     * @return string
+     * @param array $options Future options
      */
     protected function parse(string $template, array $data = [], ?array $options = null): string
     {
@@ -261,11 +247,6 @@ class Parser extends View
 
     /**
      * Parse a single key/value, extracting it
-     *
-     * @param string $key
-     * @param string $val
-     *
-     * @return array
      */
     protected function parseSingle(string $key, string $val): array
     {
@@ -278,12 +259,6 @@ class Parser extends View
      * Parse a tag pair
      *
      * Parses tag pairs: {some_tag} string... {/some_tag}
-     *
-     * @param string $variable
-     * @param array  $data
-     * @param string $template
-     *
-     * @return array
      */
     protected function parsePair(string $variable, array $data, string $template): array
     {
@@ -371,10 +346,6 @@ class Parser extends View
      * Removes any comments from the file. Comments are wrapped in {# #} symbols:
      *
      *      {# This is a comment #}
-     *
-     * @param string $template
-     *
-     * @return string
      */
     protected function parseComments(string $template): string
     {
@@ -384,10 +355,6 @@ class Parser extends View
     /**
      * Extracts noparse blocks, inserting a hash in its place so that
      * those blocks of the page are not touched by parsing.
-     *
-     * @param string $template
-     *
-     * @return string
      */
     protected function extractNoparse(string $template): string
     {
@@ -411,10 +378,6 @@ class Parser extends View
 
     /**
      * Re-inserts the noparsed contents back into the template.
-     *
-     * @param string $template
-     *
-     * @return string
      */
     public function insertNoparse(string $template): string
     {
@@ -434,10 +397,6 @@ class Parser extends View
      *  - if
      *  - elseif
      *  - else
-     *
-     * @param string $template
-     *
-     * @return string
      */
     protected function parseConditionals(string $template): string
     {
@@ -488,8 +447,6 @@ class Parser extends View
      *
      * @param string $leftDelimiter
      * @param string $rightDelimiter
-     *
-     * @return RendererInterface
      */
     public function setDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
     {
@@ -506,9 +463,6 @@ class Parser extends View
      * @param mixed  $pattern
      * @param string $content
      * @param string $template
-     * @param bool   $escape
-     *
-     * @return string
      */
     protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
     {
@@ -535,12 +489,6 @@ class Parser extends View
 
     /**
      * Callback used during parse() to apply any filters to the value.
-     *
-     * @param array  $matches
-     * @param string $replace
-     * @param bool   $escape
-     *
-     * @return string
      */
     protected function prepareReplacement(array $matches, string $replace, bool $escape = true): string
     {
@@ -559,8 +507,6 @@ class Parser extends View
 
     /**
      * Checks the placeholder the view provided to see if we need to provide any autoescaping.
-     *
-     * @param string $key
      *
      * @return false|string
      */
@@ -596,11 +542,6 @@ class Parser extends View
     /**
      * Given a set of filters, will apply each of the filters in turn
      * to $replace, and return the modified string.
-     *
-     * @param string $replace
-     * @param array  $filters
-     *
-     * @return string
      */
     protected function applyFilters(string $replace, array $filters): string
     {
@@ -643,8 +584,6 @@ class Parser extends View
     /**
      * Scans the template for any parser plugins, and attempts to execute them.
      * Plugins are delimited by {+ ... +}
-     *
-     * @param string $template
      *
      * @return string
      */
@@ -699,10 +638,6 @@ class Parser extends View
     /**
      * Makes a new plugin available during the parsing of the template.
      *
-     * @param string   $alias
-     * @param callable $callback
-     * @param bool     $isPair
-     *
      * @return $this
      */
     public function addPlugin(string $alias, callable $callback, bool $isPair = false)
@@ -714,8 +649,6 @@ class Parser extends View
 
     /**
      * Removes a plugin from the available plugins.
-     *
-     * @param string $alias
      *
      * @return $this
      */

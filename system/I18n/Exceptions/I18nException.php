@@ -22,8 +22,6 @@ class I18nException extends FrameworkException
      * Thrown when createFromFormat fails to receive a valid
      * DateTime back from DateTime::createFromFormat.
      *
-     * @param string $format
-     *
      * @return static
      */
     public static function forInvalidFormat(string $format)
@@ -34,8 +32,6 @@ class I18nException extends FrameworkException
     /**
      * Thrown when the numeric representation of the month falls
      * outside the range of allowed months.
-     *
-     * @param string $month
      *
      * @return static
      */
@@ -48,8 +44,6 @@ class I18nException extends FrameworkException
      * Thrown when the supplied day falls outside the range
      * of allowed days.
      *
-     * @param string $day
-     *
      * @return static
      */
     public static function forInvalidDay(string $day)
@@ -60,9 +54,6 @@ class I18nException extends FrameworkException
     /**
      * Thrown when the day provided falls outside the allowed
      * last day for the given month.
-     *
-     * @param string $lastDay
-     * @param string $day
      *
      * @return static
      */
@@ -75,8 +66,6 @@ class I18nException extends FrameworkException
      * Thrown when the supplied hour falls outside the
      * range of allowed hours.
      *
-     * @param string $hour
-     *
      * @return static
      */
     public static function forInvalidHour(string $hour)
@@ -88,8 +77,6 @@ class I18nException extends FrameworkException
      * Thrown when the supplied minutes falls outside the
      * range of allowed minutes.
      *
-     * @param string $minutes
-     *
      * @return static
      */
     public static function forInvalidMinutes(string $minutes)
@@ -100,8 +87,6 @@ class I18nException extends FrameworkException
     /**
      * Thrown when the supplied seconds falls outside the
      * range of allowed seconds.
-     *
-     * @param string $seconds
      *
      * @return static
      */

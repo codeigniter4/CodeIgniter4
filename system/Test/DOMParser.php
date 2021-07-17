@@ -48,8 +48,6 @@ class DOMParser
 
     /**
      * Returns the body of the current document.
-     *
-     * @return string
      */
     public function getBody(): string
     {
@@ -58,8 +56,6 @@ class DOMParser
 
     /**
      * Sets a string as the body that we want to work with.
-     *
-     * @param string $content
      *
      * @return $this
      */
@@ -90,8 +86,6 @@ class DOMParser
      * Loads the contents of a file as a string
      * so that we can work with it.
      *
-     * @param string $path
-     *
      * @return DOMParser
      */
     public function withFile(string $path)
@@ -110,8 +104,6 @@ class DOMParser
      *
      * @param string $search
      * @param string $element
-     *
-     * @return bool
      */
     public function see(?string $search = null, ?string $element = null): bool
     {
@@ -130,10 +122,7 @@ class DOMParser
     /**
      * Checks to see if the text is NOT found within the result.
      *
-     * @param string      $search
-     * @param string|null $element
-     *
-     * @return bool
+     * @param string $search
      */
     public function dontSee(?string $search = null, ?string $element = null): bool
     {
@@ -143,10 +132,6 @@ class DOMParser
     /**
      * Checks to see if an element with the matching CSS specifier
      * is found within the current DOM.
-     *
-     * @param string $element
-     *
-     * @return bool
      */
     public function seeElement(string $element): bool
     {
@@ -155,10 +140,6 @@ class DOMParser
 
     /**
      * Checks to see if the element is available within the result.
-     *
-     * @param string $element
-     *
-     * @return bool
      */
     public function dontSeeElement(string $element): bool
     {
@@ -168,11 +149,6 @@ class DOMParser
     /**
      * Determines if a link with the specified text is found
      * within the results.
-     *
-     * @param string      $text
-     * @param string|null $details
-     *
-     * @return bool
      */
     public function seeLink(string $text, ?string $details = null): bool
     {
@@ -181,11 +157,6 @@ class DOMParser
 
     /**
      * Checks for an input named $field with a value of $value.
-     *
-     * @param string $field
-     * @param string $value
-     *
-     * @return bool
      */
     public function seeInField(string $field, string $value): bool
     {
@@ -196,10 +167,6 @@ class DOMParser
 
     /**
      * Checks for checkboxes that are currently checked.
-     *
-     * @param string $element
-     *
-     * @return bool
      */
     public function seeCheckboxIsChecked(string $element): bool
     {
@@ -213,10 +180,6 @@ class DOMParser
 
     /**
      * Search the DOM using an XPath expression.
-     *
-     * @param string|null $search
-     * @param string      $element
-     * @param array       $paths
      *
      * @return DOMNodeList
      */
@@ -270,8 +233,6 @@ class DOMParser
 
     /**
      * Look for the a selector  in the passed text.
-     *
-     * @param string $selector
      *
      * @return array
      */

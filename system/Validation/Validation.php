@@ -86,8 +86,7 @@ class Validation implements ValidationInterface
     /**
      * Validation constructor.
      *
-     * @param ValidationConfig  $config
-     * @param RendererInterface $view
+     * @param ValidationConfig $config
      */
     public function __construct($config, RendererInterface $view)
     {
@@ -105,8 +104,6 @@ class Validation implements ValidationInterface
      * @param array|null  $data    The array of data to validate.
      * @param string|null $group   The predefined group of rules to apply.
      * @param string|null $dbGroup The database group to use.
-     *
-     * @return bool
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
@@ -163,10 +160,7 @@ class Validation implements ValidationInterface
      * determining whether validation was successful or not.
      *
      * @param mixed    $value
-     * @param string   $rule
      * @param string[] $errors
-     *
-     * @return bool
      */
     public function check($value, string $rule, array $errors = []): bool
     {
@@ -181,13 +175,9 @@ class Validation implements ValidationInterface
      * the error to $this->errors and moves on to the next,
      * so that we can collect all of the first errors.
      *
-     * @param string       $field
-     * @param string|null  $label
      * @param array|string $value
      * @param array|null   $rules
      * @param array        $data
-     *
-     * @return bool
      */
     protected function processRules(string $field, ?string $label, $value, $rules = null, ?array $data = null): bool
     {
@@ -317,8 +307,6 @@ class Validation implements ValidationInterface
      * array values.
      *
      * @param IncomingRequest|RequestInterface $request
-     *
-     * @return ValidationInterface
      */
     public function withRequest(RequestInterface $request): ValidationInterface
     {
@@ -350,11 +338,6 @@ class Validation implements ValidationInterface
      *        'rule' => 'message',
      *        'rule' => 'message'
      *    ]
-     *
-     * @param string      $field
-     * @param string|null $label
-     * @param string      $rules
-     * @param array       $errors
      *
      * @return $this
      */
@@ -388,10 +371,7 @@ class Validation implements ValidationInterface
      *        ],
      *    ]
      *
-     * @param array $rules
      * @param array $errors // An array of custom error messages
-     *
-     * @return ValidationInterface
      */
     public function setRules(array $rules, array $errors = []): ValidationInterface
     {
@@ -417,8 +397,6 @@ class Validation implements ValidationInterface
 
     /**
      * Returns all of the rules currently defined.
-     *
-     * @return array
      */
     public function getRules(): array
     {
@@ -427,10 +405,6 @@ class Validation implements ValidationInterface
 
     /**
      * Checks to see if the rule for key $field has been set or not.
-     *
-     * @param string $field
-     *
-     * @return bool
      */
     public function hasRule(string $field): bool
     {
@@ -479,10 +453,6 @@ class Validation implements ValidationInterface
 
     /**
      * Returns the rendered HTML of the errors as defined in $template.
-     *
-     * @param string $template
-     *
-     * @return string
      */
     public function listErrors(string $template = 'list'): string
     {
@@ -497,11 +467,6 @@ class Validation implements ValidationInterface
 
     /**
      * Displays a single error in formatted HTML as defined in the $template view.
-     *
-     * @param string $field
-     * @param string $template
-     *
-     * @return string
      */
     public function showError(string $field, string $template = 'single'): string
     {
@@ -540,8 +505,6 @@ class Validation implements ValidationInterface
      * be any name, but must all still be an array of the
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
-     *
-     * @param string|null $group
      *
      * @return array|ValidationException|null
      */
@@ -586,11 +549,6 @@ class Validation implements ValidationInterface
      * The value of {id} would be replaced with the actual id in the form data:
      *
      *  'required|is_unique[users,email,id,13]'
-     *
-     * @param array $rules
-     * @param array $data
-     *
-     * @return array
      */
     protected function fillPlaceholders(array $rules, array $data): array
     {
@@ -625,10 +583,6 @@ class Validation implements ValidationInterface
 
     /**
      * Checks to see if an error exists for the given field.
-     *
-     * @param string $field
-     *
-     * @return bool
      */
     public function hasError(string $field): bool
     {
@@ -681,11 +635,6 @@ class Validation implements ValidationInterface
 
     /**
      * Sets the error for a specific field. Used by custom validation methods.
-     *
-     * @param string $field
-     * @param string $error
-     *
-     * @return ValidationInterface
      */
     public function setError(string $field, string $error): ValidationInterface
     {
@@ -697,13 +646,8 @@ class Validation implements ValidationInterface
     /**
      * Attempts to find the appropriate error message
      *
-     * @param string      $rule
-     * @param string      $field
-     * @param string|null $label
-     * @param string      $param
-     * @param string      $value The value that caused the validation to fail.
-     *
-     * @return string
+     * @param string $param
+     * @param string $value The value that caused the validation to fail.
      */
     protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
     {
@@ -725,10 +669,6 @@ class Validation implements ValidationInterface
 
     /**
      * Split rules string by pipe operator.
-     *
-     * @param string $rules
-     *
-     * @return array
      */
     protected function splitRules(string $rules): array
     {
@@ -750,8 +690,6 @@ class Validation implements ValidationInterface
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.
-     *
-     * @return ValidationInterface
      */
     public function reset(): ValidationInterface
     {

@@ -71,9 +71,6 @@ class Factories
      * Loads instances based on the method component name. Either
      * creates a new instance or returns an existing shared instance.
      *
-     * @param string $component
-     * @param array  $arguments
-     *
      * @return mixed
      */
     public static function __callStatic(string $component, array $arguments)
@@ -121,8 +118,6 @@ class Factories
      *
      * @param array  $options The array of component-specific directives
      * @param string $name    Class name, namespace optional
-     *
-     * @return string|null
      */
     protected static function locateClass(array $options, string $name): ?string
     {
@@ -180,8 +175,6 @@ class Factories
      *
      * @param array  $options The array of component-specific directives
      * @param string $name    Class name, namespace optional
-     *
-     * @return bool
      */
     protected static function verifyPreferApp(array $options, string $name): bool
     {
@@ -203,8 +196,6 @@ class Factories
      *
      * @param array  $options The array of component-specific directives
      * @param string $name    Class name, namespace optional
-     *
-     * @return bool
      */
     protected static function verifyInstanceOf(array $options, string $name): bool
     {
@@ -245,7 +236,6 @@ class Factories
      * Normalizes, stores, and returns the configuration for a specific component
      *
      * @param string $component Lowercase, plural component name
-     * @param array  $values
      *
      * @return array<string, mixed> The result after applying defaults and normalization
      */
@@ -297,7 +287,6 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      * @param string $name      The name of the instance
-     * @param object $instance
      */
     public static function injectMock(string $component, string $name, object $instance)
     {
@@ -314,10 +303,6 @@ class Factories
 
     /**
      * Gets a basename from a class name, namespaced or not.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     public static function getBasename(string $name): string
     {

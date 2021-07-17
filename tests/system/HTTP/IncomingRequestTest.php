@@ -576,6 +576,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     /**
      * @dataProvider providePathChecks
+     *
+     * @param mixed $path
+     * @param mixed $detectPath
      */
     public function testExtensionPHP($path, $detectPath)
     {

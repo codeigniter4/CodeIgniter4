@@ -25,9 +25,6 @@ class CLIException extends RuntimeException
      * Thrown when `$color` specified for `$type` is not within the
      * allowed list of colors.
      *
-     * @param string $type
-     * @param string $color
-     *
      * @return CLIException
      */
     public static function forInvalidColor(string $type, string $color)

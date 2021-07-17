@@ -1053,6 +1053,8 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
+     * @param mixed $second
      */
     public function testGreaterThan($first, $second, $expected)
     {
@@ -1108,6 +1110,8 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
+     * @param mixed $second
      */
     public function testGreaterThanEqual($first, $second, $expected)
     {
@@ -1168,6 +1172,8 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
+     * @param mixed $second
      */
     public function testLessThan($first, $second, $expected)
     {
@@ -1228,6 +1234,8 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $str
      * @param $expected
+     * @param mixed $first
+     * @param mixed $second
      */
     public function testLessEqualThan($first, $second, $expected)
     {
@@ -1386,6 +1394,7 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $check
      * @param $expected
+     * @param mixed $field
      */
     public function testRequiredWith($field, $check, $expected = false)
     {
@@ -1469,6 +1478,7 @@ final class RulesTest extends CIUnitTestCase
      *
      * @param $check
      * @param $expected
+     * @param mixed $field
      */
     public function testRequiredWithout($field, $check, $expected = false)
     {

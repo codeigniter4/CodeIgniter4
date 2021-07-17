@@ -60,10 +60,6 @@ class BaseCollector
 
     /**
      * Gets the Collector's title.
-     *
-     * @param bool $safe
-     *
-     * @return string
      */
     public function getTitle(bool $safe = false): string
     {
@@ -76,8 +72,6 @@ class BaseCollector
 
     /**
      * Returns any information that should be shown next to the title.
-     *
-     * @return string
      */
     public function getTitleDetails(): string
     {
@@ -86,8 +80,6 @@ class BaseCollector
 
     /**
      * Does this collector need it's own tab?
-     *
-     * @return bool
      */
     public function hasTabContent(): bool
     {
@@ -96,8 +88,6 @@ class BaseCollector
 
     /**
      * Does this collector have a label?
-     *
-     * @return bool
      */
     public function hasLabel(): bool
     {
@@ -106,8 +96,6 @@ class BaseCollector
 
     /**
      * Does this collector have information for the timeline?
-     *
-     * @return bool
      */
     public function hasTimelineData(): bool
     {
@@ -117,8 +105,6 @@ class BaseCollector
     /**
      * Grabs the data for the timeline, properly formatted,
      * or returns an empty array.
-     *
-     * @return array
      */
     public function timelineData(): array
     {
@@ -132,8 +118,6 @@ class BaseCollector
     /**
      * Does this Collector have data that should be shown in the
      * 'Vars' tab?
-     *
-     * @return bool
      */
     public function hasVarData(): bool
     {
@@ -173,8 +157,6 @@ class BaseCollector
      *      'start'     => 10       // milliseconds
      *      'duration'  => 15       // milliseconds
      *  ]
-     *
-     * @return array
      */
     protected function formatTimelineData(): array
     {
@@ -195,10 +177,6 @@ class BaseCollector
      * Clean Path
      *
      * This makes nicer looking paths for the error output.
-     *
-     * @param string $file
-     *
-     * @return string
      */
     public function cleanPath(string $file): string
     {
@@ -217,8 +195,6 @@ class BaseCollector
      * Does this collector have any data collected?
      *
      * If not, then the toolbar button won't get shown.
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -230,8 +206,6 @@ class BaseCollector
      * be SVG, or a base-64 encoded.
      *
      * Recommended dimensions are 24px x 24px
-     *
-     * @return string
      */
     public function icon(): string
     {
@@ -240,8 +214,6 @@ class BaseCollector
 
     /**
      * Return settings as an array.
-     *
-     * @return array
      */
     public function getAsArray(): array
     {

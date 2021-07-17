@@ -35,7 +35,6 @@ class Config
     /**
      * Helper method for injecting mock instances while testing.
      *
-     * @param string $name
      * @param object $instance
      */
     public static function injectMock(string $name, $instance)

@@ -80,9 +80,6 @@ class Autoloader
      * Reads in the configuration array (described above) and stores
      * the valid parts that we'll need.
      *
-     * @param Autoload $config
-     * @param Modules  $modules
-     *
      * @return $this
      */
     public function initialize(Autoload $config, Modules $modules)
@@ -136,7 +133,6 @@ class Autoloader
      * Registers namespaces with the autoloader.
      *
      * @param array|string $namespace
-     * @param string|null  $path
      *
      * @return $this
      */
@@ -168,8 +164,6 @@ class Autoloader
      *
      * If a prefix param is set, returns only paths to the given prefix.
      *
-     * @param string|null $prefix
-     *
      * @return array
      */
     public function getNamespace(?string $prefix = null)
@@ -184,8 +178,6 @@ class Autoloader
     /**
      * Removes a single namespace from the psr4 settings.
      *
-     * @param string $namespace
-     *
      * @return $this
      */
     public function removeNamespace(string $namespace)
@@ -199,8 +191,6 @@ class Autoloader
 
     /**
      * Load a class using available class mapping.
-     *
-     * @param string $class
      *
      * @return false|string
      */
@@ -266,8 +256,6 @@ class Autoloader
     /**
      * A central way to include a file. Split out primarily for testing purposes.
      *
-     * @param string $file
-     *
      * @return false|string The filename on success, false if the file is not loaded
      */
     protected function includeFile(string $file)
@@ -291,8 +279,6 @@ class Autoloader
      * to manipulate at the command line. Replaces spaces and consecutive
      * dashes with a single dash. Trim period, dash and underscore from beginning
      * and end of filename.
-     *
-     * @param string $filename
      *
      * @return string The sanitized filename
      */

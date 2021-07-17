@@ -86,10 +86,6 @@ trait GeneratorTrait
 
     /**
      * Execute the command.
-     *
-     * @param array $params
-     *
-     * @return void
      */
     protected function execute(array $params): void
     {
@@ -167,10 +163,6 @@ trait GeneratorTrait
 
     /**
      * Prepare options and do the necessary replacements.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function prepare(string $class): string
     {
@@ -181,10 +173,6 @@ trait GeneratorTrait
      * Change file basename before saving.
      *
      * Useful for components where the file name has a date.
-     *
-     * @param string $filename
-     *
-     * @return string
      */
     protected function basename(string $filename): string
     {
@@ -193,8 +181,6 @@ trait GeneratorTrait
 
     /**
      * Parses the class name and checks if it is already qualified.
-     *
-     * @return string
      */
     protected function qualifyClassName(): string
     {
@@ -244,8 +230,6 @@ trait GeneratorTrait
      * with fallback to `$template` when the defined view does not exist.
      *
      * @param array $data Data to be passed to the view.
-     *
-     * @return string
      */
     protected function renderTemplate(array $data = []): string
     {
@@ -260,13 +244,6 @@ trait GeneratorTrait
 
     /**
      * Performs pseudo-variables contained within view file.
-     *
-     * @param string $class
-     * @param array  $search
-     * @param array  $replace
-     * @param array  $data
-     *
-     * @return string
      */
     protected function parseTemplate(string $class, array $search = [], array $replace = [], array $data = []): string
     {
@@ -286,10 +263,6 @@ trait GeneratorTrait
      * Builds the contents for class being generated, doing all
      * the replacements necessary, and alphabetically sorts the
      * imports for a given template.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function buildContent(string $class): string
     {
@@ -307,10 +280,6 @@ trait GeneratorTrait
 
     /**
      * Builds the file path from the class name.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function buildPath(string $class): string
     {
@@ -335,8 +304,6 @@ trait GeneratorTrait
     /**
      * Allows child generators to modify the internal `$hasClassName` flag.
      *
-     * @param bool $hasClassName
-     *
      * @return $this
      */
     protected function setHasClassName(bool $hasClassName)
@@ -348,8 +315,6 @@ trait GeneratorTrait
 
     /**
      * Allows child generators to modify the internal `$sortImports` flag.
-     *
-     * @param bool $sortImports
      *
      * @return $this
      */
@@ -363,8 +328,6 @@ trait GeneratorTrait
     /**
      * Allows child generators to modify the internal `$enabledSuffixing` flag.
      *
-     * @param bool $enabledSuffixing
-     *
      * @return $this
      */
     protected function setEnabledSuffixing(bool $enabledSuffixing)
@@ -377,8 +340,6 @@ trait GeneratorTrait
     /**
      * Gets a single command-line option. Returns TRUE if the option exists,
      * but doesn't have a value, and is simply acting as a flag.
-     *
-     * @param string $name
      *
      * @return mixed
      */

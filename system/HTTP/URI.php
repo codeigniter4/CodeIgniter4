@@ -143,8 +143,6 @@ class URI
      * @param string $path
      * @param string $query
      * @param string $fragment
-     *
-     * @return string
      */
     public static function createURIString(?string $scheme = null, ?string $authority = null, ?string $path = null, ?string $query = null, ?string $fragment = null): string
     {
@@ -178,10 +176,6 @@ class URI
      * RFC 3986 Section 5.2.4
      *
      * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
-     *
-     * @param string $path
-     *
-     * @return string
      *
      * @internal
      */
@@ -246,8 +240,6 @@ class URI
      * If $silent == true, then will not throw exceptions and will
      * attempt to continue gracefully.
      *
-     * @param bool $silent
-     *
      * @return URI
      */
     public function setSilent(bool $silent = true)
@@ -261,8 +253,6 @@ class URI
      * If $raw == true, then will use parseStr() method
      * instead of native parse_str() function.
      *
-     * @param bool $raw
-     *
      * @return URI
      */
     public function useRawQueryString(bool $raw = true)
@@ -274,8 +264,6 @@ class URI
 
     /**
      * Sets and overwrites any current URI information.
-     *
-     * @param string|null $uri
      *
      * @return URI
      */
@@ -334,8 +322,6 @@ class URI
      * scheme, it SHOULD NOT be included.
      *
      * @see https://tools.ietf.org/html/rfc3986#section-3.2
-     *
-     * @param bool $ignorePort
      *
      * @return string The URI authority, in "[user-info@]host[:port]" format.
      */
@@ -396,8 +382,6 @@ class URI
     /**
      * Temporarily sets the URI to show a password in userInfo. Will
      * reset itself after the first call to authority().
-     *
-     * @param bool $val
      *
      * @return URI
      */
@@ -478,10 +462,6 @@ class URI
 
     /**
      * Retrieve the query string
-     *
-     * @param array $options
-     *
-     * @return string
      */
     public function getQuery(array $options = []): string
     {
@@ -516,8 +496,6 @@ class URI
 
     /**
      * Retrieve a URI fragment
-     *
-     * @return string
      */
     public function getFragment(): string
     {
@@ -526,8 +504,6 @@ class URI
 
     /**
      * Returns the segments of the path as an array.
-     *
-     * @return array
      */
     public function getSegments(): array
     {
@@ -560,8 +536,7 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
-     * @param int   $number
-     * @param mixed $value  (string or int)
+     * @param mixed $value (string or int)
      *
      * @return $this
      */
@@ -587,8 +562,6 @@ class URI
 
     /**
      * Returns the total number of segments.
-     *
-     * @return int
      */
     public function getTotalSegments(): int
     {
@@ -602,8 +575,6 @@ class URI
      * assumes URIs with the same host as baseURL should
      * be relative to the project's configuration.
      * This aspect of __toString() is deprecated and should be avoided.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -642,8 +613,6 @@ class URI
     /**
      * Parses the given string and saves the appropriate authority pieces.
      *
-     * @param string $str
-     *
      * @return $this
      */
     public function setAuthority(string $str)
@@ -671,8 +640,6 @@ class URI
      * to only http or https.
      *
      * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
-     *
-     * @param string $str
      *
      * @return $this
      */
@@ -704,8 +671,6 @@ class URI
 
     /**
      * Sets the host name to use.
-     *
-     * @param string $str
      *
      * @return $this
      */
@@ -745,8 +710,6 @@ class URI
     /**
      * Sets the path portion of the URI.
      *
-     * @param string $path
-     *
      * @return $this
      */
     public function setPath(string $path)
@@ -780,8 +743,6 @@ class URI
      * Sets the query portion of the URI, while attempting
      * to clean the various parts of the query keys and values.
      *
-     * @param string $query
-     *
      * @return $this
      */
     public function setQuery(string $query)
@@ -812,8 +773,6 @@ class URI
      * A convenience method to pass an array of items in as the Query
      * portion of the URI.
      *
-     * @param array $query
-     *
      * @return URI
      */
     public function setQueryArray(array $query)
@@ -826,8 +785,7 @@ class URI
     /**
      * Adds a single new element to the query vars.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -884,8 +842,6 @@ class URI
      *
      * @see https://tools.ietf.org/html/rfc3986#section-3.5
      *
-     * @param string $string
-     *
      * @return $this
      */
     public function setFragment(string $string)
@@ -899,10 +855,6 @@ class URI
      * Encodes any dangerous characters, and removes dot segments.
      * While dot segments have valid uses according to the spec,
      * this URI class does not allow them.
-     *
-     * @param string|null $path
-     *
-     * @return string
      */
     protected function filterPath(?string $path = null): string
     {
@@ -937,8 +889,6 @@ class URI
 
     /**
      * Saves our parts from a parse_url call.
-     *
-     * @param array $parts
      */
     protected function applyParts(array $parts)
     {
@@ -989,8 +939,6 @@ class URI
      * RFC 3986 Section 2
      *
      * @see http://tools.ietf.org/html/rfc3986#section-5.2
-     *
-     * @param string $uri
      *
      * @return URI
      */
@@ -1052,8 +1000,6 @@ class URI
      *
      * @param URI $base
      * @param URI $reference
-     *
-     * @return string
      */
     protected function mergePaths(self $base, self $reference): string
     {
@@ -1076,10 +1022,6 @@ class URI
     /**
      * This is equivalent to the native PHP parse_str() function.
      * This version allows the dot to be used as a key of the query string.
-     *
-     * @param string $query
-     *
-     * @return array
      */
     protected function parseStr(string $query): array
     {

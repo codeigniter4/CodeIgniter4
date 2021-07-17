@@ -102,9 +102,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     /**
      * Constructor
-     *
-     * @param AppConfig $config
-     * @param string    $ipAddress
      */
     public function __construct(AppConfig $config, string $ipAddress)
     {
@@ -121,8 +118,6 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Internal method to force removal of a cookie by the client
      * when session_destroy() is called.
-     *
-     * @return bool
      */
     protected function destroyCookie(): bool
     {
@@ -141,10 +136,6 @@ abstract class BaseHandler implements SessionHandlerInterface
      * A dummy method allowing drivers with no locking functionality
      * (databases other than PostgreSQL and MySQL) to act as if they
      * do acquire a lock.
-     *
-     * @param string $sessionID
-     *
-     * @return bool
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -155,8 +146,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     /**
      * Releases the lock, if any.
-     *
-     * @return bool
      */
     protected function releaseLock(): bool
     {
@@ -175,8 +164,6 @@ abstract class BaseHandler implements SessionHandlerInterface
      * To work around the problem, the drivers will call this method
      * so that the INI is set just in time for the error message to
      * be properly generated.
-     *
-     * @return bool
      */
     protected function fail(): bool
     {

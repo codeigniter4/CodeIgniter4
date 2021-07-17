@@ -156,6 +156,9 @@ final class FindModelTest extends LiveModelTestCase
 
     /**
      * @dataProvider provideGroupBy
+     *
+     * @param mixed $groupBy
+     * @param mixed $total
      */
     public function testFirstAggregate($groupBy, $total): void
     {
@@ -179,6 +182,9 @@ final class FindModelTest extends LiveModelTestCase
 
     /**
      * @dataProvider provideAggregateAndGroupBy
+     *
+     * @param mixed $aggregate
+     * @param mixed $groupBy
      */
     public function testFirstRespectsSoftDeletes($aggregate, $groupBy): void
     {
@@ -212,6 +218,9 @@ final class FindModelTest extends LiveModelTestCase
 
     /**
      * @dataProvider provideAggregateAndGroupBy
+     *
+     * @param mixed $aggregate
+     * @param mixed $groupBy
      */
     public function testFirstRecoverTempUseSoftDeletes($aggregate, $groupBy): void
     {

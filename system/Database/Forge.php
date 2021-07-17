@@ -162,8 +162,6 @@ class Forge
 
     /**
      * Constructor.
-     *
-     * @param BaseConnection $db
      */
     public function __construct(BaseConnection $db)
     {
@@ -183,12 +181,9 @@ class Forge
     /**
      * Create database
      *
-     * @param string $dbName
-     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
+     * @param bool $ifNotExists Whether to add IF NOT EXISTS condition
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public function createDatabase(string $dbName, bool $ifNotExists = false): bool
     {
@@ -237,11 +232,7 @@ class Forge
     /**
      * Determine if a database exists
      *
-     * @param string $dbName
-     *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     private function databaseExists(string $dbName): bool
     {
@@ -259,11 +250,7 @@ class Forge
     /**
      * Drop database
      *
-     * @param string $dbName
-     *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public function dropDatabase(string $dbName): bool
     {
@@ -297,8 +284,6 @@ class Forge
      * Add Key
      *
      * @param array|string $key
-     * @param bool         $primary
-     * @param bool         $unique
      *
      * @return Forge
      */
@@ -380,12 +365,6 @@ class Forge
 
     /**
      * Add Foreign Key
-     *
-     * @param string $fieldName
-     * @param string $tableName
-     * @param string $tableField
-     * @param string $onUpdate
-     * @param string $onDelete
      *
      * @throws DatabaseException
      *
@@ -547,8 +526,6 @@ class Forge
      * CREATE TABLE attributes
      *
      * @param array $attributes Associative array of table attributes
-     *
-     * @return string
      */
     protected function _createTableAttributes(array $attributes): string
     {
@@ -695,8 +672,6 @@ class Forge
      * @param array|string $field Column definition
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public function addColumn(string $table, $field): bool
     {
@@ -759,8 +734,6 @@ class Forge
      * @param array|string $field Column definition
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     public function modifyColumn(string $table, $field): bool
     {
@@ -839,10 +812,6 @@ class Forge
 
     /**
      * Process fields
-     *
-     * @param bool $createTable
-     *
-     * @return array
      */
     protected function _processFields(bool $createTable = false): array
     {
@@ -926,10 +895,6 @@ class Forge
 
     /**
      * Process column
-     *
-     * @param array $field
-     *
-     * @return string
      */
     protected function _processColumn(array $field): string
     {
@@ -946,8 +911,6 @@ class Forge
      * Field attribute TYPE
      *
      * Performs a data type mapping between different databases.
-     *
-     * @param array $attributes
      *
      * @return void
      */
@@ -967,9 +930,6 @@ class Forge
      *        if $attributes['TYPE'] is found in the array
      *    - array(TYPE => UTYPE) will change $field['type'],
      *        from TYPE to UTYPE in case of a match
-     *
-     * @param array $attributes
-     * @param array $field
      *
      * @return void|null
      */
@@ -1006,9 +966,6 @@ class Forge
     /**
      * Field attribute DEFAULT
      *
-     * @param array $attributes
-     * @param array $field
-     *
      * @return void|null
      */
     protected function _attributeDefault(array &$attributes, array &$field)
@@ -1033,9 +990,6 @@ class Forge
     /**
      * Field attribute UNIQUE
      *
-     * @param array $attributes
-     * @param array $field
-     *
      * @return void
      */
     protected function _attributeUnique(array &$attributes, array &$field)
@@ -1047,9 +1001,6 @@ class Forge
 
     /**
      * Field attribute AUTO_INCREMENT
-     *
-     * @param array $attributes
-     * @param array $field
      *
      * @return void
      */
@@ -1066,8 +1017,6 @@ class Forge
      * Process primary keys
      *
      * @param string $table Table name
-     *
-     * @return string
      */
     protected function _processPrimaryKeys(string $table): string
     {
@@ -1089,8 +1038,6 @@ class Forge
 
     /**
      * Process indexes
-     *
-     * @param string $table
      *
      * @return array|string
      */
@@ -1130,8 +1077,6 @@ class Forge
      * Process foreign keys
      *
      * @param string $table Table name
-     *
-     * @return string
      */
     protected function _processForeignKeys(string $table): string
     {

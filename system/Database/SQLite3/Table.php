@@ -75,9 +75,6 @@ class Table
 
     /**
      * Table constructor.
-     *
-     * @param Connection $db
-     * @param Forge      $forge
      */
     public function __construct(Connection $db, Forge $forge)
     {
@@ -89,8 +86,6 @@ class Table
      * Reads an existing database table and
      * collects all of the information needed to
      * recreate this table.
-     *
-     * @param string $table
      *
      * @return Table
      */
@@ -125,8 +120,6 @@ class Table
      * to finalize the action. It creates a temp table, creates the new
      * table with modifications, and copies the data over to the new table.
      * Resets the connection dataCache to be sure changes are collected.
-     *
-     * @return bool
      */
     public function run(): bool
     {
@@ -182,8 +175,6 @@ class Table
      * Modifies a field, including changing data type,
      * renaming, etc.
      *
-     * @param array $field
-     *
      * @return Table
      */
     public function modifyColumn(array $field)
@@ -201,8 +192,6 @@ class Table
     /**
      * Drops a foreign key from this table so that
      * it won't be recreated in the future.
-     *
-     * @param string $column
      *
      * @return Table
      */

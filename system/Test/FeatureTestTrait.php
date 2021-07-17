@@ -138,10 +138,6 @@ trait FeatureTestTrait
      * Calls a single URI, executes it, and returns a TestResponse
      * instance that can be used to run many assertions against.
      *
-     * @param string     $method
-     * @param string     $path
-     * @param array|null $params
-     *
      * @throws RedirectException
      * @throws Exception
      *
@@ -216,9 +212,6 @@ trait FeatureTestTrait
     /**
      * Performs a GET request.
      *
-     * @param string     $path
-     * @param array|null $params
-     *
      * @throws RedirectException
      * @throws Exception
      *
@@ -231,9 +224,6 @@ trait FeatureTestTrait
 
     /**
      * Performs a POST request.
-     *
-     * @param string     $path
-     * @param array|null $params
      *
      * @throws RedirectException
      * @throws Exception
@@ -248,9 +238,6 @@ trait FeatureTestTrait
     /**
      * Performs a PUT request
      *
-     * @param string     $path
-     * @param array|null $params
-     *
      * @throws RedirectException
      * @throws Exception
      *
@@ -263,9 +250,6 @@ trait FeatureTestTrait
 
     /**
      * Performss a PATCH request
-     *
-     * @param string     $path
-     * @param array|null $params
      *
      * @throws RedirectException
      * @throws Exception
@@ -280,9 +264,6 @@ trait FeatureTestTrait
     /**
      * Performs a DELETE request.
      *
-     * @param string     $path
-     * @param array|null $params
-     *
      * @throws RedirectException
      * @throws Exception
      *
@@ -295,9 +276,6 @@ trait FeatureTestTrait
 
     /**
      * Performs an OPTIONS request.
-     *
-     * @param string     $path
-     * @param array|null $params
      *
      * @throws RedirectException
      * @throws Exception
@@ -312,11 +290,6 @@ trait FeatureTestTrait
     /**
      * Setup a Request object to use so that CodeIgniter
      * won't try to auto-populate some of the items.
-     *
-     * @param string      $method
-     * @param string|null $path
-     *
-     * @return IncomingRequest
      */
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
@@ -342,8 +315,6 @@ trait FeatureTestTrait
     /**
      * Setup the custom request's headers
      *
-     * @param IncomingRequest $request
-     *
      * @return IncomingRequest
      */
     protected function setupHeaders(IncomingRequest $request)
@@ -362,10 +333,6 @@ trait FeatureTestTrait
      * relevant to the request, like $_POST data.
      *
      * Always populate the GET vars based on the URI.
-     *
-     * @param string     $method
-     * @param Request    $request
-     * @param array|null $params
      *
      * @throws ReflectionException
      *
@@ -396,11 +363,8 @@ trait FeatureTestTrait
      * This allows the body to be formatted in a way that the controller is going to
      * expect as in the case of testing a JSON or XML API.
      *
-     * @param Request    $request
-     * @param array|null $params  The parameters to be formatted and put in the body. If this is empty, it will get the
-     *                            what has been loaded into the request global of the request class.
-     *
-     * @return Request
+     * @param array|null $params The parameters to be formatted and put in the body. If this is empty, it will get the
+     *                           what has been loaded into the request global of the request class.
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {
