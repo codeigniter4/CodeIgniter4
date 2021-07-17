@@ -17,7 +17,7 @@ namespace CodeIgniter\Entity\Cast;
 class BooleanCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): bool
     {

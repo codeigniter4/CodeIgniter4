@@ -21,7 +21,7 @@ use stdClass;
 class JsonCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = [])
     {
@@ -48,7 +48,7 @@ class JsonCast extends BaseCast
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function set($value, array $params = []): string
     {
