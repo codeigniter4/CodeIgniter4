@@ -725,7 +725,7 @@ class CodeIgniter
     //--------------------------------------------------------------------
 
     /**
-     * Replaces the memory_usage and elapsed_time tags.
+     * Replaces the elapsed_time tag.
      *
      * @param string $output
      *
