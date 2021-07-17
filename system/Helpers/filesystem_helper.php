@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
- * CodeIgniter File System Helpers
- */
+// CodeIgniter File System Helpers
 // ------------------------------------------------------------------------
 
 if (! function_exists('directory_map')) {
