@@ -21,7 +21,7 @@ use Exception;
 class DatetimeCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @throws Exception
      */

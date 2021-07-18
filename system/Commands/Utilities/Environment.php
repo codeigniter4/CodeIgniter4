@@ -69,7 +69,7 @@ final class Environment extends BaseCommand
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @param array<string, mixed> $params
      *

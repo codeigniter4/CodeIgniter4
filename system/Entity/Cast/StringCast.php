@@ -17,7 +17,7 @@ namespace CodeIgniter\Entity\Cast;
 class StringCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): string
     {

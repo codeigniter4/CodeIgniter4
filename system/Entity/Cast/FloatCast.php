@@ -17,7 +17,7 @@ namespace CodeIgniter\Entity\Cast;
 class FloatCast extends BaseCast
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function get($value, array $params = []): float
     {
