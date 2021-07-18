@@ -53,8 +53,6 @@ class Language
      */
     protected $loadedFiles = [];
 
-    //--------------------------------------------------------------------
-
     public function __construct(string $locale)
     {
         $this->locale = $locale;
@@ -63,8 +61,6 @@ class Language
             $this->intlSupport = true;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the current locale to use when performing string lookups.
@@ -82,8 +78,6 @@ class Language
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @return string
      */
@@ -91,8 +85,6 @@ class Language
     {
         return $this->locale;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parses the language string for a file, loads the file, if necessary,
@@ -135,8 +127,6 @@ class Language
 
         return $this->formatMessage($output, $args);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @return array|string|null
@@ -193,8 +183,6 @@ class Language
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Advanced message formatting.
      *
@@ -219,8 +207,6 @@ class Language
 
         return MessageFormatter::formatMessage($this->locale, $message, $args);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Loads a language file in the current locale. If $return is true,
@@ -266,8 +252,6 @@ class Language
         $this->language[$locale][$file] = $lang;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A simple method for including files that can be
      * overridden during testing.
@@ -299,6 +283,4 @@ class Language
 
         return $strings;
     }
-
-    //--------------------------------------------------------------------
 }

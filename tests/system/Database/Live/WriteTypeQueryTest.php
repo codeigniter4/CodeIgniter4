@@ -26,8 +26,6 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    //--------------------------------------------------------------------
-
     public function testInsert()
     {
         $builder = $this->db->table('jobs');
@@ -48,8 +46,6 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpdate()
     {
         $builder = new BaseBuilder('jobs', $this->db);
@@ -65,8 +61,6 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testDelete()
     {
         $builder = $this->db->table('jobs');
@@ -74,8 +68,6 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
-
-    //--------------------------------------------------------------------
 
     public function testReplace()
     {
@@ -95,16 +87,12 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    //--------------------------------------------------------------------
-
     public function testCreate()
     {
         $sql = 'CREATE DATABASE foo';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDrop()
     {
@@ -117,8 +105,6 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    //--------------------------------------------------------------------
-
     public function testTruncate()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -127,16 +113,12 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLoad()
     {
         $sql = "LOAD DATA INFILE '/tmp/test.txt' INTO TABLE test FIELDS TERMINATED BY ','  LINES STARTING BY 'xxx';";
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCopy()
     {

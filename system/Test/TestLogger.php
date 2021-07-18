@@ -17,8 +17,6 @@ class TestLogger extends Logger
 {
     protected static $op_logs = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * The log method is overridden so that we can store log history during
      * the tests to allow us to check ->assertLogged() methods.
@@ -57,8 +55,6 @@ class TestLogger extends Logger
         return parent::log($level, $message, $context);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used by CIUnitTestCase class to provide ->assertLogged() methods.
      *
@@ -78,7 +74,6 @@ class TestLogger extends Logger
         return false;
     }
 
-    //--------------------------------------------------------------------
     // Expose cleanFileNames()
     public function cleanup($file)
     {

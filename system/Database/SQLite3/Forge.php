@@ -36,8 +36,6 @@ class Forge extends BaseForge
      */
     protected $null = 'NULL';
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -53,8 +51,6 @@ class Forge extends BaseForge
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Create database
      *
@@ -69,8 +65,6 @@ class Forge extends BaseForge
         // We'll return TRUE so that an error isn't generated.
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Drop database
@@ -112,8 +106,6 @@ class Forge extends BaseForge
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * ALTER TABLE
      *
@@ -148,8 +140,6 @@ class Forge extends BaseForge
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Process column
      *
@@ -171,8 +161,6 @@ class Forge extends BaseForge
                . $field['unique']
                . $field['default'];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Process indexes
@@ -213,8 +201,6 @@ class Forge extends BaseForge
         return $sqls;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Field attribute TYPE
      *
@@ -237,8 +223,6 @@ class Forge extends BaseForge
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Field attribute AUTO_INCREMENT
      *
@@ -260,8 +244,6 @@ class Forge extends BaseForge
             $this->primaryKeys = [];
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Foreign Key Drop

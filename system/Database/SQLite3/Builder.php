@@ -50,8 +50,6 @@ class Builder extends BaseBuilder
         'insert' => 'OR IGNORE',
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Replace statement
      *
@@ -67,8 +65,6 @@ class Builder extends BaseBuilder
     {
         return 'INSERT OR ' . parent::_replace($table, $keys, $values);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Truncate statement

@@ -78,8 +78,6 @@ class PagerRenderer
      */
     protected $pageSelector;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -97,8 +95,6 @@ class PagerRenderer
         $this->pageSelector = $details['pageSelector'] ?? 'page';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the total number of links that should appear on either
      * side of the current page. Adjusts the first and last counts
@@ -115,8 +111,6 @@ class PagerRenderer
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if there is a "previous" page before our "first" page.
      *
@@ -126,8 +120,6 @@ class PagerRenderer
     {
         return $this->first > 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a URL to the "previous" page. The previous page is NOT the
@@ -155,8 +147,6 @@ class PagerRenderer
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if there is a "next" page after our "last" page.
      *
@@ -166,8 +156,6 @@ class PagerRenderer
     {
         return $this->pageCount > $this->last;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a URL to the "next" page. The next page is NOT, the
@@ -195,8 +183,6 @@ class PagerRenderer
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the URI of the first page.
      *
@@ -214,8 +200,6 @@ class PagerRenderer
 
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the URI of the last page.
@@ -235,8 +219,6 @@ class PagerRenderer
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the URI of the current page.
      *
@@ -254,8 +236,6 @@ class PagerRenderer
 
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of links that should be displayed. Each link
@@ -283,8 +263,6 @@ class PagerRenderer
         return $links;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Updates the first and last pages based on $surroundCount,
      * which is the number of links surrounding the active page
@@ -302,8 +280,6 @@ class PagerRenderer
         $this->last  = $this->current + $count <= $this->pageCount ? (int) ($this->current + $count) : (int) $this->pageCount;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if there is a "previous" page before our "first" page.
      *
@@ -313,8 +289,6 @@ class PagerRenderer
     {
         return $this->current > 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a URL to the "previous" page.
@@ -340,8 +314,6 @@ class PagerRenderer
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if there is a "next" page after our "last" page.
      *
@@ -351,8 +323,6 @@ class PagerRenderer
     {
         return $this->current < $this->last;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a URL to the "next" page.

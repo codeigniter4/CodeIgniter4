@@ -20,8 +20,6 @@ use stdClass;
  */
 class Result extends BaseResult
 {
-    //--------------------------------------------------------------------
-
     /**
      * Gets the number of fields in the result set.
      *
@@ -172,8 +170,6 @@ class Result extends BaseResult
         return sqlsrv_fetch_object($this->resultID, $className);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
      *
@@ -187,6 +183,4 @@ class Result extends BaseResult
 
         return $this->numRows;
     }
-
-    //--------------------------------------------------------------------
 }

@@ -48,8 +48,6 @@ final class BaseHandlerTest extends CIUnitTestCase
         $this->path  = $this->start . 'ci-logo.png';
     }
 
-    //--------------------------------------------------------------------
-
     public function testNew()
     {
         $handler = Services::image('gd', null, false);
@@ -110,7 +108,6 @@ final class BaseHandlerTest extends CIUnitTestCase
         $this->assertTrue($image instanceof Image);
     }
 
-    //--------------------------------------------------------------------
     // Something handled by our Image
     public function testImageHandled()
     {

@@ -40,8 +40,6 @@ final class ResourceControllerTest extends CIUnitTestCase
      */
     protected $routes;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -67,8 +65,6 @@ final class ResourceControllerTest extends CIUnitTestCase
             ob_end_clean();
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testResourceGet()
     {
@@ -221,7 +217,6 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $output);
     }
 
-    //--------------------------------------------------------------------
     public function testModel()
     {
         $resource = new MockResourceController();
@@ -257,7 +252,6 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
-    //--------------------------------------------------------------------
     public function testFormat()
     {
         $resource = new MockResourceController();
@@ -270,7 +264,6 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertSame('xml', $resource->getFormat());
     }
 
-    //--------------------------------------------------------------------
     public function testJSONFormatOutput()
     {
         $resource = new MockResourceController();
@@ -299,7 +292,6 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    //--------------------------------------------------------------------
     public function testXMLFormatOutput()
     {
         $resource = new MockResourceController();

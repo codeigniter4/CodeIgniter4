@@ -398,8 +398,6 @@ class ContentSecurityPolicy
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Adds a new valid endpoint for valid image sources. Can be either
      * a URI class or a simple string.
@@ -575,10 +573,6 @@ class ContentSecurityPolicy
 
         return $this;
     }
-
-    //-------------------------------------------------------------------------
-    // Utility
-    //-------------------------------------------------------------------------
 
     /**
      * DRY method to add an string or array to a class property.

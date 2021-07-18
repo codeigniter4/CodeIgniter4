@@ -27,8 +27,6 @@ final class RequestTest extends CIUnitTestCase
         $_GET  = [];
     }
 
-    //--------------------------------------------------------------------
-
     public function testFetchGlobalsSingleValue()
     {
         $_POST['foo'] = 'bar';
@@ -288,8 +286,6 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'clients[]'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFetchGlobalFiltersWithNull()
     {
         $expected = [
@@ -528,8 +524,6 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'people[0]', FILTER_VALIDATE_INT));
     }
 
-    //--------------------------------------------------------------------
-
     public function ipAddressChecks()
     {
         return [
@@ -583,8 +577,6 @@ final class RequestTest extends CIUnitTestCase
     {
         $this->assertSame($expected, $this->request->isValidIP($address, $type));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetIPAddressDefault()
     {
@@ -667,8 +659,6 @@ final class RequestTest extends CIUnitTestCase
     }
 
     //FIXME getIPAddress should have more testing, to 100% code coverage
-
-    //--------------------------------------------------------------------
 
     public function testMethodReturnsRightStuff()
     {

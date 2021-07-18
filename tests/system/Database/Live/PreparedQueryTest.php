@@ -19,8 +19,6 @@ final class PreparedQueryTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-    //--------------------------------------------------------------------
-
     public function testPrepareReturnsPreparedQuery()
     {
         $query = $this->db->prepare(static function ($db) {
@@ -75,8 +73,6 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $query->close();
     }
-
-    //--------------------------------------------------------------------
 
     public function testExecuteRunsQueryAndReturnsResultObject()
     {

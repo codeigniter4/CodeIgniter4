@@ -20,8 +20,6 @@ final class DbUtilsTest extends CIUnitTestCase
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
     protected static $origDebug;
 
-    //--------------------------------------------------------------------
-
     /**
      * This test must run first to store the inital debug value before we tinker with it below
      */
@@ -32,8 +30,6 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->assertIsBool($this::$origDebug);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsBackup()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -43,8 +39,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $util->backup();
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsBackupWithParamsArray()
     {
@@ -59,8 +53,6 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup($params);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsBackupWithParamsString()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -70,8 +62,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $util->backup('db_jobs');
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsListDatabases()
     {
@@ -89,8 +79,6 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsDatabaseExist()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -107,8 +95,6 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsOptimizeDatabase()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -117,8 +103,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $this->assertTrue((bool) $d);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue()
     {
@@ -135,8 +119,6 @@ final class DbUtilsTest extends CIUnitTestCase
         // this point in code execution will never be reached
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -152,8 +134,6 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsOptimizeTable()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -162,8 +142,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $this->assertTrue((bool) $d);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsOptimizeTableFalseOptimizeTable()
     {
@@ -177,8 +155,6 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->optimizeTable('db_job');
     }
 
-    //--------------------------------------------------------------------
-
     public function testUtilsRepairTable()
     {
         $util = (new Database())->loadUtils($this->db);
@@ -188,8 +164,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $util->repairTable('db_job');
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsCSVFromResult()
     {
@@ -203,8 +177,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $this->assertSame('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUtilsXMLFromResult()
     {

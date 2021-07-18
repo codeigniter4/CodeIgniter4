@@ -40,8 +40,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetStatusCodeThrowsExceptionForBadCodes()
     {
         $response = new Response(new App());
@@ -49,8 +47,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $response->setStatusCode(54322);
     }
-
-    //--------------------------------------------------------------------
 
     public function testConstructWithCSPEnabled()
     {
@@ -61,8 +57,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertTrue($response instanceof Response);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetStatusCodeSetsReason()
     {
         $response = new Response(new App());
@@ -71,8 +65,6 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame('OK', $response->getReasonPhrase());
     }
-
-    //--------------------------------------------------------------------
 
     public function testCanSetCustomReasonCode()
     {
@@ -83,8 +75,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('Not the mama', $response->getReasonPhrase());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRequiresMessageWithUnknownStatusCode()
     {
         $response = new Response(new App());
@@ -93,8 +83,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->expectExceptionMessage(lang('HTTP.unknownStatusCode', [115]));
         $response->setStatusCode(115);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRequiresMessageWithSmallStatusCode()
     {
@@ -105,8 +93,6 @@ final class ResponseTest extends CIUnitTestCase
         $response->setStatusCode(95);
     }
 
-    //--------------------------------------------------------------------
-
     public function testRequiresMessageWithLargeStatusCode()
     {
         $response = new Response(new App());
@@ -115,8 +101,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
         $response->setStatusCode(695);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetStatusCodeInterpretsReason()
     {
@@ -127,8 +111,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('Multiple Choices', $response->getReasonPhrase());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetStatusCodeSavesCustomReason()
     {
         $response = new Response(new App());
@@ -138,16 +120,12 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('My Little Pony', $response->getReasonPhrase());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetReasonDefaultsToOK()
     {
         $response = new Response(new App());
 
         $this->assertSame('OK', $response->getReasonPhrase());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetDateRemembersDateInUTC()
     {
@@ -162,8 +140,6 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetLink()
     {
@@ -200,8 +176,6 @@ final class ResponseTest extends CIUnitTestCase
         );
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetContentType()
     {
         $response = new Response(new App());
@@ -211,8 +185,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNoCache()
     {
         $response = new Response(new App());
@@ -221,8 +193,6 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetCache()
     {
@@ -255,8 +225,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-Control'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetLastModifiedWithDateTimeObject()
     {
         $response = new Response(new App());
@@ -271,8 +239,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
-    //--------------------------------------------------------------------
-
     public function testRedirectSetsDefaultCodeAndLocationHeader()
     {
         $response = new Response(new App());
@@ -283,8 +249,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame('example.com', $response->getHeaderLine('Location'));
         $this->assertSame(302, $response->getStatusCode());
     }
-
-    //--------------------------------------------------------------------
 
     public function testRedirectSetsCode()
     {
@@ -297,8 +261,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(307, $response->getStatusCode());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRedirectWithIIS()
     {
         $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
@@ -306,8 +268,6 @@ final class ResponseTest extends CIUnitTestCase
         $response->redirect('example.com', 'auto', 307);
         $this->assertSame('0;url=example.com', $response->getHeaderLine('Refresh'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetCookieFails()
     {
@@ -341,8 +301,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertTrue($response->hasCookie('foo', null, 'ack'));
         $this->assertFalse($response->hasCookie('foo', null, 'nak'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testJSONWithArray()
     {
@@ -381,8 +339,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($expected, $response->getJSON());
     }
 
-    //--------------------------------------------------------------------
-
     public function testXMLWithArray()
     {
         $body = [
@@ -419,8 +375,6 @@ final class ResponseTest extends CIUnitTestCase
 
         $this->assertSame($expected, $response->getXML());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetDownloadResponseByData()
     {
@@ -467,8 +421,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertNull($actual);
     }
 
-    //--------------------------------------------------------------------
-
     public function testPretendMode()
     {
         $response = new MockResponse(new App());
@@ -486,8 +438,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $response->getStatusCode();
     }
-
-    //--------------------------------------------------------------------
 
     public function testTemporaryRedirect11()
     {
@@ -513,8 +463,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(307, $response->getStatusCode());
     }
 
-    //--------------------------------------------------------------------
-
     // Make sure cookies are set by RedirectResponse this way
     // See https://github.com/codeigniter4/CodeIgniter4/issues/1393
     public function testRedirectResponseCookies()
@@ -529,8 +477,6 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertTrue($answer1->hasCookie('foo'));
         $this->assertTrue($answer1->hasCookie('login_time'));
     }
-
-    //--------------------------------------------------------------------
 
     // Make sure we don't blow up if pretending to send headers
     public function testPretendOutput()

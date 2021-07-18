@@ -29,8 +29,6 @@ class Plugins
         return current_url();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Wrap helper function to use as view plugin.
      *
@@ -40,8 +38,6 @@ class Plugins
     {
         return previous_url();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Wrap helper function to use as view plugin.
@@ -59,8 +55,6 @@ class Plugins
         return mailto($email, $title, $attrs);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Wrap helper function to use as view plugin.
      *
@@ -77,8 +71,6 @@ class Plugins
         return safe_mailto($email, $title, $attrs);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Wrap helper function to use as view plugin.
      *
@@ -92,8 +84,6 @@ class Plugins
 
         return lang($line, $params);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Wrap helper function to use as view plugin.
@@ -112,8 +102,6 @@ class Plugins
         return $validator->showError($params['field']);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Wrap helper function to use as view plugin.
      *
@@ -125,8 +113,6 @@ class Plugins
     {
         return route_to(...$params);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Wrap helper function to use as view plugin.

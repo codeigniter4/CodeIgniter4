@@ -20,8 +20,6 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
     /**
      * Where would the log be written?
      */
-    //--------------------------------------------------------------------
-
     public function __construct(array $config)
     {
         parent::__construct($config);
@@ -30,8 +28,6 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 
         self::$logs = [];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles logging the message.
@@ -53,12 +49,8 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     public static function getLogs()
     {
         return self::$logs;
     }
-
-    //--------------------------------------------------------------------
 }

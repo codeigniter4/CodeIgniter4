@@ -28,8 +28,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
     }
 
-    //--------------------------------------------------------------------
-
     public function testCanGrabRequestVars()
     {
         $_REQUEST['TEST'] = 5;
@@ -62,8 +60,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('5', $this->request->getPostGet('TEST'));
         $this->assertSame('3', $this->request->getGetPost('TEST'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNoOldInput()
     {
@@ -133,8 +129,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($locations, $this->request->getOldInput('location'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testCanGrabServerVars()
     {
         $server                   = $this->getPrivateProperty($this->request, 'globals');
@@ -162,8 +156,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('5', $this->request->getCookie('TEST'));
         $this->assertNull($this->request->getCookie('TESTY'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testStoresDefaultLocale()
     {
@@ -198,8 +190,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request->setLocale('xx');
         $this->assertSame('es', $request->getLocale());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
@@ -271,8 +261,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
         $this->assertSame('en', $this->request->negotiate('language', ['en', 'da']));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCanGrabGetRawJSON()
     {
@@ -416,8 +404,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
-    //--------------------------------------------------------------------
-
     public function testIsCLI()
     {
         // this should be the case in unit testing
@@ -429,8 +415,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request->appendHeader('X-Requested-With', 'XMLHttpRequest');
         $this->assertTrue($this->request->isAJAX());
     }
-
-    //--------------------------------------------------------------------
 
     public function testIsSecure()
     {
@@ -450,8 +434,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($this->request->isSecure());
     }
 
-    //--------------------------------------------------------------------
-
     public function testUserAgent()
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
@@ -461,8 +443,6 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('Mozilla', $request->getUserAgent()->__toString());
     }
-
-    //--------------------------------------------------------------------
 
     public function testFileCollectionFactory()
     {
@@ -485,8 +465,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('someFile.txt', $file->getName());
         $this->assertSame(124, $file->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetFileMultiple()
     {
@@ -520,8 +498,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(125, $gotit[1]->getSize());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetFile()
     {
         $_FILES = [
@@ -537,8 +513,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $gotit = $this->request->getFile('userfile');
         $this->assertSame(124, $gotit->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSpoofing()
     {
@@ -605,8 +579,6 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($detectPath, $request->detectPath());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetPath()
     {
         $_SERVER['REQUEST_URI'] = '/index.php/fruits/banana';
@@ -651,8 +623,6 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('candy/snickers', $request->getPath());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetPath()
     {

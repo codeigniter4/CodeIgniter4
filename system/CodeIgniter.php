@@ -276,8 +276,6 @@ class CodeIgniter
         CliRenderer::$min_terminal_width = $config->cliMinWidth;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Launch the application!
      *
@@ -341,8 +339,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set our Response instance to "pretend" mode so that things like
      * cookies and headers are not actually sent, allowing PHP 7.2+ to
@@ -358,8 +354,6 @@ class CodeIgniter
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles the main request logic and fires the controller.
@@ -454,15 +448,11 @@ class CodeIgniter
             $this->sendResponse();
         }
 
-        //--------------------------------------------------------------------
         // Is there a post-system event?
-        //--------------------------------------------------------------------
         Events::trigger('post_system');
 
         return $this->response;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * You can load different configurations depending on your
@@ -485,8 +475,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Load any custom boot files based upon the current environment.
      *
@@ -507,8 +495,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Start the Benchmark
      *
@@ -524,8 +510,6 @@ class CodeIgniter
         $this->benchmark->start('bootstrap');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets a Request object to be used for this request.
      * Used when running certain tests.
@@ -540,8 +524,6 @@ class CodeIgniter
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get our Request object, (either IncomingRequest or CLIRequest)
@@ -566,8 +548,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get our Response object, and set some default values, including
      * the HTTP protocol version and a default successful response.
@@ -583,8 +563,6 @@ class CodeIgniter
         // Assume success until proven otherwise.
         $this->response->setStatusCode(200);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Force Secure Site Access? If the config value 'forceGlobalSecureRequests'
@@ -604,8 +582,6 @@ class CodeIgniter
 
         force_https($duration, $this->request, $this->response);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if a response has been cached for the given URI.
@@ -646,8 +622,6 @@ class CodeIgniter
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Tells the app that the final output should be cached.
      *
@@ -659,8 +633,6 @@ class CodeIgniter
     {
         static::$cacheTTL = $time;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Caches the full response from the current request. Used for
@@ -681,8 +653,6 @@ class CodeIgniter
         return cache()->save($this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), static::$cacheTTL);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an array with our basic performance stats collected.
      *
@@ -695,8 +665,6 @@ class CodeIgniter
             'totalTime' => $this->totalTime,
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates the cache name to use for our full-page caching.
@@ -722,8 +690,6 @@ class CodeIgniter
         return md5($name);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Replaces the elapsed_time tag.
      *
@@ -737,8 +703,6 @@ class CodeIgniter
 
         return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Try to Route It - As it sounds like, works with the router to
@@ -782,8 +746,6 @@ class CodeIgniter
         return $this->router->getFilter();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines the path to use for us to try to route to, based
      * on user input (setPath), or the CLI/IncomingRequest path.
@@ -796,8 +758,6 @@ class CodeIgniter
 
         return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Allows the request path to be set from outside the class,
@@ -815,8 +775,6 @@ class CodeIgniter
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Now that everything has been setup, this method attempts to run the
@@ -846,8 +804,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Instantiates the controller class.
      *
@@ -862,8 +818,6 @@ class CodeIgniter
 
         return $class;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Runs the controller, allowing for _remap methods to function.
@@ -887,8 +841,6 @@ class CodeIgniter
 
         return $output;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Displays a 404 Page Not Found error. If set, will try to
@@ -940,8 +892,6 @@ class CodeIgniter
         throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gathers the script output from the buffer, replaces some execution
      * time tag in the output and displays the debug toolbar, if required.
@@ -989,8 +939,6 @@ class CodeIgniter
         $this->response->setBody($this->output);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * If we have a session object to use, store the current URI
      * as the previous URI. This is called just prior to sending the
@@ -1021,8 +969,6 @@ class CodeIgniter
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Modifies the Request Object to use a different method if a POST
      * variable called _method is found.
@@ -1052,8 +998,6 @@ class CodeIgniter
         $this->response->pretend($this->useSafeOutput)->send();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Exits the application, setting the exit code for CLI-based applications
      * that might be watching.
@@ -1065,10 +1009,6 @@ class CodeIgniter
      */
     protected function callExit($code)
     {
-        // @codeCoverageIgnoreStart
-        exit($code);
-        // @codeCoverageIgnoreEnd
+        exit($code); // @codeCoverageIgnore
     }
-
-    //--------------------------------------------------------------------
 }

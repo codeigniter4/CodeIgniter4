@@ -13,16 +13,12 @@ final class EmptyTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testEmptyWithNoTable()
     {
@@ -34,6 +30,4 @@ final class EmptyTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $answer));
     }
-
-    //--------------------------------------------------------------------
 }

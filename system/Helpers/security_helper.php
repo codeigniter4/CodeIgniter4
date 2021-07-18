@@ -27,8 +27,6 @@ if (! function_exists('sanitize_filename')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('strip_image_tags')) {
     /**
      * Strip Image Tags
@@ -50,8 +48,6 @@ if (! function_exists('strip_image_tags')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('encode_php_tags')) {
     /**
      * Convert PHP tags to entities
@@ -65,5 +61,3 @@ if (! function_exists('encode_php_tags')) {
         return str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
     }
 }
-
-//--------------------------------------------------------------------

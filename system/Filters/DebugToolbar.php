@@ -34,8 +34,6 @@ class DebugToolbar implements FilterInterface
     {
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * If the debug flag is set (CI_DEBUG) then collect performance
      * and debug information and display it in a toolbar.
@@ -50,6 +48,4 @@ class DebugToolbar implements FilterInterface
     {
         Services::toolbar()->prepare($request, $response);
     }
-
-    //--------------------------------------------------------------------
 }

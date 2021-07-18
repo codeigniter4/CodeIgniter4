@@ -60,8 +60,6 @@ class Builder extends BaseBuilder
      */
     public $keyPermission = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * FROM tables
      *

@@ -12,7 +12,6 @@
 use Config\ForeignCharacters;
 
 // CodeIgniter Text Helpers
-//--------------------------------------------------------------------
 
 if (! function_exists('word_limiter')) {
     /**
@@ -41,8 +40,6 @@ if (! function_exists('word_limiter')) {
         return rtrim($matches[0]) . $endChar;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('character_limiter')) {
     /**
@@ -83,8 +80,6 @@ if (! function_exists('character_limiter')) {
         return (mb_strlen($out) === mb_strlen($str)) ? $out : $out . $endChar;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('ascii_to_entities')) {
     /**
@@ -138,8 +133,6 @@ if (! function_exists('ascii_to_entities')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('entities_to_ascii')) {
     /**
      * Entities to ASCII
@@ -181,8 +174,6 @@ if (! function_exists('entities_to_ascii')) {
         return $str;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('word_censor')) {
     /**
@@ -240,8 +231,6 @@ if (! function_exists('word_censor')) {
         return trim($str);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('highlight_code')) {
     /**
@@ -310,8 +299,6 @@ if (! function_exists('highlight_code')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('highlight_phrase')) {
     /**
      * Phrase Highlighter
@@ -330,8 +317,6 @@ if (! function_exists('highlight_phrase')) {
         return ($str !== '' && $phrase !== '') ? preg_replace('/(' . preg_quote($phrase, '/') . ')/i', $tagOpen . '\\1' . $tagClose, $str) : $str;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('convert_accented_characters')) {
     /**
@@ -363,8 +348,6 @@ if (! function_exists('convert_accented_characters')) {
         return preg_replace($arrayFrom, $arrayTo, $str);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('word_wrap')) {
     /**
@@ -450,8 +433,6 @@ if (! function_exists('word_wrap')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('ellipsize')) {
     /**
      * Ellipsize String
@@ -488,8 +469,6 @@ if (! function_exists('ellipsize')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('strip_slashes')) {
     /**
      * Strip Slashes
@@ -514,8 +493,6 @@ if (! function_exists('strip_slashes')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('strip_quotes')) {
     /**
      * Strip Quotes
@@ -532,8 +509,6 @@ if (! function_exists('strip_quotes')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('quotes_to_entities')) {
     /**
      * Quotes to Entities
@@ -549,8 +524,6 @@ if (! function_exists('quotes_to_entities')) {
         return str_replace(["\\'", '"', "'", '"'], ['&#39;', '&quot;', '&#39;', '&quot;'], $str);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('reduce_double_slashes')) {
     /**
@@ -574,8 +547,6 @@ if (! function_exists('reduce_double_slashes')) {
         return preg_replace('#(^|[^:])//+#', '\\1/', $str);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('reduce_multiples')) {
     /**
@@ -602,8 +573,6 @@ if (! function_exists('reduce_multiples')) {
         return ($trim) ? trim($str, $character) : $str;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('random_string')) {
     /**
@@ -658,8 +627,6 @@ if (! function_exists('random_string')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('increment_string')) {
     /**
      * Add's _1 to a string or increment the ending number to allow _2, _3, etc
@@ -677,8 +644,6 @@ if (! function_exists('increment_string')) {
         return isset($match[2]) ? $match[1] . $separator . ($match[2] + 1) : $str . $separator . $first;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('alternator')) {
     /**
@@ -707,8 +672,6 @@ if (! function_exists('alternator')) {
         return $args[($i++ % count($args))];
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('excerpt')) {
     /**
@@ -763,6 +726,4 @@ if (! function_exists('excerpt')) {
 
         return str_replace('  ', ' ', $ellPre . $prev . $phrase . $post . $ellipsis);
     }
-
-    //--------------------------------------------------------------------
 }

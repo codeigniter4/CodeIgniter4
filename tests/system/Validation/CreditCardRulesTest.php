@@ -33,8 +33,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
         ],
     ];
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,9 +42,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
         $_FILES = [];
     }
 
-    //--------------------------------------------------------------------
     // Credit Card Rules
-    //--------------------------------------------------------------------
 
     /**
      * @dataProvider creditCardProvider
@@ -67,8 +63,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Cards shown are test cards found around the web.
@@ -1213,8 +1207,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used to generate fake credit card numbers that will still pass the Luhn
      * check used to validate the card so we can be sure the cards are recognized correctly.
@@ -1263,6 +1255,4 @@ final class CreditCardRulesTest extends CIUnitTestCase
 
         return implode('', $string);
     }
-
-    //--------------------------------------------------------------------
 }

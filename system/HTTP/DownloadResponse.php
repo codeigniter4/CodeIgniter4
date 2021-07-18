@@ -219,8 +219,6 @@ class DownloadResponse extends Response
         return $result;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Disallows status changing.
      *
@@ -233,8 +231,6 @@ class DownloadResponse extends Response
     {
         throw DownloadException::forCannotSetStatusCode($code, $reason);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the Content Type header for this response with the mime type
@@ -269,8 +265,6 @@ class DownloadResponse extends Response
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Disables cache configuration.
      *
@@ -282,10 +276,6 @@ class DownloadResponse extends Response
     {
         throw DownloadException::forCannotSetCache();
     }
-
-    //--------------------------------------------------------------------
-    // Output Methods
-    //--------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

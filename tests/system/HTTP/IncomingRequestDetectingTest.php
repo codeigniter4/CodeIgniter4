@@ -28,8 +28,6 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
     }
 
-    //--------------------------------------------------------------------
-
     public function testPathDefault()
     {
         $this->request->uri     = '/index.php/woot?code=good#pos';
@@ -111,8 +109,6 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testPathQueryString()
     {
         $this->request->uri      = '/?/ci/index.php/woot';
@@ -132,8 +128,6 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $expected                = '';
         $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testPathPathInfo()
     {

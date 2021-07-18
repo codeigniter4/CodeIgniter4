@@ -74,8 +74,6 @@ abstract class BaseResult implements ResultInterface
      */
     public $rowData;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -87,8 +85,6 @@ abstract class BaseResult implements ResultInterface
         $this->connID   = $connID;
         $this->resultID = $resultID;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the results of the query. Typically an array of
@@ -111,8 +107,6 @@ abstract class BaseResult implements ResultInterface
 
         return $this->getCustomResultObject($type);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the results as an array of custom objects.
@@ -168,8 +162,6 @@ abstract class BaseResult implements ResultInterface
         return $this->customResultObject[$className];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the results as an array of arrays.
      *
@@ -208,8 +200,6 @@ abstract class BaseResult implements ResultInterface
 
         return $this->resultArray;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the results as an array of objects.
@@ -255,8 +245,6 @@ abstract class BaseResult implements ResultInterface
         return $this->resultObject;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Wrapper object to return a row as either an array, an object, or
      * a custom class.
@@ -295,8 +283,6 @@ abstract class BaseResult implements ResultInterface
         return $this->getCustomRowObject($n, $type);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a row as a custom class instance.
      *
@@ -324,8 +310,6 @@ abstract class BaseResult implements ResultInterface
         return $this->customResultObject[$className][$this->currentRow];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a single row from the results as an array.
      *
@@ -349,8 +333,6 @@ abstract class BaseResult implements ResultInterface
         return $result[$this->currentRow];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a single row from the results as an object.
      *
@@ -373,8 +355,6 @@ abstract class BaseResult implements ResultInterface
 
         return $result[$this->currentRow];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Assigns an item into a particular column slot.
@@ -404,8 +384,6 @@ abstract class BaseResult implements ResultInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the "first" row of the current results.
      *
@@ -420,8 +398,6 @@ abstract class BaseResult implements ResultInterface
         return (empty($result)) ? null : $result[0];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the "last" row of the current results.
      *
@@ -435,8 +411,6 @@ abstract class BaseResult implements ResultInterface
 
         return (empty($result)) ? null : $result[count($result) - 1];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the "next" row of the current results.
@@ -454,8 +428,6 @@ abstract class BaseResult implements ResultInterface
 
         return isset($result[$this->currentRow + 1]) ? $result[++$this->currentRow] : null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the "previous" row of the current results.
@@ -478,8 +450,6 @@ abstract class BaseResult implements ResultInterface
         return $result[$this->currentRow];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an unbuffered row and move the pointer to the next row.
      *
@@ -499,8 +469,6 @@ abstract class BaseResult implements ResultInterface
 
         return $this->fetchObject($type);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Number of rows in the result set; checks for previous count, falls
@@ -531,16 +499,12 @@ abstract class BaseResult implements ResultInterface
      */
     abstract public function getFieldCount(): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates an array of column names in the result set.
      *
      * @return array
      */
     abstract public function getFieldNames(): array;
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates an array of objects representing field meta-data.
@@ -549,16 +513,12 @@ abstract class BaseResult implements ResultInterface
      */
     abstract public function getFieldData(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Frees the current result.
      *
      * @return void
      */
     abstract public function freeResult();
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves the internal pointer to the desired offset. This is called
@@ -571,8 +531,6 @@ abstract class BaseResult implements ResultInterface
      */
     abstract public function dataSeek(int $n = 0);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the result set as an array.
      *
@@ -581,8 +539,6 @@ abstract class BaseResult implements ResultInterface
      * @return mixed
      */
     abstract protected function fetchAssoc();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the result set as an object.
@@ -594,6 +550,4 @@ abstract class BaseResult implements ResultInterface
      * @return object
      */
     abstract protected function fetchObject(string $className = 'stdClass');
-
-    //--------------------------------------------------------------------
 }

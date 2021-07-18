@@ -35,6 +35,4 @@ final class PretendTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Query::class, $result);
     }
-
-    //--------------------------------------------------------------------
 }

@@ -16,8 +16,6 @@ final class XMLHelperTest extends CIUnitTestCase
         helper('xml');
     }
 
-    // --------------------------------------------------------------------
-
     public function testConvert()
     {
         $original = '<p>Here is a so-so paragraph & an entity (&#123;).</p>';
@@ -25,7 +23,6 @@ final class XMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, xml_convert($original));
     }
 
-    // --------------------------------------------------------------------
     public function testConvertProtected()
     {
         $original = '<p>Here is a so&so; paragraph & an entity (&#123;).</p>';

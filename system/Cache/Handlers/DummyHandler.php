@@ -25,8 +25,6 @@ class DummyHandler extends BaseHandler
     {
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to fetch an item from the cache store.
      *
@@ -38,8 +36,6 @@ class DummyHandler extends BaseHandler
     {
         return null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
@@ -55,8 +51,6 @@ class DummyHandler extends BaseHandler
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Saves an item to the cache store.
      *
@@ -71,8 +65,6 @@ class DummyHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -85,8 +77,6 @@ class DummyHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes items from the cache store matching a given pattern.
      *
@@ -98,8 +88,6 @@ class DummyHandler extends BaseHandler
     {
         return 0;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic incrementation of a raw stored value.
@@ -114,8 +102,6 @@ class DummyHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic decrementation of a raw stored value.
      *
@@ -129,8 +115,6 @@ class DummyHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -140,8 +124,6 @@ class DummyHandler extends BaseHandler
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -156,8 +138,6 @@ class DummyHandler extends BaseHandler
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns detailed information about the specific item in the cache.
      *
@@ -169,8 +149,6 @@ class DummyHandler extends BaseHandler
     {
         return null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the driver is supported on this system.

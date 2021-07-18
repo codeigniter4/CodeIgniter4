@@ -31,8 +31,6 @@ class FileCollection
      */
     protected $files;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an array of all uploaded files that were found.
      * Each element in the array will be an instance of UploadedFile.
@@ -76,8 +74,6 @@ class FileCollection
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
      *
@@ -109,8 +105,6 @@ class FileCollection
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks whether an uploaded file with name $fileID exists in
      * this request.
@@ -141,8 +135,6 @@ class FileCollection
 
         return isset($this->files[$fileID]);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Taking information from the $_FILES array, it creates an instance
@@ -202,8 +194,6 @@ class FileCollection
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Reformats the odd $_FILES array into something much more like
      * we would expect, with each object having its own array.
@@ -251,8 +241,6 @@ class FileCollection
 
         return $output;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Navigate through a array looking for a particular index

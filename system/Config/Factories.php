@@ -67,8 +67,6 @@ class Factories
      */
     protected static $instances = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Loads instances based on the method component name. Either
      * creates a new instance or returns an existing shared instance.
@@ -177,8 +175,6 @@ class Factories
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Verifies that a class & config satisfy the "preferApp" option
      *
@@ -219,8 +215,6 @@ class Factories
 
         return is_a($name, $options['instanceOf'], true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the component-specific configuration

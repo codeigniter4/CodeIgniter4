@@ -102,8 +102,6 @@ class Router implements RouterInterface
      */
     protected $filterInfo;
 
-    //--------------------------------------------------------------------
-
     /**
      * Stores a reference to the RouteCollection object.
      *
@@ -120,8 +118,6 @@ class Router implements RouterInterface
         // @phpstan-ignore-next-line
         $this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @param string|null $uri
@@ -169,8 +165,6 @@ class Router implements RouterInterface
         return $this->controllerName();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the filter info for the matched route, if any.
      *
@@ -180,8 +174,6 @@ class Router implements RouterInterface
     {
         return $this->filterInfo;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the name of the matched controller.
@@ -195,8 +187,6 @@ class Router implements RouterInterface
             : $this->controller;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the method to run in the
      * chosen container.
@@ -209,8 +199,6 @@ class Router implements RouterInterface
             ? str_replace('-', '_', $this->method)
             : $this->method;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the 404 Override settings from the Collection.
@@ -236,8 +224,6 @@ class Router implements RouterInterface
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the binds that have been matched and collected
      * during the parsing process as an array, ready to send to
@@ -249,8 +235,6 @@ class Router implements RouterInterface
     {
         return $this->params;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the name of the sub-directory the controller is in,
@@ -265,8 +249,6 @@ class Router implements RouterInterface
         return ! empty($this->directory) ? $this->directory : '';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the routing information that was matched for this
      * request, if a route was defined.
@@ -278,8 +260,6 @@ class Router implements RouterInterface
         return $this->matchedRoute;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns all options set for the matched route
      *
@@ -289,8 +269,6 @@ class Router implements RouterInterface
     {
         return $this->matchedRouteOptions;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the value that should be used to match the index.php file. Defaults
@@ -309,8 +287,6 @@ class Router implements RouterInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
@@ -326,8 +302,6 @@ class Router implements RouterInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns true/false based on whether the current route contained
      * a {locale} placeholder.
@@ -339,8 +313,6 @@ class Router implements RouterInterface
         return (bool) $this->detectedLocale;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the detected locale, if any, or null.
      *
@@ -350,8 +322,6 @@ class Router implements RouterInterface
     {
         return $this->detectedLocale;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Compares the uri string against the routes that the
@@ -470,8 +440,6 @@ class Router implements RouterInterface
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to match a URI path against Controllers and directories
      * found in APPPATH/Controllers, to find a matching route.
@@ -547,8 +515,6 @@ class Router implements RouterInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
      *
@@ -564,8 +530,6 @@ class Router implements RouterInterface
     {
         return $this->scanControllers($segments);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Scans the controller directory, attempting to locate a controller matching the supplied uri $segments
@@ -615,8 +579,6 @@ class Router implements RouterInterface
         return $segments;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the sub-directory that the controller is in.
      *
@@ -663,8 +625,6 @@ class Router implements RouterInterface
         return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set request route
      *
@@ -697,8 +657,6 @@ class Router implements RouterInterface
         $this->params = $segments;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the default controller based on the info set in the RouteCollection.
      */
@@ -721,6 +679,4 @@ class Router implements RouterInterface
 
         log_message('info', 'Used the default controller.');
     }
-
-    //--------------------------------------------------------------------
 }

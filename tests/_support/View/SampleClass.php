@@ -20,8 +20,6 @@ class SampleClass
         return 'Hello';
     }
 
-    //--------------------------------------------------------------------
-
     public function echobox($params)
     {
         if (is_array($params)) {
@@ -31,8 +29,6 @@ class SampleClass
         return $params;
     }
 
-    //--------------------------------------------------------------------
-
     public static function staticEcho($params)
     {
         if (is_array($params)) {
@@ -41,8 +37,6 @@ class SampleClass
 
         return $params;
     }
-
-    //--------------------------------------------------------------------
 
     public function work($p1, $p2, $p4)
     {

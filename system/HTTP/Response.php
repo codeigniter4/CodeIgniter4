@@ -156,9 +156,8 @@ class Response extends Message implements MessageInterface, ResponseInterface
 
         $this->CSPEnabled = $config->CSPEnabled;
 
-        //---------------------------------------------------------------------
         // DEPRECATED COOKIE MANAGEMENT
-        //---------------------------------------------------------------------
+
         $this->cookiePrefix   = $config->cookiePrefix;
         $this->cookieDomain   = $config->cookieDomain;
         $this->cookiePath     = $config->cookiePath;

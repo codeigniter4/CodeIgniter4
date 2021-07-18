@@ -29,8 +29,6 @@ final class UserAgentTest extends CIUnitTestCase
         helper('url');
     }
 
-    // --------------------------------------------------------------------
-
     public function testMobile()
     {
         // Mobile Not Set
@@ -38,8 +36,6 @@ final class UserAgentTest extends CIUnitTestCase
         $this->assertFalse($this->agent->isMobile());
         unset($_SERVER['HTTP_USER_AGENT']);
     }
-
-    // --------------------------------------------------------------------
 
     public function testIsFunctions()
     {
@@ -49,8 +45,6 @@ final class UserAgentTest extends CIUnitTestCase
         $this->assertFalse($this->agent->isRobot());
         $this->assertFalse($this->agent->isMobile());
     }
-
-    // --------------------------------------------------------------------
 
     public function testReferrer()
     {
@@ -64,14 +58,10 @@ final class UserAgentTest extends CIUnitTestCase
         $this->assertSame('', $this->agent->getReferrer());
     }
 
-    // --------------------------------------------------------------------
-
     public function testAgentString()
     {
         $this->assertSame($this->_user_agent, $this->agent->getAgentString());
     }
-
-    // --------------------------------------------------------------------
 
     public function testBrowserInfo()
     {
@@ -80,8 +70,6 @@ final class UserAgentTest extends CIUnitTestCase
         $this->assertSame('533.20.27', $this->agent->getVersion());
         $this->assertSame('', $this->agent->getRobot());
     }
-
-    // --------------------------------------------------------------------
 
     public function testParse()
     {

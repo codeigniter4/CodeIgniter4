@@ -84,8 +84,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame('image/png', $props['mime_type']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testResizeIgnored()
     {
         $this->handler->withFile($this->path);
@@ -125,8 +123,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(354, $this->handler->getWidth());
         $this->assertSame(456, $this->handler->getHeight());
     }
-
-    //--------------------------------------------------------------------
 
     public function testCropTopLeft()
     {
@@ -176,8 +172,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(100, $this->handler->getHeight());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRotate()
     {
         $this->handler->withFile($this->path); // 155x200
@@ -200,8 +194,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->handler->rotate(77);
     }
 
-    //--------------------------------------------------------------------
-
     public function testFlatten()
     {
         $this->handler->withFile($this->path);
@@ -209,8 +201,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(155, $this->handler->getWidth());
         $this->assertSame(200, $this->handler->getHeight());
     }
-
-    //--------------------------------------------------------------------
 
     public function testFlip()
     {
@@ -243,7 +233,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->handler->flip('bogus');
     }
 
-    //--------------------------------------------------------------------
     public function testFit()
     {
         $this->handler->withFile($this->path);
@@ -290,8 +279,6 @@ final class GDHandlerTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testText()
     {
         $this->handler->withFile($this->path);
@@ -300,8 +287,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(200, $this->handler->getHeight());
     }
 
-    //--------------------------------------------------------------------
-
     public function testMoreText()
     {
         $this->handler->withFile($this->path);
@@ -309,8 +294,6 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(155, $this->handler->getWidth());
         $this->assertSame(200, $this->handler->getHeight());
     }
-
-    //--------------------------------------------------------------------
 
     public function testImageCreation()
     {
@@ -326,8 +309,6 @@ final class GDHandlerTest extends CIUnitTestCase
             $this->assertSame(200, $this->handler->getHeight());
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testImageCopy()
     {

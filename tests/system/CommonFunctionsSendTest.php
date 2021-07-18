@@ -16,8 +16,6 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
         unset($_ENV['foo'], $_SERVER['foo']);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Make sure cookies are set by RedirectResponse this way
      * See https://github.com/codeigniter4/CodeIgniter4/issues/1393

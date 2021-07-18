@@ -29,15 +29,11 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertSame('secret', $actual);
     }
 
-    //--------------------------------------------------------------------
-
     public function testLogging()
     {
         log_message('error', 'Some variable did not contain a value.');
         $this->assertLogged('error', 'Some variable did not contain a value.');
     }
-
-    //--------------------------------------------------------------------
 
     public function testEventTriggering()
     {
@@ -50,8 +46,6 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertEventTriggered('foo');
     }
 
-    //--------------------------------------------------------------------
-
     public function testStreamFilter()
     {
         CITestStreamFilter::$buffer = '';
@@ -61,8 +55,6 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertSame($expected, CITestStreamFilter::$buffer);
         stream_filter_remove($this->stream_filter);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * PHPunit emits headers before we get nominal control of
@@ -90,7 +82,6 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
     }
 
-    //--------------------------------------------------------------------
     public function testCloseEnough()
     {
         $this->assertCloseEnough(1, 1);

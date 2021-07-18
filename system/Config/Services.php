@@ -109,8 +109,6 @@ class Services extends BaseService
         return CacheFactory::getHandler($config);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The CLI Request class provides for ways to interact with
      * a command line request.
@@ -130,8 +128,6 @@ class Services extends BaseService
 
         return new CLIRequest($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * CodeIgniter, the core of the framework.
@@ -196,8 +192,6 @@ class Services extends BaseService
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Email class allows you to send email via mail, sendmail, SMTP.
      *
@@ -239,8 +233,6 @@ class Services extends BaseService
         return $encryption->initialize($config);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Exceptions class holds the methods that handle:
      *
@@ -272,8 +264,6 @@ class Services extends BaseService
         return new Exceptions($config, $request, $response);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Filters allow you to run tasks before and/or after a controller
      * is executed. During before filters, the request can be modified,
@@ -296,8 +286,6 @@ class Services extends BaseService
         return new Filters($config, AppServices::request(), AppServices::response());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Format class is a convenient place to create Formatters.
      *
@@ -316,8 +304,6 @@ class Services extends BaseService
 
         return new Format($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Honeypot provides a secret input on forms that bots should NOT
@@ -338,8 +324,6 @@ class Services extends BaseService
 
         return new Honeypot($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Acts as a factory for ImageHandler classes and returns an instance
@@ -364,8 +348,6 @@ class Services extends BaseService
         return new $class($config);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Iterator class provides a simple way of looping over a function
      * and timing the results and memory usage. Used when debugging and
@@ -383,8 +365,6 @@ class Services extends BaseService
 
         return new Iterator();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Responsible for loading the language string translations.
@@ -406,8 +386,6 @@ class Services extends BaseService
         return new Language($locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Logger class is a PSR-3 compatible Logging class that supports
      * multiple handlers that process the actual logging.
@@ -424,8 +402,6 @@ class Services extends BaseService
 
         return new Logger(config('Logger'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the appropriate Migration runner.
@@ -446,8 +422,6 @@ class Services extends BaseService
 
         return new MigrationRunner($config, $db);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Negotiate class provides the content negotiation features for
@@ -470,8 +444,6 @@ class Services extends BaseService
         return new Negotiate($request);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the appropriate pagination handler.
      *
@@ -493,8 +465,6 @@ class Services extends BaseService
         return new Pager($config, $view);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Parser is a simple template parser.
      *
@@ -515,8 +485,6 @@ class Services extends BaseService
 
         return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Renderer class is the class that actually displays a file to the user.
@@ -540,8 +508,6 @@ class Services extends BaseService
 
         return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Request class models an HTTP request.
@@ -567,8 +533,6 @@ class Services extends BaseService
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Response class models an HTTP response.
      *
@@ -587,8 +551,6 @@ class Services extends BaseService
 
         return new Response($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Redirect class provides nice way of working with redirects.
@@ -611,8 +573,6 @@ class Services extends BaseService
         return $response;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Routes service is a class that allows for easily building
      * a collection of routes.
@@ -629,8 +589,6 @@ class Services extends BaseService
 
         return new RouteCollection(AppServices::locator(), config('Modules'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Router class uses a RouteCollection's array of routes, and determines
@@ -654,8 +612,6 @@ class Services extends BaseService
         return new Router($routes, $request);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Security class provides a few handy tools for keeping the site
      * secure, most notably the CSRF protection tools.
@@ -675,8 +631,6 @@ class Services extends BaseService
 
         return new Security($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the session manager.
@@ -709,8 +663,6 @@ class Services extends BaseService
         return $session;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Throttler class provides a simple method for implementing
      * rate limiting in your applications.
@@ -728,8 +680,6 @@ class Services extends BaseService
         return new Throttler(AppServices::cache());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The Timer class provides a simple way to Benchmark portions of your
      * application.
@@ -746,8 +696,6 @@ class Services extends BaseService
 
         return new Timer();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the debug toolbar.
@@ -768,8 +716,6 @@ class Services extends BaseService
         return new Toolbar($config);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The URI class provides a way to model and manipulate URIs.
      *
@@ -786,8 +732,6 @@ class Services extends BaseService
 
         return new URI($uri);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Validation class provides tools for validating input data.
@@ -808,8 +752,6 @@ class Services extends BaseService
         return new Validation($config, AppServices::renderer());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * View cells are intended to let you insert HTML into view
      * that has been generated by any callable in the system.
@@ -826,8 +768,6 @@ class Services extends BaseService
 
         return new Cell(AppServices::cache());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The Typography class provides a way to format text in semantically relevant ways.

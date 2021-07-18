@@ -12,8 +12,6 @@ final class PrefixTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,16 +19,12 @@ final class PrefixTest extends CIUnitTestCase
         $this->db = new MockConnection(['DBPrefix' => 'ci_']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrefixesSetOnTableNames()
     {
         $expected = 'ci_users';
 
         $this->assertSame($expected, $this->db->prefixTable('users'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testPrefixesSetOnTableNamesWithWhereClause()
     {

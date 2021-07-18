@@ -24,8 +24,6 @@ final class DebugToolbarTest extends CIUnitTestCase
         $this->response = Services::response();
     }
 
-    //--------------------------------------------------------------------
-
     public function testDebugToolbarFilter()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';

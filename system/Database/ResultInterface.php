@@ -27,8 +27,6 @@ interface ResultInterface
      */
     public function getResult(string $type = 'object'): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the results as an array of custom objects.
      *
@@ -37,8 +35,6 @@ interface ResultInterface
      * @return mixed
      */
     public function getCustomResultObject(string $className);
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the results as an array of arrays.
@@ -49,8 +45,6 @@ interface ResultInterface
      */
     public function getResultArray(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the results as an array of objects.
      *
@@ -59,8 +53,6 @@ interface ResultInterface
      * @return array
      */
     public function getResultObject(): array;
-
-    //--------------------------------------------------------------------
 
     /**
      * Wrapper object to return a row as either an array, an object, or
@@ -75,8 +67,6 @@ interface ResultInterface
      */
     public function getRow($n = 0, string $type = 'object');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a row as a custom class instance.
      *
@@ -89,8 +79,6 @@ interface ResultInterface
      */
     public function getCustomRowObject(int $n, string $className);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a single row from the results as an array.
      *
@@ -101,8 +89,6 @@ interface ResultInterface
      * @return mixed
      */
     public function getRowArray(int $n = 0);
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a single row from the results as an object.
@@ -115,8 +101,6 @@ interface ResultInterface
      */
     public function getRowObject(int $n = 0);
 
-    //--------------------------------------------------------------------
-
     /**
      * Assigns an item into a particular column slot.
      *
@@ -127,8 +111,6 @@ interface ResultInterface
      */
     public function setRow($key, $value = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the "first" row of the current results.
      *
@@ -137,8 +119,6 @@ interface ResultInterface
      * @return mixed
      */
     public function getFirstRow(string $type = 'object');
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the "last" row of the current results.
@@ -149,8 +129,6 @@ interface ResultInterface
      */
     public function getLastRow(string $type = 'object');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the "next" row of the current results.
      *
@@ -159,8 +137,6 @@ interface ResultInterface
      * @return mixed
      */
     public function getNextRow(string $type = 'object');
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the "previous" row of the current results.
@@ -171,8 +147,6 @@ interface ResultInterface
      */
     public function getPreviousRow(string $type = 'object');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an unbuffered row and move the pointer to the next row.
      *
@@ -182,16 +156,12 @@ interface ResultInterface
      */
     public function getUnbufferedRow(string $type = 'object');
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the number of fields in the result set.
      *
      * @return int
      */
     public function getFieldCount(): int;
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates an array of column names in the result set.
@@ -200,8 +170,6 @@ interface ResultInterface
      */
     public function getFieldNames(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates an array of objects representing field meta-data.
      *
@@ -209,16 +177,12 @@ interface ResultInterface
      */
     public function getFieldData(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Frees the current result.
      *
      * @return void
      */
     public function freeResult();
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves the internal pointer to the desired offset. This is called
@@ -230,6 +194,4 @@ interface ResultInterface
      * @return mixed
      */
     public function dataSeek(int $n = 0);
-
-    //--------------------------------------------------------------------
 }

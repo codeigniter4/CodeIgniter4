@@ -73,8 +73,6 @@ if (! function_exists('_get_uri')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
@@ -98,8 +96,6 @@ if (! function_exists('site_url')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('base_url')) {
     /**
      * Returns the base URL as defined by the App config.
@@ -118,8 +114,6 @@ if (! function_exists('base_url')) {
         return rtrim(site_url($relativePath, $scheme, $config), '/');
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('current_url')) {
     /**
@@ -150,8 +144,6 @@ if (! function_exists('current_url')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('previous_url')) {
     /**
      * Returns the previous URL the current visitor was on. For security reasons
@@ -176,8 +168,6 @@ if (! function_exists('previous_url')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('uri_string')) {
     /**
      * URL String
@@ -195,8 +185,6 @@ if (! function_exists('uri_string')) {
             : Services::request()->getUri()->getPath();
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('index_page')) {
     /**
@@ -216,8 +204,6 @@ if (! function_exists('index_page')) {
         return $config->indexPage;
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('anchor')) {
     /**
@@ -252,8 +238,6 @@ if (! function_exists('anchor')) {
         return '<a href="' . $siteUrl . '"' . $attributes . '>' . $title . '</a>';
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('anchor_popup')) {
     /**
@@ -310,8 +294,6 @@ if (! function_exists('anchor_popup')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('mailto')) {
     /**
      * Mailto Link
@@ -331,8 +313,6 @@ if (! function_exists('mailto')) {
         return '<a href="mailto:' . $email . '"' . stringify_attributes($attributes) . '>' . $title . '</a>';
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('safe_mailto')) {
     /**
@@ -426,8 +406,6 @@ if (! function_exists('safe_mailto')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('auto_link')) {
     /**
      * Auto-linker
@@ -477,8 +455,6 @@ if (! function_exists('auto_link')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('prep_url')) {
     /**
      * Prep URL - Simply adds the http:// or https:// part if no scheme is included.
@@ -509,8 +485,6 @@ if (! function_exists('prep_url')) {
         return $str;
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('url_title')) {
     /**
@@ -551,8 +525,6 @@ if (! function_exists('url_title')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('mb_url_title')) {
     /**
      * Create URL Title that takes into account accented characters
@@ -574,8 +546,6 @@ if (! function_exists('mb_url_title')) {
         return url_title(convert_accented_characters($str), $separator, $lowercase);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('url_to')) {
     /**

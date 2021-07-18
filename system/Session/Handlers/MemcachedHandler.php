@@ -48,8 +48,6 @@ class MemcachedHandler extends BaseHandler
      */
     protected $sessionExpiration = 7200;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -76,8 +74,6 @@ class MemcachedHandler extends BaseHandler
 
         $this->sessionExpiration = $config->sessionExpiration;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Open
@@ -132,8 +128,6 @@ class MemcachedHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Read
      *
@@ -159,8 +153,6 @@ class MemcachedHandler extends BaseHandler
 
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -207,8 +199,6 @@ class MemcachedHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -235,8 +225,6 @@ class MemcachedHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Destroy
      *
@@ -257,8 +245,6 @@ class MemcachedHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -273,8 +259,6 @@ class MemcachedHandler extends BaseHandler
         // Not necessary, Memcached takes care of that.
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get lock
@@ -323,8 +307,6 @@ class MemcachedHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Release lock
      *
@@ -350,6 +332,4 @@ class MemcachedHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

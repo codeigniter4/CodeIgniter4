@@ -12,16 +12,12 @@ final class GetTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGet()
     {
@@ -31,8 +27,6 @@ final class GetTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2141
@@ -50,8 +44,6 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
      */
@@ -68,8 +60,6 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetWhereWithLimitAndOffset()
     {
         $builder = $this->db->table('users');
@@ -83,8 +73,6 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetWhereWithWhereConditionOnly()
     {
         $builder = $this->db->table('users');
@@ -97,8 +85,6 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetWhereWithoutArgs()
     {

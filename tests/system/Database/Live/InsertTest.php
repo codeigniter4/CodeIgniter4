@@ -30,8 +30,6 @@ final class InsertTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testInsertBatch()
     {
         $jobData = [
@@ -51,8 +49,6 @@ final class InsertTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'Cab Driver']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testReplaceWithNoMatchingData()
     {
         $data = [
@@ -70,8 +66,6 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame('Cab Driver', $row->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testReplaceWithMatchingData()
     {
         $data = [
@@ -88,8 +82,6 @@ final class InsertTest extends CIUnitTestCase
 
         $this->assertSame('Cab Driver', $row->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testBug302()
     {

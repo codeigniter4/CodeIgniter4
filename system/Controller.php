@@ -66,8 +66,6 @@ class Controller
      */
     protected $validator;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -91,8 +89,6 @@ class Controller
         helper($this->helpers);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A convenience method to use when you need to ensure that a single
      * method is reached only via HTTPS. If it isn't, then a redirect
@@ -110,8 +106,6 @@ class Controller
         force_https($duration, $this->request, $this->response);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Provides a simple way to tie into the main CodeIgniter class and
      * tell it how long to cache the current page for.
@@ -122,8 +116,6 @@ class Controller
     {
         CodeIgniter::cache($time);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles "auto-loading" helper files.
@@ -140,8 +132,6 @@ class Controller
 
         helper($this->helpers);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * A shortcut to performing validation on input data. If validation

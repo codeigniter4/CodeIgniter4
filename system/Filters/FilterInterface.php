@@ -36,8 +36,6 @@ interface FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Allows After filters to inspect and modify the response
      * object as needed. This method does not allow any way
@@ -51,6 +49,4 @@ interface FilterInterface
      * @return mixed
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null);
-
-    //--------------------------------------------------------------------
 }

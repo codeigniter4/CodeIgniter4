@@ -155,8 +155,6 @@ trait RequestTrait
         return empty($this->ipAddress) ? '' : $this->ipAddress;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from the $_SERVER array.
      *
@@ -170,8 +168,6 @@ trait RequestTrait
     {
         return $this->fetchGlobal('server', $index, $filter, $flags);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fetch an item from the $_ENV array.
@@ -187,8 +183,6 @@ trait RequestTrait
         return $this->fetchGlobal('env', $index, $filter, $flags);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
      *
@@ -203,8 +197,6 @@ trait RequestTrait
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fetches one or more items from a global, like cookies, get, post, etc.
@@ -307,8 +299,6 @@ trait RequestTrait
 
         return filter_var($value, $filter, $flags);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves a copy of the current state of one of several PHP globals

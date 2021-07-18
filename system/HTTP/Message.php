@@ -43,8 +43,6 @@ class Message implements MessageInterface
      */
     protected $body;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the Message's body.
      *

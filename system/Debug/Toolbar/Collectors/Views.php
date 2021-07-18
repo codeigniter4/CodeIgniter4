@@ -73,8 +73,6 @@ class Views extends BaseCollector
      */
     protected $views = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      */
@@ -82,8 +80,6 @@ class Views extends BaseCollector
     {
         $this->viewer = Services::renderer();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Child classes should implement this to return the timeline data
@@ -108,8 +104,6 @@ class Views extends BaseCollector
 
         return $data;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Gets a collection of data that should be shown in the 'Vars' tab.
@@ -136,8 +130,6 @@ class Views extends BaseCollector
             'View Data' => $this->viewer->getData(),
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a count of all views.

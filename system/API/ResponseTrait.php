@@ -81,8 +81,6 @@ trait ResponseTrait
      */
     protected $formatter;
 
-    //--------------------------------------------------------------------
-
     /**
      * Provides a single, simple method to return an API response, formatted
      * to match the requested format, with proper content-type and status code.
@@ -123,8 +121,6 @@ trait ResponseTrait
         return $this->response->setBody($output)->setStatusCode($status, $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used for generic failures that no custom methods exist for.
      *
@@ -151,7 +147,6 @@ trait ResponseTrait
     }
 
     //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
     // Response Helpers
     //--------------------------------------------------------------------
 
@@ -167,8 +162,6 @@ trait ResponseTrait
     {
         return $this->respond($data, $this->codes['created'], $message);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Used after a resource has been successfully deleted.
@@ -196,8 +189,6 @@ trait ResponseTrait
         return $this->respond($data, $this->codes['updated'], $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used after a command has been successfully executed but there is no
      * meaningful reply to send back to the client.
@@ -210,8 +201,6 @@ trait ResponseTrait
     {
         return $this->respond(null, $this->codes['no_content'], $message);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Used when the client is either didn't send authorization information,
@@ -229,8 +218,6 @@ trait ResponseTrait
         return $this->fail($description, $this->codes['unauthorized'], $code, $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used when access is always denied to this resource and no amount
      * of trying again will help.
@@ -246,8 +233,6 @@ trait ResponseTrait
         return $this->fail($description, $this->codes['forbidden'], $code, $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used when a specified resource cannot be found.
      *
@@ -261,8 +246,6 @@ trait ResponseTrait
     {
         return $this->fail($description, $this->codes['resource_not_found'], $code, $message);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Used when the data provided by the client cannot be validated.
@@ -294,8 +277,6 @@ trait ResponseTrait
         return $this->fail($errors, $this->codes['invalid_data'], $code, $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Use when trying to create a new resource and it already exists.
      *
@@ -309,8 +290,6 @@ trait ResponseTrait
     {
         return $this->fail($description, $this->codes['resource_exists'], $code, $message);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Use when a resource was previously deleted. This is different than
@@ -328,8 +307,6 @@ trait ResponseTrait
         return $this->fail($description, $this->codes['resource_gone'], $code, $message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used when the user has made too many requests for the resource recently.
      *
@@ -343,8 +320,6 @@ trait ResponseTrait
     {
         return $this->fail($description, $this->codes['too_many_requests'], $code, $message);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Used when there is a server error.

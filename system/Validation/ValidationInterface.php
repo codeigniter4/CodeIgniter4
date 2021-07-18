@@ -29,8 +29,6 @@ interface ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Check; runs the validation process, returning true or false
      * determining whether or not validation was successful.
@@ -43,8 +41,6 @@ interface ValidationInterface
      */
     public function check($value, string $rule, array $errors = []): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
@@ -54,10 +50,6 @@ interface ValidationInterface
      * @return ValidationInterface
      */
     public function withRequest(RequestInterface $request): ValidationInterface;
-
-    //--------------------------------------------------------------------
-    // Rules
-    //--------------------------------------------------------------------
 
     /**
      * Stores the rules that should be used to validate the items.
@@ -69,8 +61,6 @@ interface ValidationInterface
      */
     public function setRules(array $rules, array $messages = []): ValidationInterface;
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if the rule for key $field has been set or not.
      *
@@ -80,11 +70,6 @@ interface ValidationInterface
      */
     public function hasRule(string $field): bool;
 
-    //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
-    // Errors
-    //--------------------------------------------------------------------
-
     /**
      * Returns the error for a specified $field (or empty string if not set).
      *
@@ -93,8 +78,6 @@ interface ValidationInterface
      * @return string
      */
     public function getError(string $field): string;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the array of errors that were encountered during
@@ -109,8 +92,6 @@ interface ValidationInterface
      */
     public function getErrors(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the error for a specific field. Used by custom validation methods.
      *
@@ -121,10 +102,6 @@ interface ValidationInterface
      */
     public function setError(string $alias, string $error): ValidationInterface;
 
-    //--------------------------------------------------------------------
-    // Misc
-    //--------------------------------------------------------------------
-
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.
@@ -132,6 +109,4 @@ interface ValidationInterface
      * @return ValidationInterface
      */
     public function reset(): ValidationInterface;
-
-    //--------------------------------------------------------------------
 }

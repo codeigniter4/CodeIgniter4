@@ -49,8 +49,8 @@ start using it in your application.
 The Code
 ========
 
-You could make your own Throttler filter, at **app/Filters/Throttle.php**, 
-along the lines of:: 
+You could make your own Throttler filter, at **app/Filters/Throttle.php**,
+along the lines of::
 
     <?php
 
@@ -84,8 +84,6 @@ along the lines of::
                 return Services::response()->setStatusCode(429);
             }
         }
-
-        //--------------------------------------------------------------------
 
         /**
          * We don't have anything to do here.

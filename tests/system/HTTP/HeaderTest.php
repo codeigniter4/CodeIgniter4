@@ -32,8 +32,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame('', $header->getValue());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHeaderStoresArrayValues()
     {
         $name  = 'foo';
@@ -47,8 +45,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($name, $header->getName());
         $this->assertSame($value, $header->getValue());
     }
-
-    //--------------------------------------------------------------------
 
     public function testHeaderSetters()
     {
@@ -69,8 +65,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($value, $header->getValue());
         $this->assertSame($name . ': bar, baz', (string) $header);
     }
-
-    //--------------------------------------------------------------------
 
     public function testHeaderAppendsValueSkippedForNull()
     {
@@ -104,8 +98,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($expected, $header->getValue());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHeaderPrependsValueSkippedForNull()
     {
         $name     = 'foo';
@@ -138,8 +130,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($expected, $header->getValue());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHeaderLineSimple()
     {
         $name  = 'foo';
@@ -169,8 +159,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($expected, $header->getValueLine());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHeaderSetValueWithNullWillMarkAsEmptyString()
     {
         $name     = 'foo';
@@ -196,8 +184,6 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($name, $header->getName());
         $this->assertSame($expected, $header->getValueLine());
     }
-
-    //--------------------------------------------------------------------
 
     public function testHeaderToStringShowsEntireHeader()
     {

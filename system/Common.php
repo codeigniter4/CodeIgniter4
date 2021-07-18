@@ -32,9 +32,7 @@ use Config\Services;
 use Config\View;
 use Laminas\Escaper\Escaper;
 
-//--------------------------------------------------------------------
 // Services Convenience Functions
-//--------------------------------------------------------------------
 
 if (! function_exists('app_timezone')) {
     /**

@@ -55,10 +55,6 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    //--------------------------------------------------------------------
-    // current_url
-    //--------------------------------------------------------------------
-
     public function testCurrentURLReturnsBasicURL()
     {
         // Since we're on a CLI, we must provide our own URI
@@ -139,10 +135,6 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http', $uri->getScheme());
         $this->assertSame(8080, $uri->getPort());
     }
-
-    //--------------------------------------------------------------------
-    // uri_string
-    //--------------------------------------------------------------------
 
     public function testUriStringAbsolute()
     {
@@ -246,10 +238,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->assertSame('assets/image.jpg', uri_string(true));
     }
-
-    //--------------------------------------------------------------------
-    // uri_is
-    //--------------------------------------------------------------------
 
     public function urlIsProvider()
     {

@@ -30,8 +30,6 @@ abstract class BaseHandler implements HandlerInterface
      */
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -41,8 +39,6 @@ abstract class BaseHandler implements HandlerInterface
     {
         $this->handles = $config['handles'] ?? [];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks whether the Handler will handle logging items of this
@@ -57,8 +53,6 @@ abstract class BaseHandler implements HandlerInterface
         return in_array($level, $this->handles, true);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handles logging the message.
      * If the handler returns false, then execution of handlers
@@ -71,8 +65,6 @@ abstract class BaseHandler implements HandlerInterface
      * @return bool
      */
     abstract public function handle($level, $message): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Stores the date format to use while logging messages.
@@ -87,6 +79,4 @@ abstract class BaseHandler implements HandlerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 }

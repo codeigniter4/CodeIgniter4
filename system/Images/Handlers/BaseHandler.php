@@ -122,8 +122,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     protected $resource;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -133,8 +131,6 @@ abstract class BaseHandler implements ImageHandlerInterface
     {
         $this->config = $config ?? new Images();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets another image for this handler to work on.
@@ -160,14 +156,10 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Make the image resource object if needed
      */
     abstract protected function ensureResource();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the image instance.
@@ -213,8 +205,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this->image;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the temporary image used during the image processing.
      * Good for extending the system or doing things this library
@@ -229,8 +219,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this->resource;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Load the temporary image used during the image processing.
      * Some functions e.g. save() will only copy and not compress
@@ -244,8 +232,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Resize the image
@@ -274,8 +260,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         return $this->_resize($maintainRatio);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Crops the image to the desired height and width. If one of the height/width values
@@ -311,8 +295,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $result;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Changes the stored image type to indicate the new file format to use when saving.
      * Does not touch the actual resource.
@@ -327,8 +309,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Rotates the image on the current canvas.
@@ -366,8 +346,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Flattens transparencies, default white background
      *
@@ -385,8 +363,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this->_flatten($red, $green, $blue);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handler-specific method to flattening an image's transparencies.
      *
@@ -400,8 +376,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract protected function _flatten(int $red = 255, int $green = 255, int $blue = 255);
 
-    //--------------------------------------------------------------------
-
     /**
      * Handler-specific method to handle rotating an image in 90 degree increments.
      *
@@ -410,8 +384,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @return mixed
      */
     abstract protected function _rotate(int $angle);
-
-    //--------------------------------------------------------------------
 
     /**
      * Flips an image either horizontally or vertically.
@@ -431,8 +403,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this->_flip($dir);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handler-specific method to handle flipping an image along its
      * horizontal or vertical axis.
@@ -442,8 +412,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @return $this
      */
     abstract protected function _flip(string $direction);
-
-    //--------------------------------------------------------------------
 
     /**
      * Overlays a string of text over the image.
@@ -476,8 +444,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handler-specific method for overlaying text on an image.
      *
@@ -485,8 +451,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @param array  $options
      */
     abstract protected function _text(string $text, array $options = []);
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles the actual resizing of the image.
@@ -497,16 +461,12 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract public function _resize(bool $maintainRatio = false);
 
-    //--------------------------------------------------------------------
-
     /**
      * Crops the image.
      *
      * @return $this
      */
     abstract public function _crop();
-
-    //--------------------------------------------------------------------
 
     /**
      * Return image width.
@@ -515,16 +475,12 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract public function _getWidth();
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the height of an image.
      *
      * @return int
      */
     abstract public function _getHeight();
-
-    //--------------------------------------------------------------------
 
     /**
      * Reads the EXIF information from the image and modifies the orientation
@@ -567,8 +523,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieve the EXIF information from the image, if possible. Returns
      * an array of the information, or null if nothing can be found.
@@ -606,8 +560,6 @@ abstract class BaseHandler implements ImageHandlerInterface
         return $exif;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Combine cropping and resizing into a single command.
      *
@@ -643,8 +595,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 
         return $this->crop($cropWidth, $cropHeight, $x, $y)->resize($width, $height);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Calculate image aspect ratio.
@@ -688,8 +638,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             $origHeight,
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Based on the position, will determine the correct x/y coords to
@@ -762,16 +710,12 @@ abstract class BaseHandler implements ImageHandlerInterface
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get the version of the image library in use.
      *
      * @return string
      */
     abstract public function getVersion();
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves any changes that have been made to file.
@@ -787,8 +731,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     abstract public function save(?string $target = null, int $quality = 90);
 
-    //--------------------------------------------------------------------
-
     /**
      * Does the driver-specific processing of the image.
      *
@@ -797,8 +739,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      * @return mixed
      */
     abstract protected function process(string $action);
-
-    //--------------------------------------------------------------------
 
     /**
      * Provide access to the Image class' methods if they don't exist
@@ -815,8 +755,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             return $this->image()->{$name}(...$args);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Re-proportion Image Width/Height
@@ -858,8 +796,6 @@ abstract class BaseHandler implements ImageHandlerInterface
             $this->width = (int) ceil($this->image()->origWidth * $this->height / $this->image()->origHeight);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return image width.

@@ -16,16 +16,12 @@ final class FileCollectionTest extends CIUnitTestCase
         $_FILES = [];
     }
 
-    //--------------------------------------------------------------------
-
     public function testAllReturnsArrayWithNoFiles()
     {
         $files = new FileCollection();
 
         $this->assertSame([], $files->all());
     }
-
-    //--------------------------------------------------------------------
 
     public function testAllReturnsValidSingleFile()
     {
@@ -49,8 +45,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('someFile.txt', $file->getName());
         $this->assertSame(124, $file->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testAllReturnsValidMultipleFilesSameName()
     {
@@ -93,8 +87,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('text/plain', $file->getClientMimeType());
         $this->assertSame(124, $file->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testAllReturnsValidMultipleFilesDifferentName()
     {
@@ -140,8 +132,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('text/csv', $file->getClientMimeType());
         $this->assertSame(248, $file->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testExtensionGuessing()
     {
@@ -219,8 +209,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('', $file->guessExtension());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group single
      */
@@ -269,8 +257,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(124, $file->getSize());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHasFileWithSingleFile()
     {
         $_FILES = [
@@ -288,8 +274,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile'));
         $this->assertFalse($collection->hasFile('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHasFileWithMultipleFilesWithDifferentNames()
     {
@@ -315,8 +299,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile1'));
         $this->assertTrue($collection->hasFile('userfile2'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group single
@@ -355,8 +337,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile.foo'));
         $this->assertTrue($collection->hasFile('userfile.foo.bar'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testErrorString()
     {
@@ -417,8 +397,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $file->getErrorString());
     }
 
-    //--------------------------------------------------------------------
-
     public function testError()
     {
         $_FILES = [
@@ -472,8 +450,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(UPLOAD_ERR_OK, $file->getError());
     }
 
-    //--------------------------------------------------------------------
-
     public function testFileReturnsValidSingleFile()
     {
         $_FILES = [
@@ -494,8 +470,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(124, $file->getSize());
     }
 
-    //--------------------------------------------------------------------
-
     public function testFileNoExistSingleFile()
     {
         $_FILES = [
@@ -512,8 +486,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $file       = $collection->getFile('fileuser');
         $this->AssertNull($file);
     }
-
-    //--------------------------------------------------------------------
 
     public function testFileReturnValidMultipleFiles()
     {
@@ -557,8 +529,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('text/csv', $file2->getClientMimeType());
         $this->assertSame(248, $file2->getSize());
     }
-
-    //--------------------------------------------------------------------
 
     public function testFileWithMultipleFilesNestedName()
     {
@@ -626,8 +596,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(243, $file2->getSize());
     }
 
-    //--------------------------------------------------------------------
-
     public function testDoesntHaveFile()
     {
         $_FILES = [
@@ -681,8 +649,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertNull($collection->getFile('my-form.detailz.avatars.0'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetFileMultipleHasNoFile()
     {
         $_FILES = [
@@ -713,8 +679,6 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $this->assertNull($files);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetFileMultipleReturnValidDotNotationSyntax()
     {
@@ -784,8 +748,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(243, $files[1]->getSize());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetFileMultipleReturnInvalidDotNotationSyntax()
     {
         $_FILES = [
@@ -823,8 +785,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $files = $collection->getFileMultiple('my-form.details.avatars');
         $this->assertNull($files);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetFileMultipleReturnValidMultipleFiles()
     {
@@ -871,8 +831,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('text/csv', $files[1]->getClientMimeType());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetFileMultipleReturnInvalidSingleFile()
     {
         $_FILES = [
@@ -890,6 +848,4 @@ final class FileCollectionTest extends CIUnitTestCase
         $files = $collection->getFileMultiple('userfile');
         $this->assertNull($files);
     }
-
-    //--------------------------------------------------------------------
 }

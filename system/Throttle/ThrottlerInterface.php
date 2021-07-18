@@ -36,8 +36,6 @@ interface ThrottlerInterface
      */
     public function check(string $key, int $capacity, int $seconds, int $cost);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of seconds until the next available token will
      * be released for usage.

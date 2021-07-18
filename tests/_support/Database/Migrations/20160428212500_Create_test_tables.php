@@ -120,8 +120,6 @@ class Migration_Create_test_tables extends Migration
         ])->createTable('ip_table', true);
     }
 
-    //--------------------------------------------------------------------
-
     public function down()
     {
         $this->forge->dropTable('user', true);

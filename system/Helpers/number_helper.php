@@ -58,8 +58,6 @@ if (! function_exists('number_to_size')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('number_to_amount')) {
     /**
      * Converts numbers to a more readable representation
@@ -116,8 +114,6 @@ if (! function_exists('number_to_amount')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('number_to_currency')) {
     /**
      * @param float  $num
@@ -136,8 +132,6 @@ if (! function_exists('number_to_currency')) {
         ]);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('format_number')) {
     /**
@@ -193,8 +187,6 @@ if (! function_exists('format_number')) {
         return $output;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('number_to_roman')) {
     /**

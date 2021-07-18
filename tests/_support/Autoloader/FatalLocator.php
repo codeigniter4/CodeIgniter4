@@ -30,8 +30,6 @@ class FatalLocator extends FileLocator
         throw new RuntimeException("locateFile({$file}, {$folder}, {$ext})");
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Searches through all of the defined namespaces looking for a file.
      * Returns an array of all found locations for the defined file.

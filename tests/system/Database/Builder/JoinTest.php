@@ -15,16 +15,12 @@ final class JoinTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testJoinSimple()
     {
@@ -37,8 +33,6 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testJoinIsNull()
     {
         $builder = new BaseBuilder('table1', $this->db);
@@ -49,8 +43,6 @@ final class JoinTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testJoinIsNotNull()
     {
@@ -63,8 +55,6 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testJoinMultipleConditions()
     {
         $builder = new BaseBuilder('table1', $this->db);
@@ -76,8 +66,6 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFullOuterJoin()
     {
         $builder = new PostgreBuilder('jobs', $this->db);
@@ -88,8 +76,6 @@ final class JoinTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testJoinWithAlias()
     {
@@ -103,6 +89,4 @@ final class JoinTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 }

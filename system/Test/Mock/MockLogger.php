@@ -80,10 +80,7 @@ class MockLogger
       |
      */
     public $handlers = [
-        //--------------------------------------------------------------------
         // File Handler
-        //--------------------------------------------------------------------
-
         'Tests\Support\Log\Handlers\TestHandler' => [
             // The log levels that this handler will handle.
             'handles' => [

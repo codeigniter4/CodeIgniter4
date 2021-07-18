@@ -15,14 +15,10 @@ final class DateHelperTest extends CIUnitTestCase
         helper('date');
     }
 
-    //--------------------------------------------------------------------
-
     public function testNowDefault()
     {
         $this->assertCloseEnough(now(), time());  // close enough
     }
-
-    //--------------------------------------------------------------------
 
     public function testNowSpecific()
     {

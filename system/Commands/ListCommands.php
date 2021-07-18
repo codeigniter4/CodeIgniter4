@@ -67,8 +67,6 @@ class ListCommands extends BaseCommand
         '--simple' => 'Prints a list of the commands with no other info',
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Displays the help for the spark cli script itself.
      *

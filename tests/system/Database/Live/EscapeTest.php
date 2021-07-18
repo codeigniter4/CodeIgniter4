@@ -25,8 +25,6 @@ final class EscapeTest extends CIUnitTestCase
         $this->char = $this->db->DBDriver === 'MySQLi' ? '\\' : "'";
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Ensures we don't have escaped - values...
      *
@@ -37,8 +35,6 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame("'-100'", $this->db->escape(-100));
     }
 
-    //--------------------------------------------------------------------
-
     public function testEscape()
     {
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
@@ -46,8 +42,6 @@ final class EscapeTest extends CIUnitTestCase
 
         $this->assertSame($expected, $sql);
     }
-
-    //--------------------------------------------------------------------
 
     public function testEscapeString()
     {
@@ -57,8 +51,6 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    //--------------------------------------------------------------------
-
     public function testEscapeLikeString()
     {
         $expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
@@ -66,8 +58,6 @@ final class EscapeTest extends CIUnitTestCase
 
         $this->assertSame($expected, $sql);
     }
-
-    //--------------------------------------------------------------------
 
     public function testEscapeLikeStringDirect()
     {

@@ -100,8 +100,6 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected $ipAddress;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -119,8 +117,6 @@ abstract class BaseHandler implements SessionHandlerInterface
         $this->savePath     = $config->sessionSavePath;
         $this->ipAddress    = $ipAddress;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Internal method to force removal of a cookie by the client
@@ -141,8 +137,6 @@ abstract class BaseHandler implements SessionHandlerInterface
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A dummy method allowing drivers with no locking functionality
      * (databases other than PostgreSQL and MySQL) to act as if they
@@ -159,8 +153,6 @@ abstract class BaseHandler implements SessionHandlerInterface
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Releases the lock, if any.
      *
@@ -172,8 +164,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fail

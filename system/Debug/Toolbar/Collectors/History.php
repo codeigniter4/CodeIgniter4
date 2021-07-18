@@ -53,8 +53,6 @@ class History extends BaseCollector
      */
     protected $files = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Specify time limit & file count for debug history.
      *
@@ -103,8 +101,6 @@ class History extends BaseCollector
         $this->files = $files;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the data of this collector to be formatted in the toolbar
      *
@@ -114,8 +110,6 @@ class History extends BaseCollector
     {
         return ['files' => $this->files];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Displays the number of included files as a badge in the tab button.
@@ -136,8 +130,6 @@ class History extends BaseCollector
     {
         return empty($this->files);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Display the icon.

@@ -114,8 +114,6 @@ class TimeDifference
         $this->testTime    = $time;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of years of difference between the two.
      *

@@ -66,8 +66,6 @@ abstract class BaseHandler implements CacheInterface
         return strlen($prefix . $key) > static::MAX_KEY_LENGTH ? $prefix . md5($key) : $prefix . $key;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
      *
@@ -89,8 +87,6 @@ abstract class BaseHandler implements CacheInterface
 
         return $value;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Deletes items from the cache store matching a given pattern.

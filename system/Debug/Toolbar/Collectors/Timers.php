@@ -42,8 +42,6 @@ class Timers extends BaseCollector
      */
     protected $title = 'Timers';
 
-    //--------------------------------------------------------------------
-
     /**
      * Child classes should implement this to return the timeline data
      * formatted for correct usage.

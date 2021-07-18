@@ -35,8 +35,6 @@ class File extends SplFileInfo
      */
     protected $originalMimeType;
 
-    //--------------------------------------------------------------------
-
     /**
      * Run our SplFileInfo constructor with an optional verification
      * that the path is really a file.
@@ -52,8 +50,6 @@ class File extends SplFileInfo
 
         parent::__construct($path);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the file size.
@@ -90,8 +86,6 @@ class File extends SplFileInfo
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to determine the file extension based on the trusted
      * getType() method. If the mime type is unknown, will return null.
@@ -102,8 +96,6 @@ class File extends SplFileInfo
     {
         return Mimes::guessExtensionFromType($this->getMimeType());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the media type of the file. SHOULD not use information from
@@ -127,8 +119,6 @@ class File extends SplFileInfo
         return $mimeType;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates a random names based on a simple hash and the time, with
      * the correct file extension attached.
@@ -142,8 +132,6 @@ class File extends SplFileInfo
 
         return time() . '_' . bin2hex(random_bytes(10)) . $extension;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves a file to a new location.
@@ -172,8 +160,6 @@ class File extends SplFileInfo
 
         return new self($destination);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the destination path for the move operation where overwriting is not expected.
@@ -210,6 +196,4 @@ class File extends SplFileInfo
 
         return $destination;
     }
-
-    //--------------------------------------------------------------------
 }

@@ -32,8 +32,6 @@ class Result extends BaseResult
         return $this->resultID->numColumns(); // @phpstan-ignore-line
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates an array of column names in the result set.
      *
@@ -49,8 +47,6 @@ class Result extends BaseResult
 
         return $fieldNames;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates an array of objects representing field meta-data.
@@ -84,8 +80,6 @@ class Result extends BaseResult
         return $retVal;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Frees the current result.
      *
@@ -98,8 +92,6 @@ class Result extends BaseResult
             $this->resultID = false;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves the internal pointer to the desired offset. This is called
@@ -121,8 +113,6 @@ class Result extends BaseResult
         return $this->resultID->reset(); // @phpstan-ignore-line
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the result set as an array.
      *
@@ -134,8 +124,6 @@ class Result extends BaseResult
     {
         return $this->resultID->fetchArray(SQLITE3_ASSOC); // @phpstan-ignore-line
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the result set as an object.
@@ -173,6 +161,4 @@ class Result extends BaseResult
 
         return $classObj;
     }
-
-    //--------------------------------------------------------------------
 }

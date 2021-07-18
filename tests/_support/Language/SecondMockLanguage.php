@@ -6,8 +6,6 @@ use CodeIgniter\Language\Language;
 
 class SecondMockLanguage extends Language
 {
-    //--------------------------------------------------------------------
-
     /**
      * Expose the protected *load* method
      */
@@ -15,8 +13,6 @@ class SecondMockLanguage extends Language
     {
         return $this->load($file, $locale, $return);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Expose the loaded language files

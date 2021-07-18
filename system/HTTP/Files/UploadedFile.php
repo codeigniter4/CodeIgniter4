@@ -70,8 +70,6 @@ class UploadedFile extends File implements UploadedFileInterface
      */
     protected $hasMoved = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Accepts the file information as would be filled in from the $_FILES array.
      *
@@ -92,8 +90,6 @@ class UploadedFile extends File implements UploadedFileInterface
 
         parent::__construct($path, false);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Move the uploaded file to a new location.
@@ -185,8 +181,6 @@ class UploadedFile extends File implements UploadedFileInterface
         return $path;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns whether the file has been moved or not. If it has,
      * the move() method will not work and certain properties, like
@@ -198,8 +192,6 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         return $this->hasMoved;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the error associated with the uploaded file.
@@ -220,8 +212,6 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         return $this->error ?? UPLOAD_ERR_OK;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get error string
@@ -246,8 +236,6 @@ class UploadedFile extends File implements UploadedFileInterface
         return sprintf($errors[$error] ?? lang('HTTP.uploadErrUnknown'), $this->getName());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the mime type as provided by the client.
      * This is NOT a trusted value.
@@ -259,8 +247,6 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         return $this->originalMimeType;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the filename. This will typically be the filename sent
@@ -274,8 +260,6 @@ class UploadedFile extends File implements UploadedFileInterface
         return $this->name;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the file as provided by the client during upload.
      *
@@ -286,8 +270,6 @@ class UploadedFile extends File implements UploadedFileInterface
         return $this->originalName;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the temporary filename where the file was uploaded to.
      *
@@ -297,8 +279,6 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         return $this->path;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Overrides SPLFileInfo's to work with uploaded files, since
@@ -329,8 +309,6 @@ class UploadedFile extends File implements UploadedFileInterface
         return Mimes::guessExtensionFromType($this->getMimeType(), $this->getClientExtension()) ?? '';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the original file extension, based on the file name that
      * was uploaded. This is NOT a trusted source.
@@ -342,8 +320,6 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         return pathinfo($this->originalName, PATHINFO_EXTENSION) ?? '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns whether the file was uploaded successfully, based on whether
@@ -377,6 +353,4 @@ class UploadedFile extends File implements UploadedFileInterface
 
         return $folderName . $this->name;
     }
-
-    //--------------------------------------------------------------------
 }

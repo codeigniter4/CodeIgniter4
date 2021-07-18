@@ -24,8 +24,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->config   = new View();
     }
 
-    //--------------------------------------------------------------------
-
     public function testAbs()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -41,8 +39,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('55', $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testCapitalize()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -57,8 +53,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('Wonder Twins', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDate()
     {
@@ -82,8 +76,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$todayDash} {$todayDash} {$todayDot} {$todaySpace} {$todayColon} {$todaySlash} {$todayBackslash}", $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDateModify()
     {
         $parser    = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -100,8 +92,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$tommorrow} {$tommorrow}", $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDefault()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -117,8 +107,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('foo bar test', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testEsc()
     {
@@ -137,8 +125,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$value1} {$value2}", $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testExcerpt()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -152,8 +138,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('... red fox jumped over ...', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHighlight()
     {
@@ -202,8 +186,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame($expected, $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLimitChars()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -217,8 +199,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('The quick&#8230;', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLimitWords()
     {
@@ -234,8 +214,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('The quick red fox&#8230;', $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLower()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -249,8 +227,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('something', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNL2BR()
     {
@@ -266,8 +242,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("first<br />\nsecond", $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNumberFormat()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -281,8 +255,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('1,098.35', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRound()
     {
@@ -298,8 +270,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('5.6 5.6 6 5 5.55', $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testStripTags()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -313,8 +283,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('Middle <b>Middle</b>', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testTitle()
     {
@@ -330,8 +298,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('Though She Be Little', $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpper()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -345,8 +311,6 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser->setData($data);
         $this->assertSame('THOUGH SHE BE LITTLE', $parser->renderString($template));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLocalNumberBase()
     {

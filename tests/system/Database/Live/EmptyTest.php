@@ -25,14 +25,10 @@ final class EmptyTest extends CIUnitTestCase
         $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
-    //--------------------------------------------------------------------
-
     public function testTruncate()
     {
         $this->db->table('misc')->truncate();
 
         $this->assertSame(0, $this->db->table('misc')->countAll());
     }
-
-    //--------------------------------------------------------------------
 }

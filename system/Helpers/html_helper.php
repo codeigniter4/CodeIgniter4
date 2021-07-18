@@ -13,9 +13,8 @@ use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Config\DocTypes;
 use Config\Mimes;
 
-// --------------------------------------------------------------------
-
 // CodeIgniter HTML Helpers
+
 if (! function_exists('ul')) {
     /**
      * Unordered List
@@ -34,8 +33,6 @@ if (! function_exists('ul')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('ol')) {
     /**
      * Ordered List
@@ -52,8 +49,6 @@ if (! function_exists('ol')) {
         return _list('ol', $list, $attributes);
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('_list')) {
     /**
@@ -97,8 +92,6 @@ if (! function_exists('_list')) {
         return $out . str_repeat(' ', $depth) . '</' . $type . ">\n";
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('img')) {
     /**
@@ -183,8 +176,6 @@ if (! function_exists('img_data')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('doctype')) {
     /**
      * Doctype
@@ -207,8 +198,6 @@ if (! function_exists('doctype')) {
         return $doctypes[$type] ?? false;
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('script_tag')) {
     /**
@@ -243,8 +232,6 @@ if (! function_exists('script_tag')) {
         return $script . 'type="text/javascript"' . '></script>';
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('link_tag')) {
     /**
@@ -309,8 +296,6 @@ if (! function_exists('link_tag')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('video')) {
     /**
      * Video
@@ -364,8 +349,6 @@ if (! function_exists('video')) {
     }
 }
 
-    // ------------------------------------------------------------------------
-
 if (! function_exists('audio')) {
     /**
      * Audio
@@ -416,8 +399,6 @@ if (! function_exists('audio')) {
     }
 }
 
-    // ------------------------------------------------------------------------
-
 if (! function_exists('_media')) {
     /**
      * Generate media based tag
@@ -460,8 +441,6 @@ if (! function_exists('_media')) {
     }
 }
 
-    // ------------------------------------------------------------------------
-
 if (! function_exists('source')) {
     /**
      * Source
@@ -493,8 +472,6 @@ if (! function_exists('source')) {
     }
 }
 
-    // ------------------------------------------------------------------------
-
 if (! function_exists('track')) {
     /**
      * Track
@@ -518,8 +495,6 @@ if (! function_exists('track')) {
                 . '" />';
     }
 }
-
-    // ------------------------------------------------------------------------
 
 if (! function_exists('object')) {
     /**
@@ -558,8 +533,6 @@ if (! function_exists('object')) {
     }
 }
 
-    // ------------------------------------------------------------------------
-
 if (! function_exists('param')) {
     /**
      * Param
@@ -582,8 +555,6 @@ if (! function_exists('param')) {
                 . '" ' . $attributes . ' />';
     }
 }
-
-    // ------------------------------------------------------------------------
 
 if (! function_exists('embed')) {
     /**
@@ -610,8 +581,6 @@ if (! function_exists('embed')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('_has_protocol')) {
     /**
      * Test the protocol of a URI.
@@ -626,8 +595,6 @@ if (! function_exists('_has_protocol')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('_space_indent')) {
     /**
      * Provide space indenting.
@@ -641,5 +608,3 @@ if (! function_exists('_space_indent')) {
         return str_repeat(' ', $depth);
     }
 }
-
-// ------------------------------------------------------------------------

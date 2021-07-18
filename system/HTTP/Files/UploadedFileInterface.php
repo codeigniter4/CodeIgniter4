@@ -34,8 +34,6 @@ interface UploadedFileInterface
      */
     public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Move the uploaded file to a new location.
      *
@@ -67,8 +65,6 @@ interface UploadedFileInterface
      */
     public function move(string $targetPath, ?string $name = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns whether the file has been moved or not. If it has,
      * the move() method will not work and certain properties, like
@@ -77,8 +73,6 @@ interface UploadedFileInterface
      * @return bool
      */
     public function hasMoved(): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the error associated with the uploaded file.
@@ -97,8 +91,6 @@ interface UploadedFileInterface
      */
     public function getError(): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieve the filename sent by the client.
      *
@@ -114,16 +106,12 @@ interface UploadedFileInterface
      */
     public function getName(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the temporary filename where the file was uploaded to.
      *
      * @return string
      */
     public function getTempName(): string;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the original file extension, based on the file name that
@@ -134,8 +122,6 @@ interface UploadedFileInterface
      */
     public function getClientExtension(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the mime type as provided by the client.
      * This is NOT a trusted value.
@@ -145,8 +131,6 @@ interface UploadedFileInterface
      */
     public function getClientMimeType(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
@@ -154,8 +138,6 @@ interface UploadedFileInterface
      * @return bool
      */
     public function isValid(): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the destination path for the move operation where overwriting is not expected.
@@ -171,6 +153,4 @@ interface UploadedFileInterface
      * @return string
      */
     public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
-
-    //--------------------------------------------------------------------
 }

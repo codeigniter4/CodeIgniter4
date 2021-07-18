@@ -48,8 +48,6 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes a multitude of various config input and verifies
      * that base_url() and site_url() return the expected result.
@@ -229,9 +227,7 @@ final class SiteUrlTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
     // base_url
-    //--------------------------------------------------------------------
 
     /**
      * These tests are only really relevant to show that base_url()

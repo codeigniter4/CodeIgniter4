@@ -59,8 +59,6 @@ final class ValidationTest extends CIUnitTestCase
         ],
     ];
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -72,8 +70,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $_FILES = [];
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetRulesStoresRules()
     {
@@ -87,16 +83,12 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($rules, $this->validation->getRules());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRunReturnsFalseWithNothingToDo()
     {
         $this->validation->setRules([]);
 
         $this->assertFalse($this->validation->run([]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRunDoesTheBasics()
     {
@@ -111,8 +103,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testRunReturnsLocalizedErrors()
     {
         $data = [
@@ -126,8 +116,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
         $this->assertSame('Validation.is_numeric', $this->validation->getError('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRunWithCustomErrors()
     {
@@ -149,22 +137,16 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testCheck()
     {
         $this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCheckLocalizedError()
     {
         $this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
         $this->assertSame('Validation.is_numeric', $this->validation->getError());
     }
-
-    //--------------------------------------------------------------------
 
     public function testCheckCustomError()
     {
@@ -173,8 +155,6 @@ final class ValidationTest extends CIUnitTestCase
         ]);
         $this->assertSame('Nope. Not a number.', $this->validation->getError());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetErrors()
     {
@@ -190,8 +170,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame(['foo' => 'Validation.is_numeric'], $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetErrorsWhenNone()
     {
@@ -210,8 +188,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getErrors());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetErrors()
     {
         $this->validation->setRules([
@@ -222,8 +198,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame(['foo' => 'Nadda'], $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     public function testRulesReturnErrors()
     {
@@ -236,8 +210,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame(['foo' => 'My lovely error'], $this->validation->getErrors());
     }
 
-    //--------------------------------------------------------------------
-
     public function testGroupsReadFromConfig()
     {
         $data = [
@@ -248,8 +220,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('Shame, shame. Too short.', $this->validation->getError('foo'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGroupsReadFromConfigValid()
     {
         $data = [
@@ -259,8 +229,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data, 'groupA'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetRuleGroup()
     {
         $this->assertSame([
@@ -268,15 +236,11 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRuleGroup('groupA'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetRuleGroupException()
     {
         $this->expectException(ValidationException::class);
         $this->validation->getRuleGroup('groupZ');
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetRuleGroup()
     {
@@ -287,16 +251,12 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetRuleGroupException()
     {
         $this->expectException(ValidationException::class);
 
         $this->validation->setRuleGroup('groupZ');
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetRuleGroupWithCustomErrorMessage()
     {
@@ -311,8 +271,6 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRunGroupWithCustomErrorMessage()
     {
         $this->validation->reset();
@@ -324,8 +282,6 @@ final class ValidationTest extends CIUnitTestCase
             'password' => 'custom password required error msg.',
         ], $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @dataProvider rulesSetupProvider
@@ -344,8 +300,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function rulesSetupProvider()
     {
@@ -398,8 +352,6 @@ final class ValidationTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetRulesRemovesErrorsArray()
     {
         $rules = [
@@ -435,8 +387,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->run($data);
     }
 
-    //--------------------------------------------------------------------
-
     public function testRawInput()
     {
         $rawstring = 'username=admin001&role=administrator&usepass=0';
@@ -454,8 +404,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->withRequest($request->withMethod('patch'))->run($data);
         $this->assertSame([], $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     public function testJsonInput()
     {
@@ -487,16 +435,12 @@ final class ValidationTest extends CIUnitTestCase
         unset($_SERVER['CONTENT_TYPE']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testHasRule()
     {
         $this->validation->setRuleGroup('groupA');
 
         $this->assertTrue($this->validation->hasRule('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotARealGroup()
     {
@@ -505,15 +449,11 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->getRuleGroup('groupX');
     }
 
-    //--------------------------------------------------------------------
-
     public function testBadTemplate()
     {
         $this->expectException(ValidationException::class);
         $this->validation->listErrors('obviouslyBadTemplate');
     }
-
-    //--------------------------------------------------------------------
 
     public function testShowNonError()
     {
@@ -526,8 +466,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('', $this->validation->showError('bogus'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testShowBadTemplate()
     {
         $this->expectException(ValidationException::class);
@@ -539,8 +477,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame('We should never get here', $this->validation->showError('foo', 'bogus_template'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNoRuleSetsSetup()
     {
@@ -557,8 +493,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->run($data);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotCustomRuleGroup()
     {
         $this->expectException(ValidationException::class);
@@ -570,8 +504,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->run($data, 'GeorgeRules');
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotRealCustomRule()
     {
         $this->expectException(ValidationException::class);
@@ -582,8 +514,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->validation->run($data, 'groupX');
     }
-
-    //--------------------------------------------------------------------
 
     public function testHasError()
     {
@@ -599,8 +529,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->hasError('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSplitRulesTrue()
     {
@@ -653,8 +581,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
     }
 
-    //--------------------------------------------------------------------
-
     public function testTagReplacement()
     {
         // data
@@ -689,8 +615,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $errors['Username']);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider arrayFieldDataProvider
      */
@@ -705,8 +629,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->withRequest($request->withMethod('post'))->run($body);
         $this->assertSame($results, $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     public function arrayFieldDataProvider()
     {
@@ -764,8 +686,6 @@ final class ValidationTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testRulesForSingleRuleWithAsteriskWillReturnNoError()
     {
         $config          = new App();
@@ -792,8 +712,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->withRequest($request->withMethod('post'))->run();
         $this->assertSame([], $this->validation->getErrors());
     }
-
-    //--------------------------------------------------------------------
 
     public function testRulesForSingleRuleWithAsteriskWillReturnError()
     {
@@ -825,8 +743,6 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    //--------------------------------------------------------------------
-
     public function testRulesForSingleRuleWithSingleValue()
     {
         $config          = new App();
@@ -848,8 +764,6 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    //--------------------------------------------------------------------
-
     public function testTranslatedLabel()
     {
         $rules = [
@@ -866,8 +780,6 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('The Foo Bar Translated field must be at least 10 characters in length.', $this->validation->getError('foo'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testTranslatedLabelIsMissing()
     {
         $rules = [
@@ -883,8 +795,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame('The Foo.bar.is.missing field must be at least 10 characters in length.', $this->validation->getError('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testTranslatedLabelWithCustomErrorMessage()
     {
@@ -904,8 +814,6 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame('The Foo Bar Translated field is very short.', $this->validation->getError('foo'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testTranslatedLabelTagReplacement()
     {

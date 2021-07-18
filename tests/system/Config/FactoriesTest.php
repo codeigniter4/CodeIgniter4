@@ -37,8 +37,6 @@ final class FactoriesTest extends CIUnitTestCase
         return $property;
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetsOptions()
     {
         $result = Factories::getOptions('models');
@@ -113,8 +111,6 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertArrayHasKey('widgets', $result);
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetsBasenameByBasename()
     {
         $this->assertSame('SomeWidget', Factories::getBasename('SomeWidget'));
@@ -134,8 +130,6 @@ final class FactoriesTest extends CIUnitTestCase
     {
         $this->assertSame('', Factories::getBasename('Tests\\Support\\'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCreatesByBasename()
     {
@@ -188,8 +182,6 @@ final class FactoriesTest extends CIUnitTestCase
 
         $this->assertInstanceOf(stdClass::class, $result);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRespectsComponentAlias()
     {

@@ -21,8 +21,6 @@ class ArrayHandler extends BaseHandler
 {
     protected static $cache = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Open
      *
@@ -40,8 +38,6 @@ class ArrayHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Read
      *
@@ -55,8 +51,6 @@ class ArrayHandler extends BaseHandler
     {
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -73,8 +67,6 @@ class ArrayHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -86,8 +78,6 @@ class ArrayHandler extends BaseHandler
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Destroy
@@ -103,8 +93,6 @@ class ArrayHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -118,6 +106,4 @@ class ArrayHandler extends BaseHandler
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

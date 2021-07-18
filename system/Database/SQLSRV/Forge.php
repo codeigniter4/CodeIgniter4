@@ -96,8 +96,6 @@ class Forge extends BaseForge
      */
     protected $_drop_table_if = "IF EXISTS (SELECT * FROM sysobjects WHERE ID = object_id(N'%s') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)\nDROP TABLE";
 
-    //--------------------------------------------------------------------
-
     /**
      * CREATE TABLE attributes
      *
@@ -192,8 +190,6 @@ class Forge extends BaseForge
 
         return $sqls;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Drop index for table

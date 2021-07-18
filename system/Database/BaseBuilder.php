@@ -244,8 +244,6 @@ class BaseBuilder
         'RIGHT OUTER',
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -278,8 +276,6 @@ class BaseBuilder
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the current database connection
      *
@@ -289,8 +285,6 @@ class BaseBuilder
     {
         return $this->db;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets a test mode status.
@@ -306,8 +300,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the name of the primary table.
      *
@@ -317,8 +309,6 @@ class BaseBuilder
     {
         return $this->tableName;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of bind values and their
@@ -330,8 +320,6 @@ class BaseBuilder
     {
         return $this->binds;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Ignore
@@ -349,8 +337,6 @@ class BaseBuilder
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select
@@ -397,8 +383,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Select Max
      *
@@ -413,8 +397,6 @@ class BaseBuilder
     {
         return $this->maxMinAvgSum($select, $alias);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select Min
@@ -431,8 +413,6 @@ class BaseBuilder
         return $this->maxMinAvgSum($select, $alias, 'MIN');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Select Average
      *
@@ -447,8 +427,6 @@ class BaseBuilder
     {
         return $this->maxMinAvgSum($select, $alias, 'AVG');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select Sum
@@ -465,8 +443,6 @@ class BaseBuilder
         return $this->maxMinAvgSum($select, $alias, 'SUM');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Select Count
      *
@@ -481,8 +457,6 @@ class BaseBuilder
     {
         return $this->maxMinAvgSum($select, $alias, 'COUNT');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * SELECT [MAX|MIN|AVG|SUM|COUNT]()
@@ -529,8 +503,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines the alias name based on the table
      *
@@ -549,8 +521,6 @@ class BaseBuilder
         return $item;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * DISTINCT
      *
@@ -566,8 +536,6 @@ class BaseBuilder
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * From
@@ -607,8 +575,6 @@ class BaseBuilder
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * JOIN
@@ -686,8 +652,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * WHERE
      *
@@ -705,8 +669,6 @@ class BaseBuilder
         return $this->whereHaving('QBWhere', $key, $value, 'AND ', $escape);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * OR WHERE
      *
@@ -723,8 +685,6 @@ class BaseBuilder
     {
         return $this->whereHaving('QBWhere', $key, $value, 'OR ', $escape);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * WHERE, HAVING
@@ -801,8 +761,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * WHERE IN
      *
@@ -819,8 +777,6 @@ class BaseBuilder
     {
         return $this->_whereIn($key, $values, false, 'AND ', $escape);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * OR WHERE IN
@@ -839,8 +795,6 @@ class BaseBuilder
         return $this->_whereIn($key, $values, false, 'OR ', $escape);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * WHERE NOT IN
      *
@@ -857,8 +811,6 @@ class BaseBuilder
     {
         return $this->_whereIn($key, $values, true, 'AND ', $escape);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * OR WHERE NOT IN
@@ -877,8 +829,6 @@ class BaseBuilder
         return $this->_whereIn($key, $values, true, 'OR ', $escape);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * HAVING IN
      *
@@ -895,8 +845,6 @@ class BaseBuilder
     {
         return $this->_whereIn($key, $values, false, 'AND ', $escape, 'QBHaving');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * OR HAVING IN
@@ -915,8 +863,6 @@ class BaseBuilder
         return $this->_whereIn($key, $values, false, 'OR ', $escape, 'QBHaving');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * HAVING NOT IN
      *
@@ -934,8 +880,6 @@ class BaseBuilder
         return $this->_whereIn($key, $values, true, 'AND ', $escape, 'QBHaving');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * OR HAVING NOT IN
      *
@@ -952,8 +896,6 @@ class BaseBuilder
     {
         return $this->_whereIn($key, $values, true, 'OR ', $escape, 'QBHaving');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Internal WHERE IN
@@ -1025,8 +967,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * LIKE
      *
@@ -1045,8 +985,6 @@ class BaseBuilder
     {
         return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * NOT LIKE
@@ -1067,8 +1005,6 @@ class BaseBuilder
         return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * OR LIKE
      *
@@ -1087,8 +1023,6 @@ class BaseBuilder
     {
         return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * OR NOT LIKE
@@ -1109,8 +1043,6 @@ class BaseBuilder
         return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * LIKE with HAVING clause
      *
@@ -1128,8 +1060,6 @@ class BaseBuilder
     {
         return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * NOT LIKE with HAVING clause
@@ -1149,8 +1079,6 @@ class BaseBuilder
         return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * OR LIKE with HAVING clause
      *
@@ -1169,8 +1097,6 @@ class BaseBuilder
         return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch, 'QBHaving');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * OR NOT LIKE with HAVING clause
      *
@@ -1188,8 +1114,6 @@ class BaseBuilder
     {
         return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch, 'QBHaving');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Internal LIKE
@@ -1258,8 +1182,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Platform independent LIKE statement builder.
      *
@@ -1280,8 +1202,6 @@ class BaseBuilder
         return "{$prefix} {$column} {$not} LIKE :{$bind}:";
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Starts a query group.
      *
@@ -1291,8 +1211,6 @@ class BaseBuilder
     {
         return $this->groupStartPrepare();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Starts a query group, but ORs the group
@@ -1304,8 +1222,6 @@ class BaseBuilder
         return $this->groupStartPrepare('', 'OR ');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Starts a query group, but NOTs the group
      *
@@ -1315,8 +1231,6 @@ class BaseBuilder
     {
         return $this->groupStartPrepare('NOT ');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Starts a query group, but OR NOTs the group
@@ -1328,8 +1242,6 @@ class BaseBuilder
         return $this->groupStartPrepare('NOT ', 'OR ');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Ends a query group
      *
@@ -1339,8 +1251,6 @@ class BaseBuilder
     {
         return $this->groupEndPrepare();
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Starts a query group for HAVING clause.
@@ -1352,8 +1262,6 @@ class BaseBuilder
         return $this->groupStartPrepare('', 'AND ', 'QBHaving');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Starts a query group for HAVING clause, but ORs the group.
      *
@@ -1363,8 +1271,6 @@ class BaseBuilder
     {
         return $this->groupStartPrepare('', 'OR ', 'QBHaving');
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Starts a query group for HAVING clause, but NOTs the group.
@@ -1376,8 +1282,6 @@ class BaseBuilder
         return $this->groupStartPrepare('NOT ', 'AND ', 'QBHaving');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Starts a query group for HAVING clause, but OR NOTs the group.
      *
@@ -1388,8 +1292,6 @@ class BaseBuilder
         return $this->groupStartPrepare('NOT ', 'OR ', 'QBHaving');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Ends a query group for HAVING clause.
      *
@@ -1399,8 +1301,6 @@ class BaseBuilder
     {
         return $this->groupEndPrepare('QBHaving');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Prepate a query group start.
@@ -1427,8 +1327,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Prepate a query group end.
      *
@@ -1448,8 +1346,6 @@ class BaseBuilder
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Group_get_type
@@ -1473,8 +1369,6 @@ class BaseBuilder
 
         return $type;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * GROUP BY
@@ -1510,8 +1404,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * HAVING
      *
@@ -1528,8 +1420,6 @@ class BaseBuilder
         return $this->whereHaving('QBHaving', $key, $value, 'AND ', $escape);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * OR HAVING
      *
@@ -1545,8 +1435,6 @@ class BaseBuilder
     {
         return $this->whereHaving('QBHaving', $key, $value, 'OR ', $escape);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * ORDER BY
@@ -1607,8 +1495,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * LIMIT
      *
@@ -1630,8 +1516,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the OFFSET value
      *
@@ -1648,8 +1532,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * LIMIT string
      *
@@ -1663,8 +1545,6 @@ class BaseBuilder
     {
         return $sql . ' LIMIT ' . ($offsetIgnore === false && $this->QBOffset ? $this->QBOffset . ', ' : '') . $this->QBLimit;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The "set" function.
@@ -1699,8 +1579,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the previously set() data, alternatively resetting it
      * if needed.
@@ -1719,8 +1597,6 @@ class BaseBuilder
 
         return $data;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get SELECT query string
@@ -1741,8 +1617,6 @@ class BaseBuilder
 
         return $this->compileFinalQuery($select);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a finalized, compiled query string with the bindings
@@ -1796,8 +1670,6 @@ class BaseBuilder
         return $result;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * "Count All" query
      *
@@ -1832,8 +1704,6 @@ class BaseBuilder
 
         return (int) $query->numrows;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * "Count All Results" query
@@ -1899,8 +1769,6 @@ class BaseBuilder
         return (int) $row->numrows;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get compiled 'where' condition string
      *
@@ -1912,8 +1780,6 @@ class BaseBuilder
     {
         return $this->QBWhere;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get_Where
@@ -1950,8 +1816,6 @@ class BaseBuilder
 
         return $result;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Insert_Batch
@@ -2012,8 +1876,6 @@ class BaseBuilder
         return $affectedRows;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Insert batch statement
      *
@@ -2029,8 +1891,6 @@ class BaseBuilder
     {
         return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The "setInsertBatch" function.  Allows key/value pairs to be set for batch inserts
@@ -2082,8 +1942,6 @@ class BaseBuilder
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get INSERT query string
@@ -2167,8 +2025,6 @@ class BaseBuilder
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Validate Insert
      *
@@ -2193,8 +2049,6 @@ class BaseBuilder
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Insert statement
@@ -2247,8 +2101,6 @@ class BaseBuilder
         return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Replace statement
      *
@@ -2265,8 +2117,6 @@ class BaseBuilder
         return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * FROM tables
      *
@@ -2281,8 +2131,6 @@ class BaseBuilder
     {
         return implode(', ', $this->QBFrom);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get UPDATE query string
@@ -2307,8 +2155,6 @@ class BaseBuilder
 
         return $this->compileFinalQuery($sql);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * UPDATE
@@ -2365,8 +2211,6 @@ class BaseBuilder
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Update statement
      *
@@ -2390,8 +2234,6 @@ class BaseBuilder
                 . $this->compileOrderBy()
                 . ($this->QBLimit ? $this->_limit(' ', true) : '');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Validate Update
@@ -2417,8 +2259,6 @@ class BaseBuilder
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Update_Batch
@@ -2495,8 +2335,6 @@ class BaseBuilder
         return $this->testMode ? $savedSQL : $affectedRows;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Update_Batch statement
      *
@@ -2535,8 +2373,6 @@ class BaseBuilder
 
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
@@ -2585,8 +2421,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Empty Table
      *
@@ -2608,8 +2442,6 @@ class BaseBuilder
 
         return $this->db->query($sql, null, false);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Truncate
@@ -2635,8 +2467,6 @@ class BaseBuilder
         return $this->db->query($sql, null, false);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Truncate statement
      *
@@ -2654,8 +2484,6 @@ class BaseBuilder
         return 'TRUNCATE ' . $table;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get DELETE query string
      *
@@ -2672,8 +2500,6 @@ class BaseBuilder
 
         return $this->compileFinalQuery($sql);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Delete
@@ -2726,8 +2552,6 @@ class BaseBuilder
         return $this->testMode ? $sql : $this->db->query($sql, $this->binds, false);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Increments a numeric column by the specified value.
      *
@@ -2744,8 +2568,6 @@ class BaseBuilder
 
         return $this->db->query($sql, $this->binds, false);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Decrements a numeric column by the specified value.
@@ -2764,8 +2586,6 @@ class BaseBuilder
         return $this->db->query($sql, $this->binds, false);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Delete statement
      *
@@ -2779,8 +2599,6 @@ class BaseBuilder
     {
         return 'DELETE ' . $this->compileIgnore('delete') . 'FROM ' . $table . $this->compileWhereHaving('QBWhere');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Track Aliases
@@ -2819,8 +2637,6 @@ class BaseBuilder
             $this->db->addTableAlias($table);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Compile the SELECT statement
@@ -2877,8 +2693,6 @@ class BaseBuilder
         return $sql;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Compile Ignore Statement
      *
@@ -2899,8 +2713,6 @@ class BaseBuilder
 
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Compile WHERE, HAVING statements
@@ -2980,8 +2792,6 @@ class BaseBuilder
         return '';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Compile GROUP BY
      *
@@ -3012,8 +2822,6 @@ class BaseBuilder
 
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Compile ORDER BY
@@ -3047,8 +2855,6 @@ class BaseBuilder
         return '';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Object to Array
      *
@@ -3075,8 +2881,6 @@ class BaseBuilder
 
         return $array;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Object to Array
@@ -3111,8 +2915,6 @@ class BaseBuilder
         return $array;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Is literal
      *
@@ -3143,8 +2945,6 @@ class BaseBuilder
         return in_array($str[0], $_str, true);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Reset Query Builder values.
      *
@@ -3160,8 +2960,6 @@ class BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Resets the query builder values.  Called by the get() function
      *
@@ -3175,8 +2973,6 @@ class BaseBuilder
             $this->{$item} = $defaultValue;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Resets the query builder values.  Called by the get() function
@@ -3206,8 +3002,6 @@ class BaseBuilder
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Resets the query builder "write" values.
      *
@@ -3226,8 +3020,6 @@ class BaseBuilder
         ]);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Tests whether the string has an SQL operator
      *
@@ -3239,8 +3031,6 @@ class BaseBuilder
     {
         return (bool) preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', trim($str));
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Returns the SQL string operator
@@ -3274,8 +3064,6 @@ class BaseBuilder
 
         return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Stores a bind value after ensuring that it's unique.
@@ -3314,8 +3102,6 @@ class BaseBuilder
         return $key . '.' . $count;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a clone of a Base Builder with reset query builder values.
      *
@@ -3325,6 +3111,4 @@ class BaseBuilder
     {
         return (clone $this)->from([], true)->resetQuery();
     }
-
-    //--------------------------------------------------------------------
 }

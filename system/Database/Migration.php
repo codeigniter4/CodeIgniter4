@@ -39,8 +39,6 @@ abstract class Migration
      */
     protected $forge;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -53,8 +51,6 @@ abstract class Migration
         $this->db = $this->forge->getConnection();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the database group name this migration uses.
      *
@@ -65,19 +61,13 @@ abstract class Migration
         return $this->DBGroup;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Perform a migration step.
      */
     abstract public function up();
 
-    //--------------------------------------------------------------------
-
     /**
      * Revert a migration step.
      */
     abstract public function down();
-
-    //--------------------------------------------------------------------
 }

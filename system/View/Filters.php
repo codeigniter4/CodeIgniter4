@@ -31,8 +31,6 @@ class Filters
         return ucfirst(strtolower($value));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Formats a date into the given $format.
      *
@@ -49,8 +47,6 @@ class Filters
 
         return date($format, $value);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Given a string or DateTime object, will return the date modified
@@ -71,8 +67,6 @@ class Filters
         return strtotime($adjustment, strtotime($value));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the given default value if $value is empty or undefined.
      *
@@ -88,8 +82,6 @@ class Filters
             : $value;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Escapes the given value with our `esc()` helper function.
      *
@@ -102,8 +94,6 @@ class Filters
     {
         return esc($value, $context);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an excerpt of the given string.
@@ -121,8 +111,6 @@ class Filters
         return excerpt($value, $phrase, $radius);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Highlights a given phrase within the text using '<mark></mark>' tags.
      *
@@ -138,8 +126,6 @@ class Filters
         return highlight_phrase($value, $phrase);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Highlights code samples with HTML/CSS.
      *
@@ -153,8 +139,6 @@ class Filters
 
         return highlight_code($value);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Limits the number of characters to $limit, and trails of with an ellipsis.
@@ -172,8 +156,6 @@ class Filters
         return character_limiter($value, $limit);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Limits the number of words to $limit, and trails of with an ellipsis.
      *
@@ -188,8 +170,6 @@ class Filters
 
         return word_limiter($value, $limit);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the $value displayed in a localized manner.
@@ -217,8 +197,6 @@ class Filters
 
         return format_number($value, $precision, $locale, ['type' => $types[$type]]);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the $value displayed as a currency string.
@@ -258,8 +236,6 @@ class Filters
         return $typography->nl2brExceptPre($value);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes a body of text and uses the auto_typography() method to
      * turn it into prettier, easier-to-read, prose.
@@ -274,8 +250,6 @@ class Filters
 
         return $typography->autoTypography($value);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Rounds a given $value in one of 3 ways;
@@ -312,8 +286,6 @@ class Filters
         return $value;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a "title case" version of the string.
      *
@@ -325,6 +297,4 @@ class Filters
     {
         return ucwords(strtolower($value));
     }
-
-    //--------------------------------------------------------------------
 }

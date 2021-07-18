@@ -135,8 +135,6 @@ class IncomingRequest extends Request
      */
     protected $userAgent;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -168,8 +166,6 @@ class IncomingRequest extends Request
         $this->detectURI($config->uriProtocol, $config->baseURL);
         $this->detectLocale($config);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles setting up the locale, perhaps auto-detecting through
@@ -236,8 +232,6 @@ class IncomingRequest extends Request
 
         return $this->path;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Will parse the REQUEST_URI and automatically detect the URI from it,
@@ -326,8 +320,6 @@ class IncomingRequest extends Request
         return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Provides a convenient way to work with the Negotiate class
      * for content negotiation.
@@ -360,8 +352,6 @@ class IncomingRequest extends Request
 
         throw HTTPException::forInvalidNegotiationType($type);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if this request was made from the command line (CLI).
@@ -401,8 +391,6 @@ class IncomingRequest extends Request
 
         return $this->hasHeader('Front-End-Https') && ! empty($this->header('Front-End-Https')->getValue()) && strtolower($this->header('Front-End-Https')->getValue()) !== 'off';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the relative path and updates the URI object.
@@ -464,8 +452,6 @@ class IncomingRequest extends Request
         return $this->path;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the locale string for this request.
      *
@@ -508,8 +494,6 @@ class IncomingRequest extends Request
         return $this->defaultLocale;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from JSON input stream with fallback to $_REQUEST object. This is the simplest way
      * to grab data from the request object and can be used in lieu of the
@@ -543,8 +527,6 @@ class IncomingRequest extends Request
 
         return $this->fetchGlobal('request', $index, $filter, $flags);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * A convenience method that grabs the raw input stream and decodes
@@ -596,8 +578,6 @@ class IncomingRequest extends Request
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
      * the String into an array.
@@ -610,8 +590,6 @@ class IncomingRequest extends Request
 
         return $output;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fetch an item from GET data.
@@ -627,8 +605,6 @@ class IncomingRequest extends Request
         return $this->fetchGlobal('get', $index, $filter, $flags);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from POST.
      *
@@ -642,8 +618,6 @@ class IncomingRequest extends Request
     {
         return $this->fetchGlobal('post', $index, $filter, $flags);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fetch an item from POST data with fallback to GET.
@@ -662,8 +636,6 @@ class IncomingRequest extends Request
         return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from GET data with fallback to POST.
      *
@@ -681,8 +653,6 @@ class IncomingRequest extends Request
         return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from the COOKIE array.
      *
@@ -697,8 +667,6 @@ class IncomingRequest extends Request
         return $this->fetchGlobal('cookie', $index, $filter, $flags);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch the user agent string
      *
@@ -708,8 +676,6 @@ class IncomingRequest extends Request
     {
         return $this->userAgent;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to get old Input data that has been flashed to the session
@@ -760,8 +726,6 @@ class IncomingRequest extends Request
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an array of all files that have been uploaded with this
      * request. Each file is represented by an UploadedFile instance.
@@ -810,8 +774,6 @@ class IncomingRequest extends Request
 
         return $this->files->getFile($fileID);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Remove relative directory (../) and multi slashes (///)

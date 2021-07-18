@@ -20,8 +20,6 @@ final class BadQueryTest extends CIUnitTestCase
     protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
     protected static $origDebug;
 
-    //--------------------------------------------------------------------
-
     /**
      * This test must run first to store the inital debug value before we tinker with it below
      */

@@ -29,8 +29,6 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * the body we thought would be sent actually was.
      */
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -58,8 +56,6 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
         $this->assertHeaderEmitted('set-cookie: FOO=bar', true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess

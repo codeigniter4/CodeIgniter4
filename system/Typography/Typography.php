@@ -222,8 +222,6 @@ class Typography
         return preg_replace(array_keys($table), $table, $str);
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Format Characters
      *
@@ -281,8 +279,6 @@ class Typography
         return preg_replace(array_keys($table), $table, $str);
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Format Newlines
      *
@@ -317,8 +313,6 @@ class Typography
         return preg_replace('/<p><\/p>(.*)/', '\\1', $str, 1);
     }
 
-    // ------------------------------------------------------------------------
-
     /**
      * Protect Characters
      *
@@ -335,8 +329,6 @@ class Typography
     {
         return str_replace(["'", '"', '--', '  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Convert newlines to HTML line breaks except within PRE tags

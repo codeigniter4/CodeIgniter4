@@ -31,16 +31,12 @@ class MockCache extends BaseHandler implements CacheInterface
      */
     protected $expirations = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes care of any handler-specific setup that must be done.
      */
     public function initialize()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to fetch an item from the cache store.
@@ -55,8 +51,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
         return $this->cache[$key] ?? null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
@@ -79,8 +73,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
         return $value;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -105,8 +97,6 @@ class MockCache extends BaseHandler implements CacheInterface
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -126,8 +116,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Deletes items from the cache store matching a given pattern.
@@ -150,8 +138,6 @@ class MockCache extends BaseHandler implements CacheInterface
         return $count;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic incrementation of a raw stored value.
      *
@@ -173,8 +159,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
         return $this->save($key, $data + $offset);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic decrementation of a raw stored value.
@@ -199,8 +183,6 @@ class MockCache extends BaseHandler implements CacheInterface
         return $this->save($key, $data - $offset);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -214,8 +196,6 @@ class MockCache extends BaseHandler implements CacheInterface
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns information on the entire cache.
      *
@@ -228,8 +208,6 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         return array_keys($this->cache);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -257,8 +235,6 @@ class MockCache extends BaseHandler implements CacheInterface
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the driver is supported on this system.
      *
@@ -268,6 +244,4 @@ class MockCache extends BaseHandler implements CacheInterface
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

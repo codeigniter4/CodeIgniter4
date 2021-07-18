@@ -28,8 +28,6 @@ class Connection extends BaseConnection
      */
     public $DBDriver = 'Postgre';
 
-    //--------------------------------------------------------------------
-
     /**
      * Database schema
      *
@@ -43,8 +41,6 @@ class Connection extends BaseConnection
      * @var string
      */
     public $escapeChar = '"';
-
-    //--------------------------------------------------------------------
 
     /**
      * Connect to the database.
@@ -87,8 +83,6 @@ class Connection extends BaseConnection
         return $this->connID;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
@@ -102,8 +96,6 @@ class Connection extends BaseConnection
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close the database connection.
      *
@@ -113,8 +105,6 @@ class Connection extends BaseConnection
     {
         pg_close($this->connID);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select a specific database table to use.
@@ -127,8 +117,6 @@ class Connection extends BaseConnection
     {
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a string containing the version of the database being used.
@@ -148,8 +136,6 @@ class Connection extends BaseConnection
 
         return isset($pgVersion['server']) ? $this->dataCache['version'] = $pgVersion['server'] : false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Executes the query against the database.
@@ -172,8 +158,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of rows affected by this query.
      *
@@ -183,8 +167,6 @@ class Connection extends BaseConnection
     {
         return pg_affected_rows($this->resultID);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * "Smart" Escape String
@@ -212,8 +194,6 @@ class Connection extends BaseConnection
         return parent::escape($str);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Platform-dependant string escape
      *
@@ -229,8 +209,6 @@ class Connection extends BaseConnection
 
         return pg_escape_string($this->connID, $str);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
@@ -252,8 +230,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
      *
@@ -269,8 +245,6 @@ class Connection extends BaseConnection
                 . $this->escape($this->DBPrefix . strtolower($table))
                 . ' ORDER BY "ordinal_position"';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with field data
@@ -307,8 +281,6 @@ class Connection extends BaseConnection
 
         return $retVal;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with index data
@@ -352,8 +324,6 @@ class Connection extends BaseConnection
 
         return $retVal;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with Foreign key data
@@ -400,8 +370,6 @@ class Connection extends BaseConnection
         return $retVal;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns platform-specific SQL to disable foreign key checks.
      *
@@ -412,8 +380,6 @@ class Connection extends BaseConnection
         return 'SET CONSTRAINTS ALL DEFERRED';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns platform-specific SQL to enable foreign key checks.
      *
@@ -423,8 +389,6 @@ class Connection extends BaseConnection
     {
         return 'SET CONSTRAINTS ALL IMMEDIATE;';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the last error code and message.
@@ -440,8 +404,6 @@ class Connection extends BaseConnection
             'message' => pg_last_error($this->connID) ?: '',
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Insert ID
@@ -480,8 +442,6 @@ class Connection extends BaseConnection
 
         return (int) $query->ins_id;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Build a DSN from the provided parameters
@@ -535,8 +495,6 @@ class Connection extends BaseConnection
         $this->DSN = rtrim($this->DSN);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set client encoding
      *
@@ -549,8 +507,6 @@ class Connection extends BaseConnection
         return pg_set_client_encoding($this->connID, $charset) === 0;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Begin Transaction
      *
@@ -560,8 +516,6 @@ class Connection extends BaseConnection
     {
         return (bool) pg_query($this->connID, 'BEGIN');
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Commit Transaction
@@ -573,8 +527,6 @@ class Connection extends BaseConnection
         return (bool) pg_query($this->connID, 'COMMIT');
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Rollback Transaction
      *
@@ -584,8 +536,6 @@ class Connection extends BaseConnection
     {
         return (bool) pg_query($this->connID, 'ROLLBACK');
     }
-
-    // --------------------------------------------------------------------
 
     /**
      * Determines if a query is a "write" type.
@@ -604,6 +554,4 @@ class Connection extends BaseConnection
 
         return parent::isWriteType($sql);
     }
-
-    // --------------------------------------------------------------------
 }

@@ -13,16 +13,12 @@ final class GroupTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGroupBy()
     {
@@ -34,8 +30,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingBy()
     {
@@ -49,8 +43,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingBy()
     {
@@ -66,8 +58,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingIn()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -80,8 +70,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingInClosure()
     {
@@ -98,8 +86,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrHavingIn()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -113,8 +99,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingInClosure()
     {
@@ -134,8 +118,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingNotIn()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -148,8 +130,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingNotInClosure()
     {
@@ -166,8 +146,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrHavingNotIn()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -181,8 +159,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingNotInClosure()
     {
@@ -202,8 +178,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingLike()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -216,8 +190,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingLikeBefore()
     {
@@ -232,8 +204,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingLikeAfter()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -246,8 +216,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotHavingLike()
     {
@@ -262,8 +230,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotHavingLikeBefore()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -277,8 +243,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotHavingLikeAfter()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -291,8 +255,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingLike()
     {
@@ -308,8 +270,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrHavingLikeBefore()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -323,8 +283,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingLikeAfter()
     {
@@ -340,8 +298,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrNotHavingLike()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -355,8 +311,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrNotHavingLikeBefore()
     {
@@ -372,8 +326,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrNotHavingLikeAfter()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -387,8 +339,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingAndGroup()
     {
@@ -407,8 +357,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingOrGroup()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -425,8 +373,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotHavingAndGroup()
     {
@@ -445,8 +391,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotHavingOrGroup()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -464,8 +408,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testAndGroups()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -480,8 +422,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrGroups()
     {
@@ -498,8 +438,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotGroups()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -514,8 +452,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrNotGroups()
     {

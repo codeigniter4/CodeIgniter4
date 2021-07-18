@@ -36,8 +36,6 @@ class ImageMagickHandler extends BaseHandler
      */
     protected $resource;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -56,8 +54,6 @@ class ImageMagickHandler extends BaseHandler
         }
         // @codeCoverageIgnoreEnd
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles the actual resizing of the image.
@@ -88,8 +84,6 @@ class ImageMagickHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Crops the image.
      *
@@ -114,8 +108,6 @@ class ImageMagickHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handles the rotation of an image resource.
      * Doesn't save the image, but replaces the current resource.
@@ -139,8 +131,6 @@ class ImageMagickHandler extends BaseHandler
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Flattens transparencies, default white background
@@ -167,8 +157,6 @@ class ImageMagickHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Flips an image along it's vertical or horizontal axis.
      *
@@ -192,8 +180,6 @@ class ImageMagickHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get driver version
      *
@@ -208,8 +194,6 @@ class ImageMagickHandler extends BaseHandler
 
         return str_replace('ImageMagick ', '', $matches[0]);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles all of the grunt work of resizing, etc.
@@ -253,8 +237,6 @@ class ImageMagickHandler extends BaseHandler
 
         return $output;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves any changes that have been made to file. If no new filename is
@@ -301,8 +283,6 @@ class ImageMagickHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get Image Resource
      *
@@ -335,8 +315,6 @@ class ImageMagickHandler extends BaseHandler
         return $this->resource;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Make the image resource object if needed
      *
@@ -364,8 +342,6 @@ class ImageMagickHandler extends BaseHandler
                 break;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handler-specific method for overlaying text on an image.
@@ -460,8 +436,6 @@ class ImageMagickHandler extends BaseHandler
         $this->process($cmd);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the width of an image.
      *
@@ -481,8 +455,6 @@ class ImageMagickHandler extends BaseHandler
     {
         return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Reads the EXIF information from the image and modifies the orientation

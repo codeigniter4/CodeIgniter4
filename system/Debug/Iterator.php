@@ -32,8 +32,6 @@ class Iterator
      */
     protected $results = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Adds a test to run.
      *
@@ -53,8 +51,6 @@ class Iterator
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Runs through all of the tests that have been added, recording
@@ -95,8 +91,6 @@ class Iterator
 
         return null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get results.
@@ -141,6 +135,4 @@ class Iterator
 
         return $tpl . '<br/>';
     }
-
-    //--------------------------------------------------------------------
 }

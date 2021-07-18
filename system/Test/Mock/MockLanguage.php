@@ -23,8 +23,6 @@ class MockLanguage extends Language
      */
     protected $data;
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the data that should be returned by the
      * 'requireFile()' method to allow easy overrides
@@ -43,8 +41,6 @@ class MockLanguage extends Language
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Provides an override that allows us to set custom
      * data to be returned easily during testing.
@@ -57,8 +53,6 @@ class MockLanguage extends Language
     {
         return $this->data ?? [];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Arbitrarily turnoff internationalization support for testing

@@ -90,8 +90,6 @@ class Image extends File
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get image properties
      *
@@ -136,6 +134,4 @@ class Image extends File
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

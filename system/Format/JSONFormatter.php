@@ -43,6 +43,4 @@ class JSONFormatter implements FormatterInterface
 
         return $result;
     }
-
-    //--------------------------------------------------------------------
 }

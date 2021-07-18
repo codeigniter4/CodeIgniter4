@@ -25,8 +25,6 @@ class DotEnv
      */
     protected $path;
 
-    //--------------------------------------------------------------------
-
     /**
      * Builds the path to our file.
      *
@@ -37,8 +35,6 @@ class DotEnv
     {
         $this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The main entry point, will load the .env file and process it
@@ -53,8 +49,6 @@ class DotEnv
 
         return $vars !== null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse the .env file into an array of key => value
@@ -94,8 +88,6 @@ class DotEnv
         return $vars;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the variable into the environment. Will parse the string
      * first to look for {name}={value} pattern, ensure that nested
@@ -118,8 +110,6 @@ class DotEnv
             $_SERVER[$name] = $value;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parses for assignment, cleans the $name and $value, and ensures
@@ -149,8 +139,6 @@ class DotEnv
 
         return [$name, $value];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Strips quotes from the environment variable value.
@@ -207,8 +195,6 @@ class DotEnv
         return $value;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      *  Resolve the nested variables.
      *
@@ -243,8 +229,6 @@ class DotEnv
         return $value;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Search the different places for environment variables and return first value found.
      *
@@ -271,6 +255,4 @@ class DotEnv
                 return $value === false ? null : $value;
         }
     }
-
-    //--------------------------------------------------------------------
 }

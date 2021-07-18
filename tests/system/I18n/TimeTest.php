@@ -260,8 +260,6 @@ final class TimeTest extends CIUnitTestCase
         $this->assertCloseEnoughString(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
     }
 
-    //--------------------------------------------------------------------
-
     public function testMagicIssetTrue()
     {
         $time = Time::parse('January 1, 2016');
@@ -275,8 +273,6 @@ final class TimeTest extends CIUnitTestCase
 
         $this->assertFalse(isset($time->foobar));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetYear()
     {
@@ -657,9 +653,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('13:20:33', $time->toTimeString());
     }
 
-    //--------------------------------------------------------------------
     // Add/Subtract
-    //--------------------------------------------------------------------
 
     public function testCanAddSeconds()
     {
@@ -765,9 +759,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2014-01-10 13:20:33', $newTime->toDateTimeString());
     }
 
-    //--------------------------------------------------------------------
     // Comparison
-    //--------------------------------------------------------------------
 
     public function testEqualWithDifferent()
     {

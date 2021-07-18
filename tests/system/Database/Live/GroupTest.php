@@ -29,8 +29,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(4, $result);
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingBy()
     {
         $result = $this->db->table('job')
@@ -42,8 +40,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertCount(2, $result);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingBy()
     {
@@ -57,8 +53,6 @@ final class GroupTest extends CIUnitTestCase
 
         $this->assertCount(2, $result);
     }
-
-    //--------------------------------------------------------------------
 
     public function testHavingIn()
     {
@@ -74,8 +68,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Developer', $result[0]->name);
         $this->assertSame('Politician', $result[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testorHavingIn()
     {
@@ -93,8 +85,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Politician', $result[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingNotIn()
     {
         $result = $this->db->table('job')
@@ -109,8 +99,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Accountant', $result[0]->name);
         $this->assertSame('Musician', $result[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingNotIn()
     {
@@ -128,8 +116,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testHavingLike()
     {
         $result = $this->db->table('job')
@@ -142,8 +128,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(1, $result);
         $this->assertSame('Developer', $result[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotHavingLike()
     {
@@ -160,8 +144,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Developer', $result[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrHavingLike()
     {
         $result = $this->db->table('job')
@@ -177,8 +159,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Accountant', $result[0]->name);
         $this->assertSame('Developer', $result[1]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrNotHavingLike()
     {
@@ -197,8 +177,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[2]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testAndHavingGroupStart()
     {
         $result = $this->db->table('job')
@@ -216,8 +194,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(1, $result);
         $this->assertSame('Accountant', $result[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrHavingGroupStart()
     {
@@ -238,8 +214,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotHavingGroupStart()
     {
         $result = $this->db->table('job')
@@ -257,8 +231,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(1, $result);
         $this->assertSame('Musician', $result[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrNotHavingGroupStart()
     {
@@ -280,8 +252,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Politician', $result[2]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testAndGroups()
     {
         $result = $this->db->table('user')
@@ -296,8 +266,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(1, $result);
         $this->assertSame('Richard A Causey', $result[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrGroups()
     {
@@ -315,8 +283,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Chris Martin', $result[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotGroups()
     {
         $result = $this->db->table('user')
@@ -331,8 +297,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(1, $result);
         $this->assertSame('Derek Jones', $result[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrNotGroups()
     {
@@ -350,8 +314,6 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Richard A Causey', $result[1]->name);
         $this->assertSame('Chris Martin', $result[2]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGroupByCount()
     {

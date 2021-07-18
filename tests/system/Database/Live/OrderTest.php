@@ -32,8 +32,6 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[3]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testOrderDescending()
     {
         $jobs = $this->db->table('job')
@@ -47,8 +45,6 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[1]->name);
         $this->assertSame('Politician', $jobs[0]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testMultipleOrderValues()
     {
@@ -64,8 +60,6 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Richard A Causey', $users[2]->name);
         $this->assertSame('Derek Jones', $users[3]->name);
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrderRandom()
     {

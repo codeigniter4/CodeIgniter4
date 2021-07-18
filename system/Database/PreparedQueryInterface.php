@@ -26,8 +26,6 @@ interface PreparedQueryInterface
      */
     public function execute(...$data);
 
-    //--------------------------------------------------------------------
-
     /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
@@ -39,14 +37,10 @@ interface PreparedQueryInterface
      */
     public function prepare(string $sql, array $options = []);
 
-    //--------------------------------------------------------------------
-
     /**
      * Explicity closes the statement.
      */
     public function close();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the SQL that has been prepared.
@@ -55,8 +49,6 @@ interface PreparedQueryInterface
      */
     public function getQueryString(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the error code created while executing this statement.
      *
@@ -64,14 +56,10 @@ interface PreparedQueryInterface
      */
     public function getErrorCode(): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the error message created while executing this statement.
      *
      * @return string
      */
     public function getErrorMessage(): string;
-
-    //--------------------------------------------------------------------
 }

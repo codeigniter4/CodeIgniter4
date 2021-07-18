@@ -40,8 +40,6 @@ class Files extends BaseCollector
      */
     protected $title = 'Files';
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns any information that should be shown next to the title.
      *
@@ -51,8 +49,6 @@ class Files extends BaseCollector
     {
         return '( ' . (int) count(get_included_files()) . ' )';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
@@ -90,8 +86,6 @@ class Files extends BaseCollector
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Displays the number of included files as a badge in the tab button.
      *
@@ -101,8 +95,6 @@ class Files extends BaseCollector
     {
         return count(get_included_files());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Display the icon.

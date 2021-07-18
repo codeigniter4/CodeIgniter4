@@ -30,8 +30,6 @@ class Result extends BaseResult
         return $this->resultID->field_count;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates an array of column names in the result set.
      *
@@ -48,8 +46,6 @@ class Result extends BaseResult
 
         return $fieldNames;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates an array of objects representing field meta-data.
@@ -107,8 +103,6 @@ class Result extends BaseResult
         return $retVal;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Frees the current result.
      *
@@ -121,8 +115,6 @@ class Result extends BaseResult
             $this->resultID = false;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves the internal pointer to the desired offset. This is called
@@ -138,8 +130,6 @@ class Result extends BaseResult
         return $this->resultID->data_seek($n);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the result set as an array.
      *
@@ -151,8 +141,6 @@ class Result extends BaseResult
     {
         return $this->resultID->fetch_assoc();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the result set as an object.
@@ -172,8 +160,6 @@ class Result extends BaseResult
         return $this->resultID->fetch_object($className);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of rows in the resultID (i.e., mysqli_result object)
      *
@@ -187,6 +173,4 @@ class Result extends BaseResult
 
         return $this->numRows;
     }
-
-    //--------------------------------------------------------------------
 }

@@ -657,7 +657,6 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
     }
 
-    //--------------------------------------------------------------------
     public function testSendWithDelay()
     {
         $request = $this->getRequest([
@@ -671,7 +670,6 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(1.0, $request->getDelay());
     }
 
-    //--------------------------------------------------------------------
     public function testSendContinued()
     {
         $request = $this->getRequest([
@@ -731,7 +729,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    //--------------------------------------------------------------------
     public function testSplitResponse()
     {
         $request = $this->getRequest([
@@ -744,7 +741,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('Hi there', $response->getBody());
     }
 
-    //--------------------------------------------------------------------
     public function testApplyBody()
     {
         $request = $this->getRequest([
@@ -760,7 +756,6 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
-    //--------------------------------------------------------------------
     public function testResponseHeaders()
     {
         $request = $this->getRequest([

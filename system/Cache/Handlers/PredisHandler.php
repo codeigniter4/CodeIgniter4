@@ -42,8 +42,6 @@ class PredisHandler extends BaseHandler
      */
     protected $redis;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -57,8 +55,6 @@ class PredisHandler extends BaseHandler
             $this->config = array_merge($this->config, $config->redis);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes care of any handler-specific setup that must be done.
@@ -78,8 +74,6 @@ class PredisHandler extends BaseHandler
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to fetch an item from the cache store.
@@ -118,8 +112,6 @@ class PredisHandler extends BaseHandler
                 return null;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -161,8 +153,6 @@ class PredisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -176,8 +166,6 @@ class PredisHandler extends BaseHandler
 
         return $this->redis->del($key) === 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Deletes items from the cache store matching a given pattern.
@@ -197,8 +185,6 @@ class PredisHandler extends BaseHandler
         return $this->redis->del($matchedKeys);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic incrementation of a raw stored value.
      *
@@ -213,8 +199,6 @@ class PredisHandler extends BaseHandler
 
         return $this->redis->hincrby($key, 'data', $offset);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic decrementation of a raw stored value.
@@ -231,8 +215,6 @@ class PredisHandler extends BaseHandler
         return $this->redis->hincrby($key, 'data', -$offset);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -242,8 +224,6 @@ class PredisHandler extends BaseHandler
     {
         return $this->redis->flushdb()->getPayload() === 'OK';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -257,8 +237,6 @@ class PredisHandler extends BaseHandler
     {
         return $this->redis->info();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -288,8 +266,6 @@ class PredisHandler extends BaseHandler
 
         return null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the driver is supported on this system.

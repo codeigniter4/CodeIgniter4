@@ -38,8 +38,6 @@ class GDHandler extends BaseHandler
         // @codeCoverageIgnoreEnd
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handles the rotation of an image resource.
      * Doesn't save the image, but replaces the current resource.
@@ -70,8 +68,6 @@ class GDHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Flattens transparencies
@@ -108,8 +104,6 @@ class GDHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Flips an image along it's vertical or horizontal axis.
      *
@@ -130,8 +124,6 @@ class GDHandler extends BaseHandler
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get GD version
      *
@@ -148,8 +140,6 @@ class GDHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Resizes the image.
      *
@@ -160,8 +150,6 @@ class GDHandler extends BaseHandler
         return $this->process('resize');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Crops the image.
      *
@@ -171,8 +159,6 @@ class GDHandler extends BaseHandler
     {
         return $this->process('crop');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles all of the grunt work of resizing, etc.
@@ -224,8 +210,6 @@ class GDHandler extends BaseHandler
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves any changes that have been made to file. If no new filename is
@@ -313,8 +297,6 @@ class GDHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Create Image Resource
      *
@@ -343,8 +325,6 @@ class GDHandler extends BaseHandler
         return $this->getImageResource($path, $imageType);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Make the image resource object if needed
      */
@@ -358,8 +338,6 @@ class GDHandler extends BaseHandler
             );
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Check if image type is supported and return image resource
@@ -406,8 +384,6 @@ class GDHandler extends BaseHandler
                 throw ImageException::forInvalidImageCreate('Ima');
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Add text overlay to an image.
@@ -489,8 +465,6 @@ class GDHandler extends BaseHandler
         $this->textOverlay($text, $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Handler-specific method for overlaying text on an image.
      *
@@ -537,8 +511,6 @@ class GDHandler extends BaseHandler
 
         $this->resource = $src;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return image width.
