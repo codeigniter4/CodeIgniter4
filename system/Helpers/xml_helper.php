@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
- * CodeIgniter XML Helpers
- */
+// CodeIgniter XML Helpers
 
 if (! function_exists('xml_convert')) {
     /**

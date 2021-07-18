@@ -11,9 +11,7 @@
 
 use Config\ForeignCharacters;
 
-/**
- * CodeIgniter Text Helpers
- */
+// CodeIgniter Text Helpers
 //--------------------------------------------------------------------
 
 if (! function_exists('word_limiter')) {

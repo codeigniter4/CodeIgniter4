@@ -15,9 +15,7 @@ use Config\Mimes;
 
 // --------------------------------------------------------------------
 
-/**
- * CodeIgniter HTML Helpers
- */
+// CodeIgniter HTML Helpers
 if (! function_exists('ul')) {
     /**
      * Unordered List

@@ -11,9 +11,7 @@
 
 use Config\App;
 
-/**
- * CodeIgniter Form Helpers
- */
+// CodeIgniter Form Helpers
 
 use Config\Services;
 

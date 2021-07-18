@@ -11,9 +11,7 @@
 
 // --------------------------------------------------------------------
 
-/**
- * CodeIgniter Inflector Helpers
- */
+// CodeIgniter Inflector Helpers
 if (! function_exists('singular')) {
     /**
      * Singular

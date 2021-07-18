@@ -465,7 +465,7 @@ class Parser extends View
     {
         $pattern = '/\{\s*(if|elseif)\s*((?:\()?(.*?)(?:\))?)\s*\}/ms';
 
-        /**
+        /*
          * For each match:
          * [0] = raw match `{if var}`
          * [1] = conditional `if`
