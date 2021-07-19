@@ -1,6 +1,14 @@
 <?php
 
-// looking for a system message not likely to be part of unit testing
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 return [
     'missingExtension' => '{0} extension could not be found.',
     'bazillion'        => 'billions and billions', // adds a new setting
