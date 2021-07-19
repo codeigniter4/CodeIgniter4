@@ -695,7 +695,7 @@ class CURLRequest extends Request
         // Send the request and wait for a response.
         $output = curl_exec($ch);
 
-        if ($output === false) {
+        if ($output === false && $curlOptions[CURLOPT_FAILONERROR]) {
             throw HTTPException::forCurlError((string) curl_errno($ch), curl_error($ch));
         }
 
