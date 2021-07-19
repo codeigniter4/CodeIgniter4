@@ -275,13 +275,13 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         ];
 
         protected $datamap = [
-            'full_name' => 'name',
+            'name' => 'full_name',
         ];
     }
 
 By adding our new database name to the ``$datamap`` array, we can tell the class what class property the database column
-should be accessible through. The key of the array is the name of the column in the database, where the value in the array
-is class property to map it to.
+should be accessible through. The key of the array is class property to map it to, where the value in the array is the
+name of the column in the database.
 
 In this example, when the model sets the ``full_name`` field on the User class, it actually assigns that value to the
 class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will still be accessible
