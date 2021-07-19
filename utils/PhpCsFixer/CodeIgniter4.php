@@ -20,7 +20,7 @@ final class CodeIgniter4 extends AbstractRuleset
         $this->rules = [
             'align_multiline_comment' => ['comment_type' => 'phpdocs_only'],
             'array_indentation'       => true,
-            'array_push'              => true, // risky
+            'array_push'              => true,
             'array_syntax'            => ['syntax' => 'short'],
             'backtick_to_shell_exec'  => true,
             'binary_operator_spaces'  => [
@@ -196,7 +196,7 @@ final class CodeIgniter4 extends AbstractRuleset
             'no_alternative_syntax'                       => false,
             'no_binary_string'                            => true,
             'no_blank_lines_after_class_opening'          => true,
-            'no_blank_lines_after_phpdoc'                 => false, // @todo enable fully when `header_comment` is required
+            'no_blank_lines_after_phpdoc'                 => true,
             'no_blank_lines_before_namespace'             => false, // conflicts with `single_blank_line_before_namespace`
             'no_break_comment'                            => ['comment_text' => 'no break'],
             'no_closing_tag'                              => true,
