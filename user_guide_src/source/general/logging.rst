@@ -80,13 +80,8 @@ Each handler's section will have one property in common: ``handles``, which is a
 ::
 
     public $handlers = [
-
-        //--------------------------------------------------------------------
         // File Handler
-        //--------------------------------------------------------------------
-
         'CodeIgniter\Log\Handlers\FileHandler' => [
-
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
         ]
     ];

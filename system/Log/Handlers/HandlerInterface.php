@@ -29,8 +29,6 @@ interface HandlerInterface
      */
     public function handle($level, $message): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks whether the Handler will handle logging items of this
      * log Level.
@@ -41,8 +39,6 @@ interface HandlerInterface
      */
     public function canHandle(string $level): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the preferred date format to use when logging.
      *
@@ -51,6 +47,4 @@ interface HandlerInterface
      * @return HandlerInterface
      */
     public function setDateFormat(string $format);
-
-    //--------------------------------------------------------------------
 }

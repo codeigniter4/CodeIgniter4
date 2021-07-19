@@ -80,8 +80,6 @@ class Connection extends BaseConnection
      */
     protected $_reserved_identifiers = ['*'];
 
-    //--------------------------------------------------------------------
-
     /**
      * Class constructor
      *
@@ -567,8 +565,6 @@ class Connection extends BaseConnection
         return isset($info['SQLServerVersion']) ? $this->dataCache['version'] = $info['SQLServerVersion'] : false;
     }
 
-    // --------------------------------------------------------------------
-
     /**
      * Determines if a query is a "write" type.
      *
@@ -586,6 +582,4 @@ class Connection extends BaseConnection
 
         return parent::isWriteType($sql);
     }
-
-    // --------------------------------------------------------------------
 }

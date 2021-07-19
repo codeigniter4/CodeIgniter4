@@ -12,16 +12,12 @@ final class BaseTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDbReturnsConnection()
     {
@@ -31,8 +27,6 @@ final class BaseTest extends CIUnitTestCase
 
         $this->assertInstanceOf(MockConnection::class, $result);
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetTableReturnsTable()
     {

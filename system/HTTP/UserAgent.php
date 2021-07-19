@@ -95,8 +95,6 @@ class UserAgent
      */
     protected $referrer;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -113,8 +111,6 @@ class UserAgent
             $this->compileData();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Is Browser
@@ -138,8 +134,6 @@ class UserAgent
         return isset($this->config->browsers[$key]) && $this->browser === $this->config->browsers[$key];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Is Robot
      *
@@ -161,8 +155,6 @@ class UserAgent
         // Check for a specific robot
         return isset($this->config->robots[$key]) && $this->robot === $this->config->robots[$key];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Is Mobile
@@ -186,8 +178,6 @@ class UserAgent
         return isset($this->config->mobiles[$key]) && $this->mobile === $this->config->mobiles[$key];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Is this a referral from another site?
      *
@@ -209,8 +199,6 @@ class UserAgent
         return $this->referrer;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Agent String
      *
@@ -220,8 +208,6 @@ class UserAgent
     {
         return $this->agent;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get Platform
@@ -233,8 +219,6 @@ class UserAgent
         return $this->platform;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get Browser Name
      *
@@ -244,8 +228,6 @@ class UserAgent
     {
         return $this->browser;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get the Browser Version
@@ -257,8 +239,6 @@ class UserAgent
         return $this->version;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get The Robot Name
      *
@@ -268,8 +248,6 @@ class UserAgent
     {
         return $this->robot;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get the Mobile Device
@@ -281,8 +259,6 @@ class UserAgent
         return $this->mobile;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get the referrer
      *
@@ -292,8 +268,6 @@ class UserAgent
     {
         return empty($_SERVER['HTTP_REFERER']) ? '' : trim($_SERVER['HTTP_REFERER']);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse a custom user-agent string
@@ -321,8 +295,6 @@ class UserAgent
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Compile the User Agent Data
      *
@@ -338,8 +310,6 @@ class UserAgent
             }
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Set the Platform
@@ -362,8 +332,6 @@ class UserAgent
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Set the Browser
@@ -388,8 +356,6 @@ class UserAgent
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set the Robot
      *
@@ -412,8 +378,6 @@ class UserAgent
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set the Mobile Device
      *
@@ -434,8 +398,6 @@ class UserAgent
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Outputs the original Agent String when cast as a string.

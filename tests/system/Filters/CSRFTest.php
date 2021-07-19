@@ -22,7 +22,6 @@ final class CSRFTest extends CIUnitTestCase
         $this->config = new \Config\Filters();
     }
 
-    //--------------------------------------------------------------------
     public function testNormal()
     {
         $this->config->globals = [

@@ -31,8 +31,6 @@ class Negotiate
      */
     protected $request;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -44,8 +42,6 @@ class Negotiate
             $this->request = $request;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Stores the request instance to grab the headers from.
@@ -60,8 +56,6 @@ class Negotiate
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines the best content-type to use based on the $supported
@@ -81,8 +75,6 @@ class Negotiate
     {
         return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines the best charset to use based on the $supported
@@ -109,8 +101,6 @@ class Negotiate
         return $match;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines the best encoding type to use based on the $supported
      * types the application says it supports, and the types requested
@@ -130,8 +120,6 @@ class Negotiate
         return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines the best language to use based on the $supported
      * types the application says it supports, and the types requested
@@ -149,7 +137,6 @@ class Negotiate
         return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
     }
 
-    //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     // Utility Methods
     //--------------------------------------------------------------------
@@ -203,8 +190,6 @@ class Negotiate
         // No matches? Return the first supported element.
         return $strictMatch ? '' : $supported[0];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parses an Accept* header into it's multiple values.
@@ -289,8 +274,6 @@ class Negotiate
         return $results;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Match-maker
      *
@@ -327,8 +310,6 @@ class Negotiate
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks two Accept values with matching 'values' to see if their
      * 'params' are the same.
@@ -354,8 +335,6 @@ class Negotiate
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Compares the types/subtypes of an acceptable Media type and
@@ -386,8 +365,6 @@ class Negotiate
         // Otherwise, subtypes must match also.
         return $aSubType === $sSubType;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Will match locales against their broader pairs, so that fr-FR would

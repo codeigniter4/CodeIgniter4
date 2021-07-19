@@ -364,7 +364,6 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('index', $router->methodName());
     }
 
-    //--------------------------------------------------------------------
     // options need to be declared separately, to not confuse PHPCBF
     public function testMatchedRouteOptions()
     {

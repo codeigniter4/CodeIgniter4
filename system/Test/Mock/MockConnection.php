@@ -24,16 +24,12 @@ class MockConnection extends BaseConnection
 
     public $lastQuery;
 
-    //--------------------------------------------------------------------
-
     public function shouldReturn(string $method, $return)
     {
         $this->returnValues[$method] = $return;
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Orchestrates a query against the database. Queries must use
@@ -90,8 +86,6 @@ class MockConnection extends BaseConnection
         return new $resultClass($this->connID, $this->resultID);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Connect to the database.
      *
@@ -112,8 +106,6 @@ class MockConnection extends BaseConnection
         return $return;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
@@ -124,8 +116,6 @@ class MockConnection extends BaseConnection
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select a specific database table to use.
@@ -141,8 +131,6 @@ class MockConnection extends BaseConnection
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a string containing the version of the database being used.
      *
@@ -152,8 +140,6 @@ class MockConnection extends BaseConnection
     {
         return CodeIgniter::CI_VERSION;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Executes the query against the database.
@@ -167,8 +153,6 @@ class MockConnection extends BaseConnection
         return $this->returnValues['execute'];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of rows affected by this query.
      *
@@ -178,8 +162,6 @@ class MockConnection extends BaseConnection
     {
         return 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the last error code and message.
@@ -198,8 +180,6 @@ class MockConnection extends BaseConnection
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Insert ID
      *
@@ -209,8 +189,6 @@ class MockConnection extends BaseConnection
     {
         return $this->connID->insert_id; // @phpstan-ignore-line
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
@@ -223,8 +201,6 @@ class MockConnection extends BaseConnection
     {
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
@@ -268,16 +244,12 @@ class MockConnection extends BaseConnection
         return [];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close the connection.
      */
     protected function _close()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Begin Transaction
@@ -289,8 +261,6 @@ class MockConnection extends BaseConnection
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Commit Transaction
      *
@@ -301,8 +271,6 @@ class MockConnection extends BaseConnection
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Rollback Transaction
      *
@@ -312,6 +280,4 @@ class MockConnection extends BaseConnection
     {
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

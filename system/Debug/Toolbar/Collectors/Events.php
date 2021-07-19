@@ -58,8 +58,6 @@ class Events extends BaseCollector
      */
     protected $viewer;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      */
@@ -67,8 +65,6 @@ class Events extends BaseCollector
     {
         $this->viewer = Services::renderer();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Child classes should implement this to return the timeline data
@@ -93,8 +89,6 @@ class Events extends BaseCollector
 
         return $data;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
@@ -131,8 +125,6 @@ class Events extends BaseCollector
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the "badge" value for the button.
      *
@@ -142,8 +134,6 @@ class Events extends BaseCollector
     {
         return count(\CodeIgniter\Events\Events::getPerformanceLogs());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Display the icon.

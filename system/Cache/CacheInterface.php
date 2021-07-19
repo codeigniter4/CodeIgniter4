@@ -21,8 +21,6 @@ interface CacheInterface
      */
     public function initialize();
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to fetch an item from the cache store.
      *
@@ -31,8 +29,6 @@ interface CacheInterface
      * @return mixed
      */
     public function get(string $key);
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -45,8 +41,6 @@ interface CacheInterface
      */
     public function save(string $key, $value, int $ttl = 60);
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -55,8 +49,6 @@ interface CacheInterface
      * @return bool Success or failure
      */
     public function delete(string $key);
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic incrementation of a raw stored value.
@@ -68,8 +60,6 @@ interface CacheInterface
      */
     public function increment(string $key, int $offset = 1);
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic decrementation of a raw stored value.
      *
@@ -80,16 +70,12 @@ interface CacheInterface
      */
     public function decrement(string $key, int $offset = 1);
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
      * @return bool Success or failure
      */
     public function clean();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -100,8 +86,6 @@ interface CacheInterface
      * @return mixed
      */
     public function getCacheInfo();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -115,14 +99,10 @@ interface CacheInterface
      */
     public function getMetaData(string $key);
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the driver is supported on this system.
      *
      * @return bool
      */
     public function isSupported(): bool;
-
-    //--------------------------------------------------------------------
 }

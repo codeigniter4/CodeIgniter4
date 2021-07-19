@@ -93,8 +93,6 @@ class Forge extends BaseForge
      */
     protected $null = 'NULL';
 
-    //--------------------------------------------------------------------
-
     /**
      * CREATE TABLE attributes
      *
@@ -128,8 +126,6 @@ class Forge extends BaseForge
 
         return $sql;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * ALTER TABLE
@@ -165,8 +161,6 @@ class Forge extends BaseForge
         return [$sql . implode(',', $field)];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Process column
      *
@@ -193,8 +187,6 @@ class Forge extends BaseForge
                 . (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
                 . $extraClause;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Process indexes

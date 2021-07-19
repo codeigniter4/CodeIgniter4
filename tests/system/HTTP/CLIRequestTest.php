@@ -30,8 +30,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $_GET  = [];
     }
 
-    //--------------------------------------------------------------------
-
     public function testParsingSegments()
     {
         $_SERVER['argv'] = [
@@ -211,8 +209,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('--foo oops --baz "queue some stuff"', $this->request->getOptionString(true));
         $this->assertSame('users/21/profile/bar', $this->request->getPath());
     }
-
-    //--------------------------------------------------------------------
 
     public function testFetchGlobalsSingleValue()
     {
@@ -461,8 +457,6 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'clients[]'));
     }
 
-    //--------------------------------------------------------------------
-
     public function ipAddressChecks()
     {
         return [
@@ -516,8 +510,6 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertSame($expected, $this->request->isValidIP($address, $type));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetIPAddressDefault()
     {
@@ -601,16 +593,12 @@ final class CLIRequestTest extends CIUnitTestCase
 
     //FIXME getIPAddress should have more testing, to 100% code coverage
 
-    //--------------------------------------------------------------------
-
     public function testMethodReturnsRightStuff()
     {
         // Defaults method to CLI now.
         $this->assertSame('cli', $this->request->getMethod());
         $this->assertSame('CLI', $this->request->getMethod(true));
     }
-
-    //---------------------------------------------------------------------
 
     public function testMethodIsCliReturnsAlwaysTrue()
     {

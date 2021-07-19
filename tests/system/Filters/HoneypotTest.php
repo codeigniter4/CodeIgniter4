@@ -30,7 +30,6 @@ final class HoneypotTest extends CIUnitTestCase
         $_POST[$this->honey->name] = 'hey';
     }
 
-    //--------------------------------------------------------------------
     public function testBeforeTriggered()
     {
         $this->config->globals = [
@@ -48,7 +47,6 @@ final class HoneypotTest extends CIUnitTestCase
         $request = $filters->run($uri, 'before');
     }
 
-    //--------------------------------------------------------------------
     public function testBeforeClean()
     {
         $this->config->globals = [
@@ -68,8 +66,6 @@ final class HoneypotTest extends CIUnitTestCase
         $request = $filters->run($uri, 'before');
         $this->assertSame($expected, $request);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -92,8 +88,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->response = $filters->run($uri, 'after');
         $this->assertStringContainsString($this->honey->name, $this->response->getBody());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess

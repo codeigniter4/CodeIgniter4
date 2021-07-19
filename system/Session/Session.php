@@ -179,17 +179,13 @@ class Session implements SessionInterface
         $this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
         $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
 
-        //---------------------------------------------------------------------
         // DEPRECATED COOKIE MANAGEMENT
-        //---------------------------------------------------------------------
         $this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
         $this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
         $this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
         $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-        /**
-         * @var CookieConfig
-         */
+        /** @var CookieConfig */
         $cookie = config('Cookie');
 
         $this->cookie = new Cookie($this->sessionCookieName, '', [
@@ -413,10 +409,6 @@ class Session implements SessionInterface
         }
     }
 
-    //--------------------------------------------------------------------
-    // Session Utility Methods
-    //--------------------------------------------------------------------
-
     /**
      * Regenerates the session ID.
      *
@@ -439,10 +431,6 @@ class Session implements SessionInterface
 
         session_destroy();
     }
-
-    //--------------------------------------------------------------------
-    // Basic Setters and Getters
-    //--------------------------------------------------------------------
 
     /**
      * Sets user data into the session.
@@ -612,10 +600,6 @@ class Session implements SessionInterface
         return isset($_SESSION[$key]) || ($key === 'session_id');
     }
 
-    //--------------------------------------------------------------------
-    // Flash Data Methods
-    //--------------------------------------------------------------------
-
     /**
      * Sets data into the session that will only last for a single request.
      * Perfect for use with single-use status update messages.
@@ -752,10 +736,6 @@ class Session implements SessionInterface
 
         return $keys;
     }
-
-    //--------------------------------------------------------------------
-    // Temp Data Methods
-    //--------------------------------------------------------------------
 
     /**
      * Sets new data into the session, and marks it as temporary data

@@ -40,8 +40,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         Services::injectMock('request', $this->request);
     }
 
-    //--------------------------------------------------------------------
-
     public function testRedirectToFullURI()
     {
         $response = new RedirectResponse(new App());
@@ -51,8 +49,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertTrue($response->hasHeader('Location'));
         $this->assertSame('http://example.com/foo', $response->getHeaderLine('Location'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRedirectRoute()
     {
@@ -84,8 +80,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response->route('differentRoute');
     }
 
-    //--------------------------------------------------------------------
-
     public function testRedirectRelativeConvertsToFullURI()
     {
         $response = new RedirectResponse($this->config);
@@ -95,8 +89,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertTrue($response->hasHeader('Location'));
         $this->assertSame('http://example.com/index.php/foo', $response->getHeaderLine('Location'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -118,8 +110,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('baz', $_SESSION['_ci_old_input']['post']['bar']);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -140,8 +130,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -157,8 +145,6 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame($response, $returned);
         $this->assertArrayHasKey('foo', $_SESSION);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess

@@ -26,16 +26,12 @@ class MockCURLRequest extends CURLRequest
 
     protected $output = '';
 
-    //--------------------------------------------------------------------
-
     public function setOutput($output)
     {
         $this->output = $output;
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     protected function sendRequest(array $curlOptions = []): string
     {
@@ -45,7 +41,6 @@ class MockCURLRequest extends CURLRequest
         return $this->output;
     }
 
-    //--------------------------------------------------------------------
     // for testing purposes only
     public function getBaseURI()
     {

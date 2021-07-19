@@ -32,8 +32,6 @@ interface RendererInterface
      */
     public function render(string $view, ?array $options = null, bool $saveData = false): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Builds the output based upon a string and any
      * data that has already been set.
@@ -48,8 +46,6 @@ interface RendererInterface
      */
     public function renderString(string $view, ?array $options = null, bool $saveData = false): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets several pieces of view data at once.
      *
@@ -60,8 +56,6 @@ interface RendererInterface
      * @return RendererInterface
      */
     public function setData(array $data = [], ?string $context = null);
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets a single piece of view data.
@@ -75,14 +69,10 @@ interface RendererInterface
      */
     public function setVar(string $name, $value = null, ?string $context = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Removes all of the view data from the system.
      *
      * @return RendererInterface
      */
     public function resetData();
-
-    //--------------------------------------------------------------------
 }

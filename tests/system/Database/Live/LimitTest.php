@@ -29,8 +29,6 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[1]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testLimitAndOffset()
     {
         $jobs = $this->db->table('job')
@@ -42,6 +40,4 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame('Accountant', $jobs[0]->name);
         $this->assertSame('Musician', $jobs[1]->name);
     }
-
-    //--------------------------------------------------------------------
 }

@@ -16,8 +16,6 @@ final class FileLocatorTest extends CIUnitTestCase
      */
     protected $locator;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,8 +37,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->locator = new FileLocator($autoloader);
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileWorksWithLegacyStructure()
     {
         $file = 'Controllers/Home';
@@ -50,16 +46,12 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileWithLegacyStructureNotFound()
     {
         $file = 'Unknown';
 
         $this->assertFalse($this->locator->locateFile($file));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLocateFileWorksInApplicationDirectory()
     {
@@ -70,8 +62,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
     {
         $file = 'Common';
@@ -80,8 +70,6 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLocateFileWorksInNestedApplicationDirectory()
     {
@@ -92,8 +80,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileReplacesFolderName()
     {
         $file = '\App\Views/errors/html/error_404.php';
@@ -102,8 +88,6 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLocateFileReplacesFolderNameLegacy()
     {
@@ -114,8 +98,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileCanFindNamespacedView()
     {
         $file = '\Errors\error_404';
@@ -124,8 +106,6 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLocateFileCanFindNestedNamespacedView()
     {
@@ -136,8 +116,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileNotFoundExistingNamespace()
     {
         $file = '\App\Views/unexistence-file.php';
@@ -145,16 +123,12 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertFalse($this->locator->locateFile($file, 'Views'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLocateFileNotFoundWithBadNamespace()
     {
         $file = '\Blogger\admin/posts.php';
 
         $this->assertFalse($this->locator->locateFile($file, 'Views'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSearchSimple()
     {
@@ -165,8 +139,6 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $foundFiles[0]);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSearchWithFileExtension()
     {
         $expected = APPPATH . 'Config/App.php';
@@ -175,8 +147,6 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame($expected, $foundFiles[0]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSearchWithMultipleFilesFound()
     {
@@ -189,16 +159,12 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertContains($expected, $foundFiles);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSearchForFileNotExist()
     {
         $foundFiles = $this->locator->search('Views/Fake.html');
 
         $this->assertArrayNotHasKey(0, $foundFiles);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSearchPrioritizeSystemOverApp()
     {
@@ -213,14 +179,10 @@ final class FileLocatorTest extends CIUnitTestCase
         );
     }
 
-    //--------------------------------------------------------------------
-
     public function testListNamespaceFilesEmptyPrefixAndPath()
     {
         $this->assertEmpty($this->locator->listNamespaceFiles('', ''));
     }
-
-    //--------------------------------------------------------------------
 
     public function testListFilesSimple()
     {
@@ -231,16 +193,12 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
     }
 
-    //--------------------------------------------------------------------
-
     public function testListFilesWithFileAsInput()
     {
         $files = $this->locator->listFiles('Config/App.php');
 
         $this->assertEmpty($files);
     }
-
-    //--------------------------------------------------------------------
 
     public function testListFilesFromMultipleDir()
     {
@@ -255,16 +213,12 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
     }
 
-    //--------------------------------------------------------------------
-
     public function testListFilesWithPathNotExist()
     {
         $files = $this->locator->listFiles('Fake/');
 
         $this->assertEmpty($files);
     }
-
-    //--------------------------------------------------------------------
 
     public function testListFilesWithoutPath()
     {

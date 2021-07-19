@@ -40,8 +40,6 @@ class FileHandler extends BaseHandler
      */
     protected $filePermissions;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -58,8 +56,6 @@ class FileHandler extends BaseHandler
 
         $this->filePermissions = $config['filePermissions'] ?? 0644;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles logging the message.
@@ -127,6 +123,4 @@ class FileHandler extends BaseHandler
 
         return is_int($result);
     }
-
-    //--------------------------------------------------------------------
 }

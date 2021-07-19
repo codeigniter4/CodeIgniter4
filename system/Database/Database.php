@@ -31,8 +31,6 @@ class Database
      */
     protected $connections = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Parses the connection binds and returns an instance of the driver
      * ready to go.
@@ -68,8 +66,6 @@ class Database
         return $this->connections[$alias];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Creates a Forge instance for the current database type.
      *
@@ -87,8 +83,6 @@ class Database
         return $this->initDriver($db->DBDriver, 'Forge', $db);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Creates a Utils instance for the current database type.
      *
@@ -105,8 +99,6 @@ class Database
 
         return $this->initDriver($db->DBDriver, 'Utils', $db);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse universal DSN string
@@ -150,8 +142,6 @@ class Database
 
         return array_merge($params, $dsnParams);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Initialize database driver.

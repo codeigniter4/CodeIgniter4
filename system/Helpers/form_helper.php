@@ -10,12 +10,9 @@
  */
 
 use Config\App;
-
-// CodeIgniter Form Helpers
-
 use Config\Services;
 
-//--------------------------------------------------------------------
+// CodeIgniter Form Helpers
 
 if (! function_exists('form_open')) {
     /**
@@ -78,8 +75,6 @@ if (! function_exists('form_open')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_open_multipart')) {
     /**
      * Form Declaration - Multipart type
@@ -103,8 +98,6 @@ if (! function_exists('form_open_multipart')) {
         return form_open($action, $attributes, $hidden);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_hidden')) {
     /**
@@ -148,8 +141,6 @@ if (! function_exists('form_hidden')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_input')) {
     /**
      * Text Input Field. If 'type' is passed in the $type field, it will be
@@ -174,8 +165,6 @@ if (! function_exists('form_input')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_password')) {
     /**
      * Password Field
@@ -198,8 +187,6 @@ if (! function_exists('form_password')) {
         return form_input($data, $value, $extra);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_upload')) {
     /**
@@ -229,8 +216,6 @@ if (! function_exists('form_upload')) {
         return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_textarea')) {
     /**
@@ -271,8 +256,6 @@ if (! function_exists('form_textarea')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_multiselect')) {
     /**
      * Multi-select menu
@@ -295,8 +278,6 @@ if (! function_exists('form_multiselect')) {
         return form_dropdown($name, $options, $selected, $extra);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_dropdown')) {
     /**
@@ -379,8 +360,6 @@ if (! function_exists('form_dropdown')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_checkbox')) {
     /**
      * Checkbox Field
@@ -419,8 +398,6 @@ if (! function_exists('form_checkbox')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_radio')) {
     /**
      * Radio Button
@@ -443,8 +420,6 @@ if (! function_exists('form_radio')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_submit')) {
     /**
      * Submit Button
@@ -461,8 +436,6 @@ if (! function_exists('form_submit')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_reset')) {
     /**
      * Reset Button
@@ -478,8 +451,6 @@ if (! function_exists('form_reset')) {
         return form_input($data, $value, $extra, 'reset');
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_button')) {
     /**
@@ -509,8 +480,6 @@ if (! function_exists('form_button')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_label')) {
     /**
      * Form Label Tag
@@ -538,8 +507,6 @@ if (! function_exists('form_label')) {
         return $label . '>' . $labelText . '</label>';
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('form_datalist')) {
     /**
@@ -576,8 +543,6 @@ if (! function_exists('form_datalist')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_fieldset')) {
     /**
      * Fieldset Tag
@@ -602,8 +567,6 @@ if (! function_exists('form_fieldset')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_fieldset_close')) {
     /**
      * Fieldset Close Tag
@@ -618,8 +581,6 @@ if (! function_exists('form_fieldset_close')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('form_close')) {
     /**
      * Form Close Tag
@@ -633,8 +594,6 @@ if (! function_exists('form_close')) {
         return '</form>' . $extra;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('set_value')) {
     /**
@@ -663,8 +622,6 @@ if (! function_exists('set_value')) {
         return ($htmlEscape) ? esc($value) : $value;
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('set_select')) {
     /**
@@ -709,8 +666,6 @@ if (! function_exists('set_select')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('set_checkbox')) {
     /**
      * Set Checkbox
@@ -754,8 +709,6 @@ if (! function_exists('set_checkbox')) {
         return ($default === true) ? ' checked="checked"' : '';
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('set_radio')) {
     /**
@@ -805,8 +758,6 @@ if (! function_exists('set_radio')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('parse_form_attributes')) {
     /**
      * Parse the form attributes
@@ -849,6 +800,4 @@ if (! function_exists('parse_form_attributes')) {
 
         return $att;
     }
-
-    //--------------------------------------------------------------------
 }

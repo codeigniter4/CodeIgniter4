@@ -30,8 +30,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testDirectoryMapDefaults()
     {
         helper('filesystem');
@@ -104,8 +102,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame([], directory_map(SUPPORTPATH . 'Files/shaker/'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDirectoryMirror()
     {
         $this->assertTrue(function_exists('directory_mirror'));
@@ -156,8 +152,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($this->structure['boo']['faz'], $result);
     }
 
-    //--------------------------------------------------------------------
-
     public function testWriteFileSuccess()
     {
         $vfs = vfsStream::setup('root');
@@ -172,8 +166,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
         $this->assertFalse(write_file(vfsStream::url('apple#test.php'), 'Simple'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDeleteFilesDefaultsToOneLevelDeep()
     {
@@ -253,8 +245,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
     {
         $this->assertFalse(delete_files(SUPPORTPATH . 'Files/shaker/'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetFilenames()
     {
@@ -346,8 +336,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame([], get_filenames(SUPPORTPATH . 'Files/shaker/'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetDirFileInfo()
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
@@ -385,8 +373,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files#baker'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetFileInfo()
     {
@@ -432,8 +418,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/icer'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testSameFileSame()
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
@@ -474,8 +458,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFalse(same_file($file1, $file2));
     }
 
-    //--------------------------------------------------------------------
-
     public function testOctalPermissions()
     {
         $this->assertSame('777', octal_permissions(0777));
@@ -502,8 +484,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
             $this->assertSame($value, symbolic_permissions($perm));
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testRealPathURL()
     {

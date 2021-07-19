@@ -66,8 +66,6 @@ class Help extends BaseCommand
      */
     protected $options = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Displays the help for spark commands.
      *

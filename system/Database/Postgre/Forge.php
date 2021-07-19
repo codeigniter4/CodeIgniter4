@@ -58,8 +58,6 @@ class Forge extends BaseForge
      */
     protected $null = 'NULL';
 
-    //--------------------------------------------------------------------
-
     /**
      * CREATE TABLE attributes
      *
@@ -71,8 +69,6 @@ class Forge extends BaseForge
     {
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * ALTER TABLE
@@ -127,8 +123,6 @@ class Forge extends BaseForge
         return $sqls;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Process column
      *
@@ -145,8 +139,6 @@ class Forge extends BaseForge
                 . $field['auto_increment']
                 . $field['unique'];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Field attribute TYPE
@@ -184,8 +176,6 @@ class Forge extends BaseForge
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Field attribute AUTO_INCREMENT
      *
@@ -200,8 +190,6 @@ class Forge extends BaseForge
             $field['type'] = $field['type'] === 'NUMERIC' || $field['type'] === 'BIGINT' ? 'BIGSERIAL' : 'SERIAL';
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Drop Table

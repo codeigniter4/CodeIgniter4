@@ -28,8 +28,6 @@ interface PagerInterface
      */
     public function links(string $group = 'default', string $template = 'default'): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Creates simple Next/Previous links, instead of full pagination.
      *
@@ -39,8 +37,6 @@ interface PagerInterface
      * @return string
      */
     public function simpleLinks(string $group = 'default', string $template = 'default'): string;
-
-    //--------------------------------------------------------------------
 
     /**
      * Allows for a simple, manual, form of pagination where all of the data
@@ -55,8 +51,6 @@ interface PagerInterface
      */
     public function makeLinks(int $page, int $perPage, int $total, string $template = 'default'): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
@@ -70,8 +64,6 @@ interface PagerInterface
      */
     public function store(string $group, int $page, int $perPage, int $total);
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the path that an aliased group of links will use.
      *
@@ -82,8 +74,6 @@ interface PagerInterface
      */
     public function setPath(string $path, string $group = 'default');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of pages.
      *
@@ -93,8 +83,6 @@ interface PagerInterface
      */
     public function getPageCount(string $group = 'default'): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of the current page of results.
      *
@@ -103,8 +91,6 @@ interface PagerInterface
      * @return int
      */
     public function getCurrentPage(string $group = 'default'): int;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the URI for a specific page for the specified group.
@@ -117,8 +103,6 @@ interface PagerInterface
      */
     public function getPageURI(?int $page = null, string $group = 'default', bool $returnObject = false);
 
-    //--------------------------------------------------------------------
-
     /**
      * Tells whether this group of results has any more pages of results.
      *
@@ -127,8 +111,6 @@ interface PagerInterface
      * @return bool
      */
     public function hasMore(string $group = 'default'): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the first page.
@@ -139,8 +121,6 @@ interface PagerInterface
      */
     public function getFirstPage(string $group = 'default');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the last page, if we have a total that we can calculate with.
      *
@@ -149,8 +129,6 @@ interface PagerInterface
      * @return int|null
      */
     public function getLastPage(string $group = 'default');
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the full URI to the next page of results, or null.
@@ -161,8 +139,6 @@ interface PagerInterface
      */
     public function getNextPageURI(string $group = 'default');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the full URL to the previous page of results, or null.
      *
@@ -172,8 +148,6 @@ interface PagerInterface
      */
     public function getPreviousPageURI(string $group = 'default');
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of results per page that should be shown.
      *
@@ -182,8 +156,6 @@ interface PagerInterface
      * @return int
      */
     public function getPerPage(string $group = 'default'): int;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array with details about the results, including
@@ -196,6 +168,4 @@ interface PagerInterface
      * @return array
      */
     public function getDetails(string $group = 'default'): array;
-
-    //--------------------------------------------------------------------
 }

@@ -17,8 +17,6 @@ class Services
      */
     protected static $mocks = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Reset shared instances and mocks for testing.
      */
@@ -28,8 +26,6 @@ class Services
 
         CIUnitTestCase::setPrivateProperty(ConfigServices::class, 'instances', []);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Inject mock object for testing.
@@ -42,8 +38,6 @@ class Services
         $name                 = strtolower($name);
         static::$mocks[$name] = $mock;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a service
@@ -64,6 +58,4 @@ class Services
             return ConfigServices::$name(...$arguments);
         }
     }
-
-    //--------------------------------------------------------------------
 }

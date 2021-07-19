@@ -34,8 +34,6 @@ final class ResourcePresenterTest extends CIUnitTestCase
      */
     protected $routes;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -61,8 +59,6 @@ final class ResourcePresenterTest extends CIUnitTestCase
             ob_end_clean();
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testResourceGet()
     {
@@ -220,8 +216,6 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $output);
     }
-
-    //--------------------------------------------------------------------
 
     public function testModel()
     {

@@ -18,8 +18,6 @@ final class CellTest extends CIUnitTestCase
      */
     protected $cell;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,21 +26,15 @@ final class CellTest extends CIUnitTestCase
         $this->cell  = new Cell($this->cache);
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
     {
         $this->assertSame([], $this->cell->prepareParams(1.023));
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrepareParamsReturnsNullWithEmptyString()
     {
         $this->assertSame([], $this->cell->prepareParams(''));
     }
-
-    //--------------------------------------------------------------------
 
     public function testPrepareParamsReturnsSelfWhenArray()
     {
@@ -54,14 +46,10 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($object, $this->cell->prepareParams($object));
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
     {
         $this->assertSame([], $this->cell->prepareParams([]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testPrepareParamsReturnsArrayWithString()
     {
@@ -74,8 +62,6 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($expected, $this->cell->prepareParams($params));
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrepareParamsHandlesCommas()
     {
         $params   = 'one=2, three=4.15';
@@ -87,8 +73,6 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($expected, $this->cell->prepareParams($params));
     }
 
-    //--------------------------------------------------------------------
-
     public function testPrepareParamsWorksWithoutSpaces()
     {
         $params   = 'one=two,three=four';
@@ -99,8 +83,6 @@ final class CellTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->cell->prepareParams($params));
     }
-
-    //--------------------------------------------------------------------
 
     public function testPrepareParamsWorksWithOddEqualsSpaces()
     {
@@ -114,10 +96,7 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($expected, $this->cell->prepareParams($params));
     }
 
-    //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
     // Render
-    //--------------------------------------------------------------------
 
     public function testDisplayRendersWithNamespacedClass()
     {
@@ -125,8 +104,6 @@ final class CellTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->cell->render('\Tests\Support\View\SampleClass::hello'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDisplayRendersWithValidParamString()
     {
@@ -139,8 +116,6 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDisplayRendersWithStaticMethods()
     {
         $params   = 'one=two,three=four';
@@ -151,8 +126,6 @@ final class CellTest extends CIUnitTestCase
 
         $this->assertSame(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
     }
-
-    //--------------------------------------------------------------------
 
     public function testOptionsEmptyArray()
     {
@@ -176,8 +149,6 @@ final class CellTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->cell->render('\Tests\Support\View\SampleClass::index', $params));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCellClassMissing()
     {
@@ -221,8 +192,6 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($expected, $this->cell->render('\Tests\Support\View\SampleClass::notThere', $params));
     }
 
-    //--------------------------------------------------------------------
-
     public function testRenderCached()
     {
         $params   = 'one=two,three=four';
@@ -250,8 +219,6 @@ final class CellTest extends CIUnitTestCase
         // we want to make sure it doesn't throw us a curveball here.
         $this->assertSame('six,five', $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1));
     }
-
-    //--------------------------------------------------------------------
 
     public function testParametersMatch()
     {

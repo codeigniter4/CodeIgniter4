@@ -59,8 +59,6 @@ final class ResponseSendTest extends CIUnitTestCase
         $this->assertHeaderEmitted('Date:');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * This test does not test that CSP is handled properly -
      * it makes sure that sending gives CSP a chance to do its thing.
@@ -92,8 +90,6 @@ final class ResponseSendTest extends CIUnitTestCase
         // and what actually got sent?; test both ways
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Make sure cookies are set by RedirectResponse this way

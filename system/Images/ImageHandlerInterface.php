@@ -28,8 +28,6 @@ interface ImageHandlerInterface
      */
     public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto');
 
-    //--------------------------------------------------------------------
-
     /**
      * Crops the image to the desired height and width. If one of the height/width values
      * is not provided, that value will be set the appropriate value based on offsets and
@@ -46,8 +44,6 @@ interface ImageHandlerInterface
      */
     public function crop(?int $width = null, ?int $height = null, ?int $x = null, ?int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
 
-    //--------------------------------------------------------------------
-
     /**
      * Changes the stored image type to indicate the new file format to use when saving.
      * Does not touch the actual resource.
@@ -58,8 +54,6 @@ interface ImageHandlerInterface
      */
     public function convert(int $imageType);
 
-    //--------------------------------------------------------------------
-
     /**
      * Rotates the image on the current canvas.
      *
@@ -68,8 +62,6 @@ interface ImageHandlerInterface
      * @return $this
      */
     public function rotate(float $angle);
-
-    //--------------------------------------------------------------------
 
     /**
      * Flattens transparencies, default white background
@@ -82,8 +74,6 @@ interface ImageHandlerInterface
      */
     public function flatten(int $red = 255, int $green = 255, int $blue = 255);
 
-    //--------------------------------------------------------------------
-
     /**
      * Reads the EXIF information from the image and modifies the orientation
      * so that displays correctly in the browser.
@@ -91,8 +81,6 @@ interface ImageHandlerInterface
      * @return ImageHandlerInterface
      */
     public function reorient();
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the EXIF information from the image, if possible. Returns
@@ -104,8 +92,6 @@ interface ImageHandlerInterface
      */
     public function getEXIF(?string $key = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Flip an image horizontally or vertically
      *
@@ -114,8 +100,6 @@ interface ImageHandlerInterface
      * @return $this
      */
     public function flip(string $dir = 'vertical');
-
-    //--------------------------------------------------------------------
 
     /**
      * Combine cropping and resizing into a single command.
@@ -139,8 +123,6 @@ interface ImageHandlerInterface
      */
     public function fit(int $width, int $height, string $position);
 
-    //--------------------------------------------------------------------
-
     /**
      * Overlays a string of text over the image.
      *
@@ -162,8 +144,6 @@ interface ImageHandlerInterface
      * @return $this
      */
     public function text(string $text, array $options = []);
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves any changes that have been made to file.

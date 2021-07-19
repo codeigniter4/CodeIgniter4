@@ -167,8 +167,6 @@ class CLIRequest extends Request
         return trim($out);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Parses the command line it was called from and collects all options
      * and valid segments.
@@ -206,8 +204,6 @@ class CLIRequest extends Request
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if this request was made from the command line (CLI).
      *
@@ -217,6 +213,4 @@ class CLIRequest extends Request
     {
         return is_cli();
     }
-
-    //--------------------------------------------------------------------
 }

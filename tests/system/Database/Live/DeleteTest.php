@@ -26,8 +26,6 @@ final class DeleteTest extends CIUnitTestCase
         $this->db->table('job')->delete();
     }
 
-    //--------------------------------------------------------------------
-
     public function testDeleteWithExternalWhere()
     {
         $this->seeInDatabase('job', ['name' => 'Developer']);
@@ -37,8 +35,6 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testDeleteWithInternalWhere()
     {
         $this->seeInDatabase('job', ['name' => 'Developer']);
@@ -47,8 +43,6 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group  single
@@ -69,6 +63,4 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->seeNumRecords(1, 'user', ['country' => 'US']);
     }
-
-    //--------------------------------------------------------------------
 }

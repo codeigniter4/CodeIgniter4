@@ -16,8 +16,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         helper('inflector');
     }
 
-    //--------------------------------------------------------------------
-
     public function testSingular()
     {
         $strings = [
@@ -55,8 +53,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testPlural()
     {
         $strings = [
@@ -92,8 +88,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             $this->assertSame($plural, $pluralizedString);
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testCounted()
     {
@@ -151,8 +145,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testCamelize()
     {
         $strings = [
@@ -165,8 +157,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             $this->assertSame($camelized, $camelizedString);
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testPascalize()
     {
@@ -181,8 +171,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testUnderscore()
     {
         $strings = [
@@ -195,8 +183,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             $this->assertSame($underscored, $underscore);
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testHumanize()
     {
@@ -216,8 +202,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         $this->assertSame($humanizedDash, $dashed[1]);
     }
 
-    //--------------------------------------------------------------------
-
     public function testIsCountable()
     {
         $words = [
@@ -235,8 +219,6 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testDasherize()
     {
         $strings = [
@@ -249,8 +231,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             $this->assertSame($dasherized, $dashed);
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrdinal()
     {
@@ -272,8 +252,6 @@ final class InflectorHelperTest extends CIUnitTestCase
             $this->assertSame($suffix, $ordinal);
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testOrdinalize()
     {

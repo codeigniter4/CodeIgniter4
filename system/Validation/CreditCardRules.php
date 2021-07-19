@@ -160,8 +160,6 @@ class CreditCardRules
         ],
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Verifies that a credit card number is valid and matches the known
      * formats for a wide number of credit card types. This does not verify
@@ -241,8 +239,6 @@ class CreditCardRules
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks the given number to see if the number passing a Luhn check.
      *
@@ -290,6 +286,4 @@ class CreditCardRules
 
         return $sum % 10 === 0;
     }
-
-    //--------------------------------------------------------------------
 }

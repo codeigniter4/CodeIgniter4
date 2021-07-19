@@ -40,8 +40,6 @@ final class RulesTest extends CIUnitTestCase
         ],
     ];
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -52,9 +50,7 @@ final class RulesTest extends CIUnitTestCase
         $_FILES = [];
     }
 
-    //--------------------------------------------------------------------
     // Rules Tests
-    //--------------------------------------------------------------------
 
     public function testRequiredNull()
     {
@@ -69,8 +65,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testRequiredTrueString()
     {
         $data = [
@@ -83,8 +77,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRequiredFalseString()
     {
@@ -100,8 +92,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testRequiredTrueArray()
     {
         $data = [
@@ -114,8 +104,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testRequiredFalseArray()
     {
@@ -130,8 +118,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testRequiredObject()
     {
         $data = [
@@ -144,8 +130,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @dataProvider ifExistProvider
@@ -160,8 +144,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function ifExistProvider()
     {
@@ -201,8 +183,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider emptysProvider
      *
@@ -216,8 +196,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function emptysProvider()
     {
@@ -367,8 +345,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testMatchesNull()
     {
         $data = [
@@ -382,8 +358,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMatchesTrue()
     {
@@ -399,8 +373,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMatchesFalse()
     {
         $data = [
@@ -414,8 +386,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMatcheNestedsTrue()
     {
@@ -433,8 +403,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMatchesNestedFalse()
     {
         $data = [
@@ -451,8 +419,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDiffersNull()
     {
         $data = [
@@ -466,8 +432,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDiffersTrue()
     {
@@ -483,8 +447,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDiffersFalse()
     {
         $data = [
@@ -498,8 +460,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testDiffersNestedTrue()
     {
@@ -517,8 +477,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testDiffersNestedFalse()
     {
         $data = [
@@ -535,8 +493,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testEqualsNull()
     {
         $data = [
@@ -549,8 +505,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testEqualsEmptyIsEmpty()
     {
@@ -565,8 +519,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testEqualsReturnsFalseOnFailure()
     {
         $data = [
@@ -579,8 +531,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testEqualsReturnsTrueOnSuccess()
     {
@@ -595,8 +545,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testEqualsReturnsFalseOnCaseMismatch()
     {
         $data = [
@@ -609,8 +557,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotEqualsNull()
     {
@@ -625,8 +571,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotEqualsEmptyIsEmpty()
     {
         $data = [
@@ -639,8 +583,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNotEqualsReturnsFalseOnFailure()
     {
@@ -655,8 +597,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotEqualsReturnsTrueOnSuccess()
     {
         $data = [
@@ -670,8 +610,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNotEqualsReturnsTrueOnCaseMismatch()
     {
         $data = [
@@ -684,8 +622,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -711,8 +647,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group DatabaseLive
      */
@@ -728,8 +662,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -758,8 +690,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -790,8 +720,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group DatabaseLive
      */
@@ -807,8 +735,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -834,8 +760,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group DatabaseLive
      */
@@ -859,8 +783,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -889,8 +811,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group DatabaseLive
@@ -921,8 +841,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group DatabaseLive
      */
@@ -939,8 +857,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMinLengthNull()
     {
         $data = [
@@ -953,8 +869,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMinLengthReturnsTrueWithSuccess()
     {
@@ -969,8 +883,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMinLengthReturnsTrueWithExactLength()
     {
         $data = [
@@ -983,8 +895,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMinLengthReturnsFalseWhenWrong()
     {
@@ -999,8 +909,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMaxLengthNull()
     {
         $data = [
@@ -1013,8 +921,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMaxLengthReturnsFalseWithNonNumericVal()
     {
@@ -1029,8 +935,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMaxLengthReturnsTrueWithSuccess()
     {
         $data = [
@@ -1043,8 +947,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMaxLengthReturnsTrueWithExactLength()
     {
@@ -1059,8 +961,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMaxLengthReturnsFalseWhenWrong()
     {
         $data = [
@@ -1073,8 +973,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testExactLengthNull()
     {
@@ -1089,8 +987,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testExactLengthReturnsTrueOnSuccess()
     {
         $data = [
@@ -1103,8 +999,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertTrue($this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function testExactLengthDetectsBadLength()
     {
@@ -1119,8 +1013,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testExactLengthReturnsFalseWhenShort()
     {
         $data = [
@@ -1134,8 +1026,6 @@ final class RulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    //--------------------------------------------------------------------
-
     public function testExactLengthReturnsFalseWhenLong()
     {
         $data = [
@@ -1148,8 +1038,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-
-    //-------------------------------------------------------------------
 
     /**
      * @dataProvider greaterThanProvider
@@ -1169,8 +1057,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function greaterThanProvider()
     {
@@ -1208,8 +1094,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //-------------------------------------------------------------------
-
     /**
      * @dataProvider greaterThanEqualProvider
      *
@@ -1228,8 +1112,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function greaterThanEqualProvider()
     {
@@ -1272,8 +1154,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //-------------------------------------------------------------------
-
     /**
      * @dataProvider lessThanProvider
      *
@@ -1292,8 +1172,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function lessThanProvider()
     {
@@ -1336,8 +1214,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //-------------------------------------------------------------------
-
     /**
      * @dataProvider lessThanEqualProvider
      *
@@ -1356,8 +1232,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function lessThanEqualProvider()
     {
@@ -1405,8 +1279,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //-------------------------------------------------------------------
-
     /**
      * @dataProvider inListProvider
      *
@@ -1426,8 +1298,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @dataProvider inListProvider
@@ -1450,8 +1320,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function inListProvider()
     {
@@ -1504,8 +1372,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider requiredWithProvider
      *
@@ -1532,8 +1398,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function requiredWithProvider()
     {
@@ -1591,8 +1455,6 @@ final class RulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider requiredWithoutProvider
      *
@@ -1619,8 +1481,6 @@ final class RulesTest extends CIUnitTestCase
 
         $this->assertSame($expected, $this->validation->run($data));
     }
-
-    //--------------------------------------------------------------------
 
     public function requiredWithoutProvider()
     {
@@ -1672,6 +1532,4 @@ final class RulesTest extends CIUnitTestCase
             ],
         ];
     }
-
-    //--------------------------------------------------------------------
 }

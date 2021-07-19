@@ -33,8 +33,6 @@ class Header
      */
     protected $value;
 
-    //--------------------------------------------------------------------
-
     /**
      * Header constructor. name is mandatory, if a value is provided, it will be set.
      *
@@ -47,8 +45,6 @@ class Header
         $this->setValue($value);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the header, in the same case it was set.
      *
@@ -58,8 +54,6 @@ class Header
     {
         return $this->name;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Gets the raw value of the header. This may return either a string
@@ -71,8 +65,6 @@ class Header
     {
         return $this->value;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the name of the header, overwriting any previous value.
@@ -88,8 +80,6 @@ class Header
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the value of the header, overwriting any previous value(s).
      *
@@ -103,8 +93,6 @@ class Header
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Appends a value to the list of values for this header. If the
@@ -131,8 +119,6 @@ class Header
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Prepends a value to the list of values for this header. If the
      * header is a single value string, it will be converted to an array.
@@ -155,8 +141,6 @@ class Header
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieves a comma-separated string of the values for a single header.
@@ -192,8 +176,6 @@ class Header
         return implode(', ', $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a representation of the entire header string, including
      * the header name and all values converted to the proper format.
@@ -204,6 +186,4 @@ class Header
     {
         return $this->name . ': ' . $this->getValueLine();
     }
-
-    //--------------------------------------------------------------------
 }

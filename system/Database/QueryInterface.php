@@ -30,8 +30,6 @@ interface QueryInterface
      */
     public function setQuery(string $sql, $binds = null, bool $setEscape = true);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the final, processed query string after binding, etal
      * has been performed.
@@ -39,8 +37,6 @@ interface QueryInterface
      * @return mixed
      */
     public function getQuery();
-
-    //--------------------------------------------------------------------
 
     /**
      * Records the execution time of the statement using microtime(true)
@@ -54,8 +50,6 @@ interface QueryInterface
      */
     public function setDuration(float $start, ?float $end = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the duration of this query during execution, or null if
      * the query has not been executed yet.
@@ -66,8 +60,6 @@ interface QueryInterface
      */
     public function getDuration(int $decimals = 6): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Stores the error description that happened for this query.
      *
@@ -76,16 +68,12 @@ interface QueryInterface
      */
     public function setError(int $code, string $error);
 
-    //--------------------------------------------------------------------
-
     /**
      * Reports whether this statement created an error not.
      *
      * @return bool
      */
     public function hasError(): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the error code created while executing this statement.
@@ -94,8 +82,6 @@ interface QueryInterface
      */
     public function getErrorCode(): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the error message created while executing this statement.
      *
@@ -103,16 +89,12 @@ interface QueryInterface
      */
     public function getErrorMessage(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the statement is a write-type query or not.
      *
      * @return bool
      */
     public function isWriteType(): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Swaps out one table prefix for a new one.
@@ -123,6 +105,4 @@ interface QueryInterface
      * @return mixed
      */
     public function swapPrefix(string $orig, string $swap);
-
-    //--------------------------------------------------------------------
 }

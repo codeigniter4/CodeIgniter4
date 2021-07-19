@@ -62,8 +62,6 @@ class FileHandler extends BaseHandler
      */
     protected $sessionIDRegex = '';
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -91,8 +89,6 @@ class FileHandler extends BaseHandler
 
         $this->configureSessionIDRegex();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Open
@@ -123,8 +119,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Read
@@ -187,8 +181,6 @@ class FileHandler extends BaseHandler
         return $sessionData;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Write
      *
@@ -241,8 +233,6 @@ class FileHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -264,8 +254,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Destroy
@@ -292,8 +280,6 @@ class FileHandler extends BaseHandler
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Garbage Collector
@@ -340,8 +326,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Configure Session ID regular expression

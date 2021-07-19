@@ -61,8 +61,6 @@ class Database extends BaseCollector
      */
     protected static $queries = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      */
@@ -70,8 +68,6 @@ class Database extends BaseCollector
     {
         $this->connections = \Config\Database::getConnections();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The static method used during Events to collect
@@ -92,8 +88,6 @@ class Database extends BaseCollector
             static::$queries[] = $query;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns timeline data formatted for the toolbar.
@@ -126,8 +120,6 @@ class Database extends BaseCollector
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the data of this collector to be formatted in the toolbar
      *
@@ -145,8 +137,6 @@ class Database extends BaseCollector
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the "badge" value for the button.
      *
@@ -156,8 +146,6 @@ class Database extends BaseCollector
     {
         return count(static::$queries);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Information to be displayed next to the title.
@@ -170,8 +158,6 @@ class Database extends BaseCollector
                 ($countConnection > 1 ? 's' : '') . ')';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Does this collector have any data collected?
      *
@@ -181,8 +167,6 @@ class Database extends BaseCollector
     {
         return empty(static::$queries);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Display the icon.

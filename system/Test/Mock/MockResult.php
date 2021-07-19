@@ -25,8 +25,6 @@ class MockResult extends BaseResult
         return 0;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates an array of column names in the result set.
      *
@@ -36,8 +34,6 @@ class MockResult extends BaseResult
     {
         return [];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates an array of objects representing field meta-data.
@@ -49,8 +45,6 @@ class MockResult extends BaseResult
         return [];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Frees the current result.
      *
@@ -59,8 +53,6 @@ class MockResult extends BaseResult
     public function freeResult()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Moves the internal pointer to the desired offset. This is called
@@ -75,8 +67,6 @@ class MockResult extends BaseResult
     {
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the result set as an array.
      *
@@ -87,8 +77,6 @@ class MockResult extends BaseResult
     protected function fetchAssoc()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the result set as an object.
@@ -104,8 +92,6 @@ class MockResult extends BaseResult
         return new $className();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Gets the number of fields in the result set.
      *
@@ -115,6 +101,4 @@ class MockResult extends BaseResult
     {
         return 0;
     }
-
-    //--------------------------------------------------------------------
 }

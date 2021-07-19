@@ -49,8 +49,6 @@ class Logs extends BaseCollector
      */
     protected $data;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the data of this collector to be formatted in the toolbar
      *
@@ -62,8 +60,6 @@ class Logs extends BaseCollector
             'logs' => $this->collectLogs(),
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Does this collector actually have any data to display?
@@ -77,8 +73,6 @@ class Logs extends BaseCollector
         return empty($this->data);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Display the icon.
      *
@@ -91,8 +85,6 @@ class Logs extends BaseCollector
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVEhLYxgFJIHU1FSjtLS0i0D8AYj7gEKMEBkqAaAFF4D4ERCvAFrwH4gDoFIMKSkpFkB+OTEYqgUTACXfA/GqjIwMQyD9H2hRHlQKJFcBEiMGQ7VgAqCBvUgK32dmZspCpagGGNPT0/1BLqeF4bQHQJePpiIwhmrBBEADR1MRfgB0+WgqAmOoFkwANHA0FY0CUgEDAwCQ0PUpNB3kqwAAAABJRU5ErkJggg==';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Ensures the data has been collected.
      */
@@ -104,6 +96,4 @@ class Logs extends BaseCollector
 
         return $this->data = Services::logger(true)->logCache ?? [];
     }
-
-    //--------------------------------------------------------------------
 }

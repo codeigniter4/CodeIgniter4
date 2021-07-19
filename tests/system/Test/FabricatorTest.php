@@ -34,8 +34,6 @@ final class FabricatorTest extends CIUnitTestCase
         Fabricator::resetCounts();
     }
 
-    //--------------------------------------------------------------------
-
     public function testConstructorWithString()
     {
         $fabricator = new Fabricator(UserModel::class);
@@ -90,8 +88,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertSame($locale, $fabricator->getLocale());
     }
 
-    //--------------------------------------------------------------------
-
     public function testModelUsesNewInstance()
     {
         // Inject the wrong model for UserModel to show it is ignored by Fabricator
@@ -120,8 +116,6 @@ final class FabricatorTest extends CIUnitTestCase
 
         $this->assertIsNumeric($faker->randomDigit);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetFormattersChangesFormatters()
     {
@@ -155,8 +149,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertSame($this->formatters, $fabricator->getFormatters());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetOverridesSets()
     {
         $overrides  = ['name' => 'Steve'];
@@ -188,8 +180,6 @@ final class FabricatorTest extends CIUnitTestCase
 
         $this->assertSame([], $fabricator->getOverrides());
     }
-
-    //--------------------------------------------------------------------
 
     public function testGuessFormattersReturnsActual()
     {
@@ -251,8 +241,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertSame($fabricator->defaultFormatter, $formatter);
     }
 
-    //--------------------------------------------------------------------
-
     public function testMakeArrayReturnsArray()
     {
         $fabricator = new Fabricator(UserModel::class, $this->formatters);
@@ -291,8 +279,6 @@ final class FabricatorTest extends CIUnitTestCase
 
         $this->assertSame($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMakeObjectReturnsModelReturnType()
     {
@@ -362,8 +348,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertSame($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMakeReturnsSingleton()
     {
         $fabricator = new Fabricator(UserModel::class);
@@ -383,8 +367,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertIsArray($result);
         $this->assertCount($count, $result);
     }
-
-    //--------------------------------------------------------------------
 
     public function testCreateMockReturnsSingleton()
     {
@@ -419,8 +401,6 @@ final class FabricatorTest extends CIUnitTestCase
         $this->assertObjectHasAttribute('deleted_at', $result);
         $this->assertNull($result->deleted_at);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetCountReturnsCount()
     {

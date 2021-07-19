@@ -64,8 +64,6 @@ class Exceptions
      */
     protected $response;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -85,8 +83,6 @@ class Exceptions
         $this->response = $response;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Responsible for registering the error, exception and shutdown
      * handling of our application.
@@ -103,8 +99,6 @@ class Exceptions
         // Do we need this in PHP7?
         register_shutdown_function([$this, 'shutdownHandler']);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Catches any uncaught errors and exceptions, including most Fatal errors
@@ -146,8 +140,6 @@ class Exceptions
         exit($exitCode);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Even in PHP7, some errors make it through to the errorHandler, so
      * convert these to Exceptions and let the exception handler log it and
@@ -172,8 +164,6 @@ class Exceptions
         throw new ErrorException($message, 0, $severity, $file, $line);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if any errors have happened during shutdown that
      * need to be caught and handle them.
@@ -190,8 +180,6 @@ class Exceptions
             $this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines the view to display based on the exception thrown,
@@ -224,8 +212,6 @@ class Exceptions
 
         return $view;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Given an exception and status code will display the error to the client.
@@ -268,8 +254,6 @@ class Exceptions
         ob_end_clean();
         echo $buffer;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Gathers the variables that will be made available to the view.
@@ -358,7 +342,6 @@ class Exceptions
     }
 
     //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
     // Display Methods
     //--------------------------------------------------------------------
 
@@ -394,8 +377,6 @@ class Exceptions
         return $file;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
@@ -415,8 +396,6 @@ class Exceptions
 
         return round($bytes / 1048576, 2) . 'MB';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Creates a syntax-highlighted version of a PHP file.
@@ -495,6 +474,4 @@ class Exceptions
 
         return '<pre><code>' . $out . '</code></pre>';
     }
-
-    //--------------------------------------------------------------------
 }

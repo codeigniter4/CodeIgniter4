@@ -19,8 +19,6 @@ use InvalidArgumentException;
  */
 class Rules
 {
-    //--------------------------------------------------------------------
-
     /**
      * The value does not match another field in $data.
      *
@@ -39,8 +37,6 @@ class Rules
         return array_key_exists($field, $data) && $str !== $data[$field];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Equals the static value provided.
      *
@@ -53,8 +49,6 @@ class Rules
     {
         return $str === $val;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns true if $str is $val characters long.
@@ -78,8 +72,6 @@ class Rules
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Greater than
      *
@@ -93,8 +85,6 @@ class Rules
         return is_numeric($str) && $str > $min;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Equal to or Greater than
      *
@@ -107,8 +97,6 @@ class Rules
     {
         return is_numeric($str) && $str >= $min;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks the database to see if the given value exist.
@@ -147,8 +135,6 @@ class Rules
         return (bool) ($row->get()->getRow() !== null);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Value should be within an array of values
      *
@@ -163,8 +149,6 @@ class Rules
 
         return in_array($value, $list, true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks the database to see if the given value is unique. Can
@@ -203,8 +187,6 @@ class Rules
         return (bool) ($row->get()->getRow() === null);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Less than
      *
@@ -218,8 +200,6 @@ class Rules
         return is_numeric($str) && $str < $max;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Equal to or Less than
      *
@@ -232,8 +212,6 @@ class Rules
     {
         return is_numeric($str) && $str <= $max;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Matches the value of another field in $data.
@@ -253,8 +231,6 @@ class Rules
         return array_key_exists($field, $data) && $str === $data[$field];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns true if $str is $val or fewer characters in length.
      *
@@ -267,8 +243,6 @@ class Rules
     {
         return is_numeric($val) && $val >= mb_strlen($str);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns true if $str is at least $val length.
@@ -283,8 +257,6 @@ class Rules
         return is_numeric($val) && $val <= mb_strlen($str);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Does not equal the static value provided.
      *
@@ -298,8 +270,6 @@ class Rules
         return $str !== $val;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Value should not be within an array of values.
      *
@@ -312,8 +282,6 @@ class Rules
     {
         return ! $this->in_list($value, $list);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Required
@@ -330,8 +298,6 @@ class Rules
 
         return is_array($str) ? ! empty($str) : (trim($str) !== '');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * The field is required when any of the other required fields are present
@@ -378,8 +344,6 @@ class Rules
         return empty($requiredFields);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The field is required when all of the other fields are present
      * in the data but not required.
@@ -421,6 +385,4 @@ class Rules
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

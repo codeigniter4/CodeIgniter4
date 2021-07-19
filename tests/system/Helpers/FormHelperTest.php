@@ -20,7 +20,6 @@ final class FormHelperTest extends CIUnitTestCase
         helper('form');
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenBasic()
     {
         $config            = new App();
@@ -55,7 +54,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenHasLocale()
     {
         $config            = new App();
@@ -78,7 +76,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('{locale}/foo/bar', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenWithoutAction()
     {
         $config            = new App();
@@ -112,7 +109,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenWithoutMethod()
     {
         $config            = new App();
@@ -146,7 +142,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenWithHidden()
     {
         $config            = new App();
@@ -187,7 +182,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open('foo/bar', $attributes, $hidden));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormOpenMultipart()
     {
         $config            = new App();
@@ -225,7 +219,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_open_multipart('foo/bar', $attributesString));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormHidden()
     {
         $expected = <<<EOH
@@ -235,7 +228,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_hidden('username', 'johndoe'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormHiddenArrayInput()
     {
         $data = [
@@ -249,7 +241,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_hidden($data, null));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormHiddenArrayValues()
     {
         $data = [
@@ -263,7 +254,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_hidden('name', $data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormInput()
     {
         $expected = <<<EOH
@@ -296,7 +286,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_input($data, '', $extra));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormPassword()
     {
         $expected = <<<EOH
@@ -305,7 +294,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_password('password'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormUpload()
     {
         $expected = <<<EOH
@@ -314,7 +302,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_upload('attachment'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormTextarea()
     {
         $expected = <<<EOH
@@ -323,7 +310,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_textarea('notes', 'Notes'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormTextareaWithValueAttribute()
     {
         $data = [
@@ -337,7 +323,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_textarea($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormTextareaExtraRowsColsArray()
     {
         $extra = [
@@ -350,7 +335,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_textarea('notes', 'Notes', $extra));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormTextareaExtraRowsColsString()
     {
         $extra    = 'cols="30" rows="5"';
@@ -360,7 +344,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_textarea('notes', 'Notes', $extra));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormDropdown()
     {
         $expected = <<<EOH
@@ -472,7 +455,6 @@ final class FormHelperTest extends CIUnitTestCase
         unset($_POST['cars']);
     }
 
-    // ------------------------------------------------------------------------
     public function testFormDropdownWithSelectedAttribute()
     {
         $expected = <<<'EOH'
@@ -491,7 +473,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_dropdown($data, $options));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormDropdownWithOptionsAttribute()
     {
         $expected = <<<'EOH'
@@ -509,7 +490,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_dropdown($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormDropdownWithEmptyArrayOptionValue()
     {
         $expected = <<<'EOH'
@@ -523,7 +503,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_dropdown('foo', $options));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormMultiselect()
     {
         $expected = <<<EOH
@@ -543,7 +522,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_multiselect('shirts[]', $options, ['med', 'large']));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormMultiselectArrayData()
     {
         $expected = <<<EOH
@@ -573,7 +551,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_multiselect($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormFieldset()
     {
         $expected = <<<EOH
@@ -583,7 +560,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_fieldset('Address Information'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormFieldsetWithNoLegent()
     {
         $expected = <<<'EOH'
@@ -593,7 +569,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_fieldset());
     }
 
-    // ------------------------------------------------------------------------
     public function testFormFieldsetWithAttributes()
     {
         $attributes = [
@@ -607,7 +582,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_fieldset('Foo', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormFieldsetClose()
     {
         $expected = <<<'EOH'
@@ -616,7 +590,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_fieldset_close('</div></div>'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormCheckbox()
     {
         $expected = <<<EOH
@@ -625,7 +598,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_checkbox('newsletter', 'accept', true));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormCheckboxArrayData()
     {
         $data = [
@@ -640,7 +612,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_checkbox($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormCheckboxArrayDataWithCheckedFalse()
     {
         $data = [
@@ -655,7 +626,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_checkbox($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormRadio()
     {
         $expected = <<<EOH
@@ -664,7 +634,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_radio('newsletter', 'accept', true));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormSubmit()
     {
         $expected = <<<EOH
@@ -673,7 +642,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_submit('mysubmit', 'Submit Post!'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormLabel()
     {
         $expected = <<<'EOH'
@@ -682,7 +650,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_label('What is your Name', 'username'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormLabelWithAttributes()
     {
         $attributes = [
@@ -694,7 +661,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_label('bar', 'foo', $attributes));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormReset()
     {
         $expected = <<<EOH
@@ -703,7 +669,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_reset('myreset', 'Reset'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormButton()
     {
         $expected = <<<EOH
@@ -712,7 +677,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_button('name', 'content'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormButtonWithDataArray()
     {
         $data = [
@@ -726,7 +690,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_button($data));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormClose()
     {
         $expected = <<<'EOH'
@@ -735,7 +698,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_close('</div></div>'));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormDatalist()
     {
         $options = [
@@ -753,7 +715,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_datalist('foo', 'bar', $options));
     }
 
-    // ------------------------------------------------------------------------
     public function testSetValue()
     {
         $_SESSION['_ci_old_input']['post']['foo'] = '<bar';
@@ -763,7 +724,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('baz', set_value('foo', 'baz'));
     }
 
-    // ------------------------------------------------------------------------
     public function testSetSelect()
     {
         $_SESSION['_ci_old_input']['post']['foo'] = 'bar';
@@ -777,7 +737,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame(' selected="selected"', set_select('foo', 'baz', true));
     }
 
-    // ------------------------------------------------------------------------
     public function testSetCheckbox()
     {
         $_SESSION = [
@@ -807,7 +766,6 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame(' checked="checked"', set_checkbox('foo', 'bar', true));
     }
 
-    // ------------------------------------------------------------------------
     public function testSetCheckboxWithValueZero()
     {
         $_SESSION = [
@@ -836,8 +794,6 @@ final class FormHelperTest extends CIUnitTestCase
         $_SESSION = [];
         $this->assertSame(' checked="checked"', set_checkbox('foo', '0', true));
     }
-
-    // ------------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -922,49 +878,42 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('code', 'beta', false));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesTrue()
     {
         $expected = 'readonly ';
         $this->assertSame($expected, parse_form_attributes(['readonly' => true], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesFalse()
     {
         $expected = 'disabled ';
         $this->assertSame($expected, parse_form_attributes(['disabled' => false], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesNull()
     {
         $expected = 'bar=""';
         $this->assertSame($expected, parse_form_attributes(['bar' => null], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesStringEmpty()
     {
         $expected = 'bar=""';
         $this->assertSame($expected, parse_form_attributes(['bar' => ''], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesStringFoo()
     {
         $expected = 'bar="foo"';
         $this->assertSame($expected, parse_form_attributes(['bar' => 'foo'], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesInt0()
     {
         $expected = 'ok="0"';
         $this->assertSame($expected, parse_form_attributes(['ok' => 0], []));
     }
 
-    // ------------------------------------------------------------------------
     public function testFormParseFormAttributesInt1()
     {
         $expected = 'ok="1"';

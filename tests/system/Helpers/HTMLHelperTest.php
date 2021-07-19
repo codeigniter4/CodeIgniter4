@@ -36,8 +36,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testBasicUL()
     {
         $expected = <<<'EOH'
@@ -104,8 +102,6 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame(ltrim($expected), ul($list));
     }
-
-    //--------------------------------------------------------------------
 
     public function testBasicOL()
     {
@@ -174,8 +170,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(ltrim($expected), ol($list));
     }
 
-    // ------------------------------------------------------------------------
-
     public function testIMG()
     {
         $target   = 'http://site.com/images/picture.jpg';
@@ -196,8 +190,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="" />';
         $this->assertSame($expected, img($target, true));
     }
-
-    // ------------------------------------------------------------------------
 
     public function testImgData()
     {
@@ -228,8 +220,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         img_data($this->imgPath . 'gobbledygook');
     }
 
-    // ------------------------------------------------------------------------
-
     public function testScriptTag()
     {
         $target   = 'http://site.com/js/mystyles.js';
@@ -250,8 +240,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $expected = '<script src="http://example.com/index.php/js/mystyles.js" type="text/javascript"></script>';
         $this->assertSame($expected, script_tag($target, true));
     }
-
-    // ------------------------------------------------------------------------
 
     public function testLinkTag()
     {
@@ -277,8 +265,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($parms));
     }
 
-    // ------------------------------------------------------------------------
-
     public function testDocType()
     {
         $target   = 'html4-strict';
@@ -297,8 +283,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $target = 'good-guess';
         $this->assertEmpty(doctype($target));
     }
-
-    // ------------------------------------------------------------------------
 
     public function testVideo()
     {
@@ -375,8 +359,6 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, $video);
     }
-
-    // ------------------------------------------------------------------------
 
     public function testAudio()
     {
@@ -467,8 +449,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    // ------------------------------------------------------------------------
-
     public function testMediaNameOnly()
     {
         $expected = <<<'EOH'
@@ -500,8 +480,6 @@ final class HTMLHelperTest extends CIUnitTestCase
         $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" />';
         $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
     }
-
-    // ------------------------------------------------------------------------
 
     public function testEmbed()
     {
@@ -571,6 +549,4 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, $object);
     }
-
-    // ------------------------------------------------------------------------
 }

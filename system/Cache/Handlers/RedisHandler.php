@@ -41,8 +41,6 @@ class RedisHandler extends BaseHandler
      */
     protected $redis;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -68,8 +66,6 @@ class RedisHandler extends BaseHandler
             $this->redis->close();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes care of any handler-specific setup that must be done.
@@ -111,8 +107,6 @@ class RedisHandler extends BaseHandler
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to fetch an item from the cache store.
      *
@@ -146,8 +140,6 @@ class RedisHandler extends BaseHandler
                 return null;
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -191,8 +183,6 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -206,8 +196,6 @@ class RedisHandler extends BaseHandler
 
         return $this->redis->del($key) === 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Deletes items from the cache store matching a given pattern.
@@ -236,8 +224,6 @@ class RedisHandler extends BaseHandler
         return $this->redis->del($matchedKeys);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic incrementation of a raw stored value.
      *
@@ -252,8 +238,6 @@ class RedisHandler extends BaseHandler
 
         return $this->redis->hIncrBy($key, 'data', $offset);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic decrementation of a raw stored value.
@@ -270,8 +254,6 @@ class RedisHandler extends BaseHandler
         return $this->redis->hIncrBy($key, 'data', -$offset);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -281,8 +263,6 @@ class RedisHandler extends BaseHandler
     {
         return $this->redis->flushDB();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -296,8 +276,6 @@ class RedisHandler extends BaseHandler
     {
         return $this->redis->info();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -326,8 +304,6 @@ class RedisHandler extends BaseHandler
 
         return null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the driver is supported on this system.

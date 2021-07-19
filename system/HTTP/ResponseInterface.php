@@ -116,8 +116,6 @@ interface ResponseInterface
      */
     public function getStatusCode(): int;
 
-    //--------------------------------------------------------------------
-
     /**
      * Return an instance with the specified status code and, optionally, reason phrase.
      *
@@ -137,8 +135,6 @@ interface ResponseInterface
      * @return self
      */
     public function setStatusCode(int $code, string $reason = '');
-
-    //--------------------------------------------------------------------
 
     /**
      * Gets the response response phrase associated with the status code.

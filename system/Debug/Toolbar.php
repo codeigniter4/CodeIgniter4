@@ -49,8 +49,6 @@ class Toolbar
      */
     protected $collectors = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -71,8 +69,6 @@ class Toolbar
             $this->collectors[] = new $collector();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns all the data required by Debug Bar
@@ -179,9 +175,6 @@ class Toolbar
         return json_encode($data);
     }
 
-    //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
-
     /**
      * Called within the view to display the timeline itself.
      *
@@ -222,8 +215,6 @@ class Toolbar
         return $output;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a sorted array of timeline data arrays from the collectors.
      *
@@ -249,8 +240,6 @@ class Toolbar
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an array of data from all of the modules
      * that should be displayed in the 'Vars' tab.
@@ -272,8 +261,6 @@ class Toolbar
         return $data;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Rounds a number to the nearest incremental value.
      *
@@ -288,8 +275,6 @@ class Toolbar
 
         return ceil($number * $increments) / $increments;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Prepare for debugging..
@@ -376,8 +361,6 @@ class Toolbar
             $response->appendBody($script);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Inject debug toolbar into the response.

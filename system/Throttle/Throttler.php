@@ -56,8 +56,6 @@ class Throttler implements ThrottlerInterface
      */
     protected $testTime;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -67,8 +65,6 @@ class Throttler implements ThrottlerInterface
     {
         $this->cache = $cache;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the number of seconds until the next available token will
@@ -80,8 +76,6 @@ class Throttler implements ThrottlerInterface
     {
         return $this->tokenTime;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Restricts the number of requests made by a single IP address within
@@ -164,8 +158,6 @@ class Throttler implements ThrottlerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Used during testing to set the current timestamp to use.
      *
@@ -179,8 +171,6 @@ class Throttler implements ThrottlerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the test time, defaulting to current.

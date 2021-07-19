@@ -42,16 +42,12 @@ class Connection extends BaseConnection
      */
     public $deleteHack = true;
 
-    // --------------------------------------------------------------------
-
     /**
      * Identifier escape character
      *
      * @var string
      */
     public $escapeChar = '`';
-
-    // --------------------------------------------------------------------
 
     /**
      * MySQLi object
@@ -61,8 +57,6 @@ class Connection extends BaseConnection
      * @var MySQLi
      */
     public $mysqli;
-
-    //--------------------------------------------------------------------
 
     /**
      * Connect to the database.
@@ -214,8 +208,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
@@ -228,8 +220,6 @@ class Connection extends BaseConnection
         $this->initialize();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close the database connection.
      *
@@ -239,8 +229,6 @@ class Connection extends BaseConnection
     {
         $this->connID->close();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Select a specific database table to use.
@@ -268,8 +256,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a string containing the version of the database being used.
      *
@@ -287,8 +273,6 @@ class Connection extends BaseConnection
 
         return $this->dataCache['version'] = $this->mysqli->server_info;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Executes the query against the database.
@@ -319,8 +303,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Prep the query
      *
@@ -341,8 +323,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of rows affected by this query.
      *
@@ -352,8 +332,6 @@ class Connection extends BaseConnection
     {
         return $this->connID->affected_rows ?? 0;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Platform-dependant string escape
@@ -370,8 +348,6 @@ class Connection extends BaseConnection
 
         return $this->connID->real_escape_string($str);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Escape Like String Direct
@@ -403,8 +379,6 @@ class Connection extends BaseConnection
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
@@ -424,8 +398,6 @@ class Connection extends BaseConnection
         return $sql;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
      *
@@ -437,8 +409,6 @@ class Connection extends BaseConnection
     {
         return 'SHOW COLUMNS FROM ' . $this->protectIdentifiers($table, true, null, false);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with field data
@@ -473,8 +443,6 @@ class Connection extends BaseConnection
 
         return $retVal;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with index data
@@ -523,8 +491,6 @@ class Connection extends BaseConnection
 
         return $keys;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array of objects with Foreign key data
@@ -575,8 +541,6 @@ class Connection extends BaseConnection
         return $retVal;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns platform-specific SQL to disable foreign key checks.
      *
@@ -587,8 +551,6 @@ class Connection extends BaseConnection
         return 'SET FOREIGN_KEY_CHECKS=0';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns platform-specific SQL to enable foreign key checks.
      *
@@ -598,8 +560,6 @@ class Connection extends BaseConnection
     {
         return 'SET FOREIGN_KEY_CHECKS=1';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the last error code and message.
@@ -623,8 +583,6 @@ class Connection extends BaseConnection
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Insert ID
      *
@@ -634,8 +592,6 @@ class Connection extends BaseConnection
     {
         return $this->connID->insert_id;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Begin Transaction
@@ -648,8 +604,6 @@ class Connection extends BaseConnection
 
         return $this->connID->begin_transaction();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Commit Transaction
@@ -667,8 +621,6 @@ class Connection extends BaseConnection
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Rollback Transaction
      *
@@ -684,6 +636,4 @@ class Connection extends BaseConnection
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 }

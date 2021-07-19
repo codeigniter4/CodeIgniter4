@@ -40,8 +40,6 @@ final class FileMovingTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testMove()
     {
         $finalFilename = 'fileA';
@@ -83,8 +81,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '.txt'));
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMoveOverwriting()
     {
@@ -138,8 +134,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertFileExists($destination . '/' . $finalFilename . '.txt');
     }
 
-    //--------------------------------------------------------------------
-
     public function testMoved()
     {
         $finalFilename = 'fileA';
@@ -173,8 +167,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($file->hasMoved());
     }
 
-    //--------------------------------------------------------------------
-
     public function testStore()
     {
         $finalFilename = 'fileA';
@@ -206,8 +198,6 @@ final class FileMovingTest extends CIUnitTestCase
         $path = $file->store($destination, $file->getName());
         $this->assertSame($destination . '/fileA.txt', $path);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAlreadyMoved()
     {
@@ -242,8 +232,6 @@ final class FileMovingTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testInvalidFile()
     {
         $_FILES = [
@@ -264,8 +252,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $file->move($destination, $file->getName(), false);
     }
-
-    //--------------------------------------------------------------------
 
     public function testFailedMove()
     {
@@ -292,8 +278,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $file->move($destination, $file->getName(), false);
     }
-
-    //--------------------------------------------------------------------
 }
 
 /*

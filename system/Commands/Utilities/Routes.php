@@ -65,8 +65,6 @@ class Routes extends BaseCommand
      */
     protected $options = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Displays the help for the spark cli script itself.
      *

@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-// --------------------------------------------------------------------
-
 // CodeIgniter Inflector Helpers
+
 if (! function_exists('singular')) {
     /**
      * Singular
@@ -73,8 +72,6 @@ if (! function_exists('singular')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('plural')) {
     /**
      * Plural
@@ -127,8 +124,6 @@ if (! function_exists('plural')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('counted')) {
     /**
      * Counted
@@ -149,8 +144,6 @@ if (! function_exists('counted')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('camelize')) {
     /**
      * Camelize
@@ -167,8 +160,6 @@ if (! function_exists('camelize')) {
         return lcfirst(str_replace(' ', '', ucwords(preg_replace('/[\s_]+/', ' ', $string))));
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('pascalize')) {
     /**
@@ -188,8 +179,6 @@ if (! function_exists('pascalize')) {
     }
 }
 
-//--------------------------------------------------------------------
-
 if (! function_exists('underscore')) {
     /**
      * Underscore
@@ -207,8 +196,6 @@ if (! function_exists('underscore')) {
         return preg_replace('/[\s]+/', '_', $replacement);
     }
 }
-
-//--------------------------------------------------------------------
 
 if (! function_exists('humanize')) {
     /**
@@ -229,8 +216,6 @@ if (! function_exists('humanize')) {
         return ucwords(preg_replace('/[' . $separator . ']+/', ' ', $replacement));
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('is_pluralizable')) {
     /**
@@ -299,8 +284,6 @@ if (! function_exists('is_pluralizable')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('dasherize')) {
     /**
      * Replaces underscores with dashes in the string.
@@ -314,8 +297,6 @@ if (! function_exists('dasherize')) {
         return str_replace('_', '-', $string);
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('ordinal')) {
     /**
@@ -345,8 +326,6 @@ if (! function_exists('ordinal')) {
         return $integer % 100 >= 11 && $integer % 100 <= 13 ? 'th' : $suffixes[$integer % 10];
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('ordinalize')) {
     /**

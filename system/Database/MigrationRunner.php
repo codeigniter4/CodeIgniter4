@@ -150,8 +150,6 @@ class MigrationRunner
         $this->db = db_connect($db);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Locate and run all new migrations
      *
@@ -225,8 +223,6 @@ class MigrationRunner
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Migrate down to a previous batch
@@ -350,8 +346,6 @@ class MigrationRunner
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Migrate a single file regardless of order or batches.
      * Method "up" or "down" determined by presence in history.
@@ -434,8 +428,6 @@ class MigrationRunner
         throw new RuntimeException($message);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieves list of available migration scripts
      *
@@ -460,8 +452,6 @@ class MigrationRunner
 
         return $migrations;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieves a list of available migration scripts for one namespace
@@ -501,8 +491,6 @@ class MigrationRunner
         return $migrations;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Create a migration object from a file path.
      *
@@ -541,8 +529,6 @@ class MigrationRunner
         return $migration;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set namespace.
      * Allows other scripts to modify on the fly as needed.
@@ -557,8 +543,6 @@ class MigrationRunner
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Set database Group.
@@ -575,8 +559,6 @@ class MigrationRunner
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set migration Name.
      *
@@ -590,8 +572,6 @@ class MigrationRunner
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * If $silent == true, then will not throw exceptions and will
@@ -608,8 +588,6 @@ class MigrationRunner
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Extracts the migration number from a filename
      *
@@ -623,8 +601,6 @@ class MigrationRunner
 
         return count($matches) ? $matches[0] : '0';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Extracts the migration class name from a filename
@@ -641,8 +617,6 @@ class MigrationRunner
         return implode('_', $parts);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Uses the non-repeatable portions of a migration or history
      * to create a sortable unique key
@@ -656,8 +630,6 @@ class MigrationRunner
         return preg_replace('/[^0-9]/', '', $object->version) . $object->class;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieves messages formatted for CLI output
      *
@@ -667,8 +639,6 @@ class MigrationRunner
     {
         return $this->cliMessages;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Clears any CLI messages.
@@ -682,8 +652,6 @@ class MigrationRunner
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Truncates the history table.
      *
@@ -695,8 +663,6 @@ class MigrationRunner
             $this->db->table($this->table)->truncate();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Add a history to the table.
@@ -728,8 +694,6 @@ class MigrationRunner
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Removes a single history
      *
@@ -751,8 +715,6 @@ class MigrationRunner
             );
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Grabs the full migration history from the database for a group
@@ -782,8 +744,6 @@ class MigrationRunner
         return ! empty($query) ? $query->getResultObject() : [];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the migration history for a single batch.
      *
@@ -803,8 +763,6 @@ class MigrationRunner
         return ! empty($query) ? $query->getResultObject() : [];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns all the batches from the database history in order
      *
@@ -823,8 +781,6 @@ class MigrationRunner
 
         return array_map('intval', array_column($batches, 'batch'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the value of the last batch in the database.
@@ -846,8 +802,6 @@ class MigrationRunner
 
         return (int) $batch;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the version number of the first migration for a batch.
@@ -875,8 +829,6 @@ class MigrationRunner
         return count($migration) ? $migration[0]->version : '0';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the version number of the last migration for a batch.
      * Mostly just for tests.
@@ -902,8 +854,6 @@ class MigrationRunner
 
         return count($migration) ? $migration[0]->version : 0;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Ensures that we have created our migrations table

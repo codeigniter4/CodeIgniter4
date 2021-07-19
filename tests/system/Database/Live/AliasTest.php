@@ -28,6 +28,4 @@ final class AliasTest extends CIUnitTestCase
 
         $this->assertCount(1, $jobs->getResult());
     }
-
-    //--------------------------------------------------------------------
 }

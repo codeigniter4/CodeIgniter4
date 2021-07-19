@@ -30,8 +30,6 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('warning', 'This is a test log'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testBasicHandle()
     {
         $config                                                                = new LoggerConfig();

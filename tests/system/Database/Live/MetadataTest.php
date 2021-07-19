@@ -52,16 +52,12 @@ final class MetadataTest extends CIUnitTestCase
         $this->assertSame($this->expectedTables, array_values($result));
     }
 
-    //--------------------------------------------------------------------
-
     public function testListTablesConstrainPrefix()
     {
         $result = $this->db->listTables(true);
 
         $this->assertSame($this->expectedTables, array_values($result));
     }
-
-    //--------------------------------------------------------------------
 
     public function testConstrainPrefixIgnoresOtherTables()
     {
@@ -96,6 +92,4 @@ final class MetadataTest extends CIUnitTestCase
         $this->forge->dropTable('widgets');
         $this->db->setPrefix($DBPrefix);
     }
-
-    //--------------------------------------------------------------------
 }

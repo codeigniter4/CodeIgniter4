@@ -55,8 +55,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     protected $db;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -66,8 +64,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     {
         $this->db = &$db;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Prepares the query against the database, and saves the connection
@@ -105,8 +101,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return $this->_prepare($query->getOriginalQuery(), $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The database-dependent portion of the prepare statement.
      *
@@ -116,8 +110,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * @return mixed
      */
     abstract public function _prepare(string $sql, array $options = []);
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes a new set of data and runs it against the currently
@@ -151,8 +143,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return new $resultClass($this->db->connID, $resultID);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * The database dependant version of the execute method.
      *
@@ -162,16 +152,12 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     abstract public function _execute(array $data): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the result object for the prepared query.
      *
      * @return mixed
      */
     abstract public function _getResult();
-
-    //--------------------------------------------------------------------
 
     /**
      * Explicitly closes the statement.
@@ -187,8 +173,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         $this->statement->close();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the SQL that has been prepared.
      *
@@ -203,8 +187,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return $this->query->getQuery();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A helper to determine if any error exists.
      *
@@ -214,8 +196,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     {
         return ! empty($this->errorString);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the error code created while executing this statement.
@@ -227,8 +207,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         return $this->errorCode;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the error message created while executing this statement.
      *
@@ -238,6 +216,4 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     {
         return $this->errorString;
     }
-
-    //--------------------------------------------------------------------
 }

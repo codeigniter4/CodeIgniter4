@@ -62,8 +62,6 @@ class Pager implements PagerInterface
      */
     protected $only = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -75,8 +73,6 @@ class Pager implements PagerInterface
         $this->config = $config;
         $this->view   = $view;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles creating and displaying the
@@ -93,8 +89,6 @@ class Pager implements PagerInterface
         return $this->displayLinks($group, $template);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Creates simple Next/Previous links, instead of full pagination.
      *
@@ -109,8 +103,6 @@ class Pager implements PagerInterface
 
         return $this->displayLinks($group, $template);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Allows for a simple, manual, form of pagination where all of the data
@@ -134,8 +126,6 @@ class Pager implements PagerInterface
         return $this->displayLinks($group, $template);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Does the actual work of displaying the view file. Used internally
      * by links(), simpleLinks(), and makeLinks().
@@ -155,8 +145,6 @@ class Pager implements PagerInterface
 
         return $this->view->setVar('pager', $pager)->render($this->config->templates[$template]);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Stores a set of pagination data for later display. Most commonly used
@@ -193,8 +181,6 @@ class Pager implements PagerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets segment for a group.
      *
@@ -209,8 +195,6 @@ class Pager implements PagerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the path that an aliased group of links will use.
@@ -229,8 +213,6 @@ class Pager implements PagerInterface
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of items in data store.
      *
@@ -244,8 +226,6 @@ class Pager implements PagerInterface
 
         return $this->groups[$group]['total'];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the total number of pages.
@@ -261,8 +241,6 @@ class Pager implements PagerInterface
         return $this->groups[$group]['pageCount'];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of the current page of results.
      *
@@ -277,8 +255,6 @@ class Pager implements PagerInterface
         return $this->groups[$group]['currentPage'] ?: 1;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Tells whether this group of results has any more pages of results.
      *
@@ -292,8 +268,6 @@ class Pager implements PagerInterface
 
         return ($this->groups[$group]['currentPage'] * $this->groups[$group]['perPage']) < $this->groups[$group]['total'];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the last page, if we have a total that we can calculate with.
@@ -313,8 +287,6 @@ class Pager implements PagerInterface
         return (int) ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines the first page # that should be shown.
      *
@@ -329,8 +301,6 @@ class Pager implements PagerInterface
         // @todo determine based on a 'surroundCount' value
         return 1;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the URI for a specific page for the specified group.
@@ -371,8 +341,6 @@ class Pager implements PagerInterface
         return $returnObject === true ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the full URI to the next page of results, or null.
      *
@@ -399,8 +367,6 @@ class Pager implements PagerInterface
 
         return $this->getPageURI($page, $group, $returnObject);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the full URL to the previous page of results, or null.
@@ -429,8 +395,6 @@ class Pager implements PagerInterface
         return $this->getPageURI($page, $group, $returnObject);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of results per page that should be shown.
      *
@@ -444,8 +408,6 @@ class Pager implements PagerInterface
 
         return (int) $this->groups[$group]['perPage'];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an array with details about the results, including
@@ -472,8 +434,6 @@ class Pager implements PagerInterface
         return $newGroup;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets only allowed queries on pagination links.
      *
@@ -487,8 +447,6 @@ class Pager implements PagerInterface
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Ensures that an array exists for the group specified.
@@ -518,8 +476,6 @@ class Pager implements PagerInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Calculating the current page
      *
@@ -541,6 +497,4 @@ class Pager implements PagerInterface
             $this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
         }
     }
-
-    //--------------------------------------------------------------------
 }

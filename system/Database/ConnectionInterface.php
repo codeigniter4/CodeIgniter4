@@ -23,8 +23,6 @@ interface ConnectionInterface
      */
     public function initialize();
 
-    //--------------------------------------------------------------------
-
     /**
      * Connect to the database.
      *
@@ -34,16 +32,12 @@ interface ConnectionInterface
      */
     public function connect(bool $persistent = false);
 
-    //--------------------------------------------------------------------
-
     /**
      * Create a persistent database connection.
      *
      * @return mixed
      */
     public function persistentConnect();
-
-    //--------------------------------------------------------------------
 
     /**
      * Keep or establish the connection if no queries have been sent for
@@ -52,8 +46,6 @@ interface ConnectionInterface
      * @return mixed
      */
     public function reconnect();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the actual connection object. If both a 'read' and 'write'
@@ -67,8 +59,6 @@ interface ConnectionInterface
      */
     public function getConnection(?string $alias = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Select a specific database table to use.
      *
@@ -78,16 +68,12 @@ interface ConnectionInterface
      */
     public function setDatabase(string $databaseName);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the current database being used.
      *
      * @return string
      */
     public function getDatabase(): string;
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the last error encountered by this connection.
@@ -98,8 +84,6 @@ interface ConnectionInterface
      */
     public function error(): array;
 
-    //--------------------------------------------------------------------
-
     /**
      * The name of the platform in use (MySQLi, mssql, etc)
      *
@@ -107,16 +91,12 @@ interface ConnectionInterface
      */
     public function getPlatform(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a string containing the version of the database being used.
      *
      * @return string
      */
     public function getVersion(): string;
-
-    //--------------------------------------------------------------------
 
     /**
      * Orchestrates a query against the database. Queries must use
@@ -133,8 +113,6 @@ interface ConnectionInterface
      */
     public function query(string $sql, $binds = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs a basic query against the database. No binding or caching
      * is performed, nor are transactions handled. Simply takes a raw
@@ -146,8 +124,6 @@ interface ConnectionInterface
      */
     public function simpleQuery(string $sql);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an instance of the query builder for this connection.
      *
@@ -157,16 +133,12 @@ interface ConnectionInterface
      */
     public function table($tableName);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the last query's statement object.
      *
      * @return mixed
      */
     public function getLastQuery();
-
-    //--------------------------------------------------------------------
 
     /**
      * "Smart" Escaping
@@ -180,8 +152,6 @@ interface ConnectionInterface
      */
     public function escape($str);
 
-    //--------------------------------------------------------------------
-
     /**
      * Allows for custom calls to the database engine that are not
      * supported through our database layer.
@@ -192,8 +162,6 @@ interface ConnectionInterface
      * @return mixed
      */
     public function callFunction(string $functionName, ...$params);
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the statement is a write-type query or not.

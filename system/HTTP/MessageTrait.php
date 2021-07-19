@@ -225,8 +225,6 @@ trait MessageTrait
         return $this->headerMap[strtolower($name)] ?? $name;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the HTTP protocol version.
      *

@@ -31,16 +31,12 @@ class WincacheHandler extends BaseHandler
         $this->prefix = $config->prefix;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes care of any handler-specific setup that must be done.
      */
     public function initialize()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to fetch an item from the cache store.
@@ -60,8 +56,6 @@ class WincacheHandler extends BaseHandler
         return $success ? $data : null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Saves an item to the cache store.
      *
@@ -78,8 +72,6 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_set($key, $value, $ttl);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -94,8 +86,6 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_delete($key);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes items from the cache store matching a given pattern.
      *
@@ -107,8 +97,6 @@ class WincacheHandler extends BaseHandler
     {
         throw new Exception('The deleteMatching method is not implemented for Wincache. You must select File, Redis or Predis handlers to use it.');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic incrementation of a raw stored value.
@@ -125,8 +113,6 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_inc($key, $offset);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic decrementation of a raw stored value.
      *
@@ -142,8 +128,6 @@ class WincacheHandler extends BaseHandler
         return wincache_ucache_dec($key, $offset);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -153,8 +137,6 @@ class WincacheHandler extends BaseHandler
     {
         return wincache_ucache_clear();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -168,8 +150,6 @@ class WincacheHandler extends BaseHandler
     {
         return wincache_ucache_info(true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -200,8 +180,6 @@ class WincacheHandler extends BaseHandler
 
         return false; // This will return null in a future release
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the driver is supported on this system.

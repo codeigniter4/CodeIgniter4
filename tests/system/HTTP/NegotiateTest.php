@@ -30,15 +30,11 @@ final class NegotiateTest extends CIUnitTestCase
         $this->negotiate = new Negotiate($this->request);
     }
 
-    //--------------------------------------------------------------------
-
     protected function tearDown(): void
     {
         $this->request = $this->negotiate = null;
         unset($this->request, $this->negotiate);
     }
-
-    //--------------------------------------------------------------------
 
     public function testNegotiateMediaFindsHighestMatch()
     {
@@ -54,8 +50,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('text/md', $this->negotiate->media(['text/md']));
     }
 
-    //--------------------------------------------------------------------
-
     public function testParseHeaderDeterminesCorrectPrecedence()
     {
         $header = $this->negotiate->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
@@ -66,16 +60,12 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('*/*', $header[3]['value']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNegotiateMediaReturnsSupportedMatchWhenAsterisksInAvailable()
     {
         $this->request->setHeader('Accept', 'image/*, text/*');
 
         $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNegotiateMediaRecognizesMediaTypes()
     {
@@ -85,8 +75,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNegotiateMediaSupportsStrictMatching()
     {
         // Image has a higher specificity, but is the wrong type...
@@ -95,8 +83,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('text/plain', $this->negotiate->media(['text/plain']));
         $this->assertSame('', $this->negotiate->media(['text/plain'], true));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @group single
@@ -112,14 +98,10 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('utf-8', $this->negotiate->charset(['iso-8859', 'unicode-1-2']));
     }
 
-    //--------------------------------------------------------------------
-
     public function testNegotiateEncodingReturnsFirstIfNoAcceptHeaderExists()
     {
         $this->assertSame('compress', $this->negotiate->encoding(['compress', 'gzip']));
     }
-
-    //--------------------------------------------------------------------
 
     public function testNegotiatesEncodingBasics()
     {
@@ -130,8 +112,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('identity', $this->negotiate->encoding());
     }
 
-    //--------------------------------------------------------------------
-
     public function testAcceptLanguageBasics()
     {
         $this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
@@ -140,8 +120,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('en-gb', $this->negotiate->language(['en-gb', 'en']));
         $this->assertSame('en', $this->negotiate->language(['en']));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774

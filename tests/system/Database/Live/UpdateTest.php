@@ -31,8 +31,6 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame('Bobby', $result[3]->name);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpdateSetsAllWithoutWhereAndLimit()
     {
         try {
@@ -56,8 +54,6 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpdateWithWhere()
     {
         $this->db->table('user')->update(['name' => 'Bobby'], ['country' => 'US']);
@@ -74,8 +70,6 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->assertCount(2, $rows);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUpdateWithWhereAndLimit()
     {
@@ -96,8 +90,6 @@ final class UpdateTest extends CIUnitTestCase
             return;
         }
     }
-
-    //--------------------------------------------------------------------
 
     public function testUpdateBatch()
     {
@@ -124,8 +116,6 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpdateWithWhereSameColumn()
     {
         $this->db->table('user')->update(['country' => 'CA'], ['country' => 'US']);
@@ -142,8 +132,6 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->assertCount(2, $rows);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUpdateWithWhereSameColumn2()
     {
@@ -166,8 +154,6 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertCount(2, $rows);
     }
 
-    //--------------------------------------------------------------------
-
     public function testUpdateWithWhereSameColumn3()
     {
         // calling order: where() -> set() in update()
@@ -188,8 +174,6 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertCount(2, $rows);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @group single
      *
@@ -207,8 +191,6 @@ final class UpdateTest extends CIUnitTestCase
             'value' => '30.192',
         ]);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data

@@ -38,8 +38,6 @@ class Builder extends BaseBuilder
         'insert' => 'ON CONFLICT DO NOTHING',
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Compile Ignore Statement
      *
@@ -60,8 +58,6 @@ class Builder extends BaseBuilder
 
         return $sql;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * ORDER BY
@@ -92,8 +88,6 @@ class Builder extends BaseBuilder
         return parent::orderBy($orderBy, $direction, $escape);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Increments a numeric column by the specified value.
      *
@@ -113,8 +107,6 @@ class Builder extends BaseBuilder
         return $this->db->query($sql, $this->binds, false);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Decrements a numeric column by the specified value.
      *
@@ -133,8 +125,6 @@ class Builder extends BaseBuilder
 
         return $this->db->query($sql, $this->binds, false);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Replace
@@ -246,8 +236,6 @@ class Builder extends BaseBuilder
         return parent::delete($where, $limit, $resetData);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * LIMIT string
      *
@@ -261,8 +249,6 @@ class Builder extends BaseBuilder
     {
         return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Update statement
@@ -289,8 +275,6 @@ class Builder extends BaseBuilder
 
         return parent::_update($table, $values);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Update_Batch statement
@@ -333,8 +317,6 @@ class Builder extends BaseBuilder
         return "UPDATE {$table} SET " . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Delete statement
      *
@@ -350,8 +332,6 @@ class Builder extends BaseBuilder
 
         return parent::_delete($table);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Truncate statement
@@ -369,8 +349,6 @@ class Builder extends BaseBuilder
     {
         return 'TRUNCATE ' . $table . ' RESTART IDENTITY';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Platform independent LIKE statement builder.
@@ -395,8 +373,6 @@ class Builder extends BaseBuilder
         return "{$prefix} {$column} {$not} {$op} :{$bind}:";
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * JOIN
      *
@@ -417,6 +393,4 @@ class Builder extends BaseBuilder
 
         return parent::join($table, $cond, $type, $escape);
     }
-
-    //--------------------------------------------------------------------
 }

@@ -26,8 +26,6 @@ interface RouterInterface
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Scans the URI and attempts to match the current URI to the
      * one of the defined routes in the RouteCollection.
@@ -38,16 +36,12 @@ interface RouterInterface
      */
     public function handle(?string $uri = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the matched controller.
      *
      * @return mixed
      */
     public function controllerName();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the name of the method to run in the
@@ -57,8 +51,6 @@ interface RouterInterface
      */
     public function methodName();
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the binds that have been matched and collected
      * during the parsing process as an array, ready to send to
@@ -67,8 +59,6 @@ interface RouterInterface
      * @return mixed
      */
     public function params();
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the value that should be used to match the index.php file. Defaults
@@ -81,6 +71,4 @@ interface RouterInterface
      * @return mixed
      */
     public function setIndexPage($page);
-
-    //--------------------------------------------------------------------
 }

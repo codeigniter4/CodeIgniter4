@@ -15,14 +15,10 @@ class GoogleMe implements FilterInterface
         return $request;
     }
 
-    //--------------------------------------------------------------------
-
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         $response->csp = 'http://google.com';
 
         return $response;
     }
-
-    //--------------------------------------------------------------------
 }

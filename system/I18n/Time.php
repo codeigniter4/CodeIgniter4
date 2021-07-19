@@ -105,8 +105,6 @@ class Time extends DateTime
         parent::__construct($time, $this->timezone);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a new Time instance with the timezone set.
      *
@@ -121,8 +119,6 @@ class Time extends DateTime
     {
         return new self(null, $timezone, $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a new Time instance while parsing a datetime string.
@@ -143,8 +139,6 @@ class Time extends DateTime
         return new self($datetime, $timezone, $locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return a new time with the time set to midnight.
      *
@@ -159,8 +153,6 @@ class Time extends DateTime
     {
         return new self(date('Y-m-d 00:00:00'), $timezone, $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an instance set to midnight yesterday morning.
@@ -177,8 +169,6 @@ class Time extends DateTime
         return new self(date('Y-m-d 00:00:00', strtotime('-1 day')), $timezone, $locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an instance set to midnight tomorrow morning.
      *
@@ -193,8 +183,6 @@ class Time extends DateTime
     {
         return new self(date('Y-m-d 00:00:00', strtotime('+1 day')), $timezone, $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a new instance based on the year, month and day. If any of those three
@@ -215,8 +203,6 @@ class Time extends DateTime
         return static::create($year, $month, $day, null, null, null, $timezone, $locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a new instance with the date set to today, and the time set to the values passed in.
      *
@@ -234,8 +220,6 @@ class Time extends DateTime
     {
         return static::create(null, null, null, $hour, $minutes, $seconds, $timezone, $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a new instance with the date time values individually set.
@@ -265,8 +249,6 @@ class Time extends DateTime
         return new self(date('Y-m-d H:i:s', strtotime("{$year}-{$month}-{$day} {$hour}:{$minutes}:{$seconds}")), $timezone, $locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Provides a replacement for DateTime's own createFromFormat function, that provides
      * more flexible timeZone handling
@@ -288,8 +270,6 @@ class Time extends DateTime
         return new self($date->format('Y-m-d H:i:s'), $timeZone);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a new instance with the datetime set based on the provided UNIX timestamp.
      *
@@ -305,8 +285,6 @@ class Time extends DateTime
     {
         return new self(gmdate('Y-m-d H:i:s', $timestamp), $timezone ?? 'UTC', $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes an instance of DateTimeInterface and returns an instance of Time with it's same values.
@@ -326,8 +304,6 @@ class Time extends DateTime
         return new self($date, $timezone, $locale);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes an instance of DateTime and returns an instance of Time with it's same values.
      *
@@ -345,8 +321,6 @@ class Time extends DateTime
     {
         return self::createFromInstance($dateTime, $locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Converts the current instance to a mutable DateTime object.
@@ -396,8 +370,6 @@ class Time extends DateTime
         static::$testNow = $datetime;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns whether we have a testNow instance saved.
      *
@@ -408,7 +380,6 @@ class Time extends DateTime
         return static::$testNow !== null;
     }
 
-    //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     // Getters
     //--------------------------------------------------------------------
@@ -425,8 +396,6 @@ class Time extends DateTime
         return $this->toLocalizedString('y');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the localized Month
      *
@@ -438,8 +407,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('M');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the localized day of the month.
@@ -453,8 +420,6 @@ class Time extends DateTime
         return $this->toLocalizedString('d');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the localized hour (in 24-hour format).
      *
@@ -466,8 +431,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('H');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the localized minutes in the hour.
@@ -481,8 +444,6 @@ class Time extends DateTime
         return $this->toLocalizedString('m');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the localized seconds
      *
@@ -494,8 +455,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('s');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the index of the day of the week
@@ -509,8 +468,6 @@ class Time extends DateTime
         return $this->toLocalizedString('c');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the index of the day of the year
      *
@@ -522,8 +479,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('D');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return the index of the week in the month
@@ -537,8 +492,6 @@ class Time extends DateTime
         return $this->toLocalizedString('W');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Return the index of the week in the year
      *
@@ -550,8 +503,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('w');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the age in years from the "current" date and 'now'
@@ -569,8 +520,6 @@ class Time extends DateTime
         return max(0, date('Y', $now) - date('Y', $time));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the number of the current quarter for the year.
      *
@@ -582,8 +531,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('Q');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Are we in daylight savings time currently?
@@ -609,8 +556,6 @@ class Time extends DateTime
         return $daylightSaving;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns boolean whether the passed timezone is the same as
      * the local timezone.
@@ -623,8 +568,6 @@ class Time extends DateTime
 
         return $local === $this->timezone->getName();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns boolean whether object is in UTC.
@@ -1010,8 +953,6 @@ class Time extends DateTime
         return $this->toLocalizedString('yyyy-MM-dd HH:mm:ss');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a localized version of the date in Y-m-d format.
      *
@@ -1023,8 +964,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('yyyy-MM-dd');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a localized version of the date in nicer date format:
@@ -1040,8 +979,6 @@ class Time extends DateTime
         return $this->toLocalizedString('MMM d, yyyy');
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a localized version of the time in nicer date format:
      *
@@ -1055,8 +992,6 @@ class Time extends DateTime
     {
         return $this->toLocalizedString('HH:mm:ss');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the localized value of this instance in $format.
@@ -1074,7 +1009,6 @@ class Time extends DateTime
         return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
     }
 
-    //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     // Comparison
     //--------------------------------------------------------------------
@@ -1103,8 +1037,6 @@ class Time extends DateTime
         return $testTime->format('Y-m-d H:i:s') === $ourTime;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Ensures that the times are identical, taking timezone into account.
      *
@@ -1131,8 +1063,6 @@ class Time extends DateTime
         return $testTime === $ourTime;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the current instance's time is before $testTime,
      * after converting to UTC.
@@ -1151,8 +1081,6 @@ class Time extends DateTime
 
         return $ourTime < $testTime;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the current instance's time is after $testTime,
@@ -1173,7 +1101,6 @@ class Time extends DateTime
         return $ourTime > $testTime;
     }
 
-    //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     // Differences
     //--------------------------------------------------------------------
@@ -1282,8 +1209,6 @@ class Time extends DateTime
         return $time;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the IntlCalendar object used for this object,
      * taking into account the locale, date, etc.
@@ -1299,8 +1224,6 @@ class Time extends DateTime
     {
         return IntlCalendar::fromDateTime($this->toDateTimeString());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Check a time string to see if it includes a relative date (like 'next Tuesday').
@@ -1319,8 +1242,6 @@ class Time extends DateTime
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Outputs a short format version of the datetime.
      *
@@ -1332,8 +1253,6 @@ class Time extends DateTime
     {
         return IntlDateFormatter::formatObject($this->toDateTime(), $this->toStringFormat, $this->locale);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Allow for property-type access to any getX method...
@@ -1358,8 +1277,6 @@ class Time extends DateTime
         return null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Allow for property-type checking to any getX method...
      *
@@ -1373,8 +1290,6 @@ class Time extends DateTime
 
         return method_exists($this, $method);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * This is called when we unserialize the Time object.

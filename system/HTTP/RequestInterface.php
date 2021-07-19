@@ -28,8 +28,6 @@ interface RequestInterface
      */
     public function getIPAddress(): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Validate an IP address
      *
@@ -41,8 +39,6 @@ interface RequestInterface
      * @deprecated Use Validation instead
      */
     public function isValidIP(string $ip, ?string $which = null): bool;
-
-    //--------------------------------------------------------------------
 
     /**
      * Get the request method.
@@ -56,8 +52,6 @@ interface RequestInterface
      */
     public function getMethod(bool $upper = false): string;
 
-    //--------------------------------------------------------------------
-
     /**
      * Fetch an item from the $_SERVER array.
      * Supplied by RequestTrait.
@@ -68,6 +62,4 @@ interface RequestInterface
      * @return mixed
      */
     public function getServer($index = null, $filter = null);
-
-    //--------------------------------------------------------------------
 }

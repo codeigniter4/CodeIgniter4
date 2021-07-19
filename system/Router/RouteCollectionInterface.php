@@ -36,8 +36,6 @@ interface RouteCollectionInterface
      */
     public function add(string $from, $to, ?array $options = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Registers a new constraint with the system. Constraints are used
      * by the routes as placeholders for regular expressions to make defining
@@ -53,8 +51,6 @@ interface RouteCollectionInterface
      */
     public function addPlaceholder($placeholder, ?string $pattern = null);
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
@@ -64,8 +60,6 @@ interface RouteCollectionInterface
      * @return mixed
      */
     public function setDefaultNamespace(string $value);
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the default controller to use when no other controller has been
@@ -77,8 +71,6 @@ interface RouteCollectionInterface
      */
     public function setDefaultController(string $value);
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
@@ -88,8 +80,6 @@ interface RouteCollectionInterface
      * @return mixed
      */
     public function setDefaultMethod(string $value);
-
-    //--------------------------------------------------------------------
 
     /**
      * Tells the system whether to convert dashes in URI strings into
@@ -103,8 +93,6 @@ interface RouteCollectionInterface
      * @return mixed
      */
     public function setTranslateURIDashes(bool $value);
-
-    //--------------------------------------------------------------------
 
     /**
      * If TRUE, the system will attempt to match the URI against
@@ -120,8 +108,6 @@ interface RouteCollectionInterface
      */
     public function setAutoRoute(bool $value): self;
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the class/method that should be called if routing doesn't
      * find a match. It can be either a closure or the controller/method
@@ -135,8 +121,6 @@ interface RouteCollectionInterface
      */
     public function set404Override($callable = null): self;
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the 404 Override setting, which can be null, a closure
      * or the controller/string.
@@ -145,16 +129,12 @@ interface RouteCollectionInterface
      */
     public function get404Override();
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the name of the default controller. With Namespace.
      *
      * @return string
      */
     public function getDefaultController();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the name of the default method to use within the controller.
@@ -163,16 +143,12 @@ interface RouteCollectionInterface
      */
     public function getDefaultMethod();
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the current value of the translateURIDashes setting.
      *
      * @return mixed
      */
     public function shouldTranslateURIDashes();
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the flag that tells whether to autoRoute URI against Controllers.
@@ -181,8 +157,6 @@ interface RouteCollectionInterface
      */
     public function shouldAutoRoute();
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the raw array of available routes.
      *
@@ -190,16 +164,12 @@ interface RouteCollectionInterface
      */
     public function getRoutes();
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the current HTTP Verb being used.
      *
      * @return string
      */
     public function getHTTPVerb();
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to look up a route based on it's destination.
@@ -221,8 +191,6 @@ interface RouteCollectionInterface
      */
     public function reverseRoute(string $search, ...$params);
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the route is a redirecting route.
      *
@@ -232,8 +200,6 @@ interface RouteCollectionInterface
      */
     public function isRedirect(string $from): bool;
 
-    //--------------------------------------------------------------------
-
     /**
      * Grabs the HTTP status code from a redirecting Route.
      *
@@ -242,6 +208,4 @@ interface RouteCollectionInterface
      * @return int
      */
     public function getRedirectCode(string $from): int;
-
-    //--------------------------------------------------------------------
 }

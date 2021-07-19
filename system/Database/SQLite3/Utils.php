@@ -26,8 +26,6 @@ class Utils extends BaseUtils
      */
     protected $optimizeTable = 'REINDEX %s';
 
-    //--------------------------------------------------------------------
-
     /**
      * Platform dependent version of the backup function.
      *
@@ -39,6 +37,4 @@ class Utils extends BaseUtils
     {
         throw new DatabaseException('Unsupported feature of the database platform you are using.');
     }
-
-    //--------------------------------------------------------------------
 }

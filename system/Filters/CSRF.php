@@ -63,8 +63,6 @@ class CSRF implements FilterInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * We don't have anything to do here.
      *
@@ -77,6 +75,4 @@ class CSRF implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
     }
-
-    //--------------------------------------------------------------------
 }

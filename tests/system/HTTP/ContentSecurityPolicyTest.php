@@ -41,8 +41,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         return $buffer;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -54,8 +52,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -69,8 +65,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertHeaderEmitted('Content-Security-Policy:');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -90,8 +84,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("script-src 'self';", $result);
         $this->assertStringContainsString("style-src 'self';", $result);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -329,8 +321,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString("style-src 'self' cdn.cloudy.com;", $result);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -481,8 +471,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('nonce-', $result);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess

@@ -42,8 +42,6 @@ class FileHandler extends BaseHandler
      */
     protected $mode;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -71,16 +69,12 @@ class FileHandler extends BaseHandler
         $this->prefix = $config->prefix;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes care of any handler-specific setup that must be done.
      */
     public function initialize()
     {
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attempts to fetch an item from the cache store.
@@ -96,8 +90,6 @@ class FileHandler extends BaseHandler
 
         return is_array($data) ? $data['data'] : null;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -134,8 +126,6 @@ class FileHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -149,8 +139,6 @@ class FileHandler extends BaseHandler
 
         return is_file($this->path . $key) && unlink($this->path . $key);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Deletes items from the cache store matching a given pattern.
@@ -171,8 +159,6 @@ class FileHandler extends BaseHandler
 
         return $deleted;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic incrementation of a raw stored value.
@@ -201,8 +187,6 @@ class FileHandler extends BaseHandler
         return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Performs atomic decrementation of a raw stored value.
      *
@@ -230,8 +214,6 @@ class FileHandler extends BaseHandler
         return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -241,8 +223,6 @@ class FileHandler extends BaseHandler
     {
         return $this->deleteFiles($this->path, false, true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -256,8 +236,6 @@ class FileHandler extends BaseHandler
     {
         return $this->getDirFileInfo($this->path);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -284,8 +262,6 @@ class FileHandler extends BaseHandler
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determines if the driver is supported on this system.
      *
@@ -295,8 +271,6 @@ class FileHandler extends BaseHandler
     {
         return is_writable($this->path);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Does the heavy lifting of actually retrieving the file and
@@ -330,11 +304,6 @@ class FileHandler extends BaseHandler
         return $data;
     }
 
-    //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
-    // SUPPORT METHODS FOR FILES
-    //--------------------------------------------------------------------
-
     /**
      * Writes a file to disk, or returns false if not successful.
      *
@@ -363,8 +332,6 @@ class FileHandler extends BaseHandler
 
         return is_int($result);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Delete Files
@@ -404,8 +371,6 @@ class FileHandler extends BaseHandler
 
         return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get Directory File Information
@@ -450,8 +415,6 @@ class FileHandler extends BaseHandler
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get File Info

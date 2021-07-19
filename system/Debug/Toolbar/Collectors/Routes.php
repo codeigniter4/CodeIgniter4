@@ -45,8 +45,6 @@ class Routes extends BaseCollector
      */
     protected $title = 'Routes';
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the data of this collector to be formatted in the toolbar
      *
@@ -135,8 +133,6 @@ class Routes extends BaseCollector
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a count of all the routes in the system.
      *
@@ -148,8 +144,6 @@ class Routes extends BaseCollector
 
         return count($rawRoutes->getRoutes());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Display the icon.

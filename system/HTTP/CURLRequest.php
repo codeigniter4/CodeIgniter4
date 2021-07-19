@@ -72,8 +72,6 @@ class CURLRequest extends Request
      */
     protected $delay = 0.0;
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes an array of options to set the following possible class properties:
      *
@@ -103,8 +101,6 @@ class CURLRequest extends Request
         $this->parseOptions($options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sends an HTTP request to the specified $url. If this is a relative
      * URL, it will be merged with $this->baseURI to form a complete URL.
@@ -128,8 +124,6 @@ class CURLRequest extends Request
         return $this->response;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Convenience method for sending a GET request.
      *
@@ -142,8 +136,6 @@ class CURLRequest extends Request
     {
         return $this->request('get', $url, $options);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Convenience method for sending a DELETE request.
@@ -158,8 +150,6 @@ class CURLRequest extends Request
         return $this->request('delete', $url, $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Convenience method for sending a HEAD request.
      *
@@ -172,8 +162,6 @@ class CURLRequest extends Request
     {
         return $this->request('head', $url, $options);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Convenience method for sending an OPTIONS request.
@@ -188,8 +176,6 @@ class CURLRequest extends Request
         return $this->request('options', $url, $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Convenience method for sending a PATCH request.
      *
@@ -202,8 +188,6 @@ class CURLRequest extends Request
     {
         return $this->request('patch', $url, $options);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Convenience method for sending a POST request.
@@ -218,8 +202,6 @@ class CURLRequest extends Request
         return $this->request('post', $url, $options);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Convenience method for sending a PUT request.
      *
@@ -232,8 +214,6 @@ class CURLRequest extends Request
     {
         return $this->request('put', $url, $options);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Set the HTTP Authentication.
@@ -255,8 +235,6 @@ class CURLRequest extends Request
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set form data to be sent.
      *
@@ -276,8 +254,6 @@ class CURLRequest extends Request
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Set JSON data to be sent.
      *
@@ -291,8 +267,6 @@ class CURLRequest extends Request
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the correct settings based on the options array
@@ -327,8 +301,6 @@ class CURLRequest extends Request
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * If the $url is a relative URL, will attempt to create
      * a full URL by prepending $this->baseURI to it.
@@ -350,8 +322,6 @@ class CURLRequest extends Request
         return URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get the request method. Overrides the Request class' method
      * since users expect a different answer here.
@@ -364,8 +334,6 @@ class CURLRequest extends Request
     {
         return ($upper) ? strtoupper($this->method) : strtolower($this->method);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fires the actual cURL request.
@@ -437,8 +405,6 @@ class CURLRequest extends Request
         return $this->response;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Takes all headers current part of this request and adds them
      * to the cURL request.
@@ -472,8 +438,6 @@ class CURLRequest extends Request
 
         return $curlOptions;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Apply method
@@ -509,8 +473,6 @@ class CURLRequest extends Request
         return $curlOptions;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Apply body
      *
@@ -526,8 +488,6 @@ class CURLRequest extends Request
 
         return $curlOptions;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parses the header retrieved from the cURL response into
@@ -556,8 +516,6 @@ class CURLRequest extends Request
             }
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Set CURL options
@@ -718,8 +676,6 @@ class CURLRequest extends Request
         return $curlOptions;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Does the actual work of initializing cURL, setting the options,
      * and grabbing the output.
@@ -747,6 +703,4 @@ class CURLRequest extends Request
 
         return $output;
     }
-
-    //--------------------------------------------------------------------
 }

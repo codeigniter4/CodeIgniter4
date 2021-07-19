@@ -28,8 +28,6 @@ class Honeypot
      */
     protected $config;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -57,8 +55,6 @@ class Honeypot
             throw HoneypotException::forNoNameField();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks the request if honeypot field has data.

@@ -74,8 +74,6 @@ class ChromeLoggerHandler extends BaseHandler
         'debug'     => 'info',
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -87,8 +85,6 @@ class ChromeLoggerHandler extends BaseHandler
 
         $this->json['request_uri'] = current_url();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles logging the message.
@@ -133,8 +129,6 @@ class ChromeLoggerHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Converts the object to display nicely in the Chrome Logger UI.
      *
@@ -155,8 +149,6 @@ class ChromeLoggerHandler extends BaseHandler
 
         return $objectArray;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Attaches the header and the content to the passed in request object.

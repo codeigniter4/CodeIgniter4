@@ -48,9 +48,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    //--------------------------------------------------------------------
-    // Test previous_url
-
     public function testPreviousURLUsesSessionFirst()
     {
         $uri1 = 'http://example.com/one?two';
@@ -69,8 +66,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($uri2, previous_url());
     }
 
-    //--------------------------------------------------------------------
-
     public function testPreviousURLUsesRefererIfNeeded()
     {
         $uri1 = 'http://example.com/one?two';
@@ -87,7 +82,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($uri1, previous_url());
     }
 
-    //--------------------------------------------------------------------
     // Test index_page
 
     public function testIndexPage()
@@ -111,7 +105,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame('banana.php', index_page($this->config));
     }
 
-    //--------------------------------------------------------------------
     // Test anchor
 
     public function anchorNormalPatterns()
@@ -323,7 +316,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    //--------------------------------------------------------------------
     // Test anchor_popup
 
     public function anchorPopupPatterns()
@@ -378,7 +370,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor_popup($uri, $title, $attributes, $this->config));
     }
 
-    //--------------------------------------------------------------------
     // Test mailto
 
     public function mailtoPatterns()
@@ -415,7 +406,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, mailto($email, $title, $attributes));
     }
 
-    //--------------------------------------------------------------------
     // Test safe_mailto
 
     public function safeMailtoPatterns()
@@ -452,7 +442,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, safe_mailto($email, $title, $attributes));
     }
 
-    //--------------------------------------------------------------------
     // Test auto_link
 
     public function autolinkUrls()
@@ -639,7 +628,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in, 'url', true));
     }
 
-    //--------------------------------------------------------------------
     // Test prep_url
 
     public function prepUrlProvider()
@@ -727,7 +715,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, prep_url($input, $secure));
     }
 
-    //--------------------------------------------------------------------
     // Test url_title
 
     public function testUrlTitle()
@@ -756,7 +743,6 @@ final class MiscUrlTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
     // Test mb_url_title
 
     public function testMbUrlTitle()

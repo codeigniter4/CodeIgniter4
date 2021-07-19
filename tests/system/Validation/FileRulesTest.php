@@ -33,8 +33,6 @@ final class FileRulesTest extends CIUnitTestCase
         ],
     ];
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -132,8 +130,6 @@ final class FileRulesTest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     public function testUploadedTrue()
     {
         $this->validation->setRules([
@@ -169,8 +165,6 @@ final class FileRulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run([]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testMaxSize()
     {
@@ -223,8 +217,6 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMaxDims()
     {
         $this->validation->setRules([
@@ -248,8 +240,6 @@ final class FileRulesTest extends CIUnitTestCase
         ]);
         $this->assertFalse($this->validation->run([]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testIsImage()
     {
@@ -282,8 +272,6 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
-    //--------------------------------------------------------------------
-
     public function testMimeTypeOk()
     {
         $this->validation->setRules([
@@ -307,8 +295,6 @@ final class FileRulesTest extends CIUnitTestCase
         ]);
         $this->assertFalse($this->validation->run([]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testExtensionOk()
     {

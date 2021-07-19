@@ -76,8 +76,6 @@ class Database extends Config
         'port'     => 3306,
     ];
 
-    //--------------------------------------------------------------------
-
     public function __construct()
     {
         parent::__construct();
@@ -89,6 +87,4 @@ class Database extends Config
             $this->defaultGroup = 'tests';
         }
     }
-
-    //--------------------------------------------------------------------
 }

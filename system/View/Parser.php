@@ -57,8 +57,6 @@ class Parser extends View
      */
     protected $dataContexts = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -75,8 +73,6 @@ class Parser extends View
 
         parent::__construct($config, $viewPath, $loader, $debug, $logger);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse a template
@@ -141,8 +137,6 @@ class Parser extends View
         return $output;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Parse a String
      *
@@ -179,8 +173,6 @@ class Parser extends View
         return $output;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets several pieces of view data at once.
      * In the Parser, we need to store the context here
@@ -214,8 +206,6 @@ class Parser extends View
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse a template
@@ -269,8 +259,6 @@ class Parser extends View
         return $this->insertNoparse($template);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Parse a single key/value, extracting it
      *
@@ -285,8 +273,6 @@ class Parser extends View
 
         return [$pattern => $val];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parse a tag pair
@@ -381,8 +367,6 @@ class Parser extends View
         return $replace;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Removes any comments from the file. Comments are wrapped in {# #} symbols:
      *
@@ -396,8 +380,6 @@ class Parser extends View
     {
         return preg_replace('/\{#.*?#\}/s', '', $template);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Extracts noparse blocks, inserting a hash in its place so that
@@ -427,8 +409,6 @@ class Parser extends View
         return $template;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Re-inserts the noparsed contents back into the template.
      *
@@ -445,8 +425,6 @@ class Parser extends View
 
         return $template;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Parses any conditionals in the code, removing blocks that don't
@@ -505,8 +483,6 @@ class Parser extends View
         return ob_get_clean();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Over-ride the substitution field delimiters.
      *
@@ -522,8 +498,6 @@ class Parser extends View
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Handles replacing a pseudo-variable with the actual content. Will double-check
@@ -559,8 +533,6 @@ class Parser extends View
         }, (string) $template);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Callback used during parse() to apply any filters to the value.
      *
@@ -584,8 +556,6 @@ class Parser extends View
 
         return $this->applyFilters($replace, $filters);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks the placeholder the view provided to see if we need to provide any autoescaping.
@@ -622,8 +592,6 @@ class Parser extends View
 
         return $escape;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Given a set of filters, will apply each of the filters in turn
@@ -670,9 +638,7 @@ class Parser extends View
         return $replace;
     }
 
-    //--------------------------------------------------------------------
     // Plugins
-    //--------------------------------------------------------------------
 
     /**
      * Scans the template for any parser plugins, and attempts to execute them.
@@ -746,8 +712,6 @@ class Parser extends View
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Removes a plugin from the available plugins.
      *
@@ -784,6 +748,4 @@ class Parser extends View
 
         return $value;
     }
-
-    //--------------------------------------------------------------------
 }

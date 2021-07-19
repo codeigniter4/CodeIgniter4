@@ -33,8 +33,6 @@ class Utils extends BaseUtils
      */
     protected $optimizeTable = 'ALTER INDEX all ON %s REORGANIZE';
 
-    //--------------------------------------------------------------------
-
     /**
      * Platform dependent version of the backup function.
      *

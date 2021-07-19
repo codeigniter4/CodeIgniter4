@@ -35,8 +35,6 @@ class Config extends BaseConfig
      */
     protected static $factory;
 
-    //--------------------------------------------------------------------
-
     /**
      * Creates the default
      *
@@ -85,8 +83,6 @@ class Config extends BaseConfig
         return $connection;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns an array of all db connections currently made.
      *
@@ -112,8 +108,6 @@ class Config extends BaseConfig
         return static::$factory->loadForge($db);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns a new instance of the Database Utilities class.
      *
@@ -127,8 +121,6 @@ class Config extends BaseConfig
 
         return static::$factory->loadUtils($db);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a new instance of the Database Seeder.
@@ -144,8 +136,6 @@ class Config extends BaseConfig
         return new Seeder($config, static::connect($group));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Ensures the database Connection Manager/Factory is loaded and ready to use.
      */
@@ -157,6 +147,4 @@ class Config extends BaseConfig
 
         static::$factory = new Database();
     }
-
-    //--------------------------------------------------------------------
 }

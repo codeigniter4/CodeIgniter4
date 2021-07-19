@@ -61,10 +61,6 @@ final class AutoloaderTest extends CIUnitTestCase
         (new Autoloader())->initialize($config, $modules);
     }
 
-    //--------------------------------------------------------------------
-    // PSR4 Namespacing
-    //--------------------------------------------------------------------
-
     public function testServiceAutoLoaderFromShareInstances()
     {
         $autoloader = Services::autoloader();
@@ -179,8 +175,6 @@ final class AutoloaderTest extends CIUnitTestCase
     {
         $this->assertFalse($this->loader->loadClass('Modules'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSanitizationSimply()
     {

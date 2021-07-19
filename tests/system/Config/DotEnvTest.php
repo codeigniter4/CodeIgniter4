@@ -14,8 +14,6 @@ final class DotEnvTest extends CIUnitTestCase
 {
     protected $fixturesFolder;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,15 +35,11 @@ final class DotEnvTest extends CIUnitTestCase
         $this->root = null;
     }
 
-    //--------------------------------------------------------------------
-
     public function testReturnsFalseIfCannotFindFile()
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'bogus');
         $this->assertFalse($dotenv->load());
     }
-
-    //--------------------------------------------------------------------
 
     public function testLoadsVars()
     {
@@ -56,8 +50,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('with spaces', getenv('SPACED'));
         $this->assertSame('', getenv('NULL'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess
@@ -73,8 +65,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -88,8 +78,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', getenv('encryption.driver'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLoadsNoneStringFiles()
     {
         $dotenv = new DotEnv($this->fixturesFolder, 2);
@@ -99,8 +87,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('with spaces', getenv('SPACED'));
         $this->assertSame('', getenv('NULL'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testCommentedLoadsVars()
     {
@@ -115,8 +101,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('', getenv('CNULL'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLoadsUnreadableFile()
     {
         $file = 'unreadable.env';
@@ -127,8 +111,6 @@ final class DotEnvTest extends CIUnitTestCase
         $dotenv = new DotEnv($this->fixturesFolder, $file);
         $dotenv->load();
     }
-
-    //--------------------------------------------------------------------
 
     public function testQuotedDotenvLoadsEnvironmentVars()
     {
@@ -142,8 +124,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('test some escaped characters like a quote (") or maybe a backslash (\\)', getenv('QESCAPED'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testSpacedValuesWithoutQuotesThrowsException()
     {
         $this->expectException('InvalidArgumentException');
@@ -152,8 +132,6 @@ final class DotEnvTest extends CIUnitTestCase
         $dotenv = new Dotenv($this->fixturesFolder, 'spaced-wrong.env');
         $dotenv->load();
     }
-
-    //--------------------------------------------------------------------
 
     public function testLoadsServerGlobals()
     {
@@ -166,8 +144,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('', $_SERVER['NULL']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNamespacedVariables()
     {
         $dotenv = new Dotenv($this->fixturesFolder, '.env');
@@ -175,8 +151,6 @@ final class DotEnvTest extends CIUnitTestCase
 
         $this->assertSame('complex', $_SERVER['SimpleConfig.simple.name']);
     }
-
-    //--------------------------------------------------------------------
 
     public function testLoadsGetServerVar()
     {
@@ -186,8 +160,6 @@ final class DotEnvTest extends CIUnitTestCase
 
         $this->assertSame('TT', $_ENV['NVAR7']);
     }
-
-    //--------------------------------------------------------------------
 
     public function testLoadsEnvGlobals()
     {
@@ -199,8 +171,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('', $_ENV['NULL']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testNestedEnvironmentVars()
     {
         $dotenv = new Dotenv($this->fixturesFolder, 'nested.env');
@@ -210,8 +180,6 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('$NVAR1 {NVAR2}', $_ENV['NVAR5']); // not resolved
         $this->assertSame('Hello/World!', $_ENV['NVAR8']);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDotenvAllowsSpecialCharacters()
     {
@@ -223,6 +191,4 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('22222:22#2^{', getenv('SPVAR4'));
         $this->assertSame('test some escaped characters like a quote " or maybe a backslash \\', getenv('SPVAR5'));
     }
-
-    //--------------------------------------------------------------------
 }

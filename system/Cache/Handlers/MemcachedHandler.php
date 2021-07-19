@@ -41,8 +41,6 @@ class MemcachedHandler extends BaseHandler
         'raw'    => false,
     ];
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -70,8 +68,6 @@ class MemcachedHandler extends BaseHandler
             $this->memcached->close();
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes care of any handler-specific setup that must be done.
@@ -135,8 +131,6 @@ class MemcachedHandler extends BaseHandler
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to fetch an item from the cache store.
      *
@@ -167,8 +161,6 @@ class MemcachedHandler extends BaseHandler
 
         return is_array($data) ? $data[0] : $data; // @phpstan-ignore-line
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves an item to the cache store.
@@ -203,8 +195,6 @@ class MemcachedHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes a specific item from the cache store.
      *
@@ -219,8 +209,6 @@ class MemcachedHandler extends BaseHandler
         return $this->memcached->delete($key);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Deletes items from the cache store matching a given pattern.
      *
@@ -232,8 +220,6 @@ class MemcachedHandler extends BaseHandler
     {
         throw new Exception('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic incrementation of a raw stored value.
@@ -254,8 +240,6 @@ class MemcachedHandler extends BaseHandler
         // @phpstan-ignore-next-line
         return $this->memcached->increment($key, $offset, $offset, 60);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Performs atomic decrementation of a raw stored value.
@@ -278,8 +262,6 @@ class MemcachedHandler extends BaseHandler
         return $this->memcached->decrement($key, $offset, $offset, 60);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Will delete all items in the entire cache.
      *
@@ -289,8 +271,6 @@ class MemcachedHandler extends BaseHandler
     {
         return $this->memcached->flush();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns information on the entire cache.
@@ -304,8 +284,6 @@ class MemcachedHandler extends BaseHandler
     {
         return $this->memcached->getStats();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns detailed information about the specific item in the cache.
@@ -335,8 +313,6 @@ class MemcachedHandler extends BaseHandler
             'data'   => $data,
         ];
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Determines if the driver is supported on this system.

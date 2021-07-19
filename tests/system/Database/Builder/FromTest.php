@@ -14,16 +14,12 @@ final class FromTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSimpleFrom()
     {
@@ -36,8 +32,6 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFromThatOverwrites()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -48,8 +42,6 @@ final class FromTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testFromWithMultipleTables()
     {
@@ -62,8 +54,6 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFromWithMultipleTablesAsString()
     {
         $builder = new BaseBuilder('user', $this->db);
@@ -74,8 +64,6 @@ final class FromTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     public function testFromReset()
     {
@@ -104,8 +92,6 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testFromWithMultipleTablesAsStringWithSQLSRV()
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -118,6 +104,4 @@ final class FromTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 }

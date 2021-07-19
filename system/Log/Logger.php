@@ -109,8 +109,6 @@ class Logger implements LoggerInterface
      */
     protected $cacheLogs = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -152,8 +150,6 @@ class Logger implements LoggerInterface
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * System is unusable.
      *
@@ -166,8 +162,6 @@ class Logger implements LoggerInterface
     {
         return $this->log('emergency', $message, $context);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Action must be taken immediately.
@@ -185,8 +179,6 @@ class Logger implements LoggerInterface
         return $this->log('alert', $message, $context);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Critical conditions.
      *
@@ -202,8 +194,6 @@ class Logger implements LoggerInterface
         return $this->log('critical', $message, $context);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
@@ -217,8 +207,6 @@ class Logger implements LoggerInterface
     {
         return $this->log('error', $message, $context);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Exceptional occurrences that are not errors.
@@ -236,8 +224,6 @@ class Logger implements LoggerInterface
         return $this->log('warning', $message, $context);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Normal but significant events.
      *
@@ -250,8 +236,6 @@ class Logger implements LoggerInterface
     {
         return $this->log('notice', $message, $context);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Interesting events.
@@ -268,8 +252,6 @@ class Logger implements LoggerInterface
         return $this->log('info', $message, $context);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Detailed debug information.
      *
@@ -282,8 +264,6 @@ class Logger implements LoggerInterface
     {
         return $this->log('debug', $message, $context);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Logs with an arbitrary level.
@@ -347,8 +327,6 @@ class Logger implements LoggerInterface
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Replaces any placeholders in the message with variables
@@ -467,8 +445,6 @@ class Logger implements LoggerInterface
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Cleans the paths of filenames by replacing APPPATH, SYSTEMPATH, FCPATH
      * with the actual var. i.e.
@@ -488,6 +464,4 @@ class Logger implements LoggerInterface
 
         return str_replace(FCPATH, 'FCPATH/', $file);
     }
-
-    //--------------------------------------------------------------------
 }

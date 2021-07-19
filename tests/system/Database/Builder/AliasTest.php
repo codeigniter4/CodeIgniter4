@@ -12,16 +12,12 @@ final class AliasTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testAlias()
     {
@@ -32,8 +28,6 @@ final class AliasTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testAliasSupportsArrayOfNames()
     {
         $builder = $this->db->table(['jobs j', 'users u']);
@@ -43,8 +37,6 @@ final class AliasTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    //--------------------------------------------------------------------
-
     public function testAliasSupportsStringOfNames()
     {
         $builder = $this->db->table('jobs j, users u');
@@ -53,8 +45,6 @@ final class AliasTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1599

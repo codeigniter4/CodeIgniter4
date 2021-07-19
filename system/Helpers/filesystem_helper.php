@@ -10,7 +10,6 @@
  */
 
 // CodeIgniter File System Helpers
-// ------------------------------------------------------------------------
 
 if (! function_exists('directory_map')) {
     /**
@@ -62,8 +61,6 @@ if (! function_exists('directory_map')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('directory_mirror')) {
     /**
      * Recursively copies the files and directories of the origin directory
@@ -108,8 +105,6 @@ if (! function_exists('directory_mirror')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('write_file')) {
     /**
      * Write File
@@ -145,8 +140,6 @@ if (! function_exists('write_file')) {
         }
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('delete_files')) {
     /**
@@ -199,8 +192,6 @@ if (! function_exists('delete_files')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('get_filenames')) {
     /**
      * Get Filenames
@@ -249,8 +240,6 @@ if (! function_exists('get_filenames')) {
     }
 }
 
-// --------------------------------------------------------------------
-
 if (! function_exists('get_dir_file_info')) {
     /**
      * Get Directory File Information
@@ -298,8 +287,6 @@ if (! function_exists('get_dir_file_info')) {
         }
     }
 }
-
-// --------------------------------------------------------------------
 
 if (! function_exists('get_file_info')) {
     /**
@@ -367,8 +354,6 @@ if (! function_exists('get_file_info')) {
     }
 }
 
-// --------------------------------------------------------------------
-
 if (! function_exists('symbolic_permissions')) {
     /**
      * Symbolic Permissions
@@ -419,8 +404,6 @@ if (! function_exists('symbolic_permissions')) {
     }
 }
 
-// --------------------------------------------------------------------
-
 if (! function_exists('octal_permissions')) {
     /**
      * Octal Permissions
@@ -438,8 +421,6 @@ if (! function_exists('octal_permissions')) {
     }
 }
 
-// ------------------------------------------------------------------------
-
 if (! function_exists('same_file')) {
     /**
      * Checks if two files both exist and have identical hashes
@@ -454,8 +435,6 @@ if (! function_exists('same_file')) {
         return is_file($file1) && is_file($file2) && md5_file($file1) === md5_file($file2);
     }
 }
-
-// ------------------------------------------------------------------------
 
 if (! function_exists('set_realpath')) {
     /**

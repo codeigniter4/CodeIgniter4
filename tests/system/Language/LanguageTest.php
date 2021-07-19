@@ -40,8 +40,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('£7.41', lang($line, ['price' => '7.41'], 'en-GB'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetLineReturnsLine()
     {
         $this->lang->setData('books', [
@@ -51,8 +49,6 @@ final class LanguageTest extends CIUnitTestCase
 
         $this->assertSame('We saved some more', $this->lang->getLine('books.booksSaved'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetLineReturnsFallbackLine()
     {
@@ -76,8 +72,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('equivalent.unknown', $this->lang->getLine('equivalent.unknown'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetLineArrayReturnsLineArray()
     {
         $this->lang->setData('books', [
@@ -93,8 +87,6 @@ final class LanguageTest extends CIUnitTestCase
         ], $this->lang->getLine('books.booksList'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetLineFormatsMessage()
     {
         // No intl extension? then we can't test this - go away....
@@ -108,8 +100,6 @@ final class LanguageTest extends CIUnitTestCase
 
         $this->assertSame('45 books have been saved.', $this->lang->getLine('books.bookCount', [91 / 2]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetLineArrayFormatsMessages()
     {
@@ -127,8 +117,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame(['45 related books.'], $this->lang->getLine('books.bookList', [91 / 2]));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/891
      */
@@ -140,8 +128,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Get line must be a string or array of strings.', $str1);
         $this->assertSame('Whatever this would be, translated', $str2);
     }
-
-    //--------------------------------------------------------------------
 
     public function testLangDoesntFormat()
     {
@@ -156,8 +142,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame(['{0, number, integer} related books.'], $this->lang->getLine('books.bookList', [15]));
     }
 
-    //--------------------------------------------------------------------
-
     public function testLanguageDuplicateKey()
     {
         $this->lang = new Language('en');
@@ -166,8 +150,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
         $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
     }
-
-    //--------------------------------------------------------------------
 
     public function testLanguageFileLoading()
     {
@@ -179,8 +161,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang->loadem('More', 'en');
         $this->assertCount(1, $this->lang->loaded()); // should only be there once
     }
-
-    //--------------------------------------------------------------------
 
     public function testLanguageFileLoadingReturns()
     {
@@ -194,8 +174,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertTrue(in_array('More', $this->lang->loaded(), true));
         $this->assertCount(1, $this->lang->loaded());
     }
-
-    //--------------------------------------------------------------------
 
     public function testLanguageSameKeyAndFileName()
     {
@@ -211,15 +189,11 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Another example', $this->lang->getLine('another.example'));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetLocale()
     {
         $this->lang = Services::language('en', false);
         $this->assertSame('en', $this->lang->getLocale());
     }
-
-    //--------------------------------------------------------------------
 
     public function testPrioritizedLocator()
     {
@@ -229,8 +203,6 @@ final class LanguageTest extends CIUnitTestCase
         // and we should have our new message too
         $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }
-
-    //--------------------------------------------------------------------
 
     public function MessageBundles()
     {
@@ -270,7 +242,6 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertGreaterThan(0, count($messages));
     }
 
-    //--------------------------------------------------------------------
     // Testing base locale vs variants
 
     public function testBaseFallbacks()
@@ -288,8 +259,6 @@ final class LanguageTest extends CIUnitTestCase
         // key isn't in either base or variant; should return bad key
         $this->assertSame('More.shootMe', $this->lang->getLine('More.shootMe'));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Testing base locale vs variants, with fallback to English.

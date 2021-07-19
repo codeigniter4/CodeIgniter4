@@ -20,14 +20,10 @@ final class URITest extends CIUnitTestCase
         parent::setUp();
     }
 
-    //--------------------------------------------------------------------
-
     protected function tearDown(): void
     {
         Factories::reset('config');
     }
-
-    //--------------------------------------------------------------------
 
     public function testConstructorSetsAllParts()
     {
@@ -47,8 +43,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame(['path'], $uri->getSegments());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSegmentsIsPopulatedRightForMultipleSegments()
     {
         $uri = new URI('http://hostname/path/to/script');
@@ -62,8 +56,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame(3, $uri->getTotalSegments());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSegmentOutOfRange()
     {
         $this->expectException(HTTPException::class);
@@ -71,16 +63,12 @@ final class URITest extends CIUnitTestCase
         $uri->getSegment(5);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSegmentOutOfRangeWithSilent()
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
         $this->assertSame('', $uri->setSilent()->getSegment(22));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSegmentOutOfRangeWithDefaultValue()
     {
@@ -90,16 +78,12 @@ final class URITest extends CIUnitTestCase
         $uri->getSegment(22, 'something');
     }
 
-    //--------------------------------------------------------------------
-
     public function testSegmentOutOfRangeWithSilentAndDefaultValue()
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
         $this->assertSame('something', $uri->setSilent()->getSegment(22, 'something'));
     }
-
-    //--------------------------------------------------------------------
 
     public function testSegmentsWithDefaultValueAndSilent()
     {
@@ -115,8 +99,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame(2, $uri->getTotalSegments());
     }
 
-    //--------------------------------------------------------------------
-
     public function testSegmentOutOfRangeWithDefaultValuesAndSilent()
     {
         $uri = new URI('http://hostname/path/to/script');
@@ -129,8 +111,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame(['path', 'to', 'script'], $uri->getSegments());
     }
 
-    //--------------------------------------------------------------------
-
     public function testCanCastAsString()
     {
         $url = 'http://username:password@hostname:9090/path?arg=value#anchor';
@@ -140,8 +120,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSimpleUri()
     {
@@ -154,8 +132,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($url, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testEmptyUri()
     {
         $url = '';
@@ -166,16 +142,12 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://', (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testMalformedUri()
     {
         $this->expectException(HTTPException::class);
         $url = 'http://abc:a123';
         $uri = new URI($url);
     }
-
-    //--------------------------------------------------------------------
 
     public function testMissingScheme()
     {
@@ -187,8 +159,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($url, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSchemeSub()
     {
         $url = 'example.com';
@@ -196,8 +166,6 @@ final class URITest extends CIUnitTestCase
         $uri->setScheme('x');
         $this->assertSame('x://' . $url, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetSchemeSetsValue()
     {
@@ -211,8 +179,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetUserInfoSetsValue()
     {
         $url = 'http://example.com/path';
@@ -224,8 +190,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('user', $uri->getUserInfo());
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testUserInfoCanShowPassword()
     {
@@ -246,8 +210,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetHostSetsValue()
     {
         $url = 'http://example.com/path';
@@ -260,8 +222,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetPortSetsValue()
     {
         $url = 'http://example.com/path';
@@ -273,8 +233,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame(9000, $uri->getPort());
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetPortInvalidValues()
     {
@@ -289,8 +247,6 @@ final class URITest extends CIUnitTestCase
         $uri->setPort(70000);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetPortInvalidValuesSilent()
     {
         $url = 'http://example.com/path';
@@ -300,8 +256,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertNull($uri->getPort());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetPortTooSmall()
     {
@@ -313,8 +267,6 @@ final class URITest extends CIUnitTestCase
         $uri->setPort(-1);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetPortZero()
     {
         $url = 'http://example.com/path';
@@ -325,8 +277,6 @@ final class URITest extends CIUnitTestCase
         $uri->setPort(0);
     }
 
-    //--------------------------------------------------------------------
-
     public function testCatchesBadPort()
     {
         $this->expectException(HTTPException::class);
@@ -334,8 +284,6 @@ final class URITest extends CIUnitTestCase
         $uri = new URI();
         $uri->setURI($url);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetPathSetsValue()
     {
@@ -348,8 +296,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('somewhere/else', $uri->getPath());
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function invalidPaths()
     {
@@ -381,8 +327,6 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider invalidPaths
      */
@@ -392,8 +336,6 @@ final class URITest extends CIUnitTestCase
         $uri->setPath($path);
         $this->assertSame($expected, $uri->getPath());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetFragmentSetsValue()
     {
@@ -407,8 +349,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetQuerySetsValue()
     {
         $url = 'http://example.com/path';
@@ -420,8 +360,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('key=value&second_key=value.2', $uri->getQuery());
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetQuerySetsValueWithUseRawQueryString()
     {
@@ -435,8 +373,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetQueryArraySetsValue()
     {
         $url = 'http://example.com/path';
@@ -448,8 +384,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('key=value&second_key=value.2', $uri->getQuery());
         $this->assertSame($expected, (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetQueryArraySetsValueWithUseRawQueryString()
     {
@@ -463,8 +397,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetQueryThrowsErrorWhenFragmentPresent()
     {
         $url = 'http://example.com/path';
@@ -473,8 +405,6 @@ final class URITest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
         $uri->setQuery('?key=value#fragment');
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetQueryThrowsErrorWhenFragmentPresentSilent()
     {
@@ -485,8 +415,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('', $uri->getQuery());
     }
-
-    //--------------------------------------------------------------------
 
     public function authorityInfo()
     {
@@ -510,8 +438,6 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider authorityInfo
      */
@@ -520,8 +446,6 @@ final class URITest extends CIUnitTestCase
         $uri = new URI($url);
         $this->assertSame($expected, $uri->getAuthority());
     }
-
-    //--------------------------------------------------------------------
 
     public function defaultPorts()
     {
@@ -537,8 +461,6 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider defaultPorts
      */
@@ -552,8 +474,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetAuthorityReconstitutes()
     {
         $authority = 'me@foo.com:3000';
@@ -563,8 +483,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame($authority, $uri->getAuthority());
     }
-
-    //--------------------------------------------------------------------
 
     public function defaultDots()
     {
@@ -664,8 +582,6 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * @dataProvider defaultDots
      */
@@ -673,8 +589,6 @@ final class URITest extends CIUnitTestCase
     {
         $this->assertSame($expected, URI::removeDotSegments($path));
     }
-
-    //--------------------------------------------------------------------
 
     public function defaultResolutions()
     {
@@ -748,8 +662,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://a/x', (string) $new);
     }
 
-    //--------------------------------------------------------------------
-
     public function testAddQueryVar()
     {
         $base = 'http://example.com/foo';
@@ -760,8 +672,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('http://example.com/foo?bar=baz', (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/954
@@ -791,8 +701,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testStripQueryVars()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -803,8 +711,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('http://example.com/foo?foo=bar', (string) $uri);
     }
-
-    //--------------------------------------------------------------------
 
     public function testKeepQueryVars()
     {
@@ -817,8 +723,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testEmptyQueryVars()
     {
         $base = 'http://example.com/foo';
@@ -828,8 +732,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo?foo=&bar=baz&baz=foz', (string) $uri);
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetQueryExcept()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -838,8 +740,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('foo=bar&baz=foz', $uri->getQuery(['except' => ['bar']]));
     }
-
-    //--------------------------------------------------------------------
 
     public function testGetQueryOnly()
     {
@@ -851,8 +751,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('foo=bar&baz=foz', $uri->getQuery(['except' => 'bar']));
     }
 
-    //--------------------------------------------------------------------
-
     public function testGetQueryWithStrings()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
@@ -861,8 +759,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('bar=baz', $uri->getQuery(['only' => 'bar']));
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
@@ -875,8 +771,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://localtest.me/subfolder', (string) (new URI('localtest.me/subfolder')));
     }
 
-    //--------------------------------------------------------------------
-
     public function testSetSegment()
     {
         $base = 'http://example.com/foo/bar/baz';
@@ -886,8 +780,6 @@ final class URITest extends CIUnitTestCase
 
         $this->assertSame('foo/banana/baz', $uri->getPath());
     }
-
-    //--------------------------------------------------------------------
 
     public function testSetSegmentFallback()
     {
@@ -938,7 +830,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($segments, $uri->getSegments());
     }
 
-    //--------------------------------------------------------------------
     // Exploratory testing, investigating https://github.com/codeigniter4/CodeIgniter4/issues/2016
 
     public function testBasedNoIndex()

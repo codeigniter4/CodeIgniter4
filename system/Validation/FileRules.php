@@ -27,8 +27,6 @@ class FileRules
      */
     protected $request;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -42,8 +40,6 @@ class FileRules
 
         $this->request = $request;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Verifies that $name is the name of a valid uploaded file.
@@ -80,8 +76,6 @@ class FileRules
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Verifies if the file's size in Kilobytes is no larger than the parameter.
@@ -122,8 +116,6 @@ class FileRules
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Uses the mime config file to determine if a file is considered an "image",
@@ -166,8 +158,6 @@ class FileRules
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if an uploaded file's mime type matches one in the parameter.
      *
@@ -204,8 +194,6 @@ class FileRules
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks to see if an uploaded file's extension matches one in the parameter.
      *
@@ -241,8 +229,6 @@ class FileRules
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Checks an uploaded file to verify that the dimensions are within
@@ -289,6 +275,4 @@ class FileRules
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

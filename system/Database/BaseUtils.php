@@ -25,8 +25,6 @@ abstract class BaseUtils
      */
     protected $db;
 
-    //--------------------------------------------------------------------
-
     /**
      * List databases statement
      *
@@ -48,8 +46,6 @@ abstract class BaseUtils
      */
     protected $repairTable = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Class constructor
      *
@@ -59,8 +55,6 @@ abstract class BaseUtils
     {
         $this->db = &$db;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * List databases
@@ -98,8 +92,6 @@ abstract class BaseUtils
         return $this->db->dataCache['db_names'];
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Determine if a particular database exists
      *
@@ -111,8 +103,6 @@ abstract class BaseUtils
     {
         return in_array($databaseName, $this->listDatabases(), true);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Optimize Table
@@ -137,8 +127,6 @@ abstract class BaseUtils
 
         return $query !== false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Optimize Database
@@ -185,8 +173,6 @@ abstract class BaseUtils
         return $result;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Repair Table
      *
@@ -215,8 +201,6 @@ abstract class BaseUtils
 
         return current($query);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generate CSV from a query result object
@@ -251,8 +235,6 @@ abstract class BaseUtils
 
         return $out;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generate XML data from a query result object
@@ -296,8 +278,6 @@ abstract class BaseUtils
 
         return $xml . '</' . $root . '>' . $newline;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Database Backup
@@ -366,8 +346,6 @@ abstract class BaseUtils
         return gzencode($this->_backup($prefs));
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Platform dependent version of the backup function.
      *
@@ -376,6 +354,4 @@ abstract class BaseUtils
      * @return mixed
      */
     abstract public function _backup(?array $prefs = null);
-
-    //--------------------------------------------------------------------
 }

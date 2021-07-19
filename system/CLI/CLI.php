@@ -140,8 +140,6 @@ class CLI
      */
     protected static $isColored = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Static "constructor".
      */
@@ -172,8 +170,6 @@ class CLI
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get input from the shell, using readline or the standard STDIN
      *
@@ -196,8 +192,6 @@ class CLI
 
         return fgets(STDIN);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Asks the user for input.
@@ -272,8 +266,6 @@ class CLI
         return empty($input) ? '' : $input;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Validate one prompt "field" at a time
      *
@@ -306,8 +298,6 @@ class CLI
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Outputs a string to the CLI without any surrounding newlines.
@@ -349,8 +339,6 @@ class CLI
         static::fwrite(STDOUT, $text . PHP_EOL);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Outputs an error to the CLI using STDERR instead of STDOUT
      *
@@ -374,8 +362,6 @@ class CLI
         static::$isColored = $stdout;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Beeps a certain number of times.
      *
@@ -385,8 +371,6 @@ class CLI
     {
         echo str_repeat("\x07", $num);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Waits a certain number of seconds, optionally showing a wait message and
@@ -418,8 +402,6 @@ class CLI
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * if operating system === windows
      *
@@ -429,8 +411,6 @@ class CLI
     {
         return PHP_OS_FAMILY === 'Windows';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Enter a number of empty lines
@@ -447,8 +427,6 @@ class CLI
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Clears the screen of output
      *
@@ -464,8 +442,6 @@ class CLI
             ? static::newLine(40)
             : static::fwrite(STDOUT, "\033[H\033[2J");
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the given text with the correct color codes for a foreground and
@@ -529,8 +505,6 @@ class CLI
         return $string . $text . "\033[0m";
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Get the number of characters in string having encoded characters
      * and ignores styles set by the color() function
@@ -558,8 +532,6 @@ class CLI
         return mb_strwidth($string);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks whether the current stream resource supports or
      * refers to a valid terminal type device.
@@ -582,8 +554,6 @@ class CLI
         return function_exists($function) && @$function($resource);
         // @codeCoverageIgnoreEnd
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns true if the stream resource supports colors.
@@ -621,8 +591,6 @@ class CLI
         return static::streamSupports('stream_isatty', $resource);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to determine the width of the viewable CLI window.
      *
@@ -639,8 +607,6 @@ class CLI
         return static::$width ?: $default;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Attempts to determine the height of the viewable CLI window.
      *
@@ -656,8 +622,6 @@ class CLI
 
         return static::$height ?: $default;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Populates the CLI's dimensions.
@@ -708,8 +672,6 @@ class CLI
         // @codeCoverageIgnoreEnd
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Displays a progress bar on the CLI. You must call it repeatedly
      * to update it. Set $thisStep = false to erase the progress bar.
@@ -743,8 +705,6 @@ class CLI
             static::fwrite(STDOUT, "\007");
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Takes a string and writes it to the command line, wrapping to a maximum
@@ -799,7 +759,6 @@ class CLI
     }
 
     //--------------------------------------------------------------------
-    //--------------------------------------------------------------------
     // Command-Line 'URI' support
     //--------------------------------------------------------------------
 
@@ -841,8 +800,6 @@ class CLI
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the command line string portions of the arguments, minus
      * any options, as a string. This is used to pass along to the main
@@ -854,8 +811,6 @@ class CLI
     {
         return implode('/', static::$segments);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns an individual segment.
@@ -877,8 +832,6 @@ class CLI
         return static::$segments[$index - 1] ?? null;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the raw array of segments found.
      *
@@ -888,8 +841,6 @@ class CLI
     {
         return static::$segments;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Gets a single command-line option. Returns TRUE if the option
@@ -912,8 +863,6 @@ class CLI
         return $val;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the raw array of options found.
      *
@@ -923,8 +872,6 @@ class CLI
     {
         return static::$options;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the options as a string, suitable for passing along on
@@ -961,8 +908,6 @@ class CLI
 
         return $trim ? trim($out) : $out;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns a well formatted table
@@ -1059,8 +1004,6 @@ class CLI
         static::write($table);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * While the library is intended for use on CLI commands,
      * commands can be called from controllers and elsewhere
@@ -1089,6 +1032,4 @@ class CLI
 }
 
 // Ensure the class is initialized. Done outside of code coverage
-// @codeCoverageIgnoreStart
-CLI::init();
-// @codeCoverageIgnoreEnd
+CLI::init(); // @codeCoverageIgnore

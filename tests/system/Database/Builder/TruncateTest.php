@@ -13,16 +13,12 @@ final class TruncateTest extends CIUnitTestCase
 {
     protected $db;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->db = new MockConnection([]);
     }
-
-    //--------------------------------------------------------------------
 
     public function testTruncate()
     {
@@ -32,6 +28,4 @@ final class TruncateTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, $builder->testMode()->truncate());
     }
-
-    //--------------------------------------------------------------------
 }

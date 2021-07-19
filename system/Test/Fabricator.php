@@ -89,8 +89,6 @@ class Fabricator
      */
     public $defaultFormatter = 'word';
 
-    //--------------------------------------------------------------------
-
     /**
      * Store the model instance and initialize Faker to the locale.
      *
@@ -134,8 +132,6 @@ class Fabricator
         // Set the formatters
         $this->setFormatters($formatters);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Reset internal counts
@@ -196,8 +192,6 @@ class Fabricator
         return self::setCount($table, self::getCount($table) - 1);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the model instance
      *
@@ -227,8 +221,6 @@ class Fabricator
     {
         return $this->faker;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Return and reset tempOverrides
@@ -262,8 +254,6 @@ class Fabricator
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the current formatters
@@ -359,8 +349,6 @@ class Fabricator
         // Nothing left, use the default
         return $this->defaultFormatter;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generate new entities with faked data
@@ -472,8 +460,6 @@ class Fabricator
 
         return $object;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generate new entities from the database

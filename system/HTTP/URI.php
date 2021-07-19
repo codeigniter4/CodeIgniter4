@@ -135,8 +135,6 @@ class URI
      */
     protected $rawQueryString = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Builds a representation of the string from the component parts.
      *
@@ -230,8 +228,6 @@ class URI
         return $output;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor.
      *
@@ -245,8 +241,6 @@ class URI
             $this->setURI($uri);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * If $silent == true, then will not throw exceptions and will
@@ -263,8 +257,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * If $raw == true, then will use parseStr() method
      * instead of native parse_str() function.
@@ -279,8 +271,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets and overwrites any current URI information.
@@ -308,8 +298,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieve the scheme component of the URI.
      *
@@ -329,8 +317,6 @@ class URI
     {
         return $this->scheme;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the authority component of the URI.
@@ -376,8 +362,6 @@ class URI
         return $authority;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieve the user information component of the URI.
      *
@@ -409,8 +393,6 @@ class URI
         return $userInfo;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Temporarily sets the URI to show a password in userInfo. Will
      * reset itself after the first call to authority().
@@ -425,8 +407,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the host component of the URI.
@@ -444,8 +424,6 @@ class URI
     {
         return $this->host ?? '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the port component of the URI.
@@ -466,8 +444,6 @@ class URI
     {
         return $this->port;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the path component of the URI.
@@ -499,8 +475,6 @@ class URI
     {
         return $this->path ?? '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Retrieve the query string
@@ -540,8 +514,6 @@ class URI
         return empty($vars) ? '' : http_build_query($vars);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Retrieve a URI fragment
      *
@@ -552,8 +524,6 @@ class URI
         return $this->fragment ?? '';
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the segments of the path as an array.
      *
@@ -563,8 +533,6 @@ class URI
     {
         return $this->segments;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the value of a specific segment of the URI path.
@@ -617,8 +585,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the total number of segments.
      *
@@ -628,8 +594,6 @@ class URI
     {
         return count($this->segments);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Formats the URI as a string.
@@ -675,8 +639,6 @@ class URI
         );
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Parses the given string and saves the appropriate authority pieces.
      *
@@ -702,8 +664,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the scheme for this URI.
      *
@@ -726,8 +686,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the userInfo/Authority portion of the URI.
      *
@@ -744,8 +702,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the host name to use.
      *
@@ -759,8 +715,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the port portion of the URI.
@@ -787,8 +741,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Sets the path portion of the URI.
@@ -824,8 +776,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the query portion of the URI, while attempting
      * to clean the various parts of the query keys and values.
@@ -858,8 +808,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * A convenience method to pass an array of items in as the Query
      * portion of the URI.
@@ -874,8 +822,6 @@ class URI
 
         return $this->setQuery($query);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Adds a single new element to the query vars.
@@ -892,8 +838,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Removes one or more query vars from the URI.
      *
@@ -909,8 +853,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Filters the query variables so that only the keys passed in
@@ -937,8 +879,6 @@ class URI
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Sets the fragment portion of the URI.
      *
@@ -954,8 +894,6 @@ class URI
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Encodes any dangerous characters, and removes dot segments.
@@ -996,8 +934,6 @@ class URI
 
         return $path;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Saves our parts from a parse_url call.
@@ -1047,8 +983,6 @@ class URI
             $this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Combines one URI string with this one based on the rules set out in
@@ -1110,8 +1044,6 @@ class URI
         return $transformed;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Given 2 paths, will merge them according to rules set out in RFC 2986,
      * Section 5.2
@@ -1140,8 +1072,6 @@ class URI
 
         return implode('/', $path);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * This is equivalent to the native PHP parse_str() function.
@@ -1173,6 +1103,4 @@ class URI
 
         return $return;
     }
-
-    //--------------------------------------------------------------------
 }

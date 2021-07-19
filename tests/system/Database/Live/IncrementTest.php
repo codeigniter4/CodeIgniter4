@@ -29,8 +29,6 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '7']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testIncrementWithValue()
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
@@ -41,8 +39,6 @@ final class IncrementTest extends CIUnitTestCase
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
     }
-
-    //--------------------------------------------------------------------
 
     public function testDecrement()
     {
@@ -55,8 +51,6 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '5']);
     }
 
-    //--------------------------------------------------------------------
-
     public function testDecrementWithValue()
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
@@ -67,6 +61,4 @@ final class IncrementTest extends CIUnitTestCase
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
     }
-
-    //--------------------------------------------------------------------
 }

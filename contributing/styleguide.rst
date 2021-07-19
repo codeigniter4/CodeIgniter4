@@ -266,61 +266,38 @@ An example::
 
     <?php
 
-    /**
-     * CodeIgniter
-     *
-     * An open source application development framework for PHP
-     *
-     ...
-     *
-     * @package    CodeIgniter
-     * @author     CodeIgniter Dev Team
-     * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
-     * @license    https://opensource.org/licenses/MIT	MIT License
-     * @link       https://codeigniter.com
-     * @since      Version 4.0.0
-     * @filesource
-     */
     namespace CodeIgniter\Fruit;
+
     use CodeIgniter\Config\BaseConfig;
 
     /**
      * Base class for entities in the CodeIgniter\Fruit module.
-     *
-     * @property $group
-     * @property $name
-     * @property $description
-     *
-     * @package CodeIgniter\Fruit
      */
     abstract class BaseFruit
     {
+      /**
+        * The group a fruit belongs to.
+        *
+        * @var string
+        */
+      protected $group;
 
-            /**
-             * The group a fruit belongs to.
-             *
-             * @var string
-             */
-            protected $group;
+      /**
+        * Fruit constructor.
+        *
+        * @param BaseConfig       $config
+        */
+      public function __construct(BaseConfig $Config)
+      {
+              $this->group   = 'Unknown';
+      }
 
-            /**
-             * Fruit constructor.
-             *
-             * @param BaseConfig       $config
-             */
-            public function __construct(BaseConfig $Config)
-            {
-                    $this->group   = 'Unknown';
-            }
-
-            //--------------------------------------------------------------------
-
-            /**
-             * Model a fruit ripening over time.
-             * 
-             * @param	array	$params
-             */
-            abstract public function ripen(array $params);
+      /**
+        * Model a fruit ripening over time.
+        *
+        * @param	array	$params
+        */
+      abstract public function ripen(array $params);
     }
 
 Other

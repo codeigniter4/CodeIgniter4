@@ -52,8 +52,6 @@ final class ControllerTest extends CIUnitTestCase
      */
     protected $logger;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -64,8 +62,6 @@ final class ControllerTest extends CIUnitTestCase
         $this->logger      = \Config\Services::logger();
         $this->codeigniter = new MockCodeIgniter($this->config);
     }
-
-    //--------------------------------------------------------------------
 
     public function testConstructor()
     {
@@ -89,7 +85,6 @@ final class ControllerTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    //--------------------------------------------------------------------
     public function testCachePage()
     {
         $this->controller = new Controller();
@@ -163,7 +158,6 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertSame('You must choose a username.', Services::validation()->getError());
     }
 
-    //--------------------------------------------------------------------
     public function testHelpers()
     {
         $this->controller      = new class() extends Controller {

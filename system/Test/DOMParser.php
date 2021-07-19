@@ -211,8 +211,6 @@ class DOMParser
         return (bool) $result->length;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Search the DOM using an XPath expression.
      *

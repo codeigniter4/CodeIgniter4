@@ -51,8 +51,6 @@ class Cell
      */
     protected $cache;
 
-    //--------------------------------------------------------------------
-
     /**
      * Cell constructor.
      *
@@ -62,8 +60,6 @@ class Cell
     {
         $this->cache = $cache;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Render a cell, returning its body as a string.
@@ -147,8 +143,6 @@ class Cell
         return $output;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Parses the params attribute. If an array, returns untouched.
      * If a string, it should be in the format "key1=value key2=value".
@@ -194,8 +188,6 @@ class Cell
         return $params;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Given the library string, attempts to determine the class and method
      * to call.
@@ -229,6 +221,4 @@ class Cell
             $method,
         ];
     }
-
-    //--------------------------------------------------------------------
 }

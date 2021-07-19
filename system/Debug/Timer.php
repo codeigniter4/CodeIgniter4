@@ -28,8 +28,6 @@ class Timer
      */
     protected $timers = [];
 
-    //--------------------------------------------------------------------
-
     /**
      * Starts a timer running.
      *
@@ -50,8 +48,6 @@ class Timer
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Stops a running timer.
@@ -75,8 +71,6 @@ class Timer
 
         return $this;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Returns the duration of a recorded timer.
@@ -105,8 +99,6 @@ class Timer
         return (float) number_format($timer['end'] - $timer['start'], $decimals);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Returns the array of timers, with the duration pre-calculated for you.
      *
@@ -129,8 +121,6 @@ class Timer
         return $timers;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Checks whether or not a timer with the specified name exists.
      *
@@ -142,6 +132,4 @@ class Timer
     {
         return array_key_exists(strtolower($name), $this->timers);
     }
-
-    //--------------------------------------------------------------------
 }

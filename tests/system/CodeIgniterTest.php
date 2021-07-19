@@ -23,8 +23,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     protected $routes;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,8 +42,6 @@ final class CodeIgniterTest extends CIUnitTestCase
         }
     }
 
-    //--------------------------------------------------------------------
-
     public function testRunEmptyDefaultRoute()
     {
         $_SERVER['argv'] = ['index.php'];
@@ -57,8 +53,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRunClosureRoute()
     {
@@ -82,8 +76,6 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
 
-    //--------------------------------------------------------------------
-
     public function testRun404Override()
     {
         $_SERVER['argv'] = ['index.php', '/'];
@@ -102,8 +94,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRun404OverrideByClosure()
     {
@@ -126,8 +116,6 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('404 Override by Closure.', $output);
     }
 
-    //--------------------------------------------------------------------
-
     public function testControllersCanReturnString()
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
@@ -149,8 +137,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
-
-    //--------------------------------------------------------------------
 
     public function testControllersCanReturnResponseObject()
     {
@@ -177,8 +163,6 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString("You want to see 'about' page.", $output);
     }
 
-    //--------------------------------------------------------------------
-
     public function testResponseConfigEmpty()
     {
         $_SERVER['argv'] = ['index.php', '/'];
@@ -188,8 +172,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRoutesIsEmpty()
     {
@@ -235,8 +217,6 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
-
-    //--------------------------------------------------------------------
 
     public function testRunForceSecure()
     {

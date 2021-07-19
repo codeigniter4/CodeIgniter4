@@ -29,8 +29,6 @@ class Console
      */
     protected $app;
 
-    //--------------------------------------------------------------------
-
     /**
      * Console constructor.
      *
@@ -40,8 +38,6 @@ class Console
     {
         $this->app = $app;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Runs the current command discovered on the CLI.
@@ -61,8 +57,6 @@ class Console
 
         return $this->app->useSafeOutput($useSafeOutput)->run();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Displays basic information about the Console.

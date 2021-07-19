@@ -18,7 +18,6 @@ final class TableTest extends CIUnitTestCase
     }
 
     // Setter Methods
-    // --------------------------------------------------------------------
 
     public function testSetTemplate()
     {
@@ -108,7 +107,6 @@ final class TableTest extends CIUnitTestCase
     }
 
     // Uility Methods
-    // --------------------------------------------------------------------
 
     public function testPrepArgs()
     {
@@ -399,8 +397,6 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Huh?</td>', $table);
     }
 
-    // --------------------------------------------------------------------
-
     public function testWithConfig()
     {
         $customSettings = [
@@ -466,8 +462,6 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertSame('Undefined table data', $table);
     }
-
-    // --------------------------------------------------------------------
 
     public function testCallback()
     {

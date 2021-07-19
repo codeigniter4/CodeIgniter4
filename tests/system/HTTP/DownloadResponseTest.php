@@ -265,14 +265,12 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->sendBody();
     }
 
-    //--------------------------------------------------------------------
     public function testGetReason()
     {
         $response = new DownloadResponse('unit-test.php', false);
         $this->assertSame('OK', $response->getReason());
     }
 
-    //--------------------------------------------------------------------
     public function testPretendOutput()
     {
         $response = new DownloadResponse('unit-test.php', false);
@@ -287,8 +285,6 @@ final class DownloadResponseTest extends CIUnitTestCase
 
         $this->assertSame(file_get_contents(__FILE__), $actual);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * @runInSeparateProcess

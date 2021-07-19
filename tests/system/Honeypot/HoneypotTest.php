@@ -19,8 +19,6 @@ final class HoneypotTest extends CIUnitTestCase
     protected $request;
     protected $response;
 
-    //--------------------------------------------------------------------
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,8 +32,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->response             = Services::response();
     }
 
-    //--------------------------------------------------------------------
-
     public function testAttachHoneypot()
     {
         $this->response->setBody('<form></form>');
@@ -46,8 +42,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->response->setBody('<div></div>');
         $this->assertStringNotContainsString($this->config->name, $this->response->getBody());
     }
-
-    //--------------------------------------------------------------------
 
     public function testAttachHoneypotAndContainer()
     {
@@ -63,8 +57,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    //--------------------------------------------------------------------
-
     public function testHasntContent()
     {
         unset($_POST[$this->config->name]);
@@ -77,8 +69,6 @@ final class HoneypotTest extends CIUnitTestCase
     {
         $this->assertTrue($this->honeypot->hasContent($this->request));
     }
-
-    //--------------------------------------------------------------------
 
     public function testConfigHidden()
     {
@@ -101,7 +91,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->honeypot = new Honeypot($this->config);
     }
 
-    //--------------------------------------------------------------------
     public function testHoneypotFilterBefore()
     {
         $config = [

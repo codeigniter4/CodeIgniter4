@@ -57,8 +57,6 @@ class DatabaseHandler extends BaseHandler
      */
     protected $rowExists = false;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -91,8 +89,6 @@ class DatabaseHandler extends BaseHandler
         }
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Open
      *
@@ -113,8 +109,6 @@ class DatabaseHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Read
@@ -169,8 +163,6 @@ class DatabaseHandler extends BaseHandler
 
         return $result;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -235,8 +227,6 @@ class DatabaseHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -248,8 +238,6 @@ class DatabaseHandler extends BaseHandler
     {
         return ($this->lock && ! $this->releaseLock()) ? $this->fail() : true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Destroy
@@ -283,8 +271,6 @@ class DatabaseHandler extends BaseHandler
         return $this->fail();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -301,8 +287,6 @@ class DatabaseHandler extends BaseHandler
 
         return $this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}") ? true : $this->fail();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Lock the session.
@@ -339,8 +323,6 @@ class DatabaseHandler extends BaseHandler
         return parent::lockSession($sessionID);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Releases the lock, if any.
      *
@@ -375,6 +357,4 @@ class DatabaseHandler extends BaseHandler
         // Unsupported DB? Let the parent handle the simple version.
         return parent::releaseLock();
     }
-
-    //--------------------------------------------------------------------
 }

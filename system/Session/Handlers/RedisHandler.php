@@ -57,8 +57,6 @@ class RedisHandler extends BaseHandler
      */
     protected $sessionExpiration = 7200;
 
-    //--------------------------------------------------------------------
-
     /**
      * Constructor
      *
@@ -102,8 +100,6 @@ class RedisHandler extends BaseHandler
             : (int) $config->sessionExpiration;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Open
      *
@@ -137,8 +133,6 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Read
      *
@@ -166,8 +160,6 @@ class RedisHandler extends BaseHandler
 
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -215,8 +207,6 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -251,8 +241,6 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Destroy
      *
@@ -275,8 +263,6 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -291,8 +277,6 @@ class RedisHandler extends BaseHandler
         // Not necessary, Redis takes care of that.
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get lock
@@ -348,8 +332,6 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Release lock
      *
@@ -372,6 +354,4 @@ class RedisHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }
