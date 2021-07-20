@@ -709,11 +709,19 @@ class CURLRequest extends Request
         }
 
         // Cookie
-        if (isset($config['cookie'])) {
-            $curlOptions[CURLOPT_COOKIEJAR]  = $config['cookie'];
-            $curlOptions[CURLOPT_COOKIEFILE] = $config['cookie'];
+        if ($cookieJar = ($config['cookie_jar'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEJAR] = $cookieJar;
         }
 
+        if ($cookieFile = ($config['cookie_file'] ?? $config['cookie'] ?? false)) {
+            $curlOptions[CURLOPT_COOKIEFILE] = $cookieFile;
+        }
+
+        // false - libcurl default value; true - to mark query as new cookie "session"
+        if (isset($config['cookie_session'])) {
+            $curlOptions[CURLOPT_COOKIESESSION] = (bool) $config['cookie_session'];
+        }
+        
         // User Agent
         if (isset($config['user_agent'])) {
             $curlOptions[CURLOPT_USERAGENT] = $config['user_agent'];
