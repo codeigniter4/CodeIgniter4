@@ -232,6 +232,16 @@ class HTTPException extends FrameworkException
     }
 
     /**
+     * For non scalar value passed to setHeader
+     *
+     * @return HTTPException
+     */
+    public static function forNonScalarHeaderValue()
+    {
+        return new static(lang('HTTP.nonScalarHeaderValue'));
+    }
+
+    /**
      * For Invalid SameSite attribute setting
      *
      * @param string $samesite
