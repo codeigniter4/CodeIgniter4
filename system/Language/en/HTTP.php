@@ -12,10 +12,11 @@
 // HTTP language settings
 return [
     // CurlRequest
-    'missingCurl'     => 'CURL must be enabled to use the CURLRequest class.',
-    'invalidSSLKey'   => 'Cannot set SSL Key. {0} is not a valid file.',
-    'sslCertNotFound' => 'SSL certificate not found at: {0}',
-    'curlError'       => '{0} : {1}',
+    'missingCurl'          => 'CURL must be enabled to use the CURLRequest class.',
+    'invalidSSLKey'        => 'Cannot set SSL Key. {0} is not a valid file.',
+    'sslCertNotFound'      => 'SSL certificate not found at: {0}',
+    'curlError'            => '{0} : {1}',
+    'nonScalarHeaderValue' => 'Only scalar values are allowed',
 
     // IncomingRequest
     'invalidNegotiationType' => '{0} is not a valid negotiation type. Must be one of: media, charset, encoding, language.',
