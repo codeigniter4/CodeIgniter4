@@ -17,7 +17,6 @@
  * @var array                      $styles
  * @var \CodeIgniter\View\Parser   $parser
  */
-
 ?>
 <style type="text/css">
 	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')) ?>
