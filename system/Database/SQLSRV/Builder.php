@@ -165,7 +165,7 @@ class Builder extends BaseBuilder
 
         // Do we want to escape the table name?
         if ($escape === true) {
-            $table = $this->db->protectIdentifiers($this->getFullName($table, true), true, null, false);
+            $table = $this->getFullName($table, true);
         }
 
         // Assemble the JOIN statement
@@ -374,7 +374,12 @@ class Builder extends BaseBuilder
             [$schema, $table] = explode('.', $table);
         }
 
-        // Create the full table name.
+        // Check whether we need to add the DBPrefix to the table name.
+        if (!empty($this->db->DBPrefix) && strpos($table, $this->db->DBPrefix) === false) {
+            $table = $this->db->DBPrefix . $table;
+        }
+
+        // Create the fully qualified table name.
         $esc = $this->db->escapeChar;
         $result  = sprintf(
             "{$esc}%s{$esc}.{$esc}%s{$esc}.{$esc}%s{$esc}",
