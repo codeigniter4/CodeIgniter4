@@ -705,6 +705,14 @@ class CURLRequest extends Request
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
             } elseif ($config['version'] === 1.1) {
                 $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+            } elseif ($config['version'] === 2) {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2;
+            } elseif ($config['version'] === 2.0) {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
+            } elseif ($config['version'] === '2TLS') {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2TLS;
+            } elseif ($config['version'] === '2PK') {
+                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE;
             }
         }
 
