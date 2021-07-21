@@ -58,13 +58,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/_support',
-        PassStrictParameterToFunctionParameterRector::class => [__DIR__ . '/tests/system/Database/Live/SelectTest.php'],
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
-        InlineIfToExplicitIfRector::class => [
-            __DIR__ . '/app/Config',
-            __DIR__ . '/system/Test/bootstrap.php',
-        ],
     ]);
 
     // auto import fully qualified class names
