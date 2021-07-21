@@ -309,7 +309,7 @@ class CURLRequest extends Request
 
         if (array_key_exists('headers', $options) && is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
-                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString')) {
+                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
                     $this->setHeader($name, (string) $value);
                 } else {
 					throw HTTPException::forNonScalarHeaderValue();
