@@ -75,7 +75,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = $this->getFullName($value);
+            $from[] = $this->getFullName($value, true);
         }
 
         return implode(', ', $from);
@@ -165,11 +165,11 @@ class Builder extends BaseBuilder
 
         // Do we want to escape the table name?
         if ($escape === true) {
-            $table = $this->db->protectIdentifiers($table, true, null, false);
+            $table = $this->db->protectIdentifiers($this->getFullName($table, true), true, null, false);
         }
 
         // Assemble the JOIN statement
-        $this->QBJoin[] = $type . 'JOIN ' . $this->getFullName($table) . $cond;
+        $this->QBJoin[] = $type . 'JOIN ' . $table . $cond;
 
         return $this;
     }
@@ -335,27 +335,60 @@ class Builder extends BaseBuilder
     }
 
     /**
+	 * Get full name of the table
+	 *
+	 * @param string $table
+	 * @param bool $includeAlias
+	 *
+	 * @return string
+	 */
+       /**
      * Get full name of the table
      *
      * @param string $table
+     * @param bool $includeAlias
      *
      * @return string
      */
-    private function getFullName(string $table): string
+    protected function getFullName(string $table, bool $includeAlias = False): string
     {
-        $alias = '';
+        if ($this->db->escapeChar === '"') {
+            $table = str_replace('"', '', $table);
+        }
 
+        $alias = '';
         if (strpos($table, ' ') !== false) {
+            // Extract alias from the table string. If it is not present, nothing occurs.
             $alias = explode(' ', $table);
             $table = array_shift($alias);
-            $alias = ' ' . implode(' ', $alias);
+            $alias = implode(' ', $alias);
         }
 
-        if ($this->db->escapeChar === '"') {
-            return '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '"."' . str_replace('"', '', $table) . '"' . $alias;
+        $schema = "";
+        if (strpos($table, '.') === False) {
+            // No schema information in query builder. Try to use the schema specified
+            // in the configuration. If none specified, fall back to 'dbo'.
+            $schema = empty($this->db->schema) ? 'dbo' : $this->db->schema;
+        } else {
+            // User supplied schema information in the query builder. Use that instead.
+            [$schema, $table] = explode('.', $table);
         }
 
-        return '[' . $this->db->getDatabase() . '].[' . $this->db->schema . '].[' . str_replace('"', '', $table) . ']' . str_replace('"', '', $alias);
+        // Create the full table name.
+        $esc = $this->db->escapeChar;
+        $result  = sprintf(
+            "{$esc}%s{$esc}.{$esc}%s{$esc}.{$esc}%s{$esc}",
+            $this->db->getDatabase(),
+            $schema,
+            $table,
+        );
+
+        // Include alias if wanted and defined.
+        if ($includeAlias && $alias !== "") {
+            $result .= " {$esc}{$alias}{$esc}";
+        }
+
+        return $result;
     }
 
     /**
@@ -366,7 +399,7 @@ class Builder extends BaseBuilder
      *
      * @return string
      */
-    private function addIdentity(string $fullTable, string $insert): string
+    protected function addIdentity(string $fullTable, string $insert): string
     {
         return 'SET IDENTITY_INSERT ' . $fullTable . " ON\n" . $insert . "\nSET IDENTITY_INSERT " . $fullTable . ' OFF';
     }
