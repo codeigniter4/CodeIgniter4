@@ -243,6 +243,12 @@ An example::
 
 	$response->request('GET', 'http://example.com', ['cookie' => WRITEPATH . 'CookieSaver.txt']);
 
+If your use case require you to store those data in separate files you could use: ``cookie_jar`` and ``cookie_file`` instead.
+An example::
+
+	$response->request('GET', 'http://example.com', ['cookie_jar' => WRITEPATH . 'CookieJar.txt']);
+	$response->request('GET', 'http://example.com', ['cookie_file' => WRITEPATH . 'CookieFile.txt']);
+
 debug
 =====
 
@@ -385,11 +391,19 @@ is true::
 	// Disable validation entirely. (Insecure!)
 	$client->request('GET', '/', ['verify' => false]);
 
+
 version
 =======
 
-To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
-or 1.1, 2.0 is currently unsupported.)::
+To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0, 1.1 or 2)::
 
-	// Force HTTP/1.0
+	// Force HTTP/1.0 (CURL_HTTP_VERSION_1_0)
 	$client->request('GET', '/', ['version' => 1.0]);
+	// Force HTTP/1.1 (CURL_HTTP_VERSION_1_1)
+	$client->request('GET', '/', ['version' => 1.1]);
+	// Force HTTP/2.0 (CURL_HTTP_VERSION_2)
+	$client->request('GET', '/', ['version' => 2]);
+	// HTTP 2 over TLS (HTTPS) only (CURL_HTTP_VERSION_2TLS)
+	$client->request('GET', '/', ['version' => '2TLS']);
+	// Issues non-TLS HTTP requests using HTTP/2 without HTTP/1.1 Upgrade (CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE)
+	$client->request('GET', '/', ['version' => '2PK']);
