@@ -71,14 +71,3 @@ jobs:
           git add .
           git commit -m "Updated API for commit ${GITHUB_SHA}"
           git push origin master
-
-  upload:
-    if: github.repository == 'codeigniter4/CodeIgniter4'
-    runs-on: ubuntu-20.04
-    needs: [build]
-    steps:
-      - name: Upload API Documentation
-        uses: actions/upload-artifact@v2
-        with:
-          name: API Documentation
-          path: api/docs/
