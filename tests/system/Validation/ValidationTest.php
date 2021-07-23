@@ -1075,4 +1075,68 @@ final class ValidationTest extends CIUnitTestCase
             ]],
         ];
     }
+
+    /**
+     * @dataProvider provideStringRulesCases
+     *
+     * @param string $input
+     * @param array  $expected
+     *
+     * @return void
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
+     */
+    public function testSplittingOfComplexStringRules(string $input, array $expected): void
+    {
+        $splitter = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+        $this->assertSame($expected, $splitter($input));
+    }
+
+    public function provideStringRulesCases(): iterable
+    {
+        yield [
+            'required',
+            ['required'],
+        ];
+
+        yield [
+            'required|numeric',
+            ['required', 'numeric'],
+        ];
+
+        yield [
+            'required|max_length[500]|hex',
+            ['required', 'max_length[500]', 'hex'],
+        ];
+
+        yield [
+            'required|numeric|regex_match[/[a-zA-Z]+/]',
+            ['required', 'numeric', 'regex_match[/[a-zA-Z]+/]'],
+        ];
+
+        yield [
+            'required|max_length[500]|regex_match[/^;"\'{}\[\]^<>=/]',
+            ['required', 'max_length[500]', 'regex_match[/^;"\'{}\[\]^<>=/]'],
+        ];
+
+        yield [
+            'regex_match[/^;"\'{}\[\]^<>=/]|regex_match[/[^a-z0-9.\|_]+/]',
+            ['regex_match[/^;"\'{}\[\]^<>=/]', 'regex_match[/[^a-z0-9.\|_]+/]'],
+        ];
+
+        yield [
+            'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+            ['required', 'regex_match[/^(01[2689]|09)[0-9]{8}$/]', 'numeric'],
+        ];
+
+        yield [
+            'required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]',
+            ['required', 'regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', 'max_length[10]'],
+        ];
+
+        yield [
+            'required|regex_match[/^(01|2689|09)[0-9]{8}$/]|numeric',
+            ['required', 'regex_match[/^(01|2689|09)[0-9]{8}$/]', 'numeric'],
+        ];
+    }
 }
