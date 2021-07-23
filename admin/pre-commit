@@ -4,47 +4,73 @@ PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php$`
 
 # Determine if a file list is passed
-if [ "$#" -eq 1 ]
-then
+if [ "$#" -eq 1 ]; then
     oIFS=$IFS
     IFS='
     '
     SFILES="$1"
     IFS=$oIFS
 fi
+
 SFILES=${SFILES:-$STAGED_FILES_CMD}
 
 echo "Starting CodeIgniter precommit..."
 
-if [ "$SFILES" != "" ]
-then
+if [ "$SFILES" != "" ]; then
     echo "Linting PHP code..."
-    for FILE in $SFILES
-    do
+    for FILE in $SFILES; do
         php -l -d display_errors=0 "$PROJECT/$FILE"
-        if [ $? != 0 ]
-        then
+
+        if [ $? != 0 ]; then
             echo "Fix the error(s) before commit."
             exit 1
         fi
+
         FILES="$FILES $FILE"
     done
 fi
 
-if [ "$FILES" != "" ]
-then
+if [ "$FILES" != "" ]; then
     echo "Running PHPStan..."
+
     # Run on whole codebase
-    if [ -d /proc/cygdrive ]
-    then
+    if [ -d /proc/cygdrive ]; then
         ./vendor/bin/phpstan analyse
     else
         php ./vendor/bin/phpstan analyse
     fi
 
-    if [ $? != 0 ]
-    then
+    if [ $? != 0 ]; then
         echo "Fix the phpstan error(s) before commit."
+        exit 1
+    fi
+fi
+
+if [ "$FILES" != "" ]; then
+    echo "Running PHP CS Fixer..."
+
+    # Run on whole codebase to skip on unnecessary filtering
+    # Run first on app, admin, public
+    if [ -d /proc/cygdrive ]; then
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff --config=.no-header.php-cs-fixer.dist.php
+    else
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff --config=.no-header.php-cs-fixer.dist.php
+    fi
+
+    if [ $? != 0 ]; then
+        echo "Files in app, admin, or public are not following the coding standards. Please fix them before commit."
+        exit 1
+    fi
+
+    # Next, run on system, tests, utils, and root PHP files
+    if [ -d /proc/cygdrive ]; then
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff
+    else
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff
+    fi
+
+    if [ $? != 0]; then
+        echo "Files in system, tests, utils, or root are not following the coding standards. Please fix them before commit."
         exit 1
     fi
 fi
