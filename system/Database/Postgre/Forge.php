@@ -69,11 +69,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * ALTER TABLE
-     *
-     * @param string $alterType ALTER type
-     * @param string $table     Table name
-     * @param mixed  $field     Column definition
+     * @param mixed $field
      *
      * @return array|bool|string
      */
@@ -93,28 +89,28 @@ class Forge extends BaseForge
 
             if (version_compare($this->db->getVersion(), '8', '>=') && isset($data['type'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . " TYPE {$data['type']}{$data['length']}";
+                    . " TYPE {$data['type']}{$data['length']}";
             }
 
             if (! empty($data['default'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . " SET DEFAULT {$data['default']}";
+                    . " SET DEFAULT {$data['default']}";
             }
 
             if (isset($data['null'])) {
                 $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
+                    . ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
             }
 
             if (! empty($data['new_name'])) {
                 $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                        . ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
+                    . ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
             }
 
             if (! empty($data['comment'])) {
                 $sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
-                        . '.' . $this->db->escapeIdentifiers($data['name'])
-                        . " IS {$data['comment']}";
+                    . '.' . $this->db->escapeIdentifiers($data['name'])
+                    . " IS {$data['comment']}";
             }
         }
 
@@ -127,19 +123,15 @@ class Forge extends BaseForge
     protected function _processColumn(array $field): string
     {
         return $this->db->escapeIdentifiers($field['name'])
-                . ' ' . $field['type'] . $field['length']
-                . $field['default']
-                . $field['null']
-                . $field['auto_increment']
-                . $field['unique'];
+            . ' ' . $field['type'] . $field['length']
+            . $field['default']
+            . $field['null']
+            . $field['auto_increment']
+            . $field['unique'];
     }
 
     /**
-     * Field attribute TYPE
-     *
      * Performs a data type mapping between different databases.
-     *
-     * @return void
      */
     protected function _attributeType(array &$attributes)
     {
@@ -170,8 +162,6 @@ class Forge extends BaseForge
 
     /**
      * Field attribute AUTO_INCREMENT
-     *
-     * @return void
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
@@ -181,12 +171,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * Drop Table
-     *
      * Generates a platform-specific DROP TABLE string
-     *
-     * @param string $table    Table name
-     * @param bool   $ifExists Whether to add an IF EXISTS condition
      */
     protected function _dropTable(string $table, bool $ifExists, bool $cascade): string
     {

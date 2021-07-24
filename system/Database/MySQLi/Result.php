@@ -99,8 +99,6 @@ class Result extends BaseResult
 
     /**
      * Frees the current result.
-     *
-     * @return void
      */
     public function freeResult()
     {
@@ -152,8 +150,6 @@ class Result extends BaseResult
 
     /**
      * Returns the number of rows in the resultID (i.e., mysqli_result object)
-     *
-     * @return int number of rows in a query result
      */
     public function getNumRows(): int
     {

@@ -82,12 +82,8 @@ class Connection extends BaseConnection
 
     /**
      * Class constructor
-     *
-     * @param array $params
-     *
-     * @return void
      */
-    public function __construct($params)
+    public function __construct(array $params)
     {
         parent::__construct($params);
 
@@ -150,8 +146,6 @@ class Connection extends BaseConnection
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
      */
     public function reconnect()
     {
@@ -161,8 +155,6 @@ class Connection extends BaseConnection
 
     /**
      * Close the database connection.
-     *
-     * @return void
      */
     protected function _close()
     {
@@ -191,13 +183,13 @@ class Connection extends BaseConnection
     protected function _listTables(bool $prefixLimit = false): string
     {
         $sql = 'SELECT [TABLE_NAME] AS "name"'
-                . ' FROM [INFORMATION_SCHEMA].[TABLES] '
-                . ' WHERE '
-                . " [TABLE_SCHEMA] = '" . $this->schema . "'    ";
+            . ' FROM [INFORMATION_SCHEMA].[TABLES] '
+            . ' WHERE '
+            . " [TABLE_SCHEMA] = '" . $this->schema . "'    ";
 
         if ($prefixLimit === true && $this->DBPrefix !== '') {
             $sql .= " AND [TABLE_NAME] LIKE '" . $this->escapeLikeString($this->DBPrefix) . "%' "
-                    . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
+                . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }
 
         return $sql;
@@ -209,9 +201,9 @@ class Connection extends BaseConnection
     protected function _listColumns(string $table = ''): string
     {
         return 'SELECT [COLUMN_NAME] '
-                . ' FROM [INFORMATION_SCHEMA].[COLUMNS]'
-                . ' WHERE  [TABLE_NAME] = ' . $this->escape($this->DBPrefix . $table)
-                . ' AND [TABLE_SCHEMA] = ' . $this->escape($this->schema);
+            . ' FROM [INFORMATION_SCHEMA].[COLUMNS]'
+            . ' WHERE  [TABLE_NAME] = ' . $this->escape($this->DBPrefix . $table)
+            . ' AND [TABLE_SCHEMA] = ' . $this->escape($this->schema);
     }
 
     /**
@@ -264,27 +256,27 @@ class Connection extends BaseConnection
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT '
-                . 'f.name as constraint_name, '
-                . 'OBJECT_NAME (f.parent_object_id) as table_name, '
-                . 'COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name, '
-                . 'OBJECT_NAME(f.referenced_object_id) foreign_table_name, '
-                . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name '
-                . 'FROM  '
-                . 'sys.foreign_keys AS f '
-                . 'INNER JOIN  '
-                . 'sys.foreign_key_columns AS fc  '
-                . 'ON f.OBJECT_ID = fc.constraint_object_id '
-                . 'INNER JOIN  '
-                . 'sys.tables t  '
-                . 'ON t.OBJECT_ID = fc.referenced_object_id '
-                . 'WHERE  '
-                . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
+            . 'f.name as constraint_name, '
+            . 'OBJECT_NAME (f.parent_object_id) as table_name, '
+            . 'COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name, '
+            . 'OBJECT_NAME(f.referenced_object_id) foreign_table_name, '
+            . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name '
+            . 'FROM  '
+            . 'sys.foreign_keys AS f '
+            . 'INNER JOIN  '
+            . 'sys.foreign_key_columns AS fc  '
+            . 'ON f.OBJECT_ID = fc.constraint_object_id '
+            . 'INNER JOIN  '
+            . 'sys.tables t  '
+            . 'ON t.OBJECT_ID = fc.referenced_object_id '
+            . 'WHERE  '
+            . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
-        $query = $query->getResultObject();
 
+        $query  = $query->getResultObject();
         $retVal = [];
 
         foreach ($query as $row) {
@@ -386,7 +378,7 @@ class Connection extends BaseConnection
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,int|string>
+     * @return array<string, int|string>
      */
     public function error(): array
     {
@@ -532,7 +524,7 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param string $sql An SQL query string
+     * @param mixed $sql
      */
     public function isWriteType($sql): bool
     {

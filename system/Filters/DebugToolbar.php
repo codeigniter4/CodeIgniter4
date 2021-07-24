@@ -24,8 +24,6 @@ class DebugToolbar implements FilterInterface
      * We don't need to do anything here.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -36,8 +34,6 @@ class DebugToolbar implements FilterInterface
      * and debug information and display it in a toolbar.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

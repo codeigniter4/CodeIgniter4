@@ -63,8 +63,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Actually execute the command.
-     *
-     * @return void
      */
     public function run(array $params)
     {
@@ -72,9 +70,7 @@ class GenerateKey extends BaseCommand
         if (in_array($prefix, [null, true], true)) {
             $prefix = 'hex2bin';
         } elseif (! in_array($prefix, ['hex2bin', 'base64'], true)) {
-            // @codeCoverageIgnoreStart
-            $prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required');
-            // @codeCoverageIgnoreEnd
+            $prefix = CLI::prompt('Please provide a valid prefix to use.', ['hex2bin', 'base64'], 'required'); // @codeCoverageIgnore
         }
 
         $length = $params['length'] ?? CLI::getOption('length');

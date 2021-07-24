@@ -38,8 +38,6 @@ class Database
      * @throws InvalidArgumentException
      *
      * @return mixed
-     *
-     * @internal param bool $useBuilder
      */
     public function load(array $params = [], string $alias = '')
     {
@@ -47,17 +45,14 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        // Handle universal DSN connection string
         if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false) {
             $params = $this->parseDSN($params);
         }
 
-        // No DB specified? Beat them senseless...
         if (empty($params['DBDriver'])) {
             throw new InvalidArgumentException('You have not selected a database type to connect to.');
         }
 
-        // Store the connection
         $this->connections[$alias] = $this->initDriver($params['DBDriver'], 'Connection', $params);
 
         return $this->connections[$alias];
@@ -68,7 +63,6 @@ class Database
      */
     public function loadForge(ConnectionInterface $db): object
     {
-        // Initialize database connection if not exists.
         if (! $db->connID) {
             $db->initialize();
         }
@@ -81,7 +75,6 @@ class Database
      */
     public function loadUtils(ConnectionInterface $db): object
     {
-        // Initialize database connection if not exists.
         if (! $db->connID) {
             $db->initialize();
         }
@@ -112,7 +105,6 @@ class Database
             'database' => isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : '',
         ];
 
-        // Do we have additional config items set?
         if (! empty($dsn['query'])) {
             parse_str($dsn['query'], $extra);
 
@@ -131,8 +123,6 @@ class Database
     /**
      * Initialize database driver.
      *
-     * @param string       $driver   Database driver name (e.g. 'MySQLi')
-     * @param string       $class    Database class name (e.g. 'Forge')
      * @param array|object $argument
      */
     protected function initDriver(string $driver, string $class, $argument): object

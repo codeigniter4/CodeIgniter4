@@ -339,8 +339,6 @@ class Session implements SessionInterface
      *
      * So we were forced to make changes, and OF COURSE something was
      * going to break and now we have this pile of shit. -- Narf
-     *
-     * @return void
      */
     protected function configureSidLength()
     {
@@ -514,8 +512,6 @@ class Session implements SessionInterface
      *
      * @param string $key  Identifier of the session property we are interested in.
      * @param array  $data value to be pushed to existing session key.
-     *
-     * @return void
      */
     public function push(string $key, array $data)
     {

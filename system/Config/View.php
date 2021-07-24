@@ -87,8 +87,6 @@ class View extends BaseConfig
     ];
 
     /**
-     * Constructor.
-     *
      * Merge the built-in and developer-configured filters and plugins,
      * with preference to the developer ones.
      */

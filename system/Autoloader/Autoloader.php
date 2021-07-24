@@ -17,8 +17,6 @@ use Config\Modules;
 use InvalidArgumentException;
 
 /**
- * CodeIgniter Autoloader
- *
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.
  *
  * Given a foo-bar package of classes in the file system at the following paths:
@@ -296,8 +294,6 @@ class Autoloader
 
     /**
      * Locates autoload information from Composer, if available.
-     *
-     * @return void
      */
     protected function discoverComposerNamespaces()
     {

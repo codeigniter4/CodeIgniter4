@@ -60,7 +60,7 @@ class CLI
     /**
      * Foreground color list
      *
-     * @var array
+     * @var array<string, string>
      */
     protected static $foreground_colors = [
         'black'        => '0;30',
@@ -85,7 +85,7 @@ class CLI
     /**
      * Background color list
      *
-     * @var array
+     * @var array<string, string>
      */
     protected static $background_colors = [
         'black'      => '40',
@@ -164,9 +164,7 @@ class CLI
         } else {
             // If the command is being called from a controller
             // we need to define STDOUT ourselves
-            // @codeCoverageIgnoreStart
-            define('STDOUT', 'php://output');
-            // @codeCoverageIgnoreEnd
+            define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
     }
 
@@ -312,10 +310,6 @@ class CLI
 
     /**
      * Outputs a string to the cli on it's own line.
-     *
-     * @param string $text       The text to output
-     * @param string $foreground
-     * @param string $background
      */
     public static function write(string $text = '', ?string $foreground = null, ?string $background = null)
     {
@@ -333,8 +327,6 @@ class CLI
 
     /**
      * Outputs an error to the CLI using STDERR instead of STDOUT
-     *
-     * @param string $text The text to output, or array of errors
      */
     public static function error(string $text, string $foreground = 'light_red', ?string $background = null)
     {
@@ -402,10 +394,6 @@ class CLI
 
     /**
      * Enter a number of empty lines
-     *
-     * @param int $num Number of lines to output
-     *
-     * @return void
      */
     public static function newLine(int $num = 1)
     {
@@ -417,8 +405,6 @@ class CLI
 
     /**
      * Clears the screen of output
-     *
-     * @return void
      *
      * @codeCoverageIgnore
      */
@@ -496,8 +482,6 @@ class CLI
     /**
      * Get the number of characters in string having encoded characters
      * and ignores styles set by the color() function
-     *
-     * @param string $string
      */
     public static function strlen(?string $string): int
     {
@@ -533,9 +517,7 @@ class CLI
             return function_exists($function);
         }
 
-        // @codeCoverageIgnoreStart
-        return function_exists($function) && @$function($resource);
-        // @codeCoverageIgnoreEnd
+        return function_exists($function) && @$function($resource); // @codeCoverageIgnore
     }
 
     /**
@@ -599,7 +581,7 @@ class CLI
     /**
      * Populates the CLI's dimensions.
      *
-     * @return void
+     * @codeCoverageIgnore
      */
     public static function generateDimensions()
     {
@@ -607,7 +589,6 @@ class CLI
             if (static::isWindows()) {
                 // Shells such as `Cygwin` and `Git bash` returns incorrect values
                 // when executing `mode CON`, so we use `tput` instead
-                // @codeCoverageIgnoreStart
                 if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell))) {
                     static::$height = (int) exec('tput lines');
                     static::$width  = (int) exec('tput cols');
@@ -623,26 +604,20 @@ class CLI
                         static::$width  = (int) $matches[2];
                     }
                 }
-                // @codeCoverageIgnoreEnd
             } elseif (($size = exec('stty size')) && preg_match('/(\d+)\s+(\d+)/', $size, $matches)) {
                 static::$height = (int) $matches[1];
                 static::$width  = (int) $matches[2];
             } else {
-                // @codeCoverageIgnoreStart
                 static::$height = (int) exec('tput lines');
                 static::$width  = (int) exec('tput cols');
-                // @codeCoverageIgnoreEnd
             }
-        }
-        // @codeCoverageIgnoreStart
-        catch (Throwable $e) {
+        } catch (Throwable $e) {
             // Reset the dimensions so that the default values will be returned later.
             // Then let the developer know of the error.
             static::$height = null;
             static::$width  = null;
             log_message('error', $e->getMessage());
         }
-        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -686,8 +661,6 @@ class CLI
      * If an int is passed into $pad_left, then all strings after the first
      * will padded with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
-     *
-     * @param string $string
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
@@ -789,7 +762,7 @@ class CLI
      *
      * **IMPORTANT:** The index here is one-based instead of zero-based.
      *
-     * @return mixed|null
+     * @return mixed
      */
     public static function getSegment(int $index)
     {
@@ -808,7 +781,7 @@ class CLI
      * Gets a single command-line option. Returns TRUE if the option
      * exists, but doesn't have a value, and is simply acting as a flag.
      *
-     * @return bool|mixed|null
+     * @return mixed
      */
     public static function getOption(string $name)
     {
@@ -870,8 +843,6 @@ class CLI
      *
      * @param array $tbody List of rows
      * @param array $thead List of columns
-     *
-     * @return void
      */
     public static function table(array $tbody, array $thead = [])
     {
@@ -969,8 +940,6 @@ class CLI
      * solution down the road.
      *
      * @param resource $handle
-     *
-     * @return void
      */
     protected static function fwrite($handle, string $string)
     {

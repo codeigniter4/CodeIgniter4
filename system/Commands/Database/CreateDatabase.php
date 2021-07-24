@@ -72,8 +72,6 @@ class CreateDatabase extends BaseCommand
 
     /**
      * Creates a new database.
-     *
-     * @return void
      */
     public function run(array $params)
     {

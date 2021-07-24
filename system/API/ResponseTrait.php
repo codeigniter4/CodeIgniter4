@@ -17,8 +17,6 @@ use CodeIgniter\HTTP\Response;
 use Config\Services;
 
 /**
- * Response trait.
- *
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
@@ -32,7 +30,7 @@ trait ResponseTrait
      * Allows child classes to override the
      * status code that is used in their API.
      *
-     * @var array
+     * @var array<string, int>
      */
     protected $codes = [
         'created'                   => 201,
@@ -86,21 +84,15 @@ trait ResponseTrait
      * to match the requested format, with proper content-type and status code.
      *
      * @param array|string|null $data
-     * @param int               $status
      *
      * @return mixed
      */
     public function respond($data = null, ?int $status = null, string $message = '')
     {
-        // If data is null and status code not provided, exit and bail
         if ($data === null && $status === null) {
             $status = 404;
-
-            // Create the output var here in case of $this->response([]);
             $output = null;
-        }
-        // If data is null but status provided, keep the output empty.
-        elseif ($data === null && is_numeric($status)) {
+        } elseif ($data === null && is_numeric($status)) {
             $output = null;
         } else {
             $status = empty($status) ? 200 : $status;
@@ -151,8 +143,7 @@ trait ResponseTrait
     /**
      * Used after successfully creating a new resource.
      *
-     * @param mixed  $data    Data.
-     * @param string $message Message.
+     * @param mixed $data
      *
      * @return mixed
      */
@@ -164,8 +155,7 @@ trait ResponseTrait
     /**
      * Used after a resource has been successfully deleted.
      *
-     * @param mixed  $data    Data.
-     * @param string $message Message.
+     * @param mixed $data
      *
      * @return mixed
      */
@@ -177,8 +167,7 @@ trait ResponseTrait
     /**
      * Used after a resource has been successfully updated.
      *
-     * @param mixed  $data    Data.
-     * @param string $message Message.
+     * @param mixed $data
      *
      * @return mixed
      */
@@ -190,8 +179,6 @@ trait ResponseTrait
     /**
      * Used after a command has been successfully executed but there is no
      * meaningful reply to send back to the client.
-     *
-     * @param string $message Message.
      *
      * @return mixed
      */
@@ -205,8 +192,6 @@ trait ResponseTrait
      * or had bad authorization credentials. User is encouraged to try again
      * with the proper information.
      *
-     * @param string $code
-     *
      * @return mixed
      */
     public function failUnauthorized(string $description = 'Unauthorized', ?string $code = null, string $message = '')
@@ -218,8 +203,6 @@ trait ResponseTrait
      * Used when access is always denied to this resource and no amount
      * of trying again will help.
      *
-     * @param string $code
-     *
      * @return mixed
      */
     public function failForbidden(string $description = 'Forbidden', ?string $code = null, string $message = '')
@@ -230,8 +213,6 @@ trait ResponseTrait
     /**
      * Used when a specified resource cannot be found.
      *
-     * @param string $code
-     *
      * @return mixed
      */
     public function failNotFound(string $description = 'Not Found', ?string $code = null, string $message = '')
@@ -241,8 +222,6 @@ trait ResponseTrait
 
     /**
      * Used when the data provided by the client cannot be validated.
-     *
-     * @param string $code
      *
      * @return mixed
      *
@@ -268,8 +247,6 @@ trait ResponseTrait
     /**
      * Use when trying to create a new resource and it already exists.
      *
-     * @param string $code
-     *
      * @return mixed
      */
     public function failResourceExists(string $description = 'Conflict', ?string $code = null, string $message = '')
@@ -282,8 +259,6 @@ trait ResponseTrait
      * Not Found, because here we know the data previously existed, but is now gone,
      * where Not Found means we simply cannot find any information about it.
      *
-     * @param string $code
-     *
      * @return mixed
      */
     public function failResourceGone(string $description = 'Gone', ?string $code = null, string $message = '')
@@ -293,8 +268,6 @@ trait ResponseTrait
 
     /**
      * Used when the user has made too many requests for the resource recently.
-     *
-     * @param string $code
      *
      * @return mixed
      */
@@ -370,8 +343,6 @@ trait ResponseTrait
 
     /**
      * Sets the format the response should be in.
-     *
-     * @param string $format
      *
      * @return $this
      */

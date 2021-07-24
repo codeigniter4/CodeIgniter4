@@ -80,8 +80,6 @@ if (! function_exists('delete_cookie')) {
      * @param string $path   the cookie path
      * @param string $prefix the cookie prefix
      *
-     * @return void
-     *
      * @see \CodeIgniter\HTTP\Response::deleteCookie()
      */
     function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')

@@ -43,8 +43,6 @@ class FileHandler extends BaseHandler
     protected $mode;
 
     /**
-     * Constructor.
-     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
@@ -68,18 +66,14 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Takes care of any handler-specific setup that must be done.
+     * {@inheritDoc}
      */
     public function initialize()
     {
     }
 
     /**
-     * Attempts to fetch an item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function get(string $key)
     {
@@ -90,13 +84,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Saves an item to the cache store.
-     *
-     * @param string $key   Cache item name
-     * @param mixed  $value The data to save
-     * @param int    $ttl   Time To Live, in seconds (default 60)
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -111,12 +99,12 @@ class FileHandler extends BaseHandler
         if ($this->writeFile($this->path . $key, serialize($contents))) {
             try {
                 chmod($this->path . $key, $this->mode);
-            }
-            // @codeCoverageIgnoreStart
-            catch (Throwable $e) {
+
+                // @codeCoverageIgnoreStart
+            } catch (Throwable $e) {
                 log_message('debug', 'Failed to set mode on cache file: ' . $e->getMessage());
+                // @codeCoverageIgnoreEnd
             }
-            // @codeCoverageIgnoreEnd
 
             return true;
         }
@@ -125,11 +113,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Deletes a specific item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function delete(string $key)
     {
@@ -139,11 +123,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @return int The number of deleted items
+     * {@inheritDoc}
      */
     public function deleteMatching(string $pattern)
     {
@@ -159,12 +139,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic incrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -186,12 +161,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic decrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -213,9 +183,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Will delete all items in the entire cache.
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function clean()
     {
@@ -223,12 +191,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Returns information on the entire cache.
-     *
-     * The information returned and the structure of the data
-     * varies depending on the handler.
-     *
-     * @return array|false
+     * {@inheritDoc}
      */
     public function getCacheInfo()
     {
@@ -236,14 +199,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Returns detailed information about the specific item in the cache.
-     *
-     * @param string $key Cache item name.
-     *
-     * @return array|false|null
-     *                          Returns null if the item does not exist, otherwise array<string, mixed>
-     *                          with at least the 'expire' key for absolute epoch expiry (or null).
-     *                          Some handlers may return false when an item does not exist, which is deprecated.
+     * {@inheritDoc}
      */
     public function getMetaData(string $key)
     {
@@ -261,7 +217,7 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Determines if the driver is supported on this system.
+     * {@inheritDoc}
      */
     public function isSupported(): bool
     {
@@ -272,7 +228,7 @@ class FileHandler extends BaseHandler
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
      *
-     * @return bool|mixed
+     * @return mixed
      */
     protected function getItem(string $filename)
     {
@@ -328,8 +284,6 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Delete Files
-     *
      * Deletes all files contained in the supplied directory path.
      * Files must be writable or owned by the system in order to be deleted.
      * If the second parameter is set to TRUE, any directories contained
@@ -365,8 +319,6 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Get Directory File Information
-     *
      * Reads the specified directory and builds an array containing the filenames,
      * filesize, dates, and permissions
      *
@@ -409,8 +361,6 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Get File Info
-     *
      * Given a file and path, returns the name, path, size, date modified
      * Second parameter allows you to explicitly declare what information you want returned
      * Options are: name, server_path, size, date, readable, writable, executable, fileperms

@@ -84,8 +84,6 @@ class Connection extends BaseConnection
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
      */
     public function reconnect()
     {
@@ -96,8 +94,6 @@ class Connection extends BaseConnection
 
     /**
      * Close the database connection.
-     *
-     * @return void
      */
     protected function _close()
     {
@@ -203,8 +199,8 @@ class Connection extends BaseConnection
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . ' AND "table_name" LIKE \''
-                    . $this->escapeLikeString($this->DBPrefix) . "%' "
-                    . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
+                . $this->escapeLikeString($this->DBPrefix) . "%' "
+                . sprintf($this->likeEscapeStr, $this->likeEscapeChar);
         }
 
         return $sql;
@@ -365,7 +361,7 @@ class Connection extends BaseConnection
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,int|string>
+     * @return array<string, int|string>
      */
     public function error(): array
     {
@@ -376,8 +372,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Insert ID
-     *
      * @return int|string
      */
     public function insertID()
@@ -415,8 +409,6 @@ class Connection extends BaseConnection
 
     /**
      * Build a DSN from the provided parameters
-     *
-     * @return void
      */
     protected function buildDSN()
     {
@@ -467,8 +459,6 @@ class Connection extends BaseConnection
 
     /**
      * Set client encoding
-     *
-     * @param string $charset The client encoding to which the data will be converted.
      */
     protected function setClientEncoding(string $charset): bool
     {
@@ -504,7 +494,7 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param string $sql An SQL query string
+     * @param mixed $sql
      */
     public function isWriteType($sql): bool
     {

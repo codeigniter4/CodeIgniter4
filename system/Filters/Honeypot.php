@@ -28,8 +28,6 @@ class Honeypot implements FilterInterface
      * @param array|null $arguments
      *
      * @throws HoneypotException
-     *
-     * @return void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -42,8 +40,6 @@ class Honeypot implements FilterInterface
      * Attach a honeypot to the current response.
      *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

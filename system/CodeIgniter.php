@@ -194,8 +194,6 @@ class CodeIgniter
      *
      * @throws FrameworkException
      *
-     * @return void
-     *
      * @codeCoverageIgnore
      */
     protected function resolvePlatformExtensions()
@@ -609,8 +607,6 @@ class CodeIgniter
 
     /**
      * Tells the app that the final output should be cached.
-     *
-     * @return void
      */
     public static function cache(int $time)
     {

@@ -29,8 +29,6 @@ use ReflectionProperty;
 use stdClass;
 
 /**
- * Class Model
- *
  * The BaseModel class provides a number of convenient features that
  * makes working with a databases less painful. Extending this class
  * provide means of implementing various database systems
@@ -288,11 +286,6 @@ abstract class BaseModel
      */
     protected $afterDelete = [];
 
-    /**
-     * BaseModel constructor.
-     *
-     * @param ValidationInterface|null $validation Validation
-     */
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -431,8 +424,6 @@ abstract class BaseModel
      * Works with the find* methods to return only the rows that
      * have been deleted.
      * This methods works only with dbCalls
-     *
-     * @return void
      */
     abstract protected function doOnlyDeleted();
 
@@ -500,8 +491,6 @@ abstract class BaseModel
      * @param Closure $userFunc Callback Function
      *
      * @throws DataException
-     *
-     * @return void
      */
     abstract public function chunk(int $size, Closure $userFunc);
 
@@ -829,8 +818,8 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param array|int|string|null $id   ID
-     * @param array|object|null     $data Data
+     * @param array|int|string|null $id
+     * @param array|object|null     $data
      *
      * @throws ReflectionException
      */
@@ -987,7 +976,7 @@ abstract class BaseModel
      * Permanently deletes all rows that have been marked as deleted
      * through soft deletes (deleted = 1)
      *
-     * @return bool|mixed
+     * @return mixed
      */
     public function purgeDeleted()
     {

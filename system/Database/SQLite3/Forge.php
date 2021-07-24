@@ -21,6 +21,11 @@ use CodeIgniter\Database\Forge as BaseForge;
 class Forge extends BaseForge
 {
     /**
+     * @var Connection
+     */
+    protected $db;
+
+    /**
      * UNSIGNED support
      *
      * @var array|bool
@@ -98,11 +103,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * ALTER TABLE
-     *
-     * @param string $alterType ALTER type
-     * @param string $table     Table name
-     * @param mixed  $field     Column definition
+     * @param mixed $field
      *
      * @return array|string|null
      */
@@ -142,11 +143,11 @@ class Forge extends BaseForge
         }
 
         return $this->db->escapeIdentifiers($field['name'])
-               . ' ' . $field['type']
-               . $field['auto_increment']
-               . $field['null']
-               . $field['unique']
-               . $field['default'];
+            . ' ' . $field['type']
+            . $field['auto_increment']
+            . $field['null']
+            . $field['unique']
+            . $field['default'];
     }
 
     /**
@@ -170,15 +171,15 @@ class Forge extends BaseForge
 
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                          . ' ON ' . $this->db->escapeIdentifiers($table)
-                          . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                    . ' ON ' . $this->db->escapeIdentifiers($table)
+                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 
                 continue;
             }
 
             $sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                      . ' ON ' . $this->db->escapeIdentifiers($table)
-                      . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                . ' ON ' . $this->db->escapeIdentifiers($table)
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
         }
 
         return $sqls;
@@ -188,8 +189,6 @@ class Forge extends BaseForge
      * Field attribute TYPE
      *
      * Performs a data type mapping between different databases.
-     *
-     * @return void
      */
     protected function _attributeType(array &$attributes)
     {
@@ -206,8 +205,6 @@ class Forge extends BaseForge
 
     /**
      * Field attribute AUTO_INCREMENT
-     *
-     * @return void
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
@@ -225,9 +222,6 @@ class Forge extends BaseForge
 
     /**
      * Foreign Key Drop
-     *
-     * @param string $table       Table name
-     * @param string $foreignName Foreign name
      *
      * @throws DatabaseException
      */

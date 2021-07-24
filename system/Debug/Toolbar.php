@@ -27,8 +27,6 @@ use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
 
 /**
- * Debug Toolbar
- *
  * Displays a toolbar with bits of stats to aid a developer in debugging.
  *
  * Inspiration: http://prophiler.fabfuel.de
@@ -49,9 +47,6 @@ class Toolbar
      */
     protected $collectors = [];
 
-    /**
-     * Constructor
-     */
     public function __construct(ToolbarConfig $config)
     {
         $this->config = $config;
@@ -261,8 +256,6 @@ class Toolbar
      * @param ResponseInterface $response
      *
      * @global \CodeIgniter\CodeIgniter $app
-     *
-     * @return void
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
@@ -321,13 +314,13 @@ class Toolbar
             $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8);
 
             $script = PHP_EOL
-                    . '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
-                    . 'data-time="' . $time . '" '
-                    . 'src="' . site_url() . '?debugbar"></script>'
-                    . '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
-                    . '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
-                    . $kintScript
-                    . PHP_EOL;
+                . '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
+                . 'data-time="' . $time . '" '
+                . 'src="' . site_url() . '?debugbar"></script>'
+                . '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
+                . '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
+                . $kintScript
+                . PHP_EOL;
 
             if (strpos($response->getBody(), '<head>') !== false) {
                 $response->setBody(preg_replace('/<head>/', '<head>' . $script, $response->getBody(), 1));
@@ -397,9 +390,6 @@ class Toolbar
 
     /**
      * Format output
-     *
-     * @param string $data   JSON encoded Toolbar data
-     * @param string $format html, json, xml
      */
     protected function format(string $data, string $format = 'html'): string
     {

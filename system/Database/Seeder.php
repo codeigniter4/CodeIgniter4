@@ -112,8 +112,6 @@ class Seeder
      * Loads the specified seeder and runs it.
      *
      * @throws InvalidArgumentException
-     *
-     * @return void
      */
     public function call(string $class)
     {
@@ -140,9 +138,7 @@ class Seeder
             // @codeCoverageIgnoreEnd
         }
 
-        /**
-         * @var Seeder
-         */
+        /** @var Seeder $seeder */
         $seeder = new $class($this->config);
         $seeder->setSilent($this->silent)->run();
 

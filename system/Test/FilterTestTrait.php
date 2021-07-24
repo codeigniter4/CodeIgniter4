@@ -221,8 +221,6 @@ trait FilterTestTrait
      * @param string $route    The route to test
      * @param string $position "before" or "after"
      * @param string $alias    Alias for the anticipated filter
-     *
-     * @return void
      */
     protected function assertNotFilter(string $route, string $position, string $alias)
     {
@@ -241,8 +239,6 @@ trait FilterTestTrait
      *
      * @param string $route    The route to test
      * @param string $position "before" or "after"
-     *
-     * @return void
      */
     protected function assertHasFilters(string $route, string $position)
     {
@@ -260,8 +256,6 @@ trait FilterTestTrait
      *
      * @param string $route    The route to test
      * @param string $position "before" or "after"
-     *
-     * @return void
      */
     protected function assertNotHasFilters(string $route, string $position)
     {

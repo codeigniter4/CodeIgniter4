@@ -337,8 +337,6 @@ class Email
     ];
 
     /**
-     * Base charsets
-     *
      * Character sets valid for 7-bit encoding,
      * excluding language suffix.
      *
@@ -386,10 +384,6 @@ class Email
     protected static $func_overload;
 
     /**
-     * Constructor - Sets Email Preferences
-     *
-     * The constructor can be passed an array of config values
-     *
      * @param array|null $config
      */
     public function __construct($config = null)
@@ -434,8 +428,6 @@ class Email
     }
 
     /**
-     * Initialize the Email Data
-     *
      * @param bool $clearAttachments
      *
      * @return Email
@@ -463,8 +455,6 @@ class Email
     }
 
     /**
-     * Set FROM
-     *
      * @param string      $from
      * @param string      $name
      * @param string|null $returnPath Return-Path
@@ -485,15 +475,12 @@ class Email
             }
         }
 
-        // Store the plain text values
         $this->tmpArchive['fromEmail'] = $from;
         $this->tmpArchive['fromName']  = $name;
 
-        // prepare the display name
         if ($name !== '') {
             // only use Q encoding if there are characters that would require it
             if (! preg_match('/[\200-\377]/', $name)) {
-                // add slashes for non-printing characters, slashes, and double quotes, and surround it in double quotes
                 $name = '"' . addcslashes($name, "\0..\37\177'\"\\") . '"';
             } else {
                 $name = $this->prepQEncoding($name);
@@ -511,8 +498,6 @@ class Email
     }
 
     /**
-     * Set Reply-to
-     *
      * @param string $replyto
      * @param string $name
      *
@@ -533,7 +518,6 @@ class Email
 
             // only use Q encoding if there are characters that would require it
             if (! preg_match('/[\200-\377]/', $name)) {
-                // add slashes for non-printing characters, slashes, and double quotes, and surround it in double quotes
                 $name = '"' . addcslashes($name, "\0..\37\177'\"\\") . '"';
             } else {
                 $name = $this->prepQEncoding($name);
@@ -548,8 +532,6 @@ class Email
     }
 
     /**
-     * Set Recipients
-     *
      * @param array|string $to
      *
      * @return Email
@@ -573,8 +555,6 @@ class Email
     }
 
     /**
-     * Set CC
-     *
      * @param string $cc
      *
      * @return Email
@@ -599,8 +579,6 @@ class Email
     }
 
     /**
-     * Set BCC
-     *
      * @param string $bcc
      * @param string $limit
      *
@@ -630,8 +608,6 @@ class Email
     }
 
     /**
-     * Set Email Subject
-     *
      * @param string $subject
      *
      * @return Email
@@ -647,8 +623,6 @@ class Email
     }
 
     /**
-     * Set Body
-     *
      * @param string $body
      *
      * @return Email
@@ -661,8 +635,6 @@ class Email
     }
 
     /**
-     * Assign file attachments
-     *
      * @param string      $file        Can be local path, URL or buffered content
      * @param string      $disposition 'attachment'
      * @param string|null $newname
@@ -695,10 +667,7 @@ class Email
         }
 
         // declare names on their own, to make phpcbf happy
-        $namesAttached = [
-            $file,
-            $newname,
-        ];
+        $namesAttached = [$file, $newname];
 
         $this->attachments[] = [
             'name'        => $namesAttached,
@@ -714,7 +683,6 @@ class Email
 
     /**
      * Set and return attachment Content-ID
-     *
      * Useful for attached inline pictures
      *
      * @param string $filename
@@ -737,8 +705,6 @@ class Email
     }
 
     /**
-     * Add a Header Item
-     *
      * @param string $header
      * @param string $value
      *
@@ -752,8 +718,6 @@ class Email
     }
 
     /**
-     * Convert a String to an Array
-     *
      * @param string $email
      *
      * @return array
@@ -768,8 +732,6 @@ class Email
     }
 
     /**
-     * Set Multipart Value
-     *
      * @param string $str
      *
      * @return Email
@@ -782,8 +744,6 @@ class Email
     }
 
     /**
-     * Set Mailtype
-     *
      * @param string $type
      *
      * @return Email
@@ -796,8 +756,6 @@ class Email
     }
 
     /**
-     * Set Wordwrap
-     *
      * @param bool $wordWrap
      *
      * @return Email
@@ -810,8 +768,6 @@ class Email
     }
 
     /**
-     * Set Protocol
-     *
      * @param string $protocol
      *
      * @return Email
@@ -824,8 +780,6 @@ class Email
     }
 
     /**
-     * Set Priority
-     *
      * @param int $n
      *
      * @return Email
@@ -838,8 +792,6 @@ class Email
     }
 
     /**
-     * Set Newline Character
-     *
      * @param string $newline
      *
      * @return Email
@@ -852,8 +804,6 @@ class Email
     }
 
     /**
-     * Set CRLF
-     *
      * @param string $CRLF
      *
      * @return Email
@@ -866,8 +816,6 @@ class Email
     }
 
     /**
-     * Get the Message ID
-     *
      * @return string
      */
     protected function getMessageID()
@@ -878,8 +826,6 @@ class Email
     }
 
     /**
-     * Get Mail Protocol
-     *
      * @return string
      */
     protected function getProtocol()
@@ -894,8 +840,6 @@ class Email
     }
 
     /**
-     * Get Mail Encoding
-     *
      * @return string
      */
     protected function getEncoding()
@@ -916,8 +860,6 @@ class Email
     }
 
     /**
-     * Get content type (text/html/attachment)
-     *
      * @return string
      */
     protected function getContentType()
@@ -949,8 +891,6 @@ class Email
     }
 
     /**
-     * Mime message
-     *
      * @return string
      */
     protected function getMimeMessage()
@@ -959,8 +899,6 @@ class Email
     }
 
     /**
-     * Validate Email Address
-     *
      * @param array|string $email
      *
      * @return bool
@@ -985,8 +923,6 @@ class Email
     }
 
     /**
-     * Email Validation
-     *
      * @param string $email
      *
      * @return bool
@@ -1002,8 +938,6 @@ class Email
     }
 
     /**
-     * Clean Extended Email Address: Joe Smith <joe@smith.com>
-     *
      * @param array|string $email
      *
      * @return array|string
@@ -1028,6 +962,7 @@ class Email
      *
      * Provides the raw message for use in plain-text headers of
      * HTML-formatted emails.
+     *
      * If the user hasn't specified his own alternative message
      * it creates one by stripping the HTML
      *
@@ -1046,15 +981,12 @@ class Email
             $body = str_replace(str_repeat("\n", $i), "\n\n", $body);
         }
 
-        // Reduce multiple spaces
         $body = preg_replace('| +|', ' ', $body);
 
         return ($this->wordWrap) ? $this->wordWrap($body, 76) : $body;
     }
 
     /**
-     * Word Wrap
-     *
      * @param string   $str
      * @param int|null $charlim Line-length limit
      *
@@ -1062,21 +994,16 @@ class Email
      */
     public function wordWrap($str, $charlim = null)
     {
-        // Set the character limit, if not already present
         if (empty($charlim)) {
             $charlim = empty($this->wrapChars) ? 76 : $this->wrapChars;
         }
 
-        // Standardize newlines
         if (strpos($str, "\r") !== false) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
 
-        // Reduce multiple spaces at end of line
         $str = preg_replace('| +\n|', "\n", $str);
 
-        // If the current word is surrounded by {unwrap} tags we'll
-        // strip the entire chunk and replace it with a marker.
         $unwrap = [];
 
         if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) {
@@ -1095,8 +1022,6 @@ class Email
         $output = '';
 
         foreach (explode("\n", $str) as $line) {
-            // Is the line within the allowed character count?
-            // If so we'll join it to the output and continue
             if (static::strlen($line) <= $charlim) {
                 $output .= $line . $this->newline;
 
@@ -1106,18 +1031,14 @@ class Email
             $temp = '';
 
             do {
-                // If the over-length word is a URL we won't wrap it
                 if (preg_match('!\[url.+\]|://|www\.!', $line)) {
                     break;
                 }
 
-                // Trim the word down
                 $temp .= static::substr($line, 0, $charlim - 1);
                 $line = static::substr($line, $charlim - 1);
             } while (static::strlen($line) > $charlim);
 
-            // If $temp contains data it means we had to split up an over-length
-            // word into smaller chunks so we'll add it back to our current line
             if ($temp !== '') {
                 $output .= $temp . $this->newline;
             }
@@ -1125,7 +1046,6 @@ class Email
             $output .= $line . $this->newline;
         }
 
-        // Put our markers back
         if ($unwrap) {
             foreach ($unwrap as $key => $val) {
                 $output = str_replace('{{unwrapped' . $key . '}}', $val, $output);
@@ -1333,13 +1253,9 @@ class Email
     }
 
     /**
-     * Prepares attachment string
-     *
      * @param string      $body      Message body to append to
      * @param string      $boundary  Multipart boundary
      * @param string|null $multipart When provided, only attachments of this type will be processed
-     *
-     * @return void
      */
     protected function appendAttachments(&$body, $boundary, $multipart = null)
     {
@@ -1366,8 +1282,6 @@ class Email
     }
 
     /**
-     * Prep Quoted Printable
-     *
      * Prepares string for Quoted-Printable Content-Transfer-Encoding
      * Refer to RFC 2045 http://www.ietf.org/rfc/rfc2045.txt
      *
@@ -1531,8 +1445,6 @@ class Email
     }
 
     /**
-     * Prep Q Encoding
-     *
      * Performs "Q Encoding" on a string for use in email headers.
      * It's related but not identical to quoted-printable, so it has its
      * own method.
@@ -1600,8 +1512,6 @@ class Email
     }
 
     /**
-     * Send Email
-     *
      * @param bool $autoClear
      *
      * @return bool
@@ -1822,9 +1732,7 @@ class Email
 
         $from = $this->validateEmailForShell($from) ? '-f ' . $from : '';
 
-        // is popen() enabled?
         if (! function_usable('popen') || false === ($fp = @popen($this->mailPath . ' -oi ' . $from . ' -t', 'w'))) {
-            // server probably has popen disabled, so nothing we can do to get a verbose error.
             return false;
         }
 
@@ -1912,8 +1820,6 @@ class Email
     }
 
     /**
-     * SMTP End
-     *
      * Shortcut to send RSET or QUIT depending on keep-alive
      */
     protected function SMTPEnd()
@@ -1922,8 +1828,6 @@ class Email
     }
 
     /**
-     * SMTP Connect
-     *
      * @return bool|string
      */
     protected function SMTPConnect()
@@ -1977,8 +1881,6 @@ class Email
     }
 
     /**
-     * Send SMTP command
-     *
      * @param string $cmd
      * @param string $data
      *
@@ -2053,8 +1955,6 @@ class Email
     }
 
     /**
-     * SMTP Authenticate
-     *
      * @return bool
      */
     protected function SMTPAuthenticate()
@@ -2108,8 +2008,6 @@ class Email
     }
 
     /**
-     * Send SMTP data
-     *
      * @param string $data
      *
      * @return bool
@@ -2153,8 +2051,6 @@ class Email
     }
 
     /**
-     * Get SMTP data
-     *
      * @return string
      */
     protected function getSMTPData()
@@ -2173,8 +2069,6 @@ class Email
     }
 
     /**
-     * Get Hostname
-     *
      * There are only two legal types of hostname - either a fully
      * qualified domain name (eg: "mail.example.com") or an IP literal
      * (eg: "[1.2.3.4]").
@@ -2198,8 +2092,6 @@ class Email
     }
 
     /**
-     * Get Debug Message
-     *
      * @param array $include List of raw data chunks to include in the output
      *                       Valid options are: 'headers', 'subject', 'body'
      *
@@ -2230,8 +2122,6 @@ class Email
     }
 
     /**
-     * Set Message
-     *
      * @param string $msg
      */
     protected function setErrorMessage($msg)
@@ -2253,9 +2143,6 @@ class Email
         return ! empty($mime) ? $mime : 'application/x-unknown-content-type';
     }
 
-    /**
-     * Destructor
-     */
     public function __destruct()
     {
         if (is_resource($this->SMTPConnect)) {

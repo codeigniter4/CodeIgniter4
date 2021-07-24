@@ -134,11 +134,6 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
-    /**
-     * Constructor
-     *
-     * @param LoggerInterface $logger
-     */
     public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         $this->config   = $config;
@@ -331,14 +326,14 @@ class View implements RendererInterface
     /**
      * Sets a single piece of view data.
      *
-     * @param mixed  $value
-     * @param string $context The context to escape it for: html, css, js, url
-     *                        If null, no escaping will happen
+     * @param mixed       $value
+     * @param string|null $context The context to escape it for: html, css, js, url
+     *                             If null, no escaping will happen
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
         if ($context) {
-            $value = \esc($value, $context);
+            $value = esc($value, $context);
         }
 
         $this->tempData        = $this->tempData ?? $this->data;
@@ -367,8 +362,6 @@ class View implements RendererInterface
 
     /**
      * Specifies that the current view should extend an existing layout.
-     *
-     * @return void
      */
     public function extend(string $layout)
     {
@@ -379,8 +372,6 @@ class View implements RendererInterface
      * Starts holds content for a section within the layout.
      *
      * @param string $name Section name
-     *
-     * @return void
      */
     public function section(string $name)
     {
@@ -395,8 +386,6 @@ class View implements RendererInterface
      * Captures the last section
      *
      * @throws RuntimeException
-     *
-     * @return void
      */
     public function endSection()
     {
@@ -454,8 +443,6 @@ class View implements RendererInterface
 
     /**
      * Logs performance data for rendering a view.
-     *
-     * @return void
      */
     protected function logPerformance(float $start, float $end, string $view)
     {

@@ -109,8 +109,6 @@ abstract class BaseResult implements ResultInterface
     /**
      * Returns the results as an array of custom objects.
      *
-     * @param string $className The name of the class to use.
-     *
      * @return mixed
      */
     public function getCustomResultObject(string $className)
@@ -484,8 +482,6 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Frees the current result.
-     *
-     * @return void
      */
     abstract public function freeResult();
 

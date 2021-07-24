@@ -596,8 +596,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @param mixed  $value
      *
      * @throws LogicException
-     *
-     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -610,8 +608,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * @param string $offset
      *
      * @throws LogicException
-     *
-     * @return void
      */
     public function offsetUnset($offset)
     {

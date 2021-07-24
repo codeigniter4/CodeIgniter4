@@ -588,8 +588,6 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string         $name      The name to group/prefix the routes with.
      * @param array|callable ...$params
-     *
-     * @return void
      */
     public function group(string $name, ...$params)
     {

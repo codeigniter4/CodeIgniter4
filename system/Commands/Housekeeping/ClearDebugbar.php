@@ -50,8 +50,6 @@ class ClearDebugbar extends BaseCommand
 
     /**
      * Actually runs the command.
-     *
-     * @return void
      */
     public function run(array $params)
     {

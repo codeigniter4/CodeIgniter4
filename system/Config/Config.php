@@ -12,8 +12,6 @@
 namespace CodeIgniter\Config;
 
 /**
- * Class Config
- *
  * @deprecated Use CodeIgniter\Config\Factories::config()
  */
 class Config

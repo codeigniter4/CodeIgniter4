@@ -93,9 +93,8 @@ class Table
     {
         $this->prefixedTableName = $table;
 
-        // Remove the prefix, if any, since it's
-        // already been added by the time we get here...
-        $prefix = $this->db->DBPrefix; // @phpstan-ignore-line
+        $prefix = $this->db->DBPrefix;
+
         if (! empty($prefix) && strpos($table, $prefix) === 0) {
             $table = substr($table, strlen($prefix));
         }
@@ -155,8 +154,6 @@ class Table
      */
     public function dropColumn($columns)
     {
-        //unset($this->fields[$column]);
-
         if (is_string($columns)) {
             $columns = explode(',', $columns);
         }
@@ -261,8 +258,6 @@ class Table
             }
         }
 
-        // Foreign Keys
-
         return $this->forge->createTable($this->tableName);
     }
 
@@ -270,8 +265,6 @@ class Table
      * Copies data from our old table to the new one,
      * taking care map data correctly based on any columns
      * that have been renamed.
-     *
-     * @return void
      */
     protected function copyData()
     {
@@ -286,7 +279,6 @@ class Table
         $exFields  = implode(', ', $exFields);
         $newFields = implode(', ', $newFields);
 
-        // @phpstan-ignore-next-line
         $this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
     }
 
@@ -353,8 +345,6 @@ class Table
     /**
      * Attempts to drop all indexes and constraints
      * from the database for this table.
-     *
-     * @return void|null
      */
     protected function dropIndexes()
     {

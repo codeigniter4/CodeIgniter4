@@ -209,8 +209,6 @@ class Connection extends BaseConnection
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
-     *
-     * @return void
      */
     public function reconnect()
     {
@@ -220,8 +218,6 @@ class Connection extends BaseConnection
 
     /**
      * Close the database connection.
-     *
-     * @return void
      */
     protected function _close()
     {
@@ -294,11 +290,7 @@ class Connection extends BaseConnection
     }
 
     /**
-     * Prep the query
-     *
-     * If needed, each database adapter can prep the query string
-     *
-     * @param string $sql an SQL query
+     * Prep the query. If needed, each database adapter can prep the query string
      */
     protected function prepQuery(string $sql): string
     {
@@ -534,7 +526,7 @@ class Connection extends BaseConnection
      * Must return this format: ['code' => string|int, 'message' => string]
      * intval(code) === 0 means "no error".
      *
-     * @return array<string,int|string>
+     * @return array<string, int|string>
      */
     public function error(): array
     {

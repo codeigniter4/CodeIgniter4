@@ -220,7 +220,6 @@ class Forge
 
             return true;
         } catch (Throwable $e) {
-            // @phpstan-ignore-next-line
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Unable to create the specified database.', 0, $e);
             }
@@ -387,11 +386,6 @@ class Forge
     }
 
     /**
-     * Foreign Key Drop
-     *
-     * @param string $table       Table name
-     * @param string $foreignName Foreign name
-     *
      * @throws DatabaseException
      *
      * @return BaseResult|bool|false|mixed|Query
@@ -416,12 +410,6 @@ class Forge
     }
 
     /**
-     * Create Table
-     *
-     * @param string $table       Table name
-     * @param bool   $ifNotExists Whether to add IF NOT EXISTS condition
-     * @param array  $attributes  Associative array of table attributes
-     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -470,12 +458,6 @@ class Forge
     }
 
     /**
-     * Create Table
-     *
-     * @param string $table       Table name
-     * @param bool   $ifNotExists Whether to add 'IF NOT EXISTS' condition
-     * @param array  $attributes  Associative array of table attributes
-     *
      * @return mixed
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
@@ -504,7 +486,6 @@ class Forge
         $columns .= $this->_processPrimaryKeys($table);
         $columns .= $this->_processForeignKeys($table);
 
-        // Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
         if ($this->createTableKeys === true) {
             $indexes = $this->_processIndexes($table);
             if (is_string($indexes)) {
@@ -512,7 +493,6 @@ class Forge
             }
         }
 
-        // createTableStr will usually have the following format: "%s %s (%s\n)"
         return sprintf(
             $this->createTableStr . '%s',
             $sql,
@@ -522,11 +502,6 @@ class Forge
         );
     }
 
-    /**
-     * CREATE TABLE attributes
-     *
-     * @param array $attributes Associative array of table attributes
-     */
     protected function _createTableAttributes(array $attributes): string
     {
         $sql = '';
@@ -541,12 +516,6 @@ class Forge
     }
 
     /**
-     * Drop Table
-     *
-     * @param string $tableName Table name
-     * @param bool   $ifExists  Whether to add an IF EXISTS condition
-     * @param bool   $cascade   Whether to add an CASCADE condition
-     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -561,7 +530,6 @@ class Forge
             return false;
         }
 
-        // If the prefix is already starting the table name, remove it...
         if ($this->db->DBPrefix && strpos($tableName, $this->db->DBPrefix) === 0) {
             $tableName = substr($tableName, strlen($this->db->DBPrefix));
         }
@@ -576,7 +544,6 @@ class Forge
 
         $this->db->enableForeignKeyChecks();
 
-        // Update table list cache
         if ($query && ! empty($this->db->dataCache['table_names'])) {
             $key = array_search(
                 strtolower($this->db->DBPrefix . $tableName),
@@ -593,13 +560,7 @@ class Forge
     }
 
     /**
-     * Drop Table
-     *
      * Generates a platform-specific DROP TABLE string
-     *
-     * @param string $table    Table name
-     * @param bool   $ifExists Whether to add an IF EXISTS condition
-     * @param bool   $cascade  Whether to add an CASCADE condition
      *
      * @return bool|string
      */
@@ -621,11 +582,6 @@ class Forge
     }
 
     /**
-     * Rename Table
-     *
-     * @param string $tableName    Old table name
-     * @param string $newTableName New table name
-     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -666,10 +622,7 @@ class Forge
     }
 
     /**
-     * Column Add
-     *
-     * @param string       $table Table name
-     * @param array|string $field Column definition
+     * @param array|string $field
      *
      * @throws DatabaseException
      */
@@ -704,10 +657,7 @@ class Forge
     }
 
     /**
-     * Column Drop
-     *
-     * @param string       $table      Table name
-     * @param array|string $columnName Column name Array or comma separated
+     * @param array|string $columnName
      *
      * @throws DatabaseException
      *
@@ -728,10 +678,7 @@ class Forge
     }
 
     /**
-     * Column Modify
-     *
-     * @param string       $table Table name
-     * @param array|string $field Column definition
+     * @param array|string $field
      *
      * @throws DatabaseException
      */
@@ -772,11 +719,7 @@ class Forge
     }
 
     /**
-     * ALTER TABLE
-     *
-     * @param string $alterType ALTER type
-     * @param string $table     Table name
-     * @param mixed  $fields    Column definition
+     * @param mixed $fields
      *
      * @return false|string|string[]
      */
@@ -899,20 +842,16 @@ class Forge
     protected function _processColumn(array $field): string
     {
         return $this->db->escapeIdentifiers($field['name'])
-               . ' ' . $field['type'] . $field['length']
-               . $field['unsigned']
-               . $field['default']
-               . $field['null']
-               . $field['auto_increment']
-               . $field['unique'];
+            . ' ' . $field['type'] . $field['length']
+            . $field['unsigned']
+            . $field['default']
+            . $field['null']
+            . $field['auto_increment']
+            . $field['unique'];
     }
 
     /**
-     * Field attribute TYPE
-     *
      * Performs a data type mapping between different databases.
-     *
-     * @return void
      */
     protected function _attributeType(array &$attributes)
     {
@@ -920,8 +859,6 @@ class Forge
     }
 
     /**
-     * Field attribute UNSIGNED
-     *
      * Depending on the unsigned property value:
      *
      *    - TRUE will always set $field['unsigned'] to 'UNSIGNED'
@@ -930,8 +867,6 @@ class Forge
      *        if $attributes['TYPE'] is found in the array
      *    - array(TYPE => UTYPE) will change $field['type'],
      *        from TYPE to UTYPE in case of a match
-     *
-     * @return void|null
      */
     protected function _attributeUnsigned(array &$attributes, array &$field)
     {
@@ -963,11 +898,6 @@ class Forge
         $field['unsigned'] = ($this->unsigned === true) ? ' UNSIGNED' : '';
     }
 
-    /**
-     * Field attribute DEFAULT
-     *
-     * @return void|null
-     */
     protected function _attributeDefault(array &$attributes, array &$field)
     {
         if ($this->default === false) {
@@ -987,11 +917,6 @@ class Forge
         }
     }
 
-    /**
-     * Field attribute UNIQUE
-     *
-     * @return void
-     */
     protected function _attributeUnique(array &$attributes, array &$field)
     {
         if (! empty($attributes['UNIQUE']) && $attributes['UNIQUE'] === true) {
@@ -999,11 +924,6 @@ class Forge
         }
     }
 
-    /**
-     * Field attribute AUTO_INCREMENT
-     *
-     * @return void
-     */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
     {
         if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
@@ -1013,11 +933,6 @@ class Forge
         }
     }
 
-    /**
-     * Process primary keys
-     *
-     * @param string $table Table name
-     */
     protected function _processPrimaryKeys(string $table): string
     {
         $sql = '';
@@ -1036,11 +951,6 @@ class Forge
         return $sql;
     }
 
-    /**
-     * Process indexes
-     *
-     * @return array|string
-     */
     protected function _processIndexes(string $table)
     {
         $sqls = [];
@@ -1053,31 +963,27 @@ class Forge
                     unset($this->keys[$i][$i2]);
                 }
             }
+
             if (count($this->keys[$i]) <= 0) {
                 continue;
             }
 
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-                          . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                          . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 
                 continue;
             }
 
             $sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                      . ' ON ' . $this->db->escapeIdentifiers($table)
-                      . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                . ' ON ' . $this->db->escapeIdentifiers($table)
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
         }
 
         return $sqls;
     }
 
-    /**
-     * Process foreign keys
-     *
-     * @param string $table Table name
-     */
     protected function _processForeignKeys(string $table): string
     {
         $sql = '';
@@ -1111,11 +1017,7 @@ class Forge
     }
 
     /**
-     * Reset
-     *
      * Resets table creation vars
-     *
-     * @return void
      */
     public function reset()
     {

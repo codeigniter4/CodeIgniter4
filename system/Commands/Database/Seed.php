@@ -63,8 +63,6 @@ class Seed extends BaseCommand
 
     /**
      * Passes to Seeder to populate the database.
-     *
-     * @return void
      */
     public function run(array $params)
     {

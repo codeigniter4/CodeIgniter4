@@ -12,8 +12,6 @@
 namespace CodeIgniter\Autoloader;
 
 /**
- * Class FileLocator
- *
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
  */
@@ -26,9 +24,6 @@ class FileLocator
      */
     protected $autoloader;
 
-    /**
-     * Constructor
-     */
     public function __construct(Autoloader $autoloader)
     {
         $this->autoloader = $autoloader;

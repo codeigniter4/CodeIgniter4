@@ -34,8 +34,6 @@ abstract class BaseResource extends Controller
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
-
-        // instantiate our model, if needed
         $this->setModel($this->modelName);
     }
 
@@ -44,23 +42,18 @@ abstract class BaseResource extends Controller
      * Given either the name or the object, determine the other.
      *
      * @param object|string|null $which
-     *
-     * @return void
      */
     public function setModel($which = null)
     {
-        // save what we have been given
         if ($which) {
             $this->model     = is_object($which) ? $which : null;
             $this->modelName = is_object($which) ? null : $which;
         }
 
-        // make a model object if needed
         if (empty($this->model) && ! empty($this->modelName) && class_exists($this->modelName)) {
             $this->model = model($this->modelName);
         }
 
-        // determine model name if needed
         if (! empty($this->model) && empty($this->modelName)) {
             $this->modelName = get_class($this->model);
         }

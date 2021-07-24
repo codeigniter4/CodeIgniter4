@@ -21,27 +21,20 @@ use Exception;
  */
 class WincacheHandler extends BaseHandler
 {
-    /**
-     * Constructor.
-     */
     public function __construct(Cache $config)
     {
         $this->prefix = $config->prefix;
     }
 
     /**
-     * Takes care of any handler-specific setup that must be done.
+     * {@inheritDoc}
      */
     public function initialize()
     {
     }
 
     /**
-     * Attempts to fetch an item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function get(string $key)
     {
@@ -55,13 +48,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Saves an item to the cache store.
-     *
-     * @param string $key   Cache item name
-     * @param mixed  $value The data to save
-     * @param int    $ttl   Time To Live, in seconds (default 60)
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -71,11 +58,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Deletes a specific item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function delete(string $key)
     {
@@ -85,11 +68,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @throws Exception
+     * {@inheritDoc}
      */
     public function deleteMatching(string $pattern)
     {
@@ -97,12 +76,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic incrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return false|int
+     * {@inheritDoc}
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -112,12 +86,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic decrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return false|int
+     * {@inheritDoc}
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -127,9 +96,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Will delete all items in the entire cache.
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function clean()
     {
@@ -137,12 +104,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Returns information on the entire cache.
-     *
-     * The information returned and the structure of the data
-     * varies depending on the handler.
-     *
-     * @return array|false
+     * {@inheritDoc}
      */
     public function getCacheInfo()
     {
@@ -150,14 +112,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Returns detailed information about the specific item in the cache.
-     *
-     * @param string $key Cache item name.
-     *
-     * @return array|false|null
-     *                          Returns null if the item does not exist, otherwise array<string, mixed>
-     *                          with at least the 'expire' key for absolute epoch expiry (or null).
-     *                          Some handlers may return false when an item does not exist, which is deprecated.
+     * {@inheritDoc}
      */
     public function getMetaData(string $key)
     {
@@ -180,7 +135,7 @@ class WincacheHandler extends BaseHandler
     }
 
     /**
-     * Determines if the driver is supported on this system.
+     * {@inheritDoc}
      */
     public function isSupported(): bool
     {

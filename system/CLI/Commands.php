@@ -76,8 +76,6 @@ class Commands
     /**
      * Discovers all commands in the framework and within user code,
      * and collects instances of them to work with.
-     *
-     * @return void
      */
     public function discoverCommands()
     {

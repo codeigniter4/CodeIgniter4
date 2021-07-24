@@ -168,9 +168,7 @@ class BaseConfig
         foreach (static::$registrars as $callable) {
             // ignore non-applicable registrars
             if (! method_exists($callable, $shortName)) {
-                // @codeCoverageIgnoreStart
-                continue;
-                // @codeCoverageIgnoreEnd
+                continue; // @codeCoverageIgnore
             }
 
             $properties = $callable::$shortName();

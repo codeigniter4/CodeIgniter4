@@ -61,7 +61,6 @@ class Builder extends BaseBuilder
      * ORDER BY
      *
      * @param string $direction ASC, DESC or RANDOM
-     * @param bool   $escape
      *
      * @return BaseBuilder
      */
@@ -118,8 +117,6 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Replace
-     *
      * Compiles an replace into string and runs the query.
      * Because PostgreSQL doesn't support the replace into command,
      * we simply do a DELETE and an INSERT on the first key/value
@@ -143,9 +140,8 @@ class Builder extends BaseBuilder
             if (CI_DEBUG) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
-            // @codeCoverageIgnoreStart
-            return false;
-            // @codeCoverageIgnoreEnd
+
+            return false; // @codeCoverageIgnore
         }
 
         $table = $this->QBFrom[0];
@@ -170,13 +166,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Insert statement
-     *
      * Generates a platform-specific insert string from the supplied data
-     *
-     * @param string $table         The table name
-     * @param array  $keys          The insert keys
-     * @param array  $unescapedKeys The insert values
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -184,13 +174,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Insert batch statement
-     *
      * Generates a platform-specific insert string from the supplied data.
-     *
-     * @param string $table  Table name
-     * @param array  $keys   INSERT keys
-     * @param array  $values INSERT values
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -198,20 +182,13 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Delete
-     *
      * Compiles a delete string and runs the query
      *
      * @param mixed $where
-     * @param int   $limit
      *
      * @throws DatabaseException
      *
      * @return mixed
-     *
-     * @internal param $bool
-     * @internal param the $mixed limit clause
-     * @internal param the $mixed where clause
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
@@ -223,11 +200,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * LIMIT string
-     *
      * Generates a platform-specific LIMIT clause.
-     *
-     * @param string $sql SQL Query
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
@@ -235,14 +208,9 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Update statement
-     *
      * Generates a platform-specific update string from the supplied data
      *
      * @throws DatabaseException
-     *
-     * @internal param the $array update data
-     * @internal param the $string table name
      */
     protected function _update(string $table, array $values): string
     {
@@ -256,13 +224,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Update_Batch statement
-     *
      * Generates a platform-specific batch update string from the supplied data
-     *
-     * @param string $table  Table name
-     * @param array  $values Update data
-     * @param string $index  WHERE key
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
@@ -295,11 +257,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Delete statement
-     *
      * Generates a platform-specific delete string from the supplied data
-     *
-     * @param string $table The table name
      */
     protected function _delete(string $table): string
     {
@@ -309,14 +267,10 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Truncate statement
-     *
      * Generates a platform-specific truncate string from the supplied data
      *
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
-     *
-     * @param string $table The table name
      */
     protected function _truncate(string $table): string
     {
@@ -330,8 +284,6 @@ class Builder extends BaseBuilder
      * searches according to the current locale.
      *
      * @see https://www.postgresql.org/docs/9.2/static/functions-matching.html
-     *
-     * @return string $like_statement
      */
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
@@ -341,13 +293,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * JOIN
-     *
      * Generates the JOIN portion of the query
-     *
-     * @param string $cond   The join condition
-     * @param string $type   The type of join
-     * @param bool   $escape Whether not to try to escape identifiers
      *
      * @return BaseBuilder
      */

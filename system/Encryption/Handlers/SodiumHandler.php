@@ -113,8 +113,6 @@ class SodiumHandler extends BaseHandler
      * @param array|string|null $params
      *
      * @throws EncryptionException If key is empty
-     *
-     * @return void
      */
     protected function parseParams($params)
     {

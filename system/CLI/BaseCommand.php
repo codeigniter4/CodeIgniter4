@@ -87,9 +87,6 @@ abstract class BaseCommand
      */
     protected $commands;
 
-    /**
-     * BaseCommand constructor.
-     */
     public function __construct(LoggerInterface $logger, Commands $commands)
     {
         $this->logger   = $logger;
@@ -98,7 +95,8 @@ abstract class BaseCommand
 
     /**
      * Actually execute a command.
-     * This has to be over-ridden in any concrete implementation.
+     *
+     * @param array<string, mixed> $params
      */
     abstract public function run(array $params);
 

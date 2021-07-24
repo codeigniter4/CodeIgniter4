@@ -79,10 +79,6 @@ final class Environment extends BaseCommand
 
     /**
      * {@inheritDoc}
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return void
      */
     public function run(array $params)
     {

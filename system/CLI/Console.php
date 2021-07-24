@@ -12,9 +12,6 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
 /**
@@ -29,9 +26,6 @@ class Console
      */
     protected $app;
 
-    /**
-     * Console constructor.
-     */
     public function __construct(CodeIgniter $app)
     {
         $this->app = $app;
@@ -42,7 +36,7 @@ class Console
      *
      * @throws Exception
      *
-     * @return mixed|RequestInterface|Response|ResponseInterface
+     * @return mixed
      */
     public function run(bool $useSafeOutput = false)
     {

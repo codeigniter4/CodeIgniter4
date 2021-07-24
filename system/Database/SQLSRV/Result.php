@@ -101,8 +101,6 @@ class Result extends BaseResult
 
     /**
      * Frees the current result.
-     *
-     * @return void
      */
     public function freeResult()
     {
@@ -147,8 +145,6 @@ class Result extends BaseResult
     /**
      * Returns the result set as an object.
      *
-     * Overridden by child classes.
-     *
      * @return bool|Entity|object
      */
     protected function fetchObject(string $className = 'stdClass')
@@ -162,8 +158,6 @@ class Result extends BaseResult
 
     /**
      * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
-     *
-     * @return int Returns the number of rows retrieved on success
      */
     public function getNumRows(): int
     {

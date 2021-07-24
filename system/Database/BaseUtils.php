@@ -195,11 +195,6 @@ abstract class BaseUtils
     /**
      * Generate CSV from a query result object
      *
-     * @param ResultInterface $query     Query result object
-     * @param string          $delim     Delimiter (default: ,)
-     * @param string          $newline   Newline character (default: \n)
-     * @param string          $enclosure Enclosure (default: ")
-     *
      * @return string
      */
     public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
@@ -228,28 +223,21 @@ abstract class BaseUtils
 
     /**
      * Generate XML data from a query result object
-     *
-     * @param ResultInterface $query  Query result object
-     * @param array           $params Any preferences
      */
     public function getXMLFromResult(ResultInterface $query, array $params = []): string
     {
-        // Set our default values
         foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val) {
             if (! isset($params[$key])) {
                 $params[$key] = $val;
             }
         }
 
-        // Create variables for convenience
         $root    = $params['root'];
         $newline = $params['newline'];
         $tab     = $params['tab'];
         $element = $params['element'];
 
-        // Load the xml helper
         helper('xml');
-        // Generate the result
         $xml = '<' . $root . '>' . $newline;
 
         while ($row = $query->getUnbufferedRow()) {
@@ -278,14 +266,10 @@ abstract class BaseUtils
      */
     public function backup($params = [])
     {
-        // If the parameters have not been submitted as an
-        // array then we know that it is simply the table
-        // name, which is a valid short cut.
         if (is_string($params)) {
             $params = ['tables' => $params];
         }
 
-        // Set up our default preferences
         $prefs = [
             'tables'             => [],
             'ignore'             => [],
@@ -297,7 +281,6 @@ abstract class BaseUtils
             'foreign_key_checks' => true,
         ];
 
-        // Did the user submit any preferences? If so set them....
         if (! empty($params)) {
             foreach (array_keys($prefs) as $key) {
                 if (isset($params[$key])) {
@@ -306,19 +289,14 @@ abstract class BaseUtils
             }
         }
 
-        // Are we backing up a complete database or individual tables?
-        // If no table names were submitted we'll fetch the entire table list
         if (empty($prefs['tables'])) {
             $prefs['tables'] = $this->db->listTables();
         }
 
-        // Validate the format
         if (! in_array($prefs['format'], ['gzip', 'txt'], true)) {
             $prefs['format'] = 'txt';
         }
 
-        // Is the encoder supported? If not, we'll either issue an
-        // error or use plain text depending on the debug settings
         if ($prefs['format'] === 'gzip' && ! function_exists('gzencode')) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('The file compression format you chose is not supported by your server.');
@@ -327,7 +305,7 @@ abstract class BaseUtils
             $prefs['format'] = 'txt';
         }
 
-        if ($prefs['format'] === 'txt') { // Was a text file requested?
+        if ($prefs['format'] === 'txt') {
             return $this->_backup($prefs);
         }
 
