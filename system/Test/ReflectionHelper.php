@@ -39,9 +39,7 @@ trait ReflectionHelper
         $refMethod->setAccessible(true);
         $obj = (gettype($obj) === 'object') ? $obj : null;
 
-        return static function () use ($obj, $refMethod) {
-            $args = func_get_args();
-
+        return static function (...$args) use ($obj, $refMethod) {
             return $refMethod->invokeArgs($obj, $args);
         };
     }
