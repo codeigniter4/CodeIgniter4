@@ -605,11 +605,9 @@ if (! function_exists('alternator')) {
      *
      * Allows strings to be alternated. See docs...
      *
-     * @phpstan-ignore-next-line
-     *
-     * @param string (as many parameters as needed)
+     * @param string ...$args (as many parameters as needed)
      */
-    function alternator(): string
+    function alternator(...$args): string
     {
         static $i;
 
@@ -618,8 +616,6 @@ if (! function_exists('alternator')) {
 
             return '';
         }
-
-        $args = func_get_args();
 
         return $args[($i++ % count($args))];
     }
