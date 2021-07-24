@@ -66,10 +66,6 @@ class Exceptions
 
     /**
      * Constructor.
-     *
-     * @param ExceptionsConfig $config
-     * @param IncomingRequest  $request
-     * @param Response         $response
      */
     public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
     {
@@ -104,8 +100,6 @@ class Exceptions
      * Catches any uncaught errors and exceptions, including most Fatal errors
      * (Yay PHP7!). Will log the error, display it if display_errors is on,
      * and fire an event that allows custom actions to be taken at this point.
-     *
-     * @param Throwable $exception
      *
      * @codeCoverageIgnore
      */
@@ -147,11 +141,6 @@ class Exceptions
      *
      * This seems to be primarily when a user triggers it with trigger_error().
      *
-     * @param int         $severity
-     * @param string      $message
-     * @param string|null $file
-     * @param int|null    $line
-     *
      * @throws ErrorException
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
@@ -185,9 +174,6 @@ class Exceptions
      * Determines the view to display based on the exception thrown,
      * whether an HTTP or CLI request, etc.
      *
-     * @param Throwable $exception
-     * @param string    $templatePath
-     *
      * @return string The path and filename of the view file to use
      */
     protected function determineView(Throwable $exception, string $templatePath): string
@@ -215,9 +201,6 @@ class Exceptions
 
     /**
      * Given an exception and status code will display the error to the client.
-     *
-     * @param Throwable $exception
-     * @param int       $statusCode
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -257,11 +240,6 @@ class Exceptions
 
     /**
      * Gathers the variables that will be made available to the view.
-     *
-     * @param Throwable $exception
-     * @param int       $statusCode
-     *
-     * @return array
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
@@ -285,8 +263,6 @@ class Exceptions
      * Mask sensitive data in the trace.
      *
      * @param array|object $trace
-     * @param array        $keysToMask
-     * @param string       $path
      */
     protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
     {
@@ -316,10 +292,6 @@ class Exceptions
 
     /**
      * Determines the HTTP status code and the exit status code for this request.
-     *
-     * @param Throwable $exception
-     *
-     * @return array
      */
     protected function determineCodes(Throwable $exception): array
     {
@@ -349,10 +321,6 @@ class Exceptions
      * Clean Path
      *
      * This makes nicer looking paths for the error output.
-     *
-     * @param string $file
-     *
-     * @return string
      */
     public static function cleanPath(string $file): string
     {
@@ -380,10 +348,6 @@ class Exceptions
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
-     *
-     * @param int $bytes
-     *
-     * @return string
      */
     public static function describeMemory(int $bytes): string
     {
@@ -399,10 +363,6 @@ class Exceptions
 
     /**
      * Creates a syntax-highlighted version of a PHP file.
-     *
-     * @param string $file
-     * @param int    $lineNumber
-     * @param int    $lines
      *
      * @return bool|string
      */

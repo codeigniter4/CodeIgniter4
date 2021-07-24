@@ -163,9 +163,6 @@ class Session implements SessionInterface
      * Constructor.
      *
      * Extract configuration settings and save them here.
-     *
-     * @param SessionHandlerInterface $driver
-     * @param App                     $config
      */
     public function __construct(SessionHandlerInterface $driver, App $config)
     {
@@ -506,8 +503,6 @@ class Session implements SessionInterface
      * Returns whether an index exists in the session array.
      *
      * @param string $key Identifier of the session property we are interested in.
-     *
-     * @return bool
      */
     public function has(string $key): bool
     {
@@ -592,8 +587,6 @@ class Session implements SessionInterface
      * Mostly used by internal PHP functions, users should stick to has()
      *
      * @param string $key Identifier of the session property to remove.
-     *
-     * @return bool
      */
     public function __isset(string $key): bool
     {
@@ -867,8 +860,6 @@ class Session implements SessionInterface
 
     /**
      * Retrieve the keys of all session data that have been marked as temporary data.
-     *
-     * @return array
      */
     public function getTempKeys(): array
     {

@@ -46,11 +46,6 @@ final class GeneralModelTest extends CIUnitTestCase
 
     /**
      * Create an instance of Model for use in testing.
-     *
-     * @param string              $modelName
-     * @param BaseConnection|null $db
-     *
-     * @return Model
      */
     private function createModel(string $modelName, ?BaseConnection $db = null): Model
     {
@@ -160,8 +155,6 @@ final class GeneralModelTest extends CIUnitTestCase
 
             /**
              * Marks the model as initialized.
-             *
-             * @return void
              */
             protected function initialize(): void
             {

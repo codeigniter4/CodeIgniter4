@@ -98,10 +98,7 @@ class Filters
     /**
      * Constructor.
      *
-     * @param FiltersConfig     $config
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
-     * @param Modules|null      $modules
+     * @param FiltersConfig $config
      */
     public function __construct($config, RequestInterface $request, ResponseInterface $response, ?Modules $modules = null)
     {
@@ -143,8 +140,6 @@ class Filters
 
     /**
      * Set the response explicity.
-     *
-     * @param ResponseInterface $response
      */
     public function setResponse(ResponseInterface $response)
     {
@@ -154,9 +149,6 @@ class Filters
     /**
      * Runs through all of the filters for the specified
      * uri and position.
-     *
-     * @param string $uri
-     * @param string $position
      *
      * @throws FilterException
      *
@@ -281,8 +273,6 @@ class Filters
 
     /**
      * Returns the processed filters array.
-     *
-     * @return array
      */
     public function getFilters(): array
     {
@@ -291,8 +281,6 @@ class Filters
 
     /**
      * Returns the filtersClass array.
-     *
-     * @return array
      */
     public function getFiltersClass(): array
     {
@@ -303,11 +291,6 @@ class Filters
      * Adds a new alias to the config file.
      * MUST be called prior to initialize();
      * Intended for use within routes files.
-     *
-     * @param string      $class
-     * @param string|null $alias
-     * @param string      $when
-     * @param string      $section
      *
      * @return $this
      */
@@ -336,9 +319,6 @@ class Filters
      * Filters can have "arguments". This is done by placing a colon immediately
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
-     *
-     * @param string $name
-     * @param string $when
      *
      * @return Filters
      */
@@ -376,8 +356,6 @@ class Filters
 
     /**
      * Returns the arguments for a specified key, or all.
-     *
-     * @param string|null $key
      *
      * @return mixed
      */
@@ -494,8 +472,6 @@ class Filters
 
     /**
      * Maps filter aliases to the equivalent filter classes
-     *
-     * @param string $position
      *
      * @throws FilterException
      *

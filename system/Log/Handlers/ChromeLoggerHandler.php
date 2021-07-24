@@ -76,8 +76,6 @@ class ChromeLoggerHandler extends BaseHandler
 
     /**
      * Constructor
-     *
-     * @param array $config
      */
     public function __construct(array $config = [])
     {
@@ -94,8 +92,6 @@ class ChromeLoggerHandler extends BaseHandler
      *
      * @param string $level
      * @param string $message
-     *
-     * @return bool
      */
     public function handle($level, $message): bool
     {

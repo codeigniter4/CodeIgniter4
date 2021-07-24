@@ -21,8 +21,6 @@ class CookieException extends FrameworkException
     /**
      * Thrown for invalid type given for the "Expires" attribute.
      *
-     * @param string $type
-     *
      * @return static
      */
     public static function forInvalidExpiresTime(string $type)
@@ -42,8 +40,6 @@ class CookieException extends FrameworkException
 
     /**
      * Thrown when the cookie name contains invalid characters per RFC 2616.
-     *
-     * @param string $name
      *
      * @return static
      */
@@ -86,8 +82,6 @@ class CookieException extends FrameworkException
 
     /**
      * Thrown when the `SameSite` attribute given is not of the valid types.
-     *
-     * @param string $sameSite
      *
      * @return static
      */

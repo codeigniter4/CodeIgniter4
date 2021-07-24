@@ -28,8 +28,6 @@ class FileLocator
 
     /**
      * Constructor
-     *
-     * @param Autoloader $autoloader
      */
     public function __construct(Autoloader $autoloader)
     {
@@ -118,10 +116,6 @@ class FileLocator
 
     /**
      * Examines a file and returns the fully qualified domain name.
-     *
-     * @param string $file
-     *
-     * @return string
      */
     public function getClassname(string $file): string
     {
@@ -175,12 +169,6 @@ class FileLocator
      *      'app/Modules/foo/Config/Routes.php',
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
-     *
-     * @param string $path
-     * @param string $ext
-     * @param bool   $prioritizeApp
-     *
-     * @return array
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
@@ -214,11 +202,6 @@ class FileLocator
 
     /**
      * Ensures a extension is at the end of a filename
-     *
-     * @param string $path
-     * @param string $ext
-     *
-     * @return string
      */
     protected function ensureExt(string $path, string $ext): string
     {
@@ -272,8 +255,6 @@ class FileLocator
      * Find the qualified name of a file according to
      * the namespace of the first matched namespace path.
      *
-     * @param string $path
-     *
      * @return false|string The qualified name or false if the path is not found
      */
     public function findQualifiedNameFromPath(string $path)
@@ -315,10 +296,6 @@ class FileLocator
     /**
      * Scans the defined namespaces, returning a list of all files
      * that are contained within the subpath specified by $path.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function listFiles(string $path): array
     {
@@ -350,11 +327,6 @@ class FileLocator
     /**
      * Scans the provided namespace, returning a list of all files
      * that are contained within the subpath specified by $path.
-     *
-     * @param string $prefix
-     * @param string $path
-     *
-     * @return array
      */
     public function listNamespaceFiles(string $prefix, string $path): array
     {
@@ -387,9 +359,6 @@ class FileLocator
     /**
      * Checks the app folder to see if the file can be found.
      * Only for use with filenames that DO NOT include namespacing.
-     *
-     * @param string      $file
-     * @param string|null $folder
      *
      * @return false|string The path to the file, or false if not found.
      */

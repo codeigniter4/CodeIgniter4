@@ -27,9 +27,6 @@ class DotEnv
 
     /**
      * Builds the path to our file.
-     *
-     * @param string $path
-     * @param string $file
      */
     public function __construct(string $path, string $file = '.env')
     {
@@ -40,8 +37,6 @@ class DotEnv
      * The main entry point, will load the .env file and process it
      * so that we end up with all settings in the PHP environment vars
      * (i.e. getenv(), $_ENV, and $_SERVER)
-     *
-     * @return bool
      */
     public function load(): bool
     {
@@ -52,8 +47,6 @@ class DotEnv
 
     /**
      * Parse the .env file into an array of key => value
-     *
-     * @return array|null
      */
     public function parse(): ?array
     {
@@ -92,9 +85,6 @@ class DotEnv
      * Sets the variable into the environment. Will parse the string
      * first to look for {name}={value} pattern, ensure that nested
      * variables are handled, and strip it of single and double quotes.
-     *
-     * @param string $name
-     * @param string $value
      */
     protected function setVariable(string $name, string $value = '')
     {
@@ -114,11 +104,6 @@ class DotEnv
     /**
      * Parses for assignment, cleans the $name and $value, and ensures
      * that nested variables are handled.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return array
      */
     public function normaliseVariable(string $name, string $value = ''): array
     {
@@ -146,11 +131,7 @@ class DotEnv
      * This was borrowed from the excellent phpdotenv with very few changes.
      * https://github.com/vlucas/phpdotenv
      *
-     * @param string $value
-     *
      * @throws InvalidArgumentException
-     *
-     * @return string
      */
     protected function sanitizeValue(string $value): string
     {
@@ -203,10 +184,6 @@ class DotEnv
      *
      * This was borrowed from the excellent phpdotenv with very few changes.
      * https://github.com/vlucas/phpdotenv
-     *
-     * @param string $value
-     *
-     * @return string
      */
     protected function resolveNestedVariables(string $value): string
     {
@@ -234,8 +211,6 @@ class DotEnv
      *
      * This was borrowed from the excellent phpdotenv with very few changes.
      * https://github.com/vlucas/phpdotenv
-     *
-     * @param string $name
      *
      * @return string|null
      */

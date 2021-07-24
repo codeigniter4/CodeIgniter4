@@ -74,8 +74,6 @@ class ControllerGenerator extends BaseCommand
 
     /**
      * Actually execute a command.
-     *
-     * @param array $params
      */
     public function run(array $params)
     {
@@ -89,10 +87,6 @@ class ControllerGenerator extends BaseCommand
 
     /**
      * Prepare options and do the necessary replacements.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function prepare(string $class): string
     {

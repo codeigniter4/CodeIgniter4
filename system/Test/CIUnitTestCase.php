@@ -270,8 +270,6 @@ abstract class CIUnitTestCase extends TestCase
      * methods for setUp or tearDown.
      *
      * @param string $stage 'setUp' or 'tearDown'
-     *
-     * @return void
      */
     private function callTraitMethods(string $stage): void
     {
@@ -345,7 +343,6 @@ abstract class CIUnitTestCase extends TestCase
      * Custom function to hook into CodeIgniter's Logging mechanism
      * to check if certain messages were logged during code execution.
      *
-     * @param string      $level
      * @param string|null $expectedMessage
      *
      * @throws Exception
@@ -369,11 +366,7 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into CodeIgniter's Events system to check if a specific
      * event was triggered or not.
      *
-     * @param string $eventName
-     *
      * @throws Exception
-     *
-     * @return bool
      */
     public function assertEventTriggered(string $eventName): bool
     {
@@ -398,8 +391,7 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string $header     The leading portion of the header we are looking for
-     * @param bool   $ignoreCase
+     * @param string $header The leading portion of the header we are looking for
      *
      * @throws Exception
      */
@@ -427,8 +419,7 @@ abstract class CIUnitTestCase extends TestCase
      * Hooks into xdebug's headers capture, looking for a specific header
      * emitted
      *
-     * @param string $header     The leading portion of the header we don't want to find
-     * @param bool   $ignoreCase
+     * @param string $header The leading portion of the header we don't want to find
      *
      * @throws Exception
      */
@@ -459,10 +450,7 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param int    $expected
-     * @param mixed  $actual
-     * @param string $message
-     * @param int    $tolerance
+     * @param mixed $actual
      *
      * @throws Exception
      */
@@ -479,10 +467,8 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed  $expected
-     * @param mixed  $actual
-     * @param string $message
-     * @param int    $tolerance
+     * @param mixed $expected
+     * @param mixed $actual
      *
      * @throws Exception
      *
@@ -531,8 +517,7 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Return first matching emitted header.
      *
-     * @param string $header     Identifier of the header of interest
-     * @param bool   $ignoreCase
+     * @param string $header Identifier of the header of interest
      *
      * @return string|null The value of the header found, null if not found
      */

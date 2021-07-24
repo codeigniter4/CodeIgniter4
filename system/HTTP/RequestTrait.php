@@ -186,8 +186,7 @@ trait RequestTrait
     /**
      * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
      *
-     * @param string $method
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -303,8 +302,6 @@ trait RequestTrait
     /**
      * Saves a copy of the current state of one of several PHP globals
      * so we can retrieve them later.
-     *
-     * @param string $method
      */
     protected function populateGlobals(string $method)
     {

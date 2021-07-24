@@ -61,7 +61,6 @@ interface MessageInterface
     /**
      * Sets a header and it's value.
      *
-     * @param string            $name
      * @param array|string|null $value
      *
      * @return $this
@@ -71,8 +70,6 @@ interface MessageInterface
     /**
      * Removes a header from the list of headers we track.
      *
-     * @param string $name
-     *
      * @return $this
      */
     public function removeHeader(string $name);
@@ -80,9 +77,6 @@ interface MessageInterface
     /**
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
-     *
-     * @param string      $name
-     * @param string|null $value
      *
      * @return $this
      */
@@ -92,17 +86,12 @@ interface MessageInterface
      * Adds an additional header value to any headers that accept
      * multiple values (i.e. are an array or implement ArrayAccess)
      *
-     * @param string $name
-     * @param string $value
-     *
      * @return $this
      */
     public function prependHeader(string $name, string $value);
 
     /**
      * Sets the HTTP protocol version.
-     *
-     * @param string $version
      *
      * @throws HTTPException For invalid protocols
      *

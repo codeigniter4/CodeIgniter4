@@ -222,8 +222,6 @@ class Table
      *
      * Ensures a standard associative array format for all cell data
      *
-     * @param array $args
-     *
      * @return array
      */
     protected function _prepArgs(array $args)

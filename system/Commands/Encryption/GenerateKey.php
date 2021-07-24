@@ -64,8 +64,6 @@ class GenerateKey extends BaseCommand
     /**
      * Actually execute the command.
      *
-     * @param array $params
-     *
      * @return void
      */
     public function run(array $params)
@@ -112,11 +110,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Generates a key and encodes it.
-     *
-     * @param string $prefix
-     * @param int    $length
-     *
-     * @return string
      */
     protected function generateRandomKey(string $prefix, int $length): string
     {
@@ -131,11 +124,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Sets the new encryption key in your .env file.
-     *
-     * @param string $key
-     * @param array  $params
-     *
-     * @return bool
      */
     protected function setNewEncryptionKey(string $key, array $params): bool
     {
@@ -153,10 +141,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Checks whether to overwrite existing encryption key.
-     *
-     * @param array $params
-     *
-     * @return bool
      */
     protected function confirmOverwrite(array $params): bool
     {
@@ -165,11 +149,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Writes the new encryption key to .env file.
-     *
-     * @param string $oldKey
-     * @param string $newKey
-     *
-     * @return bool
      */
     protected function writeNewEncryptionKeyToFile(string $oldKey, string $newKey): bool
     {
@@ -199,10 +178,6 @@ class GenerateKey extends BaseCommand
 
     /**
      * Get the regex of the current encryption key.
-     *
-     * @param string $oldKey
-     *
-     * @return string
      */
     protected function keyPattern(string $oldKey): string
     {

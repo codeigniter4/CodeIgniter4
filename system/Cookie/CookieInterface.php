@@ -60,78 +60,56 @@ interface CookieInterface
     /**
      * Returns a unique identifier for the cookie consisting
      * of its prefixed name, path, and domain.
-     *
-     * @return string
      */
     public function getId(): string;
 
     /**
      * Gets the cookie prefix.
-     *
-     * @return string
      */
     public function getPrefix(): string;
 
     /**
      * Gets the cookie name.
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Gets the cookie name prepended with the prefix, if any.
-     *
-     * @return string
      */
     public function getPrefixedName(): string;
 
     /**
      * Gets the cookie value.
-     *
-     * @return string
      */
     public function getValue(): string;
 
     /**
      * Gets the time in Unix timestamp the cookie expires.
-     *
-     * @return int
      */
     public function getExpiresTimestamp(): int;
 
     /**
      * Gets the formatted expires time.
-     *
-     * @return string
      */
     public function getExpiresString(): string;
 
     /**
      * Checks if the cookie is expired.
-     *
-     * @return bool
      */
     public function isExpired(): bool;
 
     /**
      * Gets the "Max-Age" cookie attribute.
-     *
-     * @return int
      */
     public function getMaxAge(): int;
 
     /**
      * Gets the "Path" cookie attribute.
-     *
-     * @return string
      */
     public function getPath(): string;
 
     /**
      * Gets the "Domain" cookie attribute.
-     *
-     * @return string
      */
     public function getDomain(): string;
 
@@ -141,8 +119,6 @@ interface CookieInterface
      * Checks if the cookie is only sent to the server when a request is made
      * with the `https:` scheme (except on `localhost`), and therefore is more
      * resistent to man-in-the-middle attacks.
-     *
-     * @return bool
      */
     public function isSecure(): bool;
 
@@ -150,22 +126,16 @@ interface CookieInterface
      * Gets the "HttpOnly" cookie attribute.
      *
      * Checks if JavaScript is forbidden from accessing the cookie.
-     *
-     * @return bool
      */
     public function isHTTPOnly(): bool;
 
     /**
      * Gets the "SameSite" cookie attribute.
-     *
-     * @return string
      */
     public function getSameSite(): string;
 
     /**
      * Checks if the cookie should be sent with no URL encoding.
-     *
-     * @return bool
      */
     public function isRaw(): bool;
 
@@ -179,8 +149,6 @@ interface CookieInterface
 
     /**
      * Returns the Cookie as a header value.
-     *
-     * @return string
      */
     public function toHeaderString(): string;
 

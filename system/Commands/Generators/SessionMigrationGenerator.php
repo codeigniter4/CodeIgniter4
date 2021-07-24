@@ -66,8 +66,6 @@ class SessionMigrationGenerator extends BaseCommand
 
     /**
      * Actually execute a command.
-     *
-     * @param array $params
      */
     public function run(array $params)
     {
@@ -88,10 +86,6 @@ class SessionMigrationGenerator extends BaseCommand
 
     /**
      * Performs the necessary replacements.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function prepare(string $class): string
     {
@@ -108,10 +102,6 @@ class SessionMigrationGenerator extends BaseCommand
 
     /**
      * Change file basename before saving.
-     *
-     * @param string $filename
-     *
-     * @return string
      */
     protected function basename(string $filename): string
     {

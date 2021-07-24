@@ -42,9 +42,6 @@ class RouterException extends FrameworkException
     /**
      * Throw when controller or its method is not found.
      *
-     * @param string $controller
-     * @param string $method
-     *
      * @return RouterException
      */
     public static function forControllerNotFound(string $controller, string $method)
@@ -54,8 +51,6 @@ class RouterException extends FrameworkException
 
     /**
      * Throw when route is not valid.
-     *
-     * @param string $route
      *
      * @return RouterException
      */

@@ -103,8 +103,6 @@ class History extends BaseCollector
 
     /**
      * Returns the data of this collector to be formatted in the toolbar
-     *
-     * @return array
      */
     public function display(): array
     {
@@ -113,8 +111,6 @@ class History extends BaseCollector
 
     /**
      * Displays the number of included files as a badge in the tab button.
-     *
-     * @return int
      */
     public function getBadgeValue(): int
     {
@@ -123,8 +119,6 @@ class History extends BaseCollector
 
     /**
      * Return true if there are no history files.
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -135,8 +129,6 @@ class History extends BaseCollector
      * Display the icon.
      *
      * Icon from https://icons8.com - 1em package
-     *
-     * @return string
      */
     public function icon(): string
     {

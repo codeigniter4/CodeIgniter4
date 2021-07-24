@@ -130,10 +130,6 @@ final class Environment extends BaseCommand
 
     /**
      * @see https://regex101.com/r/4sSORp/1 for the regex in action
-     *
-     * @param string $newEnv
-     *
-     * @return bool
      */
     private function writeNewEnvironmentToEnvFile(string $newEnv): bool
     {

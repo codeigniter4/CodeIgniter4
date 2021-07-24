@@ -49,11 +49,6 @@ abstract class LiveModelTestCase extends CIUnitTestCase
 
     /**
      * Create an instance of Model for use in testing.
-     *
-     * @param string              $modelName
-     * @param BaseConnection|null $db
-     *
-     * @return Model
      */
     protected function createModel(string $modelName, ?BaseConnection $db = null): Model
     {

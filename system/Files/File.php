@@ -38,9 +38,6 @@ class File extends SplFileInfo
     /**
      * Run our SplFileInfo constructor with an optional verification
      * that the path is really a file.
-     *
-     * @param string $path
-     * @param bool   $checkFile
      */
     public function __construct(string $path, bool $checkFile = false)
     {
@@ -68,8 +65,6 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit.
      *
-     * @param string $unit
-     *
      * @return int|string
      */
     public function getSizeByUnit(string $unit = 'b')
@@ -89,8 +84,6 @@ class File extends SplFileInfo
     /**
      * Attempts to determine the file extension based on the trusted
      * getType() method. If the mime type is unknown, will return null.
-     *
-     * @return string|null
      */
     public function guessExtension(): ?string
     {
@@ -122,8 +115,6 @@ class File extends SplFileInfo
     /**
      * Generates a random names based on a simple hash and the time, with
      * the correct file extension attached.
-     *
-     * @return string
      */
     public function getRandomName(): string
     {
@@ -135,10 +126,6 @@ class File extends SplFileInfo
 
     /**
      * Moves a file to a new location.
-     *
-     * @param string      $targetPath
-     * @param string|null $name
-     * @param bool        $overwrite
      *
      * @return File
      */
@@ -167,12 +154,6 @@ class File extends SplFileInfo
      * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
      * last element is an integer as there may be cases that the delimiter may be present in the filename.
      * For the all other cases, it appends an integer starting from zero before the file's extension.
-     *
-     * @param string $destination
-     * @param string $delimiter
-     * @param int    $i
-     *
-     * @return string
      */
     public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
     {

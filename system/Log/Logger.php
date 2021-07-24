@@ -113,7 +113,6 @@ class Logger implements LoggerInterface
      * Constructor.
      *
      * @param \Config\Logger $config
-     * @param bool           $debug
      *
      * @throws RuntimeException
      */
@@ -154,9 +153,6 @@ class Logger implements LoggerInterface
      * System is unusable.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function emergency($message, array $context = []): bool
     {
@@ -170,9 +166,6 @@ class Logger implements LoggerInterface
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function alert($message, array $context = []): bool
     {
@@ -185,9 +178,6 @@ class Logger implements LoggerInterface
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function critical($message, array $context = []): bool
     {
@@ -199,9 +189,6 @@ class Logger implements LoggerInterface
      * be logged and monitored.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function error($message, array $context = []): bool
     {
@@ -215,9 +202,6 @@ class Logger implements LoggerInterface
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function warning($message, array $context = []): bool
     {
@@ -228,9 +212,6 @@ class Logger implements LoggerInterface
      * Normal but significant events.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function notice($message, array $context = []): bool
     {
@@ -243,9 +224,6 @@ class Logger implements LoggerInterface
      * Example: User logs in, SQL logs.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function info($message, array $context = []): bool
     {
@@ -256,9 +234,6 @@ class Logger implements LoggerInterface
      * Detailed debug information.
      *
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function debug($message, array $context = []): bool
     {
@@ -270,9 +245,6 @@ class Logger implements LoggerInterface
      *
      * @param mixed  $level
      * @param string $message
-     * @param array  $context
-     *
-     * @return bool
      */
     public function log($level, $message, array $context = []): bool
     {
@@ -341,7 +313,6 @@ class Logger implements LoggerInterface
      * {line}
      *
      * @param mixed $message
-     * @param array $context
      *
      * @return mixed
      */
@@ -402,8 +373,6 @@ class Logger implements LoggerInterface
      * Determines the file and line that the logging call
      * was made from by analyzing the backtrace.
      * Find the earliest stack frame that is part of our logging system.
-     *
-     * @return array
      */
     public function determineFile(): array
     {
@@ -452,10 +421,6 @@ class Logger implements LoggerInterface
      *  /var/www/site/app/Controllers/Home.php
      *      becomes:
      *  APPPATH/Controllers/Home.php
-     *
-     * @param string $file
-     *
-     * @return string
      */
     protected function cleanFileNames(string $file): string
     {

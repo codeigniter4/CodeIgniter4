@@ -33,8 +33,6 @@ class Negotiate
 
     /**
      * Constructor
-     *
-     * @param RequestInterface|null $request
      */
     public function __construct(?RequestInterface $request = null)
     {
@@ -45,8 +43,6 @@ class Negotiate
 
     /**
      * Stores the request instance to grab the headers from.
-     *
-     * @param RequestInterface $request
      *
      * @return $this
      */
@@ -65,11 +61,8 @@ class Negotiate
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
      *
-     * @param array $supported
-     * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
-     *                           If FALSE, will return the first supported element.
-     *
-     * @return string
+     * @param bool $strictMatch If TRUE, will return an empty string when no match found.
+     *                          If FALSE, will return the first supported element.
      */
     public function media(array $supported, bool $strictMatch = false): string
     {
@@ -83,10 +76,6 @@ class Negotiate
      *
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
-     *
-     * @param array $supported
-     *
-     * @return string
      */
     public function charset(array $supported): string
     {
@@ -108,10 +97,6 @@ class Negotiate
      *
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
-     *
-     * @param array $supported
-     *
-     * @return string
      */
     public function encoding(array $supported = []): string
     {
@@ -127,10 +112,6 @@ class Negotiate
      *
      * If no match is found, the first, highest-ranking client requested
      * type is returned.
-     *
-     * @param array $supported
-     *
-     * @return string
      */
     public function language(array $supported): string
     {
@@ -195,10 +176,6 @@ class Negotiate
      * Parses an Accept* header into it's multiple values.
      *
      * This is based on code from Aura.Accept library.
-     *
-     * @param string $header
-     *
-     * @return array
      */
     public function parseHeader(string $header): array
     {
@@ -277,12 +254,7 @@ class Negotiate
     /**
      * Match-maker
      *
-     * @param array  $acceptable
-     * @param string $supported
-     * @param bool   $enforceTypes
-     * @param bool   $matchLocales
-     *
-     * @return bool
+     * @param bool $matchLocales
      */
     protected function match(array $acceptable, string $supported, bool $enforceTypes = false, $matchLocales = false): bool
     {
@@ -313,11 +285,6 @@ class Negotiate
     /**
      * Checks two Accept values with matching 'values' to see if their
      * 'params' are the same.
-     *
-     * @param array $acceptable
-     * @param array $supported
-     *
-     * @return bool
      */
     protected function matchParameters(array $acceptable, array $supported): bool
     {
@@ -339,11 +306,6 @@ class Negotiate
     /**
      * Compares the types/subtypes of an acceptable Media type and
      * the supported string.
-     *
-     * @param array $acceptable
-     * @param array $supported
-     *
-     * @return bool
      */
     public function matchTypes(array $acceptable, array $supported): bool
     {
@@ -369,11 +331,6 @@ class Negotiate
     /**
      * Will match locales against their broader pairs, so that fr-FR would
      * match a supported localed of fr
-     *
-     * @param array $acceptable
-     * @param array $supported
-     *
-     * @return bool
      */
     public function matchLocales(array $acceptable, array $supported): bool
     {

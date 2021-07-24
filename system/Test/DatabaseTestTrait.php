@@ -200,8 +200,6 @@ trait DatabaseTestTrait
     /**
      * Seeds that database with a specific seeder.
      *
-     * @param string $name
-     *
      * @return void
      */
     public function seed(string $name)
@@ -241,8 +239,6 @@ trait DatabaseTestTrait
     /**
      * Loads the Builder class appropriate for the current database.
      *
-     * @param string $tableName
-     *
      * @return BaseBuilder
      */
     public function loadBuilder(string $tableName)
@@ -255,10 +251,6 @@ trait DatabaseTestTrait
     /**
      * Fetches a single column from a database row with criteria
      * matching $where.
-     *
-     * @param string $table
-     * @param string $column
-     * @param array  $where
      *
      * @throws DatabaseException
      *
@@ -284,9 +276,6 @@ trait DatabaseTestTrait
      * Asserts that records that match the conditions in $where DO
      * exist in the database.
      *
-     * @param string $table
-     * @param array  $where
-     *
      * @throws DatabaseException
      *
      * @return void
@@ -300,9 +289,6 @@ trait DatabaseTestTrait
     /**
      * Asserts that records that match the conditions in $where do
      * not exist in the database.
-     *
-     * @param string $table
-     * @param array  $where
      *
      * @return void
      */
@@ -319,9 +305,6 @@ trait DatabaseTestTrait
      * Inserts a row into to the database. This row will be removed
      * after the test has run.
      *
-     * @param string $table
-     * @param array  $data
-     *
      * @return bool
      */
     public function hasInDatabase(string $table, array $data)
@@ -337,10 +320,6 @@ trait DatabaseTestTrait
     /**
      * Asserts that the number of rows in the database that match $where
      * is equal to $expected.
-     *
-     * @param int    $expected
-     * @param string $table
-     * @param array  $where
      *
      * @throws DatabaseException
      *

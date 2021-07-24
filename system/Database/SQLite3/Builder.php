@@ -58,8 +58,6 @@ class Builder extends BaseBuilder
      * @param string $table  the table name
      * @param array  $keys   the insert keys
      * @param array  $values the insert values
-     *
-     * @return string
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -73,10 +71,6 @@ class Builder extends BaseBuilder
      *
      * If the database does not support the TRUNCATE statement,
      * then this method maps to 'DELETE FROM table'
-     *
-     * @param string $table
-     *
-     * @return string
      */
     protected function _truncate(string $table): string
     {

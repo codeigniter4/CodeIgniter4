@@ -244,6 +244,8 @@ final class LanguageTest extends CIUnitTestCase
      * but we can at least try loading them ... more accurate code coverage?
      *
      * @dataProvider MessageBundles
+     *
+     * @param mixed $bundle
      */
     public function testBundleUniqueKeys($bundle)
     {

@@ -25,8 +25,6 @@ class FormatException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when the instantiated class does not exist.
      *
-     * @param string $class
-     *
      * @return FormatException
      */
     public static function forInvalidFormatter(string $class)
@@ -50,8 +48,6 @@ class FormatException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when the supplied MIME type has no
      * defined Formatter class.
-     *
-     * @param string $mime
      *
      * @return FormatException
      */

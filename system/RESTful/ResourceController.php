@@ -101,8 +101,6 @@ class ResourceController extends BaseResource
     /**
      * Set/change the expected response representation for returned objects
      *
-     * @param string $format
-     *
      * @return void
      */
     public function setFormat(string $format = 'json')

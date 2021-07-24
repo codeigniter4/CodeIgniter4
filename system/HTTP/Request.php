@@ -72,8 +72,6 @@ class Request extends Message implements MessageInterface, RequestInterface
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @return bool
-     *
      * @deprecated Use Validation instead
      *
      * @codeCoverageIgnore
@@ -88,8 +86,6 @@ class Request extends Message implements MessageInterface, RequestInterface
      *
      * @param bool $upper Whether to return in upper or lower case.
      *
-     * @return string
-     *
      * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
      *
      * @codeCoverageIgnore
@@ -101,8 +97,6 @@ class Request extends Message implements MessageInterface, RequestInterface
 
     /**
      * Sets the request method. Used when spoofing the request.
-     *
-     * @param string $method
      *
      * @return Request
      *

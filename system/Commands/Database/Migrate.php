@@ -64,8 +64,6 @@ class Migrate extends BaseCommand
     /**
      * Ensures that all migrations have been run.
      *
-     * @param array $params
-     *
      * @return void
      */
     public function run(array $params)

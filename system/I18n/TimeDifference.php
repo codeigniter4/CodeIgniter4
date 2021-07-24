@@ -99,9 +99,6 @@ class TimeDifference
     /**
      * Note: both parameters are required to be in the same timezone. No timezone
      * shifting is done internally.
-     *
-     * @param DateTime $currentTime
-     * @param DateTime $testTime
      */
     public function __construct(DateTime $currentTime, DateTime $testTime)
     {
@@ -116,8 +113,6 @@ class TimeDifference
 
     /**
      * Returns the number of years of difference between the two.
-     *
-     * @param bool $raw
      *
      * @return float|int
      */
@@ -135,8 +130,6 @@ class TimeDifference
     /**
      * Returns the number of months difference between the two dates.
      *
-     * @param bool $raw
-     *
      * @return float|int
      */
     public function getMonths(bool $raw = false)
@@ -152,8 +145,6 @@ class TimeDifference
 
     /**
      * Returns the number of weeks difference between the two dates.
-     *
-     * @param bool $raw
      *
      * @return float|int
      */
@@ -171,8 +162,6 @@ class TimeDifference
     /**
      * Returns the number of days difference between the two dates.
      *
-     * @param bool $raw
-     *
      * @return float|int
      */
     public function getDays(bool $raw = false)
@@ -188,8 +177,6 @@ class TimeDifference
 
     /**
      * Returns the number of hours difference between the two dates.
-     *
-     * @param bool $raw
      *
      * @return float|int
      */
@@ -207,8 +194,6 @@ class TimeDifference
     /**
      * Returns the number of minutes difference between the two dates.
      *
-     * @param bool $raw
-     *
      * @return float|int
      */
     public function getMinutes(bool $raw = false)
@@ -225,8 +210,6 @@ class TimeDifference
     /**
      * Returns the number of seconds difference between the two dates.
      *
-     * @param bool $raw
-     *
      * @return int
      */
     public function getSeconds(bool $raw = false)
@@ -242,10 +225,6 @@ class TimeDifference
 
     /**
      * Convert the time to human readable format
-     *
-     * @param string|null $locale
-     *
-     * @return string
      */
     public function humanize(?string $locale = null): string
     {

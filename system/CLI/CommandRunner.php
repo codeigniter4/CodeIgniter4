@@ -59,8 +59,6 @@ class CommandRunner extends Controller
     /**
      * Default command.
      *
-     * @param array $params
-     *
      * @throws ReflectionException
      *
      * @return mixed
@@ -74,8 +72,6 @@ class CommandRunner extends Controller
 
     /**
      * Allows access to the current commands that have been found.
-     *
-     * @return array
      */
     public function getCommands(): array
     {

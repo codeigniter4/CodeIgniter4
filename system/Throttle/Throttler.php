@@ -58,8 +58,6 @@ class Throttler implements ThrottlerInterface
 
     /**
      * Constructor.
-     *
-     * @param CacheInterface $cache
      */
     public function __construct(CacheInterface $cache)
     {
@@ -69,8 +67,6 @@ class Throttler implements ThrottlerInterface
     /**
      * Returns the number of seconds until the next available token will
      * be released for usage.
-     *
-     * @return int
      */
     public function getTokenTime(): int
     {
@@ -92,8 +88,6 @@ class Throttler implements ThrottlerInterface
      * @param int    $capacity The number of requests the "bucket" can hold
      * @param int    $seconds  The time it takes the "bucket" to completely refill
      * @param int    $cost     The number of tokens this action uses.
-     *
-     * @return bool
      *
      * @internal param int $maxRequests
      */
@@ -161,8 +155,6 @@ class Throttler implements ThrottlerInterface
     /**
      * Used during testing to set the current timestamp to use.
      *
-     * @param int $time
-     *
      * @return $this
      */
     public function setTestTime(int $time)
@@ -174,8 +166,6 @@ class Throttler implements ThrottlerInterface
 
     /**
      * Return the test time, defaulting to current.
-     *
-     * @return int
      */
     public function time(): int
     {

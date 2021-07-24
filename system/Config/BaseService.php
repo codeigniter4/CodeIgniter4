@@ -169,8 +169,7 @@ class BaseService
      *
      * $key must be a name matching a service.
      *
-     * @param string $key
-     * @param mixed  ...$params
+     * @param mixed ...$params
      *
      * @return mixed
      */
@@ -197,8 +196,6 @@ class BaseService
      * The Autoloader class is the central class that handles our
      * spl_autoload_register method, and helper methods.
      *
-     * @param bool $getShared
-     *
      * @return Autoloader
      */
     public static function autoloader(bool $getShared = true)
@@ -219,8 +216,6 @@ class BaseService
      * within namespaced folders, as well as convenience methods for
      * loading 'helpers', and 'libraries'.
      *
-     * @param bool $getShared
-     *
      * @return FileLocator
      */
     public static function locator(bool $getShared = true)
@@ -240,9 +235,6 @@ class BaseService
      * Provides the ability to perform case-insensitive calling of service
      * names.
      *
-     * @param string $name
-     * @param array  $arguments
-     *
      * @return mixed
      */
     public static function __callStatic(string $name, array $arguments)
@@ -259,10 +251,6 @@ class BaseService
     /**
      * Check if the requested service is defined and return the declaring
      * class. Return null if not found.
-     *
-     * @param string $name
-     *
-     * @return string|null
      */
     public static function serviceExists(string $name): ?string
     {
@@ -296,8 +284,6 @@ class BaseService
 
     /**
      * Resets any mock and shared instances for a single service.
-     *
-     * @param string $name
      */
     public static function resetSingle(string $name)
     {
@@ -307,8 +293,7 @@ class BaseService
     /**
      * Inject mock object for testing.
      *
-     * @param string $name
-     * @param mixed  $mock
+     * @param mixed $mock
      */
     public static function injectMock(string $name, $mock)
     {
@@ -320,9 +305,6 @@ class BaseService
      * for new Config\Services files. Caches a copy of each one, then
      * looks for the service method in each, returning an instance of
      * the service, if available.
-     *
-     * @param string $name
-     * @param array  $arguments
      *
      * @return mixed
      *

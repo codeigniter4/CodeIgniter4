@@ -86,10 +86,7 @@ class BaseConfig
     /**
      * Initialization an environment-specific configuration setting
      *
-     * @param mixed  $property
-     * @param string $name
-     * @param string $prefix
-     * @param string $shortPrefix
+     * @param mixed $property
      *
      * @return mixed
      */
@@ -113,10 +110,6 @@ class BaseConfig
 
     /**
      * Retrieve an environment-specific configuration setting
-     *
-     * @param string $property
-     * @param string $prefix
-     * @param string $shortPrefix
      *
      * @return mixed
      */

@@ -141,9 +141,6 @@ interface ResponseInterface
      *
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-     *
-     * @return string
-     *
      * @deprecated Use getReasonPhrase()
      */
     public function getReason(): string;
@@ -154,8 +151,6 @@ interface ResponseInterface
 
     /**
      * Sets the date header
-     *
-     * @param DateTime $date
      *
      * @return ResponseInterface
      */
@@ -174,8 +169,6 @@ interface ResponseInterface
     /**
      * Set the Link Header
      *
-     * @param PagerInterface $pager
-     *
      * @see http://tools.ietf.org/html/rfc5988
      *
      * @return Response
@@ -187,9 +180,6 @@ interface ResponseInterface
     /**
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
-     *
-     * @param string $mime
-     * @param string $charset
      *
      * @return ResponseInterface
      */
@@ -203,7 +193,6 @@ interface ResponseInterface
      * Converts the $body into JSON and sets the Content Type header.
      *
      * @param array|string $body
-     * @param bool         $unencoded
      *
      * @return $this
      */
@@ -272,8 +261,6 @@ interface ResponseInterface
      *  - proxy-revalidate
      *  - no-transform
      *
-     * @param array $options
-     *
      * @return ResponseInterface
      */
     public function setCache(array $options = []);
@@ -339,20 +326,11 @@ interface ResponseInterface
 
     /**
      * Checks to see if the Response has a specified cookie or not.
-     *
-     * @param string      $name
-     * @param string|null $value
-     * @param string      $prefix
-     *
-     * @return bool
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool;
 
     /**
      * Returns the cookie
-     *
-     * @param string|null $name
-     * @param string      $prefix
      *
      * @return Cookie|Cookie[]|null
      */
@@ -360,11 +338,6 @@ interface ResponseInterface
 
     /**
      * Sets a cookie to be deleted when the response is sent.
-     *
-     * @param string $name
-     * @param string $domain
-     * @param string $path
-     * @param string $prefix
      *
      * @return $this
      */
@@ -384,9 +357,8 @@ interface ResponseInterface
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string $uri    The URI to redirect to
-     * @param string $method
-     * @param int    $code   The type of redirection, defaults to 302
+     * @param string $uri  The URI to redirect to
+     * @param int    $code The type of redirection, defaults to 302
      *
      * @throws HTTPException For invalid status code.
      *

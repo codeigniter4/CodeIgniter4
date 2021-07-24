@@ -97,8 +97,6 @@ class Forge extends BaseForge
      * CREATE TABLE attributes
      *
      * @param array $attributes Associative array of table attributes
-     *
-     * @return string
      */
     protected function _createTableAttributes(array $attributes): string
     {
@@ -163,10 +161,6 @@ class Forge extends BaseForge
 
     /**
      * Process column
-     *
-     * @param array $field
-     *
-     * @return string
      */
     protected function _processColumn(array $field): string
     {
@@ -192,8 +186,6 @@ class Forge extends BaseForge
      * Process indexes
      *
      * @param string $table (ignored)
-     *
-     * @return string
      */
     protected function _processIndexes(string $table): string
     {

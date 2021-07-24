@@ -69,8 +69,6 @@ interface UploadedFileInterface
      * Returns whether the file has been moved or not. If it has,
      * the move() method will not work and certain properties, like
      * the tempName, will no longer be available.
-     *
-     * @return bool
      */
     public function hasMoved(): bool;
 
@@ -108,8 +106,6 @@ interface UploadedFileInterface
 
     /**
      * Gets the temporary filename where the file was uploaded to.
-     *
-     * @return string
      */
     public function getTempName(): string;
 
@@ -117,8 +113,6 @@ interface UploadedFileInterface
      * Returns the original file extension, based on the file name that
      * was uploaded. This is NOT a trusted source.
      * For a trusted version, use guessExtension() instead.
-     *
-     * @return string
      */
     public function getClientExtension(): string;
 
@@ -126,16 +120,12 @@ interface UploadedFileInterface
      * Returns the mime type as provided by the client.
      * This is NOT a trusted value.
      * For a trusted version, use getMimeType() instead.
-     *
-     * @return string
      */
     public function getClientMimeType(): string;
 
     /**
      * Returns whether the file was uploaded successfully, based on whether
      * it was uploaded via HTTP and has no errors.
-     *
-     * @return bool
      */
     public function isValid(): bool;
 
@@ -145,12 +135,6 @@ interface UploadedFileInterface
      * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
      * last element is an integer as there may be cases that the delimiter may be present in the filename.
      * For the all other cases, it appends an integer starting from zero before the file's extension.
-     *
-     * @param string $destination
-     * @param string $delimiter
-     * @param int    $i
-     *
-     * @return string
      */
     public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
 }

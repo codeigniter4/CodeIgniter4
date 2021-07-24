@@ -48,9 +48,6 @@ class Commands
 
     /**
      * Runs a command given
-     *
-     * @param string $command
-     * @param array  $params
      */
     public function run(string $command, array $params)
     {
@@ -138,11 +135,6 @@ class Commands
     /**
      * Verifies if the command being sought is found
      * in the commands list.
-     *
-     * @param string $command
-     * @param array  $commands
-     *
-     * @return bool
      */
     public function verifyCommand(string $command, array $commands): bool
     {
@@ -171,11 +163,6 @@ class Commands
     /**
      * Finds alternative of `$name` among collection
      * of commands.
-     *
-     * @param string $name
-     * @param array  $collection
-     *
-     * @return array
      */
     protected function getCommandAlternatives(string $name, array $collection): array
     {

@@ -21,8 +21,6 @@ class DataException extends RuntimeException implements ExceptionInterface
     /**
      * Used by the Model's trigger() method when the callback cannot be found.
      *
-     * @param string $method
-     *
      * @return DataException
      */
     public static function forInvalidMethodTriggered(string $method)
@@ -33,8 +31,6 @@ class DataException extends RuntimeException implements ExceptionInterface
     /**
      * Used by Model's insert/update methods when there isn't
      * any data to actually work with.
-     *
-     * @param string $mode
      *
      * @return DataException
      */
@@ -48,8 +44,6 @@ class DataException extends RuntimeException implements ExceptionInterface
      * primary key defined and Model has option `useAutoIncrement`
      * set to false.
      *
-     * @param string $mode
-     *
      * @return DataException
      */
     public static function forEmptyPrimaryKey(string $mode)
@@ -61,8 +55,6 @@ class DataException extends RuntimeException implements ExceptionInterface
      * Thrown when an argument for one of the Model's methods
      * were empty or otherwise invalid, and they could not be
      * to work correctly for that method.
-     *
-     * @param string $argument
      *
      * @return DataException
      */

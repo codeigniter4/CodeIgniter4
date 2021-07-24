@@ -24,8 +24,6 @@ interface ValidationInterface
      *
      * @param array  $data  The array of data to validate.
      * @param string $group The pre-defined group of rules to apply.
-     *
-     * @return bool
      */
     public function run(?array $data = null, ?string $group = null): bool;
 
@@ -44,38 +42,21 @@ interface ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
-     *
-     * @param RequestInterface $request
-     *
-     * @return ValidationInterface
      */
     public function withRequest(RequestInterface $request): ValidationInterface;
 
     /**
      * Stores the rules that should be used to validate the items.
-     *
-     * @param array $rules
-     * @param array $messages
-     *
-     * @return ValidationInterface
      */
     public function setRules(array $rules, array $messages = []): ValidationInterface;
 
     /**
      * Checks to see if the rule for key $field has been set or not.
-     *
-     * @param string $field
-     *
-     * @return bool
      */
     public function hasRule(string $field): bool;
 
     /**
      * Returns the error for a specified $field (or empty string if not set).
-     *
-     * @param string $field
-     *
-     * @return string
      */
     public function getError(string $field): string;
 
@@ -94,19 +75,12 @@ interface ValidationInterface
 
     /**
      * Sets the error for a specific field. Used by custom validation methods.
-     *
-     * @param string $alias
-     * @param string $error
-     *
-     * @return ValidationInterface
      */
     public function setError(string $alias, string $error): ValidationInterface;
 
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.
-     *
-     * @return ValidationInterface
      */
     public function reset(): ValidationInterface;
 }

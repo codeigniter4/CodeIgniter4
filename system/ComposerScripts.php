@@ -80,10 +80,6 @@ final class ComposerScripts
 
     /**
      * Recursively remove the contents of the previous `system/ThirdParty`.
-     *
-     * @param string $directory
-     *
-     * @return void
      */
     private static function recursiveDelete(string $directory): void
     {
@@ -109,11 +105,6 @@ final class ComposerScripts
     /**
      * Recursively copy the files and directories of the origin directory
      * into the target directory, i.e. "mirror" its contents.
-     *
-     * @param string $originDir
-     * @param string $targetDir
-     *
-     * @return void
      */
     private static function recursiveMirror(string $originDir, string $targetDir): void
     {
@@ -154,8 +145,6 @@ final class ComposerScripts
 
     /**
      * Copy Kint's init files into `system/ThirdParty/Kint/`
-     *
-     * @return void
      */
     private static function copyKintInitFiles(): void
     {

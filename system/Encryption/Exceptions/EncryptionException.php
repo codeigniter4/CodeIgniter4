@@ -35,8 +35,6 @@ class EncryptionException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when the handler requested is not available.
      *
-     * @param string $handler
-     *
      * @return static
      */
     public static function forNoHandlerAvailable(string $handler)

@@ -54,8 +54,6 @@ class TestResponse extends TestCase
 
     /**
      * Stores or the Response and parses the body in the DOM.
-     *
-     * @param ResponseInterface $response
      */
     public function __construct(ResponseInterface $response)
     {
@@ -69,8 +67,6 @@ class TestResponse extends TestCase
     /**
      * Sets the request.
      *
-     * @param RequestInterface $request
-     *
      * @return $this
      */
     public function setRequest(RequestInterface $request)
@@ -82,8 +78,6 @@ class TestResponse extends TestCase
 
     /**
      * Sets the Response and updates the DOM.
-     *
-     * @param ResponseInterface $response
      *
      * @return $this
      */
@@ -127,8 +121,6 @@ class TestResponse extends TestCase
     /**
      * Boils down the possible responses into a boolean valid/not-valid
      * response type.
-     *
-     * @return bool
      */
     public function isOK(): bool
     {
@@ -145,8 +137,6 @@ class TestResponse extends TestCase
 
     /**
      * Asserts that the status is a specific value.
-     *
-     * @param int $code
      *
      * @throws Exception
      */
@@ -181,8 +171,6 @@ class TestResponse extends TestCase
 
     /**
      * Returns whether or not the Response was a redirect or RedirectResponse
-     *
-     * @return bool
      */
     public function isRedirect(): bool
     {
@@ -204,8 +192,6 @@ class TestResponse extends TestCase
     /**
      * Assert that a given response was a redirect
      * and it was redirect to a specific URI.
-     *
-     * @param string $uri
      *
      * @throws Exception
      */
@@ -235,8 +221,6 @@ class TestResponse extends TestCase
 
     /**
      * Returns the URL set for redirection.
-     *
-     * @return string|null
      */
     public function getRedirectUrl(): ?string
     {
@@ -262,8 +246,7 @@ class TestResponse extends TestCase
     /**
      * Asserts that an SESSION key has been set and, optionally, test it's value.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @throws Exception
      */
@@ -285,8 +268,6 @@ class TestResponse extends TestCase
     /**
      * Asserts the session is missing $key.
      *
-     * @param string $key
-     *
      * @throws Exception
      */
     public function assertSessionMissing(string $key)
@@ -301,7 +282,6 @@ class TestResponse extends TestCase
     /**
      * Asserts that the Response contains a specific header.
      *
-     * @param string      $key
      * @param string|null $value
      *
      * @throws Exception
@@ -318,8 +298,6 @@ class TestResponse extends TestCase
     /**
      * Asserts the Response headers does not contain the specified header.
      *
-     * @param string $key
-     *
      * @throws Exception
      */
     public function assertHeaderMissing(string $key)
@@ -334,9 +312,7 @@ class TestResponse extends TestCase
     /**
      * Asserts that the response has the specified cookie.
      *
-     * @param string      $key
      * @param string|null $value
-     * @param string      $prefix
      *
      * @throws Exception
      */
@@ -347,8 +323,6 @@ class TestResponse extends TestCase
 
     /**
      * Assert the Response does not have the specified cookie set.
-     *
-     * @param string $key
      */
     public function assertCookieMissing(string $key)
     {
@@ -357,9 +331,6 @@ class TestResponse extends TestCase
 
     /**
      * Asserts that a cookie exists and has an expired time.
-     *
-     * @param string $key
-     * @param string $prefix
      *
      * @throws Exception
      */
@@ -391,9 +362,6 @@ class TestResponse extends TestCase
 
     /**
      * Test that the response contains a matching JSON fragment.
-     *
-     * @param array $fragment
-     * @param bool  $strict
      *
      * @throws Exception
      */
@@ -454,9 +422,6 @@ class TestResponse extends TestCase
     /**
      * Assert that the desired text can be found in the result body.
      *
-     * @param string|null $search
-     * @param string|null $element
-     *
      * @throws Exception
      */
     public function assertSee(?string $search = null, ?string $element = null)
@@ -466,9 +431,6 @@ class TestResponse extends TestCase
 
     /**
      * Asserts that we do not see the specified text.
-     *
-     * @param string|null $search
-     * @param string|null $element
      *
      * @throws Exception
      */
@@ -480,8 +442,6 @@ class TestResponse extends TestCase
     /**
      * Assert that we see an element selected via a CSS selector.
      *
-     * @param string $search
-     *
      * @throws Exception
      */
     public function assertSeeElement(string $search)
@@ -491,8 +451,6 @@ class TestResponse extends TestCase
 
     /**
      * Assert that we do not see an element selected via a CSS selector.
-     *
-     * @param string $search
      *
      * @throws Exception
      */
@@ -504,9 +462,6 @@ class TestResponse extends TestCase
     /**
      * Assert that we see a link with the matching text and/or class.
      *
-     * @param string      $text
-     * @param string|null $details
-     *
      * @throws Exception
      */
     public function assertSeeLink(string $text, ?string $details = null)
@@ -516,9 +471,6 @@ class TestResponse extends TestCase
 
     /**
      * Assert that we see an input with name/value.
-     *
-     * @param string      $field
-     * @param string|null $value
      *
      * @throws Exception
      */

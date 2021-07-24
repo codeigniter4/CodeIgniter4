@@ -24,12 +24,9 @@ if (! function_exists('_get_uri')) {
      *
      * @internal Outside of the framework this should not be used directly.
      *
-     * @param string   $relativePath May include queries or fragments
-     * @param App|null $config
+     * @param string $relativePath May include queries or fragments
      *
      * @throws InvalidArgumentException For invalid paths or config
-     *
-     * @return URI
      */
     function _get_uri(string $relativePath = '', ?App $config = null): URI
     {
@@ -77,11 +74,8 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param mixed       $relativePath URI string or array of URI segments
-     * @param string|null $scheme
-     * @param App|null    $config       Alternate configuration to use
-     *
-     * @return string
+     * @param mixed    $relativePath URI string or array of URI segments
+     * @param App|null $config       Alternate configuration to use
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
@@ -103,8 +97,6 @@ if (! function_exists('base_url')) {
      *
      * @param mixed  $relativePath URI string or array of URI segments
      * @param string $scheme
-     *
-     * @return string
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
@@ -151,8 +143,6 @@ if (! function_exists('previous_url')) {
      * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
      * which can be set by the user so is untrusted and not set by certain browsers/servers.
      *
-     * @param bool $returnObject
-     *
      * @return mixed|string|URI
      */
     function previous_url(bool $returnObject = false)
@@ -175,8 +165,6 @@ if (! function_exists('uri_string')) {
      * Returns the path part of the current URL
      *
      * @param bool $relative Whether the resulting path should be relative to baseURL
-     *
-     * @return string
      */
     function uri_string(bool $relative = false): string
     {
@@ -193,8 +181,6 @@ if (! function_exists('index_page')) {
      * Returns the "index_page" from your config file
      *
      * @param App|null $altConfig Alternate configuration to use
-     *
-     * @return string
      */
     function index_page(?App $altConfig = null): string
     {
@@ -215,8 +201,6 @@ if (! function_exists('anchor')) {
      * @param string   $title      The link title
      * @param mixed    $attributes Any attributes
      * @param App|null $altConfig  Alternate configuration to use
-     *
-     * @return string
      */
     function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
     {
@@ -250,8 +234,6 @@ if (! function_exists('anchor_popup')) {
      * @param string   $title      the link title
      * @param mixed    $attributes any attributes
      * @param App|null $altConfig  Alternate configuration to use
-     *
-     * @return string
      */
     function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
     {
@@ -301,8 +283,6 @@ if (! function_exists('mailto')) {
      * @param string $email      the email address
      * @param string $title      the link title
      * @param mixed  $attributes any attributes
-     *
-     * @return string
      */
     function mailto(string $email, string $title = '', $attributes = ''): string
     {
@@ -323,8 +303,6 @@ if (! function_exists('safe_mailto')) {
      * @param string $email      the email address
      * @param string $title      the link title
      * @param mixed  $attributes any attributes
-     *
-     * @return string
      */
     function safe_mailto(string $email, string $title = '', $attributes = ''): string
     {
@@ -418,8 +396,6 @@ if (! function_exists('auto_link')) {
      * @param string $str   the string
      * @param string $type  the type: email, url, or both
      * @param bool   $popup whether to create pop-up links
-     *
-     * @return string
      */
     function auto_link(string $str, string $type = 'both', bool $popup = false): string
     {
@@ -464,8 +440,6 @@ if (! function_exists('prep_url')) {
      *
      * @param string $str    the URL
      * @param bool   $secure set true if you want to force https://
-     *
-     * @return string
      */
     function prep_url(string $str = '', bool $secure = false): string
     {
@@ -497,8 +471,6 @@ if (! function_exists('url_title')) {
      * @param string $str       Input string
      * @param string $separator Word separator (usually '-' or '_')
      * @param bool   $lowercase Whether to transform the output string to lowercase
-     *
-     * @return string
      */
     function url_title(string $str, string $separator = '-', bool $lowercase = false): string
     {
@@ -536,8 +508,6 @@ if (! function_exists('mb_url_title')) {
      * @param string $str       Input string
      * @param string $separator Word separator (usually '-' or '_')
      * @param bool   $lowercase Whether to transform the output string to lowercase
-     *
-     * @return string
      */
     function mb_url_title(string $str, string $separator = '-', bool $lowercase = false): string
     {
@@ -552,12 +522,9 @@ if (! function_exists('url_to')) {
      * Get the full, absolute URL to a controller method
      * (with additional arguments)
      *
-     * @param string $controller
-     * @param mixed  ...$args
+     * @param mixed ...$args
      *
      * @throws RouterException
-     *
-     * @return string
      */
     function url_to(string $controller, ...$args): string
     {
@@ -583,10 +550,6 @@ if (! function_exists('url_is')) {
      *
      * Example:
      *   if (url_is('admin*)) ...
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     function url_is(string $path): bool
     {

@@ -293,6 +293,10 @@ final class FeatureTestTraitTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideRoutesData
+     *
+     * @param mixed $from
+     * @param mixed $to
+     * @param mixed $httpGet
      */
     public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
     {

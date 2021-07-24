@@ -179,8 +179,6 @@ class Encryption
      * __isset() magic, providing checking for some of our protected properties
      *
      * @param string $key Property name
-     *
-     * @return bool
      */
     public function __isset($key): bool
     {

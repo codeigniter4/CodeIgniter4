@@ -188,9 +188,6 @@ class IncomingRequest extends Request
      * Sets up our URI object based on the information we have. This is
      * either provided by the user in the baseURL Config setting, or
      * determined from the environment as needed.
-     *
-     * @param string $protocol
-     * @param string $baseURL
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
@@ -204,10 +201,6 @@ class IncomingRequest extends Request
     /**
      * Detects the relative path based on
      * the URIProtocol Config setting.
-     *
-     * @param string $protocol
-     *
-     * @return string
      */
     public function detectPath(string $protocol = ''): string
     {
@@ -293,8 +286,6 @@ class IncomingRequest extends Request
      * Parse QUERY_STRING
      *
      * Will parse QUERY_STRING and automatically detect the URI from it.
-     *
-     * @return string
      */
     protected function parseQueryString(): string
     {
@@ -323,12 +314,6 @@ class IncomingRequest extends Request
     /**
      * Provides a convenient way to work with the Negotiate class
      * for content negotiation.
-     *
-     * @param string $type
-     * @param array  $supported
-     * @param bool   $strictMatch
-     *
-     * @return string
      */
     public function negotiate(string $type, array $supported, bool $strictMatch = false): string
     {
@@ -355,8 +340,6 @@ class IncomingRequest extends Request
 
     /**
      * Determines if this request was made from the command line (CLI).
-     *
-     * @return bool
      */
     public function isCLI(): bool
     {
@@ -365,8 +348,6 @@ class IncomingRequest extends Request
 
     /**
      * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
-     *
-     * @return bool
      */
     public function isAJAX(): bool
     {
@@ -376,8 +357,6 @@ class IncomingRequest extends Request
     /**
      * Attempts to detect if the current connection is secure through
      * a few different methods.
-     *
-     * @return bool
      */
     public function isSecure(): bool
     {
@@ -440,8 +419,6 @@ class IncomingRequest extends Request
     /**
      * Returns the path relative to SCRIPT_NAME,
      * running detection as necessary.
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -454,8 +431,6 @@ class IncomingRequest extends Request
 
     /**
      * Sets the locale string for this request.
-     *
-     * @param string $locale
      *
      * @return IncomingRequest
      */
@@ -476,8 +451,6 @@ class IncomingRequest extends Request
     /**
      * Gets the current locale, with a fallback to the default
      * locale if none is set.
-     *
-     * @return string
      */
     public function getLocale(): string
     {
@@ -486,8 +459,6 @@ class IncomingRequest extends Request
 
     /**
      * Returns the default locale as set in Config\App.php
-     *
-     * @return string
      */
     public function getDefaultLocale(): string
     {
@@ -682,8 +653,6 @@ class IncomingRequest extends Request
      * with redirect_with_input(). It first checks for the data in the old
      * POST data, then the old GET data and finally check for dot arrays
      *
-     * @param string $key
-     *
      * @return mixed
      */
     public function getOldInput(string $key)
@@ -729,8 +698,6 @@ class IncomingRequest extends Request
     /**
      * Returns an array of all files that have been uploaded with this
      * request. Each file is represented by an UploadedFile instance.
-     *
-     * @return array
      */
     public function getFiles(): array
     {
@@ -744,8 +711,6 @@ class IncomingRequest extends Request
     /**
      * Verify if a file exist, by the name of the input field used to upload it, in the collection
      * of uploaded files and if is have been uploaded with multiple option.
-     *
-     * @param string $fileID
      *
      * @return array|null
      */
@@ -762,8 +727,6 @@ class IncomingRequest extends Request
      * Retrieves a single file by the name of the input field used
      * to upload it.
      *
-     * @param string $fileID
-     *
      * @return UploadedFile|null
      */
     public function getFile(string $fileID)
@@ -779,10 +742,6 @@ class IncomingRequest extends Request
      * Remove relative directory (../) and multi slashes (///)
      *
      * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
-     *
-     * @param string $uri
-     *
-     * @return string
      *
      * @deprecated Use URI::removeDotSegments() directly
      */

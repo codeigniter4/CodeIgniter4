@@ -196,8 +196,6 @@ class ContentSecurityPolicy
      * Constructor.
      *
      * Stores our default values from the Config file.
-     *
-     * @param ContentSecurityPolicyConfig $config
      */
     public function __construct(ContentSecurityPolicyConfig $config)
     {
@@ -213,8 +211,6 @@ class ContentSecurityPolicy
      *
      * Should be called just prior to sending the response to the user agent.
      *
-     * @param ResponseInterface $response
-     *
      * @return void
      */
     public function finalize(ResponseInterface &$response)
@@ -229,8 +225,6 @@ class ContentSecurityPolicy
      * you are just starting to implement the policy, and will help
      * determine what errors need to be addressed before you turn on
      * all filtering.
-     *
-     * @param bool $value
      *
      * @return $this
      */
@@ -249,7 +243,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -271,7 +264,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-child-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -292,7 +284,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -313,7 +304,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-default-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -333,7 +323,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-font-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -351,7 +340,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-form-action
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -369,7 +357,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -387,7 +374,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-frame-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -405,7 +391,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-img-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -423,7 +408,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-media-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -441,7 +425,6 @@ class ContentSecurityPolicy
      * @see https://www.w3.org/TR/CSP/#directive-manifest-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -459,7 +442,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-object-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -476,8 +458,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-plugin-types
      *
-     * @param array|string $mime              One or more plugin mime types, separate by spaces
-     * @param bool|null    $explicitReporting
+     * @param array|string $mime One or more plugin mime types, separate by spaces
      *
      * @return $this
      */
@@ -494,8 +475,6 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-report-uri
      *
-     * @param string $uri
-     *
      * @return $this
      */
     public function setReportURI(string $uri)
@@ -511,8 +490,7 @@ class ContentSecurityPolicy
      *
      * @see http://www.w3.org/TR/CSP/#directive-sandbox
      *
-     * @param array|string $flags             An array of sandbox flags that can be added to the directive.
-     * @param bool|null    $explicitReporting
+     * @param array|string $flags An array of sandbox flags that can be added to the directive.
      *
      * @return $this
      */
@@ -530,7 +508,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -548,7 +525,6 @@ class ContentSecurityPolicy
      * @see http://www.w3.org/TR/CSP/#directive-connect-src
      *
      * @param array|string $uri
-     * @param bool|null    $explicitReporting
      *
      * @return $this
      */
@@ -563,8 +539,6 @@ class ContentSecurityPolicy
      * Sets whether the user agents should rewrite URL schemes, changing
      * HTTP to HTTPS.
      *
-     * @param bool $value
-     *
      * @return $this
      */
     public function upgradeInsecureRequests(bool $value = true)
@@ -578,8 +552,6 @@ class ContentSecurityPolicy
      * DRY method to add an string or array to a class property.
      *
      * @param array|string $options
-     * @param string       $target
-     * @param bool|null    $explicitReporting
      *
      * @return void
      */
@@ -603,8 +575,6 @@ class ContentSecurityPolicy
      * Scans the body of the request message and replaces any nonce
      * placeholders with actual nonces, that we'll then add to our
      * headers.
-     *
-     * @param ResponseInterface $response
      *
      * @return void
      */
@@ -649,8 +619,6 @@ class ContentSecurityPolicy
      * Based on the current state of the elements, will add the appropriate
      * Content-Security-Policy and Content-Security-Policy-Report-Only headers
      * with their values to the response object.
-     *
-     * @param ResponseInterface $response
      *
      * @return void
      */
@@ -736,7 +704,6 @@ class ContentSecurityPolicy
      * array might have options that are geared toward either the regular or the
      * reportOnly header, since it's viable to have both simultaneously.
      *
-     * @param string            $name
      * @param array|string|null $values
      *
      * @return void

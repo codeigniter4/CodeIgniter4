@@ -247,9 +247,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string        $tableName
-     * @param ConnectionInterface $db
-     * @param array               $options
+     * @param array|string $tableName
      *
      * @throws DatabaseException
      */
@@ -302,8 +300,6 @@ class BaseBuilder
 
     /**
      * Gets the name of the primary table.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -313,8 +309,6 @@ class BaseBuilder
     /**
      * Returns an array of bind values and their
      * named parameters for binding in the Query object later.
-     *
-     * @return array
      */
     public function getBinds(): array
     {
@@ -326,8 +320,6 @@ class BaseBuilder
      *
      * Set ignore Flag for next insert,
      * update or delete query.
-     *
-     * @param bool $ignore
      *
      * @return $this
      */
@@ -467,8 +459,6 @@ class BaseBuilder
      * @used-by selectSum()
      *
      * @param string $select Field name
-     * @param string $alias
-     * @param string $type
      *
      * @throws DatabaseException
      * @throws DataException
@@ -505,10 +495,6 @@ class BaseBuilder
 
     /**
      * Determines the alias name based on the table
-     *
-     * @param string $item
-     *
-     * @return string
      */
     protected function createAliasFromTable(string $item): string
     {
@@ -525,8 +511,6 @@ class BaseBuilder
      * DISTINCT
      *
      * Sets a flag which tells the query string compiler to add DISTINCT
-     *
-     * @param bool $val
      *
      * @return $this
      */
@@ -581,7 +565,6 @@ class BaseBuilder
      *
      * Generates the JOIN portion of the query
      *
-     * @param string $table
      * @param string $cond   The join condition
      * @param string $type   The type of join
      * @param bool   $escape Whether not to try to escape identifiers
@@ -697,7 +680,6 @@ class BaseBuilder
      * @param string $qbKey  'QBWhere' or 'QBHaving'
      * @param mixed  $key
      * @param mixed  $value
-     * @param string $type
      * @param bool   $escape
      *
      * @return $this
@@ -908,7 +890,6 @@ class BaseBuilder
      * @param string             $key    The field to search
      * @param array|Closure|null $values The values searched on, or anonymous function with subquery
      * @param bool               $not    If the statement would be IN or NOT IN
-     * @param string             $type
      * @param bool               $escape
      * @param string             $clause (Internal use only)
      *
@@ -973,11 +954,9 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
-     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed $field
+     * @param bool  $escape
+     * @param bool  $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -992,11 +971,9 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
-     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed $field
+     * @param bool  $escape
+     * @param bool  $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1011,11 +988,9 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
-     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed $field
+     * @param bool  $escape
+     * @param bool  $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1030,11 +1005,9 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
-     * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
+     * @param mixed $field
+     * @param bool  $escape
+     * @param bool  $insensitiveSearch IF true, will force a case-insensitive search
      *
      * @return $this
      */
@@ -1049,10 +1022,8 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
+     * @param mixed $field
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -1067,10 +1038,8 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
+     * @param mixed $field
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -1085,10 +1054,8 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
+     * @param mixed $field
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -1103,10 +1070,8 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed  $field
-     * @param string $match
-     * @param string $side
-     * @param bool   $escape
+     * @param mixed $field
+     * @param bool  $escape
      *
      * @return $this
      */
@@ -1128,10 +1093,6 @@ class BaseBuilder
      * @used-by orNotHavingLike()
      *
      * @param mixed  $field
-     * @param string $match
-     * @param string $type
-     * @param string $side
-     * @param string $not
      * @param bool   $escape
      * @param bool   $insensitiveSearch IF true, will force a case-insensitive search
      * @param string $clause            (Internal use only)
@@ -1184,12 +1145,6 @@ class BaseBuilder
 
     /**
      * Platform independent LIKE statement builder.
-     *
-     * @param string|null $prefix
-     * @param string      $column
-     * @param string|null $not
-     * @param string      $bind
-     * @param bool        $insensitiveSearch
      *
      * @return string $like_statement
      */
@@ -1305,10 +1260,6 @@ class BaseBuilder
     /**
      * Prepate a query group start.
      *
-     * @param string $not
-     * @param string $type
-     * @param string $clause
-     *
      * @return $this
      */
     protected function groupStartPrepare(string $not = '', string $type = 'AND ', string $clause = 'QBWhere')
@@ -1329,8 +1280,6 @@ class BaseBuilder
 
     /**
      * Prepate a query group end.
-     *
-     * @param string $clause
      *
      * @return $this
      */
@@ -1355,10 +1304,6 @@ class BaseBuilder
      * @used-by whereHaving()
      * @used-by _whereIn()
      * @used-by havingGroupStart()
-     *
-     * @param string $type
-     *
-     * @return string
      */
     protected function groupGetType(string $type): string
     {
@@ -1439,7 +1384,6 @@ class BaseBuilder
     /**
      * ORDER BY
      *
-     * @param string $orderBy
      * @param string $direction ASC, DESC or RANDOM
      * @param bool   $escape
      *
@@ -1538,8 +1482,6 @@ class BaseBuilder
      * Generates a platform-specific LIMIT clause.
      *
      * @param string $sql SQL Query
-     *
-     * @return string
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
@@ -1582,10 +1524,6 @@ class BaseBuilder
     /**
      * Returns the previously set() data, alternatively resetting it
      * if needed.
-     *
-     * @param bool $clean
-     *
-     * @return array
      */
     public function getSetData(bool $clean = false): array
     {
@@ -1604,8 +1542,6 @@ class BaseBuilder
      * Compiles a SELECT query string and returns the sql.
      *
      * @param bool $reset TRUE: resets QB values; FALSE: leave QB values alone
-     *
-     * @return string
      */
     public function getCompiledSelect(bool $reset = true): string
     {
@@ -1621,10 +1557,6 @@ class BaseBuilder
     /**
      * Returns a finalized, compiled query string with the bindings
      * inserted and prefixes swapped out.
-     *
-     * @param string $sql
-     *
-     * @return string
      */
     protected function compileFinalQuery(string $sql): string
     {
@@ -1710,8 +1642,6 @@ class BaseBuilder
      *
      * Generates a platform-specific query string that counts all records
      * returned by an Query Builder query.
-     *
-     * @param bool $reset
      *
      * @return int|string when $test = true
      */
@@ -1884,8 +1814,6 @@ class BaseBuilder
      * @param string $table  Table name
      * @param array  $keys   INSERT keys
      * @param array  $values INSERT values
-     *
-     * @return string
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -1895,9 +1823,8 @@ class BaseBuilder
     /**
      * The "setInsertBatch" function.  Allows key/value pairs to be set for batch inserts
      *
-     * @param mixed  $key
-     * @param string $value
-     * @param bool   $escape
+     * @param mixed $key
+     * @param bool  $escape
      *
      * @return $this|null
      */
@@ -2033,8 +1960,6 @@ class BaseBuilder
      * has been chosen to be inserted into.
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     protected function validateInsert(): bool
     {
@@ -2058,8 +1983,6 @@ class BaseBuilder
      * @param string $table         The table name
      * @param array  $keys          The insert keys
      * @param array  $unescapedKeys The insert values
-     *
-     * @return string
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -2109,8 +2032,6 @@ class BaseBuilder
      * @param string $table  The table name
      * @param array  $keys   The insert keys
      * @param array  $values The insert values
-     *
-     * @return string
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -2124,8 +2045,6 @@ class BaseBuilder
      * about operator precedence.
      *
      * Note: This is only used (and overridden) by MySQL and SQLSRV.
-     *
-     * @return string
      */
     protected function _fromTables(): string
     {
@@ -2218,8 +2137,6 @@ class BaseBuilder
      *
      * @param string $table  the Table name
      * @param array  $values the Update data
-     *
-     * @return string
      */
     protected function _update(string $table, array $values): string
     {
@@ -2243,8 +2160,6 @@ class BaseBuilder
      * chosen to be update.
      *
      * @throws DatabaseException
-     *
-     * @return bool
      */
     protected function validateUpdate(): bool
     {
@@ -2343,8 +2258,6 @@ class BaseBuilder
      * @param string $table  Table name
      * @param array  $values Update data
      * @param string $index  WHERE key
-     *
-     * @return string
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
@@ -2378,7 +2291,6 @@ class BaseBuilder
      * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
      *
      * @param array|object $key
-     * @param string       $index
      * @param bool         $escape
      *
      * @throws DatabaseException
@@ -2476,8 +2388,6 @@ class BaseBuilder
      * then this method maps to 'DELETE FROM table'
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _truncate(string $table): string
     {
@@ -2490,8 +2400,6 @@ class BaseBuilder
      * Compiles a delete query string and returns the sql
      *
      * @param bool $reset TRUE: reset QB values; FALSE: leave QB values alone
-     *
-     * @return string
      */
     public function getCompiledDelete(bool $reset = true): string
     {
@@ -2506,9 +2414,8 @@ class BaseBuilder
      *
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where     The where clause
-     * @param int   $limit     The limit clause
-     * @param bool  $resetData
+     * @param mixed $where The where clause
+     * @param int   $limit The limit clause
      *
      * @throws DatabaseException
      *
@@ -2555,9 +2462,6 @@ class BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @param string $column
-     * @param int    $value
-     *
      * @return bool
      */
     public function increment(string $column, int $value = 1)
@@ -2571,9 +2475,6 @@ class BaseBuilder
 
     /**
      * Decrements a numeric column by the specified value.
-     *
-     * @param string $column
-     * @param int    $value
      *
      * @return bool
      */
@@ -2592,8 +2493,6 @@ class BaseBuilder
      * Generates a platform-specific delete string from the supplied data
      *
      * @param string $table The table name
-     *
-     * @return string
      */
     protected function _delete(string $table): string
     {
@@ -2645,8 +2544,6 @@ class BaseBuilder
      * Should not be called directly.
      *
      * @param mixed $selectOverride
-     *
-     * @return string
      */
     protected function compileSelect($selectOverride = false): string
     {
@@ -2698,8 +2595,6 @@ class BaseBuilder
      *
      * Checks if the ignore option is supported by
      * the Database Driver for the specific statement.
-     *
-     * @param string $statement
      *
      * @return string
      */
@@ -2919,10 +2814,6 @@ class BaseBuilder
      * Is literal
      *
      * Determines if a string represents a literal value or a field name
-     *
-     * @param string $str
-     *
-     * @return bool
      */
     protected function isLiteral(string $str): bool
     {
@@ -3022,10 +2913,6 @@ class BaseBuilder
 
     /**
      * Tests whether the string has an SQL operator
-     *
-     * @param string $str
-     *
-     * @return bool
      */
     protected function hasOperator(string $str): bool
     {
@@ -3034,9 +2921,6 @@ class BaseBuilder
 
     /**
      * Returns the SQL string operator
-     *
-     * @param string $str
-     * @param bool   $list
      *
      * @return mixed
      */
@@ -3071,11 +2955,7 @@ class BaseBuilder
      * with PHP 7+ we get a huge memory/performance gain with indexed
      * arrays instead, so lets take advantage of that here.
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param bool   $escape
-     *
-     * @return string
+     * @param mixed $value
      */
     protected function setBind(string $key, $value = null, bool $escape = true): string
     {

@@ -17,8 +17,7 @@ if (! function_exists('number_to_size')) {
     /**
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
-     * @param mixed  $num       Will be cast as int
-     * @param int    $precision
+     * @param mixed  $num    Will be cast as int
      * @param string $locale
      *
      * @return bool|string
@@ -70,9 +69,7 @@ if (! function_exists('number_to_amount')) {
      *
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
-     * @param string      $num
-     * @param int         $precision
-     * @param string|null $locale
+     * @param string $num
      *
      * @return bool|string
      */
@@ -116,12 +113,8 @@ if (! function_exists('number_to_amount')) {
 
 if (! function_exists('number_to_currency')) {
     /**
-     * @param float  $num
-     * @param string $currency
      * @param string $locale
      * @param int    $fraction
-     *
-     * @return string
      */
     function number_to_currency(float $num, string $currency, ?string $locale = null, ?int $fraction = null): string
     {
@@ -137,13 +130,6 @@ if (! function_exists('format_number')) {
     /**
      * A general purpose, locale-aware, number_format method.
      * Used by all of the functions of the number_helper.
-     *
-     * @param float       $num
-     * @param int         $precision
-     * @param string|null $locale
-     * @param array       $options
-     *
-     * @return string
      */
     function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {
@@ -193,8 +179,6 @@ if (! function_exists('number_to_roman')) {
      * Convert a number to a roman numeral.
      *
      * @param string $num it will convert to int
-     *
-     * @return string|null
      */
     function number_to_roman(string $num): ?string
     {

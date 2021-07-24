@@ -43,11 +43,6 @@ class FileRules
 
     /**
      * Verifies that $name is the name of a valid uploaded file.
-     *
-     * @param string|null $blank
-     * @param string      $name
-     *
-     * @return bool
      */
     public function uploaded(?string $blank, string $name): bool
     {
@@ -79,11 +74,6 @@ class FileRules
 
     /**
      * Verifies if the file's size in Kilobytes is no larger than the parameter.
-     *
-     * @param string|null $blank
-     * @param string      $params
-     *
-     * @return bool
      */
     public function max_size(?string $blank, string $params): bool
     {
@@ -120,11 +110,6 @@ class FileRules
     /**
      * Uses the mime config file to determine if a file is considered an "image",
      * which for our purposes basically means that it's a raster image or svg.
-     *
-     * @param string|null $blank
-     * @param string      $params
-     *
-     * @return bool
      */
     public function is_image(?string $blank, string $params): bool
     {
@@ -160,11 +145,6 @@ class FileRules
 
     /**
      * Checks to see if an uploaded file's mime type matches one in the parameter.
-     *
-     * @param string|null $blank
-     * @param string      $params
-     *
-     * @return bool
      */
     public function mime_in(?string $blank, string $params): bool
     {
@@ -196,11 +176,6 @@ class FileRules
 
     /**
      * Checks to see if an uploaded file's extension matches one in the parameter.
-     *
-     * @param string|null $blank
-     * @param string      $params
-     *
-     * @return bool
      */
     public function ext_in(?string $blank, string $params): bool
     {
@@ -233,11 +208,6 @@ class FileRules
     /**
      * Checks an uploaded file to verify that the dimensions are within
      * a specified allowable dimension.
-     *
-     * @param string|null $blank
-     * @param string      $params
-     *
-     * @return bool
      */
     public function max_dims(?string $blank, string $params): bool
     {

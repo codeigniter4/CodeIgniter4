@@ -237,8 +237,6 @@ class MockCache extends BaseHandler implements CacheInterface
 
     /**
      * Determines if the driver is supported on this system.
-     *
-     * @return bool
      */
     public function isSupported(): bool
     {

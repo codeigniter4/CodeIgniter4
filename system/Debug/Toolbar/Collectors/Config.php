@@ -22,8 +22,6 @@ class Config
 {
     /**
      * Return toolbar config values as an array.
-     *
-     * @return array
      */
     public static function display(): array
     {

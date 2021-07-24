@@ -286,8 +286,6 @@ class Model extends BaseModel
      *
      * @param array|int|string|null $id   ID
      * @param array|null            $data Data
-     *
-     * @return bool
      */
     protected function doUpdate($id = null, $data = null): bool
     {
@@ -603,8 +601,6 @@ class Model extends BaseModel
      * If this method return false insert operation will be executed
      *
      * @param array|object $data Data
-     *
-     * @return bool
      */
     protected function shouldUpdate($data): bool
     {
@@ -652,8 +648,6 @@ class Model extends BaseModel
      * @param array|object|null     $data Data
      *
      * @throws ReflectionException
-     *
-     * @return bool
      */
     public function update($id = null, $data = null): bool
     {
@@ -721,8 +715,6 @@ class Model extends BaseModel
      * Checks for the existence of properties across this model, builder, and db connection.
      *
      * @param string $name Name
-     *
-     * @return bool
      */
     public function __isset(string $name): bool
     {
@@ -777,8 +769,6 @@ class Model extends BaseModel
      * @param bool          $onlyChanged Only Changed
      *
      * @throws ReflectionException
-     *
-     * @return array
      *
      * @codeCoverageIgnore
      *

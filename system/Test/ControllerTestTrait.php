@@ -126,8 +126,6 @@ trait ControllerTestTrait
     /**
      * Loads the specified controller, and generates any needed dependencies.
      *
-     * @param string $name
-     *
      * @return mixed
      */
     public function controller(string $name)
@@ -145,8 +143,7 @@ trait ControllerTestTrait
     /**
      * Runs the specified method on the controller and returns the results.
      *
-     * @param string $method
-     * @param array  $params
+     * @param array $params
      *
      * @throws InvalidArgumentException
      *
@@ -274,8 +271,6 @@ trait ControllerTestTrait
 
     /**
      * Set the controller's URI, with method chaining.
-     *
-     * @param string $uri
      *
      * @return mixed
      */

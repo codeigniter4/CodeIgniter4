@@ -19,11 +19,7 @@ if (! function_exists('word_limiter')) {
      *
      * Limits a string to X number of words.
      *
-     * @param string $str
-     * @param int    $limit
      * @param string $endChar the end character. Usually an ellipsis
-     *
-     * @return string
      */
     function word_limiter(string $str, int $limit = 100, string $endChar = '&#8230;'): string
     {
@@ -48,11 +44,7 @@ if (! function_exists('character_limiter')) {
      * Limits the string based on the character count.  Preserves complete words
      * so the character count may not be exactly as specified.
      *
-     * @param string $str
-     * @param int    $n
      * @param string $endChar the end character. Usually an ellipsis
-     *
-     * @return string
      */
     function character_limiter(string $str, int $n = 500, string $endChar = '&#8230;'): string
     {
@@ -86,10 +78,6 @@ if (! function_exists('ascii_to_entities')) {
      * High ASCII to Entities
      *
      * Converts high ASCII text and MS Word special characters to character entities
-     *
-     * @param string $str
-     *
-     * @return string
      */
     function ascii_to_entities(string $str): string
     {
@@ -138,11 +126,6 @@ if (! function_exists('entities_to_ascii')) {
      * Entities to ASCII
      *
      * Converts character entities back to ASCII
-     *
-     * @param string $str
-     * @param bool   $all
-     *
-     * @return string
      */
     function entities_to_ascii(string $str, bool $all = true): string
     {
@@ -186,8 +169,6 @@ if (! function_exists('word_censor')) {
      * @param string $str         the text string
      * @param array  $censored    the array of censored words
      * @param string $replacement the optional replacement value
-     *
-     * @return string
      */
     function word_censor(string $str, array $censored, string $replacement = ''): string
     {
@@ -239,8 +220,6 @@ if (! function_exists('highlight_code')) {
      * Colorizes code strings
      *
      * @param string $str the text string
-     *
-     * @return string
      */
     function highlight_code(string $str): string
     {
@@ -309,8 +288,6 @@ if (! function_exists('highlight_phrase')) {
      * @param string $phrase   the phrase you'd like to highlight
      * @param string $tagOpen  the opening tag to precede the phrase with
      * @param string $tagClose the closing tag to end the phrase with
-     *
-     * @return string
      */
     function highlight_phrase(string $str, string $phrase, string $tagOpen = '<mark>', string $tagClose = '</mark>'): string
     {
@@ -323,8 +300,6 @@ if (! function_exists('convert_accented_characters')) {
      * Convert Accented Foreign Characters to ASCII
      *
      * @param string $str Input string
-     *
-     * @return string
      */
     function convert_accented_characters(string $str): string
     {
@@ -359,8 +334,6 @@ if (! function_exists('word_wrap')) {
      *
      * @param string $str     the text string
      * @param int    $charlim = 76    the number of characters to wrap at
-     *
-     * @return string
      */
     function word_wrap(string $str, int $charlim = 76): string
     {
@@ -498,10 +471,6 @@ if (! function_exists('strip_quotes')) {
      * Strip Quotes
      *
      * Removes single and double quotes from a string
-     *
-     * @param string $str
-     *
-     * @return string
      */
     function strip_quotes(string $str): string
     {
@@ -514,10 +483,6 @@ if (! function_exists('quotes_to_entities')) {
      * Quotes to Entities
      *
      * Converts single and double quotes to entities
-     *
-     * @param string $str
-     *
-     * @return string
      */
     function quotes_to_entities(string $str): string
     {
@@ -537,10 +502,6 @@ if (! function_exists('reduce_double_slashes')) {
      * becomes:
      *
      * http://www.some-site.com/index.php
-     *
-     * @param string $str
-     *
-     * @return string
      */
     function reduce_double_slashes(string $str): string
     {
@@ -560,11 +521,8 @@ if (! function_exists('reduce_multiples')) {
      *
      * Fred, Bill, Joe, Jimmy
      *
-     * @param string $str
      * @param string $character the character you wish to reduce
      * @param bool   $trim      TRUE/FALSE - whether to trim the character from the beginning/end
-     *
-     * @return string
      */
     function reduce_multiples(string $str, string $character = ',', bool $trim = false): string
     {
@@ -582,8 +540,6 @@ if (! function_exists('random_string')) {
      *
      * @param string $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
      * @param int    $len  Number of characters
-     *
-     * @return string
      */
     function random_string(string $type = 'alnum', int $len = 8): string
     {
@@ -634,8 +590,6 @@ if (! function_exists('increment_string')) {
      * @param string $str       Required
      * @param string $separator What should the duplicate number be appended with
      * @param int    $first     Which number should be used for the first dupe increment
-     *
-     * @return string
      */
     function increment_string(string $str, string $separator = '_', int $first = 1): string
     {
@@ -654,8 +608,6 @@ if (! function_exists('alternator')) {
      * @phpstan-ignore-next-line
      *
      * @param string (as many parameters as needed)
-     *
-     * @return string
      */
     function alternator(): string
     {

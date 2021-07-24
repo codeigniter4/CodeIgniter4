@@ -1220,9 +1220,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
      * Used to generate fake credit card numbers that will still pass the Luhn
      * check used to validate the card so we can be sure the cards are recognized correctly.
      *
-     * @param int $prefix
-     * @param int $length
-     *
      * @return string
      */
     protected function generateCardNum(int $prefix, int $length)

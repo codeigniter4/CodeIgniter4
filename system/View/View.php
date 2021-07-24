@@ -137,11 +137,7 @@ class View implements RendererInterface
     /**
      * Constructor
      *
-     * @param ViewConfig       $config
-     * @param string|null      $viewPath
-     * @param FileLocator|null $loader
-     * @param bool|null        $debug
-     * @param LoggerInterface  $logger
+     * @param LoggerInterface $logger
      */
     public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
@@ -168,8 +164,6 @@ class View implements RendererInterface
      * @param bool|null  $saveData If true, saves data for subsequent calls,
      *                             if false, cleans the data after displaying,
      *                             if null, uses the config setting.
-     *
-     * @return string
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -283,8 +277,6 @@ class View implements RendererInterface
      * @param bool|null  $saveData If true, saves data for subsequent calls,
      *                             if false, cleans the data after displaying,
      *                             if null, uses the config setting.
-     *
-     * @return string
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -312,11 +304,6 @@ class View implements RendererInterface
 
     /**
      * Extract first bit of a long string and add ellipsis
-     *
-     * @param string $string
-     * @param int    $length
-     *
-     * @return string
      */
     public function excerpt(string $string, int $length = 20): string
     {
@@ -326,11 +313,8 @@ class View implements RendererInterface
     /**
      * Sets several pieces of view data at once.
      *
-     * @param array  $data
      * @param string $context The context to escape it for: html, css, js, url
      *                        If null, no escaping will happen
-     *
-     * @return RendererInterface
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
@@ -347,12 +331,9 @@ class View implements RendererInterface
     /**
      * Sets a single piece of view data.
      *
-     * @param string $name
      * @param mixed  $value
      * @param string $context The context to escape it for: html, css, js, url
      *                        If null, no escaping will happen
-     *
-     * @return RendererInterface
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
@@ -368,8 +349,6 @@ class View implements RendererInterface
 
     /**
      * Removes all of the view data from the system.
-     *
-     * @return RendererInterface
      */
     public function resetData(): RendererInterface
     {
@@ -380,8 +359,6 @@ class View implements RendererInterface
 
     /**
      * Returns the current data that will be displayed in the view.
-     *
-     * @return array
      */
     public function getData(): array
     {
@@ -390,8 +367,6 @@ class View implements RendererInterface
 
     /**
      * Specifies that the current view should extend an existing layout.
-     *
-     * @param string $layout
      *
      * @return void
      */
@@ -443,8 +418,6 @@ class View implements RendererInterface
 
     /**
      * Renders a section's contents.
-     *
-     * @param string $sectionName
      */
     public function renderSection(string $sectionName)
     {
@@ -463,11 +436,7 @@ class View implements RendererInterface
     /**
      * Used within layout views to include additional views.
      *
-     * @param string     $view
-     * @param array|null $options
-     * @param bool       $saveData
-     *
-     * @return string
+     * @param bool $saveData
      */
     public function include(string $view, ?array $options = null, $saveData = true): string
     {
@@ -477,8 +446,6 @@ class View implements RendererInterface
     /**
      * Returns the performance data that might have been collected
      * during the execution. Used primarily in the Debug Toolbar.
-     *
-     * @return array
      */
     public function getPerformanceData(): array
     {
@@ -487,10 +454,6 @@ class View implements RendererInterface
 
     /**
      * Logs performance data for rendering a view.
-     *
-     * @param float  $start
-     * @param float  $end
-     * @param string $view
      *
      * @return void
      */

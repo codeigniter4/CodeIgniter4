@@ -1317,6 +1317,8 @@ class Email
     }
 
     /**
+     * @param mixed $type
+     *
      * @return bool
      */
     protected function attachmentsHaveMultipart($type)

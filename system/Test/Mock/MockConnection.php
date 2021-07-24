@@ -39,10 +39,7 @@ class MockConnection extends BaseConnection
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param string $sql
-     * @param mixed  ...$binds
-     * @param bool   $setEscapeFlags
-     * @param string $queryClass
+     * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query
      *
@@ -89,8 +86,6 @@ class MockConnection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @param bool $persistent
-     *
      * @return mixed
      */
     public function connect(bool $persistent = false)
@@ -109,8 +104,6 @@ class MockConnection extends BaseConnection
     /**
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
-     *
-     * @return bool
      */
     public function reconnect(): bool
     {
@@ -119,8 +112,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Select a specific database table to use.
-     *
-     * @param string $databaseName
      *
      * @return mixed
      */
@@ -133,8 +124,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Returns a string containing the version of the database being used.
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -143,8 +132,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Executes the query against the database.
-     *
-     * @param string $sql
      *
      * @return mixed
      */
@@ -155,8 +142,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Returns the total number of rows affected by this query.
-     *
-     * @return int
      */
     public function affectedRows(): int
     {
@@ -169,21 +154,17 @@ class MockConnection extends BaseConnection
      * Must return an array with keys 'code' and 'message':
      *
      *  return ['code' => null, 'message' => null);
-     *
-     * @return array
      */
     public function error(): array
     {
         return [
-            'code'    => null,
-            'message' => null,
+            'code'    => 0,
+            'message' => '',
         ];
     }
 
     /**
      * Insert ID
-     *
-     * @return int
      */
     public function insertID(): int
     {
@@ -192,10 +173,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
-     *
-     * @param bool $constrainByPrefix
-     *
-     * @return string
      */
     protected function _listTables(bool $constrainByPrefix = false): string
     {
@@ -204,41 +181,22 @@ class MockConnection extends BaseConnection
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
-     *
-     * @param string $table
-     *
-     * @return string
      */
     protected function _listColumns(string $table = ''): string
     {
         return '';
     }
 
-    /**
-     * @param string $table
-     *
-     * @return array
-     */
     protected function _fieldData(string $table): array
     {
         return [];
     }
 
-    /**
-     * @param string $table
-     *
-     * @return array
-     */
     protected function _indexData(string $table): array
     {
         return [];
     }
 
-    /**
-     * @param string $table
-     *
-     * @return array
-     */
     protected function _foreignKeyData(string $table): array
     {
         return [];
@@ -253,8 +211,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Begin Transaction
-     *
-     * @return bool
      */
     protected function _transBegin(): bool
     {
@@ -263,8 +219,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Commit Transaction
-     *
-     * @return bool
      */
     protected function _transCommit(): bool
     {
@@ -273,8 +227,6 @@ class MockConnection extends BaseConnection
 
     /**
      * Rollback Transaction
-     *
-     * @return bool
      */
     protected function _transRollback(): bool
     {

@@ -158,9 +158,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Create a new Cookie instance from a `Set-Cookie` header.
      *
-     * @param string $cookie
-     * @param bool   $raw
-     *
      * @throws CookieException
      *
      * @return static
@@ -701,8 +698,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * Converts expires time to Unix format.
      *
      * @param DateTimeInterface|int|string $expires
-     *
-     * @return int
      */
     protected static function convertExpiresTimestamp($expires = 0): int
     {
@@ -735,12 +730,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * If `$raw` is true, names should not contain invalid characters
      * as `setrawcookie()` will reject this.
      *
-     * @param string $name
-     * @param bool   $raw
-     *
      * @throws CookieException
-     *
-     * @return void
      */
     protected function validateName(string $name, bool $raw): void
     {
@@ -756,14 +746,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Validates the special prefixes if some attribute requirements are met.
      *
-     * @param string $prefix
-     * @param bool   $secure
-     * @param string $path
-     * @param string $domain
-     *
      * @throws CookieException
-     *
-     * @return void
      */
     protected function validatePrefix(string $prefix, bool $secure, string $path, string $domain): void
     {
@@ -779,12 +762,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Validates the `SameSite` to be within the allowed types.
      *
-     * @param string $samesite
-     * @param bool   $secure
-     *
      * @throws CookieException
-     *
-     * @return void
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
      */

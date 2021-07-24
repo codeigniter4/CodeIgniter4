@@ -24,10 +24,6 @@ trait DebugTraceableTrait
     /**
      * Tweaks the exception's constructor to assign the file/line to where
      * it is actually raised rather than were it is instantiated.
-     *
-     * @param string         $message
-     * @param int            $code
-     * @param Throwable|null $previous
      */
     final public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {

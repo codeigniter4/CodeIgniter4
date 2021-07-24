@@ -439,6 +439,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @dataProvider dirtyPathsProvider
+     *
+     * @param mixed $input
+     * @param mixed $expected
      */
     public function testCleanPathActuallyCleaningThePaths($input, $expected)
     {

@@ -73,8 +73,6 @@ class MigrateCreate extends BaseCommand
 
     /**
      * Actually execute a command.
-     *
-     * @param array $params
      */
     public function run(array $params)
     {

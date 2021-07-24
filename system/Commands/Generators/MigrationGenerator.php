@@ -74,8 +74,6 @@ class MigrationGenerator extends BaseCommand
 
     /**
      * Actually execute a command.
-     *
-     * @param array $params
      */
     public function run(array $params)
     {
@@ -94,10 +92,6 @@ class MigrationGenerator extends BaseCommand
 
     /**
      * Prepare options and do the necessary replacements.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function prepare(string $class): string
     {
@@ -118,10 +112,6 @@ class MigrationGenerator extends BaseCommand
 
     /**
      * Change file basename before saving.
-     *
-     * @param string $filename
-     *
-     * @return string
      */
     protected function basename(string $filename): string
     {

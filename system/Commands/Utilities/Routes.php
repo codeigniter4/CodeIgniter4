@@ -67,8 +67,6 @@ class Routes extends BaseCommand
 
     /**
      * Displays the help for the spark cli script itself.
-     *
-     * @param array $params
      */
     public function run(array $params)
     {

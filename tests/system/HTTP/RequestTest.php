@@ -581,6 +581,10 @@ final class RequestTest extends CIUnitTestCase
 
     /**
      * @dataProvider ipAddressChecks
+     *
+     * @param mixed      $expected
+     * @param mixed      $address
+     * @param mixed|null $type
      */
     public function testValidIPAddress($expected, $address, $type = null)
     {

@@ -44,8 +44,6 @@ class Builder extends BaseBuilder
      * about operator precedence.
      *
      * Note: This is only used (and overridden) by MySQL.
-     *
-     * @return string
      */
     protected function _fromTables(): string
     {

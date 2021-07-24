@@ -64,9 +64,6 @@ class Pager implements PagerInterface
 
     /**
      * Constructor.
-     *
-     * @param PagerConfig       $config
-     * @param RendererInterface $view
      */
     public function __construct(PagerConfig $config, RendererInterface $view)
     {
@@ -77,10 +74,7 @@ class Pager implements PagerInterface
     /**
      * Handles creating and displaying the
      *
-     * @param string $group
      * @param string $template The output template alias to render.
-     *
-     * @return string
      */
     public function links(string $group = 'default', string $template = 'default_full'): string
     {
@@ -91,11 +85,6 @@ class Pager implements PagerInterface
 
     /**
      * Creates simple Next/Previous links, instead of full pagination.
-     *
-     * @param string $group
-     * @param string $template
-     *
-     * @return string
      */
     public function simpleLinks(string $group = 'default', string $template = 'default_simple'): string
     {
@@ -108,14 +97,9 @@ class Pager implements PagerInterface
      * Allows for a simple, manual, form of pagination where all of the data
      * is provided by the user. The URL is the current URI.
      *
-     * @param int         $page
-     * @param int|null    $perPage
-     * @param int         $total
      * @param string      $template The output template alias to render.
      * @param int         $segment  (whether page number is provided by URI segment)
      * @param string|null $group    optional group (i.e. if we'd like to define custom path)
-     *
-     * @return string
      */
     public function makeLinks(int $page, ?int $perPage, int $total, string $template = 'default_full', int $segment = 0, ?string $group = 'default'): string
     {
@@ -129,11 +113,6 @@ class Pager implements PagerInterface
     /**
      * Does the actual work of displaying the view file. Used internally
      * by links(), simpleLinks(), and makeLinks().
-     *
-     * @param string $group
-     * @param string $template
-     *
-     * @return string
      */
     protected function displayLinks(string $group, string $template): string
     {
@@ -149,12 +128,6 @@ class Pager implements PagerInterface
     /**
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
-     *
-     * @param string   $group
-     * @param int      $page
-     * @param int|null $perPage
-     * @param int      $total
-     * @param int      $segment
      *
      * @return $this
      */
@@ -184,9 +157,6 @@ class Pager implements PagerInterface
     /**
      * Sets segment for a group.
      *
-     * @param int    $number
-     * @param string $group
-     *
      * @return mixed
      */
     public function setSegment(int $number, string $group = 'default')
@@ -198,9 +168,6 @@ class Pager implements PagerInterface
 
     /**
      * Sets the path that an aliased group of links will use.
-     *
-     * @param string $path
-     * @param string $group
      *
      * @return mixed
      */
@@ -215,10 +182,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the total number of items in data store.
-     *
-     * @param string $group
-     *
-     * @return int
      */
     public function getTotal(string $group = 'default'): int
     {
@@ -229,10 +192,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the total number of pages.
-     *
-     * @param string $group
-     *
-     * @return int
      */
     public function getPageCount(string $group = 'default'): int
     {
@@ -243,10 +202,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the number of the current page of results.
-     *
-     * @param string $group
-     *
-     * @return int
      */
     public function getCurrentPage(string $group = 'default'): int
     {
@@ -257,10 +212,6 @@ class Pager implements PagerInterface
 
     /**
      * Tells whether this group of results has any more pages of results.
-     *
-     * @param string $group
-     *
-     * @return bool
      */
     public function hasMore(string $group = 'default'): bool
     {
@@ -271,8 +222,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the last page, if we have a total that we can calculate with.
-     *
-     * @param string $group
      *
      * @return int|null
      */
@@ -289,10 +238,6 @@ class Pager implements PagerInterface
 
     /**
      * Determines the first page # that should be shown.
-     *
-     * @param string $group
-     *
-     * @return int
      */
     public function getFirstPage(string $group = 'default'): int
     {
@@ -304,10 +249,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the URI for a specific page for the specified group.
-     *
-     * @param int|null $page
-     * @param string   $group
-     * @param bool     $returnObject
      *
      * @return string|URI
      */
@@ -344,9 +285,6 @@ class Pager implements PagerInterface
     /**
      * Returns the full URI to the next page of results, or null.
      *
-     * @param string $group
-     * @param bool   $returnObject
-     *
      * @return string|null
      */
     public function getNextPageURI(string $group = 'default', bool $returnObject = false)
@@ -371,9 +309,6 @@ class Pager implements PagerInterface
     /**
      * Returns the full URL to the previous page of results, or null.
      *
-     * @param string $group
-     * @param bool   $returnObject
-     *
      * @return string|null
      */
     public function getPreviousPageURI(string $group = 'default', bool $returnObject = false)
@@ -397,10 +332,6 @@ class Pager implements PagerInterface
 
     /**
      * Returns the number of results per page that should be shown.
-     *
-     * @param string $group
-     *
-     * @return int
      */
     public function getPerPage(string $group = 'default'): int
     {
@@ -414,10 +345,6 @@ class Pager implements PagerInterface
      * total, per_page, current_page, last_page, next_url, prev_url, from, to.
      * Does not include the actual data. This data is suitable for adding
      * a 'data' object to with the result set and converting to JSON.
-     *
-     * @param string $group
-     *
-     * @return array
      */
     public function getDetails(string $group = 'default'): array
     {
@@ -437,8 +364,6 @@ class Pager implements PagerInterface
     /**
      * Sets only allowed queries on pagination links.
      *
-     * @param array $queries
-     *
      * @return Pager
      */
     public function only(array $queries): self
@@ -451,8 +376,7 @@ class Pager implements PagerInterface
     /**
      * Ensures that an array exists for the group specified.
      *
-     * @param string $group
-     * @param int    $perPage
+     * @param int $perPage
      */
     protected function ensureGroup(string $group, ?int $perPage = null)
     {
@@ -478,8 +402,6 @@ class Pager implements PagerInterface
 
     /**
      * Calculating the current page
-     *
-     * @param string $group
      */
     protected function calculateCurrentPage(string $group)
     {

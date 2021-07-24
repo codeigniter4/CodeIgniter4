@@ -21,8 +21,7 @@ interface RouterInterface
     /**
      * Stores a reference to the RouteCollection object.
      *
-     * @param RouteCollectionInterface $routes
-     * @param Request                  $request
+     * @param Request $request
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null);
 

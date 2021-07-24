@@ -56,7 +56,6 @@ if (! function_exists('get_cookie')) {
      * Fetch an item from the $_COOKIE array
      *
      * @param string $index
-     * @param bool   $xssClean
      *
      * @return mixed
      *
@@ -94,12 +93,6 @@ if (! function_exists('delete_cookie')) {
 if (! function_exists('has_cookie')) {
     /**
      * Checks if a cookie exists by name.
-     *
-     * @param string      $name
-     * @param string|null $value
-     * @param string      $prefix
-     *
-     * @return bool
      */
     function has_cookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
