@@ -605,9 +605,7 @@ if (! function_exists('alternator')) {
      *
      * Allows strings to be alternated. See docs...
      *
-     * @phpstan-ignore-next-line
-     *
-     * @param string (as many parameters as needed)
+     * @param string ...$args (as many parameters as needed)
      */
     function alternator(...$args): string
     {
