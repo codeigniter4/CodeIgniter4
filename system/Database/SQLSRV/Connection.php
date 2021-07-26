@@ -221,7 +221,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _indexData(string $table): array
+    protected function _indexData(string $table): array
     {
         $sql = 'EXEC sp_helpindex ' . $this->escape($table);
 
@@ -261,7 +261,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _foreignKeyData(string $table): array
+    protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT '
                 . 'f.name as constraint_name, '
@@ -329,7 +329,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _fieldData(string $table): array
+    protected function _fieldData(string $table): array
     {
         $sql = 'SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, COLUMN_DEFAULT
 			FROM INFORMATION_SCHEMA.COLUMNS
@@ -453,7 +453,7 @@ class Connection extends BaseConnection
      *
      * @return mixed
      */
-    public function execute(string $sql)
+    protected function execute(string $sql)
     {
         $stmt = ($this->scrollable === false || $this->isWriteType($sql)) ?
             sqlsrv_query($this->connID, $sql) :

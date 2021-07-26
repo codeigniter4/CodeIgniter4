@@ -112,7 +112,7 @@ class Connection extends BaseConnection
      *
      * @return mixed \SQLite3Result object or bool
      */
-    public function execute(string $sql)
+    protected function execute(string $sql)
     {
         try {
             return $this->isWriteType($sql)
@@ -217,7 +217,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _fieldData(string $table): array
+    protected function _fieldData(string $table): array
     {
         if (false === $query = $this->query('PRAGMA TABLE_INFO(' . $this->protectIdentifiers($table, true, null, false) . ')')) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
@@ -252,7 +252,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _indexData(string $table): array
+    protected function _indexData(string $table): array
     {
         // Get indexes
         // Don't use PRAGMA index_list, so we can preserve index order
@@ -293,7 +293,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _foreignKeyData(string $table): array
+    protected function _foreignKeyData(string $table): array
     {
         if ($this->supportsForeignKeys() !== true) {
             return [];

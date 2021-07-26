@@ -16,7 +16,7 @@ use CodeIgniter\Security\Security;
 
 class MockSecurity extends Security
 {
-    public function sendCookie(RequestInterface $request)
+    protected function sendCookie(RequestInterface $request)
     {
         $_COOKIE['csrf_cookie_name'] = $this->hash;
 

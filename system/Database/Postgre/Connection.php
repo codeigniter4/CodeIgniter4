@@ -134,7 +134,7 @@ class Connection extends BaseConnection
      *
      * @return mixed
      */
-    public function execute(string $sql)
+    protected function execute(string $sql)
     {
         try {
             return pg_query($this->connID, $sql);
@@ -229,7 +229,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _fieldData(string $table): array
+    protected function _fieldData(string $table): array
     {
         $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
@@ -263,7 +263,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _indexData(string $table): array
+    protected function _indexData(string $table): array
     {
         $sql = 'SELECT "indexname", "indexdef"
 			FROM "pg_indexes"
@@ -304,7 +304,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _foreignKeyData(string $table): array
+    protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
             tc.constraint_name, tc.table_name, kcu.column_name,
