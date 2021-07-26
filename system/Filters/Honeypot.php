@@ -22,17 +22,18 @@ use Config\Services;
 class Honeypot implements FilterInterface
 {
     /**
-     * Checks if Honeypot field is empty; if not
-     * then the requester is a bot
+     * Checks if Honeypot field is empty, if not then the
+     * requester is a bot
      *
      * @param array|null $arguments
+     *
+     * @throws HoneypotException
      *
      * @return void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        $honeypot = Services::honeypot(new \Config\Honeypot());
-        if ($honeypot->hasContent($request)) {
+        if (Services::honeypot()->hasContent($request)) {
             throw HoneypotException::isBot();
         }
     }
@@ -46,7 +47,6 @@ class Honeypot implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        $honeypot = Services::honeypot(new \Config\Honeypot());
-        $honeypot->attachHoneypot($response);
+        Services::honeypot()->attachHoneypot($response);
     }
 }

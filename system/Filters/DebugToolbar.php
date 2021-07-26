@@ -11,9 +11,7 @@
 
 namespace CodeIgniter\Filters;
 
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
@@ -25,8 +23,7 @@ class DebugToolbar implements FilterInterface
     /**
      * We don't need to do anything here.
      *
-     * @param IncomingRequest|RequestInterface $request
-     * @param array|null                       $arguments
+     * @param array|null $arguments
      *
      * @return void
      */
@@ -38,9 +35,7 @@ class DebugToolbar implements FilterInterface
      * If the debug flag is set (CI_DEBUG) then collect performance
      * and debug information and display it in a toolbar.
      *
-     * @param IncomingRequest|RequestInterface $request
-     * @param Response|ResponseInterface       $response
-     * @param array|null                       $arguments
+     * @param array|null $arguments
      *
      * @return void
      */
