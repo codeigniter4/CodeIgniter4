@@ -55,9 +55,9 @@ jobs:
       - name: Prepare API repo
         working-directory: api
         run: |
-          rm -rf api/docs*
-          mkdir -p api/docs
           git reset --hard master
+          rm -rfv api/docs
+          mkdir --parents --verbose api/docs
 
       - name: Build API in source repo
         working-directory: source
