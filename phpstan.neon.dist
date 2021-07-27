@@ -28,6 +28,7 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
+        reportUnmatchedIgnoredErrors: false 
 	ignoreErrors:
 		- '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
 		- '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli|\$schema#'
