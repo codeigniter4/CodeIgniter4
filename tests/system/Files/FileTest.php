@@ -89,4 +89,20 @@ final class FileTest extends CIUnitTestCase
 
         new File(SYSTEMPATH . 'Commoner.php', true);
     }
+
+    public function testGetDestination(): void
+    {
+        $file = new File(SYSTEMPATH . 'Common.php');
+        copy(SYSTEMPATH . 'Common.php', SYSTEMPATH . 'Common_Copy.php');
+
+        $this->assertSame(SYSTEMPATH . 'Common_Copy_1.php', $file->getDestination(SYSTEMPATH . 'Common_Copy.php', ''));
+        $this->assertSame(SYSTEMPATH . 'Common_1.php', $file->getDestination(SYSTEMPATH . 'Common.php'));
+        $this->assertSame(SYSTEMPATH . 'Common_Copy_5.php', $file->getDestination(SYSTEMPATH . 'Common_Copy_5.php'));
+
+        copy(SYSTEMPATH . 'Common_Copy.php', SYSTEMPATH . 'Common_Copy_5.php');
+        $this->assertSame(SYSTEMPATH . 'Common_Copy_6.php', $file->getDestination(SYSTEMPATH . 'Common_Copy_5.php'));
+
+        unlink(SYSTEMPATH . 'Common_Copy.php');
+        unlink(SYSTEMPATH . 'Common_Copy_5.php');
+    }
 }
