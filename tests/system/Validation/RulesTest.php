@@ -270,11 +270,6 @@ final class RulesTest extends CIUnitTestCase
                 ['foo' => null],
                 false,
             ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => false],
-                false,
-            ],
             // This tests will return true because the input data is trimmed
             [
                 ['foo' => 'permit_empty|required'],
