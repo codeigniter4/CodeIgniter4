@@ -161,7 +161,7 @@ class File extends SplFileInfo
             $info      = pathinfo($destination);
             $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
             if (strpos($info['filename'], $delimiter) !== false) {
-                $parts = explode($delimiter, $info['filename']);
+                $parts = explode($delimiter, $info['filename']); // @phpstan-ignore-line
                 if (is_numeric(end($parts))) {
                     $i = end($parts);
                     array_pop($parts);
