@@ -360,6 +360,8 @@ class ForgeTest extends CIUnitTestCase
 
     public function testForeignKey()
     {
+        $this->forge->dropTable('forge_test_users', true);
+
         $attributes = [];
 
         if ($this->db->DBDriver === 'MySQLi') {
@@ -627,6 +629,8 @@ class ForgeTest extends CIUnitTestCase
 
     public function testDropForeignKey()
     {
+        $this->forge->dropTable('forge_test_users', true);
+
         $attributes = [];
 
         if ($this->db->DBDriver === 'MySQLi') {
