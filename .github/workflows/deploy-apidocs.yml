@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: codeigniter4/api
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: api
 
       - name: Setup PHP
@@ -40,10 +40,6 @@ jobs:
         with:
           php-version: '8.0'
           coverage: none
-
-      - name: Install GraphViz for phpDocumentor
-        run: |
-          sudo apt-get install -yq graphviz
 
       - name: Download phpDocumentor v3.1
         run: |
@@ -56,8 +52,8 @@ jobs:
         working-directory: api
         run: |
           git reset --hard master
-          rm -rfv api/docs
-          mkdir --parents --verbose api/docs
+          rm -rfv docs
+          mkdir --parents --verbose docs
 
       - name: Build API in source repo
         working-directory: source
