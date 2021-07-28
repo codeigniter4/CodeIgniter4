@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: codeigniter4/api
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           path: api
 
       - name: Setup PHP
