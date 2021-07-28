@@ -352,6 +352,33 @@
 <h1>Version 4.1.4<a class="headerlink" href="#version-4-1-4" title="Permalink to this headline">¶</a></h1>
 <p>Release Date: Not released</p>
 <p><strong>4.1.4 release of CodeIgniter4</strong></p>
+<p>Breaking Changes:</p>
+<p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses:</p>
+<ul class="simple">
+<li><p>CodeIgniter4DatabaseMySQLiConnection::execute()</p></li>
+<li><p>CodeIgniter4DatabaseMySQLiConnection::_fieldData()</p></li>
+<li><p>CodeIgniter4DatabaseMySQLiConnection::_indexData()</p></li>
+<li><p>CodeIgniter4DatabaseMySQLiConnection::_foreignKeyData()</p></li>
+<li><p>CodeIgniter4DatabasePostgreBuilder::_like_statement()</p></li>
+<li><p>CodeIgniter4DatabasePostgreConnection::execute()</p></li>
+<li><p>CodeIgniter4DatabasePostgreConnection::_fieldData()</p></li>
+<li><p>CodeIgniter4DatabasePostgreConnection::_indexData()</p></li>
+<li><p>CodeIgniter4DatabasePostgreConnection::_foreignKeyData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLSRVConnection::execute()</p></li>
+<li><p>CodeIgniter4DatabaseSQLSRVConnection::_fieldData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLSRVConnection::_indexData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLSRVConnection::_foreignKeyData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLite3Connection::execute()</p></li>
+<li><p>CodeIgniter4DatabaseSQLite3Connection::_fieldData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLite3Connection::_indexData()</p></li>
+<li><p>CodeIgniter4DatabaseSQLite3Connection::_foreignKeyData()</p></li>
+<li><p>CodeIgniter4ImagesHandlersGDHandler::_flatten()</p></li>
+<li><p>CodeIgniter4ImagesHandlersGDHandler::_flip()</p></li>
+<li><p>CodeIgniter4ImagesHandlersImageMagickHandler::_flatten()</p></li>
+<li><p>CodeIgniter4ImagesHandlersImageMagickHandler::_flip()</p></li>
+<li><p>CodeIgniter4TestMockMockIncomingRequest::detectURI()</p></li>
+<li><p>CodeIgniter4TestMockMockSecurity.php::sendCookie()</p></li>
+</ul>
 </div>
 
 
@@ -370,7 +397,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 19, 2021.
+        Last updated on Jul 28, 2021.
       </span>
 
     </p>
