@@ -20,7 +20,7 @@ class MockIncomingRequest extends IncomingRequest
     //        // Don't do anything... force the tester to manually set the headers they want.
     //    }
 
-    public function detectURI($protocol, $baseURL)
+    protected function detectURI($protocol, $baseURL)
     {
         // Do nothing...
     }

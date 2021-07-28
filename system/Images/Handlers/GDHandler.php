@@ -70,7 +70,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
-    public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+    protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
         $srcImg = $this->createImage();
 
@@ -101,7 +101,7 @@ class GDHandler extends BaseHandler
      *
      * @return $this
      */
-    public function _flip(string $direction)
+    protected function _flip(string $direction)
     {
         $srcImg = $this->createImage();
 

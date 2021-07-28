@@ -271,7 +271,7 @@ class Connection extends BaseConnection
      *
      * @return mixed
      */
-    public function execute(string $sql)
+    protected function execute(string $sql)
     {
         while ($this->connID->more_results()) {
             $this->connID->next_result();
@@ -391,7 +391,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _fieldData(string $table): array
+    protected function _fieldData(string $table): array
     {
         $table = $this->protectIdentifiers($table, true, null, false);
 
@@ -424,7 +424,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _indexData(string $table): array
+    protected function _indexData(string $table): array
     {
         $table = $this->protectIdentifiers($table, true, null, false);
 
@@ -469,7 +469,7 @@ class Connection extends BaseConnection
      *
      * @return stdClass[]
      */
-    public function _foreignKeyData(string $table): array
+    protected function _foreignKeyData(string $table): array
     {
         $sql = '
                     SELECT

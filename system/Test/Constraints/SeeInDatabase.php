@@ -50,7 +50,7 @@ class SeeInDatabase extends Constraint
      *
      * @param mixed $table
      */
-    public function matches($table): bool
+    protected function matches($table): bool
     {
         return $this->db->table($table)->where($this->data)->countAllResults() > 0;
     }
@@ -60,7 +60,7 @@ class SeeInDatabase extends Constraint
      *
      * @param mixed $table
      */
-    public function failureDescription($table): string
+    protected function failureDescription($table): string
     {
         return sprintf(
             "a row in the table [%s] matches the attributes \n%s\n\n%s",

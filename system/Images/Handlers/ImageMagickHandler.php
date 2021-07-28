@@ -135,7 +135,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return $this
      */
-    public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+    protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
     {
         $flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
 
@@ -156,7 +156,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @return $this
      */
-    public function _flip(string $direction)
+    protected function _flip(string $direction)
     {
         $angle = $direction === 'horizontal' ? '-flop' : '-flip';
 
