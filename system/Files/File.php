@@ -100,9 +100,7 @@ class File extends SplFileInfo
     public function getMimeType(): string
     {
         if (! function_exists('finfo_open')) {
-            // @codeCoverageIgnoreStart
-            return $this->originalMimeType ?? 'application/octet-stream';
-            // @codeCoverageIgnoreEnd
+            return $this->originalMimeType ?? 'application/octet-stream'; // @codeCoverageIgnore
         }
 
         $finfo    = finfo_open(FILEINFO_MIME_TYPE);
@@ -157,21 +155,27 @@ class File extends SplFileInfo
      */
     public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
     {
+        if ($delimiter === '') {
+            $delimiter = '_';
+        }
+
         while (is_file($destination)) {
             $info      = pathinfo($destination);
             $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
+
             if (strpos($info['filename'], $delimiter) !== false) {
-                $parts = explode($delimiter, $info['filename']); // @phpstan-ignore-line
+                $parts = explode($delimiter, $info['filename']);
+
                 if (is_numeric(end($parts))) {
                     $i = end($parts);
                     array_pop($parts);
                     $parts[]     = ++$i;
-                    $destination = $info['dirname'] . '/' . implode($delimiter, $parts) . $extension;
+                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . implode($delimiter, $parts) . $extension;
                 } else {
-                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
+                    $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
                 }
             } else {
-                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . $extension;
+                $destination = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . $delimiter . ++$i . $extension;
             }
         }
 

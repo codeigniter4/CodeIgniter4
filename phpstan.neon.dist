@@ -9,7 +9,6 @@ services:
 			- phpstan.rules.rule
 
 parameters:
-	reportUnmatchedIgnoredErrors: false
 	tmpDir: build/phpstan
 	level: 5
 	paths:
