@@ -61,8 +61,6 @@ class Builder extends BaseBuilder
     public $keyPermission = false;
 
     /**
-     * FROM tables
-     *
      * Groups tables in FROM clauses if needed, so there is no confusion
      * about operator precedence.
      */
@@ -78,14 +76,10 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Truncate statement
-     *
      * Generates a platform-specific truncate string from the supplied data
      *
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
-     *
-     * @param string $table The table name
      */
     protected function _truncate(string $table): string
     {
@@ -93,13 +87,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * JOIN
-     *
      * Generates the JOIN portion of the query
-     *
-     * @param string $cond   The join condition
-     * @param string $type   The type of join
-     * @param bool   $escape Whether not to try to escape identifiers
      *
      * @return $this
      */
@@ -169,16 +157,9 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Insert statement
-     *
      * Generates a platform-specific insert string from the supplied data
-     * auto-enable
      *
-     * @todo implement check for this instad static $insertKeyPermission
-     *
-     * @param string $table         The table name
-     * @param array  $keys          The insert keys
-     * @param array  $unescapedKeys The insert values
+     * @todo implement check for this instead static $insertKeyPermission
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -191,12 +172,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Update statement
-     *
      * Generates a platform-specific update string from the supplied data
-     *
-     * @param string $table  the Table name
-     * @param array  $values the Update data
      */
     protected function _update(string $table, array $values): string
     {
@@ -209,7 +185,7 @@ class Builder extends BaseBuilder
         $fullTableName = $this->getFullName($table);
 
         $statement = 'UPDATE ' . (empty($this->QBLimit) ? '' : 'TOP(' . $this->QBLimit . ') ') . $fullTableName . ' SET '
-                . implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
+            . implode(', ', $valstr) . $this->compileWhereHaving('QBWhere') . $this->compileOrderBy();
 
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
@@ -274,9 +250,6 @@ class Builder extends BaseBuilder
 
     /**
      * Add permision statements for index value inserts
-     *
-     * @param string $fullTable full table name
-     * @param string $insert    statement
      */
     private function addIdentity(string $fullTable, string $insert): string
     {
@@ -302,11 +275,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Replace
-     *
      * Compiles a replace into string and runs the query
-     *
-     * @param array|null $set An associative array of insert values
      *
      * @throws DatabaseException
      *
@@ -344,15 +313,8 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Replace statement
-     *
      * Generates a platform-specific replace string from the supplied data
-     *
      * on match delete and insert
-     *
-     * @param string $table  The table name
-     * @param array  $keys   The insert keys
-     * @param array  $values The insert values
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -420,8 +382,6 @@ class Builder extends BaseBuilder
      *
      * Handle float return value
      *
-     * @param string $select Field name
-     *
      * @return BaseBuilder
      */
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
@@ -453,8 +413,6 @@ class Builder extends BaseBuilder
 
     /**
      * Delete statement
-     *
-     * @param string $table The table name
      */
     protected function _delete(string $table): string
     {
@@ -462,12 +420,9 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Delete
-     *
      * Compiles a delete string and runs the query
      *
-     * @param mixed $where The where clause
-     * @param int   $limit The limit clause
+     * @param mixed $where
      *
      * @throws DatabaseException
      *
@@ -507,7 +462,7 @@ class Builder extends BaseBuilder
      *
      * Generates a query string based on which functions were used.
      *
-     * @param mixed $selectOverride
+     * @param bool $selectOverride
      */
     protected function compileSelect($selectOverride = false): string
     {
@@ -564,10 +519,8 @@ class Builder extends BaseBuilder
     /**
      * WHERE, HAVING
      *
-     * @param string $qbKey  'QBWhere' or 'QBHaving'
-     * @param mixed  $key
-     * @param mixed  $value
-     * @param bool   $escape
+     * @param mixed $key
+     * @param mixed $value
      *
      * @return $this
      */
@@ -631,14 +584,8 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Get
-     *
      * Compiles the select statement based on the other functions called
      * and runs the query
-     *
-     * @param int  $limit  The limit clause
-     * @param int  $offset The offset clause
-     * @param bool $reset  Are we want to clear query builder values?
      *
      * @return ResultInterface
      */

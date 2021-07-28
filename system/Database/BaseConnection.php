@@ -17,7 +17,33 @@ use CodeIgniter\Events\Events;
 use Throwable;
 
 /**
- * Class BaseConnection
+ * @property array      $aliasedTables
+ * @property string     $charset
+ * @property bool       $compress
+ * @property float      $connectDuration
+ * @property float      $connectTime
+ * @property string     $database
+ * @property string     $DBCollat
+ * @property bool       $DBDebug
+ * @property string     $DBDriver
+ * @property string     $DBPrefix
+ * @property string     $DSN
+ * @property mixed      $encrypt
+ * @property array      $failover
+ * @property string     $hostname
+ * @property mixed      $lastQuery
+ * @property string     $password
+ * @property bool       $pConnect
+ * @property int|string $port
+ * @property bool       $pretend
+ * @property string     $queryClass
+ * @property array      $reservedIdentifiers
+ * @property bool       $strictOn
+ * @property string     $subdriver
+ * @property string     $swapPre
+ * @property int        $transDepth
+ * @property bool       $transFailure
+ * @property bool       $transStatus
  */
 abstract class BaseConnection implements ConnectionInterface
 {
@@ -316,7 +342,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      *
-     * @return mixed|void
+     * @return mixed
      */
     public function initialize()
     {
@@ -391,8 +417,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Close the database connection.
-     *
-     * @return void
      */
     public function close()
     {
@@ -643,8 +667,6 @@ abstract class BaseConnection implements ConnectionInterface
      * Disable Transactions
      *
      * This permits transactions to be disabled at run-time.
-     *
-     * @return void
      */
     public function transOff()
     {
@@ -704,7 +726,6 @@ abstract class BaseConnection implements ConnectionInterface
                 $this->transStatus = true;
             }
 
-            //            log_message('debug', 'DB Transaction Failure');
             return false;
         }
 
@@ -840,8 +861,6 @@ abstract class BaseConnection implements ConnectionInterface
      *                     ->get();
      *           })
      *
-     * @param array $options Passed to the prepare() method
-     *
      * @return BasePreparedQuery|null
      */
     public function prepare(Closure $func, array $options = [])
@@ -862,9 +881,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         $class = str_ireplace('Connection', 'PreparedQuery', static::class);
-        /**
-         * @var BasePreparedQuery $class
-         */
+        /** @var BasePreparedQuery $class */
         $class = new $class($this);
 
         return $class->prepare($sql, $options);
@@ -931,7 +948,6 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param array|string $item
-     * @param bool         $protectIdentifiers
      *
      * @return array|string
      */
@@ -1131,8 +1147,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Prepends a database prefix if one exists in configuration
      *
-     * @param string $table the table
-     *
      * @throws DatabaseException
      */
     public function prefixTable(string $table = ''): string
@@ -1280,8 +1294,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an array of table names
      *
-     * @param bool $constrainByPrefix = FALSE
-     *
      * @throws DatabaseException
      *
      * @return array|bool
@@ -1304,7 +1316,8 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         $this->dataCache['table_names'] = [];
-        $query                          = $this->query($sql);
+
+        $query = $this->query($sql);
 
         foreach ($query->getResultArray() as $row) {
             // Do we know from which column to get the table name?
@@ -1341,8 +1354,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Fetch Field Names
      *
-     * @param string $table Table name
-     *
      * @throws DatabaseException
      *
      * @return array|false
@@ -1366,7 +1377,8 @@ abstract class BaseConnection implements ConnectionInterface
             return false;
         }
 
-        $query                                  = $this->query($sql);
+        $query = $this->query($sql);
+
         $this->dataCache['field_names'][$table] = [];
 
         foreach ($query->getResultArray() as $row) {
@@ -1399,8 +1411,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @param string $table the table name
-     *
      * @return array
      */
     public function getFieldData(string $table)
@@ -1411,8 +1421,6 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with key data
      *
-     * @param string $table the table name
-     *
      * @return array
      */
     public function getIndexData(string $table)
@@ -1422,8 +1430,6 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Returns an object with foreign key data
-     *
-     * @param string $table the table name
      *
      * @return array
      */

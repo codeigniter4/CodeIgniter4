@@ -55,9 +55,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     protected $db;
 
-    /**
-     * Constructor.
-     */
     public function __construct(BaseConnection $db)
     {
         $this->db = &$db;
@@ -70,8 +67,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * NOTE: This version is based on SQL code. Child classes should
      * override this method.
      *
-     * @param array $options Passed to the connection's prepare statement.
-     *
      * @return mixed
      */
     public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
@@ -81,9 +76,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         // need to replace our named placeholders (:name)
         $sql = preg_replace('/:[^\s,)]+/', '?', $sql);
 
-        /**
-         * @var Query $query
-         */
+        /** @var Query $query */
         $query = new $queryClass($this->db);
 
         $query->setQuery($sql);
@@ -100,8 +93,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The database-dependent portion of the prepare statement.
      *
-     * @param array $options Passed to the connection's prepare statement.
-     *
      * @return mixed
      */
     abstract public function _prepare(string $sql, array $options = []);
@@ -109,8 +100,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
-     *
-     * @param array $data
      *
      * @return ResultInterface
      */
@@ -152,8 +141,6 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Explicitly closes the statement.
-     *
-     * @return void
      */
     public function close()
     {

@@ -85,10 +85,6 @@ class Serve extends BaseCommand
 
     /**
      * Run the server
-     *
-     * @param array $params Parameters
-     *
-     * @return void
      */
     public function run(array $params)
     {

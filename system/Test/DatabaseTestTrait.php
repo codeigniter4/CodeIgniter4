@@ -199,8 +199,6 @@ trait DatabaseTestTrait
 
     /**
      * Seeds that database with a specific seeder.
-     *
-     * @return void
      */
     public function seed(string $name)
     {
@@ -277,8 +275,6 @@ trait DatabaseTestTrait
      * exist in the database.
      *
      * @throws DatabaseException
-     *
-     * @return void
      */
     public function seeInDatabase(string $table, array $where)
     {
@@ -289,8 +285,6 @@ trait DatabaseTestTrait
     /**
      * Asserts that records that match the conditions in $where do
      * not exist in the database.
-     *
-     * @return void
      */
     public function dontSeeInDatabase(string $table, array $where)
     {
@@ -322,8 +316,6 @@ trait DatabaseTestTrait
      * is equal to $expected.
      *
      * @throws DatabaseException
-     *
-     * @return void
      */
     public function seeNumRecords(int $expected, string $table, array $where)
     {

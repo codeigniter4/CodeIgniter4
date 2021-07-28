@@ -20,8 +20,6 @@ interface PreparedQueryInterface
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
      *
-     * @param array $data
-     *
      * @return ResultInterface
      */
     public function execute(...$data);
@@ -29,8 +27,6 @@ interface PreparedQueryInterface
     /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
-     *
-     * @param array $options Passed to the connection's prepare statement.
      *
      * @return mixed
      */

@@ -19,18 +19,14 @@ use Closure;
 class DummyHandler extends BaseHandler
 {
     /**
-     * Takes care of any handler-specific setup that must be done.
+     * {@inheritDoc}
      */
     public function initialize()
     {
     }
 
     /**
-     * Attempts to fetch an item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return null
+     * {@inheritDoc}
      */
     public function get(string $key)
     {
@@ -38,13 +34,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Get an item from the cache, or execute the given Closure and store the result.
-     *
-     * @param string  $key      Cache item name
-     * @param int     $ttl      Time to live
-     * @param Closure $callback Callback return value
-     *
-     * @return null
+     * {@inheritDoc}
      */
     public function remember(string $key, int $ttl, Closure $callback)
     {
@@ -52,13 +42,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Saves an item to the cache store.
-     *
-     * @param string $key   Cache item name
-     * @param mixed  $value The data to save
-     * @param int    $ttl   Time To Live, in seconds (default 60)
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -66,11 +50,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Deletes a specific item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function delete(string $key)
     {
@@ -78,11 +58,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @return int The number of deleted items
+     * {@inheritDoc}
      */
     public function deleteMatching(string $pattern)
     {
@@ -90,12 +66,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic incrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -103,12 +74,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic decrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -116,9 +82,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Will delete all items in the entire cache.
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function clean()
     {
@@ -126,12 +90,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Returns information on the entire cache.
-     *
-     * The information returned and the structure of the data
-     * varies depending on the handler.
-     *
-     * @return null
+     * {@inheritDoc}
      */
     public function getCacheInfo()
     {
@@ -139,11 +98,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Returns detailed information about the specific item in the cache.
-     *
-     * @param string $key Cache item name.
-     *
-     * @return null
+     * {@inheritDoc}
      */
     public function getMetaData(string $key)
     {
@@ -151,7 +106,7 @@ class DummyHandler extends BaseHandler
     }
 
     /**
-     * Determines if the driver is supported on this system.
+     * {@inheritDoc}
      */
     public function isSupported(): bool
     {

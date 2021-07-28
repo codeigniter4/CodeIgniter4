@@ -36,7 +36,7 @@ class PreparedQuery extends BasePreparedQuery
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
      *
-     * @return mixed
+     * @return $this
      */
     public function _prepare(string $sql, array $options = [])
     {

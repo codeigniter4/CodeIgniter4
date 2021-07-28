@@ -92,7 +92,7 @@ interface ResultInterface
      * Assigns an item into a particular column slot.
      *
      * @param string $key
-     * @param null   $value
+     * @param mixed  $value
      *
      * @return mixed
      */
@@ -150,8 +150,6 @@ interface ResultInterface
 
     /**
      * Frees the current result.
-     *
-     * @return void
      */
     public function freeResult();
 

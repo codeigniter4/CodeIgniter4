@@ -54,10 +54,6 @@ class Builder extends BaseBuilder
      * Replace statement
      *
      * Generates a platform-specific replace string from the supplied data
-     *
-     * @param string $table  the table name
-     * @param array  $keys   the insert keys
-     * @param array  $values the insert values
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -65,8 +61,6 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Truncate statement
-     *
      * Generates a platform-specific truncate string from the supplied data
      *
      * If the database does not support the TRUNCATE statement,

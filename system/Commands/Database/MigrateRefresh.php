@@ -64,8 +64,6 @@ class MigrateRefresh extends BaseCommand
     /**
      * Does a rollback followed by a latest to refresh the current state
      * of the database.
-     *
-     * @return void
      */
     public function run(array $params)
     {

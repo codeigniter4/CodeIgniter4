@@ -41,9 +41,6 @@ class RedisHandler extends BaseHandler
      */
     protected $redis;
 
-    /**
-     * Constructor.
-     */
     public function __construct(Cache $config)
     {
         $this->prefix = $config->prefix;
@@ -54,8 +51,6 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Class destructor
-     *
      * Closes the connection to Redis if present.
      */
     public function __destruct()
@@ -66,7 +61,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Takes care of any handler-specific setup that must be done.
+     * {@inheritDoc}
      */
     public function initialize()
     {
@@ -74,8 +69,6 @@ class RedisHandler extends BaseHandler
 
         $this->redis = new Redis();
 
-        // Try to connect to Redis, if an issue occurs throw a CriticalError exception,
-        // so that the CacheFactory can attempt to initiate the next cache handler.
         try {
             // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
             // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
@@ -99,18 +92,12 @@ class RedisHandler extends BaseHandler
                 throw new CriticalError('Cache: Redis select database failed.');
             }
         } catch (RedisException $e) {
-            // $this->redis->connect() can sometimes throw a RedisException.
-            // We need to convert the exception into a CriticalError exception and throw it.
             throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
         }
     }
 
     /**
-     * Attempts to fetch an item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function get(string $key)
     {
@@ -140,13 +127,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Saves an item to the cache store.
-     *
-     * @param string $key   Cache item name
-     * @param mixed  $value The data to save
-     * @param int    $ttl   Time To Live, in seconds (default 60)
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function save(string $key, $value, int $ttl = 60)
     {
@@ -182,11 +163,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Deletes a specific item from the cache store.
-     *
-     * @param string $key Cache item name
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function delete(string $key)
     {
@@ -196,11 +173,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Deletes items from the cache store matching a given pattern.
-     *
-     * @param string $pattern Cache items glob-style pattern
-     *
-     * @return int The number of deleted items
+     * {@inheritDoc}
      */
     public function deleteMatching(string $pattern)
     {
@@ -223,12 +196,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic incrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return int
+     * {@inheritDoc}
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -238,12 +206,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Performs atomic decrementation of a raw stored value.
-     *
-     * @param string $key    Cache ID
-     * @param int    $offset Step/value to increase by
-     *
-     * @return int
+     * {@inheritDoc}
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -253,9 +216,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Will delete all items in the entire cache.
-     *
-     * @return bool Success or failure
+     * {@inheritDoc}
      */
     public function clean()
     {
@@ -263,12 +224,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Returns information on the entire cache.
-     *
-     * The information returned and the structure of the data
-     * varies depending on the handler.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getCacheInfo()
     {
@@ -276,13 +232,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Returns detailed information about the specific item in the cache.
-     *
-     * @param string $key Cache item name.
-     *
-     * @return array|null
-     *                    Returns null if the item does not exist, otherwise array<string, mixed>
-     *                    with at least the 'expire' key for absolute epoch expiry (or null).
+     * {@inheritDoc}
      */
     public function getMetaData(string $key)
     {
@@ -304,7 +254,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Determines if the driver is supported on this system.
+     * {@inheritDoc}
      */
     public function isSupported(): bool
     {

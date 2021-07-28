@@ -29,8 +29,6 @@ use ReflectionException;
 use ReflectionProperty;
 
 /**
- * Class Model
- *
  * The Model class extends BaseModel and provides additional
  * convenient features that makes working with a SQL database
  * table less painful.
@@ -40,7 +38,7 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @mixin    BaseBuilder
+ * @mixin BaseBuilder
  *
  * @property BaseConnection $db
  */
@@ -91,12 +89,6 @@ class Model extends BaseModel
      */
     protected $escape = [];
 
-    /**
-     * Model constructor.
-     *
-     * @param ConnectionInterface|null $db         DB Connection
-     * @param ValidationInterface|null $validation Validation
-     */
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
         /**
@@ -284,8 +276,8 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This methods works only with dbCalls
      *
-     * @param array|int|string|null $id   ID
-     * @param array|null            $data Data
+     * @param array|int|string|null $id
+     * @param array|null            $data
      */
     protected function doUpdate($id = null, $data = null): bool
     {
@@ -385,8 +377,6 @@ class Model extends BaseModel
      * Works with the find* methods to return only the rows that
      * have been deleted.
      * This methods works only with dbCalls
-     *
-     * @return void
      */
     protected function doOnlyDeleted()
     {
@@ -467,12 +457,7 @@ class Model extends BaseModel
      * determine the rows to operate on.
      * This methods works only with dbCalls
      *
-     * @param int     $size     Size
-     * @param Closure $userFunc Callback Function
-     *
      * @throws DataException
-     *
-     * @return void
      */
     public function chunk(int $size, Closure $userFunc)
     {
@@ -506,9 +491,6 @@ class Model extends BaseModel
     /**
      * Override countAllResults to account for soft deleted accounts.
      *
-     * @param bool $reset Reset
-     * @param bool $test  Test
-     *
      * @return mixed
      */
     public function countAllResults(bool $reset = true, bool $test = false)
@@ -529,8 +511,6 @@ class Model extends BaseModel
 
     /**
      * Provides a shared instance of the Query Builder.
-     *
-     * @param string|null $table Table name
      *
      * @throws ModelException
      *
@@ -577,9 +557,9 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param mixed       $key    Field name, or an array of field/value pairs
-     * @param string|null $value  Field value, if $key is a single field
-     * @param bool|null   $escape Whether to escape values and identifiers
+     * @param array|string $key    Field name, or an array of field/value pairs
+     * @param string|null  $value  Field value, if $key is a single field
+     * @param bool|null    $escape Whether to escape values and identifiers
      *
      * @return $this
      */
@@ -616,7 +596,7 @@ class Model extends BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data     Data
+     * @param array|object|null $data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
      * @throws ReflectionException
@@ -644,8 +624,8 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param array|int|string|null $id   ID
-     * @param array|object|null     $data Data
+     * @param array|int|string|null $id
+     * @param array|object|null     $data
      *
      * @throws ReflectionException
      */
@@ -670,9 +650,8 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array with raw values.
      *
-     * @param object|string $data        Data
-     * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be casted as array as well
+     * @param object|string $data
+     * @param bool          $recursive If true, inner entities will be casted as array as well
      *
      * @throws ReflectionException
      *
@@ -683,8 +662,10 @@ class Model extends BaseModel
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
         // Always grab the primary key otherwise updates will fail.
-        if (method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey}))) {
+        if (
+            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
+            && ! empty($data->{$this->primaryKey}))
+        ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }
 
@@ -729,9 +710,6 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @param string $name   Name
-     * @param array  $params Params
-     *
      * @return $this|null
      */
     public function __call(string $name, array $params)
@@ -763,10 +741,8 @@ class Model extends BaseModel
      * Takes a class an returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
      *
-     * @param object|string $data        Data
-     * @param string|null   $primaryKey  Primary Key
-     * @param string        $dateFormat  Date Format
-     * @param bool          $onlyChanged Only Changed
+     * @param object|string $data
+     * @param string|null   $primaryKey
      *
      * @throws ReflectionException
      *

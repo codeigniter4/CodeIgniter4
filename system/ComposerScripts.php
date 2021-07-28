@@ -63,8 +63,6 @@ final class ComposerScripts
     /**
      * This static method is called by Composer after every update event,
      * i.e., `composer install`, `composer update`, `composer remove`.
-     *
-     * @return void
      */
     public static function postUpdate()
     {

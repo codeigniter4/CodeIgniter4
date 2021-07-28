@@ -69,7 +69,7 @@ if [ "$FILES" != "" ]; then
         php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff
     fi
 
-    if [ $? != 0]; then
+    if [ $? != 0 ]; then
         echo "Files in system, tests, utils, or root are not following the coding standards. Please fix them before commit."
         exit 1
     fi

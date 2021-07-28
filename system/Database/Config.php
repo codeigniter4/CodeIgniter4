@@ -38,8 +38,7 @@ class Config extends BaseConfig
     /**
      * Creates the default
      *
-     * @param array|string $group     The name of the connection group to use,
-     *                                or an array of configuration settings.
+     * @param array|string $group     The name of the connection group to use, or an array of configuration settings.
      * @param bool         $getShared Whether to return a shared instance of the connection.
      *
      * @return BaseConnection

@@ -65,8 +65,6 @@ class MigrateRollback extends BaseCommand
     /**
      * Runs all of the migrations in reverse order, until they have
      * all been unapplied.
-     *
-     * @return void
      */
     public function run(array $params)
     {
@@ -102,11 +100,11 @@ class MigrateRollback extends BaseCommand
             }
 
             CLI::write('Done rolling back migrations.', 'green');
-        }
-        // @codeCoverageIgnoreStart
-        catch (Throwable $e) {
+
+            // @codeCoverageIgnoreStart
+        } catch (Throwable $e) {
             $this->showError($e);
+            // @codeCoverageIgnoreEnd
         }
-        // @codeCoverageIgnoreEnd
     }
 }

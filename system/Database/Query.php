@@ -84,9 +84,6 @@ class Query implements QueryInterface
      */
     public $db;
 
-    /**
-     * BaseQuery constructor.
-     */
     public function __construct(ConnectionInterface &$db)
     {
         $this->db = $db;
@@ -131,10 +128,7 @@ class Query implements QueryInterface
     {
         if ($setEscape) {
             array_walk($binds, static function (&$item) {
-                $item = [
-                    $item,
-                    true,
-                ];
+                $item = [$item, true];
             });
         }
 
@@ -275,8 +269,6 @@ class Query implements QueryInterface
     /**
      * Escapes and inserts any binds into the finalQueryString object.
      *
-     * @return void
-     *
      * @see https://regex101.com/r/EUEhay/4
      */
     protected function compileBinds()
@@ -306,9 +298,7 @@ class Query implements QueryInterface
             $binds = array_reverse($binds);
         }
 
-        // We'll need marker length later
-        $ml = strlen($this->bindMarker);
-
+        $ml  = strlen($this->bindMarker);
         $sql = $hasNamedBinds ? $this->matchNamedBinds($sql, $binds) : $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
 
         $this->finalQueryString = $sql;
@@ -343,7 +333,6 @@ class Query implements QueryInterface
      */
     protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
     {
-        // Make sure not to replace a chunk inside a string that happens to match the bind marker
         if ($c = preg_match_all("/'[^']*'/", $sql, $matches)) {
             $c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
 
@@ -351,18 +340,18 @@ class Query implements QueryInterface
             if ($bindCount !== $c) {
                 return $sql;
             }
-        }
-        // Number of binds must match bindMarkers in the string.
-        elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount) {
+        } elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount) {
             return $sql;
         }
 
         do {
             $c--;
             $escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
+
             if (is_array($escapedValue)) {
                 $escapedValue = '(' . implode(',', $escapedValue) . ')';
             }
+
             $sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
         } while ($c !== 0);
 

@@ -63,8 +63,6 @@ class Migrate extends BaseCommand
 
     /**
      * Ensures that all migrations have been run.
-     *
-     * @return void
      */
     public function run(array $params)
     {
@@ -77,12 +75,9 @@ class Migrate extends BaseCommand
         $group     = $params['g'] ?? CLI::getOption('g');
 
         try {
-            // Check for 'all' namespaces
             if (array_key_exists('all', $params) || CLI::getOption('all')) {
                 $runner->setNamespace(null);
-            }
-            // Check for a specified namespace
-            elseif ($namespace) {
+            } elseif ($namespace) {
                 $runner->setNamespace($namespace);
             }
 
@@ -97,11 +92,11 @@ class Migrate extends BaseCommand
             }
 
             CLI::write('Done migrations.', 'green');
-        }
-        // @codeCoverageIgnoreStart
-        catch (Throwable $e) {
+
+            // @codeCoverageIgnoreStart
+        } catch (Throwable $e) {
             $this->showError($e);
+            // @codeCoverageIgnoreEnd
         }
-        // @codeCoverageIgnoreEnd
     }
 }

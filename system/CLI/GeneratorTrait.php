@@ -228,8 +228,6 @@ trait GeneratorTrait
     /**
      * Gets the generator view as defined in the `Config\Generators::$views`,
      * with fallback to `$template` when the defined view does not exist.
-     *
-     * @param array $data Data to be passed to the view.
      */
     protected function renderTemplate(array $data = []): string
     {

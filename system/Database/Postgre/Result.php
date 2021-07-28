@@ -65,8 +65,6 @@ class Result extends BaseResult
 
     /**
      * Frees the current result.
-     *
-     * @return void
      */
     public function freeResult()
     {
@@ -118,8 +116,6 @@ class Result extends BaseResult
 
     /**
      * Returns the number of rows in the resultID (i.e., PostgreSQL query result resource)
-     *
-     * @return int The number of rows in the query result
      */
     public function getNumRows(): int
     {

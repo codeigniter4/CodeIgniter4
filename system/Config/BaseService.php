@@ -269,8 +269,6 @@ class BaseService
 
     /**
      * Reset shared instances and mocks for testing.
-     *
-     * @param bool $initAutoloader Initializes autoloader instance
      */
     public static function reset(bool $initAutoloader = false)
     {

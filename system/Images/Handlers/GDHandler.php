@@ -30,12 +30,9 @@ class GDHandler extends BaseHandler
     {
         parent::__construct($config);
 
-        // We should never see this, so can't test it
-        // @codeCoverageIgnoreStart
         if (! extension_loaded('gd')) {
-            throw ImageException::forMissingExtension('GD');
+            throw ImageException::forMissingExtension('GD'); // @codeCoverageIgnore
         }
-        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -367,8 +364,6 @@ class GDHandler extends BaseHandler
 
     /**
      * Add text overlay to an image.
-     *
-     * @return void
      */
     protected function _text(string $text, array $options = [])
     {
@@ -446,8 +441,6 @@ class GDHandler extends BaseHandler
      * Handler-specific method for overlaying text on an image.
      *
      * @param bool $isShadow Whether we are drawing the dropshadow or actual text
-     *
-     * @return void
      */
     protected function textOverlay(string $text, array $options = [], bool $isShadow = false)
     {

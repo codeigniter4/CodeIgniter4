@@ -16,8 +16,6 @@ use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
 
 /**
- * Class Cache
- *
  * A factory for loading the desired
  */
 class CacheFactory

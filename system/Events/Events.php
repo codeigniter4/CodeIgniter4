@@ -63,8 +63,6 @@ class Events
 
     /**
      * Ensures that we have a events file ready.
-     *
-     * @return void
      */
     public static function initialize()
     {
@@ -113,8 +111,6 @@ class Events
      * @param string   $eventName
      * @param callable $callback
      * @param int      $priority
-     *
-     * @return void
      */
     public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
     {
@@ -229,8 +225,6 @@ class Events
      * removed, otherwise all listeners for all events are removed.
      *
      * @param string|null $eventName
-     *
-     * @return void
      */
     public static function removeAllListeners($eventName = null)
     {
@@ -243,8 +237,6 @@ class Events
 
     /**
      * Sets the path to the file that routes are read from.
-     *
-     * @return void
      */
     public static function setFiles(array $files)
     {
@@ -265,8 +257,6 @@ class Events
      * Turns simulation on or off. When on, events will not be triggered,
      * simply logged. Useful during testing when you don't actually want
      * the tests to run.
-     *
-     * @return void
      */
     public static function simulate(bool $choice = true)
     {
