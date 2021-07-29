@@ -244,12 +244,6 @@ final class InflectorHelperTest extends CIUnitTestCase
     public function testOrdinal()
     {
         $suffixes = [
-            'st' => 1,
-            'nd' => 2,
-            'rd' => 3,
-            'th' => 4,
-            'th' => 11,
-            'th' => 20,
             'st' => 21,
             'nd' => 22,
             'rd' => 23,

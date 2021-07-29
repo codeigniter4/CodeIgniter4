@@ -148,46 +148,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
                 '6011 0009 9013 9424',
                 true,
             ],
-            'jcb1' => [
-                'jcb',
-                '3530 1113 3330 0000',
-                true,
-            ],
-            'jcb2' => [
-                'jcb',
-                '3566 0020 2036 0505',
-                true,
-            ],
-            'mastercard1' => [
-                'mastercard',
-                '5555 5555 5555 4444',
-                true,
-            ],
-            'mastercard2' => [
-                'mastercard',
-                '5105 1051 0510 5100',
-                true,
-            ],
-            'visa1' => [
-                'visa',
-                '4111 1111 1111 1111',
-                true,
-            ],
-            'visa2' => [
-                'visa',
-                '4012 8888 8888 1881',
-                true,
-            ],
-            'visa3' => [
-                'visa',
-                '4222 2222 2222 2',
-                true,
-            ],
-            'dankort1' => [
-                'dankort',
-                '5019 7170 1010 3742',
-                true,
-            ],
             'unionpay1' => [
                 'unionpay',
                 $this->generateCardNum(62, 16),
@@ -1201,11 +1161,6 @@ final class CreditCardRulesTest extends CIUnitTestCase
             'bmoabm1' => [
                 'bmoabm',
                 $this->generateCardNum(500, 16),
-                true,
-            ],
-            'hsbc' => [
-                'hsbc',
-                $this->generateCardNum(56, 16),
                 true,
             ],
             'hsbc' => [
