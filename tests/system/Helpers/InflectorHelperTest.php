@@ -262,8 +262,7 @@ final class InflectorHelperTest extends CIUnitTestCase
      */
     public function testOrdinal(string $suffix, int $number)
     {
-        $ordinal = ordinal($number);
-        $this->assertSame($suffix, $ordinal);
+        $this->assertSame($suffix, ordinal($number));
     }
 
     public function testOrdinalize()
