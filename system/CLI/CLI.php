@@ -228,13 +228,13 @@ class CLI
         }
 
         if (is_string($options)) {
-            $extraOutput = ' [' . static::color($options, 'white') . ']';
+            $extraOutput = ' [' . static::color($options, 'green') . ']';
             $default     = $options;
         }
 
         if (is_array($options) && $options) {
             $opts               = $options;
-            $extraOutputDefault = static::color($opts[0], 'white');
+            $extraOutputDefault = static::color($opts[0], 'green');
 
             unset($opts[0]);
 
