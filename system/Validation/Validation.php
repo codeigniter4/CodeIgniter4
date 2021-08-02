@@ -17,6 +17,7 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Validation as ValidationConfig;
 use InvalidArgumentException;
+use TypeError;
 
 /**
  * Validator
@@ -353,23 +354,33 @@ class Validation implements ValidationInterface
      *        'rule' => 'message'
      *    ]
      *
-     * @param string      $field
-     * @param string|null $label
-     * @param string      $rules
-     * @param array       $errors
+     * @param string       $field
+     * @param string|null  $label
+     * @param string|array $rules
+     * @param array        $errors
      *
      * @return $this
+     *
+     * @throws TypeError
      */
-    public function setRule(string $field, string $label = null, string $rules, array $errors = [])
+    public function setRule(string $field, string $label = null, $rules, array $errors = [])
     {
-        $this->rules[$field] = [
-            'label' => $label,
-            'rules' => $rules,
+        if (! is_array($rules) && ! is_string($rules)) {
+            throw new TypeError('$rules must be of type string|array');
+        }
+
+        $ruleSet = [
+            $field => [
+                'label' => $label,
+                'rules' => $rules,
+            ],
         ];
 
-        $this->customErrors = array_merge($this->customErrors, [
-            $field => $errors,
-        ]);
+        if ($errors) {
+            $ruleSet[$field]['errors'] = $errors;
+        }
+
+        $this->setRules($ruleSet + $this->getRules());
 
         return $this;
     }
@@ -400,16 +411,18 @@ class Validation implements ValidationInterface
         $this->customErrors = $errors;
 
         foreach ($rules as $field => &$rule) {
-            if (! is_array($rule)) {
-                continue;
-            }
+            if (is_array($rule)) {
+                if (array_key_exists('errors', $rule)) {
+                    $this->customErrors[$field] = $rule['errors'];
+                    unset($rule['errors']);
+                }
 
-            if (! array_key_exists('errors', $rule)) {
-                continue;
+                // if $rule is already a rule collection, just move it to "rules"
+                // transforming [foo => [required, foobar]] to [foo => [rules => [required, foobar]]]
+                if (! array_key_exists('rules', $rule)) {
+                    $rule = ['rules' => $rule];
+                }
             }
-
-            $this->customErrors[$field] = $rule['errors'];
-            unset($rule['errors']);
         }
 
         $this->rules = $rules;
@@ -603,22 +616,30 @@ class Validation implements ValidationInterface
         }
 
         if (! empty($replacements)) {
-            foreach ($rules as &$rule) {
-                if (is_array($rule)) {
-                    foreach ($rule as &$row) {
-                        // Should only be an `errors` array
-                        // which doesn't take placeholders.
-                        if (is_array($row)) {
+            foreach ($rules as &$validationSet) {
+                // Blast $rule apart, unless it's already an array
+                $plainRules = $validationSet['rules'] ?? $validationSet;
+
+                if (is_array($plainRules)) {
+                    foreach ($plainRules as &$row) {
+                        // could be a named anonymous function or a callable
+                        // both don't support placeholders
+                        if (! is_string($row)) {
                             continue;
                         }
 
                         $row = strtr($row, $replacements);
                     }
-
-                    continue;
+                } else {
+                    $plainRules = strtr($plainRules, $replacements);
                 }
 
-                $rule = strtr($rule, $replacements);
+                // set rules together again
+                if (isset($validationSet['rules'])) {
+                    $validationSet['rules'] = $plainRules;
+                } else {
+                    $validationSet = $plainRules;
+                }
             }
         }
 

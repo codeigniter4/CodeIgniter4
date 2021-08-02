@@ -1,0 +1,10 @@
+Version 4.2.0
+=============
+
+Release Date:
+
+**4.2.0 release of CodeIgniter4**
+
+Changes:
+
+- ``Validation::setRule`` signature changed and now allows string or array types for ``$rules``; see PR #3910
