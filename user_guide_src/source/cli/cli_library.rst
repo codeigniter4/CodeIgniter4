@@ -38,7 +38,7 @@ Getting Input from the User
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
-handled with the ``prompt()`` method.
+handled with the ``prompt()`` or ``promptByKey()`` method.
 
 You can provide a question by passing it in as the first parameter::
 
@@ -60,6 +60,38 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 Validation rules can also be written in the array syntax.::
 
 	$email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+
+
+**promptByKey()**
+
+Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
+``promptByKey()`` allows the user to select an option by its key instead of its value::
+
+    $fruit = CLI::promptByKey('These are your choices:', ['The red apple', 'The plump orange', 'The ripe banana']);
+
+    //These are your choices:
+    //  [0]  The red apple
+    //  [1]  The plump orange
+    //  [2]  The ripe banana
+    //
+    //[0, 1, 2]:
+
+Named keys are also possible::
+
+    $fruit = CLI::promptByKey(['These are your choices:', 'Which would you like?'], [
+        'apple' => 'The red apple',
+        'orange' => 'The plump orange',
+        'banana' => 'The ripe banana'
+    ]);
+
+    //These are your choices:
+    //  [apple]   The red apple
+    //  [orange]  The plump orange
+    //  [banana]  The ripe banana
+    //
+    //Which would you like? [apple, orange, banana]:
+
+Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
 Providing Feedback
 ==================
