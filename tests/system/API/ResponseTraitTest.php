@@ -429,9 +429,9 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = $this->makeController();
         $controller->failServerError('Nope.', 'FAT-CHANCE', 'A custom reason.');
 
-        $this::assertEquals('A custom reason.', $this->response->getReason());
-        $this::assertEquals(500, $this->response->getStatusCode());
-        $this::assertEquals($this->formatter->format([
+        $this->assertSame('A custom reason.', $this->response->getReason());
+        $this->assertSame(500, $this->response->getStatusCode());
+        $this->assertSame($this->formatter->format([
             'status'   => 500,
             'error'    => 'FAT-CHANCE',
             'messages' => [

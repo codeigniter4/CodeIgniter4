@@ -22,7 +22,6 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
-use Rector\CodeQualityStrict\Rector\Variable\MoveVariableDeclarationNearReferenceRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
@@ -106,7 +105,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
     $services->set(TernaryToNullCoalescingRector::class);
     $services->set(ListToArrayDestructRector::class);
-    $services->set(MoveVariableDeclarationNearReferenceRector::class);
     $services->set(RemoveVarTagFromClassConstantRector::class);
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
