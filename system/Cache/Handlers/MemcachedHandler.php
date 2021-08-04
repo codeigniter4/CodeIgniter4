@@ -138,7 +138,7 @@ class MemcachedHandler extends BaseHandler
             }
         } elseif ($this->memcached instanceof Memcache) {
             $flags = false;
-            $data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
+            $data  = $this->memcached->get($key, $flags);
 
             // check for unmatched key (i.e. $flags is untouched)
             if ($flags === false) {
