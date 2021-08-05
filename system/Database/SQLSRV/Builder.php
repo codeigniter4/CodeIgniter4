@@ -183,22 +183,34 @@ class Builder extends BaseBuilder
 	/**
 	 * Get full name of the table
 	 *
-	 * @param string $table
+	 * @param string $tableName
 	 *
 	 * @return string
 	 */
-	private function getFullName(string $table): string
+
+	private function segmentTable(string $tableName): string
 	{
-		$tableExploded = explode('.', $table);
+		$tableExploded = explode('.', $tableName);
 		if (count($tableExploded) === 2)
 		{
 			$this->db->schema = str_replace('"', '', $tableExploded[0]);
 			$tableName        = $tableExploded[1];
 		}
-		else
-		{
-			$tableName = $table;
-		}
+
+		return $tableName;
+	}
+
+	/**
+	 * Get full name of the table
+	 *
+	 * @param string $table
+	 *
+	 * @return string
+	 */
+
+	private function getFullName(string $table): string
+	{
+		$tableName = $this->segmentTable($table);
 
 		if ($this->db->escapeChar === '"')
 		{
