@@ -292,7 +292,7 @@ class Validation implements ValidationInterface
                 if (is_array($value)) {
                     $value = '[' . implode(', ', $value) . ']';
                 }
-
+                $error = is_null($error) ? null : str_replace( ['{field}' , '{param}' , '{value}'], [$field, $param, $value], $error);
                 $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
 
                 return false;
