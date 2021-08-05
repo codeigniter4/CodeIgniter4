@@ -230,9 +230,33 @@ class Builder extends BaseBuilder
 
     /**
      * Get full name of the table
+     *
+     * @param string $tableName
+     *
+     * @return string
+     */
+
+    private function validateSchema(string $tableName): string
+    {
+        $tableExploded = explode('.', $tableName);
+        if (count($tableExploded) === 2)
+        {
+            $this->db->schema = str_replace('"', '', $tableExploded[0]);
+            $tableName        = $tableExploded[1];
+        }
+
+        return $tableName;
+    }
+
+
+
+
+    /**
+     * Get full name of the table
      */
     private function getFullName(string $table): string
     {
+        $table = $this->validateSchema($table);
         $alias = '';
 
         if (strpos($table, ' ') !== false) {
