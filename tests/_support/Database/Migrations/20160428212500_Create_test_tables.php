@@ -137,7 +137,6 @@ class Migration_Create_test_tables extends Migration
                 'data' => ['type' => 'BLOB', 'null' => false],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('timestamp');
             $this->forge->createTable('ci_sessions', true);
         }
 
@@ -149,7 +148,6 @@ class Migration_Create_test_tables extends Migration
                 "data bytea DEFAULT '' NOT NULL",
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('timestamp');
             $this->forge->createTable('ci_sessions', true);
         }
     }
