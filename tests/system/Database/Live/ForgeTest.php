@@ -427,6 +427,43 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_users', true);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4986
+     */
+    public function testForeignKeyAddingWithStringFields()
+    {
+        if ($this->db->DBDriver !== 'MySQLi') {
+            $this->markTestSkipped('Testing only on MySQLi but fix expands to all DBs.');
+        }
+
+        $attributes = ['ENGINE' => 'InnoDB'];
+
+        $this->forge->addField([
+            '`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            '`name` VARCHAR(255) NOT NULL',
+        ])->createTable('forge_test_users', true, $attributes);
+
+        $this->forge
+            ->addField([
+                '`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+                '`users_id` INT(11) NOT NULL',
+                '`name` VARCHAR(255) NOT NULL',
+            ])
+            ->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE')
+            ->createTable('forge_test_invoices', true, $attributes);
+
+        $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices')[0];
+
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_foreign', $foreignKeyData->constraint_name);
+        $this->assertSame('users_id', $foreignKeyData->column_name);
+        $this->assertSame('id', $foreignKeyData->foreign_column_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices', $foreignKeyData->table_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_users', $foreignKeyData->foreign_table_name);
+
+        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable('forge_test_users', true);
+    }
+
     public function testForeignKeyFieldNotExistException()
     {
         $this->expectException(DatabaseException::class);
