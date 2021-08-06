@@ -23,9 +23,7 @@ $finder = Finder::create()
         __DIR__ . '/public',
     ]);
 
-$overrides = [
-    'no_blank_lines_after_phpdoc' => false,
-];
+$overrides = [];
 
 $options = [
     'cacheFile' => 'build/.no-header.php-cs-fixer.cache',
