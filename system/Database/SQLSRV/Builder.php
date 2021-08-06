@@ -231,7 +231,6 @@ class Builder extends BaseBuilder
     /**
      * Get full name of the table
      */
-
     private function validateSchema(string $tableName): string
     {
         $tableExploded = explode('.', $tableName);
@@ -242,9 +241,6 @@ class Builder extends BaseBuilder
 
         return $tableName;
     }
-
-
-
 
     /**
      * Get full name of the table
