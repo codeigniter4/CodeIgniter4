@@ -324,7 +324,7 @@ class Rules
      */
     public function required($str = null): bool
     {
-        if (is_object($str)) {
+        if (is_object($str) || is_bool($str)) {
             return true;
         }
 
