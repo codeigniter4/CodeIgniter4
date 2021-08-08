@@ -144,6 +144,23 @@ class RulesTest extends CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testRequiredBoolean()
+    {
+        $data = [
+            'foo' => true,
+            'bar' => false
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'required',
+            'bar' => 'required'
+        ]);
+
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
     /**
      * @dataProvider ifExistProvider
      *
@@ -280,10 +297,11 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => null],
                 false,
             ],
+            // This test will return true because false value is boolean
             [
                 ['foo' => 'permit_empty|required'],
                 ['foo' => false],
-                false,
+                true,
             ],
             // This tests will return true because the input data is trimmed
             [
