@@ -729,8 +729,21 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
-        return Services::language($locale)
-            ->getLine($line, $args);
+        if($locale)
+        {
+            //Save previous locale
+            $oldLocale = Services::language()->getLocale();
+        }
+
+        $line = Services::language($locale)
+                        ->getLine($line, $args);
+
+        if($locale && $oldLocale != Services::language()->getLocale())
+        {
+            //Reset to previous locale
+            Services::language($oldLocale);
+        }
+        return $line;
     }
 }
 
