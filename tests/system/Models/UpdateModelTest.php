@@ -17,6 +17,7 @@ use stdClass;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
@@ -353,6 +354,30 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $this->createModel(WithoutAutoIncrementModel::class)->update($key, $update);
         $this->seeInDatabase('without_auto_increment', ['key' => $key, 'value' => $update['value']]);
+    }
+
+    public function testUpdateEmptyID(): void
+    {
+        $id = '';
+
+        $update = [
+            'value' => 'some different value',
+        ];
+
+        $this->createModel(StringifyPkeyModel::class)->protect(false)->update($id, $update);
+        $this->seeInDatabase('stringifypkey', ['id' => $id, 'value' => $update['value']]);
+    }
+
+    public function testUpdateZeroID(): void
+    {
+        $id = 0;
+
+        $update = [
+            'value' => 'some different value',
+        ];
+
+        $this->createModel(StringifyPkeyModel::class)->protect(false)->update($id, $update);
+        $this->seeInDatabase('stringifypkey', ['id' => $id, 'value' => $update['value']]);
     }
 
     /**

@@ -315,4 +315,73 @@ final class SaveModelTest extends LiveModelTestCase
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $update);
     }
+
+    public function testUseAutoIncrementSetToFalseSaveEmptyID(): void
+    {
+        $insert = [
+            'key'   => '',
+            'value' => 'some value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+        $this->model->save($insert);
+
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $insert);
+
+        $update = [
+            'key'   => '',
+            'value' => 'some different value',
+        ];
+
+        $this->model->save($update);
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $update);
+    }
+
+    public function testUseAutoIncrementSetToFalseSaveZeroID(): void
+    {
+        $insert = [
+            'key'   => 0,
+            'value' => 'some value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+        $this->model->save($insert);
+
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $insert);
+
+        $update = [
+            'key'   => 0,
+            'value' => 'some different value',
+        ];
+
+        $this->model->save($update);
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $update);
+    }
+
+    public function testUseAutoIncrementSetToFalseSaveFalseID(): void
+    {
+        $insert = [
+            'key'   => false,
+            'value' => 'some value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+        $this->model->save($insert);
+
+        $this->assertSame(0, $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $insert);
+
+        $update = [
+            'key'   => false,
+            'value' => 'some different value',
+        ];
+
+        $this->model->save($update);
+        $this->assertSame(0, $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $update);
+    }
 }

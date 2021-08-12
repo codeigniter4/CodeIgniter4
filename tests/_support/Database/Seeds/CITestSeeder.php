@@ -78,6 +78,14 @@ class CITestSeeder extends Seeder
                     'id'    => 'A01',
                     'value' => 'test',
                 ],
+                [
+                    'id'    => '0',
+                    'value' => 'test zero key',
+                ],
+                [
+                    'id'    => '',
+                    'value' => 'test empty key',
+                ],
             ],
             'without_auto_increment' => [
                 [

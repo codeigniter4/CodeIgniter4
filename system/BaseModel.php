@@ -673,7 +673,7 @@ abstract class BaseModel
      */
     protected function shouldUpdate($data): bool
     {
-        return ! empty($this->getIdValue($data));
+        return $this->getIdValue($data) !== null;
     }
 
     /**
@@ -943,7 +943,7 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
-        if ($id && (is_numeric($id) || is_string($id))) {
+        if (isset($id) && (is_numeric($id) || is_string($id))) {
             $id = [$id];
         }
 

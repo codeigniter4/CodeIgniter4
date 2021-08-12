@@ -268,6 +268,81 @@ final class InsertModelTest extends LiveModelTestCase
         $this->seeInDatabase('without_auto_increment', $insert);
     }
 
+    public function testInsertIdZero(): void
+    {
+        $data = [
+            'key'   => 0,
+            'value' => 'value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $result = $this->model->protect(false)->insert($data, false);
+        $this->assertTrue($result);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => 0]);
+    }
+
+    public function testInsertIdZeroString(): void
+    {
+        $data = [
+            'key'   => '0',
+            'value' => 'value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $result = $this->model->protect(false)->insert($data, false);
+        $this->assertTrue($result);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => 0]);
+    }
+
+    public function testInsertIdFalse(): void
+    {
+        $data = [
+            'key'   => false,
+            'value' => 'value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $result = $this->model->protect(false)->insert($data, false);
+        $this->assertTrue($result);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => '']);
+    }
+
+    public function testInsertIdFalseString(): void
+    {
+        $data = [
+            'key'   => 'false',
+            'value' => 'value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $result = $this->model->protect(false)->insert($data, false);
+        $this->assertTrue($result);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => 'false']);
+    }
+
+    public function testInsertIdEmptyString(): void
+    {
+        $data = [
+            'key'   => '',
+            'value' => 'value',
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $result = $this->model->protect(false)->insert($data, false);
+        $this->assertTrue($result);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => '']);
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4087
      */

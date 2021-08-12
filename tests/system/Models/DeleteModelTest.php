@@ -52,6 +52,24 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->dontSeeInDatabase('stringifypkey', ['value' => 'test']);
     }
 
+    public function testDeleteZeroPrimaryKey(): void
+    {
+        $this->createModel(StringifyPkeyModel::class);
+        $this->seeInDatabase('stringifypkey', ['value' => 'test zero key']);
+
+        $this->model->delete('0');
+        $this->dontSeeInDatabase('stringifypkey', ['value' => 'test zero key']);
+    }
+
+    public function testDeleteEmptyPrimaryKey(): void
+    {
+        $this->createModel(StringifyPkeyModel::class);
+        $this->seeInDatabase('stringifypkey', ['value' => 'test empty key']);
+
+        $this->model->delete('');
+        $this->dontSeeInDatabase('stringifypkey', ['value' => 'test empty key']);
+    }
+
     public function testDeleteWithSoftDeletes(): void
     {
         $this->createModel(UserModel::class);

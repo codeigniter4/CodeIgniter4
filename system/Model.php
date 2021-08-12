@@ -225,7 +225,7 @@ class Model extends BaseModel
 
         // Require non empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
+        if (! $this->useAutoIncrement && ! isset($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
@@ -263,7 +263,7 @@ class Model extends BaseModel
             foreach ($set as $row) {
                 // Require non empty primaryKey when
                 // not using auto-increment feature
-                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+                if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
             }
@@ -332,7 +332,7 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($id) {
+        if (isset($id)) {
             $builder = $builder->whereIn($this->primaryKey, $id);
         }
 
@@ -444,7 +444,7 @@ class Model extends BaseModel
             return $data->{$this->primaryKey};
         }
 
-        if (is_array($data) && ! empty($data[$this->primaryKey])) {
+        if (is_array($data) && isset($data[$this->primaryKey])) {
             return $data[$this->primaryKey];
         }
 
@@ -661,12 +661,12 @@ class Model extends BaseModel
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
-        // Always grab the primary key otherwise updates will fail.
-        if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-            && ! empty($data->{$this->primaryKey}))
-        ) {
-            $properties[$this->primaryKey] = $data->{$this->primaryKey};
+        if (! empty($properties) && ! in_array($this->primaryKey, $properties, true)) {
+            // Always grab the primary key otherwise updates will fail.
+            $primaryKey = $this->getIdValue($data);
+            if ($primaryKey !== null) {
+                $properties[$this->primaryKey] = $primaryKey;
+            }
         }
 
         return $properties;
@@ -756,7 +756,7 @@ class Model extends BaseModel
             $properties = $data->toRawArray($onlyChanged);
 
             // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
+            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && isset($data->{$primaryKey})) {
                 $properties[$primaryKey] = $data->{$primaryKey};
             }
         } else {

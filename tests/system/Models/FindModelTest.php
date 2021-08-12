@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
+use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 
 /**
@@ -26,6 +27,18 @@ final class FindModelTest extends LiveModelTestCase
     {
         $this->createModel(JobModel::class);
         $this->assertSame('Musician', $this->model->find(4)->name);
+    }
+
+    public function testFindReturnsRowZeroId(): void
+    {
+        $this->createModel(StringifyPkeyModel::class);
+        $this->assertSame('test zero key', $this->model->find('0')->value);
+    }
+
+    public function testFindReturnsRowEmptyId(): void
+    {
+        $this->createModel(StringifyPkeyModel::class);
+        $this->assertSame('test empty key', $this->model->find('')->value);
     }
 
     public function testFindReturnsMultipleRows(): void
