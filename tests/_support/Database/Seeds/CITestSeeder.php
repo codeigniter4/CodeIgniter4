@@ -110,7 +110,7 @@ class CITestSeeder extends Seeder
             ],
         ];
 
-        //set SQL times to more correct format
+        // set SQL times to more correct format
         if ($this->db->DBDriver === 'SQLite3') {
             $data['type_test'][0]['type_date']      = '2020/01/11';
             $data['type_test'][0]['type_time']      = '15:22:00';

@@ -375,7 +375,7 @@ class View implements RendererInterface
      */
     public function section(string $name)
     {
-        //Saved to prevent BC.
+        // Saved to prevent BC.
         $this->currentSection = $name;
         $this->sectionStack[] = $name;
 

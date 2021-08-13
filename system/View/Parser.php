@@ -333,7 +333,7 @@ class Parser extends View
                 $str .= $out;
             }
 
-            //Escape | character from filters as it's handled as OR in regex
+            // Escape | character from filters as it's handled as OR in regex
             $escapedMatch = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
 
             $replace['#' . $escapedMatch . '#s'] = $str;

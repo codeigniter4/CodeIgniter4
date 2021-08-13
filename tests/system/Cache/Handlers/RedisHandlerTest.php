@@ -157,14 +157,14 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame('keys=90', $dbInfo[0]);
     }
 
-    //FIXME: I don't like all Hash logic very much. It's wasting memory.
-    //public function testIncrement()
-    //{
-    //}
+    // FIXME: I don't like all Hash logic very much. It's wasting memory.
+    // public function testIncrement()
+    // {
+    // }
 
-    //public function testDecrement()
-    //{
-    //}
+    // public function testDecrement()
+    // {
+    // }
 
     public function testClean()
     {

@@ -1155,7 +1155,7 @@ class RouteCollection implements RouteCollectionInterface
             $from = str_ireplace(':' . $tag, $pattern, $from);
         }
 
-        //If is redirect, No processing
+        // If is redirect, No processing
         if (! isset($options['redirect']) && is_string($to)) {
             // If no namespace found, add the default namespace
             if (strpos($to, '\\') === false || strpos($to, '\\') > 0) {

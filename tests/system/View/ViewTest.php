@@ -232,7 +232,7 @@ final class ViewTest extends CIUnitTestCase
         $view     = new View($this->config, $this->viewsDir, $this->loader);
         $expected = '<h1>Hello World</h1>';
 
-        //I think saveData is sava current data, is not clean already set data.
+        // I think saveData is sava current data, is not clean already set data.
         $view->setVar('testString', 'Hello World');
         $this->assertSame($expected, $view->renderString('<h1><?= $testString ?></h1>', [], false));
         $this->assertArrayNotHasKey('testString', $view->getData());

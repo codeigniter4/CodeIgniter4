@@ -978,8 +978,8 @@ if (! function_exists('single_service')) {
 }
 
 if (! function_exists('slash_item')) {
-    //Unlike CI3, this function is placed here because
-    //it's not a config, or part of a config.
+    // Unlike CI3, this function is placed here because
+    // it's not a config, or part of a config.
     /**
      * Fetch a config file item with slash appended (if not empty)
      *
