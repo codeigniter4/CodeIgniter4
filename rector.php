@@ -28,6 +28,7 @@ use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Array_\RemoveDuplicatedArrayKeyRector;
+use Rector\DeadCode\Rector\Assign\RemoveDoubleAssignRector;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
@@ -113,4 +114,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $services->set(RemoveDuplicatedArrayKeyRector::class);
+    $services->set(RemoveDoubleAssignRector::class);
 };

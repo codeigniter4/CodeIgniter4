@@ -153,7 +153,6 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
     public function testPathPathInfoGlobal()
     {
         $this->request->uri = '/index.php/woot?code=good#pos';
-        $this->request->uri = '/index.php/woot?code=good#pos';
         $this->request->setGlobal('server', [
             'PATH_INFO' => 'silliness',
         ]);
