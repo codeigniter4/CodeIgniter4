@@ -1327,7 +1327,7 @@ abstract class BaseModel
             return true;
         }
 
-        //Validation requires array, so cast away.
+        // Validation requires array, so cast away.
         if (is_object($data)) {
             $data = (array) $data;
         }

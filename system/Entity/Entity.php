@@ -353,7 +353,7 @@ class Entity implements JsonSerializable
             $type = substr($type, 1);
         }
 
-        //In order not to create a separate handler for the
+        // In order not to create a separate handler for the
         // json-array type, we transform the required one.
         $type = $type === 'json-array' ? 'json[array]' : $type;
 
@@ -363,7 +363,7 @@ class Entity implements JsonSerializable
 
         $params = [];
 
-        //Attempt to retrieve additional parameters if specified
+        // Attempt to retrieve additional parameters if specified
         // type[param, param2,param3]
         if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches)) {
             $type   = $matches[1];

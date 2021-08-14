@@ -27,7 +27,7 @@ if (! function_exists('singular')) {
             return $result;
         }
 
-        //Arranged in order.
+        // Arranged in order.
         $singularRules = [
             '/(matr)ices$/'                                                   => '\1ix',
             '/(vert|ind)ices$/'                                               => '\1ex',

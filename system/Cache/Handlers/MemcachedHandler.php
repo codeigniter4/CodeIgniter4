@@ -220,7 +220,7 @@ class MemcachedHandler extends BaseHandler
 
         $key = static::validateKey($key, $this->prefix);
 
-        //FIXME: third parameter isn't other handler actions.
+        // FIXME: third parameter isn't other handler actions.
         // @phpstan-ignore-next-line
         return $this->memcached->decrement($key, $offset, $offset, 60);
     }

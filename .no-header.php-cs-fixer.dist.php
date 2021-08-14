@@ -14,6 +14,7 @@ declare(strict_types=1);
 use Nexus\CsConfig\Factory;
 use PhpCsFixer\Finder;
 use Utils\PhpCsFixer\CodeIgniter4;
+use Utils\PhpCsFixer\Fixer\Comment\SpaceAfterCommentStartFixer;
 
 $finder = Finder::create()
     ->files()
@@ -26,8 +27,14 @@ $finder = Finder::create()
 $overrides = [];
 
 $options = [
-    'cacheFile' => 'build/.no-header.php-cs-fixer.cache',
-    'finder'    => $finder,
+    'cacheFile'    => 'build/.no-header.php-cs-fixer.cache',
+    'finder'       => $finder,
+    'customFixers' => [
+        new SpaceAfterCommentStartFixer(),
+    ],
+    'customRules' => [
+        'CodeIgniter4/space_after_comment_start' => true,
+    ],
 ];
 
 return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();

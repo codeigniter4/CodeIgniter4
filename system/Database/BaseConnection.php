@@ -461,7 +461,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function getConnection(?string $alias = null)
     {
-        //@todo work with read/write connections
+        // @todo work with read/write connections
         return $this->connID;
     }
 

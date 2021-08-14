@@ -85,7 +85,7 @@ class Exceptions
      */
     public function initialize()
     {
-        //Set the Exception Handler
+        // Set the Exception Handler
         set_exception_handler([$this, 'exceptionHandler']);
 
         // Set the Error Handler
