@@ -1275,7 +1275,7 @@ if (! function_exists('request_is')) {
      */
     function request_is(string $type): bool
     {
-        $request = Services::request(null, true);
+        $request = service('request');
 
         if ($type === 'ajax')
         {
