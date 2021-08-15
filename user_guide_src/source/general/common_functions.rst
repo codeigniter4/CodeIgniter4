@@ -405,7 +405,7 @@ Miscellaneous Functions
     :param   string    $type: The type needed to be compared
     :rtype: bool
 
-    Helper function used to easily compare if the HTTP method matches the need.
+    Helper function to determine if the HTTP method matches the expected value.
 
 ================
 Global Constants
