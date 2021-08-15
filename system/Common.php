@@ -1282,6 +1282,6 @@ if (! function_exists('request_is')) {
             return (bool) $request->isAJAX();
         }
 
-        return (bool) $request->getMethod() === $type;
+        return strtolower($request->getMethod()) === strtolower($type);
     }
 }
