@@ -206,8 +206,8 @@ class FileRules
     }
 
     /**
-     * Checks an uploaded file to verify that the dimensions are within
-     * a specified allowable dimension.
+     * Checks an uploaded file to verify that the dimensions are below
+	 * a specified maximum allowable dimension.
      */
     public function max_dims(?string $blank, string $params): bool
     {
@@ -230,19 +230,65 @@ class FileRules
             }
 
             // Get Parameter sizes
-            $allowedWidth  = $params[0] ?? 0;
-            $allowedHeight = $params[1] ?? 0;
+			$allowedMaxWidth  = $params[0] ?? 0;
+			$allowedMaxHeight = $params[1] ?? 0;
 
-            // Get uploaded image size
-            $info       = getimagesize($file->getTempName());
-            $fileWidth  = $info[0];
-            $fileHeight = $info[1];
+			// Get uploaded image size
+			$info       = getimagesize($file->getTempName());
+			$fileWidth  = $info[0];
+			$fileHeight = $info[1];
 
-            if ($fileWidth > $allowedWidth || $fileHeight > $allowedHeight) {
-                return false;
-            }
+			if ($fileWidth > $allowedMaxWidth || $fileHeight > $allowedMaxHeight){
+				return false;
+			}
         }
 
         return true;
     }
+    
+    /**
+	 * Checks an uploaded file to verify that the dimensions are above
+	 * a specified minimum allowable dimension.
+     */
+    public function min_dims(?string $blank, string $params): bool
+	{
+		// Grab the file name off the top of the $params
+		// after we split it.
+		$params = explode(',', $params);
+		$name   = array_shift($params);
+
+		if (! ($files = $this->request->getFileMultiple($name)))
+		{
+			$files = [$this->request->getFile($name)];
+		}
+
+		foreach ($files as $file)
+		{
+			if (is_null($file))
+			{
+				return false;
+			}
+
+			if ($file->getError() === UPLOAD_ERR_NO_FILE)
+			{
+				return true;
+			}
+
+			// Get Parameter sizes
+			$allowedMinWidth  = $params[0] ?? 0;
+			$allowedMinHeight = $params[1] ?? 0;
+
+			// Get uploaded image size
+			$info       = getimagesize($file->getTempName());
+			$fileWidth  = $info[0];
+			$fileHeight = $info[1];
+
+			if ($fileWidth < $allowedMinWidth || $fileHeight < $allowedMinHeight)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
