@@ -763,8 +763,25 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], string $locale = null)
     {
-        return Services::language($locale)
-            ->getLine($line, $args);
+        $language = Services::language();
+
+        //Get active locale
+        $activeLocale = $language->getLocale();
+
+        if ($locale && $locale != $activeLocale)
+        {
+            $language->setLocale($locale);
+        }
+
+        $line = $language->getLine($line, $args);
+
+        if ($locale && $locale != $activeLocale)
+        {
+            //Reset to active locale
+            $language->setLocale($activeLocale);
+        }
+
+        return $line;
     }
 }
 
