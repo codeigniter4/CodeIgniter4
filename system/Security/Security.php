@@ -125,7 +125,7 @@ class Security implements SecurityInterface
      */
     public function __construct(App $config)
     {
-        /** @var SecurityConfig */
+        /** @var SecurityConfig $security */
         $security = config('Security');
 
         // Store CSRF-related configurations
@@ -134,7 +134,7 @@ class Security implements SecurityInterface
         $this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
         $rawCookieName    = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
 
-        /** @var CookieConfig */
+        /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
         $cookiePrefix     = $cookie->prefix ?? $config->cookiePrefix;

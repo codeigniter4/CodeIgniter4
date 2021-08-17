@@ -268,8 +268,6 @@ class Router implements RouterInterface
      * it a blank.
      *
      * @param string $page
-     *
-     * @return $this
      */
     public function setIndexPage($page): self
     {
@@ -281,10 +279,6 @@ class Router implements RouterInterface
     /**
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
-     *
-     * @param bool|false $val
-     *
-     * @return $this
      */
     public function setTranslateURIDashes(bool $val = false): self
     {

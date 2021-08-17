@@ -354,7 +354,7 @@ class Connection extends BaseConnection
      */
     protected function _transBegin(): bool
     {
-        return (bool) sqlsrv_begin_transaction($this->connID);
+        return sqlsrv_begin_transaction($this->connID);
     }
 
     /**
@@ -362,7 +362,7 @@ class Connection extends BaseConnection
      */
     protected function _transCommit(): bool
     {
-        return (bool) sqlsrv_commit($this->connID);
+        return sqlsrv_commit($this->connID);
     }
 
     /**
@@ -370,7 +370,7 @@ class Connection extends BaseConnection
      */
     protected function _transRollback(): bool
     {
-        return (bool) sqlsrv_rollback($this->connID);
+        return sqlsrv_rollback($this->connID);
     }
 
     /**

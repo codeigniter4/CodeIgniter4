@@ -66,17 +66,14 @@ class Toolbar
     /**
      * Returns all the data required by Debug Bar
      *
-     * @param float $startTime App start time
+     * @param float           $startTime App start time
+     * @param IncomingRequest $request
+     * @param Response        $response
      *
      * @return string JSON encoded data
      */
     public function run(float $startTime, float $totalTime, RequestInterface $request, ResponseInterface $response): string
     {
-        /**
-         * @var IncomingRequest $request
-         * @var Response        $response
-         */
-
         // Data items used within the view.
         $data['url']             = current_url();
         $data['method']          = $request->getMethod(true);

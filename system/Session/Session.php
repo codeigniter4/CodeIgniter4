@@ -182,7 +182,7 @@ class Session implements SessionInterface
         $this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
         $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-        /** @var CookieConfig */
+        /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
         $this->cookie = new Cookie($this->sessionCookieName, '', [

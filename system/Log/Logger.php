@@ -282,7 +282,7 @@ class Logger implements LoggerInterface
             }
 
             /**
-             * @var HandlerInterface
+             * @var HandlerInterface $handler
              */
             $handler = $this->handlers[$className];
 

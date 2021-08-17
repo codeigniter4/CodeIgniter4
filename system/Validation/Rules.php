@@ -113,7 +113,7 @@ class Rules
             $row = $row->where($whereField, $whereValue);
         }
 
-        return (bool) ($row->get()->getRow() !== null);
+        return $row->get()->getRow() !== null;
     }
 
     /**
@@ -158,7 +158,7 @@ class Rules
             $row = $row->where("{$ignoreField} !=", $ignoreValue);
         }
 
-        return (bool) ($row->get()->getRow() === null);
+        return $row->get()->getRow() === null;
     }
 
     /**

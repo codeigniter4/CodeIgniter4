@@ -997,9 +997,6 @@ class URI
      * Section 5.2
      *
      * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
-     *
-     * @param URI $base
-     * @param URI $reference
      */
     protected function mergePaths(self $base, self $reference): string
     {
