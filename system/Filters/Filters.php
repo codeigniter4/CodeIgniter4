@@ -254,8 +254,6 @@ class Filters
      * Restores instance to its pre-initialized state.
      * Most useful for testing so the service can be
      * re-initialized to a different path.
-     *
-     * @return $this
      */
     public function reset(): self
     {
@@ -427,8 +425,6 @@ class Filters
 
         if (array_key_exists($method, $this->config->methods)) {
             $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
-
-            return;
         }
     }
 

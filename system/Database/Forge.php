@@ -996,20 +996,18 @@ class Forge
             'SET DEFAULT',
         ];
 
-        if ($this->foreignKeys !== []) {
-            foreach ($this->foreignKeys as $field => $fkey) {
-                $nameIndex = $table . '_' . $field . '_foreign';
+        foreach ($this->foreignKeys as $field => $fkey) {
+            $nameIndex = $table . '_' . $field . '_foreign';
 
-                $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                    . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
+                . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
 
-                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                    $sql .= ' ON DELETE ' . $fkey['onDelete'];
-                }
+            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+            }
 
-                if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                    $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
-                }
+            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
+                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
         }
 

@@ -64,8 +64,8 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         if ($this->request === null) {
-            $this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
-            $this->response = new MockResponse((object) $config);
+            $this->request  = new MockIncomingRequest($config, new URI($uri), null, new UserAgent());
+            $this->response = new MockResponse($config);
         }
 
         // Insert headers into request.

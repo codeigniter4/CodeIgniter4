@@ -48,7 +48,7 @@ final class EventsTest extends CIUnitTestCase
     public function testInitialize()
     {
         /**
-         * @var Modules
+         * @var Modules $config
          */
         $config          = config('Modules');
         $config->aliases = [];

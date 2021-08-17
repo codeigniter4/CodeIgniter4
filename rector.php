@@ -27,13 +27,14 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
-use Rector\DeadCode\Rector\Array_\RemoveDuplicatedArrayKeyRector;
-use Rector\DeadCode\Rector\Assign\RemoveDoubleAssignRector;
-use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
-use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
-use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
-use Rector\DeadCode\Rector\Property\RemoveUnusedPrivatePropertyRector;
-use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
+use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
+use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
+use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
+use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -51,6 +52,7 @@ use Utils\Rector\RemoveVarTagFromClassConstantRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->import(SetList::DEAD_CODE);
     $containerConfigurator->import(SetList::PHP_73);
 
     $parameters = $containerConfigurator->parameters();
@@ -72,6 +74,43 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
+
+        // requires php 8
+        RemoveUnusedPromotedPropertyRector::class,
+
+        // currently buggy on call inside assign, wait for next release
+        RemoveParentCallWithoutParentRector::class,
+
+        // private method called via getPrivateMethodInvoker
+        RemoveUnusedPrivateMethodRector::class => [
+            __DIR__ . '/system/Entity/Entity.php',
+            __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
+        ],
+
+        // call on purpose for nothing happen check
+        RemoveEmptyMethodCallRector::class => [
+            __DIR__ . '/tests',
+        ],
+
+        // currently buggy on class implements ArrayAccess, wait for next release
+        RemoveDeadStmtRector::class => [
+            __DIR__ . '/tests/system/Cookie/CookieTest.php',
+        ],
+
+        // check on constant compare
+        UnwrapFutureCompatibleIfPhpVersionRector::class => [
+            __DIR__ . '/system/CodeIgniter.php',
+        ],
+
+        // check context ResponseTrait
+        RemoveUselessReturnTagRector::class => [
+            __DIR__ . '/system/HTTP/MessageTrait.php',
+        ],
+
+        // casted to Entity via EntityTest->getCastEntity()
+        RecastingRemovalRector::class => [
+            __DIR__ . '/tests/system/Entity/EntityTest.php',
+        ],
     ]);
 
     // auto import fully qualified class names
@@ -92,17 +131,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SimplifyStrposLowerRector::class);
     $services->set(CombineIfRector::class);
     $services->set(SimplifyIfReturnBoolRector::class);
-    $services->set(RemoveDuplicatedCaseInSwitchRector::class);
     $services->set(InlineIfToExplicitIfRector::class);
     $services->set(PreparedValueToEarlyReturnRector::class);
     $services->set(ShortenElseIfRector::class);
-    $services->set(RemoveUnusedForeachKeyRector::class);
     $services->set(SimplifyIfElseToTernaryRector::class);
     $services->set(UnusedForeachValueToArrayKeysRector::class);
-    $services->set(RemoveConcatAutocastRector::class);
     $services->set(ChangeArrayPushToArrayAssignRector::class);
     $services->set(UnnecessaryTernaryExpressionRector::class);
-    $services->set(RemoveUnusedPrivatePropertyRector::class);
     $services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
     $services->set(TernaryToNullCoalescingRector::class);
     $services->set(ListToArrayDestructRector::class);
@@ -110,9 +145,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
     $services->set(RemoveExtraParametersRector::class);
-    $services->set(RemoveUnusedVariableAssignRector::class);
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
-    $services->set(RemoveDuplicatedArrayKeyRector::class);
-    $services->set(RemoveDoubleAssignRector::class);
 };

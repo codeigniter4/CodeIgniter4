@@ -139,8 +139,6 @@ class Throttler implements ThrottlerInterface
 
     /**
      * @param string $key The name of the bucket
-     *
-     * @return $this
      */
     public function remove(string $key): self
     {

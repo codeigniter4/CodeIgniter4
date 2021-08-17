@@ -239,7 +239,7 @@ class PagerRenderer
             $uri     = $this->segment === 0 ? $uri->addQuery($this->pageSelector, $i) : $uri->setSegment($this->segment, $i);
             $links[] = [
                 'uri'    => URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment()),
-                'title'  => (int) $i,
+                'title'  => $i,
                 'active' => ($i === $this->current),
             ];
         }
@@ -260,8 +260,8 @@ class PagerRenderer
             return;
         }
 
-        $this->first = $this->current - $count > 0 ? (int) ($this->current - $count) : 1;
-        $this->last  = $this->current + $count <= $this->pageCount ? (int) ($this->current + $count) : (int) $this->pageCount;
+        $this->first = $this->current - $count > 0 ? $this->current - $count : 1;
+        $this->last  = $this->current + $count <= $this->pageCount ? $this->current + $count : (int) $this->pageCount;
     }
 
     /**

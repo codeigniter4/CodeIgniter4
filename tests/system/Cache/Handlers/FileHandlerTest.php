@@ -345,7 +345,7 @@ final class BaseTestFileHandler extends FileHandler
     public function getFileInfoTest()
     {
         $tmpHandle = tmpfile();
-        stream_get_meta_data($tmpHandle)['uri'];
+        stream_get_meta_data($tmpHandle);
 
         return $this->getFileInfo(stream_get_meta_data($tmpHandle)['uri'], [
             'name',

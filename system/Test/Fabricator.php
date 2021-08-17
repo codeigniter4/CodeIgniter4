@@ -233,8 +233,6 @@ class Fabricator
      *
      * @param array $overrides Array of [field => value]
      * @param bool  $persist   Whether these overrides should persist through the next operation
-     *
-     * @return $this
      */
     public function setOverrides(array $overrides = [], $persist = true): self
     {
@@ -259,8 +257,6 @@ class Fabricator
      * Set the formatters to use. Will attempt to autodetect if none are available.
      *
      * @param array|null $formatters Array of [field => formatter], or null to detect
-     *
-     * @return $this
      */
     public function setFormatters(?array $formatters = null): self
     {
@@ -277,8 +273,6 @@ class Fabricator
 
     /**
      * Try to identify the appropriate Faker formatter for each field.
-     *
-     * @return $this
      */
     protected function detectFormatters(): self
     {

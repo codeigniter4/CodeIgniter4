@@ -304,10 +304,8 @@ if (! function_exists('video')) {
 
         $video .= ">\n";
 
-        if (! empty($tracks)) {
-            foreach ($tracks as $track) {
-                $video .= _space_indent() . $track . "\n";
-            }
+        foreach ($tracks as $track) {
+            $video .= _space_indent() . $track . "\n";
         }
 
         if (! empty($unsupportedMessage)) {
@@ -352,10 +350,8 @@ if (! function_exists('audio')) {
 
         $audio .= '>';
 
-        if (! empty($tracks)) {
-            foreach ($tracks as $track) {
-                $audio .= "\n" . _space_indent() . $track;
-            }
+        foreach ($tracks as $track) {
+            $audio .= "\n" . _space_indent() . $track;
         }
 
         if (! empty($unsupportedMessage)) {
@@ -388,10 +384,8 @@ if (! function_exists('_media')) {
             $media .= _space_indent() . $option . "\n";
         }
 
-        if (! empty($tracks)) {
-            foreach ($tracks as $track) {
-                $media .= _space_indent() . $track . "\n";
-            }
+        foreach ($tracks as $track) {
+            $media .= _space_indent() . $track . "\n";
         }
 
         if (! empty($unsupportedMessage)) {
