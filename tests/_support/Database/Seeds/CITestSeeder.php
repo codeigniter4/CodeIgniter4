@@ -97,6 +97,7 @@ class CITestSeeder extends Seeder
                     'type_datetime'   => '2020-06-18T05:12:24.000+02:00',
                     'type_timestamp'  => '2019-07-18T21:53:21.000+02:00',
                     'type_bigint'     => 2342342,
+                    'type_boolean'    => 1,
                 ],
             ],
         ];
@@ -110,7 +111,8 @@ class CITestSeeder extends Seeder
         }
 
         if ($this->db->DBDriver === 'Postgre') {
-            $data['type_test'][0]['type_time'] = '15:22:00';
+            $data['type_test'][0]['type_time']    = '15:22:00';
+            $data['type_test'][0]['type_boolean'] = true;
             unset(
                 $data['type_test'][0]['type_enum'],
                 $data['type_test'][0]['type_set'],
