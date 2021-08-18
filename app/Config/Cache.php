@@ -2,7 +2,6 @@
 
 namespace Config;
 
-use CodeIgniter\Cache\Handlers\BaseHandler;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Cache\Handlers\FileHandler;
 use CodeIgniter\Cache\Handlers\MemcachedHandler;
