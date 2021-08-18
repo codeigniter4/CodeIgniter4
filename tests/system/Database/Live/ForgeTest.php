@@ -508,21 +508,21 @@ class ForgeTest extends CIUnitTestCase
         $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
 
         if ($this->db->DBDriver === 'SQLite3') {
-            $this->assertSame($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
-            $this->assertSame($foreignKeyData[0]->sequence, 0);
-            $this->assertSame($foreignKeyData[1]->constraint_name, 'users_second_id to db_forge_test_users.second_id');
-            $this->assertSame($foreignKeyData[1]->sequence, 1);
+            $this->assertSame('users_id to db_forge_test_users.id', $foreignKeyData[0]->constraint_name);
+            $this->assertSame(0, $foreignKeyData[0]->sequence);
+            $this->assertSame('users_second_id to db_forge_test_users.second_id', $foreignKeyData[1]->constraint_name);
+            $this->assertSame(1, $foreignKeyData[1]->sequence);
         } else {
             $haystack = ['users_id', 'users_second_id'];
-            $this->assertSame($foreignKeyData[0]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
+            $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign', $foreignKeyData[0]->constraint_name);
             $this->assertContains($foreignKeyData[0]->column_name, $haystack);
 
             $secondIdKey = $this->db->DBDriver === 'Postgre' ? 2 : 1;
-            $this->assertSame($foreignKeyData[$secondIdKey]->constraint_name, $this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign');
+            $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign', $foreignKeyData[$secondIdKey]->constraint_name);
             $this->assertContains($foreignKeyData[$secondIdKey]->column_name, $haystack);
         }
-        $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
-        $this->assertSame($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices', $foreignKeyData[0]->table_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_users', $foreignKeyData[0]->foreign_table_name);
 
         $this->forge->dropTable('forge_test_invoices', true);
         $this->forge->dropTable('forge_test_users', true);
