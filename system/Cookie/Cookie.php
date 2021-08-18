@@ -17,6 +17,7 @@ use Config\Cookie as CookieConfig;
 use DateTimeInterface;
 use InvalidArgumentException;
 use LogicException;
+use ReturnTypeWillChange;
 
 /**
  * A `Cookie` class represents an immutable HTTP cookie value object.
@@ -562,11 +563,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Whether an offset exists.
      *
-     * @param string $offset
-     *
-     * @return bool
+     * @param mixed $offset
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $offset === 'expire' ? true : property_exists($this, $offset);
     }
@@ -574,12 +573,13 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Offset to retrieve.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @throws InvalidArgumentException
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (! $this->offsetExists($offset)) {
@@ -592,12 +592,12 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Offset to set.
      *
-     * @param string $offset
-     * @param mixed  $value
+     * @param mixed $offset
+     * @param mixed $value
      *
      * @throws LogicException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new LogicException(sprintf('Cannot set values of properties of %s as it is immutable.', static::class));
     }
@@ -605,11 +605,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Offset to unset.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @throws LogicException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new LogicException(sprintf('Cannot unset values of properties of %s as it is immutable.', static::class));
     }
