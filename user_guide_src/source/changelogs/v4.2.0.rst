@@ -1,10 +1,20 @@
 Version 4.2.0
 =============
 
-Release Date:
+Release Date: Not released
 
 **4.2.0 release of CodeIgniter4**
+
+Enhancements:
+
+- Added Cache config for reserved characters
 
 Changes:
 
 - ``Validation::setRule`` signature changed and now allows string or array types for ``$rules``; see PR #3910
+
+Deprecations:
+
+- Deprecated ``CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS`` in favor of the new config property
+
+Bugs Fixed:

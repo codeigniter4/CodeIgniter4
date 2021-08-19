@@ -61,6 +61,7 @@ class Migration_Create_test_tables extends Migration
             'type_double'     => ['type' => 'DOUBLE', 'null' => true],
             'type_decimal'    => ['type' => 'DECIMAL', 'constraint' => '18,4', 'null' => true],
             'type_blob'       => ['type' => 'BLOB', 'null' => true],
+            'type_boolean'    => ['type' => 'BOOLEAN', 'null' => true],
         ];
 
         if ($this->db->DBDriver === 'Postgre') {
@@ -128,7 +129,6 @@ class Migration_Create_test_tables extends Migration
                 'data' => ['type' => 'BLOB', 'null' => false],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('timestamp');
             $this->forge->createTable('ci_sessions', true);
         }
 
@@ -140,7 +140,6 @@ class Migration_Create_test_tables extends Migration
                 "data bytea DEFAULT '' NOT NULL",
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('timestamp');
             $this->forge->createTable('ci_sessions', true);
         }
     }

@@ -387,12 +387,25 @@ class Forge
                     throw new InvalidArgumentException('Field information is required for that operation.');
                 }
 
-                $this->fields[] = $field;
+                $fieldName = explode(' ', $field, 2)[0];
+                $fieldName = trim($fieldName, '`\'"');
+
+                $this->fields[$fieldName] = $field;
             }
         }
 
         if (is_array($field)) {
-            $this->fields = array_merge($this->fields, $field);
+            foreach ($field as $idx => $f) {
+                if (is_string($f)) {
+                    $this->addField($f);
+
+                    continue;
+                }
+
+                if (is_array($f)) {
+                    $this->fields = array_merge($this->fields, [$idx => $f]);
+                }
+            }
         }
 
         return $this;
@@ -878,7 +891,7 @@ class Forge
         $fields = [];
 
         foreach ($this->fields as $key => $attributes) {
-            if (is_int($key) && ! is_array($attributes)) {
+            if (! is_array($attributes)) {
                 $fields[] = ['_literal' => $attributes];
 
                 continue;
