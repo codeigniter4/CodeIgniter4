@@ -111,6 +111,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         RecastingRemovalRector::class => [
             __DIR__ . '/tests/system/Entity/EntityTest.php',
         ],
+
+        // session handlers have the gc() method with underscored parameter `$max_lifetime`
+        UnderscoreToCamelCaseVariableNameRector::class => [
+            __DIR__ . '/system/Session/Handlers',
+        ],
     ]);
 
     // auto import fully qualified class names

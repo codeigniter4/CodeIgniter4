@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Memcached;
+use ReturnTypeWillChange;
 
 /**
  * Session handler using Memcache for persistence
@@ -49,8 +50,6 @@ class MemcachedHandler extends BaseHandler
     protected $sessionExpiration = 7200;
 
     /**
-     * Constructor
-     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -73,14 +72,12 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Open
+     * Re-initialize existing session, or creates a new one.
      *
-     * Sanitizes save_path and initializes connections.
-     *
-     * @param string $savePath Server path(s)
-     * @param string $name     Session cookie name, unused
+     * @param string $path The path where to store/retrieve the session
+     * @param string $name The session name
      */
-    public function open($savePath, $name): bool
+    public function open($path, $name): bool
     {
         $this->memcached = new Memcached();
         $this->memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); // required for touch() usage
@@ -91,8 +88,7 @@ class MemcachedHandler extends BaseHandler
             $serverList[] = $server['host'] . ':' . $server['port'];
         }
 
-        if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)
-        ) {
+        if (! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->savePath, $matches, PREG_SET_ORDER)) {
             $this->memcached = null;
             $this->logger->error('Session: Invalid Memcached save path format: ' . $this->savePath);
 
@@ -124,60 +120,57 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Read
+     * Reads the session data from the session storage, and returns the results.
      *
-     * Reads session data and acquires a lock
+     * @param string $id The session ID
      *
-     * @param string $sessionID Session ID
-     *
-     * @return string Serialized session data
+     * @return false|string Returns an encoded string of the read data.
+     *                      If nothing was read, it must return false.
      */
-    public function read($sessionID): string
+    #[ReturnTypeWillChange]
+    public function read($id)
     {
-        if (isset($this->memcached) && $this->lockSession($sessionID)) {
-            // Needed by write() to detect session_regenerate_id() calls
+        if (isset($this->memcached) && $this->lockSession($id)) {
             if (! isset($this->sessionID)) {
-                $this->sessionID = $sessionID;
+                $this->sessionID = $id;
             }
 
-            $sessionData       = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-            $this->fingerprint = md5($sessionData);
+            $data = (string) $this->memcached->get($this->keyPrefix . $id);
 
-            return $sessionData;
+            $this->fingerprint = md5($data);
+
+            return $data;
         }
 
         return '';
     }
 
     /**
-     * Write
+     * Writes the session data to the session storage.
      *
-     * Writes (create / update) session data
-     *
-     * @param string $sessionID   Session ID
-     * @param string $sessionData Serialized session data
+     * @param string $id   The session ID
+     * @param string $data The encoded session data
      */
-    public function write($sessionID, $sessionData): bool
+    public function write($id, $data): bool
     {
         if (! isset($this->memcached)) {
             return false;
         }
 
-        // Was the ID regenerated?
-        if ($sessionID !== $this->sessionID) {
-            if (! $this->releaseLock() || ! $this->lockSession($sessionID)) {
+        if ($this->sessionID !== $id) {
+            if (! $this->releaseLock() || ! $this->lockSession($id)) {
                 return false;
             }
 
             $this->fingerprint = md5('');
-            $this->sessionID   = $sessionID;
+            $this->sessionID   = $id;
         }
 
         if (isset($this->lockKey)) {
             $this->memcached->replace($this->lockKey, time(), 300);
 
-            if ($this->fingerprint !== ($fingerprint = md5($sessionData))) {
-                if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration)) {
+            if ($this->fingerprint !== ($fingerprint = md5($data))) {
+                if ($this->memcached->set($this->keyPrefix . $id, $data, $this->sessionExpiration)) {
                     $this->fingerprint = $fingerprint;
 
                     return true;
@@ -186,16 +179,14 @@ class MemcachedHandler extends BaseHandler
                 return false;
             }
 
-            return $this->memcached->touch($this->keyPrefix . $sessionID, $this->sessionExpiration);
+            return $this->memcached->touch($this->keyPrefix . $id, $this->sessionExpiration);
         }
 
         return false;
     }
 
     /**
-     * Close
-     *
-     * Releases locks and closes connection.
+     * Closes the current session.
      */
     public function close(): bool
     {
@@ -217,16 +208,14 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Destroy
+     * Destroys a session
      *
-     * Destroys the current session.
-     *
-     * @param string $sessionId Session ID
+     * @param string $id The session ID being destroyed
      */
-    public function destroy($sessionId): bool
+    public function destroy($id): bool
     {
         if (isset($this->memcached, $this->lockKey)) {
-            $this->memcached->delete($this->keyPrefix . $sessionId);
+            $this->memcached->delete($this->keyPrefix . $id);
 
             return $this->destroyCookie();
         }
@@ -235,22 +224,21 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Garbage Collector
+     * Cleans up expired sessions.
      *
-     * Deletes expired sessions
+     * @param int $max_lifetime Sessions that have not updated
+     *                          for the last max_lifetime seconds will be removed.
      *
-     * @param int $maxlifetime Maximum lifetime of sessions
+     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    public function gc($maxlifetime): bool
+    #[ReturnTypeWillChange]
+    public function gc($max_lifetime)
     {
-        // Not necessary, Memcached takes care of that.
-        return true;
+        return 1;
     }
 
     /**
-     * Get lock
-     *
-     * Acquires an (emulated) lock.
+     * Acquires an emulated lock.
      *
      * @param string $sessionID Session ID
      */
@@ -260,7 +248,6 @@ class MemcachedHandler extends BaseHandler
             return $this->memcached->replace($this->lockKey, time(), 300);
         }
 
-        // 30 attempts to obtain a lock, in case another request already has it
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
         $attempt = 0;
 
@@ -293,8 +280,6 @@ class MemcachedHandler extends BaseHandler
     }
 
     /**
-     * Release lock
-     *
      * Releases a previously acquired lock
      */
     protected function releaseLock(): bool
