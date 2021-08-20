@@ -14,7 +14,6 @@ namespace CodeIgniter\Test\Filters;
 use php_user_filter;
 
 /**
- * Class to extract an output snapshot.
  * Used to capture output during unit testing, so that it can
  * be used in assertions.
  */
@@ -28,16 +27,15 @@ class CITestStreamFilter extends php_user_filter
     public static $buffer = '';
 
     /**
-     * Output filtering - catch it all.
+     * This method is called whenever data is read from or written to the
+     * attached stream (such as with fread() or fwrite()).
      *
      * @param resource $in
      * @param resource $out
      * @param int      $consumed
      * @param bool     $closing
-     *
-     * @return int
      */
-    public function filter($in, $out, &$consumed, $closing)
+    public function filter($in, $out, &$consumed, $closing): int
     {
         while ($bucket = stream_bucket_make_writeable($in)) {
             static::$buffer .= $bucket->data;
@@ -45,11 +43,8 @@ class CITestStreamFilter extends php_user_filter
             $consumed += $bucket->datalen;
         }
 
-        // @phpstan-ignore-next-line
         return PSFS_PASS_ON;
     }
 }
 
-// @codeCoverageIgnoreStart
-stream_filter_register('CITestStreamFilter', 'CodeIgniter\Test\Filters\CITestStreamFilter');
-// @codeCoverageIgnoreEnd
+stream_filter_register('CITestStreamFilter', CITestStreamFilter::class); // @codeCoverageIgnore
