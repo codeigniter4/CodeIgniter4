@@ -225,12 +225,10 @@ trait DatabaseTestTrait
      */
     protected function clearInsertCache()
     {
-        if (! empty($this->insertCache)) {
-            foreach ($this->insertCache as $row) {
-                $this->db->table($row[0])
-                    ->where($row[1])
-                    ->delete();
-            }
+        foreach ($this->insertCache as $row) {
+            $this->db->table($row[0])
+                ->where($row[1])
+                ->delete();
         }
     }
 
