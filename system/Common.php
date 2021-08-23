@@ -471,9 +471,9 @@ if (! function_exists('force_https')) {
         $baseURL = config(App::class)->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
-            $baseURL = (string) substr($baseURL, strlen('https://'));
+            $baseURL = substr($baseURL, strlen('https://'));
         } elseif (strpos($baseURL, 'http://') === 0) {
-            $baseURL = (string) substr($baseURL, strlen('http://'));
+            $baseURL = substr($baseURL, strlen('http://'));
         }
 
         $uri = URI::createURIString(
@@ -601,18 +601,16 @@ if (! function_exists('helper')) {
             else {
                 $paths = $loader->search('Helpers/' . $filename);
 
-                if (! empty($paths)) {
-                    foreach ($paths as $path) {
-                        if (strpos($path, APPPATH) === 0) {
-                            // @codeCoverageIgnoreStart
-                            $appHelper = $path;
-                        // @codeCoverageIgnoreEnd
-                        } elseif (strpos($path, SYSTEMPATH) === 0) {
-                            $systemHelper = $path;
-                        } else {
-                            $localIncludes[] = $path;
-                            $loaded[]        = $filename;
-                        }
+                foreach ($paths as $path) {
+                    if (strpos($path, APPPATH) === 0) {
+                        // @codeCoverageIgnoreStart
+                        $appHelper = $path;
+                    // @codeCoverageIgnoreEnd
+                    } elseif (strpos($path, SYSTEMPATH) === 0) {
+                        $systemHelper = $path;
+                    } else {
+                        $localIncludes[] = $path;
+                        $loaded[]        = $filename;
                     }
                 }
 
@@ -636,10 +634,8 @@ if (! function_exists('helper')) {
         }
 
         // Now actually include all of the files
-        if (! empty($includes)) {
-            foreach ($includes as $path) {
-                include_once $path;
-            }
+        foreach ($includes as $path) {
+            include_once $path;
         }
     }
 }

@@ -30,11 +30,9 @@ use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
-use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
+use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
-use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -78,9 +76,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         // requires php 8
         RemoveUnusedPromotedPropertyRector::class,
 
-        // currently buggy on call inside assign, wait for next release
-        RemoveParentCallWithoutParentRector::class,
-
         // private method called via getPrivateMethodInvoker
         RemoveUnusedPrivateMethodRector::class => [
             __DIR__ . '/system/Entity/Entity.php',
@@ -92,19 +87,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/tests',
         ],
 
-        // currently buggy on class implements ArrayAccess, wait for next release
-        RemoveDeadStmtRector::class => [
-            __DIR__ . '/tests/system/Cookie/CookieTest.php',
-        ],
-
         // check on constant compare
         UnwrapFutureCompatibleIfPhpVersionRector::class => [
             __DIR__ . '/system/CodeIgniter.php',
-        ],
-
-        // check context ResponseTrait
-        RemoveUselessReturnTagRector::class => [
-            __DIR__ . '/system/HTTP/MessageTrait.php',
         ],
 
         // casted to Entity via EntityTest->getCastEntity()
@@ -115,6 +100,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         // session handlers have the gc() method with underscored parameter `$max_lifetime`
         UnderscoreToCamelCaseVariableNameRector::class => [
             __DIR__ . '/system/Session/Handlers',
+        ],
+
+        // check on $_SESSION
+        RemoveUnusedNonEmptyArrayBeforeForeachRector::class => [
+            __DIR__ . '/system/Debug/Toolbar.php',
         ],
     ]);
 
