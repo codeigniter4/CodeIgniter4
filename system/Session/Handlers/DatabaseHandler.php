@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Config\Database;
 use Exception;
 
@@ -57,7 +58,12 @@ class DatabaseHandler extends BaseHandler
      */
     protected $rowExists = false;
 
-    //--------------------------------------------------------------------
+    /**
+     * The session table name
+     *
+     * @var string
+     */
+    protected $savePath = 'ci_sessions';
 
     /**
      * Constructor
@@ -70,7 +76,7 @@ class DatabaseHandler extends BaseHandler
         parent::__construct($config, $ipAddress);
 
         // Determine Table
-        $this->table = $config->sessionSavePath;
+        $this->table = $this->savePath;
 
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
@@ -78,7 +84,7 @@ class DatabaseHandler extends BaseHandler
 
         // Get DB Connection
         // @phpstan-ignore-next-line
-        $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+        $this->DBGroup = config('Session')->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
         $this->db = Database::connect($this->DBGroup);
 
@@ -90,8 +96,6 @@ class DatabaseHandler extends BaseHandler
             $this->platform = 'postgre';
         }
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Open
@@ -113,8 +117,6 @@ class DatabaseHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Read
@@ -169,8 +171,6 @@ class DatabaseHandler extends BaseHandler
 
         return $result;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -232,8 +232,6 @@ class DatabaseHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -245,8 +243,6 @@ class DatabaseHandler extends BaseHandler
     {
         return ($this->lock && ! $this->releaseLock()) ? $this->fail() : true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Destroy
@@ -280,8 +276,6 @@ class DatabaseHandler extends BaseHandler
         return $this->fail();
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -298,8 +292,6 @@ class DatabaseHandler extends BaseHandler
 
         return $this->db->table($this->table)->where("timestamp <", "now() - INTERVAL {$interval}", false)->delete() ? true : $this->fail();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Lock the session.
@@ -336,8 +328,6 @@ class DatabaseHandler extends BaseHandler
         return parent::lockSession($sessionID);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Releases the lock, if any.
      *
@@ -372,6 +362,4 @@ class DatabaseHandler extends BaseHandler
         // Unsupported DB? Let the parent handle the simple version.
         return parent::releaseLock();
     }
-
-    //--------------------------------------------------------------------
 }

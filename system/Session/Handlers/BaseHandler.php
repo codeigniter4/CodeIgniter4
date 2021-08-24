@@ -12,6 +12,7 @@
 namespace CodeIgniter\Session\Handlers;
 
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -35,6 +36,50 @@ abstract class BaseHandler implements SessionHandlerInterface
      * @var mixed
      */
     protected $lock = false;
+
+    /**
+     * User's IP address.
+     *
+     * @var string
+     */
+    protected $ipAddress;
+
+    /**
+     * Current session ID
+     *
+     * @var string
+     */
+    protected $sessionID;
+
+    /**
+     * The name of the session which is used as cookie name.
+     * It should only contain alphanumeric characters.
+     *
+     * @var string
+     */
+    protected $cookieName = 'ci_session';
+
+    /**
+     * The number of SECONDS you want the session to last.
+     * Set to `0` means expire when the browser is closed.
+     *
+     * @var int
+     */
+    protected $lifetime = 7200;
+
+    /**
+     * The 'save path' for the session varies between
+     *
+     * @var string|array
+     */
+    protected $savePath;
+
+    /**
+     * Match IP addresses for cookies?
+     *
+     * @var bool
+     */
+    protected $matchIP = false;
 
     /**
      * Cookie prefix
@@ -65,44 +110,6 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $cookieSecure = false;
 
     /**
-     * Cookie name to use
-     *
-     * @var string
-     */
-    protected $cookieName;
-
-    /**
-     * Match IP addresses for cookies?
-     *
-     * @var bool
-     */
-    protected $matchIP = false;
-
-    /**
-     * Current session ID
-     *
-     * @var string
-     */
-    protected $sessionID;
-
-    /**
-     * The 'save path' for the session
-     * varies between
-     *
-     * @var string|array
-     */
-    protected $savePath;
-
-    /**
-     * User's IP address.
-     *
-     * @var string
-     */
-    protected $ipAddress;
-
-    //--------------------------------------------------------------------
-
-    /**
      * Constructor
      *
      * @param AppConfig $config
@@ -110,17 +117,20 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     public function __construct(AppConfig $config, string $ipAddress)
     {
+        /** @var SessionConfig $session */
+        $session = config('Session');
+        
+        $this->cookieName = $session->name ?? $config->sessionCookieName ?? $this->cookieName;
+        $this->lifetime   = $session->lifetime ?? $config->sessionExpiration ?? $this->lifetime;
+        $this->savePath   = $session->savePath ?? $config->sessionSavePath ?? $this->savePath;
+        $this->matchIP    = $session->matchIP ?? $config->sessionMatchIP ?? $this->matchIP;
+
         $this->cookiePrefix = $config->cookiePrefix;
         $this->cookieDomain = $config->cookieDomain;
         $this->cookiePath   = $config->cookiePath;
         $this->cookieSecure = $config->cookieSecure;
-        $this->cookieName   = $config->sessionCookieName;
-        $this->matchIP      = $config->sessionMatchIP;
-        $this->savePath     = $config->sessionSavePath;
         $this->ipAddress    = $ipAddress;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Internal method to force removal of a cookie by the client
@@ -131,11 +141,9 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected function destroyCookie(): bool
     {
         return setcookie(
-                $this->cookieName, '', 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
+            $this->cookieName, '', 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
         );
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * A dummy method allowing drivers with no locking functionality
@@ -153,8 +161,6 @@ abstract class BaseHandler implements SessionHandlerInterface
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Releases the lock, if any.
      *
@@ -166,8 +172,6 @@ abstract class BaseHandler implements SessionHandlerInterface
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Fail

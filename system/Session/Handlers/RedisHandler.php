@@ -54,10 +54,10 @@ class RedisHandler extends BaseHandler
      * Number of seconds until the session ends.
      *
      * @var int
+     *
+     * @deprecated
      */
     protected $sessionExpiration = 7200;
-
-    //--------------------------------------------------------------------
 
     /**
      * Constructor
@@ -75,34 +75,30 @@ class RedisHandler extends BaseHandler
             throw SessionException::forEmptySavepath();
         }
 
-        if (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches)) {
-            if (! isset($matches[3])) {
-                $matches[3] = '';
-            } // Just to avoid undefined index notices below
-
-            $this->savePath = [
-                'host'     => $matches[1],
-                'port'     => empty($matches[2]) ? null : $matches[2],
-                'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
-                'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
-            ];
-
-            preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
-        } else {
+        if (! preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches)) {
             throw SessionException::forInvalidSavePathFormat($this->savePath);
         }
+
+        if (! isset($matches[3])) {
+            $matches[3] = '';
+        } // Just to avoid undefined index notices below
+
+        $this->savePath = [
+            'host'     => $matches[1],
+            'port'     => empty($matches[2]) ? null : $matches[2],
+            'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
+            'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
+            'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+        ];
+
+        preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
 
         if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . ':';
         }
 
-        $this->sessionExpiration = empty($config->sessionExpiration)
-            ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
+        $this->lifetime = empty($this->lifetime) ? (int) ini_get('session.gc_maxlifetime') : $this->lifetime;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Open
@@ -137,8 +133,6 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Read
      *
@@ -166,8 +160,6 @@ class RedisHandler extends BaseHandler
 
         return '';
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Write
@@ -199,7 +191,7 @@ class RedisHandler extends BaseHandler
             $this->redis->expire($this->lockKey, 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === false) {
-                if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration)) {
+                if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->lifetime)) {
                     $this->fingerprint = $fingerprint;
                     $this->keyExists   = true;
 
@@ -209,13 +201,11 @@ class RedisHandler extends BaseHandler
                 return false;
             }
 
-            return $this->redis->expire($this->keyPrefix . $sessionID, $this->sessionExpiration);
+            return $this->redis->expire($this->keyPrefix . $sessionID, $this->lifetime);
         }
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Close
@@ -249,8 +239,6 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Destroy
      *
@@ -273,8 +261,6 @@ class RedisHandler extends BaseHandler
         return false;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Garbage Collector
      *
@@ -289,8 +275,6 @@ class RedisHandler extends BaseHandler
         // Not necessary, Redis takes care of that.
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Get lock
@@ -346,8 +330,6 @@ class RedisHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Release lock
      *
@@ -370,6 +352,4 @@ class RedisHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 }

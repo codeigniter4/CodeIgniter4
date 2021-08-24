@@ -21,13 +21,6 @@ use Exception;
 class FileHandler extends BaseHandler
 {
     /**
-     * Where to save the session files to.
-     *
-     * @var string
-     */
-    protected $savePath;
-
-    /**
      * The file handle
      *
      * @var resource|null
@@ -49,11 +42,11 @@ class FileHandler extends BaseHandler
     protected $fileNew;
 
     /**
-     * Whether IP addresses should be matched.
+     * Where to save the session files to.
      *
-     * @var bool
+     * @var string
      */
-    protected $matchIP = false;
+    protected $savePath = WRITEPATH . 'session';
 
     /**
      * Regex of session ID
@@ -61,8 +54,6 @@ class FileHandler extends BaseHandler
      * @var string
      */
     protected $sessionIDRegex = '';
-
-    //--------------------------------------------------------------------
 
     /**
      * Constructor
@@ -74,25 +65,10 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($config->sessionSavePath)) {
-            $this->savePath = rtrim($config->sessionSavePath, '/\\');
-            ini_set('session.save_path', $config->sessionSavePath);
-        } else {
-            $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
-
-            if (! $sessionPath) {
-                $sessionPath = WRITEPATH . 'session';
-            }
-
-            $this->savePath = $sessionPath;
-        }
-
-        $this->matchIP = $config->sessionMatchIP;
+        ini_set('session.save_path', rtrim($this->savePath, '/\\'));
 
         $this->configureSessionIDRegex();
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Open
@@ -123,8 +99,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Read
@@ -187,8 +161,6 @@ class FileHandler extends BaseHandler
         return $sessionData;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Write
      *
@@ -241,8 +213,6 @@ class FileHandler extends BaseHandler
         return true;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Close
      *
@@ -264,8 +234,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Destroy
@@ -292,8 +260,6 @@ class FileHandler extends BaseHandler
 
         return false;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Garbage Collector
@@ -340,8 +306,6 @@ class FileHandler extends BaseHandler
 
         return true;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Configure Session ID regular expression
