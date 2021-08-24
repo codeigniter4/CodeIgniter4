@@ -223,6 +223,27 @@ Options:
     future releases. Please use ``make:migration`` as replacement. Also, please use ``make:migration --session``
     to use instead of the deprecated ``session:migration``.
 
+make:validation
+-----------
+
+Creates a new validation file.
+
+Usage:
+======
+::
+
+    make:validation <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the validation class. **[REQUIRED]**
+
+Options:
+========
+* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix``: Append the component suffix to the generated class name.
+* ``--force``: Set this flag to overwrite existing files on destination.
+
 ****************************************
 Scaffolding a Complete Set of Stock Code
 ****************************************
