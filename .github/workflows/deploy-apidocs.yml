@@ -41,12 +41,9 @@ jobs:
           php-version: '8.0'
           coverage: none
 
-      - name: Download phpDocumentor v3.1
-        run: |
-          cd ./source
-          curl \
-            -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.1.0/phpDocumentor.phar \
-            -o admin/phpDocumentor.phar
+      - name: Download latest phpDocumentor
+        working-directory: source
+        run: phive install --no-progress --trust-gpg-keys 67F861C3D889C656 --target ./admin phpDocumentor
 
       - name: Prepare API repo
         working-directory: api
