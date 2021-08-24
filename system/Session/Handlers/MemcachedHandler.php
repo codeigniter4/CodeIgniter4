@@ -13,6 +13,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Memcached;
 
 /**
@@ -45,8 +46,17 @@ class MemcachedHandler extends BaseHandler
      * Number of seconds until the session ends.
      *
      * @var int
+     * 
+     * @deprecated
      */
     protected $sessionExpiration = 7200;
+
+    /**
+     * Number of seconds until the session ends.
+     *
+     * @var int
+     */
+    protected $lifetime = 7200;
 
     //--------------------------------------------------------------------
 
@@ -74,7 +84,10 @@ class MemcachedHandler extends BaseHandler
             ini_set('memcached.sess_prefix', $this->keyPrefix);
         }
 
-        $this->sessionExpiration = $config->sessionExpiration;
+        /** @var SessionConfig */
+        $session = config('Session');
+
+        $this->lifetime = $session->lifetime ?? $config->sessionExpiration ?? $this->lifetime;
     }
 
     //--------------------------------------------------------------------
@@ -192,7 +205,7 @@ class MemcachedHandler extends BaseHandler
             $this->memcached->replace($this->lockKey, time(), 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($sessionData))) {
-                if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration)) {
+                if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->lifetime)) {
                     $this->fingerprint = $fingerprint;
 
                     return true;
@@ -201,7 +214,7 @@ class MemcachedHandler extends BaseHandler
                 return false;
             }
 
-            return $this->memcached->touch($this->keyPrefix . $sessionID, $this->sessionExpiration);
+            return $this->memcached->touch($this->keyPrefix . $sessionID, $this->lifetime);
         }
 
         return false;

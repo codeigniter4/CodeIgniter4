@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Config\Database;
 use Exception;
 
@@ -70,15 +71,18 @@ class DatabaseHandler extends BaseHandler
         parent::__construct($config, $ipAddress);
 
         // Determine Table
-        $this->table = $config->sessionSavePath;
+        $this->table = $this->savePath;
 
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
 
+        /** @var SessionConfig */
+        $session = config('Session');
+
         // Get DB Connection
         // @phpstan-ignore-next-line
-        $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+        $this->DBGroup = $session->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
         $this->db = Database::connect($this->DBGroup);
 

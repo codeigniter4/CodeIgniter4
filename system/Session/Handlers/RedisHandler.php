@@ -13,6 +13,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Exception;
 use Redis;
 use RedisException;
@@ -54,8 +55,17 @@ class RedisHandler extends BaseHandler
      * Number of seconds until the session ends.
      *
      * @var int
+     *
+     * @deprecated
      */
     protected $sessionExpiration = 7200;
+
+    /**
+     * Number of seconds until the session ends.
+     *
+     * @var int
+     */
+    protected $lifetime = 7200;
 
     //--------------------------------------------------------------------
 
@@ -97,9 +107,14 @@ class RedisHandler extends BaseHandler
             $this->keyPrefix .= $this->ipAddress . ':';
         }
 
-        $this->sessionExpiration = empty($config->sessionExpiration)
+        /** @var SessionConfig */
+        $session = config('Session');
+
+        $lifetime = $session->lifetime ?? $config->sessionExpiration;
+
+        $this->lifetime = empty($config->lifetime)
             ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
+            : (int) $config->lifetime;
     }
 
     //--------------------------------------------------------------------
@@ -199,7 +214,7 @@ class RedisHandler extends BaseHandler
             $this->redis->expire($this->lockKey, 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === false) {
-                if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration)) {
+                if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->lifetime)) {
                     $this->fingerprint = $fingerprint;
                     $this->keyExists   = true;
 
@@ -209,7 +224,7 @@ class RedisHandler extends BaseHandler
                 return false;
             }
 
-            return $this->redis->expire($this->keyPrefix . $sessionID, $this->sessionExpiration);
+            return $this->redis->expire($this->keyPrefix . $sessionID, $this->lifetime);
         }
 
         return false;
