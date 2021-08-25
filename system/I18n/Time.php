@@ -21,10 +21,9 @@ use Exception;
 use IntlCalendar;
 use IntlDateFormatter;
 use Locale;
+use ReturnTypeWillChange;
 
 /**
- * Class Time
- *
  * A localized date/time package inspired
  * by Nesbot/Carbon and CakePHP/Chronos.
  *
@@ -232,19 +231,20 @@ class Time extends DateTime
      *
      * @param string                   $format
      * @param string                   $datetime
-     * @param DateTimeZone|string|null $timeZone
+     * @param DateTimeZone|string|null $timezone
      *
      * @throws Exception
      *
      * @return Time
      */
-    public static function createFromFormat($format, $datetime, $timeZone = null)
+    #[ReturnTypeWillChange]
+    public static function createFromFormat($format, $datetime, $timezone = null)
     {
         if (! $date = parent::createFromFormat($format, $datetime)) {
             throw I18nException::forInvalidFormat($format);
         }
 
-        return new self($date->format('Y-m-d H:i:s'), $timeZone);
+        return new self($date->format('Y-m-d H:i:s'), $timezone);
     }
 
     /**
@@ -679,6 +679,7 @@ class Time extends DateTime
      *
      * @return Time
      */
+    #[ReturnTypeWillChange]
     public function setTimezone($timezone)
     {
         $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
@@ -695,6 +696,7 @@ class Time extends DateTime
      *
      * @return Time
      */
+    #[ReturnTypeWillChange]
     public function setTimestamp($timestamp)
     {
         $time = date('Y-m-d H:i:s', $timestamp);
@@ -1181,7 +1183,7 @@ class Time extends DateTime
     /**
      * This is called when we unserialize the Time object.
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         /**
          * Prior to unserialization, this is a string.
