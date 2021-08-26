@@ -390,20 +390,6 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Cast as JSON
-     *
-     * @param mixed $value
-     *
-     * @throws CastException
-     *
-     * @return mixed
-     */
-    private function castAsJson($value, bool $asArray = false)
-    {
-        return JsonCast::get($value, $asArray ? ['array'] : []);
-    }
-
-    /**
      * Support for json_encode()
      *
      * @return array|mixed

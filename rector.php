@@ -78,7 +78,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         // private method called via getPrivateMethodInvoker
         RemoveUnusedPrivateMethodRector::class => [
-            __DIR__ . '/system/Entity/Entity.php',
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
         ],
 
