@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -93,57 +92,7 @@ class Builder extends BaseBuilder
      */
     public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
-        if ($type !== '') {
-            $type = strtoupper(trim($type));
-
-            if (! in_array($type, $this->joinTypes, true)) {
-                $type = '';
-            } else {
-                $type .= ' ';
-            }
-        }
-
-        // Extract any aliases that might exist. We use this information
-        // in the protectIdentifiers to know whether to add a table prefix
-        $this->trackAliases($table);
-
-        if (! is_bool($escape)) {
-            $escape = $this->db->protectIdentifiers;
-        }
-
-        if (! $this->hasOperator($cond)) {
-            $cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
-        } elseif ($escape === false) {
-            $cond = ' ON ' . $cond;
-        } else {
-            // Split multiple conditions
-            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
-                $conditions = [];
-                $joints     = $joints[0];
-                array_unshift($joints, ['', 0]);
-
-                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--) {
-                    $joints[$i][1] += strlen($joints[$i][0]); // offset
-                    $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
-                    $pos            = $joints[$i][1] - strlen($joints[$i][0]);
-                    $joints[$i]     = $joints[$i][0];
-                }
-
-                ksort($conditions);
-            } else {
-                $conditions = [$cond];
-                $joints     = [''];
-            }
-
-            $cond = ' ON ';
-
-            foreach ($conditions as $i => $condition) {
-                $operator = $this->getOperator($condition);
-
-                $cond .= $joints[$i];
-                $cond .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
-            }
-        }
+        parent::join($table, $cond, $type, $escape);
 
         // Do we want to escape the table name?
         if ($escape === true) {
@@ -514,73 +463,6 @@ class Builder extends BaseBuilder
         }
 
         return $sql;
-    }
-
-    /**
-     * WHERE, HAVING
-     *
-     * @param mixed $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
-    {
-        if (! is_array($key)) {
-            $key = [$key => $value];
-        }
-
-        // If the escape value was not set will base it on the global setting
-        if (! is_bool($escape)) {
-            $escape = $this->db->protectIdentifiers;
-        }
-
-        foreach ($key as $k => $v) {
-            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
-
-            if ($v !== null) {
-                $op = $this->getOperator($k, true);
-
-                if (! empty($op)) {
-                    $k = trim($k);
-
-                    end($op);
-
-                    $op = trim(current($op));
-
-                    if (substr($k, -1 * strlen($op)) === $op) {
-                        $k = rtrim(strrev(preg_replace(strrev('/' . $op . '/'), strrev(''), strrev($k), 1)));
-                    }
-                }
-
-                $bind = $this->setBind($k, $v, $escape);
-
-                if (empty($op)) {
-                    $k .= ' =';
-                } else {
-                    $k .= " {$op}";
-                }
-
-                if ($v instanceof Closure) {
-                    $builder = $this->cleanClone();
-                    $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
-                } else {
-                    $v = " :{$bind}:";
-                }
-            } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
-                // value appears not to have been set, assign the test to IS NULL
-                $k .= ' IS NULL';
-            } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
-                $k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
-            }
-
-            $this->{$qbKey}[] = [
-                'condition' => $prefix . $k . $v,
-                'escape'    => $escape,
-            ];
-        }
-
-        return $this;
     }
 
     /**
