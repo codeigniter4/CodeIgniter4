@@ -258,8 +258,11 @@ creates is the Pascal case version of the filename.
 
 You can use (make:migration) with the following options:
 
-- ``-n`` - to choose namespace, otherwise the value of ``APP_NAMESPACE`` will be used.
-- ``-force`` - If a similarly named migration file is present in destination, this will be overwritten.
+- ``--session``   - Generates the migration file for database sessions.
+- ``--table``     - Table name to use for database sessions. Default: ``ci_sessions``.
+- ``--dbgroup``   - Database group to use for database sessions. Default: ``default``.
+- ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
+- ``--suffix``    - Append the component title to the class name.
 
 *********************
 Migration Preferences
