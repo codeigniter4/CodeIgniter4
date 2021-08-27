@@ -27,6 +27,7 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
@@ -406,8 +407,9 @@ class Entity implements JsonSerializable
     /**
      * Support for json_encode()
      *
-     * @return array|mixed
+     * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();
