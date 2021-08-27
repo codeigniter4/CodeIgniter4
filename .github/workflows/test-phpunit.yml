@@ -44,9 +44,9 @@ jobs:
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
         mysql-versions: ['5.7']
         include:
-          - php-versions: 7.4
+          - php-versions: '7.4'
             db-platforms: MySQLi
-            mysql-versions: 8.0
+            mysql-versions: '8.0'
 
     services:
       mysql:
@@ -113,7 +113,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composercache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
