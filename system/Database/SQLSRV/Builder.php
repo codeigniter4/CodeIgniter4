@@ -92,7 +92,57 @@ class Builder extends BaseBuilder
      */
     public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
     {
-        parent::join($table, $cond, $type, $escape);
+        if ($type !== '') {
+            $type = strtoupper(trim($type));
+
+            if (! in_array($type, $this->joinTypes, true)) {
+                $type = '';
+            } else {
+                $type .= ' ';
+            }
+        }
+
+        // Extract any aliases that might exist. We use this information
+        // in the protectIdentifiers to know whether to add a table prefix
+        $this->trackAliases($table);
+
+        if (! is_bool($escape)) {
+            $escape = $this->db->protectIdentifiers;
+        }
+
+        if (! $this->hasOperator($cond)) {
+            $cond = ' USING (' . ($escape ? $this->db->escapeIdentifiers($cond) : $cond) . ')';
+        } elseif ($escape === false) {
+            $cond = ' ON ' . $cond;
+        } else {
+            // Split multiple conditions
+            if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE)) {
+                $conditions = [];
+                $joints     = $joints[0];
+                array_unshift($joints, ['', 0]);
+
+                for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i--) {
+                    $joints[$i][1] += strlen($joints[$i][0]); // offset
+                    $conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
+                    $pos            = $joints[$i][1] - strlen($joints[$i][0]);
+                    $joints[$i]     = $joints[$i][0];
+                }
+
+                ksort($conditions);
+            } else {
+                $conditions = [$cond];
+                $joints     = [''];
+            }
+
+            $cond = ' ON ';
+
+            foreach ($conditions as $i => $condition) {
+                $operator = $this->getOperator($condition);
+
+                $cond .= $joints[$i];
+                $cond .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
+            }
+        }
 
         // Do we want to escape the table name?
         if ($escape === true) {
