@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Entity;
 
+use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -589,54 +590,60 @@ final class EntityTest extends CIUnitTestCase
 
     public function testCastAsJSONSyntaxError()
     {
-        $entity = new Entity();
-
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Syntax error, malformed JSON');
 
-        $method('{ this is bad string', true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))('{ this is bad string');
     }
 
     public function testCastAsJSONAnotherErrorDepth()
     {
-        $entity = new Entity();
-
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Maximum stack depth exceeded');
 
         $string = '{' . str_repeat('"test":{', 513) . '"test":"value"' . str_repeat('}', 513) . '}';
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastAsJSONControlCharCheck()
     {
-        $entity = new Entity();
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Unexpected control character found');
 
         $string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastAsJSONStateMismatch()
     {
-        $entity = new Entity();
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Underflow or the modes mismatch');
 
         $string = '[{"name":"jack","product_id":"1234"]';
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastSetter()
