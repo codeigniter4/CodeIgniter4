@@ -30,7 +30,6 @@ use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
-use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -99,11 +98,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         // session handlers have the gc() method with underscored parameter `$max_lifetime`
         UnderscoreToCamelCaseVariableNameRector::class => [
             __DIR__ . '/system/Session/Handlers',
-        ],
-
-        // check on $_SESSION
-        RemoveUnusedNonEmptyArrayBeforeForeachRector::class => [
-            __DIR__ . '/system/Debug/Toolbar.php',
         ],
     ]);
 
