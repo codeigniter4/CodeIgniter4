@@ -298,7 +298,7 @@ if (! function_exists('form_dropdown')) {
             }
         }
 
-        // standardize selected as strings, like  the option keys will be.
+        // Standardize selected as strings, like the option keys will be
         foreach ($selected as $key => $item) {
             $selected[$key] = (string) $item;
         }
@@ -308,6 +308,7 @@ if (! function_exists('form_dropdown')) {
         $form     = '<select ' . rtrim(parse_form_attributes($data, $defaults)) . $extra . $multiple . ">\n";
 
         foreach ($options as $key => $val) {
+            // Keys should always be strings for strict comparison
             $key = (string) $key;
 
             if (is_array($val)) {
@@ -318,6 +319,9 @@ if (! function_exists('form_dropdown')) {
                 $form .= '<optgroup label="' . $key . "\">\n";
 
                 foreach ($val as $optgroupKey => $optgroupVal) {
+                    // Keys should always be strings for strict comparison
+                    $optgroupKey = (string) $optgroupKey;
+
                     $sel = in_array($optgroupKey, $selected, true) ? ' selected="selected"' : '';
                     $form .= '<option value="' . htmlspecialchars($optgroupKey) . '"' . $sel . '>' . $optgroupVal . "</option>\n";
                 }
