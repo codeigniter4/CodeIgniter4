@@ -14,6 +14,7 @@ namespace CodeIgniter\Files;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Config\Mimes;
+use ReturnTypeWillChange;
 use SplFileInfo;
 
 /**
@@ -29,8 +30,6 @@ class File extends SplFileInfo
     protected $size;
 
     /**
-     * Original MimeType
-     *
      * @var string|null
      */
     protected $originalMimeType;
@@ -38,6 +37,8 @@ class File extends SplFileInfo
     /**
      * Run our SplFileInfo constructor with an optional verification
      * that the path is really a file.
+     *
+     * @throws FileNotFoundException
      */
     public function __construct(string $path, bool $checkFile = false)
     {
@@ -55,8 +56,9 @@ class File extends SplFileInfo
      * the file in the $_FILES array if available, as PHP calculates this based
      * on the actual size transmitted.
      *
-     * @return int The file size in bytes
+     * @return false|int The file size in bytes, or false on failure
      */
+    #[ReturnTypeWillChange]
     public function getSize()
     {
         return $this->size ?? ($this->size = parent::getSize());
@@ -65,7 +67,7 @@ class File extends SplFileInfo
     /**
      * Retrieve the file size by unit.
      *
-     * @return int|string
+     * @return false|int|string
      */
     public function getSizeByUnit(string $unit = 'b')
     {
