@@ -1004,7 +1004,7 @@ abstract class BaseConnection implements ConnectionInterface
             // we have nothing more to do other than escape the item
             //
             // NOTE: The ! empty() condition prevents this method
-            //       from breaking when QB isn't enabled.
+            // from breaking when QB isn't enabled.
             if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
                 if ($protectIdentifiers === true) {
                     foreach ($parts as $key => $val) {

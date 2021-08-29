@@ -123,7 +123,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --ansi --no-interaction
-          composer remove --ansi --dev --unused -W rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config
+          composer remove --ansi --dev --unused -W rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
           php -r 'file_put_contents("vendor/laminas/laminas-zendframework-bridge/src/autoload.php", "");'
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}

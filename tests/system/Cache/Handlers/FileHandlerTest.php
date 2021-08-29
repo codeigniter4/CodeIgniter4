@@ -221,8 +221,8 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->fileHandler->save(self::$key1, 10);
         $this->fileHandler->save(self::$key2, 'value');
 
-        //  Line following commented out to force the cache to add a zero entry for key3
-        //      $this->fileHandler->save(self::$key3, 0);
+        // Line following commented out to force the cache to add a zero entry for key3
+        // $this->fileHandler->save(self::$key3, 0);
 
         $this->assertSame(9, $this->fileHandler->decrement(self::$key1, 1));
         $this->assertFalse($this->fileHandler->decrement(self::$key2, 1));

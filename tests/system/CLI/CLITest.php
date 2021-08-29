@@ -75,14 +75,15 @@ final class CLITest extends CIUnitTestCase
         // The problem: if the block below is enabled, the phpunit tests
         // go catatonic when it is executed, presumably because of
         // the CLI::input() waiting for a key press
-        //      // test the press any key to continue...
-        //      stream_filter_register('CLITestKeyboardFilter', 'CodeIgniter\CLI\CLITestKeyboardFilter');
-        //      $spoofer = stream_filter_append(STDIN, 'CLITestKeyboardFilter');
-        //      $time = time();
-        //      CLITestKeyboardFilter::$spoofed = ' ';
-        //      CLI::wait(0);
-        //      stream_filter_remove($spoofer);
-        //      $this->assertEquals(0, time() - $time);
+        //
+        // // test the press any key to continue...
+        // stream_filter_register('CLITestKeyboardFilter', 'CodeIgniter\CLI\CLITestKeyboardFilter');
+        // $spoofer = stream_filter_append(STDIN, 'CLITestKeyboardFilter');
+        // $time = time();
+        // CLITestKeyboardFilter::$spoofed = ' ';
+        // CLI::wait(0);
+        // stream_filter_remove($spoofer);
+        // $this->assertEquals(0, time() - $time);
     }
 
     public function testIsWindows()

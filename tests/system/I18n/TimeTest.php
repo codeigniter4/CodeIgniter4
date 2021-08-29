@@ -643,19 +643,6 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('May 10, 2017', $time->toFormattedDateString());
     }
 
-    /**
-     * Unfortunately, ubuntu 14.04 (on TravisCI) fails this test and
-     * shows a numeric version of the month instead of the textual version.
-     * Confirmed on CentOS 7 as well.
-     * Example: format 'MMM' for November returns 'M02' instead of 'Nov'
-     * Not sure what the fix is just yet....
-     */
-    //    public function testToFormattedDateString()
-    //    {
-    //        $time = Time::parse('February 10, 2017', 'America/Chicago');
-    //        $this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
-    //    }
-
     public function testToTimeString()
     {
         $time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
