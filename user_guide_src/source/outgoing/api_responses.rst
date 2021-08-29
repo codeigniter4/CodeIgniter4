@@ -85,7 +85,7 @@ format both XML and JSON responses::
 
         public $supportedResponseFormats = [
             'application/json',
-            'application/xml'
+            'application/xml',
         ];
 
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
@@ -98,7 +98,7 @@ support both JSON and XML::
 
     public $formatters = [
         'application/json' => \CodeIgniter\Format\JSONFormatter::class,
-        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class
+        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
     ];
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
@@ -167,8 +167,8 @@ Class Reference
 	        'code'     => '321a',
 	        'messages' => [
 	            'Error message 1',
-	            'Error message 2'
-	        ]
+	            'Error message 2',
+	        ],
 	    ];
 
 .. php:method:: respondCreated($data = null[, string $message = ''])
@@ -317,4 +317,3 @@ Class Reference
     ::
 
     	return $this->failServerError('Server error.');
-

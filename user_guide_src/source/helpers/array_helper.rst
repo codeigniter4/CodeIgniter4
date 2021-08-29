@@ -33,10 +33,10 @@ The following functions are available:
         $data = [
             'foo' => [
                 'buzz' => [
-                    'fizz' => 11
+                    'fizz' => 11,
                 ],
                 'bar' => [
-                    'baz' => 23
+                    'baz' => 23,
                 ]
             ]
         ]
@@ -61,10 +61,10 @@ The following functions are available:
 
         $data = [
             'foo' => [
-                'bar.baz' => 23
+                'bar.baz' => 23,
             ],
             'foo.bar' => [
-                'baz' => 43
+                'baz' => 43,
             ],
         ];
 

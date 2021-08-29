@@ -151,7 +151,7 @@ The following functions are available:
         $data = [
             'name'  => 'John Doe',
             'email' => 'john@example.com',
-            'url'   => 'http://example.com'
+            'url'   => 'http://example.com',
         ];
 
         echo form_hidden($data);
@@ -169,7 +169,7 @@ The following functions are available:
         $data = [
             'name'  => 'John Doe',
             'email' => 'john@example.com',
-            'url'   => 'http://example.com'
+            'url'   => 'http://example.com',
         ];
 
         echo form_hidden('my_array', $data);
@@ -189,7 +189,7 @@ The following functions are available:
             'name'  => 'email',
             'id'    => 'hiddenemail',
             'value' => 'john@example.com',
-            'class' => 'hiddenemail'
+            'class' => 'hiddenemail',
         ];
 
         echo form_input($data);
@@ -223,7 +223,7 @@ The following functions are available:
             'value'     => 'johndoe',
             'maxlength' => '100',
             'size'      => '50',
-            'style'     => 'width:50%'
+            'style'     => 'width:50%',
         ];
 
         echo form_input($data);
@@ -237,12 +237,12 @@ The following functions are available:
     If you would like your form to contain some additional data, like
     JavaScript, you can pass it as a string in the third parameter::
 
-        $js = 'onClick="some_function()"';
+        $js = 'onClick="some_function ()"';
         echo form_input('username', 'johndoe', $js);
 
     Or you can pass it as an array::
 
-        $js = ['onClick' => 'some_function();'];
+        $js = ['onClick' => 'some_function ();'];
         echo form_input('username', 'johndoe', $js);
 
     To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter::
@@ -442,7 +442,7 @@ The following functions are available:
         echo form_fieldset_close($string);
         // Would produce: </fieldset></div></div>
 
-.. php:function:: form_checkbox([$data = ''[, $value = ''[, $checked = FALSE[, $extra = '']]]])
+.. php:function:: form_checkbox([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
     :param	array	$data: Field attributes data
     :param	string	$value: Field value
@@ -453,10 +453,10 @@ The following functions are available:
 
     Lets you generate a checkbox field. Simple example::
 
-        echo form_checkbox('newsletter', 'accept', TRUE);
+        echo form_checkbox('newsletter', 'accept', true);
         // Would produce:  <input type="checkbox" name="newsletter" value="accept" checked="checked" />
 
-    The third parameter contains a boolean TRUE/FALSE to determine whether
+    The third parameter contains a boolean true/false to determine whether
     the box should be checked or not.
 
     Similar to the other form functions in this helper, you can also pass an
@@ -466,7 +466,7 @@ The following functions are available:
             'name'    => 'newsletter',
             'id'      => 'newsletter',
             'value'   => 'accept',
-            'checked' => TRUE,
+            'checked' => true,
             'style'   => 'margin:10px'
         ];
 
@@ -478,14 +478,14 @@ The following functions are available:
     fourth parameter::
 
         $js = 'onClick="some_function()"';
-        echo form_checkbox('newsletter', 'accept', TRUE, $js);
+        echo form_checkbox('newsletter', 'accept', true, $js);
 
     Or you can pass it as an array::
 
         $js = ['onClick' => 'some_function();'];
-        echo form_checkbox('newsletter', 'accept', TRUE, $js);
+        echo form_checkbox('newsletter', 'accept', true, $js);
 
-.. php:function:: form_radio([$data = ''[, $value = ''[, $checked = FALSE[, $extra = '']]]])
+.. php:function:: form_radio([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
     :param	array	$data: Field attributes data
     :param	string	$value: Field value
@@ -573,7 +573,7 @@ The following functions are available:
             'id'      => 'button',
             'value'   => 'true',
             'type'    => 'reset',
-            'content' => 'Reset'
+            'content' => 'Reset',
         ];
 
         echo form_button($data);
@@ -599,7 +599,7 @@ The following functions are available:
         echo form_close($string);
         // Would produce:  </form> </div></div>
 
-.. php:function:: set_value($field[, $default = ''[, $html_escape = TRUE]])
+.. php:function:: set_value($field[, $default = ''[, $html_escape = true]])
 
     :param	string	$field: Field name
     :param	string	$default: Default value
@@ -620,7 +620,7 @@ The following functions are available:
 
     The above form will show "0" when loaded for the first time.
 
-.. php:function:: set_select($field[, $value = ''[, $default = FALSE]])
+.. php:function:: set_select($field[, $value = ''[, $default = false]])
 
     :param	string	$field: Field name
     :param	string	$value: Value to check for
@@ -633,17 +633,17 @@ The following functions are available:
 
     The first parameter must contain the name of the select menu, the second
     parameter must contain the value of each item, and the third (optional)
-    parameter lets you set an item as the default (use boolean TRUE/FALSE).
+    parameter lets you set an item as the default (use boolean true/false).
 
     Example::
 
         <select name="myselect">
-            <option value="one" <?= set_select('myselect', 'one', TRUE) ?>>One</option>
+            <option value="one" <?= set_select('myselect', 'one', true) ?>>One</option>
             <option value="two" <?= set_select('myselect', 'two') ?>>Two</option>
             <option value="three" <?= set_select('myselect', 'three') ?>>Three</option>
         </select>
 
-.. php:function:: set_checkbox($field[, $value = ''[, $default = FALSE]])
+.. php:function:: set_checkbox($field[, $value = ''[, $default = false]])
 
     :param	string	$field: Field name
     :param	string	$value: Value to check for
@@ -655,14 +655,14 @@ The following functions are available:
 
     The first parameter must contain the name of the checkbox, the second
     parameter must contain its value, and the third (optional) parameter
-    lets you set an item as the default (use boolean TRUE/FALSE).
+    lets you set an item as the default (use boolean true/false).
 
     Example::
 
         <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?> />
         <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?> />
 
-.. php:function:: set_radio($field[, $value = ''[, $default = FALSE]])
+.. php:function:: set_radio($field[, $value = ''[, $default = false]])
 
     :param	string	$field: Field name
     :param	string	$value: Value to check for
@@ -675,7 +675,7 @@ The following functions are available:
 
     Example::
 
-        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', TRUE) ?> />
+        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?> />
         <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
 
     .. note:: If you are using the Form Validation class, you must always specify

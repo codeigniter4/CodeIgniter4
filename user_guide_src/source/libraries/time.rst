@@ -85,8 +85,8 @@ Given separate inputs for **year**, **month**, and **day**, will return a new in
 are not provided, it will use the current value to fill it in. Accepts strings for the timezone and locale in the
 fourth and fifth parameters::
 
-    $today       = Time::createFromDate();            // Uses current year, month, and day
-    $anniversary = Time::createFromDate(2018);  // Uses current month and day
+    $today       = Time::createFromDate(); // Uses current year, month, and day
+    $anniversary = Time::createFromDate(2018); // Uses current month and day
     $date        = Time::createFromDate(2018, 3, 15, 'America/Chicago', 'en_US');
 
 createFromTime()
@@ -96,8 +96,8 @@ Like **createFromDate** except it is only concerned with the **hours**, **minute
 current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
 fourth and fifth parameters::
 
-    $lunch  = Time::createFromTime(11, 30)       // 11:30 am today
-    $dinner = Time::createFromTime(18, 00, 00)  // 6:00 pm today
+    $lunch  = Time::createFromTime(11, 30); // 11:30 am today
+    $dinner = Time::createFromTime(18, 00, 00); // 6:00 pm today
     $time   = Time::createFromTime($hour, $minutes, $seconds, $timezone, $locale);
 
 create()
@@ -160,7 +160,7 @@ A full listing of values can be found `here <https://unicode-org.github.io/icu-d
 ::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
-    echo $time->toLocalizedString('MMM d, yyyy');   // March 9, 2016
+    echo $time->toLocalizedString('MMM d, yyyy'); // March 9, 2016
 
 toDateTimeString()
 ------------------
@@ -169,7 +169,7 @@ This is the first of three helper methods to work with the IntlDateFormatter wit
 This will return a string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s)::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
-    echo $time->toDateTimeString();     // 2016-03-09 12:00:00
+    echo $time->toDateTimeString(); // 2016-03-09 12:00:00
 
 toDateString()
 --------------
@@ -177,7 +177,7 @@ toDateString()
 Displays just the date portion of the Time::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
-    echo $time->toDateString();     // 2016-03-09
+    echo $time->toDateString(); // 2016-03-09
 
 toTimeString()
 --------------
@@ -185,7 +185,7 @@ toTimeString()
 Displays just the time portion of the value::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
-    echo $time->toTimeString();     // 12:00:00
+    echo $time->toTimeString(); // 12:00:00
 
 humanize()
 ----------
@@ -197,7 +197,7 @@ human readable format that is geared towards being easily understood. It can cre
     // Assume current time is: March 10, 2017 (America/Chicago)
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
 
-    echo $time->humanize();     // 1 year ago
+    echo $time->humanize(); // 1 year ago
 
 The exact time displayed is determined in the following manner:
 
@@ -234,37 +234,37 @@ The following basic getters exist::
 
     $time = Time::parse('August 12, 2016 4:15:23pm');
 
-    echo $time->getYear();      // 2016
-    echo $time->getMonth();     // 8
-    echo $time->getDay();       // 12
-    echo $time->getHour();      // 16
-    echo $time->getMinute();    // 15
-    echo $time->getSecond();    // 23
+    echo $time->getYear(); // 2016
+    echo $time->getMonth(); // 8
+    echo $time->getDay(); // 12
+    echo $time->getHour(); // 16
+    echo $time->getMinute(); // 15
+    echo $time->getSecond(); // 23
 
-    echo $time->year;           // 2016
-    echo $time->month;          // 8
-    echo $time->day;            // 12
-    echo $time->hour;           // 16
-    echo $time->minute;         // 15
-    echo $time->second;         // 23
+    echo $time->year; // 2016
+    echo $time->month; // 8
+    echo $time->day; // 12
+    echo $time->hour; // 16
+    echo $time->minute; // 15
+    echo $time->second; // 23
 
 In addition to these, a number of methods exist to provide additional information about the date::
 
     $time = Time::parse('August 12, 2016 4:15:23pm');
 
-    echo $time->getDayOfWeek();     // 6 - but may vary based on locale's starting day of the week
-    echo $time->getDayOfYear();     // 225
-    echo $time->getWeekOfMonth();   // 2
-    echo $time->getWeekOfYear();    // 33
-    echo $time->getTimestamp();     // 1471018523 - UNIX timestamp
-    echo $time->getQuarter();       // 3
+    echo $time->getDayOfWeek(); // 6 - but may vary based on locale's starting day of the week
+    echo $time->getDayOfYear(); // 225
+    echo $time->getWeekOfMonth(); // 2
+    echo $time->getWeekOfYear(); // 33
+    echo $time->getTimestamp(); // 1471018523 - UNIX timestamp
+    echo $time->getQuarter(); // 3
 
-    echo $time->dayOfWeek;          // 6
-    echo $time->dayOfYear;          // 225
-    echo $time->weekOfMonth;        // 2
-    echo $time->weekOfYear;         // 33
-    echo $time->timestamp;          // 1471018523
-    echo $time->quarter;            // 3
+    echo $time->dayOfWeek; // 6
+    echo $time->dayOfYear; // 225
+    echo $time->weekOfMonth; // 2
+    echo $time->weekOfYear; // 33
+    echo $time->timestamp; // 1471018523
+    echo $time->quarter; // 3
 
 getAge()
 --------
@@ -274,32 +274,32 @@ the age of someone based on their birthday::
 
     $time = Time::parse('5 years ago');
 
-    echo $time->getAge();   // 5
-    echo $time->age;        // 5
+    echo $time->getAge(); // 5
+    echo $time->age; // 5
 
 getDST()
 --------
 
 Returns boolean true/false based on whether the Time instance is currently observing Daylight Savings Time::
 
-    echo Time::createFromDate(2012, 1, 1)->getDst();     // false
-    echo Time::createFromDate(2012, 9, 1)->dst;     // true
+    echo Time::createFromDate(2012, 1, 1)->getDst(); // false
+    echo Time::createFromDate(2012, 9, 1)->dst; // true
 
 getLocal()
 ----------
 
 Returns boolean true if the Time instance is in the same timezone as the application is currently running in::
 
-    echo Time::now()->getLocal();       // true
-    echo Time::now('Europe/London');    // false
+    echo Time::now()->getLocal(); // true
+    echo Time::now('Europe/London'); // false
 
 getUtc()
 --------
 
 Returns boolean true if the Time instance is in UTC time::
 
-    echo Time::now('America/Chicago')->getUtc();    // false
-    echo Time::now('UTC')->utc;                     // true
+    echo Time::now('America/Chicago')->getUtc(); // false
+    echo Time::now('UTC')->utc; // true
 
 getTimezone()
 -------------
@@ -318,8 +318,8 @@ getTimezoneName()
 
 Returns the full `timezone string <https://www.php.net/manual/en/timezones.php>`__ of the Time instance::
 
-    echo Time::now('America/Chicago')->getTimezoneName();   // America/Chicago
-    echo Time::now('Europe/London')->timezoneName;          // Europe/London
+    echo Time::now('America/Chicago')->getTimezoneName(); // America/Chicago
+    echo Time::now('Europe/London')->timezoneName; // Europe/London
 
 Setters
 =======
@@ -334,11 +334,11 @@ thrown.
 ::
 
     $time = $time->setYear(2017);
-    $time = $time->setMonthNumber(4);           // April
+    $time = $time->setMonthNumber(4); // April
     $time = $time->setMonthLongName('April');
-    $time = $time->setMonthShortName('Feb');    // February
+    $time = $time->setMonthShortName('Feb'); // February
     $time = $time->setDay(25);
-    $time = $time->setHour(14);                 // 2:00 pm
+    $time = $time->setHour(14); // 2:00 pm
     $time = $time->setMinute(30);
     $time = $time->setSecond(54);
 
@@ -348,13 +348,13 @@ setTimezone()
 Converts the time from it's current timezone into the new one::
 
     $time  = Time::parse('13 May 2020 10:00', 'America/Chicago');
-    $time2 = $time->setTimezone('Europe/London');           // Returns new instance converted to new timezone
+    $time2 = $time->setTimezone('Europe/London'); // Returns new instance converted to new timezone
 
-    echo $time->getTimezoneName();   // American/Chicago
-    echo $time2->getTimezoneName();  // Europe/London
+    echo $time->getTimezoneName(); // American/Chicago
+    echo $time2->getTimezoneName(); // Europe/London
 
-    echo $time->toDateTimeString();   // 2020-05-13 10:00:00
-    echo $time2->toDateTimeString();   // 2020-05-13 18:00:00
+    echo $time->toDateTimeString(); // 2020-05-13 10:00:00
+    echo $time2->toDateTimeString(); // 2020-05-13 18:00:00
 
 setTimestamp()
 --------------
@@ -364,8 +364,8 @@ Returns a new instance with the date set to the new timestamp::
     $time = Time::parse('May 10, 2017', 'America/Chicago');
     $time2 = $time->setTimestamp(strtotime('April 1, 2017'));
 
-    echo $time->toDateTimeString();     // 2017-05-10 00:00:00
-    echo $time2->toDateTimeString();     // 2017-04-01 00:00:00
+    echo $time->toDateTimeString(); // 2017-05-10 00:00:00
+    echo $time2->toDateTimeString(); // 2017-04-01 00:00:00
 
 Modifying the Value
 ===================
@@ -405,13 +405,13 @@ that way::
     $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
     $time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
 
-    $time1->equals($time2);    // true
+    $time1->equals($time2); // true
 
 The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
 a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
 a timezone string in as the second parameter. If no timezone is given, the system default will be used::
 
-    $time1->equals('January 11, 2017 03:50:00', 'Europe/London');  // true
+    $time1->equals('January 11, 2017 03:50:00', 'Europe/London'); // true
 
 sameAs()
 --------
@@ -423,7 +423,7 @@ all identical::
     $time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
 
     $time1->sameAs($time2);    // false
-    $time2->sameAs('January 10, 2017 21:50:00', 'America/Chicago');    // true
+    $time2->sameAs('January 10, 2017 21:50:00', 'America/Chicago'); // true
 
 isBefore()
 ----------
@@ -434,14 +434,14 @@ both times::
     $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
     $time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-    $time1->isBefore($time2);  // true
-    $time2->isBefore($time1);  // false
+    $time1->isBefore($time2); // true
+    $time2->isBefore($time1); // false
 
 The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
 a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
 a timezone string in as the second parameter. If no timezone is given, the system default will be used::
 
-    $time1->isBefore('March 15, 2013', 'America/Chicago');  // false
+    $time1->isBefore('March 15, 2013', 'America/Chicago'); // false
 
 isAfter()
 ---------
@@ -451,8 +451,8 @@ Works exactly the same as **isBefore()** except checks if the time is after the 
     $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
     $time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-    $time1->isAfter($time2);  // false
-    $time2->isAfter($time1);  // true
+    $time1->isAfter($time2); // false
+    $time2->isAfter($time1); // true
 
 Viewing Differences
 ===================
@@ -476,23 +476,23 @@ the original time::
 
     $diff = $current->difference($test);
 
-    echo $diff->getYears();     // -7
-    echo $diff->getMonths();    // -84
-    echo $diff->getWeeks();     // -365
-    echo $diff->getDays();      // -2557
-    echo $diff->getHours();     // -61368
-    echo $diff->getMinutes();   // -3682080
-    echo $diff->getSeconds();   // -220924800
+    echo $diff->getYears(); // -7
+    echo $diff->getMonths(); // -84
+    echo $diff->getWeeks(); // -365
+    echo $diff->getDays(); // -2557
+    echo $diff->getHours(); // -61368
+    echo $diff->getMinutes(); // -3682080
+    echo $diff->getSeconds(); // -220924800
 
 You can use either **getX()** methods, or access the calculate values as if they were properties::
 
-    echo $diff->years;     // -7
-    echo $diff->months;    // -84
-    echo $diff->weeks;     // -365
-    echo $diff->days;      // -2557
-    echo $diff->hours;     // -61368
-    echo $diff->minutes;   // -3682080
-    echo $diff->seconds;   // -220924800
+    echo $diff->years;   // -7
+    echo $diff->months; // -84
+    echo $diff->weeks; // -365
+    echo $diff->days; // -2557
+    echo $diff->hours; // -61368
+    echo $diff->minutes; // -3682080
+    echo $diff->seconds; // -220924800
 
 humanize()
 ----------
@@ -506,7 +506,7 @@ human readable format that is geared towards being easily understood. It can cre
 
     $diff = $current->difference($test)
 
-    echo $diff->humanize();     // 1 year ago
+    echo $diff->humanize(); // 1 year ago
 
 The exact time displayed is determined in the following manner:
 

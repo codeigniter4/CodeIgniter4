@@ -1,5 +1,5 @@
 Create news items
-###############################################################################
+#################
 
 You now know how you can read data from a database using CodeIgniter, but
 you haven't written any information to the database yet. In this section,
@@ -7,7 +7,7 @@ you'll expand your news controller and model created earlier to include
 this functionality.
 
 Create a form
--------------------------------------------------------
+-------------
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
@@ -50,21 +50,18 @@ validation <../libraries/validation>` library to do this.
         $model = new NewsModel();
 
         if ($this->request->getMethod() === 'post' && $this->validate([
-                'title' => 'required|min_length[3]|max_length[255]',
-                'body'  => 'required',
-            ]))
-        {
+            'title' => 'required|min_length[3]|max_length[255]',
+            'body'  => 'required',
+        ])) {
             $model->save([
                 'title' => $this->request->getPost('title'),
-                'slug'  => url_title($this->request->getPost('title'), '-', TRUE),
+                'slug'  => url_title($this->request->getPost('title'), '-', true),
                 'body'  => $this->request->getPost('body'),
             ]);
 
             echo view('news/success');
-            
-        }
-        else
-        {
+
+        } else {
             echo view('templates/header', ['title' => 'Create a news item']);
             echo view('news/create');
             echo view('templates/footer');

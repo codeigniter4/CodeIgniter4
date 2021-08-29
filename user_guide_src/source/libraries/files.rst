@@ -36,12 +36,10 @@ Once you have an instance, you have the full power of the SplFileInfo class at t
     echo $file->getPerms();
 
     // Write CSV rows to it.
-    if ($file->isWritable())
-    {
+    if ($file->isWritable()) {
         $csv = $file->openFile('w');
 
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $csv->fputcsv($row);
         }
     }
@@ -63,16 +61,16 @@ method. This is especially useful to rename files when moving it so that the fil
 
 Returns the size of the uploaded file in bytes::
 
-	$size     = $file->getSize();      // 256901
+	$size     = $file->getSize(); // 256901
 
 **getSizeByUnit()**
 
 Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
 the results in kilobytes or megabytes, respectively::
 
-	$bytes     = $file->getSizeByUnit();      // 256901
-	$kilobytes = $file->getSizeByUnit('kb');  // 250.880
-	$megabytes = $file->getSizeByUnit('mb');  // 0.245
+	$bytes     = $file->getSizeByUnit(); // 256901
+	$kilobytes = $file->getSizeByUnit('kb'); // 250.880
+	$megabytes = $file->getSizeByUnit('mb'); // 0.245
 
 **getMimeType()**
 

@@ -211,8 +211,8 @@ you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actua
     // Leaves just the 'foo' variable
     $uri->keepQuery('foo');
 
-.. note:: By default ``setQuery()`` and ``setQueryArray()`` methods uses native ``parse_str()`` function to prepare data. 
-	If you want to use more liberal rules (which allow key names to contain dots), you can use a special method 
+.. note:: By default ``setQuery()`` and ``setQueryArray()`` methods uses native ``parse_str()`` function to prepare data.
+	If you want to use more liberal rules (which allow key names to contain dots), you can use a special method
 	``useRawQueryString()`` beforehand.
 
 Fragment
@@ -238,8 +238,7 @@ what the values of the segments are. The segments start at 1 being the furthest 
 	// URI = http://example.com/users/15/profile
 
 	// Prints '15'
-	if ($uri->getSegment(1) == 'users')
-	{
+	if ($uri->getSegment(1) == 'users') {
 		echo $uri->getSegment(2);
 	}
 

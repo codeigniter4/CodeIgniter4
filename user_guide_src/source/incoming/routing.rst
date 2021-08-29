@@ -103,7 +103,7 @@ Note that a single ``(:any)`` will match multiple segments in the URL if present
 
 	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
 
-will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the 
+will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
 Controller should take into account the maximum parameters::
 
     public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
@@ -112,7 +112,7 @@ Controller should take into account the maximum parameters::
         echo $seg3; // false in first and second, 789 in third
     }
 
-If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the 
+If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above::
 
 	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
@@ -171,9 +171,9 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view::
 
-    $routes->add('feed', function()
-    {
+    $routes->add('feed', function () {
         $rss = new RSSFeeder();
+
         return $rss->feed('general');
     });
 
@@ -185,7 +185,7 @@ the ``map()`` method. Instead of calling the ``add()`` method for each route tha
 define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
     $routes = [];
-    $routes['product/(:num)']      = 'Catalog::productLookupById';
+    $routes['product/(:num)'] = 'Catalog::productLookupById';
     $routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
 
     $collection->map($routes);
@@ -216,8 +216,7 @@ You can group your routes under a common name with the ``group()`` method. The g
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area::
 
-    $routes->group('admin', function($routes)
-    {
+    $routes->group('admin', function ($routes) {
         $routes->add('users', 'Admin\Users::index');
         $routes->add('blog', 'Admin\Blog::index');
     });
@@ -226,8 +225,7 @@ This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like `
 
 If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
 
-    $routes->group('api', ['namespace' => 'App\API\v1'], function($routes)
-    {
+    $routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
         $routes->resource('users');
     });
 
@@ -236,8 +234,7 @@ This would handle a resource route to the ``App\API\v1\Users`` controller with t
 You can also use a specific `filter <filters.html>`_ for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
-    $routes->group('api', ['filter' => 'api-auth'], function($routes)
-    {
+    $routes->group('api', ['filter' => 'api-auth'], function ($routes) {
         $routes->resource('users');
     });
 
@@ -245,21 +242,18 @@ The value for the filter must match one of the aliases defined within ``app/Conf
 
 It is possible to nest groups within groups for finer organization if you need it::
 
-    $routes->group('admin', function($routes)
-    {
-        $routes->group('users', function($routes)
-        {
+    $routes->group('admin', function ($routes) {
+        $routes->group('users', function ($routes) {
             $routes->add('list', 'Admin\Users::list');
         });
-
     });
 
-This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example 
+This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example
 ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
-At some point, you may want to group routes for the purpose of applying filters or other route 
-config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass 
-an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the 
+At some point, you may want to group routes for the purpose of applying filters or other route
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
 given route config options.
 
 Environment Restrictions
@@ -270,8 +264,7 @@ tools that only the developer can use on their local machines that are not reach
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment::
 
-    $routes->environment('development', function($routes)
-    {
+    $routes->environment('development', function ($routes) {
         $routes->add('builder', 'Tools\Builder::index');
     });
 
@@ -354,7 +347,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
     $routes->match(['get', 'put'], 'from', 'to', $options);
     $routes->resource('photos', $options);
     $routes->map($array, $options);
-    $routes->group('name', $options, function());
+    $routes->group('name', $options, function ());
 
 Applying Filters
 ----------------
@@ -545,7 +538,7 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     $routes->set404Override('App\Errors::show404');
 
     // Will display a custom view
-    $routes->set404Override(function()
+    $routes->set404Override(function ()
     {
         echo view('my_errors/not_found.html');
     });
@@ -563,4 +556,3 @@ For an example of use lowering the priority see :ref:`priority`::
 
     // to disable
     $routes->setPrioritize(false);
-

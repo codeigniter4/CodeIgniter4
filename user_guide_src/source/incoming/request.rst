@@ -1,5 +1,5 @@
 Request Class
-****************************************************
+*************
 
 The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
@@ -11,7 +11,7 @@ See the documentation for the :doc:`IncomingRequest Class </incoming/incomingreq
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
 Class Reference
-============================================================
+===============
 
 .. php:class:: CodeIgniter\\HTTP\\Request
 
@@ -46,19 +46,16 @@ Class Reference
 
             ::
 
-                if ( ! $request->isValidIP($ip))
-                {
+                if ( ! $request->isValidIP($ip)) {
                     echo 'Not Valid';
-                }
-                else
-                {
+                } else {
                     echo 'Valid';
                 }
 
         Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
         an IP format. The default checks for both formats.
 
-    .. php:method:: getMethod([$upper = FALSE])
+    .. php:method:: getMethod([$upper = false])
 
 		.. important:: Use of the ``$upper`` parameter is deprecated.
 
@@ -70,8 +67,8 @@ Class Reference
         in uppercase or lowercase.
         ::
 
-            echo $request->getMethod(TRUE); // Outputs: POST
-            echo $request->getMethod(FALSE); // Outputs: post
+            echo $request->getMethod(true); // Outputs: POST
+            echo $request->getMethod(false); // Outputs: post
             echo $request->getMethod(); // Outputs: post
 
     .. php:method:: setMethod($method)
@@ -85,7 +82,7 @@ Class Reference
         :param    mixed     $index: Value name
         :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_SERVER item value if found, NULL if not
+        :returns: $_SERVER item value if found, null if not
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
@@ -104,7 +101,7 @@ Class Reference
         :param    mixed     $index: Value name
         :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_ENV item value if found, NULL if not
+        :returns: $_ENV item value if found, null if not
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the

@@ -119,8 +119,7 @@ Instead it prints it to the screen wherever the cursor is currently. This allows
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
 print "Done" on the same line::
 
-    for ($i = 0; $i <= 10; $i++)
-    {
+    for ($i = 0; $i <= 10; $i++) {
         CLI::print($i);
     }
 
@@ -172,8 +171,7 @@ every line after the first line, so that you will have a crisp column edge on th
     // to determine the width of the left column
     $maxlen = max(array_map('strlen', $titles));
 
-    for ($i=0; $i < count($titles); $i++)
-    {
+    for ($i = 0; $i < count($titles); $i++) {
         CLI::write(
             // Display the title on the left of the row
             $titles[$i] . '   ' .
@@ -227,8 +225,7 @@ pass ``false`` as the first parameter and the progress bar will be removed.
     $totalSteps = count($tasks);
     $currStep   = 1;
 
-    foreach ($tasks as $task)
-    {
+    foreach ($tasks as $task) {
         CLI::showProgress($currStep++, $totalSteps);
         $task->run();
     }

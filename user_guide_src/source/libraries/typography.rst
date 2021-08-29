@@ -26,7 +26,7 @@ The following functions are available:
 
 **autoTypography()**
 
-.. php:function:: autoTypography($str[, $reduce_linebreaks = FALSE])
+.. php:function:: autoTypography($str[, $reduce_linebreaks = false])
 
 	:param	string	$str: Input string
 	:param	bool	$reduce_linebreaks: Whether to reduce multiple instances of double newlines to two

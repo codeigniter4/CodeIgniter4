@@ -17,7 +17,7 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
+.. php:function:: site_url([$uri = ''[, $protocol = null[, $altConfig = null]]])
 
     :param  mixed         $uri: URI string or array of URI segments
     :param  string        $protocol: Protocol, e.g., 'http' or 'https'
@@ -51,7 +51,7 @@ The following functions are available:
     different site than yours, which contains different configuration preferences.
     We use this for unit testing the framework itself.
 
-.. php:function:: base_url([$uri = ''[, $protocol = NULL]])
+.. php:function:: base_url([$uri = ''[, $protocol = null]])
 
     :param  mixed   $uri: URI string or array of URI segments
     :param  string  $protocol: Protocol, e.g., 'http' or 'https'
@@ -127,13 +127,13 @@ The following functions are available:
         /blog/comments/123
 
     Or with the optional relative parameter::
-    
+
         app.baseURL = http://some-site.com/subfolder/
 
         uri_string(); // "/subfolder/blog/comments/123"
         uri_string(true); // "blog/comments/123"
 
-.. php:function:: index_page([$altConfig = NULL])
+.. php:function:: index_page([$altConfig = null])
 
     :param \\Config\\App $altConfig: Alternate configuration to use
     :returns: 'index_page' value
@@ -149,7 +149,7 @@ The following functions are available:
     different site than yours, which contains different configuration preferences.
     We use this for unit testing the framework itself.
 
-.. php:function:: anchor([$uri = ''[, $title = ''[, $attributes = ''[, $altConfig = NULL]]]])
+.. php:function:: anchor([$uri = ''[, $title = ''[, $attributes = ''[, $altConfig = null]]]])
 
     :param  mixed         $uri: URI string or array of URI segments
     :param  string        $title: Anchor title
@@ -194,7 +194,7 @@ The following functions are available:
 
     .. note:: Attributes passed into the anchor function are automatically escaped to protected against XSS attacks.
 
-.. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = FALSE[, $altConfig = NULL]]]])
+.. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = false[, $altConfig = null]]]])
 
     :param  string          $uri: URI string
     :param  string          $title: Anchor title
@@ -219,7 +219,7 @@ The following functions are available:
             'resizable'   => 'yes',
             'screenx'     => 0,
             'screeny'     => 0,
-            'window_name' => '_blank'
+            'window_name' => '_blank',
         ];
 
         echo anchor_popup('news/local/123', 'Click Me!', $atts);
@@ -277,7 +277,7 @@ The following functions are available:
     version of the *mailto* tag using ordinal numbers written with JavaScript to
     help prevent the e-mail address from being harvested by spam bots.
 
-.. php:function:: auto_link($str[, $type = 'both'[, $popup = FALSE]])
+.. php:function:: auto_link($str[, $type = 'both'[, $popup = false]])
 
     :param  string  $str: Input string
     :param  string  $type: Link type ('email', 'url' or 'both')
@@ -304,13 +304,13 @@ The following functions are available:
         $string = auto_link($string, 'email');
 
     The third parameter determines whether links are shown in a new window.
-    The value can be TRUE or FALSE (boolean)::
+    The value can be true or false (boolean)::
 
-        $string = auto_link($string, 'both', TRUE);
+        $string = auto_link($string, 'both', true);
 
     .. note:: The only URLs recognized are those that start with "www." or with "://".
 
-.. php:function:: url_title($str[, $separator = '-'[, $lowercase = FALSE]])
+.. php:function:: url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
     :param  string  $separator: Word separator (usually '-' or '_')
@@ -336,15 +336,15 @@ The following functions are available:
         // Produces: Whats_wrong_with_CSS
 
     The third parameter determines whether or not lowercase characters are
-    forced. By default they are not. Options are boolean TRUE/FALSE.
+    forced. By default they are not. Options are boolean true/false.
 
     Example::
 
         $title     = "What's wrong with CSS?";
-        $url_title = url_title($title, '-', TRUE);
+        $url_title = url_title($title, '-', true);
         // Produces: whats-wrong-with-css
 
-.. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = FALSE]])
+.. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
     :param  string  $separator: Word separator (usually '-' or '_')
@@ -358,7 +358,7 @@ The following functions are available:
 .. php:function:: prep_url([$str = ''[, $secure = false]])
 
     :param  string   $str: URL string
-    :param  boolean  $secure: TRUE for https://
+    :param  boolean  $secure: true for https://
     :returns: Protocol-prefixed URL string
     :rtype: string
 

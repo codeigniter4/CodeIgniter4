@@ -110,11 +110,10 @@ In controller::
     {
        foreach($imagefile['images'] as $img)
        {
-          if ($img->isValid() && ! $img->hasMoved())
-          {
-               $newName = $img->getRandomName();
-               $img->move(WRITEPATH.'uploads', $newName);
-          }
+			if ($img->isValid() && ! $img->hasMoved()) {
+				$newName = $img->getRandomName();
+				$img->move(WRITEPATH.'uploads', $newName);
+			}
        }
     }
 
@@ -155,8 +154,7 @@ Verify A File
 
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method::
 
-	if (! $file->isValid())
-	{
+	if (! $file->isValid()) {
 		throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
 	}
 
@@ -230,8 +228,7 @@ By default, the original filename was used. You can specify a new filename by pa
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean::
 
-    if ($file->isValid() && ! $file->hasMoved())
-    {
+    if ($file->isValid() && ! $file->hasMoved()) {
         $file->move($path);
     }
 
