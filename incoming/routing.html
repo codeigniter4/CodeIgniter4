@@ -568,9 +568,9 @@ redirect them back to the same page after they log in, you may find this example
 <p>You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nv">$rss</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RSSFeeder</span><span class="p">();</span>
+
     <span class="k">return</span> <span class="nv">$rss</span><span class="o">-&gt;</span><span class="na">feed</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -582,7 +582,7 @@ a simple view:</p>
 the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method. Instead of calling the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="s1">&#39;Catalog::productLookupById&#39;</span><span class="p">;</span>
+<span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Catalog::productLookupById&#39;</span><span class="p">;</span>
 <span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;product/(:alphanum)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Catalog::productLookupByName&#39;</span><span class="p">;</span>
 
 <span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$routes</span><span class="p">);</span>
@@ -612,8 +612,7 @@ controller can be loaded.</p>
 <p>You can group your routes under a common name with the <code class="docutils literal notranslate"><span class="pre">group()</span></code> method. The group name becomes a segment that
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::index&#39;</span><span class="p">);</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Blog::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
@@ -621,8 +620,7 @@ extensive set of routes that all share the opening string, like when building an
 </div>
 <p>This would prefix the ‘users’ and ‘blog” URIs with “admin”, handling URLs like <code class="docutils literal notranslate"><span class="pre">/admin/users</span></code> and <code class="docutils literal notranslate"><span class="pre">/admin/blog</span></code>.</p>
 <p>If you need to assign options to a group, like a <a class="reference external" href="#assigning-namespace">namespace</a>, do it before the callback:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -630,21 +628,17 @@ extensive set of routes that all share the opening string, like when building an
 <p>This would handle a resource route to the <code class="docutils literal notranslate"><span class="pre">App\API\v1\Users</span></code> controller with the <code class="docutils literal notranslate"><span class="pre">/api/users</span></code> URI.</p>
 <p>You can also use a specific <a class="reference external" href="filters.html">filter</a> for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
 <p>The value for the filter must match one of the aliases defined within <code class="docutils literal notranslate"><span class="pre">app/Config/Filters.php</span></code>.</p>
 <p>It is possible to nest groups within groups for finer organization if you need it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-    <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
     <span class="p">});</span>
-
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -661,8 +655,7 @@ given route config options.</p>
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the <code class="docutils literal notranslate"><span class="pre">environment()</span></code> method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;builder&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools\Builder::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -743,7 +736,7 @@ can modify the generated routes, or further restrict them. The <code class="docu
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">],</span> <span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="k">function</span><span class="p">());</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="k">function</span> <span class="p">());</span>
 </pre></div>
 </div>
 <div class="section" id="applying-filters">
@@ -926,7 +919,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">);</span>
 
 <span class="c1">// Will display a custom view</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="k">function</span><span class="p">()</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span>
 <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;my_errors/not_found.html&#39;</span><span class="p">);</span>
 <span class="p">});</span>
@@ -965,7 +958,7 @@ For an example of use lowering the priority see <a class="reference internal" hr
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

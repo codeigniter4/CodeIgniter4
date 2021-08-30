@@ -373,9 +373,9 @@ as it runs as a filter and has no manual interaction.</p>
 and enabling the <cite>csrf</cite> filter globally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">//&#39;honeypot&#39;</span>
-                <span class="s1">&#39;csrf&#39;</span>
-        <span class="p">]</span>
+                <span class="c1">// &#39;honeypot&#39;,</span>
+                <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -384,16 +384,16 @@ endpoints expecting externally POSTed content). You can add these URIs
 by adding them as exceptions in the filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]]</span>
-        <span class="p">]</span>
+                <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]],</span>
+        <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>Regular expressions are also supported (case-insensitive):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                    <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]]</span>
-            <span class="p">]</span>
+                    <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
+            <span class="p">],</span>
     <span class="p">];</span>
 </pre></div>
 </div>
@@ -475,7 +475,7 @@ the second optional parameter, $relative_path to true.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

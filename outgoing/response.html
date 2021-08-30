@@ -396,7 +396,7 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 <code class="docutils literal notranslate"><span class="pre">setJSON</span></code> and <code class="docutils literal notranslate"><span class="pre">setXML</span></code> methods. Typically, you will send an array of data to be converted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span>
+    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -436,9 +436,9 @@ parameter. This is not case-sensitive.</p>
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
 file data.</p>
-<p>If you set the second parameter to NULL and <code class="docutils literal notranslate"><span class="pre">$filename</span></code> is an existing, readable
+<p>If you set the second parameter to null and <code class="docutils literal notranslate"><span class="pre">$filename</span></code> is an existing, readable
 file path, then its content will be read instead.</p>
-<p>If you set the third parameter to boolean TRUE, then the actual file MIME type
+<p>If you set the third parameter to boolean true, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
 handler for that type - it can use it.</p>
 <p>Example:</p>
@@ -836,7 +836,7 @@ this as it is handled automatically by CodeIgniter.</p>
 
 <dl class="method">
 <dt id="setCookie">
-<code class="sig-name descname">setCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = FALSE</em><span class="optional">[</span>, <em class="sig-param">$httponly = FALSE</em><span class="optional">[</span>, <em class="sig-param">$samesite = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httponly = false</em><span class="optional">[</span>, <em class="sig-param">$samesite = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -868,8 +868,8 @@ parameter:</p>
     <span class="s1">&#39;domain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
     <span class="s1">&#39;path&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
-    <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
+    <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
     <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Lax&#39;</span>
 <span class="p">];</span>
 
@@ -1017,7 +1017,7 @@ request only.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

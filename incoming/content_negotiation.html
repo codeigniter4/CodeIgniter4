@@ -391,7 +391,7 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
     <span class="s1">&#39;text/html&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;application/xml&#39;</span>
+    <span class="s1">&#39;application/xml&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
@@ -423,7 +423,7 @@ header:</p>
 and German you would do something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;en&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;de&#39;</span>
+    <span class="s1">&#39;de&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$lang</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">);</span>
@@ -483,7 +483,7 @@ specify the type of compression the client supports:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

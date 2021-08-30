@@ -415,12 +415,9 @@ on whether it is valid or not.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The $request-&gt;getIPAddress() method above automatically validates the IP address.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Not Valid&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">else</span>
-<span class="p">{</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Valid&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -432,7 +429,7 @@ an IP format. The default checks for both formats.</p>
 
 <dl class="method">
 <dt id="getMethod">
-<code class="sig-name descname">getMethod</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$upper = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getMethod" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getMethod</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$upper = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getMethod" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -454,8 +451,8 @@ an IP format. The default checks for both formats.</p>
 </dl>
 <p>Returns the <code class="docutils literal notranslate"><span class="pre">$_SERVER['REQUEST_METHOD']</span></code>, with the option to set it
 in uppercase or lowercase.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">TRUE</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">FALSE</span><span class="p">);</span> <span class="c1">// Outputs: post</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Outputs: post</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span> <span class="c1">// Outputs: post</span>
 </pre></div>
 </div>
@@ -491,7 +488,7 @@ in uppercase or lowercase.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_SERVER item value if found, NULL if not</p>
+<dd class="field-even"><p>$_SERVER item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>mixed</p>
@@ -521,7 +518,7 @@ as an array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_ENV item value if found, NULL if not</p>
+<dd class="field-even"><p>$_ENV item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>mixed</p>
@@ -600,7 +597,7 @@ Can optionally filter the input when you retrieve it by passing in a filter.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

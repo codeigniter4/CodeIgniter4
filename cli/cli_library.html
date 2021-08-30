@@ -464,8 +464,7 @@ even set background colors by passing the color name in as the third parameter:<
 Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
 print “Done” on the same line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">print</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -512,8 +511,7 @@ every line after the first line, so that you will have a crisp column edge on th
 <span class="c1">// to determine the width of the left column</span>
 <span class="nv">$maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">&#39;strlen&#39;</span><span class="p">,</span> <span class="nv">$titles</span><span class="p">));</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$titles</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
-<span class="p">{</span>
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$titles</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span>
         <span class="c1">// Display the title on the left of the row</span>
         <span class="nv">$titles</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;   &#39;</span> <span class="o">.</span>
@@ -558,8 +556,7 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$totalSteps</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$tasks</span><span class="p">);</span>
 <span class="nv">$currStep</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$tasks</span> <span class="k">as</span> <span class="nv">$task</span><span class="p">)</span>
-<span class="p">{</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$tasks</span> <span class="k">as</span> <span class="nv">$task</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">showProgress</span><span class="p">(</span><span class="nv">$currStep</span><span class="o">++</span><span class="p">,</span> <span class="nv">$totalSteps</span><span class="p">);</span>
     <span class="nv">$task</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
 <span class="p">}</span>
@@ -618,7 +615,7 @@ waiting for a key press.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

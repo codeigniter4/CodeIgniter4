@@ -442,7 +442,7 @@ methods to keep the data separate:</p>
     <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;group1&#39;</span><span class="p">),</span>
         <span class="s1">&#39;pages&#39;</span> <span class="o">=&gt;</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;group2&#39;</span><span class="p">),</span>
-        <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">pager</span>
+        <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -527,7 +527,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span>
+    <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -631,7 +631,7 @@ title, which is just the number, and a boolean that tells whether the link is th
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;uri&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/foo?page=2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="mi">1</span>
+        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -712,7 +712,7 @@ result set.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

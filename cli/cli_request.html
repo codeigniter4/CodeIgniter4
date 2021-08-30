@@ -377,7 +377,7 @@ but adds some accessor methods for convenience.</p>
 <p>Returns the value of a specific command line argument deemed to be an option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// command line: php index.php users 21 profile --foo bar</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>  <span class="c1">// bar</span>
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;notthere&#39;</span><span class="p">);</span> <span class="c1">// NULL</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;notthere&#39;</span><span class="p">);</span> <span class="c1">// null</span>
 </pre></div>
 </div>
 <p><strong>getOptionString()</strong></p>
@@ -411,7 +411,7 @@ but adds some accessor methods for convenience.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

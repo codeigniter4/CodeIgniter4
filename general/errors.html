@@ -382,12 +382,9 @@ execution is then sent to the error handler which displays the appropriate error
 </pre></div>
 </div>
 <p>If you are calling a method that might throw an exception, you can catch that exception using a <code class="docutils literal notranslate"><span class="pre">try/catch</span></code> block:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
     <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span>
-<span class="p">{</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
@@ -397,16 +394,14 @@ the scripts dies, echoing the error message that the <code class="docutils liter
 <p>In the example above, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
 a <code class="docutils literal notranslate"><span class="pre">UnknownFileException</span></code>, we can specify that in the catch parameter. Any other exceptions that are thrown and are
 not child classes of the caught exception will be passed on to the error handler:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something here...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something here...</span>
 
     <span class="k">throw</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">(),</span> <span class="nv">$e</span><span class="p">);</span>
@@ -456,8 +451,7 @@ are not set up to log <strong>critical</strong> errors, which all exceptions are
 <code class="docutils literal notranslate"><span class="pre">/app/views/errors/html/error_404.php</span></code>. You should customize all of the error views for your site.
 If, in <code class="docutils literal notranslate"><span class="pre">Config/Routes.php</span></code>, you have specified a 404 Override, that will be called instead of the standard
 404 page:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="o">::</span><span class="na">forPageNotFound</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -514,7 +508,7 @@ redirect code to use instead of the default (<code class="docutils literal notra
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

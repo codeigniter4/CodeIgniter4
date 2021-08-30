@@ -380,8 +380,7 @@ there are a number of new assertions that you can use in your tests.</p>
 <p><strong>isOK()</strong></p>
 <p>Returns a boolean true/false based on whether the response is perceived to be “ok”. This is primarily determined by
 a response status code in the 200 or 300’s.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">())</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">())</span> <span class="p">{</span>
     <span class="o">...</span>
 <span class="p">}</span>
 </pre></div>
@@ -393,8 +392,7 @@ a response status code in the 200 or 300’s.</p>
 </div>
 <p><strong>isRedirect()</strong></p>
 <p>Returns a boolean true/false based on whether the response is a redirected response.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isRedirect</span><span class="p">())</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isRedirect</span><span class="p">())</span> <span class="p">{</span>
     <span class="o">...</span>
 <span class="p">}</span>
 </pre></div>
@@ -612,7 +610,7 @@ can help to test the responses.</p>
 <p>Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Response body is this:</span>
 <span class="p">[</span>
-    <span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">,</span> <span class="s1">&#39;key-b&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">,</span> <span class="s1">&#39;key-b&#39;</span><span class="p">],</span>
 <span class="p">]</span>
 
 <span class="c1">// Is true</span>
@@ -646,7 +644,7 @@ can help to test the responses.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

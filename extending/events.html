@@ -386,7 +386,7 @@ a callable that will be run when that event is triggered:</p>
 <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="s1">&#39;SomeClass::someMethod&#39;</span><span class="p">);</span>
 
 <span class="c1">// Use a Closure</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
 <span class="p">});</span>
@@ -423,7 +423,7 @@ need to call the <code class="docutils literal notranslate"><span class="pre">tr
 given the arguments in the same order as defined:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\CodeIgniter\Events\Events</span><span class="o">::</span><span class="na">trigger</span><span class="p">(</span><span class="s1">&#39;some_events&#39;</span><span class="p">,</span> <span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">);</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span><span class="p">)</span> <span class="p">{</span>
         <span class="o">...</span>
 <span class="p">});</span>
 </pre></div>
@@ -472,7 +472,7 @@ When <strong>true</strong>, all events will be skipped over during the trigger m
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

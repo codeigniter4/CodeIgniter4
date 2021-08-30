@@ -427,7 +427,7 @@ the <strong>app/Config/Toolbar.php</strong> configuration file:</p>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Database</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Logs</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Views</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Cache</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Cache</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Files</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Routes</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Events</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
@@ -522,7 +522,7 @@ it to sort it correctly and display the correct information. The inner arrays mu
     <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name displayed on the left of the timeline</span>
     <span class="s1">&#39;component&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name of the Component listed in the middle of timeline</span>
     <span class="s1">&#39;start&#39;</span>     <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// start time, like microtime(true)</span>
-    <span class="s1">&#39;duration&#39;</span>  <span class="o">=&gt;</span> <span class="mf">0.00</span>    <span class="c1">// duration, like mircrotime(true) - microtime(true)</span>
+    <span class="s1">&#39;duration&#39;</span>  <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// duration, like mircrotime(true) - microtime(true)</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -539,12 +539,12 @@ outer array’s key is the name of the section on the Vars tab:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;section 1&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span>
+        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="s1">&#39;section 2&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span>
-    <span class="p">]</span>
+        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
  <span class="p">];</span>
 </pre></div>
 </div>
@@ -569,7 +569,7 @@ outer array’s key is the name of the section on the Vars tab:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

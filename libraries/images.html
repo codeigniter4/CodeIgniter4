@@ -490,9 +490,7 @@ error upon failure, like this:</p>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="k">catch</span> <span class="p">(</span><span class="nx">CodeIgniter\Images\ImageException</span> <span class="nv">$e</span><span class="p">)</span>
-<span class="p">{</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">CodeIgniter\Images\ImageException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -717,7 +715,7 @@ name of one of the installed system fonts that you wish to use, i.e., Calibri.</
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

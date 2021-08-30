@@ -473,10 +473,8 @@ functions:</p>
 <span class="p">{</span>
     <span class="nv">$needle</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$needle</span> <span class="o">:</span> <span class="p">[</span><span class="nv">$needle</span><span class="p">];</span>
 
-    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$needle</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">))</span>
-        <span class="p">{</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$needle</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">,</span> <span class="k">true</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -488,6 +486,7 @@ functions:</p>
 <span class="k">function</span> <span class="nf">random_element</span><span class="p">(</span><span class="nv">$array</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nb">shuffle</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+
     <span class="k">return</span> <span class="nb">array_pop</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -525,7 +524,7 @@ Browse each one to see what they do.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

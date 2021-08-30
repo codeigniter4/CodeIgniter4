@@ -428,7 +428,7 @@ Entity itself at <strong>app/Entities/User.php</strong>.</p>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span>
+        <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
     <span class="p">];</span>
     <span class="k">protected</span> <span class="nv">$returnType</span>    <span class="o">=</span> <span class="s1">&#39;App\Entities\User&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
@@ -452,10 +452,11 @@ instances of our User Entity class instead of an object or array like normal.</p
 
 <span class="c1">// Updating</span>
 <span class="nb">unset</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">)</span>
-<span class="p">{</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">=</span> <span class="s1">&#39;something new&#39;</span><span class="p">;</span>
 <span class="p">}</span>
+
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 
 <span class="c1">// Create</span>
@@ -589,7 +590,7 @@ with the Entity class’ data mapping features.</p>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>        <span class="c1">// Represents a username</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
@@ -615,7 +616,7 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>        <span class="c1">// Represents a username</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
@@ -688,7 +689,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;is_banned&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;is_banned&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
         <span class="s1">&#39;is_banned_nullable&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;?boolean&#39;</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
@@ -882,7 +883,7 @@ attribute to check:</p>
 </pre></div>
 </div>
 <p>Or to check the whole entity for changed values omit the parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span>       <span class="c1">// true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </div>
@@ -904,7 +905,7 @@ attribute to check:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

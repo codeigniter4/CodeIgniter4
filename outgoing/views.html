@@ -433,7 +433,7 @@ content view, and a footer view. That might look something like this:</p>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
         <span class="p">{</span>
                 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="s1">&#39;page_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your title&#39;</span>
+                        <span class="s1">&#39;page_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your title&#39;</span><span class="p">,</span>
                 <span class="p">];</span>
 
                 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;header&#39;</span><span class="p">);</span>
@@ -488,7 +488,7 @@ Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Heading&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span>
+        <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blogview&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -530,7 +530,7 @@ into the <cite>$option</cite> array in the third parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Heading&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span>
+        <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Message&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blogview&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;saveData&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
@@ -555,8 +555,8 @@ typically be in the form of a multi-dimensional array.</p>
         <span class="p">{</span>
                 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="s1">&#39;todo_list&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Clean House&#39;</span><span class="p">,</span> <span class="s1">&#39;Call Mom&#39;</span><span class="p">,</span> <span class="s1">&#39;Run Errands&#39;</span><span class="p">],</span>
-                        <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s2">&quot;My Real Title&quot;</span><span class="p">,</span>
-                        <span class="s1">&#39;heading&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;My Real Heading&quot;</span>
+                        <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;My Real Title&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;heading&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Real Heading&#39;</span><span class="p">,</span>
                 <span class="p">];</span>
 
                 <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;blogview&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -605,7 +605,7 @@ typically be in the form of a multi-dimensional array.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

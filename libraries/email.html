@@ -520,8 +520,8 @@ regardless of SMTPCrypto setting.)</p></td>
 <td><p>SMTP Timeout (in seconds).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>SMTPKeepAlive</strong></p></td>
-<td><p>FALSE</p></td>
-<td><p>TRUE or FALSE (boolean)</p></td>
+<td><p>false</p></td>
+<td><p>true or false (boolean)</p></td>
 <td><p>Enable persistent SMTP connections.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>SMTPCrypto</strong></p></td>
@@ -533,8 +533,8 @@ channel to the server using SSL and “tls” will issue a
 set this to blank.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>wordWrap</strong></p></td>
-<td><p>TRUE</p></td>
-<td><p>TRUE or FALSE (boolean)</p></td>
+<td><p>true</p></td>
+<td><p>true or false (boolean)</p></td>
 <td><p>Enable word-wrap.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>wrapChars</strong></p></td>
@@ -555,8 +555,8 @@ paths otherwise they will not work.</p></td>
 <td><p>Character set (utf-8, iso-8859-1, etc.).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>validate</strong></p></td>
-<td><p>TRUE</p></td>
-<td><p>TRUE or FALSE (boolean)</p></td>
+<td><p>true</p></td>
+<td><p>true or false (boolean)</p></td>
 <td><p>Whether to validate the email address.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>priority</strong></p></td>
@@ -575,8 +575,8 @@ paths otherwise they will not work.</p></td>
 <td><p>Newline character. (Use “\r\n” to comply with RFC 822).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>BCCBatchMode</strong></p></td>
-<td><p>FALSE</p></td>
-<td><p>TRUE or FALSE (boolean)</p></td>
+<td><p>false</p></td>
+<td><p>true or false (boolean)</p></td>
 <td><p>Enable BCC Batch Mode.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>BCCBatchSize</strong></p></td>
@@ -585,8 +585,8 @@ paths otherwise they will not work.</p></td>
 <td><p>Number of emails in each BCC batch.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DSN</strong></p></td>
-<td><p>FALSE</p></td>
-<td><p>TRUE or FALSE (boolean)</p></td>
+<td><p>false</p></td>
+<td><p>true or false (boolean)</p></td>
 <td><p>Enable notify message from server</p></td>
 </tr>
 </tbody>
@@ -873,7 +873,7 @@ permitting the data to be reset between cycles.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you set the parameter to TRUE any attachments will be cleared as
+<p>If you set the parameter to true any attachments will be cleared as
 well:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -890,13 +890,13 @@ well:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
-<p>The e-mail sending method. Returns boolean TRUE or FALSE based on
+<p>The e-mail sending method. Returns boolean true or false based on
 success or failure, enabling it to be used conditionally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span>
 <span class="p">{</span>
@@ -905,7 +905,7 @@ success or failure, enabling it to be used conditionally:</p>
 </pre></div>
 </div>
 <p>This method will automatically clear all parameters if the request was
-successful. To stop this behaviour pass FALSE:</p>
+successful. To stop this behaviour pass false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="c1">// Parameters won&#39;t be cleared</span>
@@ -921,7 +921,7 @@ to avoid clearing the email parameters.</p>
 <p class="admonition-title">Note</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">BCCBatchMode</span></code> is enabled, and there are more than
 <code class="docutils literal notranslate"><span class="pre">BCCBatchSize</span></code> recipients, this method will always return
-boolean <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p>
+boolean <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -985,7 +985,7 @@ parameter as mime-type:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Attachment Content-ID or FALSE if not found</p>
+<dd class="field-even"><p>Attachment Content-ID or false if not found</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>string</p>
@@ -995,8 +995,8 @@ parameter as mime-type:</p>
 (picture) attachment into HTML. First parameter must be the already attached file name.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;/img/photo1.jpg&#39;</span><span class="p">;</span>
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$address</span><span class="p">)</span>
-<span class="p">{</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$address</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
         <span class="nv">$cid</span> <span class="o">=</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAttachmentCID</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
         <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;&lt;img src=&quot;cid:&#39;</span><span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span><span class="s1">&#39;&quot; alt=&quot;photo1&quot; /&gt;&#39;</span><span class="p">);</span>
@@ -1031,7 +1031,7 @@ the email message. Useful for debugging.</p>
 <p>You can optionally specify which parts of the message should be printed.
 Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>body</strong>.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// You need to pass FALSE while sending in order for the email data</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// You need to pass false while sending in order for the email data</span>
 <span class="c1">// to not be cleared - if that happens, printDebugger() would have</span>
 <span class="c1">// nothing to output.</span>
 <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
@@ -1067,7 +1067,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

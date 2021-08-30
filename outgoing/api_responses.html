@@ -435,7 +435,7 @@ mime types that your application can automatically format the response for. By d
 format both XML and JSON responses:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$supportedResponseFormats</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;application/xml&#39;</span>
+    <span class="s1">&#39;application/xml&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -447,7 +447,7 @@ name, and the class must implement <strong>CodeIgniter\Format\FormatterInterface
 support both JSON and XML:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\JSONFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="s1">&#39;application/xml&#39;</span>  <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\XMLFormatter</span><span class="o">::</span><span class="na">class</span>
+    <span class="s1">&#39;application/xml&#39;</span>  <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\XMLFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -524,8 +524,8 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
     <span class="s1">&#39;code&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;321a&#39;</span><span class="p">,</span>
     <span class="s1">&#39;messages&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;Error message 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Error message 2&#39;</span>
-    <span class="p">]</span>
+        <span class="s1">&#39;Error message 2&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -788,7 +788,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

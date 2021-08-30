@@ -377,8 +377,7 @@ requirements are not met.</p>
 <div class="section" id="example-usage">
 <h2><a class="toc-backref" href="#id1">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
 <p>The following example shows a common usage pattern within your controllers.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Saving to the cache!&lt;br /&gt;&#39;</span><span class="p">;</span>
     <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;foobarbaz!&#39;</span><span class="p">;</span>
 
@@ -453,7 +452,7 @@ to projects and modules. This will replace the hard-coded value in a future rele
 </dd>
 </dl>
 <p>This method will attempt to fetch an item from the cache store. If the
-item does not exist, the method will return NULL.</p>
+item does not exist, the method will return null.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">);</span>
 </pre></div>
@@ -531,7 +530,7 @@ in order to allow usage of <code class="docutils literal notranslate"><span clas
 </dd>
 </dl>
 <p>This method will delete a specific item from the cache store. If item
-deletion fails, the method will return FALSE.</p>
+deletion fails, the method will return false.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">);</span>
 </pre></div>
@@ -592,7 +591,7 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>Performs atomic incrementation of a raw stored value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 2</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span>    <span class="c1">// &#39;iterator&#39; is now 3</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 6</span>
 </pre></div>
 </div>
@@ -618,7 +617,7 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>Performs atomic decrementation of a raw stored value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 6</span>
-<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span>    <span class="c1">// &#39;iterator&#39; is now 5</span>
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 5</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
 </pre></div>
 </div>
@@ -636,7 +635,7 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 </dd>
 </dl>
 <p>This method will ‘clean’ the entire cache. If the deletion of the
-cache files fails, the method will return FALSE.</p>
+cache files fails, the method will return false.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">clean</span><span class="p">();</span>
 </pre></div>
@@ -804,7 +803,7 @@ support your chosen cache.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

@@ -390,10 +390,10 @@ and allows the use of a the ‘*’ wildcard. Given the following array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;buzz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;fizz&#39;</span> <span class="o">=&gt;</span> <span class="mi">11</span>
+            <span class="s1">&#39;fizz&#39;</span> <span class="o">=&gt;</span> <span class="mi">11</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">23</span>
+            <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">23</span><span class="p">,</span>
         <span class="p">]</span>
     <span class="p">]</span>
 <span class="p">]</span>
@@ -418,10 +418,10 @@ have a numeric index:</p>
 <p>If the array key contains a dot, then the key can be escaped with a backslash:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;bar.baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">23</span>
+        <span class="s1">&#39;bar.baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">23</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="s1">&#39;foo.bar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">43</span>
+        <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">43</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
@@ -632,7 +632,7 @@ will be supplying an initial <code class="docutils literal notranslate"><span cl
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

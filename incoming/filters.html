@@ -425,8 +425,7 @@ Returning it in the before filter will not stop the execution but only replace t
 <span class="p">{</span>
     <span class="nv">$auth</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$auth</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span><span class="p">())</span>
-    <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$auth</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span><span class="p">())</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -480,7 +479,7 @@ run on every request. Filters can be specified by adding their alias to either t
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
+    <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -492,7 +491,7 @@ an array with the ‘except’ key and a uri to match as the value alongside the
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api/*&#39;</span><span class="p">],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
+    <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -504,7 +503,7 @@ URI’s you can use an array of URI patterns:</p>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo/*&#39;</span><span class="p">,</span> <span class="s1">&#39;bar/*&#39;</span><span class="p">]],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span>  <span class="o">=&gt;</span> <span class="p">[],</span>
+    <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -569,7 +568,7 @@ a list of URI patterns that filter should apply to:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

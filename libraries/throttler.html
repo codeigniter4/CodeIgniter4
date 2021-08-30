@@ -415,8 +415,7 @@ along the lines of:</p>
 <span class="sd">     * This is a demo implementation of using the Throttler class</span>
 <span class="sd">     * to implement rate limiting for your application.</span>
 <span class="sd">     *</span>
-<span class="sd">     * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
-<span class="sd">     * @param array|null                                         $arguments</span>
+<span class="sd">     * @param array|null $arguments</span>
 <span class="sd">     *</span>
 <span class="sd">     * @return mixed</span>
 <span class="sd">     */</span>
@@ -427,8 +426,7 @@ along the lines of:</p>
         <span class="c1">// Restrict an IP address to no more</span>
         <span class="c1">// than 1 request per second across the</span>
         <span class="c1">// entire site.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">(),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">(),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -436,9 +434,7 @@ along the lines of:</p>
     <span class="sd">/**</span>
 <span class="sd">     * We don&#39;t have anything to do here.</span>
 <span class="sd">     *</span>
-<span class="sd">     * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request</span>
-<span class="sd">     * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response</span>
-<span class="sd">     * @param array|null                                         $arguments</span>
+<span class="sd">     * @param array|null $arguments</span>
 <span class="sd">     *</span>
 <span class="sd">     * @return mixed</span>
 <span class="sd">     */</span>
@@ -463,13 +459,13 @@ this to incoming requests, you need to edit <strong>/app/Config/Filters.php</str
 filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
         <span class="o">...</span>
-        <span class="s1">&#39;throttle&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\Throttle</span><span class="o">::</span><span class="na">class</span>
+        <span class="s1">&#39;throttle&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\Throttle</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>Next, we assign it to all POST requests made on the site:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;throttle&#39;</span><span class="p">,</span> <span class="s1">&#39;CSRF&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;throttle&#39;</span><span class="p">,</span> <span class="s1">&#39;CSRF&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -491,7 +487,7 @@ filter:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE if action can be performed, FALSE if not</p>
+<dd class="field-even"><p>true if action can be performed, false if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -513,7 +509,7 @@ are reduced by $cost if successful.</p>
 <dd class="field-even"><p>integer</p>
 </dd>
 </dl>
-<p>After <code class="docutils literal notranslate"><span class="pre">check()</span></code> has been run and returned FALSE, this method can be used
+<p>After <code class="docutils literal notranslate"><span class="pre">check()</span></code> has been run and returned false, this method can be used
 to determine the time until a new token should be available and the action can be
 tried again. In this case, the minimum enforced wait time is one second.</p>
 </dd></dl>
@@ -557,7 +553,7 @@ Won’t fail if the bucket doesn’t exist.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

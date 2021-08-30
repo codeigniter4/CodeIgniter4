@@ -519,12 +519,9 @@ to update the schema:</p>
         <span class="p">{</span>
                 <span class="nv">$migrate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">migrations</span><span class="p">();</span>
 
-                <span class="k">try</span>
-                <span class="p">{</span>
+                <span class="k">try</span> <span class="p">{</span>
                         <span class="nv">$migrate</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
-                <span class="p">}</span>
-                <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span>
-                <span class="p">{</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
                         <span class="c1">// Do something with the error here...</span>
                 <span class="p">}</span>
         <span class="p">}</span>
@@ -743,8 +740,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Sets the namespace the library should look for migration files:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$namespace</span><span class="p">)</span>
-          <span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$namespace</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -766,8 +762,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Sets the group the library should look for migration files:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setGroup</span><span class="p">(</span><span class="nv">$group</span><span class="p">)</span>
-          <span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setGroup</span><span class="p">(</span><span class="nv">$group</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -793,7 +788,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

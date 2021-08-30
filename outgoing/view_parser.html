@@ -452,7 +452,7 @@ script. You will have to give each escaped value a unique parameter name.</p>
 like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;blog_title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Title&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span>
+        <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
@@ -561,8 +561,8 @@ corresponding to your variable pair data. Consider this example:</p>
                 <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 2&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 2&#39;</span><span class="p">],</span>
                 <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 3&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 3&#39;</span><span class="p">],</span>
                 <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 4&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 4&#39;</span><span class="p">],</span>
-                <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 5&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 5&#39;</span><span class="p">]</span>
-        <span class="p">]</span>
+                <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 5&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 5&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
@@ -580,11 +580,11 @@ method:</p>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;blog_title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;blog_entries&#39;</span> <span class="o">=&gt;</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">()</span>
+        <span class="s1">&#39;blog_entries&#39;</span> <span class="o">=&gt;</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">(),</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the array you are trying to loop over contains objects instead of arrays,
@@ -604,12 +604,13 @@ an associative array of values, like a record from a database:</p>
         <span class="s1">&#39;blog_title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span><span class="p">,</span>
         <span class="s1">&#39;blog_entry&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 1&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 1&#39;</span>
-        <span class="p">]</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Body 1&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code> is an associative
@@ -651,7 +652,7 @@ data pairs into the inner substitution.</p>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span> <span class="p">]</span>
+        <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -663,7 +664,7 @@ data pairs into the inner substitution.</p>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span> <span class="p">]</span>
+        <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span><span class="o">=&gt;</span><span class="k">false</span><span class="p">]);</span>
@@ -1050,7 +1051,7 @@ key/value pairs:</p>
 used within the template file. The value is any valid PHP callable, including static class methods, and closures:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;\Some\Class::methodName&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span>   <span class="o">=&gt;</span> <span class="k">function</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
+        <span class="s1">&#39;bar&#39;</span>   <span class="o">=&gt;</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
         <span class="p">},</span>
 <span class="p">];</span>
@@ -1063,7 +1064,7 @@ used within the template file. The value is any valid PHP callable, including st
 
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plugins</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plugins</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
         <span class="p">};</span>
 
@@ -1116,10 +1117,10 @@ template, the original pseudo-variable is shown in the result:</p>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span>
         <span class="s1">&#39;firstname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span>
+        <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 
 <span class="c1">// Result: Hello, John {initials} Doe</span>
 </pre></div>
@@ -1134,11 +1135,11 @@ pair tag, but the closing variable pair tag is not rendered properly:</p>
         <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
         <span class="s1">&#39;titles&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="p">[</span><span class="s1">&#39;degree&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;BSc&#39;</span><span class="p">],</span>
-                <span class="p">[</span><span class="s1">&#39;degree&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;PhD&#39;</span><span class="p">]</span>
-        <span class="p">]</span>
+                <span class="p">[</span><span class="s1">&#39;degree&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;PhD&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 
 <span class="c1">// Result: Hello, John Doe (Mr{degree} {/degrees})</span>
 </pre></div>
@@ -1161,7 +1162,7 @@ of in the view.</p>
         <span class="p">]</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Result:</p>
@@ -1180,17 +1181,16 @@ using a view fragment:</p>
         <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Second Link&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/second&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data1</span> <span class="k">as</span> <span class="nv">$menuItem</span><span class="p">)</span>
-<span class="p">{</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data1</span> <span class="k">as</span> <span class="nv">$menuItem</span><span class="p">),{</span>
         <span class="nv">$temp</span> <span class="o">.=</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$menuItem</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template1</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nv">$template2</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;{menuitems}&lt;/ul&gt;&#39;</span><span class="p">;</span>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;menuitems&#39;</span> <span class="o">=&gt;</span> <span class="nv">$temp</span>
+        <span class="s1">&#39;menuitems&#39;</span> <span class="o">=&gt;</span> <span class="nv">$temp</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template2</span><span class="p">);</span>
+            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template2</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Result:</p>
@@ -1341,7 +1341,7 @@ substitutions are performed for each data pair.</p>
 <dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
 </dd>
 </dl>
-<p>Over-ride the substitution field delimiters:</p>
+<p>Override the substitution field delimiters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setDelimiters</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span><span class="s1">&#39;]&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1368,7 +1368,7 @@ substitutions are performed for each data pair.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

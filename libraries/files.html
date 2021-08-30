@@ -386,12 +386,10 @@ to check that the file exists and throw <code class="docutils literal notranslat
 <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getPerms</span><span class="p">();</span>
 
 <span class="c1">// Write CSV rows to it.</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">isWritable</span><span class="p">())</span>
-<span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">isWritable</span><span class="p">())</span> <span class="p">{</span>
     <span class="nv">$csv</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">openFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">);</span>
 
-    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$rows</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
-    <span class="p">{</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$rows</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$csv</span><span class="o">-&gt;</span><span class="na">fputcsv</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -410,15 +408,15 @@ method. This is especially useful to rename files when moving it so that the fil
 </div>
 <p><strong>getSize()</strong></p>
 <p>Returns the size of the uploaded file in bytes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$size</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span>      <span class="c1">// 256901</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$size</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span> <span class="c1">// 256901</span>
 </pre></div>
 </div>
 <p><strong>getSizeByUnit()</strong></p>
 <p>Returns the size of the uploaded file default in bytes. You can pass in either ‘kb’ or ‘mb’ as the first parameter to get
 the results in kilobytes or megabytes, respectively:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">();</span>      <span class="c1">// 256901</span>
-<span class="nv">$kilobytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;kb&#39;</span><span class="p">);</span>  <span class="c1">// 250.880</span>
-<span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>  <span class="c1">// 0.245</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">();</span> <span class="c1">// 256901</span>
+<span class="nv">$kilobytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;kb&#39;</span><span class="p">);</span> <span class="c1">// 250.880</span>
+<span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span> <span class="c1">// 0.245</span>
 </pre></div>
 </div>
 <p><strong>getMimeType()</strong></p>
@@ -474,7 +472,7 @@ resulting location is needed:</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>

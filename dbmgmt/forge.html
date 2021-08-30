@@ -404,25 +404,23 @@ to connect to as the first parameter.</p>
 <h2><a class="toc-backref" href="#id2">Creating and Dropping Databases</a><a class="headerlink" href="#creating-and-dropping-databases" title="Permalink to this headline">¶</a></h2>
 <p><strong>$forge-&gt;createDatabase(‘db_name’)</strong></p>
 <p>Permits you to create the database specified in the first parameter.
-Returns TRUE/FALSE based on success or failure:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
-<span class="p">{</span>
+Returns true/false based on success or failure:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;Database created!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>An optional second parameter set to TRUE will add IF EXISTS statement
+<p>An optional second parameter set to true will add IF EXISTS statement
 or will check if a database exists before create it (depending on DBMS).</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives CREATE DATABASE IF NOT EXISTS my_db</span>
 <span class="c1">// or will check if a database exists</span>
 </pre></div>
 </div>
 <p><strong>$forge-&gt;dropDatabase(‘db_name’)</strong></p>
 <p>Permits you to drop the database specified in the first parameter.
-Returns TRUE/FALSE based on success or failure:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span>
-<span class="p">{</span>
+Returns true/false based on success or failure:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s1">&#39;Database deleted!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -476,8 +474,8 @@ also require a ‘constraint’ key.</p>
 <ul class="simple">
 <li><p>unsigned/true : to generate “UNSIGNED” in the field definition.</p></li>
 <li><p>default/value : to generate a default value in the field definition.</p></li>
-<li><p>null/true : to generate “NULL” in the field definition. Without this,
-the field will default to “NOT NULL”.</p></li>
+<li><p>null/true : to generate “null” in the field definition. Without this,
+the field will default to “NOT null”.</p></li>
 <li><p>auto_increment/true : generates an auto_increment flag on the
 field. Note that the field type must be a type that supports this,
 such as integer.</p></li>
@@ -548,16 +546,16 @@ Primary Key.</p>
 <h3><a class="toc-backref" href="#id6">Adding Keys</a><a class="headerlink" href="#adding-keys" title="Permalink to this headline">¶</a></h3>
 <p>Generally speaking, you’ll want your table to have Keys. This is
 accomplished with $forge-&gt;addKey(‘field’). The optional second
-parameter set to TRUE will make it a primary key and the third
-parameter set to TRUE will make it a unique key. Note that addKey()
+parameter set to true will make it a primary key and the third
+parameter set to true will make it a unique key. Note that addKey()
 must be followed by a call to createTable().</p>
 <p>Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id` (`blog_id`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;site_id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;site_id&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives PRIMARY KEY `blog_id_site_id` (`blog_id`, `site_id`)</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">(</span><span class="s1">&#39;blog_name&#39;</span><span class="p">);</span>
@@ -566,7 +564,7 @@ below is for MySQL.</p>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_name&#39;</span><span class="p">,</span> <span class="s1">&#39;blog_label&#39;</span><span class="p">]);</span>
 <span class="c1">// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)</span>
 
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="k">FALSE</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addKey</span><span class="p">([</span><span class="s1">&#39;blog_id&#39;</span><span class="p">,</span> <span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)</span>
 </pre></div>
 </div>
@@ -602,15 +600,15 @@ with</p>
 <span class="c1">// gives CREATE TABLE table_name</span>
 </pre></div>
 </div>
-<p>An optional second parameter set to TRUE adds an “IF NOT EXISTS” clause
+<p>An optional second parameter set to true adds an “IF NOT EXISTS” clause
 into the definition</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// gives CREATE TABLE IF NOT EXISTS table_name</span>
 </pre></div>
 </div>
 <p>You could also pass optional table attributes, such as MySQL’s <code class="docutils literal notranslate"><span class="pre">ENGINE</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ENGINE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">];</span>
-<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 <span class="c1">// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci</span>
 </pre></div>
 </div>
@@ -680,7 +678,7 @@ AFTER and FIRST clauses to position the new column.</p>
 
 <span class="c1">// Will place the new column at the start of the table definition:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]</span>
+        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -732,7 +730,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -762,13 +760,13 @@ change the name, you can add a “name” key into the field defining array.</p>
 
 <dl class="method">
 <dt id="addKey">
-<code class="sig-name descname">addKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$primary = FALSE</em><span class="optional">[</span>, <em class="sig-param">$unique = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$primary = false</em><span class="optional">[</span>, <em class="sig-param">$unique = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
-<li><p><strong>$primary</strong> (<em>bool</em>) – Set to TRUE if it should be a primary key or a regular one</p></li>
-<li><p><strong>$unique</strong> (<em>bool</em>) – Set to TRUE if it should be a unique key or a regular one</p></li>
+<li><p><strong>$primary</strong> (<em>bool</em>) – Set to true if it should be a primary key or a regular one</p></li>
+<li><p><strong>$unique</strong> (<em>bool</em>) – Set to true if it should be a unique key or a regular one</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -821,16 +819,16 @@ change the name, you can add a “name” key into the field defining array.</p>
 
 <dl class="method">
 <dt id="createDatabase">
-<code class="sig-name descname">createDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="optional">[</span>, <em class="sig-param">$ifNotExists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">createDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="optional">[</span>, <em class="sig-param">$ifNotExists = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$db_name</strong> (<em>string</em>) – Name of the database to create</p></li>
-<li><p><strong>$ifNotExists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause or check if database exists</p></li>
+<li><p><strong>$ifNotExists</strong> (<em>string</em>) – Set to true to add an ‘IF NOT EXISTS’ clause or check if database exists</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -841,17 +839,17 @@ change the name, you can add a “name” key into the field defining array.</p>
 
 <dl class="method">
 <dt id="createTable">
-<code class="sig-name descname">createTable</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$if_not_exists = FALSE</em><span class="optional">[</span>, <em class="sig-param">array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">createTable</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$if_not_exists = false</em><span class="optional">[</span>, <em class="sig-param">array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$table</strong> (<em>string</em>) – Name of the table to create</p></li>
-<li><p><strong>$if_not_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF NOT EXISTS’ clause</p></li>
+<li><p><strong>$if_not_exists</strong> (<em>string</em>) – Set to true to add an ‘IF NOT EXISTS’ clause</p></li>
 <li><p><strong>$attributes</strong> (<em>string</em>) – An associative array of table attributes</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Query object on success, FALSE on failure</p>
+<dd class="field-even"><p>Query object on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>mixed</p>
@@ -871,7 +869,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -890,7 +888,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -901,16 +899,16 @@ change the name, you can add a “name” key into the field defining array.</p>
 
 <dl class="method">
 <dt id="dropTable">
-<code class="sig-name descname">dropTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em><span class="optional">[</span>, <em class="sig-param">$if_exists = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dropTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em><span class="optional">[</span>, <em class="sig-param">$if_exists = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$table</strong> (<em>string</em>) – Name of the table to drop</p></li>
-<li><p><strong>$if_exists</strong> (<em>string</em>) – Set to TRUE to add an ‘IF EXISTS’ clause</p></li>
+<li><p><strong>$if_exists</strong> (<em>string</em>) – Set to true to add an ‘IF EXISTS’ clause</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -930,7 +928,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TRUE on success, FALSE on failure</p>
+<dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -950,7 +948,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Query object on success, FALSE on failure</p>
+<dd class="field-even"><p>Query object on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>mixed</p>
@@ -980,7 +978,7 @@ change the name, you can add a “name” key into the field defining array.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Jul 28, 2021.
+        Last updated on Aug 30, 2021.
       </span>
 
     </p>
