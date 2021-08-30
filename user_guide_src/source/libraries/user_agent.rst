@@ -39,20 +39,13 @@ is available::
 
 	$agent = $this->request->getUserAgent();
 
-	if ($agent->isBrowser())
-	{
+	if ($agent->isBrowser()) {
 		$currentAgent = $agent->getBrowser().' '.$agent->getVersion();
-	}
-	elseif ($agent->isRobot())
-	{
+	} elseif ($agent->isRobot()) {
 		$currentAgent = $this->agent->robot();
-	}
-	elseif ($agent->isMobile())
-	{
+	} elseif ($agent->isMobile()) {
 		$currentAgent = $agent->getMobile();
-	}
-	else
-	{
+	} else {
 		$currentAgent = 'Unidentified User Agent';
 	}
 
@@ -66,21 +59,18 @@ Class Reference
 
 .. php:class:: CodeIgniter\\HTTP\\UserAgent
 
-	.. php:method:: isBrowser([$key = NULL])
+	.. php:method:: isBrowser([$key = null])
 
 		:param	string	$key: Optional browser name
-    		:returns:	TRUE if the user agent is a (specified) browser, FALSE if not
+    		:returns:	true if the user agent is a (specified) browser, false if not
     		:rtype:	bool
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known web browser.
+    		Returns true/false (boolean) if the user agent is a known web browser.
     		::
 
-			if ($agent->isBrowser('Safari'))
-			{
+			if ($agent->isBrowser('Safari')) {
 				echo 'You are using Safari.';
-			}
-			elseif ($agent->isBrowser())
-			{
+			} elseif ($agent->isBrowser()) {
 				echo 'You are using a browser.';
 			}
 
@@ -88,35 +78,30 @@ Class Reference
 				  You can find this list in **app/Config/UserAgents.php** if you want to add new
 				  browsers or change the strings.
 
-	.. php:method:: isMobile([$key = NULL])
+	.. php:method:: isMobile([$key = null])
 
 		:param	string	$key: Optional mobile device name
-    		:returns:	TRUE if the user agent is a (specified) mobile device, FALSE if not
+    		:returns:	true if the user agent is a (specified) mobile device, false if not
     		:rtype:	bool
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known mobile device.
+    		Returns true/false (boolean) if the user agent is a known mobile device.
     		::
 
-			if ($agent->isMobile('iphone'))
-			{
+			if ($agent->isMobile('iphone')) {
 				echo view('iphone/home');
-			}
-			elseif ($agent->isMobile())
-			{
+			} elseif ($agent->isMobile()) {
 				echo view('mobile/home');
-			}
-			else
-			{
+			} else {
 				echo view('web/home');
 			}
 
-	.. php:method:: isRobot([$key = NULL])
+	.. php:method:: isRobot([$key = null])
 
 		:param	string	$key: Optional robot name
-    		:returns:	TRUE if the user agent is a (specified) robot, FALSE if not
+    		:returns:	true if the user agent is a (specified) robot, false if not
     		:rtype:	bool
 
-    		Returns TRUE/FALSE (boolean) if the user agent is a known robot.
+    		Returns true/false (boolean) if the user agent is a known robot.
 
     		.. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
     				  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
@@ -125,10 +110,10 @@ Class Reference
 
 	.. php:method:: isReferral()
 
-		:returns:	TRUE if the user agent is a referral, FALSE if not
+		:returns:	true if the user agent is a referral, false if not
 		:rtype:	bool
 
-		Returns TRUE/FALSE (boolean) if the user agent was referred from another site.
+		Returns true/false (boolean) if the user agent was referred from another site.
 
 	.. php:method:: getBrowser()
 
@@ -172,8 +157,7 @@ Class Reference
 
 		The referrer, if the user agent was referred from another site. Typically you'll test for this as follows::
 
-			if ($agent->isReferral())
-			{
+			if ($agent->isReferral()) {
 				echo $agent->referrer();
 			}
 

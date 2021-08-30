@@ -132,14 +132,11 @@ this code and save it to your **app/Controllers/** folder::
         {
             helper(['form', 'url']);
 
-            if (! $this->validate([]))
-            {
+            if (! $this->validate([])) {
                 echo view('Signup', [
                     'validation' => $this->validator,
                 ]);
-            }
-            else
-            {
+            } else {
                 echo view('Success');
             }
         }
@@ -227,14 +224,14 @@ Like, ``setRule()``, but accepts an array of field names and their rules::
 
     $validation->setRules([
         'username' => 'required',
-        'password' => 'required|min_length[10]'
+        'password' => 'required|min_length[10]',
     ]);
 
 To give a labeled error message you can set up as::
 
     $validation->setRules([
         'username' => ['label' => 'Username', 'rules' => 'required'],
-        'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]']
+        'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]'],
     ]);
 
 withRequest()
@@ -245,8 +242,7 @@ data that was input from an HTTP Request. If desired, you can pass an instance o
 current Request object and it will take all of the input data and set it as the
 data to be validated::
 
-    $validation->withRequest($this->request)
-               ->run();
+    $validation->withRequest($this->request)->run();
 
 Working with Validation
 ************************************************
@@ -262,29 +258,29 @@ easily validate your data::
         'name' => 'Joe Smith',
         'friends' => [
             [
-                'name' => 'Fred Flinstone'
+                'name' => 'Fred Flinstone',
             ],
             [
-                'name' => 'Wilma'
-            ]
+                'name' => 'Wilma',
+            ],
         ]
     ]
 
     // Joe Smith
     $validation->setRules([
-        'contacts.name' => 'required'
+        'contacts.name' => 'required',
     ]);
 
     // Fred Flintsone & Wilma
     $validation->setRules([
-        'contacts.friends.name' => 'required'
+        'contacts.friends.name' => 'required',
     ]);
 
 You can use the '*' wildcard symbol to match any one level of the array::
 
     // Fred Flintsone & Wilma
     $validation->setRules([
-        'contacts.*.name' => 'required'
+        'contacts.*.name' => 'required',
     ]);
 
 "dot array syntax" can also be useful when you have single dimension array data.
@@ -294,11 +290,11 @@ For example, data returned by multi select dropdown::
     'user_ids' => [
         1,
         2,
-        3
+        3,
     ]
     // Rule
     $validation->setRules([
-        'user_ids.*' => 'required'
+        'user_ids.*' => 'required',
     ]);
 
 Validate 1 Value
@@ -331,7 +327,7 @@ rules. As shown earlier, the validation array will have this prototype::
             'username'     => 'required',
             'password'     => 'required',
             'pass_confirm' => 'required|matches[password]',
-            'email'        => 'required|valid_email'
+            'email'        => 'required|valid_email',
         ];
     }
 
@@ -349,7 +345,7 @@ be used for any errors when this group is used::
             'username'     => 'required',
             'password'     => 'required',
             'pass_confirm' => 'required|matches[password]',
-            'email'        => 'required|valid_email'
+            'email'        => 'required|valid_email',
         ];
 
         public $signup_errors = [
@@ -357,8 +353,8 @@ be used for any errors when this group is used::
                 'required'    => 'You must choose a username.',
             ],
             'email'    => [
-                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
-            ]
+                'valid_email' => 'Please check the Email field. It does not appear to be valid.',
+            ],
         ];
     }
 
@@ -370,14 +366,14 @@ Or pass all settings in an array::
             'username' => [
                 'rules'  => 'required',
                 'errors' => [
-                    'required' => 'You must choose a Username.'
-                ]
+                    'required' => 'You must choose a Username.',
+                ],
             ],
             'email'    => [
                 'rules'  => 'required|valid_email',
                 'errors' => [
-                    'valid_email' => 'Please check the Email field. It does not appear to be valid.'
-                ]
+                    'valid_email' => 'Please check the Email field. It does not appear to be valid.',
+                ],
             ],
         ];
     }
@@ -411,10 +407,11 @@ rules after one another, you might need to call ``$validation->reset()`` before 
 errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
 you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated::
 
-    for ($userAccounts as $user) {
+    foreach ($userAccounts as $user) {
         $validation->reset();
         $validation->setRules($userAccountRules);
-        if (!$validation->run($user)) {
+
+        if (! $validation->run($user)) {
             // handle validation errors
         }
     }
@@ -428,7 +425,7 @@ the name of the field (or array key) that was passed in as $data surrounded by c
 replaced by the **value** of the matched incoming field. An example should clarify this::
 
     $validation->setRules([
-        'email' => 'required|valid_email|is_unique[users.email,id,{id}]'
+        'email' => 'required|valid_email|is_unique[users.email,id,{id}]',
     ]);
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
@@ -436,13 +433,13 @@ that has an id matching the placeholder's value. Assuming that the form POST dat
 
     $_POST = [
         'id' => 4,
-        'email' => 'foo@example.com'
+        'email' => 'foo@example.com',
     ];
 
 then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule::
 
     $validation->setRules([
-        'email' => 'required|valid_email|is_unique[users.email,id,4]'
+        'email' => 'required|valid_email|is_unique[users.email,id,4]',
     ]);
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
@@ -482,8 +479,8 @@ As the last parameter::
                 'required' => 'All accounts must have usernames provided',
             ],
             'password' => [
-                'min_length' => 'Your password is too short. You want to get hacked?'
-            ]
+                'min_length' => 'Your password is too short. You want to get hacked?',
+            ],
         ]
     );
 
@@ -494,15 +491,15 @@ Or as a labeled style::
                 'label'  => 'Username',
                 'rules'  => 'required|is_unique[users.username]',
                 'errors' => [
-                    'required' => 'All accounts must have {field} provided'
-                ]
+                    'required' => 'All accounts must have {field} provided',
+                ],
             ],
             'password' => [
                 'label'  => 'Password',
                 'rules'  => 'required|min_length[10]',
                 'errors' => [
-                    'min_length' => 'Your {field} is too short. You want to get hacked?'
-                ]
+                    'min_length' => 'Your {field} is too short. You want to get hacked?',
+                ],
             ]
         ]
     );
@@ -529,16 +526,16 @@ We can simply use the language lines defined in this file, like this::
                 'label'  => 'Rules.username',
                 'rules'  => 'required|is_unique[users.username]',
                 'errors' => [
-                    'required' => 'Rules.username.required'
-                ]
+                    'required' => 'Rules.username.required',
+                ],
             ],
             'password' => [
                 'label'  => 'Rules.password',
                 'rules'  => 'required|min_length[10]',
                 'errors' => [
-                    'min_length' => 'Rules.password.min_length'
-                ]
-            ]
+                    'min_length' => 'Rules.password.min_length',
+                ],
+            ],
         ]
     );
 
@@ -572,8 +569,7 @@ Check If Error Exists
 
 You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name::
 
-    if ($validation->hasError('username'))
-    {
+    if ($validation->hasError('username')) {
         echo $validation->getError('username');
     }
 
@@ -623,7 +619,7 @@ short alias they can be referenced by. If we were to add our example file from a
     public $templates = [
         'list'    => 'CodeIgniter\Validation\Views\list',
         'single'  => 'CodeIgniter\Validation\Views\single',
-        'my_list' => '_errors_list'
+        'my_list' => '_errors_list',
     ];
 
 Specifying the Template
@@ -667,7 +663,7 @@ a boolean true or false value signifying true if it passed the test or false if 
     {
         public function even(string $str): bool
         {
-            return (int)$str % 2 == 0;
+            return (int) $str % 2 == 0;
         }
     }
 
@@ -677,9 +673,9 @@ second parameter::
 
     public function even(string $str, string &$error = null): bool
     {
-        if ((int)$str % 2 != 0)
-        {
+        if ((int) $str % 2 !== 0) {
             $error = lang('myerrors.evenError');
+
             return false;
         }
 
@@ -689,7 +685,7 @@ second parameter::
 Your new custom rule could now be used just like any other rule::
 
     $this->validate($request, [
-        'foo' => 'required|even'
+        'foo' => 'required|even',
     ]);
 
 Allowing Parameters
@@ -708,8 +704,7 @@ for rules like ``require_with`` that needs to check the value of another submitt
         // search field is present or not.
         $present = $this->required($str ?? '');
 
-        if ($present)
-        {
+        if ($present) {
             return true;
         }
 
@@ -718,10 +713,8 @@ for rules like ``require_with`` that needs to check the value of another submitt
         // as $fields is the lis
         $requiredFields = [];
 
-        foreach ($fields as $field)
-        {
-            if (array_key_exists($field, $data))
-            {
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $data)) {
                 $requiredFields[] = $field;
             }
         }
@@ -887,7 +880,7 @@ file upload related rules::
 
     // In the controller
     $this->validate([
-        'avatar' => 'uploaded[avatar]|max_size[avatar,1024]'
+        'avatar' => 'uploaded[avatar]|max_size[avatar,1024]',
     ]);
 
 ======================= ========== ============================================= ===================================================

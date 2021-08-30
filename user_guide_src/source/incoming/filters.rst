@@ -67,8 +67,7 @@ This is typically used to perform redirects, like in this example::
     {
         $auth = service('auth');
 
-        if (! $auth->isLoggedIn())
-        {
+        if (! $auth->isLoggedIn()) {
             return redirect()->to(site_url('login'));
         }
     }
@@ -128,7 +127,7 @@ run on every request. Filters can be specified by adding their alias to either t
         'before' => [
             'csrf',
         ],
-        'after'  => [],
+        'after' => [],
     ];
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
@@ -140,7 +139,7 @@ an array with the 'except' key and a uri to match as the value alongside the ali
         'before' => [
             'csrf' => ['except' => 'api/*'],
         ],
-        'after'  => [],
+        'after' => [],
     ];
 
 Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
@@ -152,7 +151,7 @@ URI's you can use an array of URI patterns::
         'before' => [
             'csrf' => ['except' => ['foo/*', 'bar/*']],
         ],
-        'after'  => [],
+        'after' => [],
     ];
 
 $methods

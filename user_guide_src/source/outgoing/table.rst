@@ -136,7 +136,7 @@ example, only the table opening tag is being changed::
 	];
 
 	$table->setTemplate($template);
-	
+
 You can also set defaults for these by passing an array of template settings
 to the Table constructor.::
 
@@ -153,7 +153,7 @@ Class Reference
 
 .. php:class:: Table
 
-	.. attribute:: $function = NULL
+	.. attribute:: $function = null
 
 		Allows you to specify a native PHP function or a valid function array object to be applied to all cell data.
 		::
@@ -170,7 +170,7 @@ Class Reference
 
 			<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>
 
-	.. php:method:: generate([$tableData = NULL])
+	.. php:method:: generate([$tableData = null])
 
 		:param	mixed	$tableData: Data to populate the table rows with
 		:returns:	HTML table
@@ -213,7 +213,7 @@ Class Reference
 
 			$table->setFooting(['Subtotal', $subtotal, $notes]);
 
-	.. php:method:: addRow([$args = array()[, ...]])
+	.. php:method:: addRow([$args = [] [, ...]])
 
 		:param	mixed	$args: An array or multiple strings containing the row values
 		:returns:	Table instance (method chaining)
@@ -267,16 +267,16 @@ Class Reference
 	.. php:method:: setTemplate($template)
 
 		:param	array	$template: An associative array containing template values
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Permits you to set your template. You can submit a full or partial template.
 		::
 
 			$template = [
-				'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
+				'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">'
 			];
-		
+
 			$table->setTemplate($template);
 
 	.. php:method:: setEmpty($value)
@@ -304,21 +304,20 @@ Class Reference
 
 			$table = new \CodeIgniter\View\Table();
 
-
 			$table->setCaption('Preferences')
-                            ->setHeading('Name', 'Color', 'Size')
-                            ->addRow('Fred', 'Blue', 'Small')
-                            ->addRow('Mary', 'Red', 'Large')
-                            ->addRow('John', 'Green', 'Medium');
+				->setHeading('Name', 'Color', 'Size')
+				->addRow('Fred', 'Blue', 'Small')
+				->addRow('Mary', 'Red', 'Large')
+				->addRow('John', 'Green', 'Medium');
 
 			echo $table->generate();
 
 			$table->clear();
 
 			$table->setCaption('Shipping')
-                            ->setHeading('Name', 'Day', 'Delivery')
-                            ->addRow('Fred', 'Wednesday', 'Express')
-                            ->addRow('Mary', 'Monday', 'Air')
-                            ->addRow('John', 'Saturday', 'Overnight');
+				->setHeading('Name', 'Day', 'Delivery')
+				->addRow('Fred', 'Wednesday', 'Express')
+				->addRow('Mary', 'Monday', 'Air')
+				->addRow('John', 'Saturday', 'Overnight');
 
 			echo $table->generate();

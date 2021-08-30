@@ -25,8 +25,7 @@ An instance of the request class already populated for you if the current class 
     {
         public function index()
         {
-            if ($this->request->isAJAX())
-            {
+            if ($this->request->isAJAX()) {
                 // ...
             }
         }
@@ -63,19 +62,17 @@ A request could be of several types, including an AJAX request or a request from
 be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 
     // Check for AJAX request.
-    if ($request->isAJAX())
-    {
+    if ($request->isAJAX()) {
         // ...
     }
 
     // Check for CLI Request
-    if ($request->isCLI())
-    {
+    if ($request->isCLI()) {
         // ...
     }
 
-.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, 
-    which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). 
+.. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header,
+    which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 You can check the HTTP method that this request represents with the ``method()`` method::
@@ -91,8 +88,7 @@ uppercase version by wrapping the call in ``str_to_upper()``::
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 
-    if (! $request->isSecure())
-    {
+    if (! $request->isSecure()) {
         force_https();
     }
 
@@ -106,7 +102,7 @@ will return null if the item doesn't exist, and you can have the data filtered. 
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this::
 
-    $something = isset($_POST['foo']) ? $_POST['foo'] : NULL;
+    $something = isset($_POST['foo']) ? $_POST['foo'] : null;
 
 With CodeIgniter’s built in methods you can simply do this::
 
@@ -236,8 +232,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 
 You can always use ``hasHeader()`` to see if the header existed in this request::
 
-    if ($request->hasHeader('DNT'))
-    {
+    if ($request->hasHeader('DNT')) {
         // Don't track something...
     }
 
@@ -298,8 +293,7 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile'))
-    {
+    if ($files->hasFile('uploadedFile')) {
         $file = $files->getFile('uploadedfile');
 
         // Generate a new secure name
@@ -308,9 +302,9 @@ and uses best practices to minimize any security risks.
         // Move the file to it's new home
         $file->move('/path/to/dir', $name);
 
-        echo $file->getSize('mb');      // 1.23
-        echo $file->getExtension();     // jpg
-        echo $file->getType();          // image/jpg
+        echo $file->getSize('mb'); // 1.23
+        echo $file->getExtension(); // jpg
+        echo $file->getType(); // image/jpg
     }
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
@@ -386,9 +380,9 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getVar([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
-        :param  int     $filter: The type of filter to apply. A list of filters can be found 
+        :param  int     $filter: The type of filter to apply. A list of filters can be found
                         `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: mixed|null
@@ -411,7 +405,7 @@ The methods provided by the parent classes that are available are:
         first parameter to null while setting the second parameter to the filter
         you want to use::
 
-            $request->getVar(null, FILTER_SANITIZE_STRING); 
+            $request->getVar(null, FILTER_SANITIZE_STRING);
             // returns all POST items with string sanitation
 
         To return an array of multiple POST parameters, pass all the required keys as an array::
@@ -426,9 +420,9 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       $_GET if no parameters supplied, otherwise the GET value if found, or null if not
         :rtype: mixed|null
@@ -438,9 +432,9 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: mixed|null
@@ -450,9 +444,9 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: mixed|null
@@ -466,9 +460,9 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: mixed|null
@@ -483,9 +477,9 @@ The methods provided by the parent classes that are available are:
         :noindex:
 
         :param	mixed	$index: COOKIE name
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:	    $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
         :rtype:	mixed
@@ -507,11 +501,11 @@ The methods provided by the parent classes that are available are:
         :noindex:
 
         :param	mixed	$index: Value name
-        :param  int     $filter: The type of filter to apply. A list of filters can be 
+        :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param  int     $flags: Flags to apply. A list of flags can be found 
+        :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:	    $_SERVER item value if found, NULL if not
+        :returns:	    $_SERVER item value if found, null if not
         :rtype:	mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
@@ -527,7 +521,7 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getUserAgent([$filter = null])
 
-        :param  int $filter: The type of filter to apply. A list of filters can be 
+        :param  int $filter: The type of filter to apply. A list of filters can be
                     found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :returns:  The User Agent string, as found in the SERVER data, or null if not found.
         :rtype: mixed

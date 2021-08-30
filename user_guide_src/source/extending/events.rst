@@ -42,7 +42,7 @@ In this example, whenever the **pre_controller** event is executed, an instance 
 	Events::on('pre_system', 'SomeClass::someMethod');
 
 	// Use a Closure
-	Events::on('pre_system', function(...$params)
+	Events::on('pre_system', function (...$params)
 	{
 		. . .
 	});
@@ -81,7 +81,7 @@ given the arguments in the same order as defined::
 
 	\CodeIgniter\Events\Events::trigger('some_events', $foo, $bar, $baz);
 
-	Events::on('some_event', function($foo, $bar, $baz) {
+	Events::on('some_event', function ($foo, $bar, $baz) {
 		...
 	});
 

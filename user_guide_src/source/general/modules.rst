@@ -154,8 +154,7 @@ but must be specified within the Routes file itself::
 
 To reduce the amount of typing needed here, the **group** routing feature is helpful::
 
-    $routes->group('blog', ['namespace' => 'Acme\Blog\Controllers'], function($routes)
-    {
+    $routes->group('blog', ['namespace' => 'Acme\Blog\Controllers'], function ($routes) {
         $routes->get('/', 'Blog::index');
     });
 

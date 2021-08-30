@@ -52,7 +52,7 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
     $supported = [
         'application/json',
         'text/html',
-        'application/xml'
+        'application/xml',
     ];
 
     $format = $request->negotiate('media', $supported);
@@ -84,7 +84,7 @@ and German you would do something like::
 
     $supported = [
         'en',
-        'de'
+        'de',
     ];
 
     $lang = $request->negotiate('language', $supported);

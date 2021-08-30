@@ -57,7 +57,7 @@ This returns an array of benchmark information, including start, end, and durati
         'render view'  => [
             'start'    => 1234567890,
             'end'      => 1345678920,
-            'duration' => 15.4315      // number of seconds
+            'duration' => 15.4315, // number of seconds
         ]
     ]
 
@@ -97,18 +97,14 @@ this test by. The second parameter is the Closure, itself::
     $iterator = new \CodeIgniter\Benchmark\Iterator();
 
     // Add a new task
-    $iterator->add('single_concat', function()
-        {
-            $str = 'Some basic'.'little'.'string concatenation test.';
-        }
-    );
+    $iterator->add('single_concat', function () {
+        $str = 'Some basic'.'little'.'string concatenation test.';
+    });
 
     // Add another task
-    $iterator->add('double', function($a='little')
-        {
-            $str = "Some basic {$little} string test.";
-        }
-    );
+    $iterator->add('double', function ($a = 'little') {
+        $str = "Some basic {$little} string test.";
+    });
 
 Running the Tasks
 =================

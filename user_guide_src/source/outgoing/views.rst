@@ -80,7 +80,7 @@ content view, and a footer view. That might look something like this::
 		public function index()
 		{
 			$data = [
-				'page_title' => 'Your title'
+				'page_title' => 'Your title',
 			];
 
 			echo view('header');
@@ -137,7 +137,7 @@ Here's an example::
 	$data = [
 		'title'   => 'My title',
 		'heading' => 'My Heading',
-		'message' => 'My Message'
+		'message' => 'My Message',
 	];
 
 	echo view('blogview', $data);
@@ -181,7 +181,7 @@ into the `$option` array in the third parameter.
 	$data = [
 		'title'   => 'My title',
 		'heading' => 'My Heading',
-		'message' => 'My Message'
+		'message' => 'My Message',
 	];
 
 	echo view('blogview', $data, ['saveData' => true]);
@@ -208,8 +208,8 @@ Here’s a simple example. Add this to your controller::
 		{
 			$data = [
 				'todo_list' => ['Clean House', 'Call Mom', 'Run Errands'],
-				'title'     => "My Real Title",
-				'heading'   => "My Real Heading"
+				'title'     => 'My Real Title',
+				'heading'   => 'My Real Heading',
 			];
 
 			echo view('blogview', $data);

@@ -34,29 +34,27 @@ Creating and Dropping Databases
 **$forge->createDatabase('db_name')**
 
 Permits you to create the database specified in the first parameter.
-Returns TRUE/FALSE based on success or failure::
+Returns true/false based on success or failure::
 
-	if ($forge->createDatabase('my_db'))
-	{
+	if ($forge->createDatabase('my_db')) {
 		echo 'Database created!';
 	}
 
-An optional second parameter set to TRUE will add IF EXISTS statement
+An optional second parameter set to true will add IF EXISTS statement
 or will check if a database exists before create it (depending on DBMS).
 
 ::
 
-	$forge->createDatabase('my_db', TRUE);
+	$forge->createDatabase('my_db', true);
 	// gives CREATE DATABASE IF NOT EXISTS my_db
 	// or will check if a database exists
 
 **$forge->dropDatabase('db_name')**
 
 Permits you to drop the database specified in the first parameter.
-Returns TRUE/FALSE based on success or failure::
+Returns true/false based on success or failure::
 
-	if ($forge->dropDatabase('my_db'))
-	{
+	if ($forge->dropDatabase('my_db')) {
 		echo 'Database deleted!';
 	}
 
@@ -115,8 +113,8 @@ Additionally, the following key/values can be used:
 
 -  unsigned/true : to generate "UNSIGNED" in the field definition.
 -  default/value : to generate a default value in the field definition.
--  null/true : to generate "NULL" in the field definition. Without this,
-   the field will default to "NOT NULL".
+-  null/true : to generate "null" in the field definition. Without this,
+   the field will default to "NOT null".
 -  auto_increment/true : generates an auto_increment flag on the
    field. Note that the field type must be a type that supports this,
    such as integer.
@@ -191,8 +189,8 @@ Adding Keys
 
 Generally speaking, you'll want your table to have Keys. This is
 accomplished with $forge->addKey('field'). The optional second
-parameter set to TRUE will make it a primary key and the third
-parameter set to TRUE will make it a unique key. Note that addKey()
+parameter set to true will make it a primary key and the third
+parameter set to true will make it a unique key. Note that addKey()
 must be followed by a call to createTable().
 
 Multiple column non-primary keys must be sent as an array. Sample output
@@ -200,11 +198,11 @@ below is for MySQL.
 
 ::
 
-	$forge->addKey('blog_id', TRUE);
+	$forge->addKey('blog_id', true);
 	// gives PRIMARY KEY `blog_id` (`blog_id`)
 
-	$forge->addKey('blog_id', TRUE);
-	$forge->addKey('site_id', TRUE);
+	$forge->addKey('blog_id', true);
+	$forge->addKey('site_id', true);
 	// gives PRIMARY KEY `blog_id_site_id` (`blog_id`, `site_id`)
 
 	$forge->addKey('blog_name');
@@ -213,7 +211,7 @@ below is for MySQL.
 	$forge->addKey(['blog_name', 'blog_label']);
 	// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
 
-	$forge->addKey(['blog_id', 'uri'], FALSE, TRUE);
+	$forge->addKey(['blog_id', 'uri'], false, true);
 	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
 To make code reading more objective it is also possible to add primary
@@ -251,18 +249,18 @@ with
 	$forge->createTable('table_name');
 	// gives CREATE TABLE table_name
 
-An optional second parameter set to TRUE adds an "IF NOT EXISTS" clause
+An optional second parameter set to true adds an "IF NOT EXISTS" clause
 into the definition
 
 ::
 
-	$forge->createTable('table_name', TRUE);
+	$forge->createTable('table_name', true);
 	// gives CREATE TABLE IF NOT EXISTS table_name
 
 You could also pass optional table attributes, such as MySQL's ``ENGINE``::
 
 	$attributes = ['ENGINE' => 'InnoDB'];
-	$forge->createTable('table_name', FALSE, $attributes);
+	$forge->createTable('table_name', false, $attributes);
 	// produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 
 .. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes,
@@ -343,7 +341,7 @@ Examples::
 
 	// Will place the new column at the start of the table definition:
 	$fields = [
-		'preferences' => ['type' => 'TEXT', 'first' => TRUE]
+		'preferences' => ['type' => 'TEXT', 'first' => true]
 	];
 
 Dropping Columns From a Table
@@ -394,7 +392,7 @@ Class Reference
 
 		:param	string	$table: Table name to add the column to
 		:param	array	$field: Column definition(s)
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Adds a column to a table. Usage:  See `Adding a Column to a Table`_.
@@ -407,11 +405,11 @@ Class Reference
 
                 Adds a field to the set that will be used to create a table. Usage:  See `Adding fields`_.
 
-	.. php:method:: addKey($key[, $primary = FALSE[, $unique = FALSE]])
+	.. php:method:: addKey($key[, $primary = false[, $unique = false]])
 
 		:param	mixed	$key: Name of a key field or an array of fields
-		:param	bool	$primary: Set to TRUE if it should be a primary key or a regular one
-		:param	bool	$unique: Set to TRUE if it should be a unique key or a regular one
+		:param	bool	$primary: Set to true if it should be a primary key or a regular one
+		:param	bool	$unique: Set to true if it should be a unique key or a regular one
 		:returns:	\CodeIgniter\Database\Forge instance (method chaining)
 		:rtype:	\CodeIgniter\Database\Forge
 
@@ -433,21 +431,21 @@ Class Reference
 
 		Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
-	.. php:method:: createDatabase($dbName[, $ifNotExists = FALSE])
+	.. php:method:: createDatabase($dbName[, $ifNotExists = false])
 
 		:param	string	$db_name: Name of the database to create
-		:param	string	$ifNotExists: Set to TRUE to add an 'IF NOT EXISTS' clause or check if database exists
-		:returns:	TRUE on success, FALSE on failure
+		:param	string	$ifNotExists: Set to true to add an 'IF NOT EXISTS' clause or check if database exists
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Creates a new database. Usage:  See `Creating and Dropping Databases`_.
 
-	.. php:method:: createTable($table[, $if_not_exists = FALSE[, array $attributes = []]])
+	.. php:method:: createTable($table[, $if_not_exists = false[, array $attributes = []]])
 
 		:param	string	$table: Name of the table to create
-		:param	string	$if_not_exists: Set to TRUE to add an 'IF NOT EXISTS' clause
+		:param	string	$if_not_exists: Set to true to add an 'IF NOT EXISTS' clause
 		:param	string	$attributes: An associative array of table attributes
-		:returns:  Query object on success, FALSE on failure
+		:returns:  Query object on success, false on failure
 		:rtype:	mixed
 
 		Creates a new table. Usage:  See `Creating a table`_.
@@ -456,7 +454,7 @@ Class Reference
 
 		:param	string	$table: Table name
 		:param	mixed	$column_names: Comma-delimited string or an array of column names
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Drops single or multiple columns from a table. Usage:  See `Dropping Columns From a Table`_.
@@ -464,16 +462,16 @@ Class Reference
 	.. php:method:: dropDatabase($dbName)
 
 		:param	string	$dbName: Name of the database to drop
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Drops a database. Usage:  See `Creating and Dropping Databases`_.
 
-	.. php:method:: dropTable($table_name[, $if_exists = FALSE])
+	.. php:method:: dropTable($table_name[, $if_exists = false])
 
 		:param	string	$table: Name of the table to drop
-		:param	string	$if_exists: Set to TRUE to add an 'IF EXISTS' clause
-		:returns:	TRUE on success, FALSE on failure
+		:param	string	$if_exists: Set to true to add an 'IF EXISTS' clause
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Drops a table. Usage:  See `Dropping a table`_.
@@ -482,7 +480,7 @@ Class Reference
 
 		:param	string	$table: Table name
 		:param	array	$field: Column definition(s)
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
 		Modifies a table column. Usage:  See `Modifying a Column in a Table`_.
@@ -491,7 +489,7 @@ Class Reference
 
 		:param	string	$table: Current of the table
 		:param	string	$new_table_name: New name of the table
-		:returns:  Query object on success, FALSE on failure
+		:returns:  Query object on success, false on failure
 		:rtype:	mixed
 
 		Renames a table. Usage:  See `Renaming a table`_.

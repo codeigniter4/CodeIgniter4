@@ -90,7 +90,7 @@ methods to keep the data separate::
         $data = [
             'users' => $userModel->paginate(10, 'group1'),
             'pages' => $pageModel->paginate(15, 'group2'),
-            'pager' => $userModel->pager
+            'pager' => $userModel->pager,
         ];
 
         echo view('users/index', $data);
@@ -189,7 +189,7 @@ that is used by editing **app/Config/Pager.php**::
 
     public $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-        'default_simple' => 'CodeIgniter\Pager\Views\default_simple'
+        'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
     ];
 
 This setting stores the alias and :doc:`namespaced view paths </outgoing/views>` for the view that
@@ -304,7 +304,7 @@ title, which is just the number, and a boolean that tells whether the link is th
 	$link = [
 		'active' => false,
 		'uri'    => 'http://example.com/foo?page=2',
-		'title'  => 1
+		'title'  => 1,
 	];
 
 In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.

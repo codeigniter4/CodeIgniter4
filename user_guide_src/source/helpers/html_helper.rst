@@ -59,7 +59,7 @@ The following functions are available:
             'width'  => '200',
             'height' => '200',
             'title'  => 'That was quite a night',
-            'rel'    => 'lightbox'
+            'rel'    => 'lightbox',
         ];
 
         img($imageProperties);
@@ -126,7 +126,7 @@ The following functions are available:
             'href'  => 'css/printer.css',
             'rel'   => 'stylesheet',
             'type'  => 'text/css',
-            'media' => 'print'
+            'media' => 'print',
         ];
 
         echo link_tag($link);
@@ -171,12 +171,12 @@ The following functions are available:
             'red',
             'blue',
             'green',
-            'yellow'
+            'yellow',
         ];
 
         $attributes = [
             'class' => 'boldlist',
-            'id'    => 'mylist'
+            'id'    => 'mylist',
         ];
 
         echo ul($list, $attributes);
@@ -196,14 +196,14 @@ The following functions are available:
 
         $attributes = [
             'class' => 'boldlist',
-            'id'    => 'mylist'
+            'id'    => 'mylist',
         ];
 
         $list = [
             'colors' => [
                 'red',
                 'blue',
-                'green'
+                'green',
             ],
             'shapes' => [
                 'round',
@@ -211,8 +211,8 @@ The following functions are available:
                 'circles' => [
                     'ellipse',
                     'oval',
-                    'sphere'
-                ]
+                    'sphere',
+                ],
             ],
             'moods'  => [
                 'happy',
@@ -220,11 +220,11 @@ The following functions are available:
                     'defeated' => [
                         'dejected',
                         'disheartened',
-                        'depressed'
+                        'depressed',
                     ],
                     'annoyed',
                     'cross',
-                    'angry'
+                    'angry',
                 ]
             ]
         ];
@@ -300,30 +300,26 @@ The following functions are available:
     Permits you to generate HTML video element from simple or
     source arrays. Example::
 
-        $tracks =
-        [
+        $tracks = [
             track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
             track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
         ];
 
         echo video('test.mp4', 'Your browser does not support the video tag.', 'controls');
 
-        echo video
-        (
+        echo video(
             'http://www.codeigniter.com/test.mp4',
             'Your browser does not support the video tag.',
             'controls',
             $tracks
         );
 
-        echo video
-        (
-            [
-              source('movie.mp4', 'video/mp4', 'class="test"'),
-              source('movie.ogg', 'video/ogg'),
-              source('movie.mov', 'video/quicktime'),
-              source('movie.ogv', 'video/ogv; codecs=dirac, speex')
-            ],
+        echo video([
+            source('movie.mp4', 'video/mp4', 'class="test"'),
+            source('movie.ogg', 'video/ogg'),
+            source('movie.mov', 'video/quicktime'),
+            source('movie.ogv', 'video/ogv; codecs=dirac, speex')
+        ],
             'Your browser does not support the video tag.',
             'class="test" controls',
             $tracks
@@ -408,8 +404,7 @@ The following functions are available:
 
         echo object('movie.swf', 'application/x-shockwave-flash', 'class="test"');
 
-        echo object
-        (
+        echo object(
             'movie.swf',
             'application/x-shockwave-flash',
             'class="test"',

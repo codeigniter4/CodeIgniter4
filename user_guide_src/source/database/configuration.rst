@@ -22,14 +22,14 @@ prototype::
         'database' => 'database_name',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
-        'pConnect' => TRUE,
-        'DBDebug'  => TRUE,
+        'pConnect' => true,
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
-        'encrypt'  => FALSE,
-        'compress' => FALSE,
-        'strictOn' => FALSE,
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
         'failover' => [],
     ];
 
@@ -80,14 +80,14 @@ These failovers can be specified by setting the failover for a connection like t
             'database' => '',
             'DBDriver' => 'MySQLi',
             'DBPrefix' => '',
-            'pConnect' => TRUE,
-            'DBDebug'  => TRUE,
+            'pConnect' => true,
+            'DBDebug'  => true,
             'charset'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
             'swapPre'  => '',
-            'encrypt'  => FALSE,
-            'compress' => FALSE,
-            'strictOn' => FALSE
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
         ],
         [
             'hostname' => 'localhost2',
@@ -96,14 +96,14 @@ These failovers can be specified by setting the failover for a connection like t
             'database' => '',
             'DBDriver' => 'MySQLi',
             'DBPrefix' => '',
-            'pConnect' => TRUE,
-            'DBDebug'  => TRUE,
+            'pConnect' => true,
+            'DBDebug'  => true,
             'charset'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
             'swapPre'  => '',
-            'encrypt'  => FALSE,
-            'compress' => FALSE,
-            'strictOn' => FALSE
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
         ]
     ];
 
@@ -123,14 +123,14 @@ example, to set up a "test" environment you would do this::
         'database' => 'database_name',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
-        'pConnect' => TRUE,
-        'DBDebug'  => TRUE,
+        'pConnect' => true,
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
-        'compress' => FALSE,
-        'encrypt'  => FALSE,
-        'strictOn' => FALSE,
+        'compress' => false,
+        'encrypt'  => false,
+        'strictOn' => false,
         'failover' => []
     );
 
@@ -188,8 +188,8 @@ Explanation of Values:
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
-**pConnect**    TRUE/FALSE (boolean) - Whether to use a persistent connection.
-**DBDebug**     TRUE/FALSE (boolean) - Whether database errors should be displayed.
+**pConnect**    true/false (boolean) - Whether to use a persistent connection.
+**DBDebug**     true/false (boolean) - Whether database errors should be displayed.
 **charset**     The character set used in communicating with the database.
 **DBCollat**    The character collation used in communicating with the database
 
@@ -201,7 +201,7 @@ Explanation of Values:
 **schema**      The database schema, default value varies by driver. Used by PostgreSQL and SQLSRV drivers.
 **encrypt**     Whether or not to use an encrypted connection.
 
-                - 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE
+                - 'sqlsrv' and 'pdo/sqlsrv' drivers accept true/false
                 - 'MySQLi' and 'pdo/mysql' drivers accept an array with the following options:
 
                     - 'ssl_key'    - Path to the private key file
@@ -209,10 +209,10 @@ Explanation of Values:
                     - 'ssl_ca'     - Path to the certificate authority file
                     - 'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
                     - 'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
-                    - 'ssl_verify' - TRUE/FALSE; Whether to verify the server certificate or not ('MySQLi' only)
+                    - 'ssl_verify' - true/false; Whether to verify the server certificate or not ('MySQLi' only)
 
 **compress**    Whether or not to use client compression (MySQL only).
-**strictOn**    TRUE/FALSE (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
+**strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
                 while developing an application.
 **port**        The database port number. To use this value you have to add a line to the database config array.
                 ::

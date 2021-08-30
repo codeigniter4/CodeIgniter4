@@ -20,7 +20,7 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: now([$timezone = NULL])
+.. php:function:: now([$timezone = null])
 
     :param	string	$timezone: Timezone
     :returns:	UNIX timestamp

@@ -145,7 +145,7 @@ variable, you will do this::
 
 	$name = $session->get('name');
 
-.. note:: The ``get()`` method returns NULL if the item you are trying
+.. note:: The ``get()`` method returns null if the item you are trying
 	to access does not exist.
 
 If you want to retrieve all of the existing userdata, you can simply
@@ -180,7 +180,7 @@ an example::
 	$newdata = [
 		'username'  => 'johndoe',
 		'email'     => 'johndoe@some-site.com',
-		'logged_in' => TRUE
+		'logged_in' => true,
 	];
 
 	$session->set($newdata);
@@ -193,8 +193,8 @@ supports this syntax::
 If you want to verify that a session value exists, simply check with
 ``isset()``::
 
-	// returns FALSE if the 'some_name' item doesn't exist or is NULL,
-	// TRUE otherwise:
+	// returns false if the 'some_name' item doesn't exist or is null,
+	// true otherwise:
 	isset($_SESSION['some_name'])
 
 Or you can call ``has()``::
@@ -287,7 +287,7 @@ Or to get an array with all flashdata, simply omit the key parameter::
 
 	$session->getFlashdata();
 
-.. note:: The ``getFlashdata()`` method returns NULL if the item cannot be
+.. note:: The ``getFlashdata()`` method returns null if the item cannot be
 	found.
 
 If you find that you need to preserve a flashdata variable through an
@@ -325,7 +325,7 @@ you want them all to have the same expiry time or not::
 	// will do so after only 240 seconds
 	$session->markAsTempdata([
 		'item'	=> 300,
-		'item2'	=> 240
+		'item2'	=> 240,
 	]);
 
 To add tempdata::
@@ -339,8 +339,8 @@ Or alternatively, using the ``setTempdata()`` method::
 
 You can also pass an array to ``setTempdata()``::
 
-	$tempdata = ['newuser' => TRUE, 'message' => 'Thanks for joining!'];
-	$session->setTempdata($tempdata, NULL, $expire);
+	$tempdata = ['newuser' => true, 'message' => 'Thanks for joining!'];
+	$session->setTempdata($tempdata, null, $expire);
 
 .. note:: If the expiration is omitted or set to 0, the default
 	time-to-live value of 300 seconds (or 5 minutes) will be used.
@@ -363,7 +363,7 @@ And of course, if you want to retrieve all existing tempdata::
 
 	$session->getTempdata();
 
-.. note:: The ``getTempdata()`` method returns NULL if the item cannot be
+.. note:: The ``getTempdata()`` method returns null if the item cannot be
 	found.
 
 If you need to remove a tempdata value before it expires, you can directly
@@ -441,14 +441,14 @@ Preference                     Default                                      Opti
 **sessionCookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
                                                                                                                               If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sessionSavePath**            NULL                                         None                                              Specifies the storage location, depends on the driver being used.
-**sessionMatchIP**             FALSE                                        TRUE/FALSE (boolean)                              Whether to validate the user's IP address when reading the session cookie.
+**sessionSavePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
+**sessionMatchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
                                                                                                                               Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                                                              will likely set this to FALSE.
+                                                                                                                              will likely set this to false.
 **sessionTimeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
                                                                                                                               session ID. Setting it to 0 will disable session ID regeneration.
-**sessionRegenerateDestroy**   FALSE                                        TRUE/FALSE (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                                                              the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
+**sessionRegenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
+                                                                                                                              the session ID. When set to false, the data will be later deleted by the garbage collector.
 ============================== ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
@@ -579,10 +579,10 @@ And then of course, create the database table ...
 For MySQL::
 
 	CREATE TABLE IF NOT EXISTS `ci_sessions` (
-		`id` varchar(128) NOT NULL,
-		`ip_address` varchar(45) NOT NULL,
-		`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-		`data` blob NOT NULL,
+		`id` varchar(128) NOT null,
+		`ip_address` varchar(45) NOT null,
+		`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT null,
+		`data` blob NOT null,
 		KEY `ci_sessions_timestamp` (`timestamp`)
 	);
 
@@ -600,10 +600,10 @@ For PostgreSQL::
 You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-	// When sessionMatchIP = TRUE
+	// When sessionMatchIP = true
 	ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-	// When sessionMatchIP = FALSE
+	// When sessionMatchIP = false
 	ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
 	// To drop a previously created primary key (use when changing the setting)
