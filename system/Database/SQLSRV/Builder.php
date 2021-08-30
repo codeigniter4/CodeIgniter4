@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\SQLSRV;
 
-use Closure;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -514,73 +513,6 @@ class Builder extends BaseBuilder
         }
 
         return $sql;
-    }
-
-    /**
-     * WHERE, HAVING
-     *
-     * @param mixed $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
-    {
-        if (! is_array($key)) {
-            $key = [$key => $value];
-        }
-
-        // If the escape value was not set will base it on the global setting
-        if (! is_bool($escape)) {
-            $escape = $this->db->protectIdentifiers;
-        }
-
-        foreach ($key as $k => $v) {
-            $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
-
-            if ($v !== null) {
-                $op = $this->getOperator($k, true);
-
-                if (! empty($op)) {
-                    $k = trim($k);
-
-                    end($op);
-
-                    $op = trim(current($op));
-
-                    if (substr($k, -1 * strlen($op)) === $op) {
-                        $k = rtrim(strrev(preg_replace(strrev('/' . $op . '/'), strrev(''), strrev($k), 1)));
-                    }
-                }
-
-                $bind = $this->setBind($k, $v, $escape);
-
-                if (empty($op)) {
-                    $k .= ' =';
-                } else {
-                    $k .= " {$op}";
-                }
-
-                if ($v instanceof Closure) {
-                    $builder = $this->cleanClone();
-                    $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
-                } else {
-                    $v = " :{$bind}:";
-                }
-            } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
-                // value appears not to have been set, assign the test to IS NULL
-                $k .= ' IS NULL';
-            } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
-                $k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
-            }
-
-            $this->{$qbKey}[] = [
-                'condition' => $prefix . $k . $v,
-                'escape'    => $escape,
-            ];
-        }
-
-        return $this;
     }
 
     /**
