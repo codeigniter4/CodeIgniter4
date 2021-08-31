@@ -208,7 +208,7 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewEntityWithDateTime(): void
     {
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -242,7 +242,7 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewEntityWithDate(): void
     {
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $created_at;
@@ -258,7 +258,7 @@ final class SaveModelTest extends LiveModelTestCase
             ];
         };
 
-        $testModel                   = new class() extends Model {
+        $testModel                   = new class () extends Model {
             protected $table         = 'empty';
             protected $allowedFields = [
                 'name',

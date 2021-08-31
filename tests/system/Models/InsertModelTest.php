@@ -157,7 +157,7 @@ final class InsertModelTest extends LiveModelTestCase
 
     public function testInsertBatchNewEntityWithDateTime(): void
     {
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -215,7 +215,7 @@ final class InsertModelTest extends LiveModelTestCase
     {
         $this->createModel(UserModel::class);
 
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
