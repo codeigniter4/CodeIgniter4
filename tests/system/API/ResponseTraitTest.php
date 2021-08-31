@@ -82,7 +82,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         // Create the controller class finally.
-        $controller = new class($this->request, $this->response, $this->formatter) {
+        $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
             protected $request;
@@ -524,7 +524,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
         $response = new MockResponse($config);
 
-        $controller = new class($request, $response) {
+        $controller = new class ($request, $response) {
             use ResponseTrait;
 
             protected $request;
