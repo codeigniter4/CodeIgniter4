@@ -435,6 +435,34 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_dropdown('cars', $options));
     }
 
+    public function testFormDropdownKeyCasting()
+    {
+        $options = [
+            'Swedish Cars' => [
+                '1' => 'Volvo',
+                '2' => 'Saab',
+            ],
+            2 => [
+                3   => 'Mercedes',
+                '4' => 'Audi',
+            ],
+        ];
+        $selected = [2];
+        $expected = <<<EOH
+            <select name="cars">
+            <optgroup label="Swedish Cars">
+            <option value="1">Volvo</option>
+            <option value="2" selected="selected">Saab</option>
+            </optgroup>
+            <optgroup label="2">
+            <option value="3">Mercedes</option>
+            <option value="4">Audi</option>
+            </optgroup>
+            </select>\n
+            EOH;
+        $this->assertSame($expected, form_dropdown('cars', $options, $selected));
+    }
+
     public function testFormDropdownInferred()
     {
         $options = [
