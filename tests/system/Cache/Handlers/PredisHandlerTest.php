@@ -62,10 +62,10 @@ final class PredisHandlerTest extends CIUnitTestCase
 
     public function testDestruct()
     {
-        $this->PredisHandler = new PRedisHandler($this->config);
+        $this->PredisHandler = new PredisHandler($this->config);
         $this->PredisHandler->initialize();
 
-        $this->assertInstanceOf(PRedisHandler::class, $this->PredisHandler);
+        $this->assertInstanceOf(PredisHandler::class, $this->PredisHandler);
     }
 
     /**

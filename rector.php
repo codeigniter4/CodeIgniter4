@@ -20,6 +20,7 @@ use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
+use Rector\CodeQuality\Rector\Name\FixClassCaseSensitivityNameRector;
 use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
@@ -135,4 +136,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(RemoveExtraParametersRector::class);
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
+    $services->set(FixClassCaseSensitivityNameRector::class);
 };
