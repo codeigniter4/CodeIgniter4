@@ -1459,8 +1459,8 @@ class Email
 
         if ($this->charset === 'UTF-8') {
             // Note: We used to have mb_encode_mimeheader() as the first choice
-            //       here, but it turned out to be buggy and unreliable. DO NOT
-            //       re-add it! -- Narf
+            // here, but it turned out to be buggy and unreliable. DO NOT
+            // re-add it! -- Narf
             if (extension_loaded('iconv')) {
                 $output = @iconv_mime_encode('', $str, [
                     'scheme'           => 'Q',

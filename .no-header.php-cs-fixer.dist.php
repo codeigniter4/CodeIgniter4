@@ -11,10 +11,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\CodingStandard\CodeIgniter4;
 use Nexus\CsConfig\Factory;
+use Nexus\CsConfig\Fixer\Comment\SpaceAfterCommentStartFixer;
+use Nexus\CsConfig\FixerGenerator;
 use PhpCsFixer\Finder;
-use Utils\PhpCsFixer\CodeIgniter4;
-use Utils\PhpCsFixer\Fixer\Comment\SpaceAfterCommentStartFixer;
 
 $finder = Finder::create()
     ->files()
@@ -22,18 +23,17 @@ $finder = Finder::create()
         __DIR__ . '/admin',
         __DIR__ . '/app',
         __DIR__ . '/public',
-    ]);
+    ])
+    ->notName('#Logger\.php$#');
 
 $overrides = [];
 
 $options = [
     'cacheFile'    => 'build/.no-header.php-cs-fixer.cache',
     'finder'       => $finder,
-    'customFixers' => [
-        new SpaceAfterCommentStartFixer(),
-    ],
-    'customRules' => [
-        'CodeIgniter4/space_after_comment_start' => true,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        SpaceAfterCommentStartFixer::name() => true,
     ],
 ];
 

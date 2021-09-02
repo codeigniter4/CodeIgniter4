@@ -15,10 +15,11 @@
         "psr/log": "^1.1"
     },
     "require-dev": {
+        "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.1",
         "mikey179/vfsstream": "^1.6",
-        "nexusphp/cs-config": "^3.1",
+        "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
         "phpstan/phpstan": "^0.12.91",
         "phpunit/phpunit": "^9.1",
