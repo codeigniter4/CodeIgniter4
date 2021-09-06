@@ -1,34 +1,37 @@
 Version 4.1.4
 =============
 
-Release Date: Not released
+Release Date: September 6, 2021
 
 **4.1.4 release of CodeIgniter4**
+
+This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
+`CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
 
 Breaking Changes:
 
 The following methods were changed from "public" to "protected" to match their parent class methods and better align with their uses:
 
-* CodeIgniter4\Database\MySQLi\Connection::execute()
-* CodeIgniter4\Database\MySQLi\Connection::_fieldData()
-* CodeIgniter4\Database\MySQLi\Connection::_indexData()
-* CodeIgniter4\Database\MySQLi\Connection::_foreignKeyData()
-* CodeIgniter4\Database\Postgre\Builder::_like_statement()
-* CodeIgniter4\Database\Postgre\Connection::execute()
-* CodeIgniter4\Database\Postgre\Connection::_fieldData()
-* CodeIgniter4\Database\Postgre\Connection::_indexData()
-* CodeIgniter4\Database\Postgre\Connection::_foreignKeyData()
-* CodeIgniter4\Database\SQLSRV\Connection::execute()
-* CodeIgniter4\Database\SQLSRV\Connection::_fieldData()
-* CodeIgniter4\Database\SQLSRV\Connection::_indexData()
-* CodeIgniter4\Database\SQLSRV\Connection::_foreignKeyData()
-* CodeIgniter4\Database\SQLite3\Connection::execute()
-* CodeIgniter4\Database\SQLite3\Connection::_fieldData()
-* CodeIgniter4\Database\SQLite3\Connection::_indexData()
-* CodeIgniter4\Database\SQLite3\Connection::_foreignKeyData()
-* CodeIgniter4\Images\Handlers\GDHandler::_flatten()
-* CodeIgniter4\Images\Handlers\GDHandler::_flip()
-* CodeIgniter4\Images\Handlers\ImageMagickHandler::_flatten()
-* CodeIgniter4\Images\Handlers\ImageMagickHandler::_flip()
-* CodeIgniter4\Test\Mock\MockIncomingRequest::detectURI()
-* CodeIgniter4\Test\Mock\MockSecurity.php::sendCookie()
+* CodeIgniter\Database\MySQLi\Connection::execute()
+* CodeIgniter\Database\MySQLi\Connection::_fieldData()
+* CodeIgniter\Database\MySQLi\Connection::_indexData()
+* CodeIgniter\Database\MySQLi\Connection::_foreignKeyData()
+* CodeIgniter\Database\Postgre\Builder::_like_statement()
+* CodeIgniter\Database\Postgre\Connection::execute()
+* CodeIgniter\Database\Postgre\Connection::_fieldData()
+* CodeIgniter\Database\Postgre\Connection::_indexData()
+* CodeIgniter\Database\Postgre\Connection::_foreignKeyData()
+* CodeIgniter\Database\SQLSRV\Connection::execute()
+* CodeIgniter\Database\SQLSRV\Connection::_fieldData()
+* CodeIgniter\Database\SQLSRV\Connection::_indexData()
+* CodeIgniter\Database\SQLSRV\Connection::_foreignKeyData()
+* CodeIgniter\Database\SQLite3\Connection::execute()
+* CodeIgniter\Database\SQLite3\Connection::_fieldData()
+* CodeIgniter\Database\SQLite3\Connection::_indexData()
+* CodeIgniter\Database\SQLite3\Connection::_foreignKeyData()
+* CodeIgniter\Images\Handlers\GDHandler::_flatten()
+* CodeIgniter\Images\Handlers\GDHandler::_flip()
+* CodeIgniter\Images\Handlers\ImageMagickHandler::_flatten()
+* CodeIgniter\Images\Handlers\ImageMagickHandler::_flip()
+* CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()
+* CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()
