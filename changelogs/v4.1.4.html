@@ -353,10 +353,10 @@
 <p>Release Date: Not released</p>
 <p><strong>4.1.4 release of CodeIgniter4</strong></p>
 <p>Breaking Changes:</p>
-<ul class="simple">
-<li><p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses:</p></li>
-</ul>
-<ul class="simple">
+<ul>
+<li><p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::execute()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::_fieldData()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::_indexData()</span></code></p></li>
@@ -381,10 +381,11 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()</span></code></p></li>
 </ul>
-<ul class="simple">
-<li><p>To be compatible with the strict inheritance checks of PHP 8.1, the following method signatures were added return types to match their parents’ signatures whenever possible:</p></li>
-</ul>
-<ul class="simple">
+</div></blockquote>
+</li>
+<li><p>To be compatible with the strict inheritance checks of PHP 8.1, the following method signatures were added return types to match their parents’ signatures whenever possible:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie::offsetExists()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie::offsetSet()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie::offsetUnset()</span></code></p></li>
@@ -392,15 +393,19 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n\Time::__wakeup()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Filters\CITestStreamFilter::filter()</span></code></p></li>
 </ul>
-<ul class="simple">
-<li><p>Related to the strict inheritance checks of PHP 8.1, the following session handlers implementing <code class="docutils literal notranslate"><span class="pre">SessionHandlerInterface</span></code> have their public methods modified to match the interface:</p></li>
-</ul>
-<ul class="simple">
+</div></blockquote>
+</li>
+<li><p>Related to the strict inheritance checks of PHP 8.1, the following session handlers implementing <code class="docutils literal notranslate"><span class="pre">SessionHandlerInterface</span></code> have their public methods modified to match the interface:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\ArrayHandler</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\DatabaseHandler</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\FileHandler</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\MemcachedHandler</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\RedisHandler</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </div>
 
@@ -420,7 +425,7 @@
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Sep 04, 2021.
+        Last updated on Sep 06, 2021.
       </span>
 
     </p>
