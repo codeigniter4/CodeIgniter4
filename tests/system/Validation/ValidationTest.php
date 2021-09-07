@@ -988,11 +988,6 @@ final class ValidationTest extends CIUnitTestCase
     /**
      * @dataProvider provideStringRulesCases
      *
-     * @param string $input
-     * @param array  $expected
-     *
-     * @return void
-     *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
      */
     public function testSplittingOfComplexStringRules(string $input, array $expected): void

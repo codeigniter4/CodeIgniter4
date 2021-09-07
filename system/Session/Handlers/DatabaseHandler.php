@@ -256,7 +256,7 @@ class DatabaseHandler extends BaseHandler
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
-        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? true : $this->fail();
+        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
     }
 
     /**

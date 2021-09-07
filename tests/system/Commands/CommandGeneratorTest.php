@@ -138,7 +138,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
      */
     public function testGeneratorIsNotConfusedWithNamespaceLikeClassNames(): void
     {
-        $time = time();
+        $time      = time();
         $notExists = true;
         command('make:migration App_Lesson');
 

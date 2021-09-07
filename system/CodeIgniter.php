@@ -496,7 +496,7 @@ class CodeIgniter
      */
     protected function startBenchmark()
     {
-        if($this->startTime === null) {
+        if ($this->startTime === null) {
             $this->startTime = microtime(true);
         }
 

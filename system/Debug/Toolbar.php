@@ -168,7 +168,6 @@ class Toolbar
     protected function renderTimeline(array $collectors, float $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
     {
         $rows       = $this->collectTimelineData($collectors);
-        $output     = '';
         $styleCount = 0;
 
         // Use recursive render function

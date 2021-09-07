@@ -136,6 +136,6 @@ final class DatabaseHandlerTest extends CIUnitTestCase
     public function testGC()
     {
         $handler = $this->getInstance();
-        $this->assertTrue($handler->gc(3600));
+        $this->assertSame(1, $handler->gc(3600));
     }
 }

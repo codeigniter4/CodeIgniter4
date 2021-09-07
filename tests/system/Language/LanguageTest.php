@@ -279,16 +279,14 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang = Services::language('en', true);
 
         lang('Language.languageGetLineInvalidArgumentException');
-        $this->assertEquals('en', $this->lang->getLocale());
+        $this->assertSame('en', $this->lang->getLocale());
 
         lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
-        $this->assertEquals('en', $this->lang->getLocale());
+        $this->assertSame('en', $this->lang->getLocale());
 
         lang('Language.languageGetLineInvalidArgumentException');
-        $this->assertEquals('en', $this->lang->getLocale());
+        $this->assertSame('en', $this->lang->getLocale());
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Testing base locale vs variants, with fallback to English.

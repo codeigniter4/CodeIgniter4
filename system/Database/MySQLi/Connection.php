@@ -69,8 +69,6 @@ class Connection extends BaseConnection
      */
     public $resultMode = MYSQLI_STORE_RESULT;
 
-    //--------------------------------------------------------------------
-
     /**
      * Connect to the database.
      *

@@ -114,7 +114,7 @@ final class PredisHandlerTest extends CIUnitTestCase
         $this->assertTrue($this->PredisHandler->save(self::$key1, 'value', 0));
         $metaData = $this->PredisHandler->getMetaData(self::$key1);
 
-        $this->assertSame(null, $metaData['expire']);
+        $this->assertNull($metaData['expire']);
         $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
         $this->assertSame('value', $metaData['data']);
 
