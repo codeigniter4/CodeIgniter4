@@ -384,63 +384,9 @@ If you relied on any of these methods being public (highly unlikely) adjust your
 </div>
 <div class="section" id="project-files">
 <h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline">¶</a></h2>
-<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
-these files being outside of the system scope they will not be changed without your intervention.
-There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Except in very rare cases for bug fixes, no changes made to files for the project space
-will break your application. All changes noted here are optional until the next major version,
-and any mandatory changes will be covered in the sections above.</p>
-</div>
-<div class="section" id="content-changes">
-<h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline">¶</a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/*</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
-</ul>
-</div>
-<div class="section" id="all-changes">
-<h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline">¶</a></h3>
-<p>This is a list of all files in the project space that received changes;
-many will be simple comments or formatting that have no affect on the runtime:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/ContentSecurityPolicy.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Logger.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Mimes.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Modules.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Controllers/BaseController.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/debug.css</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_404.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_exception.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/welcome_message.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">composer.json</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">contributing/guidelines.rst</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">phpstan.neon.dist</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">public/index.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rector.php</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
-</ul>
-</div>
+<p>All files in the project space were reformatted with the new coding style. This will not affect
+existing code but you may want to apply the updated coding style to your own projects to keep
+them in line with the framework’s version of these files.</p>
 </div>
 </div>
 
