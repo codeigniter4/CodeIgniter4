@@ -64,8 +64,7 @@ Then  you would modify the ``routes`` service to load your class instead::
 
 	public static function routes(bool $getShared = true)
 	{
-		if ($getShared)
-		{
+		if ($getShared) {
 			return static::getSharedInstance('routes');
 		}
 
@@ -107,6 +106,8 @@ If you need to use a constructor in your class make sure you extend the parent c
         public function __construct()
         {
             parent::__construct();
+
+            // your code here
         }
     }
 

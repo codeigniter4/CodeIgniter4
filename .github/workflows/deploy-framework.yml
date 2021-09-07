@@ -9,7 +9,7 @@ on:
 jobs:
   framework:
     name: Deploy to framework
-    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-latest
     steps:
       - name: Identify
@@ -36,7 +36,7 @@ jobs:
         run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
@@ -54,7 +54,7 @@ jobs:
 
   appstarter:
     name: Deploy to appstarter
-    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-latest
     steps:
       - name: Identify
@@ -81,7 +81,7 @@ jobs:
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |

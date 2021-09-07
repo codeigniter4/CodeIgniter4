@@ -1,8 +1,15 @@
 # Changelog
 
-## [Unreleased](https://github.com/codeigniter4/CodeIgniter4/tree/HEAD)
+## [v4.1.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.4) (2021-09-06)
 
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...HEAD)
+This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
+[CodeIgniter Coding Standard](https://github.com/CodeIgniter/coding-standard) (based on PSR-12).
+
+*Note: Full changelog forthcoming.*
+
+## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.2...v4.1.3)
 
 **Fixed bugs:**
 

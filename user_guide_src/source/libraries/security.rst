@@ -28,9 +28,9 @@ and enabling the `csrf` filter globally::
 
 	public $globals = [
 		'before' => [
-			//'honeypot'
-			'csrf'
-		]
+			// 'honeypot',
+			'csrf',
+		],
 	];
 
 Select URIs can be whitelisted from CSRF protection (for example API
@@ -39,16 +39,16 @@ by adding them as exceptions in the filter::
 
 	public $globals = [
 		'before' => [
-			'csrf' => ['except' => ['api/record/save']]
-		]
+			'csrf' => ['except' => ['api/record/save']],
+		],
 	];
 
 Regular expressions are also supported (case-insensitive)::
 
     public $globals = [
 		'before' => [
-			'csrf' => ['except' => ['api/record/[0-9]+']]
-		]
+			'csrf' => ['except' => ['api/record/[0-9]+']],
+		],
 	];
 
 If you use the :doc:`form helper <../helpers/form_helper>`, then

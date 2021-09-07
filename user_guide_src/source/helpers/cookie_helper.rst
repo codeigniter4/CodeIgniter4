@@ -42,7 +42,7 @@ The following functions are available:
 
     :param	string	$index: Cookie name
     :param	bool	$xss_clean: Whether to apply XSS filtering to the returned value
-    :returns:	The cookie value or NULL if not found
+    :returns:	The cookie value or null if not found
     :rtype:	mixed
 
     This helper function gives you friendlier syntax to get browser

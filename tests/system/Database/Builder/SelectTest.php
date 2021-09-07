@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -6,275 +17,233 @@ use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class SelectTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SelectTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testSimpleSelect()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT * FROM "users"';
 
-	public function testSimpleSelect()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT * FROM "users"';
+    public function testSelectOnlyOneColumn()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->select('name');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT "name" FROM "users"';
 
-	public function testSelectOnlyOneColumn()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->select('name');
+    public function testSelectAcceptsArray()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$expected = 'SELECT "name" FROM "users"';
+        $builder->select(['name', 'role']);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT "name", "role" FROM "users"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testSelectAcceptsArray()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+    public function testSelectAcceptsMultipleColumns()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-		$builder->select(['name', 'role']);
+        $builder->select('name, role');
 
-		$expected = 'SELECT "name", "role" FROM "users"';
+        $expected = 'SELECT "name", "role" FROM "users"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectKeepsAliases()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSelectAcceptsMultipleColumns()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $builder->select('name, role as myRole');
 
-		$builder->select('name, role');
+        $expected = 'SELECT "name", "role" as "myRole" FROM "users"';
 
-		$expected = 'SELECT "name", "role" FROM "users"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectWorksWithComplexSelects()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
 
-	public function testSelectKeepsAliases()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
 
-		$builder->select('name, role as myRole');
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT "name", "role" as "myRole" FROM "users"';
+    public function testSelectMinWithNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->selectMin('payments');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
 
-	public function testSelectWorksWithComplexSelects()
-	{
-		$builder = new BaseBuilder('users', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
+    public function testSelectMinWithAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
+        $builder->selectMin('payments', 'myAlias');
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testSelectMinWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+    public function testSelectMaxWithNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$builder->selectMin('payments');
+        $builder->selectMax('payments');
 
-		$expected = 'SELECT MIN("payments") AS "payments" FROM "invoices"';
+        $expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectMaxWithAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	public function testSelectMinWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $builder->selectMax('payments', 'myAlias');
 
-		$builder->selectMin('payments', 'myAlias');
+        $expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
 
-		$expected = 'SELECT MIN("payments") AS "myAlias" FROM "invoices"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectAvgWithNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->selectAvg('payments');
 
-	public function testSelectMaxWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
 
-		$builder->selectMax('payments');
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT MAX("payments") AS "payments" FROM "invoices"';
+    public function testSelectAvgWithAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->selectAvg('payments', 'myAlias');
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
 
-	public function testSelectMaxWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->selectMax('payments', 'myAlias');
+    public function testSelectSumWithNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$expected = 'SELECT MAX("payments") AS "myAlias" FROM "invoices"';
+        $builder->selectSum('payments');
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testSelectAvgWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+    public function testSelectSumWithAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$builder->selectAvg('payments');
+        $builder->selectSum('payments', 'myAlias');
 
-		$expected = 'SELECT AVG("payments") AS "payments" FROM "invoices"';
+        $expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectCountWithNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	public function testSelectAvgWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $builder->selectCount('payments');
 
-		$builder->selectAvg('payments', 'myAlias');
+        $expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
 
-		$expected = 'SELECT AVG("payments") AS "myAlias" FROM "invoices"';
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+    public function testSelectCountWithAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->selectCount('payments', 'myAlias');
 
-	public function testSelectSumWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
 
-		$builder->selectSum('payments');
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expected = 'SELECT SUM("payments") AS "payments" FROM "invoices"';
+    public function testSelectMinThrowsExceptionOnEmptyValue()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->expectException(DataException::class);
+        $this->expectExceptionMessage('Empty statement is given for the field `Select`');
 
-	//--------------------------------------------------------------------
+        $builder->selectSum('');
+    }
 
-	public function testSelectSumWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+    public function testSelectMaxWithDotNameAndNoAlias()
+    {
+        $builder = new BaseBuilder('invoices', $this->db);
 
-		$builder->selectSum('payments', 'myAlias');
+        $builder->selectMax('db.payments');
 
-		$expected = 'SELECT SUM("payments") AS "myAlias" FROM "invoices"';
+        $expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testSelectMinThrowsExceptionOnMultipleColumn()
+    {
+        $builder = new BaseBuilder('users', $this->db);
 
-	public function testSelectCountWithNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
+        $this->expectException(DataException::class);
+        $this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
 
-		$builder->selectCount('payments');
+        $builder->selectSum('name,role');
+    }
 
-		$expected = 'SELECT COUNT("payments") AS "payments" FROM "invoices"';
+    public function testSimpleSelectWithSQLSRV()
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder = new SQLSRVBuilder('users', $this->db);
 
-	//--------------------------------------------------------------------
+        $expected = 'SELECT * FROM "test"."dbo"."users"';
 
-	public function testSelectCountWithAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
-
-		$builder->selectCount('payments', 'myAlias');
-
-		$expected = 'SELECT COUNT("payments") AS "myAlias" FROM "invoices"';
-
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSelectMinThrowsExceptionOnEmptyValue()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
-
-		$this->expectException(DataException::class);
-		$this->expectExceptionMessage('Empty statement is given for the field `Select`');
-
-		$builder->selectSum('');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSelectMaxWithDotNameAndNoAlias()
-	{
-		$builder = new BaseBuilder('invoices', $this->db);
-
-		$builder->selectMax('db.payments');
-
-		$expected = 'SELECT MAX("db"."payments") AS "payments" FROM "invoices"';
-
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSelectMinThrowsExceptionOnMultipleColumn()
-	{
-		$builder = new BaseBuilder('users', $this->db);
-
-		$this->expectException(DataException::class);
-		$this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
-
-		$builder->selectSum('name,role');
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSimpleSelectWithSQLSRV()
-	{
-		$this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
-
-		$builder = new SQLSRVBuilder('users', $this->db);
-
-		$expected = 'SELECT * FROM "test"."dbo"."users"';
-
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

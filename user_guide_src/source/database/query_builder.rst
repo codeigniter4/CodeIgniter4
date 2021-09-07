@@ -60,8 +60,7 @@ $query, which can be used to show the results::
 
     $query = $builder->get();
 
-    foreach ($query->getResult() as $row)
-    {
+    foreach ($query->getResult() as $row) {
         echo $row->title;
     }
 
@@ -310,7 +309,7 @@ methods:
 
     ::
 
-        $builder->where('advance_amount <', function(BaseBuilder $builder) {
+        $builder->where('advance_amount <', function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
         });
         // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
@@ -341,7 +340,7 @@ You can use subqueries instead of an array of values.
 
     ::
 
-        $builder->whereIn('id', function(BaseBuilder $builder) {
+        $builder->whereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
         // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
@@ -361,7 +360,7 @@ You can use subqueries instead of an array of values.
 
     ::
 
-        $builder->orWhereIn('id', function(BaseBuilder $builder) {
+        $builder->orWhereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -382,7 +381,7 @@ You can use subqueries instead of an array of values.
 
     ::
 
-        $builder->whereNotIn('id', function(BaseBuilder $builder) {
+        $builder->whereNotIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -404,7 +403,7 @@ You can use subqueries instead of an array of values.
 
     ::
 
-        $builder->orWhereNotIn('id', function(BaseBuilder $builder) {
+        $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
@@ -545,7 +544,7 @@ You can use subqueries instead of an array of values.
 
 ::
 
-    $builder->havingIn('id', function(BaseBuilder $builder) {
+    $builder->havingIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
     // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
@@ -565,7 +564,7 @@ You can use subqueries instead of an array of values.
 
 ::
 
-    $builder->orHavingIn('id', function(BaseBuilder $builder) {
+    $builder->orHavingIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 
@@ -586,7 +585,7 @@ You can use subqueries instead of an array of values.
 
 ::
 
-    $builder->havingNotIn('id', function(BaseBuilder $builder) {
+    $builder->havingNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 
@@ -608,7 +607,7 @@ You can use subqueries instead of an array of values.
 
 ::
 
-    $builder->orHavingNotIn('id', function(BaseBuilder $builder) {
+    $builder->orHavingNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 

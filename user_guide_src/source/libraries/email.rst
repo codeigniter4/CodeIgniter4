@@ -128,24 +128,24 @@ Preference          Default Value          Options                      Descript
 **SMTPPort**        25                     None                         SMTP Port. (If set to 465, TLS will be used for the connection
                                                                         regardless of SMTPCrypto setting.)
 **SMTPTimeout**     5                      None                         SMTP Timeout (in seconds).
-**SMTPKeepAlive**   FALSE                  TRUE or FALSE (boolean)      Enable persistent SMTP connections.
+**SMTPKeepAlive**   false                  true or false (boolean)      Enable persistent SMTP connections.
 **SMTPCrypto**      No Default             tls or ssl                   SMTP Encryption. Setting this to "ssl" will create a secure
                                                                         channel to the server using SSL and "tls" will issue a
                                                                         ``STARTTLS`` command to the server. Connection on port 465 should
                                                                         set this to blank.
-**wordWrap**        TRUE                   TRUE or FALSE (boolean)      Enable word-wrap.
+**wordWrap**        true                   true or false (boolean)      Enable word-wrap.
 **wrapChars**       76                                                  Character count to wrap at.
 **mailType**        text                   text or html                 Type of mail. If you send HTML email you must send it as a complete web
                                                                         page. Make sure you don't have any relative links or relative image
                                                                         paths otherwise they will not work.
 **charset**         utf-8                                               Character set (utf-8, iso-8859-1, etc.).
-**validate**        TRUE                   TRUE or FALSE (boolean)      Whether to validate the email address.
+**validate**        true                   true or false (boolean)      Whether to validate the email address.
 **priority**        3                      1, 2, 3, 4, 5                Email Priority. 1 = highest. 5 = lowest. 3 = normal.
 **CRLF**            \\n                    "\\r\\n" or "\\n" or "\\r"   Newline character. (Use "\\r\\n" to comply with RFC 822).
 **newline**         \\n                    "\\r\\n" or "\\n" or "\\r"   Newline character. (Use "\\r\\n" to comply with RFC 822).
-**BCCBatchMode**    FALSE                  TRUE or FALSE (boolean)      Enable BCC Batch Mode.
+**BCCBatchMode**    false                  true or false (boolean)      Enable BCC Batch Mode.
 **BCCBatchSize**    200                    None                         Number of emails in each BCC batch.
-**DSN**             FALSE                  TRUE or FALSE (boolean)      Enable notify message from server
+**DSN**             false                  true or false (boolean)      Enable notify message from server
 =================== ====================== ============================ =======================================================================
 
 Overriding Word Wrapping
@@ -320,7 +320,7 @@ Class Reference
 				$email->send();
 			}
 
-		If you set the parameter to TRUE any attachments will be cleared as
+		If you set the parameter to true any attachments will be cleared as
 		well::
 
 			$email->clear(true);
@@ -328,10 +328,10 @@ Class Reference
 	.. php:method:: send($autoClear = true)
 
 		:param	bool	$autoClear: Whether to clear message data automatically
-		:returns:	TRUE on success, FALSE on failure
+		:returns:	true on success, false on failure
 		:rtype:	bool
 
-		The e-mail sending method. Returns boolean TRUE or FALSE based on
+		The e-mail sending method. Returns boolean true or false based on
 		success or failure, enabling it to be used conditionally::
 
 			if (! $email->send())
@@ -340,7 +340,7 @@ Class Reference
 			}
 
 		This method will automatically clear all parameters if the request was
-		successful. To stop this behaviour pass FALSE::
+		successful. To stop this behaviour pass false::
 
 			if ($email->send(false))
 			{
@@ -352,7 +352,7 @@ Class Reference
 
 		.. note:: If ``BCCBatchMode`` is enabled, and there are more than
 			``BCCBatchSize`` recipients, this method will always return
-			boolean ``TRUE``.
+			boolean ``true``.
 
 	.. php:method:: attach($filename[, $disposition = ''[, $newname = null[, $mime = '']]])
 
@@ -395,7 +395,7 @@ Class Reference
 	.. php:method:: setAttachmentCID($filename)
 
 		:param	string	$filename: Existing attachment filename
-		:returns:	Attachment Content-ID or FALSE if not found
+		:returns:	Attachment Content-ID or false if not found
 		:rtype:	string
 
 		Sets and returns an attachment's Content-ID, which enables your to embed an inline
@@ -404,8 +404,8 @@ Class Reference
 
 			$filename = '/img/photo1.jpg';
 			$email->attach($filename);
-			foreach ($list as $address)
-			{
+
+			foreach ($list as $address) {
 				$email->setTo($address);
 				$cid = $email->setAttachmentCID($filename);
 				$email->setMessage('<img src="cid:'. $cid .'" alt="photo1" />');
@@ -428,7 +428,7 @@ Class Reference
 
 		Example::
 
-			// You need to pass FALSE while sending in order for the email data
+			// You need to pass false while sending in order for the email data
 			// to not be cleared - if that happens, printDebugger() would have
 			// nothing to output.
 			$email->send(false);

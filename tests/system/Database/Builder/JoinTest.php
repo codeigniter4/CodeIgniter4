@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
@@ -6,99 +17,85 @@ use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class JoinTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class JoinTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testJoinSimple()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->join('job', 'user.id = job.id');
 
-	public function testJoinSimple()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+        $expectedSQL = 'SELECT * FROM "user" JOIN "job" ON "user"."id" = "job"."id"';
 
-		$builder->join('job', 'user.id = job.id');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "user" JOIN "job" ON "user"."id" = "job"."id"';
+    public function testJoinIsNull()
+    {
+        $builder = new BaseBuilder('table1', $this->db);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->join('table2', 'field IS NULL');
 
-	//--------------------------------------------------------------------
+        $expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NULL';
 
-	public function testJoinIsNull()
-	{
-		$builder = new BaseBuilder('table1', $this->db);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->join('table2', 'field IS NULL');
+    public function testJoinIsNotNull()
+    {
+        $builder = new BaseBuilder('table1', $this->db);
 
-		$expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NULL';
+        $builder->join('table2', 'field IS NOT NULL');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NOT NULL';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testJoinIsNotNull()
-	{
-		$builder = new BaseBuilder('table1', $this->db);
+    public function testJoinMultipleConditions()
+    {
+        $builder = new BaseBuilder('table1', $this->db);
 
-		$builder->join('table2', 'field IS NOT NULL');
+        $builder->join('table2', "table1.field1 = table2.field2 AND table1.field1 = 'foo' AND table2.field2 = 0", 'LEFT');
 
-		$expectedSQL = 'SELECT * FROM "table1" JOIN "table2" ON "field" IS NOT NULL';
+        $expectedSQL = "SELECT * FROM \"table1\" LEFT JOIN \"table2\" ON \"table1\".\"field1\" = \"table2\".\"field2\" AND \"table1\".\"field1\" = 'foo' AND \"table2\".\"field2\" = 0";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	//--------------------------------------------------------------------
+    public function testFullOuterJoin()
+    {
+        $builder = new PostgreBuilder('jobs', $this->db);
+        $builder->testMode();
+        $builder->join('users as u', 'users.id = jobs.id', 'full outer');
 
-	public function testJoinMultipleConditions()
-	{
-		$builder = new BaseBuilder('table1', $this->db);
+        $expectedSQL = 'SELECT * FROM "jobs" FULL OUTER JOIN "users" as "u" ON "users"."id" = "jobs"."id"';
 
-		$builder->join('table2', "table1.field1 = table2.field2 AND table1.field1 = 'foo' AND table2.field2 = 0", 'LEFT');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = "SELECT * FROM \"table1\" LEFT JOIN \"table2\" ON \"table1\".\"field1\" = \"table2\".\"field2\" AND \"table1\".\"field1\" = 'foo' AND \"table2\".\"field2\" = 0";
+    public function testJoinWithAlias()
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder->testMode();
+        $builder->join('users u', 'u.id = jobs.id', 'LEFT');
 
-	//--------------------------------------------------------------------
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
 
-	public function testFullOuterJoin()
-	{
-		$builder = new PostgreBuilder('jobs', $this->db);
-		$builder->testMode();
-		$builder->join('users as u', 'users.id = jobs.id', 'full outer');
-
-		$expectedSQL = 'SELECT * FROM "jobs" FULL OUTER JOIN "users" as "u" ON "users"."id" = "jobs"."id"';
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testJoinWithAlias()
-	{
-		$this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
-
-		$builder = new SQLSRVBuilder('jobs', $this->db);
-		$builder->testMode();
-		$builder->join('users u', 'u.id = jobs.id', 'LEFT');
-
-		$expectedSQL = 'SELECT * FROM "test"."dbo"."jobs" LEFT JOIN "test"."dbo"."users" "u" ON "u"."id" = "jobs"."id"';
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
-
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

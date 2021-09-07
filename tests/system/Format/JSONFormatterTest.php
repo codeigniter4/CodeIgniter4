@@ -1,63 +1,76 @@
-<?php namespace CodeIgniter\Format;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class JSONFormatterTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class JSONFormatterTest extends CIUnitTestCase
 {
-	protected $jsonFormatter;
+    protected $jsonFormatter;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->jsonFormatter = new JSONFormatter();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->jsonFormatter = new JSONFormatter();
+    }
 
-	public function testBasicJSON()
-	{
-		$data = [
-			'foo' => 'bar',
-		];
+    public function testBasicJSON()
+    {
+        $data = [
+            'foo' => 'bar',
+        ];
 
-		$expected = '{
+        $expected = '{
     "foo": "bar"
 }';
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
+    }
 
-	public function testUnicodeOutput()
-	{
-		$data = [
-			'foo' => 'База данни грешка',
-		];
+    public function testUnicodeOutput()
+    {
+        $data = [
+            'foo' => 'База данни грешка',
+        ];
 
-		$expected = '{
+        $expected = '{
     "foo": "База данни грешка"
 }';
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
+    }
 
-	public function testKeepsURLs()
-	{
-		$data = [
-			'foo' => 'https://www.example.com/foo/bar',
-		];
+    public function testKeepsURLs()
+    {
+        $data = [
+            'foo' => 'https://www.example.com/foo/bar',
+        ];
 
-		$expected = '{
+        $expected = '{
     "foo": "https://www.example.com/foo/bar"
 }';
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
+    }
 
-	public function testJSONError()
-	{
-		$this->expectException('RuntimeException');
+    public function testJSONError()
+    {
+        $this->expectException('RuntimeException');
 
-		$data     = ["\xB1\x31"];
-		$expected = 'Boom';
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
-
+        $data     = ["\xB1\x31"];
+        $expected = 'Boom';
+        $this->assertSame($expected, $this->jsonFormatter->format($data));
+    }
 }

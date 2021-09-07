@@ -89,7 +89,7 @@ like this::
 
 	$data = [
 		'blog_title'   => 'My Blog Title',
-		'blog_heading' => 'My Blog Heading'
+		'blog_heading' => 'My Blog Heading',
 	];
 
 	echo $parser->setData($data)
@@ -194,8 +194,8 @@ corresponding to your variable pair data. Consider this example::
 			['title' => 'Title 2', 'body' => 'Body 2'],
 			['title' => 'Title 3', 'body' => 'Body 3'],
 			['title' => 'Title 4', 'body' => 'Body 4'],
-			['title' => 'Title 5', 'body' => 'Body 5']
-		]
+			['title' => 'Title 5', 'body' => 'Body 5'],
+		],
 	];
 
 	echo $parser->setData($data)
@@ -214,11 +214,11 @@ method::
 	$data = [
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
-		'blog_entries' => $query->getResultArray()
+		'blog_entries' => $query->getResultArray(),
 	];
 
 	echo $parser->setData($data)
-	             ->render('blog_template');
+	            ->render('blog_template');
 
 If the array you are trying to loop over contains objects instead of arrays,
 the parser will first look for an ``asArray`` method on the object. If it exists,
@@ -240,12 +240,13 @@ an associative array of values, like a record from a database::
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
 		'blog_entry'   => [
-			'title' => 'Title 1', 'body' => 'Body 1'
-		]
+			'title' => 'Title 1',
+			'body' => 'Body 1',
+		],
 	];
 
 	echo $parser->setData($data)
-	             ->render('blog_template');
+	            ->render('blog_template');
 
 The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
@@ -292,7 +293,7 @@ The following example is not impacted by cascading::
 
 	$data = [
 		'name'     => 'George',
-		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ]
+		'location' => ['city' => 'Red City', 'planet' => 'Mars'],
 	];
 
 	echo $parser->setData($data)->renderString($template);
@@ -304,7 +305,7 @@ This example gives different results, depending on cascading::
 
 	$data = [
 		'name'     => 'George',
-		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ]
+		'location' => ['city' => 'Red City', 'planet' => 'Mars'],
 	];
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
@@ -540,7 +541,7 @@ used within the template file. The value is any valid PHP callable, including st
 
 	public $plugins = [
 		'foo'	=> '\Some\Class::methodName',
-		'bar'	=> function($str, array $params=[]) {
+		'bar'	=> function ($str, array $params=[]) {
 			return $str;
 		},
 	];
@@ -553,7 +554,7 @@ Any closures that are being used must be defined in the config file's constructo
 
         public function __construct()
         {
-            $this->plugins['bar'] = function(array $params=[]) {
+            $this->plugins['bar'] = function (array $params=[]) {
                 return $params[0] ?? '';
             };
 
@@ -605,10 +606,10 @@ template, the original pseudo-variable is shown in the result::
 	$data = [
 		'title'     => 'Mr',
 		'firstname' => 'John',
-		'lastname'  => 'Doe'
+		'lastname'  => 'Doe',
 	];
 	echo $parser->setData($data)
-	             ->renderString($template);
+	            ->renderString($template);
 
 	// Result: Hello, John {initials} Doe
 
@@ -623,11 +624,11 @@ pair tag, but the closing variable pair tag is not rendered properly::
 		'lastname'  => 'Doe',
 		'titles'    => [
 			['degree' => 'BSc'],
-			['degree' => 'PhD']
-		]
+			['degree' => 'PhD'],
+		],
 	];
 	echo $parser->setData($data)
-	             ->renderString($template);
+	            ->renderString($template);
 
 	// Result: Hello, John Doe (Mr{degree} {/degrees})
 
@@ -652,7 +653,7 @@ An example with the iteration controlled in the view::
 		]
 	];
 	echo $parser->setData($data)
-	             ->renderString($template);
+	            ->renderString($template);
 
 Result::
 
@@ -671,17 +672,16 @@ using a view fragment::
 		['title' => 'Second Link', 'link' => '/second'],
 	];
 
-	foreach ($data1 as $menuItem)
-	{
+	foreach ($data1 as $menuItem),{
 		$temp .= $parser->setData($menuItem)->renderString($template1);
 	}
 
 	$template2 = '<ul>{menuitems}</ul>';
 	$data = [
-		'menuitems' => $temp
+		'menuitems' => $temp,
 	];
 	echo $parser->setData($data)
-	             ->renderString($template2);
+	            ->renderString($template2);
 
 Result::
 
@@ -710,12 +710,12 @@ Class Reference
 
         Options supported:
 
-	        -   ``cache`` - the time in seconds, to save a view's results
-	        -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
-	        -   ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
-	        -   ``saveData`` - true if the view data parameter should be retained for subsequent calls
-	        -   ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
-	        -   ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
+	        - ``cache`` - the time in seconds, to save a view's results
+	        - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
+	        - ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
+	        - ``saveData`` - true if the view data parameter should be retained for subsequent calls
+	        - ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
+	        - ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
 		Any conditional substitutions are performed first, then remaining
 		substitutions are performed for each data pair.
@@ -770,6 +770,6 @@ Class Reference
     		:returns: The Renderer, for method chaining
     		:rtype: CodeIgniter\\View\\RendererInterface.
 
-    		Over-ride the substitution field delimiters::
+    		Override the substitution field delimiters::
 
 			$renderer->setDelimiters('[',']');

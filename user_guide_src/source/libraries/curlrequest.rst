@@ -34,7 +34,7 @@ The options are described later in this document::
 
 	$options = [
 		'baseURI' => 'http://example.com/api/v1/',
-		'timeout'  => 3
+		'timeout'  => 3,
 	];
 	$client = \Config\Services::curlrequest($options);
 
@@ -67,7 +67,7 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 	$client = \Config\Services::curlrequest();
 
 	$response = $client->request('GET', 'https://api.github.com/user', [
-		'auth' => ['user', 'pass']
+		'auth' => ['user', 'pass'],
 	]);
 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
@@ -97,7 +97,7 @@ set a base URI, and then make all requests with that client using relative URLs.
 when working with APIs::
 
 	$client = \Config\Services::curlrequest([
-		'baseURI' => 'https://example.com/api/v1/'
+		'baseURI' => 'https://example.com/api/v1/',
 	]);
 
 	// GET http:example.com/api/v1/photos
@@ -130,8 +130,8 @@ methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
 
-	$code   = $response->getStatusCode();    // 200
-	$reason = $response->getReason();      // OK
+	$code   = $response->getStatusCode(); // 200
+	$reason = $response->getReason(); // OK
 
 You can retrieve headers from the response::
 
@@ -139,8 +139,7 @@ You can retrieve headers from the response::
 	echo $response->getHeaderLine('Content-Type');
 
 	// Get all headers
-	foreach ($response->getHeaders() as $name => $value)
-	{
+	foreach ($response->getHeaders() as $name => $value) {
 		echo $name .': '. $response->getHeaderLine($name) ."\n";
 	}
 
@@ -151,8 +150,7 @@ The body can be retrieved using the ``getBody()`` method::
 The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
-	if (strpos($response->getHeader('content-type'), 'application/json') !== false)
-	{
+	if (strpos($response->getHeader('content-type'), 'application/json') !== false) {
 		$body = json_decode($body);
 	}
 
@@ -208,8 +206,7 @@ body
 There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
 The first way is to use the ``setBody()`` method::
 
-	$client->setBody($body)
-	       ->request('put', 'http://example.com');
+	$client->setBody($body) ->request('put', 'http://example.com');
 
 The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
 and functions the exact same way as the previous example. The value must be a string::
@@ -275,8 +272,8 @@ if it's not already set::
 	$client->request('POST', '/post', [
 		'form_params' => [
 			'foo' => 'bar',
-			'baz' => ['hi', 'there']
-		]
+			'baz' => ['hi', 'there'],
+		],
 	]);
 
 .. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
@@ -294,8 +291,8 @@ representing the header field values::
 		'headers' => [
 			'User-Agent' => 'testing/1.0',
 			'Accept'     => 'application/json',
-			'X-Foo'      => ['Bar', 'Baz']
-		]
+			'X-Foo'      => ['Bar', 'Baz'],
+		],
 	]);
 
 If headers are passed into the constructor they are treated as default values that will be overridden later by any
@@ -337,7 +334,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 
 	$post_data = [
 		'foo'      => 'bar',
-		'userfile' => new \CURLFile('/path/to/file.txt')
+		'userfile' => new \CURLFile('/path/to/file.txt'),
 	];
 
 .. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use

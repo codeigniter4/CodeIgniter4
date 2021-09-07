@@ -72,8 +72,7 @@ The following functions are available:
     Allows two or more items to be alternated between, when cycling through
     a loop. Example::
 
-        for ($i = 0; $i < 10; $i++)
-        {     
+        for ($i = 0; $i < 10; $i++) {     
             echo alternator('string one', 'string two');
         }
 
@@ -82,8 +81,7 @@ The following functions are available:
 
     ::
 
-        for ($i = 0; $i < 10; $i++)
-        {     
+        for ($i = 0; $i < 10; $i++) {     
             echo alternator('one', 'two', 'three', 'four', 'five');
         }
 
@@ -132,7 +130,7 @@ The following functions are available:
         and handle string inputs. This however makes it just an
         alias for ``stripslashes()``.
 
-.. php:function:: reduce_multiples($str[, $character = ''[, $trim = FALSE]])
+.. php:function:: reduce_multiples($str[, $character = ''[, $trim = false]])
 
     :param	string	$str: Text to search in
     :param	string	$character: Character to reduce
@@ -146,11 +144,11 @@ The following functions are available:
         $string = "Fred, Bill,, Joe, Jimmy";
         $string = reduce_multiples($string, ","); // results in "Fred, Bill, Joe, Jimmy"
 
-    If the third parameter is set to TRUE it will remove occurrences of the
+    If the third parameter is set to true it will remove occurrences of the
     character at the beginning and the end of the string. Example::
 
         $string = ",Fred, Bill,, Joe, Jimmy,";
-        $string = reduce_multiples($string, ", ", TRUE); // results in "Fred, Bill, Joe, Jimmy"
+        $string = reduce_multiples($string, ", ", true); // results in "Fred, Bill, Joe, Jimmy"
 
 .. php:function:: quotes_to_entities($str)
 
@@ -234,7 +232,7 @@ The following functions are available:
 
         $string = ascii_to_entities($string);
 
-.. php:function:: entities_to_ascii($str[, $all = TRUE])
+.. php:function:: entities_to_ascii($str[, $all = true])
 
     :param	string	$str: Input string
     :param	bool	$all: Whether to convert unsafe entities as well

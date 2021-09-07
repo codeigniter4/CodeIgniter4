@@ -174,12 +174,9 @@ to update the schema::
 		{
 			$migrate = \Config\Services::migrations();
 
-			try
-			{
+			try {
 				$migrate->latest();
-			}
-			catch (\Throwable $e)
-			{
+			} catch (\Throwable $e) {
 				// Do something with the error here...
 			}
 		}
@@ -321,8 +318,8 @@ Class Reference
 		:returns:	``true`` on success, ``false`` on failure
 		:rtype:	bool
 
-		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. 
-		
+		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated.
+
 		.. note:: This method is recommended only for testing and could cause data consistency issues.
 
 	.. php:method:: setNamespace($namespace)
@@ -333,8 +330,7 @@ Class Reference
 
 	  Sets the namespace the library should look for migration files::
 
-	    $migration->setNamespace($namespace)
-	              ->latest();
+	    $migration->setNamespace($namespace)->latest();
 	.. php:method:: setGroup($group)
 
 	  :param  string  $group: database group name.
@@ -343,5 +339,4 @@ Class Reference
 
 	  Sets the group the library should look for migration files::
 
-	    $migration->setGroup($group)
-	              ->latest();
+	    $migration->setGroup($group)->latest();

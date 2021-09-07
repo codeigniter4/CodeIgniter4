@@ -195,7 +195,7 @@ Ensure that something you expected to be logged actually was::
 
 Ensure that an event you expected to be triggered actually was::
 
-    Events::on('foo', function($arg) use(&$result) {
+    Events::on('foo', function ($arg) use(&$result) {
         $result = $arg;
     });
 
@@ -384,5 +384,5 @@ An example demonstrating this inside one of your test cases::
     {
         CLI::write('first.');
         $expected = "first.\n";
-        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }

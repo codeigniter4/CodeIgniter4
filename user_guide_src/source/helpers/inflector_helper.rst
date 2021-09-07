@@ -105,12 +105,12 @@ The following functions are available:
 .. php:function:: is_pluralizable($word)
 
     :param	string	$word: Input string
-    :returns:	TRUE if the word is countable or FALSE if not
+    :returns:	true if the word is countable or false if not
     :rtype:	bool
 
     Checks if the given word has a plural version. Example::
 
-        is_pluralizable('equipment'); // Returns FALSE
+        is_pluralizable('equipment'); // Returns false
 
 .. php:function:: dasherize($string)
 

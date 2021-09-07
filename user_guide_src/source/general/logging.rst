@@ -10,8 +10,7 @@ You can log information to the local log files by using the ``log_message()`` me
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself::
 
-    if ($some_var == '')
-    {
+    if ($some_var === '') {
         log_message('error', 'Some variable did not contain a value.');
     }
 
@@ -80,13 +79,8 @@ Each handler's section will have one property in common: ``handles``, which is a
 ::
 
     public $handlers = [
-
-        //--------------------------------------------------------------------
         // File Handler
-        //--------------------------------------------------------------------
-
         'CodeIgniter\Log\Handlers\FileHandler' => [
-
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
         ]
     ];
@@ -112,12 +106,9 @@ If you want to log an Exception or an Error, you can use the key of 'exception',
 Exception or Error itself. A string will be generated from that object containing the error message, the
 file name and line number. You must still provide the exception placeholder in the message::
 
-    try
-    {
+    try {
         // Something throws error here
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
         log_message('error', '[ERROR] {exception}', ['exception' => $e]);
     }
 

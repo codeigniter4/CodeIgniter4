@@ -79,7 +79,7 @@ the **app/Config/Toolbar.php** configuration file::
         \CodeIgniter\Debug\Toolbar\Collectors\Database::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Logs::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Views::class,
-         \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
+        \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Files::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Routes::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Events::class,
@@ -182,7 +182,7 @@ it to sort it correctly and display the correct information. The inner arrays mu
         'name'      => '',     // Name displayed on the left of the timeline
         'component' => '',     // Name of the Component listed in the middle of timeline
         'start'     => 0.00,   // start time, like microtime(true)
-        'duration'  => 0.00    // duration, like mircrotime(true) - microtime(true)
+        'duration'  => 0.00,   // duration, like mircrotime(true) - microtime(true)
     ];
 
 Providing Vars
@@ -199,10 +199,10 @@ outer array's key is the name of the section on the Vars tab::
     $data = [
         'section 1' => [
             'foo' => 'bar',
-            'bar' => 'baz'
+            'bar' => 'baz',
         ],
         'section 2' => [
             'foo' => 'bar',
-            'bar' => 'baz'
-        ]
+            'bar' => 'baz',
+        ],
      ];

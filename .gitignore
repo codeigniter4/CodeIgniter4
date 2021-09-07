@@ -126,3 +126,5 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+
+/.php-cs-fixer.php

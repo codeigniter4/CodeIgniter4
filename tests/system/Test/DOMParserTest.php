@@ -1,404 +1,418 @@
 <?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Test;
 
 use InvalidArgumentException;
 
-class DOMParserTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DOMParserTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (! extension_loaded('DOM')) {
+            $this->markTestSkipped('DOM extension not loaded.');
+        }
+    }
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    public function testCanRoundTripHTML()
+    {
+        $dom = new DOMParser();
 
-		if (! extension_loaded('DOM'))
-		{
-			$this->markTestSkipped('DOM extension not loaded.');
-		}
-	}
+        $html     = '<div><h1>Hello</h1></div>';
+        $expected = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">' . "\n"
+                . '<html><body><div><h1>Hello</h1></div></body></html>';
 
-	public function testCanRoundTripHTML()
-	{
-		$dom = new DOMParser();
+        $this->assertSame($expected . "\n", $dom->withString($html)->getBody());
+    }
 
-		$html     = '<div><h1>Hello</h1></div>';
-		$expected = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">' . "\n"
-				. '<html><body><div><h1>Hello</h1></div></body></html>';
+    public function testParseSelectorWithID()
+    {
+        $dom = new DOMParser();
+
+        $selector = $dom->parseSelector('div#row');
+
+        $this->assertSame('div', $selector['tag']);
+        $this->assertSame('row', $selector['id']);
+    }
+
+    public function testParseSelectorWithClass()
+    {
+        $dom = new DOMParser();
+
+        $selector = $dom->parseSelector('div.row');
+
+        $this->assertSame('div', $selector['tag']);
+        $this->assertSame('row', $selector['class']);
+    }
 
-		$this->assertEquals($expected . "\n", $dom->withString($html)->getBody());
-	}
+    public function testParseSelectorWithClassMultiple()
+    {
+        $dom = new DOMParser();
 
-	public function testParseSelectorWithID()
-	{
-		$dom = new DOMParser();
+        $selector = $dom->parseSelector('div.row.another');
+
+        $this->assertSame('div', $selector['tag']);
+        // Only parses the first class
+        $this->assertSame('row', $selector['class']);
+    }
 
-		$selector = $dom->parseSelector('div#row');
+    public function testParseSelectorWithAttribute()
+    {
+        $dom = new DOMParser();
 
-		$this->assertEquals('div', $selector['tag']);
-		$this->assertEquals('row', $selector['id']);
-	}
+        $selector = $dom->parseSelector('a[ href = http://example.com ]');
 
-	public function testParseSelectorWithClass()
-	{
-		$dom = new DOMParser();
+        $this->assertSame('a', $selector['tag']);
+        $this->assertSame(['href' => 'http://example.com'], $selector['attr']);
+    }
 
-		$selector = $dom->parseSelector('div.row');
+    public function provideText()
+    {
+        return [
+            ['Hello World'],
+            ['Hellö Wörld'],
+        ];
+    }
 
-		$this->assertEquals('div', $selector['tag']);
-		$this->assertEquals('row', $selector['class']);
-	}
+    /**
+     * @dataProvider provideText
+     *
+     * @param mixed $text
+     */
+    public function testSeeText($text)
+    {
+        $dom = new DOMParser();
 
-	public function testParseSelectorWithClassMultiple()
-	{
-		$dom = new DOMParser();
+        $html = '<html><body><h1>' . $text . '</h1></body></html>';
+        $dom->withString($html);
 
-		$selector = $dom->parseSelector('div.row.another');
+        $this->assertTrue($dom->see($text));
+    }
 
-		$this->assertEquals('div', $selector['tag']);
-		// Only parses the first class
-		$this->assertEquals('row', $selector['class']);
-	}
+    public function testSeeHTML()
+    {
+        $dom = new DOMParser();
 
-	public function testParseSelectorWithAttribute()
-	{
-		$dom = new DOMParser();
+        $html = '<html><body><h1>Hello World</h1></body></html>';
+        $dom->withString($html);
 
-		$selector = $dom->parseSelector('a[ href = http://example.com ]');
+        $this->assertTrue($dom->see('<h1>'));
+    }
 
-		$this->assertEquals('a', $selector['tag']);
-		$this->assertEquals(['href' => 'http://example.com'], $selector['attr']);
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3984
+     */
+    public function testSeeHTMLOutsideBodyTag()
+    {
+        $dom = new DOMParser();
 
-	public function provideText()
-	{
-		return [
-			['Hello World'],
-			['Hellö Wörld'],
-		];
-	}
+        $html = '<html><head><title>My Title</title></head><body><h1>Hello World</h1></body></html>';
+        $dom->withString($html);
 
-	/**
-	 * @dataProvider provideText
-	 */
-	public function testSeeText($text)
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('My Title', 'title'));
+    }
 
-		$html = '<html><body><h1>' . $text . '</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see($text));
-	}
+        $html = '<html><body><h1>Hello World</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeHTML()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->see('Hello Worlds'));
+    }
 
-		$html = '<html><body><h1>Hello World</h1></body></html>';
-		$dom->withString($html);
+    /**
+     * @dataProvider provideText
+     *
+     * @param mixed $text
+     */
+    public function testSeeElement($text)
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('<h1>'));
-	}
+        $html = '<html><body><h1> ' . $text . '</h1></body></html>';
+        $dom->withString($html);
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/3984
-	 */
-	public function testSeeHTMLOutsideBodyTag()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see($text, 'h1'));
+    }
 
-		$html = '<html><head><title>My Title</title></head><body><h1>Hello World</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementPartialText()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('My Title', 'title'));
-	}
+        $html = '<html><body><h1>Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeFail()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('Hello World', 'h1'));
+    }
 
-		$html = '<html><body><h1>Hello World</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementID()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->see('Hello Worlds'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	/**
-	 * @dataProvider provideText
-	 */
-	public function testSeeElement($text)
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('Hello World', '#heading'));
+    }
 
-		$html = '<html><body><h1> ' . $text . '</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementIDFails()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see($text, 'h1'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementPartialText()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->see('Hello Worlds', '#heading'));
+    }
 
-		$html = '<html><body><h1>Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementIDWithTag()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('Hello World', 'h1'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementID()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('Hello World', 'h1#heading'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementIDWithTagFails()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('Hello World', '#heading'));
-	}
+        $html = '<html><body><h2 id="heading">Hello World Wide Web</h2></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementIDFails()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->see('Hello World', 'h1#heading'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementClass()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->see('Hello Worlds', '#heading'));
-	}
+        $html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementIDWithTag()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('Hello World', '.heading'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementClassFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('Hello World', 'h1#heading'));
-	}
+        $html = '<html><body><h1 class="headings">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementIDWithTagFails()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->see('Hello World', '.heading'));
+    }
 
-		$html = '<html><body><h2 id="heading">Hello World Wide Web</h2></body></html>';
-		$dom->withString($html);
+    public function testSeeElementClassWithTag()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->see('Hello World', 'h1#heading'));
-	}
+        $html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementClass()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->see('Hello World', 'h1.heading'));
+    }
 
-		$html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementClassWithTagFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('Hello World', '.heading'));
-	}
+        $html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementClassFail()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->see('Hello World', 'h2.heading'));
+    }
 
-		$html = '<html><body><h1 class="headings">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementSuccess()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->see('Hello World', '.heading'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementClassWithTag()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeElement('#heading'));
+    }
 
-		$html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeElementFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->see('Hello World', 'h1.heading'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementClassWithTagFail()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->seeElement('#headings'));
+    }
 
-		$html = '<html><body><h1 class="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testDontSeeElementSuccess()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->see('Hello World', 'h2.heading'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementSuccess()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->dontSeeElement('#head'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testDontSeeElementFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeElement('#heading'));
-	}
+        $html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
 
-	public function testSeeElementFail()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->dontSeeElement('#heading'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeLinkSuccess()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->seeElement('#headings'));
-	}
+        $html = '<html><body><a href="http://example.com">Hello</a></body></html>';
+        $dom->withString($html);
 
-	public function testDontSeeElementSuccess()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeLink('Hello'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeLinkFalse()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->dontSeeElement('#head'));
-	}
+        $html = '<html><body><a href="http://example.com">Hello</a></body></html>';
+        $dom->withString($html);
 
-	public function testDontSeeElementFail()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->seeLink('Hello World!'));
+    }
 
-		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
-		$dom->withString($html);
+    public function testSeeLinkClassSuccess()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->dontSeeElement('#heading'));
-	}
+        $html = '<html><body><a class="btn" href="http://example.com">Hello</a></body></html>';
+        $dom->withString($html);
 
-	public function testSeeLinkSuccess()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeLink('Hello', '.btn'));
+    }
 
-		$html = '<html><body><a href="http://example.com">Hello</a></body></html>';
-		$dom->withString($html);
+    public function testSeeLinkClassFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeLink('Hello'));
-	}
+        $html = '<html><body><a class="button" href="http://example.com">Hello</a></body></html>';
+        $dom->withString($html);
 
-	public function testSeeLinkFalse()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->seeLink('Hello', '.btn'));
+    }
 
-		$html = '<html><body><a href="http://example.com">Hello</a></body></html>';
-		$dom->withString($html);
+    public function testSeeInFieldSuccess()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->seeLink('Hello World!'));
-	}
+        $html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
+        $dom->withString($html);
 
-	public function testSeeLinkClassSuccess()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeInField('user', 'Foobar'));
+    }
 
-		$html = '<html><body><a class="btn" href="http://example.com">Hello</a></body></html>';
-		$dom->withString($html);
+    public function testSeeInFieldFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeLink('Hello', '.btn'));
-	}
+        $html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
+        $dom->withString($html);
 
-	public function testSeeLinkClassFail()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->seeInField('user', 'Foobars'));
+    }
 
-		$html = '<html><body><a class="button" href="http://example.com">Hello</a></body></html>';
-		$dom->withString($html);
+    public function testSeeInFieldSuccessArray()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->seeLink('Hello', '.btn'));
-	}
+        $html = '<html><body><input type="text" name="user[name]" value="Foobar"></body></html>';
+        $dom->withString($html);
 
-	public function testSeeInFieldSuccess()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeInField('user[name]', 'Foobar'));
+    }
 
-		$html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
-		$dom->withString($html);
+    public function testSeeCheckboxIsCheckedByIDTrue()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeInField('user', 'Foobar'));
-	}
+        $html = '<html><body><input type="checkbox" name="user" id="user" value="1" checked></body></html>';
+        $dom->withString($html);
 
-	public function testSeeInFieldFail()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeCheckboxIsChecked('#user'));
+    }
 
-		$html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
-		$dom->withString($html);
+    public function testSeeCheckboxIsCheckedByIDFail()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->seeInField('user', 'Foobars'));
-	}
+        $html = '<html><body><input type="checkbox" name="user" id="users" value="1" checked></body></html>';
+        $dom->withString($html);
 
-	public function testSeeInFieldSuccessArray()
-	{
-		$dom = new DOMParser();
+        $this->assertFalse($dom->seeCheckboxIsChecked('#user'));
+    }
 
-		$html = '<html><body><input type="text" name="user[name]" value="Foobar"></body></html>';
-		$dom->withString($html);
+    public function testSeeCheckboxIsCheckedByClassTrue()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeInField('user[name]', 'Foobar'));
-	}
+        $html = '<html><body><input type="checkbox" name="user" class="btn" value="1" checked></body></html>';
+        $dom->withString($html);
 
-	public function testSeeCheckboxIsCheckedByIDTrue()
-	{
-		$dom = new DOMParser();
+        $this->assertTrue($dom->seeCheckboxIsChecked('.btn'));
+    }
 
-		$html = '<html><body><input type="checkbox" name="user" id="user" value="1" checked></body></html>';
-		$dom->withString($html);
+    public function testWithFile()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeCheckboxIsChecked('#user'));
-	}
+        $filename = APPPATH . 'index.html';
 
-	public function testSeeCheckboxIsCheckedByIDFail()
-	{
-		$dom = new DOMParser();
+        $dom->withFile($filename);
+        $this->assertTrue($dom->see('Directory access is forbidden.'));
+    }
 
-		$html = '<html><body><input type="checkbox" name="user" id="users" value="1" checked></body></html>';
-		$dom->withString($html);
+    public function testWithNotFile()
+    {
+        $dom = new DOMParser();
 
-		$this->assertFalse($dom->seeCheckboxIsChecked('#user'));
-	}
+        $filename = APPPATH . 'bogus.html';
 
-	public function testSeeCheckboxIsCheckedByClassTrue()
-	{
-		$dom = new DOMParser();
+        $this->expectException(InvalidArgumentException::class);
+        $dom->withFile($filename);
+    }
 
-		$html = '<html><body><input type="checkbox" name="user" class="btn" value="1" checked></body></html>';
-		$dom->withString($html);
+    public function testSeeAttribute()
+    {
+        $dom = new DOMParser();
 
-		$this->assertTrue($dom->seeCheckboxIsChecked('.btn'));
-	}
+        $path     = '[ name = user ]';
+        $selector = $dom->parseSelector($path);
 
-	public function testWithFile()
-	{
-		$dom = new DOMParser();
+        $this->assertSame(['name' => 'user'], $selector['attr']);
 
-		$filename = APPPATH . 'index.html';
+        $html = '<html><body><div name="user">George</div></body></html>';
+        $dom->withString($html);
 
-		$dom->withFile($filename);
-		$this->assertTrue($dom->see('Directory access is forbidden.'));
-	}
-
-	public function testWithNotFile()
-	{
-		$dom = new DOMParser();
-
-		$filename = APPPATH . 'bogus.html';
-
-		$this->expectException(InvalidArgumentException::class);
-		$dom->withFile($filename);
-	}
-
-	public function testSeeAttribute()
-	{
-		$dom = new DOMParser();
-
-		$path     = '[ name = user ]';
-		$selector = $dom->parseSelector($path);
-
-		$this->assertEquals(['name' => 'user'], $selector['attr']);
-
-		$html = '<html><body><div name="user">George</div></body></html>';
-		$dom->withString($html);
-
-		$this->assertTrue($dom->see(null, '*[ name = user ]'));
-		$this->assertFalse($dom->see(null, '*[ name = notthere ]'));
-	}
-
+        $this->assertTrue($dom->see(null, '*[ name = user ]'));
+        $this->assertFalse($dom->see(null, '*[ name = notthere ]'));
+    }
 }

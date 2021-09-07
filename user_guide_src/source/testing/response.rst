@@ -40,8 +40,7 @@ Returns a boolean true/false based on whether the response is perceived to be "o
 a response status code in the 200 or 300's.
 ::
 
-    if ($result->isOK())
-    {
+    if ($result->isOK()) {
         ...
     }
 
@@ -57,8 +56,7 @@ This assertion simply uses the **isOK()** method to test a response. **assertNot
 Returns a boolean true/false based on whether the response is a redirected response.
 ::
 
-    if ($result->isRedirect())
-    {
+    if ($result->isRedirect()) {
         ...
     }
 
@@ -314,7 +312,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
 
     // Response body is this:
     [
-        'config' => ['key-a', 'key-b']
+        'config' => ['key-a', 'key-b'],
     ]
 
     // Is true

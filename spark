@@ -24,9 +24,8 @@ define('SPARKED', true);
  */
 
 // Refuse to run when called from php-cgi
-if (strpos(PHP_SAPI, 'cgi') === 0)
-{
-	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+if (strpos(PHP_SAPI, 'cgi') === 0) {
+    exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
 // Path to the front controller
@@ -53,17 +52,16 @@ error_reporting(-1);
 ini_set('display_errors', '1');
 
 // Show basic information before we do anything else.
-if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true)))
-{
-	unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
-	$suppress = true;
+if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
+    unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
+    $suppress = true;
 }
 
 $console->showHeader($suppress);
 
 // fire off the command in the main framework.
 $response = $console->run();
-if ($response->getStatusCode() >= 300)
-{
-	exit($response->getStatusCode());
+
+if ($response->getStatusCode() >= 300) {
+    exit($response->getStatusCode());
 }
