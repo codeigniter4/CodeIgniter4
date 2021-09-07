@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Test\CIUnitTestCase;
@@ -8,9 +17,13 @@ use CodeIgniter\Test\ReflectionHelper;
 use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 
-class DatabaseHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DatabaseHandlerTest extends CIUnitTestCase
 {
-    use DatabaseTestTrait, ReflectionHelper;
+    use DatabaseTestTrait;
+    use ReflectionHelper;
 
     protected $refresh = true;
 
@@ -46,7 +59,7 @@ class DatabaseHandlerTest extends CIUnitTestCase
         $appConfig = new AppConfig();
 
         foreach ($config as $key => $c) {
-            $appConfig->$key = $c;
+            $appConfig->{$key} = $c;
         }
 
         return new DatabaseHandler($appConfig, '127.0.0.1');

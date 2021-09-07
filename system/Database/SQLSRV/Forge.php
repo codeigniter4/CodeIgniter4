@@ -14,7 +14,6 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Forge as BaseForge;
 
-
 /**
  * Forge for SQLSRV
  */
@@ -95,17 +94,17 @@ class Forge extends BaseForge
     {
         parent::__construct($db);
 
-        $this->createTableIfStr = "IF NOT EXISTS"
-            . "(SELECT t.name, s.name as schema_name, t.type_desc "
-            . "FROM sys.tables t "
-            . "INNER JOIN sys.schemas s on s.schema_id = t.schema_id "
+        $this->createTableIfStr = 'IF NOT EXISTS'
+            . '(SELECT t.name, s.name as schema_name, t.type_desc '
+            . 'FROM sys.tables t '
+            . 'INNER JOIN sys.schemas s on s.schema_id = t.schema_id '
             . "WHERE s.name=N'" . $this->db->schema . "' "
             . "AND t.name=REPLACE(N'%s', '\"', '') "
             . "AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
 
-        $this->createTableStr = "%s " . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
+        $this->createTableStr = '%s ' . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
 
-        $this->renameTableStr = "EXEC sp_rename [" . $this->db->escapeIdentifiers($this->db->schema) . ".%s] , %s ;";
+        $this->renameTableStr = 'EXEC sp_rename [' . $this->db->escapeIdentifiers($this->db->schema) . '.%s] , %s ;';
 
         $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
     }
@@ -125,7 +124,6 @@ class Forge extends BaseForge
      */
     protected function _alterTable(string $alterType, string $table, $field)
     {
-    
 
         // Handle DROP here
         if ($alterType === 'DROP') {
@@ -220,12 +218,8 @@ class Forge extends BaseForge
         return $this->db->simpleQuery($sql);
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Process indexes
-     *
-     * @param string $table
      *
      * @return array|string
      */
@@ -262,8 +256,6 @@ class Forge extends BaseForge
 
         return $sqls;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Process column

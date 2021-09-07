@@ -161,7 +161,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertTrue($this->fileHandler->save(self::$key1, 'value', 0));
         $metaData = $this->fileHandler->getMetaData(self::$key1);
 
-        $this->assertSame(null, $metaData['expire']);
+        $this->assertNull($metaData['expire']);
         $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
         $this->assertSame('value', $metaData['data']);
 

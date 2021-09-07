@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -18,10 +14,10 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
+use stdClass;
 use function lang;
 use function log_message;
 use function remove_invisible_characters;
-use stdClass;
 
 /**
  * Connection for SQLSRV

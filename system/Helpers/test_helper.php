@@ -9,8 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\Model;
 use CodeIgniter\Exceptions\TestException;
+use CodeIgniter\Model;
 use CodeIgniter\Test\Fabricator;
 use Config\Services;
 
@@ -44,30 +44,27 @@ if (! function_exists('fake')) {
     }
 }
 
-if (! function_exists('mock'))
-{
-	/**
-	 * Used within our test suite to mock certain system tools.
-	 *
-	 * @param string $className Fully qualified class name
-	 */
-	function mock(string $className)
-	{
-		$mockClass   = $className::$mockClass;
-		$mockService = $className::$mockServiceName ?? '';
+if (! function_exists('mock')) {
+    /**
+     * Used within our test suite to mock certain system tools.
+     *
+     * @param string $className Fully qualified class name
+     */
+    function mock(string $className)
+    {
+        $mockClass   = $className::$mockClass;
+        $mockService = $className::$mockServiceName ?? '';
 
-		if (empty($mockClass) || ! class_exists($mockClass))
-		{
-			throw TestException::forInvalidMockClass($mockClass);
-		}
+        if (empty($mockClass) || ! class_exists($mockClass)) {
+            throw TestException::forInvalidMockClass($mockClass);
+        }
 
-		$mock = new $mockClass();
+        $mock = new $mockClass();
 
-		if (! empty($mockService))
-		{
-			Services::injectMock($mockService, $mock);
-		}
+        if (! empty($mockService)) {
+            Services::injectMock($mockService, $mock);
+        }
 
-		return $mock;
-	}
+        return $mock;
+    }
 }

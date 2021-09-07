@@ -165,7 +165,7 @@ class Migration_Create_test_tables extends Migration
         $this->forge->dropTable('without_auto_increment', true);
         $this->forge->dropTable('ip_table', true);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'])) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'], true)) {
             $this->forge->dropTable('ci_sessions', true);
         }
     }

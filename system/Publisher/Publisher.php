@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Publisher;
@@ -36,456 +36,403 @@ use Throwable;
  */
 class Publisher extends FileCollection
 {
-	/**
-	 * Array of discovered Publishers.
-	 *
-	 * @var array<string,self[]|null>
-	 */
-	private static $discovered = [];
+    /**
+     * Array of discovered Publishers.
+     *
+     * @var array<string,self[]|null>
+     */
+    private static $discovered = [];
 
-	/**
-	 * Directory to use for methods that need temporary storage.
-	 * Created on-the-fly as needed.
-	 *
-	 * @var string|null
-	 */
-	private $scratch;
+    /**
+     * Directory to use for methods that need temporary storage.
+     * Created on-the-fly as needed.
+     *
+     * @var string|null
+     */
+    private $scratch;
 
-	/**
-	 * Exceptions for specific files from the last write operation.
-	 *
-	 * @var array<string,Throwable>
-	 */
-	private $errors = [];
+    /**
+     * Exceptions for specific files from the last write operation.
+     *
+     * @var array<string,Throwable>
+     */
+    private $errors = [];
 
-	/**
-	 * List of file published curing the last write operation.
-	 *
-	 * @var string[]
-	 */
-	private $published = [];
+    /**
+     * List of file published curing the last write operation.
+     *
+     * @var string[]
+     */
+    private $published = [];
 
-	/**
-	 * List of allowed directories and their allowed files regex.
-	 * Restrictions are intentionally private to prevent overriding.
-	 *
-	 * @var array<string,string>
-	 */
-	private $restrictions;
+    /**
+     * List of allowed directories and their allowed files regex.
+     * Restrictions are intentionally private to prevent overriding.
+     *
+     * @var array<string,string>
+     */
+    private $restrictions;
 
-	/**
-	 * Base path to use for the source.
-	 *
-	 * @var string
-	 */
-	protected $source = ROOTPATH;
+    /**
+     * Base path to use for the source.
+     *
+     * @var string
+     */
+    protected $source = ROOTPATH;
 
-	/**
-	 * Base path to use for the destination.
-	 *
-	 * @var string
-	 */
-	protected $destination = FCPATH;
+    /**
+     * Base path to use for the destination.
+     *
+     * @var string
+     */
+    protected $destination = FCPATH;
 
-	//--------------------------------------------------------------------
-	// Support Methods
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Support Methods
+    //--------------------------------------------------------------------
 
-	/**
-	 * Discovers and returns all Publishers in the specified namespace directory.
-	 *
-	 * @param string $directory
-	 *
-	 * @return self[]
-	 */
-	final public static function discover(string $directory = 'Publishers'): array
-	{
-		if (isset(self::$discovered[$directory]))
-		{
-			return self::$discovered[$directory];
-		}
-	
-		self::$discovered[$directory] = [];
+    /**
+     * Discovers and returns all Publishers in the specified namespace directory.
+     *
+     * @return self[]
+     */
+    final public static function discover(string $directory = 'Publishers'): array
+    {
+        if (isset(self::$discovered[$directory])) {
+            return self::$discovered[$directory];
+        }
 
-		/** @var FileLocator $locator */
-		$locator = service('locator');
+        self::$discovered[$directory] = [];
 
-		if ([] === $files = $locator->listFiles($directory))
-		{
-			return [];
-		}
+        /** @var FileLocator $locator */
+        $locator = service('locator');
 
-		// Loop over each file checking to see if it is a Publisher
-		foreach (array_unique($files) as $file)
-		{
-			$className = $locator->findQualifiedNameFromPath($file);
+        if ([] === $files = $locator->listFiles($directory)) {
+            return [];
+        }
 
-			if (is_string($className) && class_exists($className) && is_a($className, self::class, true))
-			{
-				self::$discovered[$directory][] = new $className();
-			}
-		}
+        // Loop over each file checking to see if it is a Publisher
+        foreach (array_unique($files) as $file) {
+            $className = $locator->findQualifiedNameFromPath($file);
 
-		sort(self::$discovered[$directory]);
+            if (is_string($className) && class_exists($className) && is_a($className, self::class, true)) {
+                self::$discovered[$directory][] = new $className();
+            }
+        }
 
-		return self::$discovered[$directory];
-	}
+        sort(self::$discovered[$directory]);
 
-	/*
-	 * Removes a directory and all its files and subdirectories.
-	 *
-	 * @param string $directory
-	 *
-	 * @return void
-	 */
-	private static function wipeDirectory(string $directory): void
-	{
-		if (is_dir($directory))
-		{
-			// Try a few times in case of lingering locks
-			$attempts = 10;
-			while ((bool) $attempts && ! delete_files($directory, true, false, true))
-			{
-				// @codeCoverageIgnoreStart
-				$attempts--;
-				usleep(100000); // .1s
-				// @codeCoverageIgnoreEnd
-			}
+        return self::$discovered[$directory];
+    }
 
-			@rmdir($directory);
-		}
-	}
+    /**
+     * Removes a directory and all its files and subdirectories.
+     */
+    private static function wipeDirectory(string $directory): void
+    {
+        if (is_dir($directory)) {
+            // Try a few times in case of lingering locks
+            $attempts = 10;
 
-	//--------------------------------------------------------------------
-	// Class Core
-	//--------------------------------------------------------------------
+            while ((bool) $attempts && ! delete_files($directory, true, false, true)) {
+                // @codeCoverageIgnoreStart
+                $attempts--;
+                usleep(100000); // .1s
+                // @codeCoverageIgnoreEnd
+            }
 
-	/**
-	 * Loads the helper and verifies the source and destination directories.
-	 *
-	 * @param string|null $source
-	 * @param string|null $destination
-	 */
-	public function __construct(string $source = null, string $destination = null)
-	{
-		helper(['filesystem']);
+            @rmdir($directory);
+        }
+    }
 
-		$this->source      = self::resolveDirectory($source ?? $this->source);
-		$this->destination = self::resolveDirectory($destination ?? $this->destination);
+    //--------------------------------------------------------------------
+    // Class Core
+    //--------------------------------------------------------------------
 
-		// Restrictions are intentionally not injected to prevent overriding
-		$this->restrictions = config('Publisher')->restrictions;
+    /**
+     * Loads the helper and verifies the source and destination directories.
+     */
+    public function __construct(?string $source = null, ?string $destination = null)
+    {
+        helper(['filesystem']);
 
-		// Make sure the destination is allowed
-		foreach (array_keys($this->restrictions) as $directory)
-		{
-			if (strpos($this->destination, $directory) === 0)
-			{
-				return;
-			}
-		}
+        $this->source      = self::resolveDirectory($source ?? $this->source);
+        $this->destination = self::resolveDirectory($destination ?? $this->destination);
 
-		throw PublisherException::forDestinationNotAllowed($this->destination);
-	}
+        // Restrictions are intentionally not injected to prevent overriding
+        $this->restrictions = config('Publisher')->restrictions;
 
-	/**
-	 * Cleans up any temporary files in the scratch space.
-	 */
-	public function __destruct()
-	{
-		if (isset($this->scratch))
-		{
-			self::wipeDirectory($this->scratch);
+        // Make sure the destination is allowed
+        foreach (array_keys($this->restrictions) as $directory) {
+            if (strpos($this->destination, $directory) === 0) {
+                return;
+            }
+        }
 
-			$this->scratch = null;
-		}
-	}
+        throw PublisherException::forDestinationNotAllowed($this->destination);
+    }
 
-	/**
-	 * Reads files from the sources and copies them out to their destinations.
-	 * This method should be reimplemented by child classes intended for
-	 * discovery.
-	 *
-	 * @return boolean
-	 *
-	 * @throws RuntimeException
-	 */
-	public function publish(): bool
-	{
-		// Safeguard against accidental misuse
-		if ($this->source === ROOTPATH && $this->destination === FCPATH)
-		{
-			throw new RuntimeException('Child classes of Publisher should provide their own publish method or a source and destination.');
-		}
+    /**
+     * Cleans up any temporary files in the scratch space.
+     */
+    public function __destruct()
+    {
+        if (isset($this->scratch)) {
+            self::wipeDirectory($this->scratch);
 
-		return $this->addPath('/')->merge(true);
-	}
+            $this->scratch = null;
+        }
+    }
 
-	//--------------------------------------------------------------------
-	// Property Accessors
-	//--------------------------------------------------------------------
+    /**
+     * Reads files from the sources and copies them out to their destinations.
+     * This method should be reimplemented by child classes intended for
+     * discovery.
+     *
+     * @throws RuntimeException
+     */
+    public function publish(): bool
+    {
+        // Safeguard against accidental misuse
+        if ($this->source === ROOTPATH && $this->destination === FCPATH) {
+            throw new RuntimeException('Child classes of Publisher should provide their own publish method or a source and destination.');
+        }
 
-	/**
-	 * Returns the source directory.
-	 *
-	 * @return string
-	 */
-	final public function getSource(): string
-	{
-		return $this->source;
-	}
+        return $this->addPath('/')->merge(true);
+    }
 
-	/**
-	 * Returns the destination directory.
-	 *
-	 * @return string
-	 */
-	final public function getDestination(): string
-	{
-		return $this->destination;
-	}
+    //--------------------------------------------------------------------
+    // Property Accessors
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns the temporary workspace, creating it if necessary.
-	 *
-	 * @return string
-	 */
-	final public function getScratch(): string
-	{
-		if (is_null($this->scratch))
-		{
-			$this->scratch = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6)) . DIRECTORY_SEPARATOR;
-			mkdir($this->scratch, 0700);
-		}
+    /**
+     * Returns the source directory.
+     */
+    final public function getSource(): string
+    {
+        return $this->source;
+    }
 
-		return $this->scratch;
-	}
+    /**
+     * Returns the destination directory.
+     */
+    final public function getDestination(): string
+    {
+        return $this->destination;
+    }
 
-	/**
-	 * Returns errors from the last write operation if any.
-	 *
-	 * @return array<string,Throwable>
-	 */
-	final public function getErrors(): array
-	{
-		return $this->errors;
-	}
+    /**
+     * Returns the temporary workspace, creating it if necessary.
+     */
+    final public function getScratch(): string
+    {
+        if (null === $this->scratch) {
+            $this->scratch = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6)) . DIRECTORY_SEPARATOR;
+            mkdir($this->scratch, 0700);
+        }
 
-	/**
-	 * Returns the files published by the last write operation.
-	 *
-	 * @return string[]
-	 */
-	final public function getPublished(): array
-	{
-		return $this->published;
-	}
+        return $this->scratch;
+    }
 
-	//--------------------------------------------------------------------
-	// Additional Handlers
-	//--------------------------------------------------------------------
+    /**
+     * Returns errors from the last write operation if any.
+     *
+     * @return array<string,Throwable>
+     */
+    final public function getErrors(): array
+    {
+        return $this->errors;
+    }
 
-	/**
-	 * Verifies and adds paths to the list.
-	 *
-	 * @param string[] $paths
-	 * @param bool $recursive
-	 *
-	 * @return $this
-	 */
-	final public function addPaths(array $paths, bool $recursive = true)
-	{
-		foreach ($paths as $path)
-		{
-			$this->addPath($path, $recursive);
-		}
+    /**
+     * Returns the files published by the last write operation.
+     *
+     * @return string[]
+     */
+    final public function getPublished(): array
+    {
+        return $this->published;
+    }
 
-		return $this;
-	}
+    //--------------------------------------------------------------------
+    // Additional Handlers
+    //--------------------------------------------------------------------
 
-	/**
-	 * Adds a single path to the file list.
-	 *
-	 * @param string  $path
-	 * @param boolean $recursive
-	 *
-	 * @return $this
-	 */
-	final public function addPath(string $path, bool $recursive = true)
-	{
-		$this->add($this->source . $path, $recursive);
+    /**
+     * Verifies and adds paths to the list.
+     *
+     * @param string[] $paths
+     *
+     * @return $this
+     */
+    final public function addPaths(array $paths, bool $recursive = true)
+    {
+        foreach ($paths as $path) {
+            $this->addPath($path, $recursive);
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Downloads and stages files from an array of URIs.
-	 *
-	 * @param string[] $uris
-	 *
-	 * @return $this
-	 */
-	final public function addUris(array $uris)
-	{
-		foreach ($uris as $uri)
-		{
-			$this->addUri($uri);
-		}
+    /**
+     * Adds a single path to the file list.
+     *
+     * @return $this
+     */
+    final public function addPath(string $path, bool $recursive = true)
+    {
+        $this->add($this->source . $path, $recursive);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Downloads a file from the URI, and adds it to the file list.
-	 *
-	 * @param string $uri Because HTTP\URI is stringable it will still be accepted
-	 *
-	 * @return $this
-	 */
-	final public function addUri(string $uri)
-	{
-		// Figure out a good filename (using URI strips queries and fragments)
-		$file = $this->getScratch() . basename((new URI($uri))->getPath());
+    /**
+     * Downloads and stages files from an array of URIs.
+     *
+     * @param string[] $uris
+     *
+     * @return $this
+     */
+    final public function addUris(array $uris)
+    {
+        foreach ($uris as $uri) {
+            $this->addUri($uri);
+        }
 
-		// Get the content and write it to the scratch space
-		write_file($file, service('curlrequest')->get($uri)->getBody());
+        return $this;
+    }
 
-		return $this->addFile($file);
-	}
+    /**
+     * Downloads a file from the URI, and adds it to the file list.
+     *
+     * @param string $uri Because HTTP\URI is stringable it will still be accepted
+     *
+     * @return $this
+     */
+    final public function addUri(string $uri)
+    {
+        // Figure out a good filename (using URI strips queries and fragments)
+        $file = $this->getScratch() . basename((new URI($uri))->getPath());
 
-	//--------------------------------------------------------------------
-	// Write Methods
-	//--------------------------------------------------------------------
+        // Get the content and write it to the scratch space
+        write_file($file, service('curlrequest')->get($uri)->getBody());
 
-	/**
-	 * Removes the destination and all its files and folders.
-	 *
-	 * @return $this
-	 */
-	final public function wipe()
-	{
-		self::wipeDirectory($this->destination);
+        return $this->addFile($file);
+    }
 
-		return $this;
-	}
+    //--------------------------------------------------------------------
+    // Write Methods
+    //--------------------------------------------------------------------
 
-	/**
-	 * Copies all files into the destination, does not create directory structure.
-	 *
-	 * @param boolean $replace Whether to overwrite existing files.
-	 *
-	 * @return boolean Whether all files were copied successfully
-	 */
-	final public function copy(bool $replace = true): bool
-	{
-		$this->errors = $this->published = [];
+    /**
+     * Removes the destination and all its files and folders.
+     *
+     * @return $this
+     */
+    final public function wipe()
+    {
+        self::wipeDirectory($this->destination);
 
-		foreach ($this->get() as $file)
-		{
-			$to = $this->destination . basename($file);
+        return $this;
+    }
 
-			try
-			{
-				$this->safeCopyFile($file, $to, $replace);
-				$this->published[] = $to;
-			}
-			catch (Throwable $e)
-			{
-				$this->errors[$file] = $e;
-			}
-		}
+    /**
+     * Copies all files into the destination, does not create directory structure.
+     *
+     * @param bool $replace Whether to overwrite existing files.
+     *
+     * @return bool Whether all files were copied successfully
+     */
+    final public function copy(bool $replace = true): bool
+    {
+        $this->errors = $this->published = [];
 
-		return $this->errors === [];
-	}
+        foreach ($this->get() as $file) {
+            $to = $this->destination . basename($file);
 
-	/**
-	 * Merges all files into the destination.
-	 * Creates a mirrored directory structure only for files from source.
-	 *
-	 * @param boolean $replace Whether to overwrite existing files.
-	 *
-	 * @return boolean Whether all files were copied successfully
-	 */
-	final public function merge(bool $replace = true): bool
-	{
-		$this->errors = $this->published = [];
+            try {
+                $this->safeCopyFile($file, $to, $replace);
+                $this->published[] = $to;
+            } catch (Throwable $e) {
+                $this->errors[$file] = $e;
+            }
+        }
 
-		// Get the files from source for special handling
-		$sourced = self::filterFiles($this->get(), $this->source);
+        return $this->errors === [];
+    }
 
-		// Handle everything else with a flat copy
-		$this->files = array_diff($this->files, $sourced);
-		$this->copy($replace);
+    /**
+     * Merges all files into the destination.
+     * Creates a mirrored directory structure only for files from source.
+     *
+     * @param bool $replace Whether to overwrite existing files.
+     *
+     * @return bool Whether all files were copied successfully
+     */
+    final public function merge(bool $replace = true): bool
+    {
+        $this->errors = $this->published = [];
 
-		// Copy each sourced file to its relative destination
-		foreach ($sourced as $file)
-		{
-			// Resolve the destination path
-			$to = $this->destination . substr($file, strlen($this->source));
+        // Get the files from source for special handling
+        $sourced = self::filterFiles($this->get(), $this->source);
 
-			try
-			{
-				$this->safeCopyFile($file, $to, $replace);
-				$this->published[] = $to;
-			}
-			catch (Throwable $e)
-			{
-				$this->errors[$file] = $e;
-			}
-		}
+        // Handle everything else with a flat copy
+        $this->files = array_diff($this->files, $sourced);
+        $this->copy($replace);
 
-		return $this->errors === [];
-	}
+        // Copy each sourced file to its relative destination
+        foreach ($sourced as $file) {
+            // Resolve the destination path
+            $to = $this->destination . substr($file, strlen($this->source));
 
-	/**
-	 * Copies a file with directory creation and identical file awareness.
-	 * Intentionally allows errors.
-	 *
-	 * @param string  $from
-	 * @param string  $to
-	 * @param boolean $replace
-	 *
-	 * @return void
-	 *
-	 * @throws PublisherException For collisions and restriction violations
-	 */
-	private function safeCopyFile(string $from, string $to, bool $replace): void
-	{
-		// Verify this is an allowed file for its destination
-		foreach ($this->restrictions as $directory => $pattern)
-		{
-			if (strpos($to, $directory) === 0 && self::matchFiles([$to], $pattern) === [])
-			{
-				throw PublisherException::forFileNotAllowed($from, $directory, $pattern);
-			}
-		}
+            try {
+                $this->safeCopyFile($file, $to, $replace);
+                $this->published[] = $to;
+            } catch (Throwable $e) {
+                $this->errors[$file] = $e;
+            }
+        }
 
-		// Check for an existing file
-		if (file_exists($to))
-		{
-			// If not replacing or if files are identical then consider successful
-			if (! $replace || same_file($from, $to))
-			{
-				return;
-			}
+        return $this->errors === [];
+    }
 
-			// If it is a directory then do not try to remove it
-			if (is_dir($to))
-			{
-				throw PublisherException::forCollision($from, $to);
-			}
+    /**
+     * Copies a file with directory creation and identical file awareness.
+     * Intentionally allows errors.
+     *
+     * @throws PublisherException For collisions and restriction violations
+     */
+    private function safeCopyFile(string $from, string $to, bool $replace): void
+    {
+        // Verify this is an allowed file for its destination
+        foreach ($this->restrictions as $directory => $pattern) {
+            if (strpos($to, $directory) === 0 && self::matchFiles([$to], $pattern) === []) {
+                throw PublisherException::forFileNotAllowed($from, $directory, $pattern);
+            }
+        }
 
-			// Try to remove anything else
-			unlink($to);
-		}
+        // Check for an existing file
+        if (file_exists($to)) {
+            // If not replacing or if files are identical then consider successful
+            if (! $replace || same_file($from, $to)) {
+                return;
+            }
 
-		// Make sure the directory exists
-		if (! is_dir($directory = pathinfo($to, PATHINFO_DIRNAME)))
-		{
-			mkdir($directory, 0775, true);
-		}
+            // If it is a directory then do not try to remove it
+            if (is_dir($to)) {
+                throw PublisherException::forCollision($from, $to);
+            }
 
-		// Allow copy() to throw errors
-		copy($from, $to);
-	}
+            // Try to remove anything else
+            unlink($to);
+        }
+
+        // Make sure the directory exists
+        if (! is_dir($directory = pathinfo($to, PATHINFO_DIRNAME))) {
+            mkdir($directory, 0775, true);
+        }
+
+        // Allow copy() to throw errors
+        copy($from, $to);
+    }
 }

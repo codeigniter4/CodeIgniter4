@@ -177,17 +177,6 @@ class Toolbar
 
     /**
      * Recursively renders timeline elements and their children.
-     *
-     * @param array $rows
-     * @param float $startTime
-     * @param int   $segmentCount
-     * @param int   $segmentDuration
-     * @param array $styles
-     * @param int   $styleCount
-     * @param int   $level
-     * @param bool  $isChild
-     *
-     * @return string
      */
     protected function renderTimelineRecursive(array $rows, float $startTime, int $segmentCount, int $segmentDuration, array &$styles, int &$styleCount, int $level = 0, bool $isChild = false): string
     {
@@ -196,7 +185,7 @@ class Toolbar
         $output = '';
 
         foreach ($rows as $row) {
-            $hasChildren = isset($row['children']) && !empty($row['children']);
+            $hasChildren = isset($row['children']) && ! empty($row['children']);
             $open        = $row['name'] === 'Controller';
 
             if ($hasChildren) {
@@ -264,7 +253,7 @@ class Toolbar
         array_multisort(...$sortArray);
 
         // Add end time to each element
-        array_walk($data, static function(&$row) {
+        array_walk($data, static function (&$row) {
             $row['end'] = $row['start'] + $row['duration'];
         });
 
@@ -276,10 +265,6 @@ class Toolbar
 
     /**
      * Arranges the already sorted timeline data into a parent => child structure.
-     *
-     * @param array $elements
-     *
-     * @return array
      */
     protected function structureTimelineData(array $elements): array
     {
@@ -287,7 +272,7 @@ class Toolbar
         $element = array_shift($elements);
 
         // If we have children behind us, collect and attach them to us
-        while (!empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
+        while (! empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
             $element['children'][] = array_shift($elements);
         }
 

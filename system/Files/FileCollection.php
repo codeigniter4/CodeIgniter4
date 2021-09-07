@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Files;
@@ -17,7 +17,6 @@ use Countable;
 use Generator;
 use InvalidArgumentException;
 use IteratorAggregate;
-use Traversable;
 
 /**
  * File Collection Class
@@ -27,360 +26,324 @@ use Traversable;
  */
 class FileCollection implements Countable, IteratorAggregate
 {
-	/**
-	 * The current list of file paths.
-	 *
-	 * @var string[]
-	 */
-	protected $files = [];
+    /**
+     * The current list of file paths.
+     *
+     * @var string[]
+     */
+    protected $files = [];
 
-	//--------------------------------------------------------------------
-	// Support Methods
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Support Methods
+    //--------------------------------------------------------------------
 
-	/**
-	 * Resolves a full path and verifies it is an actual directory.
-	 *
-	 * @param string $directory
-	 *
-	 * @return string
-	 *
-	 * @throws FileException
-	 */
-	final protected static function resolveDirectory(string $directory): string
-	{
-		if (! is_dir($directory = set_realpath($directory)))
-		{
-			$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
-			throw FileException::forExpectedDirectory($caller['function']);
-		}
+    /**
+     * Resolves a full path and verifies it is an actual directory.
+     *
+     * @throws FileException
+     */
+    final protected static function resolveDirectory(string $directory): string
+    {
+        if (! is_dir($directory = set_realpath($directory))) {
+            $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
 
-		return $directory;
-	}
+            throw FileException::forExpectedDirectory($caller['function']);
+        }
 
-	/**
-	 * Resolves a full path and verifies it is an actual file.
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 *
-	 * @throws FileException
-	 */
-	final protected static function resolveFile(string $file): string
-	{
-		if (! is_file($file = set_realpath($file)))
-		{
-			$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
-			throw FileException::forExpectedFile($caller['function']);
-		}
+        return $directory;
+    }
 
-		return $file;
-	}
+    /**
+     * Resolves a full path and verifies it is an actual file.
+     *
+     * @throws FileException
+     */
+    final protected static function resolveFile(string $file): string
+    {
+        if (! is_file($file = set_realpath($file))) {
+            $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
 
-	/**
-	 * Removes files that are not part of the given directory (recursive).
-	 *
-	 * @param string[] $files
-	 * @param string   $directory
-	 *
-	 * @return string[]
-	 */
-	final protected static function filterFiles(array $files, string $directory): array
-	{
-		$directory = self::resolveDirectory($directory);
+            throw FileException::forExpectedFile($caller['function']);
+        }
 
-		return array_filter($files, static function (string $value) use ($directory): bool {
-			return strpos($value, $directory) === 0;
-		});
-	}
+        return $file;
+    }
 
-	/**
-	 * Returns any files whose `basename` matches the given pattern.
-	 *
-	 * @param string[] $files
-	 * @param string   $pattern Regex or pseudo-regex string
-	 *
-	 * @return string[]
-	 */
-	final protected static function matchFiles(array $files, string $pattern): array
-	{
-		// Convert pseudo-regex into their true form
-		if (@preg_match($pattern, '') === false)
-		{
-			$pattern = str_replace(
-				['#', '.', '*', '?'],
-				['\#', '\.', '.*', '.'],
-				$pattern
-			);
-			$pattern = "#{$pattern}#";
-		}
+    /**
+     * Removes files that are not part of the given directory (recursive).
+     *
+     * @param string[] $files
+     *
+     * @return string[]
+     */
+    final protected static function filterFiles(array $files, string $directory): array
+    {
+        $directory = self::resolveDirectory($directory);
 
-		return array_filter($files, static function ($value) use ($pattern) {
-			return (bool) preg_match($pattern, basename($value));
-		});
-	}
+        return array_filter($files, static function (string $value) use ($directory): bool {
+            return strpos($value, $directory) === 0;
+        });
+    }
 
-	//--------------------------------------------------------------------
-	// Class Core
-	//--------------------------------------------------------------------
+    /**
+     * Returns any files whose `basename` matches the given pattern.
+     *
+     * @param string[] $files
+     * @param string   $pattern Regex or pseudo-regex string
+     *
+     * @return string[]
+     */
+    final protected static function matchFiles(array $files, string $pattern): array
+    {
+        // Convert pseudo-regex into their true form
+        if (@preg_match($pattern, '') === false) {
+            $pattern = str_replace(
+                ['#', '.', '*', '?'],
+                ['\#', '\.', '.*', '.'],
+                $pattern
+            );
+            $pattern = "#{$pattern}#";
+        }
 
-	/**
-	 * Loads the Filesystem helper and adds any initial files.
-	 *
-	 * @param string[] $files
-	 */
-	public function __construct(array $files = [])
-	{
-		helper(['filesystem']);
+        return array_filter($files, static function ($value) use ($pattern) {
+            return (bool) preg_match($pattern, basename($value));
+        });
+    }
 
-		$this->add($files)->define();
-	}
+    //--------------------------------------------------------------------
+    // Class Core
+    //--------------------------------------------------------------------
 
-	/**
-	 * Applies any initial inputs after the constructor.
-	 * This method is a stub to be implemented by child classes.
-	 *
-	 * @return void
-	 */
-	protected function define(): void
-	{
-	}
+    /**
+     * Loads the Filesystem helper and adds any initial files.
+     *
+     * @param string[] $files
+     */
+    public function __construct(array $files = [])
+    {
+        helper(['filesystem']);
 
-	/**
-	 * Optimizes and returns the current file list.
-	 *
-	 * @return string[]
-	 */
-	public function get(): array
-	{
-		$this->files = array_unique($this->files);
-		sort($this->files, SORT_STRING);
+        $this->add($files)->define();
+    }
 
-		return $this->files;
-	}
+    /**
+     * Applies any initial inputs after the constructor.
+     * This method is a stub to be implemented by child classes.
+     */
+    protected function define(): void
+    {
+    }
 
-	/**
-	 * Sets the file list directly, files are still subject to verification.
-	 * This works as a "reset" method with [].
-	 *
-	 * @param string[] $files The new file list to use
-	 *
-	 * @return $this
-	 */
-	public function set(array $files)
-	{
-		$this->files = [];
+    /**
+     * Optimizes and returns the current file list.
+     *
+     * @return string[]
+     */
+    public function get(): array
+    {
+        $this->files = array_unique($this->files);
+        sort($this->files, SORT_STRING);
 
-		return $this->addFiles($files);
-	}
+        return $this->files;
+    }
 
-	/**
-	 * Adds an array/single file or directory to the list.
-	 *
-	 * @param string|string[] $paths
-	 * @param boolean         $recursive
-	 *
-	 * @return $this
-	 */
-	public function add($paths, bool $recursive = true)
-	{
-		$paths = (array) $paths;
+    /**
+     * Sets the file list directly, files are still subject to verification.
+     * This works as a "reset" method with [].
+     *
+     * @param string[] $files The new file list to use
+     *
+     * @return $this
+     */
+    public function set(array $files)
+    {
+        $this->files = [];
 
-		foreach ($paths as $path)
-		{
-			if (! is_string($path))
-			{
-				throw new InvalidArgumentException('FileCollection paths must be strings.');
-			}
+        return $this->addFiles($files);
+    }
 
-			// Test for a directory
-			try
-			{
-				$directory = self::resolveDirectory($path);
-			}
-			catch (FileException $e)
-			{
-				return $this->addFile($path);
-			}
+    /**
+     * Adds an array/single file or directory to the list.
+     *
+     * @param string|string[] $paths
+     *
+     * @return $this
+     */
+    public function add($paths, bool $recursive = true)
+    {
+        $paths = (array) $paths;
 
-			$this->addDirectory($path, $recursive);
-		}
+        foreach ($paths as $path) {
+            if (! is_string($path)) {
+                throw new InvalidArgumentException('FileCollection paths must be strings.');
+            }
 
-		return $this;
-	}
+            // Test for a directory
+            try {
+                $directory = self::resolveDirectory($path);
+            } catch (FileException $e) {
+                return $this->addFile($path);
+            }
 
-	//--------------------------------------------------------------------
-	// File Handling
-	//--------------------------------------------------------------------
+            $this->addDirectory($path, $recursive);
+        }
 
-	/**
-	 * Verifies and adds files to the list.
-	 *
-	 * @param string[] $files
-	 *
-	 * @return $this
-	 */
-	public function addFiles(array $files)
-	{
-		foreach ($files as $file)
-		{
-			$this->addFile($file);
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    //--------------------------------------------------------------------
+    // File Handling
+    //--------------------------------------------------------------------
 
-	/**
-	 * Verifies and adds a single file to the file list.
-	 *
-	 * @param string $file
-	 *
-	 * @return $this
-	 */
-	public function addFile(string $file)
-	{
-		$this->files[] = self::resolveFile($file);
+    /**
+     * Verifies and adds files to the list.
+     *
+     * @param string[] $files
+     *
+     * @return $this
+     */
+    public function addFiles(array $files)
+    {
+        foreach ($files as $file) {
+            $this->addFile($file);
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Removes files from the list.
-	 *
-	 * @param string[] $files
-	 *
-	 * @return $this
-	 */
-	public function removeFiles(array $files)
-	{
-		$this->files = array_diff($this->files, $files);
+    /**
+     * Verifies and adds a single file to the file list.
+     *
+     * @return $this
+     */
+    public function addFile(string $file)
+    {
+        $this->files[] = self::resolveFile($file);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Removes a single file from the list.
-	 *
-	 * @param string $file
-	 *
-	 * @return $this
-	 */
-	public function removeFile(string $file)
-	{
-		return $this->removeFiles([$file]);
-	}
+    /**
+     * Removes files from the list.
+     *
+     * @param string[] $files
+     *
+     * @return $this
+     */
+    public function removeFiles(array $files)
+    {
+        $this->files = array_diff($this->files, $files);
 
-	//--------------------------------------------------------------------
-	// Directory Handling
-	//--------------------------------------------------------------------
+        return $this;
+    }
 
-	/**
-	 * Verifies and adds files from each
-	 * directory to the list.
-	 *
-	 * @param string[] $directories
-	 * @param bool $recursive
-	 *
-	 * @return $this
-	 */
-	public function addDirectories(array $directories, bool $recursive = false)
-	{
-		foreach ($directories as $directory)
-		{
-			$this->addDirectory($directory, $recursive);
-		}
+    /**
+     * Removes a single file from the list.
+     *
+     * @return $this
+     */
+    public function removeFile(string $file)
+    {
+        return $this->removeFiles([$file]);
+    }
 
-		return $this;
-	}
+    //--------------------------------------------------------------------
+    // Directory Handling
+    //--------------------------------------------------------------------
 
-	/**
-	 * Verifies and adds all files from a directory.
-	 *
-	 * @param string  $directory
-	 * @param boolean $recursive
-	 *
-	 * @return $this
-	 */
-	public function addDirectory(string $directory, bool $recursive = false)
-	{
-		$directory = self::resolveDirectory($directory);
+    /**
+     * Verifies and adds files from each
+     * directory to the list.
+     *
+     * @param string[] $directories
+     *
+     * @return $this
+     */
+    public function addDirectories(array $directories, bool $recursive = false)
+    {
+        foreach ($directories as $directory) {
+            $this->addDirectory($directory, $recursive);
+        }
 
-		// Map the directory to depth 2 to so directories become arrays
-		foreach (directory_map($directory, 2, true) as $key => $path)
-		{
-			if (is_string($path))
-			{
-				$this->addFile($directory . $path);
-			}
-			elseif ($recursive && is_array($path))
-			{
-				$this->addDirectory($directory . $key, true);
-			}
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Verifies and adds all files from a directory.
+     *
+     * @return $this
+     */
+    public function addDirectory(string $directory, bool $recursive = false)
+    {
+        $directory = self::resolveDirectory($directory);
 
-	//--------------------------------------------------------------------
-	// Filtering
-	//--------------------------------------------------------------------
+        // Map the directory to depth 2 to so directories become arrays
+        foreach (directory_map($directory, 2, true) as $key => $path) {
+            if (is_string($path)) {
+                $this->addFile($directory . $path);
+            } elseif ($recursive && is_array($path)) {
+                $this->addDirectory($directory . $key, true);
+            }
+        }
 
-	/**
-	 * Removes any files from the list that match the supplied pattern
-	 * (within the optional scope).
-	 *
-	 * @param string      $pattern Regex or pseudo-regex string
-	 * @param string|null $scope The directory to limit the scope
-	 *
-	 * @return $this
-	 */
-	public function removePattern(string $pattern, string $scope = null)
-	{
-		if ($pattern === '')
-		{
-			return $this;
-		}
+        return $this;
+    }
 
-		// Start with all files or those in scope
-		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
+    //--------------------------------------------------------------------
+    // Filtering
+    //--------------------------------------------------------------------
 
-		// Remove any files that match the pattern
-		return $this->removeFiles(self::matchFiles($files, $pattern));
-	}
+    /**
+     * Removes any files from the list that match the supplied pattern
+     * (within the optional scope).
+     *
+     * @param string      $pattern Regex or pseudo-regex string
+     * @param string|null $scope   The directory to limit the scope
+     *
+     * @return $this
+     */
+    public function removePattern(string $pattern, ?string $scope = null)
+    {
+        if ($pattern === '') {
+            return $this;
+        }
 
-	/**
-	 * Keeps only the files from the list that match
-	 * (within the optional scope).
-	 *
-	 * @param string      $pattern Regex or pseudo-regex string
-	 * @param string|null $scope A directory to limit the scope
-	 *
-	 * @return $this
-	 */
-	public function retainPattern(string $pattern, string $scope = null)
-	{
-		if ($pattern === '')
-		{
-			return $this;
-		}
+        // Start with all files or those in scope
+        $files = null === $scope ? $this->files : self::filterFiles($this->files, $scope);
 
-		// Start with all files or those in scope
-		$files = is_null($scope) ? $this->files : self::filterFiles($this->files, $scope);
+        // Remove any files that match the pattern
+        return $this->removeFiles(self::matchFiles($files, $pattern));
+    }
 
-		// Matches the pattern within the scoped files and remove their inverse.
-		return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
-	}
+    /**
+     * Keeps only the files from the list that match
+     * (within the optional scope).
+     *
+     * @param string      $pattern Regex or pseudo-regex string
+     * @param string|null $scope   A directory to limit the scope
+     *
+     * @return $this
+     */
+    public function retainPattern(string $pattern, ?string $scope = null)
+    {
+        if ($pattern === '') {
+            return $this;
+        }
 
-	//--------------------------------------------------------------------
-	// Interface Methods
-	//--------------------------------------------------------------------
+        // Start with all files or those in scope
+        $files = null === $scope ? $this->files : self::filterFiles($this->files, $scope);
+
+        // Matches the pattern within the scoped files and remove their inverse.
+        return $this->removeFiles(array_diff($files, self::matchFiles($files, $pattern)));
+    }
+
+    //--------------------------------------------------------------------
+    // Interface Methods
+    //--------------------------------------------------------------------
 
     /**
      * Returns the current number of files in the collection.
      * Fulfills Countable.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -397,9 +360,8 @@ class FileCollection implements Countable, IteratorAggregate
      */
     public function getIterator(): Generator
     {
-    	foreach ($this->get() as $file)
-    	{
-    		yield new File($file, true);
-    	}
+        foreach ($this->get() as $file) {
+            yield new File($file, true);
+        }
     }
 }

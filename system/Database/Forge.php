@@ -379,10 +379,7 @@ class Forge
      * Add Foreign Key
      *
      * @param string|string[] $fieldName
-     * @param string          $tableName
      * @param string|string[] $tableField
-     * @param string          $onUpdate
-     * @param string          $onDelete
      *
      * @throws DatabaseException
      *
@@ -401,7 +398,7 @@ class Forge
         }
 
         if ($errorNames !== []) {
-            $errorNames[0] = implode(', ',$errorNames);
+            $errorNames[0] = implode(', ', $errorNames);
 
             throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
         }

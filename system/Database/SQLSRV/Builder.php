@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -16,6 +15,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\ResultInterface;
+
 /**
  * Builder for SQLSRV
  *
@@ -170,8 +170,6 @@ class Builder extends BaseBuilder
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Insert batch statement
      *
@@ -180,15 +178,11 @@ class Builder extends BaseBuilder
      * @param string $table  Table name
      * @param array  $keys   INSERT keys
      * @param array  $values INSERT values
-     *
-     * @return string
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
         return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Generates a platform-specific update string from the supplied data
@@ -212,8 +206,6 @@ class Builder extends BaseBuilder
         return $this->keyPermission ? $this->addIdentity($fullTableName, $statement) : $statement;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * Update_Batch statement
      *
@@ -222,8 +214,6 @@ class Builder extends BaseBuilder
      * @param string $table  Table name
      * @param array  $values Update data
      * @param string $index  WHERE key
-     *
-     * @return string
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
@@ -252,8 +242,6 @@ class Builder extends BaseBuilder
 
         return 'UPDATE ' . $this->compileIgnore('update') . ' ' . $this->getFullName($table) . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Increments a numeric column by the specified value.
@@ -371,7 +359,7 @@ class Builder extends BaseBuilder
         }
 
         $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' ON');
-        
+
         $result = $this->db->query($sql, $this->binds, false);
         $this->db->simpleQuery('SET IDENTITY_INSERT ' . $this->getFullName($table) . ' OFF');
 
@@ -477,8 +465,6 @@ class Builder extends BaseBuilder
         return $this;
     }
 
-    //--------------------------------------------------------------------
-
     /**
      * "Count All" query
      *
@@ -512,8 +498,6 @@ class Builder extends BaseBuilder
 
         return (int) $query->numrows;
     }
-
-    //--------------------------------------------------------------------
 
     /**
      * Delete statement

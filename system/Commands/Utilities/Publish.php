@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Commands\Utilities;
@@ -22,92 +22,83 @@ use CodeIgniter\Publisher\Publisher;
  */
 class Publish extends BaseCommand
 {
-	/**
-	 * The group the command is lumped under
-	 * when listing commands.
-	 *
-	 * @var string
-	 */
-	protected $group = 'CodeIgniter';
+    /**
+     * The group the command is lumped under
+     * when listing commands.
+     *
+     * @var string
+     */
+    protected $group = 'CodeIgniter';
 
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'publish';
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'publish';
 
-	/**
-	 * The Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Discovers and executes all predefined Publisher classes.';
+    /**
+     * The Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Discovers and executes all predefined Publisher classes.';
 
-	/**
-	 * The Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'publish [<directory>]';
+    /**
+     * The Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'publish [<directory>]';
 
-	/**
-	 * The Command's arguments
-	 *
-	 * @var array<string, string>
-	 */
-	protected $arguments = [
-		'directory' => '[Optional] The directory to scan within each namespace. Default: "Publishers".',
-	];
+    /**
+     * The Command's arguments
+     *
+     * @var array<string, string>
+     */
+    protected $arguments = [
+        'directory' => '[Optional] The directory to scan within each namespace. Default: "Publishers".',
+    ];
 
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [];
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = [];
 
-	//--------------------------------------------------------------------
+    /**
+     * Displays the help for the spark cli script itself.
+     */
+    public function run(array $params)
+    {
+        $directory = array_shift($params) ?? 'Publishers';
 
-	/**
-	 * Displays the help for the spark cli script itself.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$directory = array_shift($params) ?? 'Publishers';
+        if ([] === $publishers = Publisher::discover($directory)) {
+            CLI::write(lang('Publisher.publishMissing', [$directory]));
 
-		if ([] === $publishers = Publisher::discover($directory))
-		{
-			CLI::write(lang('Publisher.publishMissing', [$directory]));
-			return;
-		}
+            return;
+        }
 
-		foreach ($publishers as $publisher)
-		{
-			if ($publisher->publish())
-			{
-				CLI::write(lang('Publisher.publishSuccess', [
-					get_class($publisher),
-					count($publisher->getPublished()),
-					$publisher->getDestination(),
-				]), 'green');
-			}
-			else
-			{
-				CLI::error(lang('Publisher.publishFailure', [
-					get_class($publisher),
-					$publisher->getDestination(),
-				]), 'light_gray', 'red');
+        foreach ($publishers as $publisher) {
+            if ($publisher->publish()) {
+                CLI::write(lang('Publisher.publishSuccess', [
+                    get_class($publisher),
+                    count($publisher->getPublished()),
+                    $publisher->getDestination(),
+                ]), 'green');
+            } else {
+                CLI::error(lang('Publisher.publishFailure', [
+                    get_class($publisher),
+                    $publisher->getDestination(),
+                ]), 'light_gray', 'red');
 
-				foreach ($publisher->getErrors() as $file => $exception)
-				{
-					CLI::write($file);
-					CLI::error($exception->getMessage());
-					CLI::newLine();
-				}
-			}
-		}
-	}
+                foreach ($publisher->getErrors() as $file => $exception) {
+                    CLI::write($file);
+                    CLI::error($exception->getMessage());
+                    CLI::newLine();
+                }
+            }
+        }
+    }
 }

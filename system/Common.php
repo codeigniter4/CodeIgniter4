@@ -644,8 +644,6 @@ if (! function_exists('is_cli')) {
     /**
      * Check if PHP was invoked from the command line.
      *
-     * @return bool
-     *
      * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in php-cli
      */
     function is_cli(): bool
@@ -721,19 +719,17 @@ if (! function_exists('lang')) {
     {
         $language = Services::language();
 
-        //Get active locale
+        // Get active locale
         $activeLocale = $language->getLocale();
 
-        if ($locale && $locale != $activeLocale)
-        {
+        if ($locale && $locale !== $activeLocale) {
             $language->setLocale($locale);
         }
 
         $line = $language->getLine($line, $args);
 
-        if ($locale && $locale != $activeLocale)
-        {
-            //Reset to active locale
+        if ($locale && $locale !== $activeLocale) {
+            // Reset to active locale
             $language->setLocale($activeLocale);
         }
 
