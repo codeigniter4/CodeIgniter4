@@ -44,7 +44,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.1.3';
+    public const CI_VERSION = '4.1.4';
 
     private const MIN_PHP_VERSION = '7.3';
 

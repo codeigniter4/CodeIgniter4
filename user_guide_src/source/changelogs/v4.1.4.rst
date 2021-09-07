@@ -1,9 +1,12 @@
 Version 4.1.4
 =============
 
-Release Date: Not released
+Release Date: September 6, 2021
 
 **4.1.4 release of CodeIgniter4**
+
+This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
+`CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
 
 Breaking Changes:
 
