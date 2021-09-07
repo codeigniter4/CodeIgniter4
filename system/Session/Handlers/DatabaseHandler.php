@@ -152,25 +152,30 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Writes the session data to the session storage.
+     * Write
      *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * Writes (create / update) session data
+     *
+     * @param string $sessionID   Session ID
+     * @param string $sessionData Serialized session data
+     *
+     * @return bool
      */
-    public function write($id, $data): bool
+    public function write($sessionID, $sessionData): bool
     {
         if ($this->lock === false) {
             return $this->fail();
         }
 
-        if ($this->sessionID !== $id) {
+        // Was the ID regenerated?
+        if ($sessionID !== $this->sessionID) {
             $this->rowExists = false;
-            $this->sessionID = $id;
+            $this->sessionID = $sessionID;
         }
 
         if ($this->rowExists === false) {
             $insertData = [
-                'id'         => $id,
+                'id'         => $sessionID,
                 'ip_address' => $this->ipAddress,
                 'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
             ];
@@ -179,13 +184,13 @@ class DatabaseHandler extends BaseHandler
                 return $this->fail();
             }
 
-            $this->fingerprint = md5($data);
+            $this->fingerprint = md5($sessionData);
             $this->rowExists   = true;
 
             return true;
         }
 
-        $builder = $this->db->table($this->table)->where('id', $id);
+        $builder = $this->db->table($this->table)->where('id', $sessionID);
 
         if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
@@ -193,15 +198,15 @@ class DatabaseHandler extends BaseHandler
 
         $updateData = [];
 
-        if ($this->fingerprint !== md5($data)) {
-            $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($data) : $data;
+        if ($this->fingerprint !== md5($sessionData)) {
+            $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($sessionData) : $sessionData;
         }
 
         if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
             return $this->fail();
         }
 
-        $this->fingerprint = md5($data);
+        $this->fingerprint = md5($sessionData);
 
         return true;
     }
@@ -256,7 +261,7 @@ class DatabaseHandler extends BaseHandler
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
-        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? true : $this->fail();
+        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
     }
 
     /**
