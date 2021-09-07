@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Custom Function Calls &mdash; CodeIgniter 4.1.4 documentation</title>
+  <title>Upgrading from 4.1.3 to 4.1.4 &mdash; CodeIgniter 4.1.4 documentation</title>
   
 
   
@@ -43,8 +43,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Database Events" href="events.html" />
-    <link rel="prev" title="Database Metadata" href="metadata.html" /> 
+    <link rel="next" title="Upgrading from 4.1.2 to 4.1.3" href="upgrade_413.html" />
+    <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,14 +98,14 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -175,20 +175,20 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Working With Databases</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Custom Function Calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html">Database Utilities</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
 </ul>
 </li>
 </ul>
@@ -329,9 +329,11 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">Working With Databases</a> &raquo;</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
         
-      <li>Custom Function Calls</li>
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+      <li>Upgrading from 4.1.3 to 4.1.4</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -348,44 +350,96 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="custom-function-calls">
-<h1>Custom Function Calls<a class="headerlink" href="#custom-function-calls" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
+  <div class="section" id="upgrading-from-4-1-3-to-4-1-4">
+<h1>Upgrading from 4.1.3 to 4.1.4<a class="headerlink" href="#upgrading-from-4-1-3-to-4-1-4" title="Permalink to this headline">¶</a></h1>
+<p>This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
+<a class="reference external" href="https://github.com/CodeIgniter/coding-standard">CodeIgniter Coding Standard</a> (based on PSR-12).</p>
+<p><strong>Method Scope</strong></p>
+<p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses.
+If you relied on any of these methods being public (highly unlikely) adjust your code accordingly:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Builder</span><span class="o">::</span><span class="na">_like_statement</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\GDHandler</span><span class="o">::</span><span class="na">_flatten</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\GDHandler</span><span class="o">::</span><span class="na">_flip</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\ImageMagickHandler</span><span class="o">::</span><span class="na">_flatten</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\ImageMagickHandler</span><span class="o">::</span><span class="na">_flip</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Test\Mock\MockIncomingRequest</span><span class="o">::</span><span class="na">detectURI</span><span class="p">()</span><span class="sb">``</span>
+<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Test\Mock\MockSecurity</span><span class="o">.</span><span class="nx">php</span><span class="o">::</span><span class="na">sendCookie</span><span class="p">()</span><span class="sb">``</span>
+</pre></div>
+</div>
+<div class="section" id="project-files">
+<h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline">¶</a></h2>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space
+will break your application. All changes noted here are optional until the next major version,
+and any mandatory changes will be covered in the sections above.</p>
+</div>
+<div class="section" id="content-changes">
+<h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline">¶</a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#db-callfunction" id="id1">$db-&gt;callFunction();</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/*</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="db-callfunction">
-<h2><a class="toc-backref" href="#id1">$db-&gt;callFunction();</a><a class="headerlink" href="#db-callfunction" title="Permalink to this headline">¶</a></h2>
-<p>This function enables you to call PHP database functions that are not
-natively included in CodeIgniter, in a platform-independent manner. For
-example, let’s say you want to call the <code class="docutils literal notranslate"><span class="pre">mysql_get_client_info()</span></code>
-function, which is <strong>not</strong> natively supported by CodeIgniter. You could
-do so like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;get_client_info&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>You must supply the name of the function, <strong>without</strong> the mysql_
-prefix, in the first parameter. The prefix is added automatically based
-on which database driver is currently being used. This permits you to
-run the same function on different database platforms. Obviously, not all
-function calls are identical between platforms, so there are limits to
-how useful this function can be in terms of portability.</p>
-<p>Any parameters needed by the function you are calling will be added to
-the second parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span><span class="p">,</span> <span class="nx">etc</span><span class="o">..</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Often, you will either need to supply a database connection ID or a
-database result ID. The connection ID can be accessed using:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">connID</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>The result ID can be accessed from within your result object, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SOME QUERY&quot;</span><span class="p">);</span>
-
-<span class="nv">$query</span><span class="o">-&gt;</span><span class="na">resultID</span><span class="p">;</span>
-</pre></div>
+<div class="section" id="all-changes">
+<h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline">¶</a></h3>
+<p>This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no affect on the runtime:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/App.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Autoload.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/ContentSecurityPolicy.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cookie.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Events.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Exceptions.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Logger.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Mimes.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Modules.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Controllers/BaseController.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/debug.css</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_404.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/errors/html/error_exception.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/welcome_message.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composer.json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contributing/guidelines.rst</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpstan.neon.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/.htaccess</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public/index.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rector.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span></code></p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -396,8 +450,8 @@ database result ID. The connection ID can be accessed using:</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="events.html" class="btn btn-neutral float-right" title="Database Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="metadata.html" class="btn btn-neutral float-left" title="Database Metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_413.html" class="btn btn-neutral float-right" title="Upgrading from 4.1.2 to 4.1.3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrading.html" class="btn btn-neutral float-left" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
