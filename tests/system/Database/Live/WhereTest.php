@@ -237,7 +237,7 @@ final class WhereTest extends CIUnitTestCase
         ]);
 
         $job = $builder
-            ->where(sprintf('LOWER(%s.name)', $this->db->prefixTable('job')), 'brewmaster')
+            ->where(sprintf("LOWER({$this->db->protectIdentifiers('%s.name')})", 'job'), 'brewmaster')
             ->get()
             ->getResult();
         $this->assertCount(1, $job);

@@ -117,7 +117,11 @@ final class PreparedQueryTest extends CIUnitTestCase
     public function testExecuteRunsQueryAndReturnsManualResultObject()
     {
         $this->query = $this->db->prepare(static function ($db) {
-            $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
+                  . $db->protectIdentifiers('name') . ', '
+                  . $db->protectIdentifiers('email') . ', '
+                  . $db->protectIdentifiers('country')
+                  . ") VALUES (?, ?, ?)";
 
             if ($db->DBDriver === 'SQLSRV') {
                 $sql = "INSERT INTO {$db->schema}.{$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
@@ -126,8 +130,8 @@ final class PreparedQueryTest extends CIUnitTestCase
             return (new Query($db))->setQuery($sql);
         });
 
-        $this->query->execute('foo', 'foo@example.com', '');
-        $this->query->execute('bar', 'bar@example.com', '');
+        $this->query->execute('foo', 'foo@example.com', 'US');
+        $this->query->execute('bar', 'bar@example.com', 'GB');
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
