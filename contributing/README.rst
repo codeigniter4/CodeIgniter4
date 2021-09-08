@@ -8,7 +8,7 @@ Contributing to CodeIgniter
 - `Contribution CSS <./css.rst>`_
 - `Framework internals <./internals.rst>`_
 - `CodeIgniter documentation <./documentation.rst>`_
-- `PHP Style Guide <./styleguide.rst>`_
+- `CodeIgniter Coding Style Guide <./styleguide.md>`_
 - `Developer's Certificate of Origin <../DCO.txt>`_
 
 CodeIgniter is a community driven project and accepts contributions of code
