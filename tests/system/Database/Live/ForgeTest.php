@@ -201,7 +201,7 @@ final class ForgeTest extends CIUnitTestCase
         {
             $this->markTestSkipped('OCI8 does not support comments on tables or columns.');
         }
-        if ($this->db->DBDriver === 'SQLite3')
+        if ($this->db->DBDriver === 'SQLite3'){
             $this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
         }
 
