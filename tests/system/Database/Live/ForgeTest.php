@@ -454,7 +454,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($foreignKeyData[0]->column_name, 'users_id');
             $this->assertSame($foreignKeyData[0]->foreign_column_name, 'id');
         }
-        $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . 'forge_test_invoices');
+        $this->assertSame($foreignKeyData[0]->table_name, $this->db->DBPrefix . $tableName);
         $this->assertSame($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix . 'forge_test_users');
 
         $this->forge->dropTable($tableName, true);
