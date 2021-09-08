@@ -213,6 +213,17 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _processColumn(array $field): string
 	{
+        $constraint = '';
+        // @fixme: can’t cover multi pattern when set type.
+        if ($field['type'] === 'VARCHAR2' && strpos($field['length'], "('") === 0) {
+            $constraint = ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
+                . ' IN ' . $field['length'] . ')';
+
+            $field['length'] = '('.max(array_map('mb_strlen', explode("','",  mb_substr($field['length'], 2, -2)))).')'.$constraint;
+        } else if (count($this->primaryKeys) === 1 && $field['name'] === $this->primaryKeys[0]) {
+            $field['unique'] = '';
+        }
+
 		return $this->db->escapeIdentifiers($field['name'])
 			   . ' ' . $field['type'] . $field['length']
 			   . $field['unsigned']
