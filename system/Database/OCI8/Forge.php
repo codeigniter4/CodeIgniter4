@@ -113,16 +113,21 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _alterTable(string $alter_type, string $table, $field)
 	{
+		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
+
 		if ($alter_type === 'DROP')
 		{
-			return parent::_alterTable($alter_type, $table, $field);
+            $fields = array_map(function ($field) {
+                return $this->db->escapeIdentifiers(trim($field));
+            }, (is_string($field)) ? explode(',', $field) : $field);
+
+			return $sql . ' DROP ('.implode(',', $fields).') CASCADE CONSTRAINT INVALIDATE';
 		}
 		elseif ($alter_type === 'CHANGE')
 		{
 			$alter_type = 'MODIFY';
 		}
 
-		$sql          = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 		$nullable_map = array_column($this->db->getFieldData($table), 'nullable', 'name');
 		$sqls         = [];
 		for ($i = 0, $c = count($field); $i < $c; $i++)
