@@ -247,7 +247,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testNegotiatesCharset()
     {
-        //      $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
+        // $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
         $this->assertSame(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
@@ -299,6 +299,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $this->assertSame('bar', $request->getJsonVar('foo'));
+        $this->assertNull($request->getJsonVar('notExists'));
+
         $jsonVar = $request->getJsonVar('baz');
         $this->assertIsObject($jsonVar);
         $this->assertSame('buzz', $jsonVar->fizz);
@@ -340,11 +342,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetVarWorksWithJson()
     {
-        $jsonObj = [
-            'foo'  => 'bar',
-            'fizz' => 'buzz',
-        ];
-        $json = json_encode($jsonObj);
+        $json = json_encode(['foo' => 'bar', 'fizz' => 'buzz']);
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -354,6 +352,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('bar', $request->getVar('foo'));
         $this->assertSame('buzz', $request->getVar('fizz'));
+        $this->assertNull($request->getVar('notExists'));
 
         $multiple = $request->getVar(['foo', 'fizz']);
         $this->assertIsArray($multiple);

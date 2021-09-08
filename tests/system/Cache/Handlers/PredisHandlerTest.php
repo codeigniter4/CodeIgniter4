@@ -109,6 +109,18 @@ final class PredisHandlerTest extends CIUnitTestCase
         $this->assertTrue($this->PredisHandler->save(self::$key1, 'value'));
     }
 
+    public function testSavePermanent()
+    {
+        $this->assertTrue($this->PredisHandler->save(self::$key1, 'value', 0));
+        $metaData = $this->PredisHandler->getMetaData(self::$key1);
+
+        $this->assertNull($metaData['expire']);
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertSame('value', $metaData['data']);
+
+        $this->assertTrue($this->PredisHandler->delete(self::$key1));
+    }
+
     public function testDelete()
     {
         $this->PredisHandler->save(self::$key1, 'value');

@@ -23,4 +23,24 @@ class FileException extends RuntimeException implements ExceptionInterface
     {
         return new static(lang('Files.cannotMove', [$from, $to, $error]));
     }
+
+    /**
+     * Throws when an item is expected to be a directory but is not or is missing.
+     *
+     * @param string $caller The method causing the exception
+     */
+    public static function forExpectedDirectory(string $caller)
+    {
+        return new static(lang('Files.expectedDirectory', [$caller]));
+    }
+
+    /**
+     * Throws when an item is expected to be a file but is not or is missing.
+     *
+     * @param string $caller The method causing the exception
+     */
+    public static function forExpectedFile(string $caller)
+    {
+        return new static(lang('Files.expectedFile', [$caller]));
+    }
 }

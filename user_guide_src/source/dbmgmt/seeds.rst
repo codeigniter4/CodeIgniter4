@@ -125,15 +125,13 @@ Using the command line, you can easily generate seed files.
 
 ::
 
-	// This command will create a UserSeeder seed file
-	// located at app/Database/Seeds/ directory.
-	> php spark make:seeder UserSeeder
+	> php spark make:seeder user --suffix
+	// Output: UserSeeder.php file located at app/Database/Seeds directory.
 
-You can supply the **root** namespace where the seed file will be stored by supplying the ``-n`` option::
+You can supply the **root** namespace where the seed file will be stored by supplying the ``--namespace`` option::
 
-	> php spark make:seeder MySeeder -n Acme\Blog
+	> php spark make:seeder MySeeder --namespace Acme\Blog
 
-If ``Acme\Blog`` is mapped to ``app/Blog`` directory, then this command will save the
-seed file to ``app/Blog/Database/Seeds/``.
+If ``Acme\Blog`` is mapped to ``app/Blog`` directory, then this command will generate ``MySeeder.php`` at ``app/Blog/Database/Seeds`` directory.
 
 Supplying the ``--force`` option will overwrite existing files in destination.

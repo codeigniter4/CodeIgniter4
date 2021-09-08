@@ -102,6 +102,18 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $this->assertTrue($this->memcachedHandler->save(self::$key1, 'value'));
     }
 
+    public function testSavePermanent()
+    {
+        $this->assertTrue($this->memcachedHandler->save(self::$key1, 'value', 0));
+        $metaData = $this->memcachedHandler->getMetaData(self::$key1);
+
+        $this->assertNull($metaData['expire']);
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertSame('value', $metaData['data']);
+
+        $this->assertTrue($this->memcachedHandler->delete(self::$key1));
+    }
+
     public function testDelete()
     {
         $this->memcachedHandler->save(self::$key1, 'value');

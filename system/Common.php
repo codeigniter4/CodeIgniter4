@@ -644,19 +644,11 @@ if (! function_exists('is_cli')) {
     /**
      * Check if PHP was invoked from the command line.
      *
-     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
+     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in php-cli
      */
     function is_cli(): bool
     {
-        if (PHP_SAPI === 'cli') {
-            return true;
-        }
-
         if (defined('STDIN')) {
-            return true;
-        }
-
-        if (stristr(PHP_SAPI, 'cgi') && getenv('TERM')) {
             return true;
         }
 
@@ -725,8 +717,23 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
-        return Services::language($locale)
-            ->getLine($line, $args);
+        $language = Services::language();
+
+        // Get active locale
+        $activeLocale = $language->getLocale();
+
+        if ($locale && $locale !== $activeLocale) {
+            $language->setLocale($locale);
+        }
+
+        $line = $language->getLine($line, $args);
+
+        if ($locale && $locale !== $activeLocale) {
+            // Reset to active locale
+            $language->setLocale($activeLocale);
+        }
+
+        return $line;
     }
 }
 
@@ -819,9 +826,7 @@ if (! function_exists('redirect')) {
     /**
      * Convenience method that works with the current global $request and
      * $router instances to redirect using named/reverse-routed routes
-     * to determine the URL to go to. If nothing is found, will treat
-     * as a traditional redirect and pass the string in, letting
-     * $response->redirect() determine the correct method and code.
+     * to determine the URL to go to.
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *

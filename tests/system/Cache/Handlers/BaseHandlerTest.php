@@ -44,6 +44,16 @@ final class BaseHandlerTest extends CIUnitTestCase
         ];
     }
 
+    public function testValidateKeyUsesConfig()
+    {
+        config('Cache')->reservedCharacters = 'b';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cache key contains reserved characters b');
+
+        BaseHandler::validateKey('banana');
+    }
+
     public function testValidateKeySuccess()
     {
         $string = 'banana';

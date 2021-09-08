@@ -215,14 +215,14 @@ trait GeneratorTrait
         // Trims input, normalize separators, and ensure that all paths are in Pascalcase.
         $class = ltrim(implode('\\', array_map('pascalize', explode('\\', str_replace('/', '\\', trim($class))))), '\\/');
 
-        // Gets the namespace from input.
-        $namespace = trim(str_replace('/', '\\', $this->getOption('namespace') ?? APP_NAMESPACE), '\\');
+        // Gets the namespace from input. Don't forget the ending backslash!
+        $namespace = trim(str_replace('/', '\\', $this->getOption('namespace') ?? APP_NAMESPACE), '\\') . '\\';
 
         if (strncmp($class, $namespace, strlen($namespace)) === 0) {
             return $class; // @codeCoverageIgnore
         }
 
-        return $namespace . '\\' . $this->directory . '\\' . str_replace('/', '\\', $class);
+        return $namespace . $this->directory . '\\' . str_replace('/', '\\', $class);
     }
 
     /**

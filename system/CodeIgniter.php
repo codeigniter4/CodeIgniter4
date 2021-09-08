@@ -357,7 +357,7 @@ class CodeIgniter
     {
         $routeFilter = $this->tryToRouteIt($routes);
 
-        // Run "before" filters
+        // Start up the filters
         $filters = Services::filters();
 
         // If any filters were specified within the routes file,
@@ -371,7 +371,10 @@ class CodeIgniter
 
         // Never run filters when running through Spark cli
         if (! defined('SPARKED')) {
+            // Run "before" filters
+            $this->benchmark->start('before_filters');
             $possibleResponse = $filters->run($uri, 'before');
+            $this->benchmark->stop('before_filters');
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
@@ -410,8 +413,11 @@ class CodeIgniter
         // Never run filters when running through Spark cli
         if (! defined('SPARKED')) {
             $filters->setResponse($this->response);
+
             // Run "after" filters
+            $this->benchmark->start('after_filters');
             $response = $filters->run($uri, 'after');
+            $this->benchmark->stop('after_filters');
         } else {
             $response = $this->response;
 
@@ -490,7 +496,9 @@ class CodeIgniter
      */
     protected function startBenchmark()
     {
-        $this->startTime = microtime(true);
+        if ($this->startTime === null) {
+            $this->startTime = microtime(true);
+        }
 
         $this->benchmark = Services::timer();
         $this->benchmark->start('total_execution', $this->startTime);

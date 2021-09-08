@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseUtils;
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
@@ -32,6 +33,13 @@ class Utils extends BaseUtils
      * @var string
      */
     protected $optimizeTable = 'ALTER INDEX all ON %s REORGANIZE';
+
+    public function __construct(ConnectionInterface &$db)
+    {
+        parent::__construct($db);
+
+        $this->optimizeTable = 'ALTER INDEX all ON  ' . $this->db->schema . '.%s REORGANIZE';
+    }
 
     /**
      * Platform dependent version of the backup function.

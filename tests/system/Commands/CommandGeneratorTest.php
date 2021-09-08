@@ -132,4 +132,24 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
         $this->assertFileExists(APPPATH . 'Controllers/TestModuleController.php');
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4857
+     */
+    public function testGeneratorIsNotConfusedWithNamespaceLikeClassNames(): void
+    {
+        $time      = time();
+        $notExists = true;
+        command('make:migration App_Lesson');
+
+        // we got 5 chances to prove that the file created went to app/Database/Migrations
+        foreach (range(0, 4) as $increment) {
+            $expectedFile = sprintf('%sDatabase/Migrations/%s_AppLesson.php', APPPATH, gmdate('Y-m-d-His', $time + $increment));
+            clearstatcache(true, $expectedFile);
+
+            $notExists = $notExists && ! is_file($expectedFile);
+        }
+
+        $this->assertFalse($notExists, 'Creating migration file for class "AppLesson" did not go to "app/Database/Migrations"');
+    }
 }
