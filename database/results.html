@@ -215,9 +215,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html#file-collections">File Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
@@ -258,6 +260,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 </ul>
 </li>
 </ul>
@@ -501,6 +504,36 @@ it returns the current row and moves the internal data pointer ahead.</p>
     <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">body</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<p>For use with MySQLi you may set MySQLi’s result mode to
+<code class="docutils literal notranslate"><span class="pre">MYSQLI_USE_RESULT</span></code> for maximum memory savings. Use of this is not
+generally recommended but it can be beneficial in some circumstances
+such as writing large queries to csv. If you change the result mode
+be aware of the tradeoffs associated with it.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">resultMode</span> <span class="o">=</span> <span class="nx">MYSQLI_USE_RESULT</span><span class="p">;</span> <span class="c1">// for unbuffered results</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;data.csv&#39;</span><span class="p">);</span>
+
+<span class="nv">$csv</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">openFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">);</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getUnbufferedRow</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="nv">$csv</span><span class="o">-&gt;</span><span class="na">fputcsv</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">resultMode</span> <span class="o">=</span> <span class="nx">MYSQLI_STORE_RESULT</span><span class="p">;</span> <span class="c1">// return to default mode</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">MYSQLI_USE_RESULT</span></code> all subsequent calls on the same
+connection will result in error until all records have been fetched or
+a <code class="docutils literal notranslate"><span class="pre">freeResult()</span></code> call has been made. The <code class="docutils literal notranslate"><span class="pre">getNumRows()</span></code> method will only
+return the number of rows based on the current position of the data pointer.
+MyISAM tables will remain locked until all the records have been fetched
+or a <code class="docutils literal notranslate"><span class="pre">freeResult()</span></code> call has been made.</p>
 </div>
 <p>You can optionally pass ‘object’ (default) or ‘array’ in order to specify
 the returned value’s type:</p>
@@ -1042,7 +1075,7 @@ field meta-data.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Sep 07, 2021.
+        Last updated on Sep 08, 2021.
       </span>
 
     </p>

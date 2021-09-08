@@ -215,9 +215,11 @@
 <li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html#file-collections">File Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publisher.html">Publisher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="security.html">Security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Throttler</a></li>
@@ -258,6 +260,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 </ul>
 </li>
 </ul>
@@ -423,10 +426,9 @@ along the lines of:</p>
     <span class="p">{</span>
         <span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
 
-        <span class="c1">// Restrict an IP address to no more</span>
-        <span class="c1">// than 1 request per second across the</span>
-        <span class="c1">// entire site.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">(),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Restrict an IP address to no more than 1 request</span>
+        <span class="c1">// per second across the entire site.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nb">md5</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">()),</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">429</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -553,7 +555,7 @@ Won’t fail if the bucket doesn’t exist.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Sep 07, 2021.
+        Last updated on Sep 08, 2021.
       </span>
 
     </p>
