@@ -1,39 +1,12 @@
 <?php
 
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database\OCI8;
@@ -43,312 +16,290 @@ namespace CodeIgniter\Database\OCI8;
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
+    /**
+     * CREATE DATABASE statement
+     *
+     * @var string
+     */
+    protected $createDatabaseStr = false;
 
-	/**
-	 * CREATE DATABASE statement
-	 *
-	 * @var string
-	 */
-	protected $createDatabaseStr = false;
+    /**
+     * CREATE TABLE IF statement
+     *
+     * @var string
+     */
+    protected $createTableIfStr = false;
 
-	/**
-	 * CREATE TABLE IF statement
-	 *
-	 * @var string
-	 */
-	protected $createTableIfStr = false;
+    /**
+     * DROP TABLE IF EXISTS statement
+     *
+     * @var string
+     */
+    protected $dropTableIfStr = false;
 
-	/**
-	 * DROP TABLE IF EXISTS statement
-	 *
-	 * @var string
-	 */
-	protected $dropTableIfStr = false;
+    /**
+     * DROP DATABASE statement
+     *
+     * @var string
+     */
+    protected $dropDatabaseStr = false;
 
-	/**
-	 * DROP DATABASE statement
-	 *
-	 * @var string
-	 */
-	protected $dropDatabaseStr = false;
+    /**
+     * UNSIGNED support
+     *
+     * @var array|bool
+     */
+    protected $unsigned = false;
 
-	/**
-	 * UNSIGNED support
-	 *
-	 * @var boolean|array
-	 */
-	protected $unsigned = false;
+    /**
+     * NULL value representation in CREATE/ALTER TABLE statements
+     *
+     * @var string
+     */
+    protected $null = 'NULL';
 
-	/**
-	 * NULL value representation in CREATE/ALTER TABLE statements
-	 *
-	 * @var string
-	 */
-	protected $null = 'NULL';
+    /**
+     * RENAME TABLE statement
+     *
+     * @var string
+     */
+    protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
 
-	/**
-	 * RENAME TABLE statement
-	 *
-	 * @var string
-	 */
-	protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
+    /**
+     * DROP CONSTRAINT statement
+     *
+     * @var string
+     */
+    protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
-	/**
-	 * DROP CONSTRAINT statement
-	 *
-	 * @var string
-	 */
-	protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
+    /**
+     * ALTER TABLE
+     *
+     * @param string $alter_type ALTER type
+     * @param string $table      Table name
+     * @param mixed  $field      Column definition
+     *
+     * @return string|string[]
+     */
+    protected function _alterTable(string $alter_type, string $table, $field)
+    {
+        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * ALTER TABLE
-	 *
-	 * @param string $alter_type ALTER type
-	 * @param string $table      Table name
-	 * @param mixed  $field      Column definition
-	 *
-	 * @return string|string[]
-	 */
-	protected function _alterTable(string $alter_type, string $table, $field)
-	{
-		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-
-		if ($alter_type === 'DROP')
-		{
+        if ($alter_type === 'DROP') {
             $fields = array_map(function ($field) {
                 return $this->db->escapeIdentifiers(trim($field));
             }, (is_string($field)) ? explode(',', $field) : $field);
 
-			return $sql . ' DROP ('.implode(',', $fields).') CASCADE CONSTRAINT INVALIDATE';
-		}
-		elseif ($alter_type === 'CHANGE')
-		{
-			$alter_type = 'MODIFY';
-		}
+            return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
+        }
+        if ($alter_type === 'CHANGE') {
+            $alter_type = 'MODIFY';
+        }
 
-		$nullable_map = array_column($this->db->getFieldData($table), 'nullable', 'name');
-		$sqls         = [];
-		for ($i = 0, $c = count($field); $i < $c; $i++)
-		{
-			if ($alter_type === 'MODIFY')
-			{
-				// If a null constraint is added to a column with a null constraint,
-				// ORA-01451 will occur,
-				// so add null constraint is used only when it is different from the current null constraint.
-				$is_want_to_add_null  = (strpos($field[$i]['null'], ' NOT') === false);
-				$current_null_addable = $nullable_map[$field[$i]['name']];
+        $nullable_map = array_column($this->db->getFieldData($table), 'nullable', 'name');
+        $sqls         = [];
 
-				if ($is_want_to_add_null === $current_null_addable)
-				{
-					$field[$i]['null'] = '';
-				}
-			}
+        for ($i = 0, $c = count($field); $i < $c; $i++) {
+            if ($alter_type === 'MODIFY') {
+                // If a null constraint is added to a column with a null constraint,
+                // ORA-01451 will occur,
+                // so add null constraint is used only when it is different from the current null constraint.
+                $is_want_to_add_null  = (strpos($field[$i]['null'], ' NOT') === false);
+                $current_null_addable = $nullable_map[$field[$i]['name']];
 
-			if ($field[$i]['_literal'] !== false)
-			{
-				$field[$i] = "\n\t" . $field[$i]['_literal'];
-			}
-			else
-			{
-				$field[$i]['_literal'] = "\n\t" . $this->_processColumn($field[$i]);
+                if ($is_want_to_add_null === $current_null_addable) {
+                    $field[$i]['null'] = '';
+                }
+            }
 
-				if (! empty($field[$i]['comment']))
-				{
-					$sqls[] = 'COMMENT ON COLUMN '
-						. $this->db->escapeIdentifiers($table) . '.' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. ' IS ' . $field[$i]['comment'];
-				}
+            if ($field[$i]['_literal'] !== false) {
+                $field[$i] = "\n\t" . $field[$i]['_literal'];
+            } else {
+                $field[$i]['_literal'] = "\n\t" . $this->_processColumn($field[$i]);
 
-				if ($alter_type === 'MODIFY' && ! empty($field[$i]['new_name']))
-				{
-					$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
-						. ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
-				}
+                if (! empty($field[$i]['comment'])) {
+                    $sqls[] = 'COMMENT ON COLUMN '
+                        . $this->db->escapeIdentifiers($table) . '.' . $this->db->escapeIdentifiers($field[$i]['name'])
+                        . ' IS ' . $field[$i]['comment'];
+                }
 
-				$field[$i] = "\n\t" . $field[$i]['_literal'];
-			}
-		}
+                if ($alter_type === 'MODIFY' && ! empty($field[$i]['new_name'])) {
+                    $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+                        . ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
+                }
 
-		$sql .= ' ' . $alter_type . ' ';
-		$sql .= (count($field) === 1)
-				? $field[0]
-				: '(' . implode(',', $field) . ')';
+                $field[$i] = "\n\t" . $field[$i]['_literal'];
+            }
+        }
 
-		// RENAME COLUMN must be executed after MODIFY
-		array_unshift($sqls, $sql);
-		return $sqls;
-	}
+        $sql .= ' ' . $alter_type . ' ';
+        $sql .= (count($field) === 1)
+                ? $field[0]
+                : '(' . implode(',', $field) . ')';
 
-	//--------------------------------------------------------------------
+        // RENAME COLUMN must be executed after MODIFY
+        array_unshift($sqls, $sql);
 
-	/**
-	 * Field attribute AUTO_INCREMENT
-	 *
-	 * @param array &$attributes
-	 * @param array &$field
-	 *
-	 * @return void
-	 */
-	protected function _attributeAutoIncrement(array &$attributes, array &$field)
-	{
-		if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
-			&& stripos($field['type'], 'NUMBER') !== false
-			&& version_compare($this->db->getVersion(), '12.1', '>=')
-		)
-		{
-			$field['auto_increment'] = ' GENERATED BY DEFAULT AS IDENTITY';
-		}
-	}
+        return $sqls;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Field attribute AUTO_INCREMENT
+     *
+     * @param array &$attributes
+     * @param array &$field
+     *
+     * @return void
+     */
+    protected function _attributeAutoIncrement(array &$attributes, array &$field)
+    {
+        if (! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true
+            && stripos($field['type'], 'NUMBER') !== false
+            && version_compare($this->db->getVersion(), '12.1', '>=')
+        ) {
+            $field['auto_increment'] = ' GENERATED BY DEFAULT AS IDENTITY';
+        }
+    }
 
-	/**
-	 * Process column
-	 *
-	 * @param array $field
-	 *
-	 * @return string
-	 */
-	protected function _processColumn(array $field): string
-	{
+    /**
+     * Process column
+     */
+    protected function _processColumn(array $field): string
+    {
         $constraint = '';
         // @fixme: can’t cover multi pattern when set type.
         if ($field['type'] === 'VARCHAR2' && strpos($field['length'], "('") === 0) {
             $constraint = ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
                 . ' IN ' . $field['length'] . ')';
 
-            $field['length'] = '('.max(array_map('mb_strlen', explode("','",  mb_substr($field['length'], 2, -2)))).')'.$constraint;
-        } else if (count($this->primaryKeys) === 1 && $field['name'] === $this->primaryKeys[0]) {
+            $field['length'] = '(' . max(array_map('mb_strlen', explode("','", mb_substr($field['length'], 2, -2)))) . ')' . $constraint;
+        } elseif (count($this->primaryKeys) === 1 && $field['name'] === $this->primaryKeys[0]) {
             $field['unique'] = '';
         }
 
-		return $this->db->escapeIdentifiers($field['name'])
-			   . ' ' . $field['type'] . $field['length']
-			   . $field['unsigned']
-			   . $field['default']
-			   . $field['auto_increment']
-			   . $field['null']
-			   . $field['unique'];
-	}
+        return $this->db->escapeIdentifiers($field['name'])
+               . ' ' . $field['type'] . $field['length']
+               . $field['unsigned']
+               . $field['default']
+               . $field['auto_increment']
+               . $field['null']
+               . $field['unique'];
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Field attribute TYPE
+     *
+     * Performs a data type mapping between different databases.
+     *
+     * @param array &$attributes
+     *
+     * @return void
+     */
+    protected function _attributeType(array &$attributes)
+    {
+        // Reset field lengths for data types that don't support it
+        // Usually overridden by drivers
+        switch (strtoupper($attributes['TYPE'])) {
+            case 'TINYINT':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 3;
+                // no break
+            case 'SMALLINT':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 5;
+                // no break
+            case 'MEDIUMINT':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 7;
+                // no break
+            case 'INT':
+            case 'INTEGER':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 11;
+                // no break
+            case 'BIGINT':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 19;
+                // no break
+            case 'NUMERIC':
+                $attributes['TYPE'] = 'NUMBER';
 
-	/**
-	 * Field attribute TYPE
-	 *
-	 * Performs a data type mapping between different databases.
-	 *
-	 * @param array &$attributes
-	 *
-	 * @return void
-	 */
-	protected function _attributeType(array &$attributes)
-	{
-		// Reset field lengths for data types that don't support it
-		// Usually overridden by drivers
-		switch (strtoupper($attributes['TYPE']))
-		{
-			case 'TINYINT':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 3;
-			case 'SMALLINT':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 5;
-			case 'MEDIUMINT':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 7;
-			case 'INT':
-			case 'INTEGER':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 11;
-			case 'BIGINT':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 19;
-			case 'NUMERIC':
-				$attributes['TYPE'] = 'NUMBER';
-				return;
+                return;
+
             case 'DOUBLE':
-				$attributes['TYPE'] = 'FLOAT';
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 126;
-				return;
-			case 'DATETIME':
-			case 'TIME':
-				$attributes['TYPE'] = 'DATE';
-				return;
-			case 'SET':
-			case 'ENUM':
-			case 'VARCHAR':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 255;
-			case 'TEXT':
-			case 'MEDIUMTEXT':
-				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 4000;
-				$attributes['TYPE']       = 'VARCHAR2';
-				return;
-			default: return;
-		}
-	}
+                $attributes['TYPE']       = 'FLOAT';
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 126;
 
-	//--------------------------------------------------------------------
+                return;
 
-	/**
-	 * Drop Table
-	 *
-	 * Generates a platform-specific DROP TABLE string
-	 *
-	 * @param string  $table     Table name
-	 * @param boolean $if_exists Whether to add an IF EXISTS condition
-	 * @param boolean $cascade
-	 *
-	 * @return string|boolean
-	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
-	{
-		$sql = parent::_dropTable($table, $if_exists, $cascade);
+            case 'DATETIME':
+            case 'TIME':
+                $attributes['TYPE'] = 'DATE';
 
-		if ($sql !== true && $cascade === true)
-		{
-			$sql .= ' CASCADE CONSTRAINTS PURGE';
-		}
-		elseif ($sql !== true)
-		{
-			$sql .= ' PURGE';
-		}
+                return;
 
-		return $sql;
-	}
+            case 'SET':
+            case 'ENUM':
+            case 'VARCHAR':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 255;
+                // no break
+            case 'TEXT':
+            case 'MEDIUMTEXT':
+                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 4000;
+                $attributes['TYPE']       = 'VARCHAR2';
 
-	//--------------------------------------------------------------------
+                return;
 
-	/**
-	 * Process foreign keys
-	 *
-	 * @param string $table Table name
-	 *
-	 * @return string
-	 */
-	protected function _processForeignKeys(string $table): string
-	{
-		$sql = '';
+            default: return;
+        }
+    }
 
-		$allowActions = [
-			'CASCADE',
-			'SET NULL',
-			'NO ACTION',
-		];
+    /**
+     * Drop Table
+     *
+     * Generates a platform-specific DROP TABLE string
+     *
+     * @param string $table     Table name
+     * @param bool   $if_exists Whether to add an IF EXISTS condition
+     *
+     * @return bool|string
+     */
+    protected function _dropTable(string $table, bool $if_exists, bool $cascade)
+    {
+        $sql = parent::_dropTable($table, $if_exists, $cascade);
 
-		if (count($this->foreignKeys) > 0)
-		{
-			foreach ($this->foreignKeys as $field => $fkey)
-			{
-				$name_index = $table . '_' . $field . '_fk';
+        if ($sql !== true && $cascade === true) {
+            $sql .= ' CASCADE CONSTRAINTS PURGE';
+        } elseif ($sql !== true) {
+            $sql .= ' PURGE';
+        }
 
-				$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
-					. ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+        return $sql;
+    }
 
-				if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions))
-				{
-					$sql .= ' ON DELETE ' . $fkey['onDelete'];
-				}
-			}
-		}
+    /**
+     * Process foreign keys
+     *
+     * @param string $table Table name
+     */
+    protected function _processForeignKeys(string $table): string
+    {
+        $sql = '';
 
-		return $sql;
-	}
+        $allowActions = [
+            'CASCADE',
+            'SET NULL',
+            'NO ACTION',
+        ];
+
+        if (count($this->foreignKeys) > 0) {
+            foreach ($this->foreignKeys as $field => $fkey) {
+                $name_index = $table . '_' . $field . '_fk';
+
+                $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+                    . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+
+                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+                    $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                }
+            }
+        }
+
+        return $sql;
+    }
 }
