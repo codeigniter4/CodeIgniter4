@@ -847,4 +847,16 @@ SQL;
 	}
 
 	// --------------------------------------------------------------------
+
+    /**
+     * Returns the name of the current database being used.
+     */
+    public function getDatabase(): string
+    {
+        if (empty($this->database)) {
+            $this->database = $this->query('SELECT DEFAULT_TABLESPACE FROM USER_USERS')->getRow()->DEFAULT_TABLESPACE ?? '';
+        }
+
+        return empty($this->database) ? '' : $this->database;
+    }
 }
