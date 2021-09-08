@@ -41,6 +41,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use stdClass;
+use ErrorException;
 
 /**
  * Connection for Postgre
@@ -247,23 +248,33 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function execute(string $sql)
 	{
-		if ($this->resetStmtId === true)
-		{
-			$sql = rtrim($sql, ';');
-			if (strpos(ltrim($sql), 'BEGIN') === 0)
-			{
-				$sql .= ';';
-			}
-			$this->stmtId = oci_parse($this->connID, $sql);
-		}
+        try {
+		    if ($this->resetStmtId === true)
+		    {
+		    	$sql = rtrim($sql, ';');
+		    	if (strpos(ltrim($sql), 'BEGIN') === 0)
+		    	{
+		    		$sql .= ';';
+		    	}
+		    	$this->stmtId = oci_parse($this->connID, $sql);
+		    }
 
-		if (strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID') !== false)
-		{
-			oci_bind_by_name($this->stmtId, ':CI_OCI8_ROWID', $this->rowId, 255);
-		}
+		    if (strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID') !== false)
+		    {
+		    	oci_bind_by_name($this->stmtId, ':CI_OCI8_ROWID', $this->rowId, 255);
+		    }
 
-		oci_set_prefetch($this->stmtId, 1000);
-		return (oci_execute($this->stmtId, $this->commitMode)) ? $this->stmtId : false;
+		    oci_set_prefetch($this->stmtId, 1000);
+		    return (oci_execute($this->stmtId, $this->commitMode)) ? $this->stmtId : false;
+        } catch (ErrorException $e) {
+            log_message('error', $e->getMessage());
+
+            if ($this->DBDebug) {
+                throw $e;
+            }
+        }
+
+        return false;
 	}
 
 	//--------------------------------------------------------------------
