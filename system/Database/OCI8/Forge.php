@@ -253,13 +253,22 @@ class Forge extends \CodeIgniter\Database\Forge
 			case 'NUMERIC':
 				$attributes['TYPE'] = 'NUMBER';
 				return;
+            case 'DOUBLE':
+				$attributes['TYPE'] = 'FLOAT';
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 126;
+				return;
 			case 'DATETIME':
+			case 'TIME':
 				$attributes['TYPE'] = 'DATE';
 				return;
-			case 'TEXT':
+			case 'SET':
+			case 'ENUM':
 			case 'VARCHAR':
-				$attributes['TYPE']       = 'VARCHAR2';
 				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 255;
+			case 'TEXT':
+			case 'MEDIUMTEXT':
+				$attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 4000;
+				$attributes['TYPE']       = 'VARCHAR2';
 				return;
 			default: return;
 		}
