@@ -296,17 +296,17 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param boolean $if_exists Whether to add an IF EXISTS condition
 	 * @param boolean $cascade
 	 *
-	 * @return string
+	 * @return string|boolean
 	 */
-	protected function _dropTable(string $table, bool $if_exists, bool $cascade): string
+	protected function _dropTable(string $table, bool $if_exists, bool $cascade)
 	{
 		$sql = parent::_dropTable($table, $if_exists, $cascade);
 
-		if ($sql !== '' && $cascade === true)
+		if ($sql !== true && $cascade === true)
 		{
 			$sql .= ' CASCADE CONSTRAINTS PURGE';
 		}
-		elseif ($sql !== '')
+		elseif ($sql !== true)
 		{
 			$sql .= ' PURGE';
 		}
