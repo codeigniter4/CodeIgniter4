@@ -19,28 +19,28 @@ class Forge extends \CodeIgniter\Database\Forge
     /**
      * CREATE DATABASE statement
      *
-     * @var string
+     * @var false
      */
     protected $createDatabaseStr = false;
 
     /**
      * CREATE TABLE IF statement
      *
-     * @var string
+     * @var false
      */
     protected $createTableIfStr = false;
 
     /**
      * DROP TABLE IF EXISTS statement
      *
-     * @var string
+     * @var false
      */
     protected $dropTableIfStr = false;
 
     /**
      * DROP DATABASE statement
      *
-     * @var string
+     * @var false
      */
     protected $dropDatabaseStr = false;
 
@@ -146,8 +146,8 @@ class Forge extends \CodeIgniter\Database\Forge
     /**
      * Field attribute AUTO_INCREMENT
      *
-     * @param array &$attributes
-     * @param array &$field
+     * @param array $attributes
+     * @param array $field
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class Forge extends \CodeIgniter\Database\Forge
      *
      * Performs a data type mapping between different databases.
      *
-     * @param array &$attributes
+     * @param array $attributes
      *
      * @return void
      */

@@ -19,6 +19,18 @@ use CodeIgniter\Database\PreparedQueryInterface;
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
+    /**
+     * A reference to the db connection to use.
+     *
+     * @var Connection
+     */
+    protected $db;
+
+    /**
+     * Is collect row id
+     *
+     * @var bool
+     */
     private $isCollectRowId;
 
     /**

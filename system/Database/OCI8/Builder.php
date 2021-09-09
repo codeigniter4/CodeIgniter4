@@ -55,6 +55,13 @@ class Builder extends BaseBuilder
     protected $limitUsed = false;
 
     /**
+     * A reference to the database connection.
+     *
+     * @var Connection
+     */
+    protected $db;
+
+    /**
      * Insert batch statement
      *
      * Generates a platform-specific insert string from the supplied data.
@@ -240,7 +247,9 @@ class Builder extends BaseBuilder
         $offset = (int) ($offsetIgnore === false) ? $this->QBOffset : 0;
         if (version_compare($this->db->getVersion(), '12.1', '>=')) {
             // OFFSET-FETCH can be used only with the ORDER BY clause
-            empty($this->QBOrderBy) && $sql .= ' ORDER BY 1';
+            if (empty($this->QBOrderBy)) {
+                $sql .= ' ORDER BY 1';
+            }
 
             return $sql . ' OFFSET ' . (int) $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
         }

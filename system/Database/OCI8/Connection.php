@@ -174,19 +174,19 @@ class Connection extends BaseConnection implements ConnectionInterface
         }
 
         if (! $this->connID || ($version_string = oci_server_version($this->connID)) === false) {
-            return false;
+            return '';
         }
         if (preg_match('#Release\s(\d+(?:\.\d+)+)#', $version_string, $match)) {
             return $this->dataCache['version'] = $match[1];
         }
 
-        return false;
+        return '';
     }
 
     /**
      * Executes the query against the database.
      *
-     * @return resource
+     * @return resource|boolean
      */
     public function execute(string $sql)
     {
@@ -464,9 +464,9 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Stored Procedure.  Executes a stored procedure
      *
-     * @param  string	package name in which the stored procedure is in
-     * @param  string	stored procedure name to execute
-     * @param  array	parameters
+     * @param  string $package    package name in which the stored procedure is in
+     * @param  string $procedure  stored procedure name to execute
+     * @param  array  $params     parameters
      *
      * @return mixed
      *
@@ -544,14 +544,14 @@ class Connection extends BaseConnection implements ConnectionInterface
         // oci_error() returns an array that already contains
         // 'code' and 'message' keys, but it can return false
         // if there was no error ....
-        if (is_resource($this->cursorId)) {
-            $error = oci_error($this->cursorId);
-        } elseif (is_resource($this->stmtId)) {
-            $error = oci_error($this->stmtId);
-        } elseif (is_resource($this->connID)) {
-            $error = oci_error($this->connID);
-        } else {
-            $error = oci_error();
+        $error = oci_error();
+        $resources = [$this->cursorId, $this->stmtId, $this->connID];
+
+        foreach ($resources as $resource) {
+          if (is_resource($resource)) {
+              $error = oci_error($resource);
+              break;
+          }
         }
 
         return is_array($error)
@@ -581,7 +581,7 @@ class Connection extends BaseConnection implements ConnectionInterface
         $column_type_list    = array_column($field_datas, 'type', 'name');
         $primary_column_name = '';
 
-        foreach ((is_array($indexs) ? $indexs : []) as $index) {
+        foreach ($indexs as $index) {
             if ($index->type !== 'PRIMARY' || count($index->fields) !== 1) {
                 continue;
             }
@@ -611,7 +611,9 @@ class Connection extends BaseConnection implements ConnectionInterface
      */
     protected function buildDSN()
     {
-        $this->DSN === '' || $this->DSN = '';
+        if ($this->DSN !== '') {
+            $this->DSN = '';
+        }
 
         // Legacy support for TNS in the hostname configuration field
         $this->hostname = str_replace(["\n", "\r", "\t", ' '], '', $this->hostname);
@@ -654,7 +656,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
         $this->database = str_replace(["\n", "\r", "\t", ' '], '', $this->database);
 
-        foreach ($valid_dsns as $regexp) {
+        foreach ($this->validDSNs as $regexp) {
             if (preg_match($regexp, $this->database)) {
                 return;
             }
