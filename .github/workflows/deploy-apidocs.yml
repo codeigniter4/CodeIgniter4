@@ -4,6 +4,7 @@
 name: Deploy API Documentation
 
 on:
+  pull_request:
   push:
     branches:
       - 'develop'
@@ -60,6 +61,7 @@ jobs:
           cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
       - name: Deploy to API repo
+        if: ${{ github.event_name != 'pull_request' }}
         working-directory: api
         run: |
           git add .
