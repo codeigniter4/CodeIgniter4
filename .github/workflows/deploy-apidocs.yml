@@ -39,11 +39,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
+          tools: phive
           coverage: none
 
       - name: Download latest phpDocumentor
         working-directory: source
-        run: phive install --no-progress --trust-gpg-keys 67F861C3D889C656 --target ./admin phpDocumentor
+        run: sudo phive install --no-progress --trust-gpg-keys 67F861C3D889C656 --target ./admin phpDocumentor
 
       - name: Prepare API repo
         working-directory: api
