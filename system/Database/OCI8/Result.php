@@ -112,7 +112,7 @@ class Result extends BaseResult implements ResultInterface
 
         $instance = new $className();
 
-        foreach ($row as $key => $value) {
+        foreach (get_object_vars($row) as $key => $value) {
             $instance->{$key} = $value;
         }
 
