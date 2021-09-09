@@ -146,9 +146,6 @@ class Forge extends \CodeIgniter\Database\Forge
     /**
      * Field attribute AUTO_INCREMENT
      *
-     * @param array $attributes
-     * @param array $field
-     *
      * @return void
      */
     protected function _attributeAutoIncrement(array &$attributes, array &$field)
@@ -191,8 +188,6 @@ class Forge extends \CodeIgniter\Database\Forge
      *
      * Performs a data type mapping between different databases.
      *
-     * @param array $attributes
-     *
      * @return void
      */
     protected function _attributeType(array &$attributes)
@@ -222,10 +217,11 @@ class Forge extends \CodeIgniter\Database\Forge
                 return;
 
             case 'BOOLEAN':
-                $attributes['TYPE'] = 'NUMBER';
+                $attributes['TYPE']       = 'NUMBER';
                 $attributes['CONSTRAINT'] = 1;
-                $attributes['UNSIGNED'] = true;
-                $attributes['NULL'] = false;
+                $attributes['UNSIGNED']   = true;
+                $attributes['NULL']       = false;
+
                 return;
 
             case 'DOUBLE':

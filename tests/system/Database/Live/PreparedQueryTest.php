@@ -69,8 +69,7 @@ final class PreparedQueryTest extends CIUnitTestCase
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
 
-        if ($this->db->DBDriver === 'OCI8')
-        {
+        if ($this->db->DBDriver === 'OCI8') {
             $expected .= ' RETURNING ROWID INTO ?';
         }
 
@@ -121,7 +120,7 @@ final class PreparedQueryTest extends CIUnitTestCase
                   . $db->protectIdentifiers('name') . ', '
                   . $db->protectIdentifiers('email') . ', '
                   . $db->protectIdentifiers('country')
-                  . ") VALUES (?, ?, ?)";
+                  . ') VALUES (?, ?, ?)';
 
             if ($db->DBDriver === 'SQLSRV') {
                 $sql = "INSERT INTO {$db->schema}.{$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";

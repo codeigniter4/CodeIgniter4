@@ -186,7 +186,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return resource|boolean
+     * @return bool|resource
      */
     public function execute(string $sql)
     {
@@ -464,9 +464,9 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Stored Procedure.  Executes a stored procedure
      *
-     * @param  string $package    package name in which the stored procedure is in
-     * @param  string $procedure  stored procedure name to execute
-     * @param  array  $params     parameters
+     * @param string $package   package name in which the stored procedure is in
+     * @param string $procedure stored procedure name to execute
+     * @param array  $params    parameters
      *
      * @return mixed
      *
@@ -544,14 +544,14 @@ class Connection extends BaseConnection implements ConnectionInterface
         // oci_error() returns an array that already contains
         // 'code' and 'message' keys, but it can return false
         // if there was no error ....
-        $error = oci_error();
+        $error     = oci_error();
         $resources = [$this->cursorId, $this->stmtId, $this->connID];
 
         foreach ($resources as $resource) {
-          if (is_resource($resource)) {
-              $error = oci_error($resource);
-              break;
-          }
+            if (is_resource($resource)) {
+                $error = oci_error($resource);
+                break;
+            }
         }
 
         return is_array($error)
