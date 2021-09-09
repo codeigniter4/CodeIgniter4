@@ -221,6 +221,13 @@ class Forge extends \CodeIgniter\Database\Forge
 
                 return;
 
+            case 'BOOLEAN':
+                $attributes['TYPE'] = 'NUMBER';
+                $attributes['CONSTRAINT'] = 1;
+                $attributes['UNSIGNED'] = true;
+                $attributes['NULL'] = false;
+                return;
+
             case 'DOUBLE':
                 $attributes['TYPE']       = 'FLOAT';
                 $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 126;
