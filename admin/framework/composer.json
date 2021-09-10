@@ -11,7 +11,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "kint-php/kint": "^3.3",
-        "laminas/laminas-escaper": "^2.8",
+        "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
