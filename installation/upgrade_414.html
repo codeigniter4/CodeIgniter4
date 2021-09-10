@@ -360,31 +360,31 @@
 <p><strong>Method Scope</strong></p>
 <p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses.
 If you relied on any of these methods being public (highly unlikely) adjust your code accordingly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\MySQLi\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Builder</span><span class="o">::</span><span class="na">_like_statement</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\Postgre\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLSRV\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">execute</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_fieldData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_indexData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Database\SQLite3\Connection</span><span class="o">::</span><span class="na">_foreignKeyData</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\GDHandler</span><span class="o">::</span><span class="na">_flatten</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\GDHandler</span><span class="o">::</span><span class="na">_flip</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\ImageMagickHandler</span><span class="o">::</span><span class="na">_flatten</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Images\Handlers\ImageMagickHandler</span><span class="o">::</span><span class="na">_flip</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Test\Mock\MockIncomingRequest</span><span class="o">::</span><span class="na">detectURI</span><span class="p">()</span><span class="sb">``</span>
-<span class="o">*</span> <span class="sb">``</span><span class="nx">CodeIgniter\Test\Mock\MockSecurity</span><span class="o">.</span><span class="nx">php</span><span class="o">::</span><span class="na">sendCookie</span><span class="p">()</span><span class="sb">``</span>
-</pre></div>
-</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::execute()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::_fieldData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::_indexData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::_foreignKeyData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Postgre\Builder::_like_statement()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Postgre\Connection::execute()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Postgre\Connection::_fieldData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Postgre\Connection::_indexData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Postgre\Connection::_foreignKeyData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::execute()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::_fieldData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::_indexData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::_foreignKeyData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLite3\Connection::execute()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLite3\Connection::_fieldData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLite3\Connection::_indexData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLite3\Connection::_foreignKeyData()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\Handlers\GDHandler::_flatten()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\Handlers\GDHandler::_flip()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\Handlers\ImageMagickHandler::_flatten()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\Handlers\ImageMagickHandler::_flip()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()</span></code></p></li>
+</ul>
 <div class="section" id="project-files">
 <h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline">¶</a></h2>
 <p>All files in the project space were reformatted with the new coding style. This will not affect
@@ -409,7 +409,7 @@ them in line with the framework’s version of these files.</p>
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Sep 08, 2021.
+        Last updated on Sep 10, 2021.
       </span>
 
     </p>
