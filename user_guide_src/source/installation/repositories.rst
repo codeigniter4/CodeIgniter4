@@ -32,8 +32,6 @@ are not directly contributed to.
 +------------------+--------------+-----------------------------------------------------------------+
 | userguide        | anyone       | Pre-built user guide                                            |
 +------------------+--------------+-----------------------------------------------------------------+
-|                  |              |                                                                 |
-+------------------+--------------+-----------------------------------------------------------------+
 
 In all the above, the latest version of a repository can be downloaded
 by selecting the "releases" link in the secondary navbar inside
