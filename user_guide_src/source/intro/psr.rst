@@ -13,10 +13,10 @@ This recommendation covers basic class, method, and file-naming standards. Our
 `style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.md>`_
 meets PSR-1 and adds its own requirements on top of it.
 
-**PSR-2: Coding Style Guide**
+**PSR-12: Extended Coding Style**
 
-This PSR was fairly controversial when it first came out. CodeIgniter meets many of the recommendations within,
-but does not, and will not, meet all of them.
+Our
+`style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.md>`_ follows the recommendations plus a set of our own styling conventions.
 
 **PSR-3: Logger Interface**
 
