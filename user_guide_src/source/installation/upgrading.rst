@@ -8,6 +8,7 @@ upgrading from.
 .. toctree::
     :titlesonly:
 
+    Upgrading from 4.1.4 to 4.2.0 <upgrade_420>
     Upgrading from 4.1.3 to 4.1.4 <upgrade_414>
     Upgrading from 4.1.2 to 4.1.3 <upgrade_413>
     Upgrading from 4.1.1 to 4.1.2 <upgrade_412>
