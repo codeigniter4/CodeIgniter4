@@ -15,8 +15,6 @@ There are several development repositories, of interest to potential contributor
 +---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
 | `coding-standard <https://github.com/CodeIgniter/coding-standard>`_ | contributors | Coding style conventions & rules                                |
 +---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
-|                                                                     |              |                                                                 |
-+---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
 
 There are also several deployment repositories, referenced in the installation directions.
 The deployment repositories are built automatically when a new version is released, and they
