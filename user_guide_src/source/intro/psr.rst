@@ -16,7 +16,7 @@ meets PSR-1 and adds its own requirements on top of it.
 **PSR-12: Extended Coding Style**
 
 Our
-`style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.md>`_ follows the recommendations plus a set of our own styling conventions.
+`style guide <https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.md>`_ follows the recommendation plus a set of our own styling conventions.
 
 **PSR-3: Logger Interface**
 
