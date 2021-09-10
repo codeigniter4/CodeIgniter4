@@ -6,17 +6,15 @@ The CodeIgniter 4 open source project has its own
 
 There are several development repositories, of interest to potential contributors:
 
-+------------------+--------------+-----------------------------------------------------------------+
-| Repository       | Audience     | Description                                                     |
-+==================+==============+=================================================================+
-| CodeIgniter4     | contributors | Project codebase, including tests & user guide sources          |
-+------------------+--------------+-----------------------------------------------------------------+
-| translations     | developers   | System message translations                                     |
-+------------------+--------------+-----------------------------------------------------------------+
-| coding-standard  | contributors | Coding style conventions & rules                                |
-+------------------+--------------+-----------------------------------------------------------------+
-|                  |              |                                                                 |
-+------------------+--------------+-----------------------------------------------------------------+
++---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
+| Repository                                                          | Audience     | Description                                                     |
++=====================================================================+==============+=================================================================+
+| CodeIgniter4                                                        | contributors | Project codebase, including tests & user guide sources          |
++---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
+| translations                                                        | developers   | System message translations                                     |
++---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
+| `coding-standard <https://github.com/CodeIgniter/coding-standard>`_ | contributors | Coding style conventions & rules                                |
++---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
 
 There are also several deployment repositories, referenced in the installation directions.
 The deployment repositories are built automatically when a new version is released, and they
@@ -31,8 +29,6 @@ are not directly contributed to.
 |                  |              | Dependent on "framework"                                        |
 +------------------+--------------+-----------------------------------------------------------------+
 | userguide        | anyone       | Pre-built user guide                                            |
-+------------------+--------------+-----------------------------------------------------------------+
-|                  |              |                                                                 |
 +------------------+--------------+-----------------------------------------------------------------+
 
 In all the above, the latest version of a repository can be downloaded
@@ -50,7 +46,7 @@ These correspond to the repositories mentioned above:
 - `codeigniter4/framework <https://packagist.org/packages/codeigniter4/framework>`_
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
-- `codeigniter4/coding-standard <https://packagist.org/packages/codeigniter4/codeigniter4-standard>`_
+- `codeigniter/coding-standard  <https://packagist.org/packages/codeigniter/coding-standard>`_
 
 See the :doc:`Installation </installation/index>` page for more information.
 
