@@ -8,7 +8,7 @@ This release focuses on code style. All changes (except those noted below) are c
 **Method Scope**
 
 The following methods were changed from "public" to "protected" to match their parent class methods and better align with their uses.
-If you relied on any of these methods being public (highly unlikely) adjust your code accordingly::
+If you relied on any of these methods being public (highly unlikely) adjust your code accordingly:
 
 * ``CodeIgniter\Database\MySQLi\Connection::execute()``
 * ``CodeIgniter\Database\MySQLi\Connection::_fieldData()``
