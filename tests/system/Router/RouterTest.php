@@ -103,6 +103,16 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('index', $router->methodName());
     }
 
+    public function testURIWithTrailingSlashMapsToController()
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('users/');
+
+        $this->assertSame('\Users', $router->controllerName());
+        $this->assertSame('index', $router->methodName());
+    }
+
     public function testURIMapsToControllerAltMethod()
     {
         $router = new Router($this->collection, $this->request);
@@ -161,6 +171,16 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
 
         $router->handle('objects/123/sort/abc/FOO');
+
+        $this->assertSame('objectsSortCreate', $router->methodName());
+        $this->assertSame(['123', 'abc', 'FOO'], $router->params());
+    }
+
+    public function testURIWithTrailingSlashMapsParamsWithMany()
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('objects/123/sort/abc/FOO/');
 
         $this->assertSame('objectsSortCreate', $router->methodName());
         $this->assertSame(['123', 'abc', 'FOO'], $router->params());

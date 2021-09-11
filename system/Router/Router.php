@@ -328,9 +328,7 @@ class Router implements RouterInterface
             return false;
         }
 
-        $uri = $uri === '/'
-            ? $uri
-            : ltrim($uri, '/ ');
+        $uri = trim($uri, '/ ') ?: '/';
 
         // Loop through the route array looking for wildcards
         foreach ($routes as $key => $val) {
