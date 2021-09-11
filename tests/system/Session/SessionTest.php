@@ -31,12 +31,12 @@ class SessionTest extends CIUnitTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'handler'  => FileHandler::class,
-            'name'     => 'ci_session',
-            'lifetime' => 7200,
-            'savePath' => null,
-            'matchIP'  => false,
-            'cooldown' => 300,
+            'handler'    => FileHandler::class,
+            'name'       => 'ci_session',
+            'lifetime'   => 7200,
+            'savePath'   => null,
+            'matchIP'    => false,
+            'cooldown'   => 300,
             'regenerate' => false,
         ];
 

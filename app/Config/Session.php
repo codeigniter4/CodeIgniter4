@@ -40,7 +40,11 @@ class Session extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * The number of SECONDS you want the session to last.
+<<<<<<< HEAD
      * Set to `0` means expire when the browser is closed.
+=======
+     * Setting to 0 (zero) means expire when the browser is closed.
+>>>>>>> 8d8c82bba537670571013bfdbd155c7a4e91b2aa
      *
      * @var int
      */

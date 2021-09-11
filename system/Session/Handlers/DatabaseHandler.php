@@ -14,7 +14,6 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
-use Config\Session as SessionConfig;
 use Config\Database;
 use Exception;
 
