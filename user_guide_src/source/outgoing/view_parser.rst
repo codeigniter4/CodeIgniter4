@@ -32,12 +32,12 @@ representations that allow you to eliminate PHP from your templates
 (view files).
 
 .. note:: CodeIgniter does **not** require you to use this class since
-	using pure PHP in your view pages (for instance using the
-	:doc:`View renderer </outgoing/view_renderer>` )
-	lets them run a little faster.
-	However, some developers prefer to use some form of template engine if
-	they work with designers who they feel would find some
-	confusion working with PHP.
+    using pure PHP in your view pages (for instance using the
+    :doc:`View renderer </outgoing/view_renderer>` )
+    lets them run a little faster.
+    However, some developers prefer to use some form of template engine if
+    they work with designers who they feel would find some
+    confusion working with PHP.
 
 ***************************
 Using the View Parser Class
@@ -147,9 +147,9 @@ constructs for conditional substitution.
 
 When the parser executes, it will generally
 
--	handle any conditional substitutions
--	handle any nested/looping substitutions
--	handle the remaining single substitutions
+- handle any conditional substitutions
+- handle any nested/looping substitutions
+- handle the remaining single substitutions
 
 Loop Substitutions
 ==================
@@ -357,7 +357,7 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 	{endif}
 
 .. note:: In the background, conditionals are parsed using an **eval()**, so you must ensure that you take
-	care with the user data that is used within conditionals, or you could open your application up to security risks.
+    care with the user data that is used within conditionals, or you could open your application up to security risks.
 
 Escaping Data
 =============
@@ -520,14 +520,14 @@ Provided Plugins
 The following plugins are available when using the parser:
 
 ==================== ========================== ================================================================================== ================================================================
-Plugin               Arguments                  Description                                                           			   Example
+Plugin               Arguments                  Description                                                                          Example
 ==================== ========================== ================================================================================== ================================================================
 current_url                                     Alias for the current_url helper function.                                         {+ current_url +}
-previous_url                                    Alias for the previous_url helper function.                           		       {+ previous_url +}
+previous_url                                    Alias for the previous_url helper function.                                          {+ previous_url +}
 siteURL                                         Alias for the site_url helper function.                                            {+ siteURL "login" +}
-mailto               email, title, attributes   Alias for the mailto helper function.                                 		       {+ mailto email=foo@example.com title="Stranger Things" +}
-safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            		       {+ safe_mailto email=foo@example.com title="Stranger Things" +}
-lang                 language string            Alias for the lang helper function.                                    		       {+ lang number.terabyteAbbr +}
+mailto               email, title, attributes   Alias for the mailto helper function.                                                {+ mailto email=foo@example.com title="Stranger Things" +}
+safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                                           {+ safe_mailto email=foo@example.com title="Stranger Things" +}
+lang                 language string            Alias for the lang helper function.                                                   {+ lang number.terabyteAbbr +}
 validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +}
 route                route name                 Alias for the route_to helper function.                                            {+ route "login" +}
 ==================== ========================== ================================================================================== ================================================================
