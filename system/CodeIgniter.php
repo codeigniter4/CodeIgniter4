@@ -639,6 +639,25 @@ class CodeIgniter
     }
 
     /**
+     * Purges the cached page
+     *
+     * @param string     $uri    Uri
+     * @param Cache|null $config Config
+     */
+    public function purgeCachedPage(string $uri, ?Cache $config = null): bool
+    {
+        $uri = new URI($uri);
+
+        if (($config ?? config('Cache'))->cacheQueryString) {
+            $uri = URI::createURIString($uri->getScheme(), $uri->getAuthority(), rtrim($uri->getPath(), '/'), $uri->getQuery());
+        } else {
+            $uri = URI::createURIString($uri->getScheme(), $uri->getAuthority(), rtrim($uri->getPath(), '/'));
+        }
+
+        return cache()->delete(md5($uri));
+    }
+
+    /**
      * Returns an array with our basic performance stats collected.
      */
     public function getPerformanceStats(): array
@@ -661,9 +680,9 @@ class CodeIgniter
         $uri = $this->request->getUri();
 
         if ($config->cacheQueryString) {
-            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
+            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), rtrim($uri->getPath(), '/'), $uri->getQuery());
         } else {
-            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
+            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), rtrim($uri->getPath(), '/'));
         }
 
         return md5($name);
