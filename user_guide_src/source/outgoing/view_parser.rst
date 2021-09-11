@@ -696,80 +696,80 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-	.. php:method:: render($view[, $options[, $saveData=false]])
+    .. php:method:: render($view[, $options[, $saveData=false]])
 
-		:param  string  $view: File name of the view source
-		:param  array   $options: Array of options, as key/value pairs
-		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
-		:returns: The rendered text for the chosen view
-		:rtype: string
+        :param  string  $view: File name of the view source
+        :param  array   $options: Array of options, as key/value pairs
+        :param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+        :returns: The rendered text for the chosen view
+        :rtype: string
 
-    		Builds the output based upon a file name and any data that has already been set::
+        Builds the output based upon a file name and any data that has already been set::
 
-			echo $parser->render('myview');
+            echo $parser->render('myview');
 
         Options supported:
 
-	        - ``cache`` - the time in seconds, to save a view's results
-	        - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
-	        - ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
-	        - ``saveData`` - true if the view data parameter should be retained for subsequent calls
-	        - ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
-	        - ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
+            - ``cache`` - the time in seconds, to save a view's results
+            - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
+            - ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
+            - ``saveData`` - true if the view data parameter should be retained for subsequent calls
+            - ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
+            - ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
-		Any conditional substitutions are performed first, then remaining
-		substitutions are performed for each data pair.
+        Any conditional substitutions are performed first, then remaining
+        substitutions are performed for each data pair.
 
-	.. php:method:: renderString($template[, $options[, $saveData=false]])
+    .. php:method:: renderString($template[, $options[, $saveData=false]])
 
-		:param  string  $template: View source provided as a string
-    		:param  array   $options: Array of options, as key/value pairs
-    		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
-    		:returns: The rendered text for the chosen view
-    		:rtype: string
+        :param  string  $template: View source provided as a string
+        :param  array   $options: Array of options, as key/value pairs
+        :param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+        :returns: The rendered text for the chosen view
+        :rtype: string
 
-    		Builds the output based upon a provided template source and any data that has already been set::
+        Builds the output based upon a provided template source and any data that has already been set::
 
-			echo $parser->render('myview');
+            echo $parser->render('myview');
 
         Options supported, and behavior, as above.
 
-	.. php:method:: setData([$data[, $context=null]])
+    .. php:method:: setData([$data[, $context=null]])
 
-		:param  array   $data: Array of view data strings, as key/value pairs
-    		:param  string  $context: The context to use for data escaping.
-    		:returns: The Renderer, for method chaining
-    		:rtype: CodeIgniter\\View\\RendererInterface.
+        :param  array   $data: Array of view data strings, as key/value pairs
+        :param  string  $context: The context to use for data escaping.
+        :returns: The Renderer, for method chaining
+        :rtype: CodeIgniter\\View\\RendererInterface.
 
-    		Sets several pieces of view data at once::
+        Sets several pieces of view data at once::
 
-			$renderer->setData(['name'=>'George', 'position'=>'Boss']);
+            $renderer->setData(['name'=>'George', 'position'=>'Boss']);
 
         Supported escape contexts: html, css, js, url, or attr or raw.
-		If 'raw', no escaping will happen.
+        If 'raw', no escaping will happen.
 
-	.. php:method:: setVar($name[, $value=null[, $context=null]])
+    .. php:method:: setVar($name[, $value=null[, $context=null]])
 
-		:param  string  $name: Name of the view data variable
-    		:param  mixed   $value: The value of this view data
-    		:param  string  $context: The context to use for data escaping.
-    		:returns: The Renderer, for method chaining
-    		:rtype: CodeIgniter\\View\\RendererInterface.
+        :param  string  $name: Name of the view data variable
+        :param  mixed   $value: The value of this view data
+        :param  string  $context: The context to use for data escaping.
+        :returns: The Renderer, for method chaining
+        :rtype: CodeIgniter\\View\\RendererInterface.
 
-    		Sets a single piece of view data::
+        Sets a single piece of view data::
 
-			$renderer->setVar('name','Joe','html');
+            $renderer->setVar('name','Joe','html');
 
         Supported escape contexts: html, css, js, url, attr or raw.
-		If 'raw', no escaping will happen.
+        If 'raw', no escaping will happen.
 
-	.. php:method:: setDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
+    .. php:method:: setDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
 
-		:param  string  $leftDelimiter: Left delimiter for substitution fields
-    		:param  string  $rightDelimiter: right delimiter for substitution fields
-    		:returns: The Renderer, for method chaining
-    		:rtype: CodeIgniter\\View\\RendererInterface.
+        :param  string  $leftDelimiter: Left delimiter for substitution fields
+        :param  string  $rightDelimiter: right delimiter for substitution fields
+        :returns: The Renderer, for method chaining
+        :rtype: CodeIgniter\\View\\RendererInterface.
 
-    		Override the substitution field delimiters::
+        Override the substitution field delimiters::
 
-			$renderer->setDelimiters('[',']');
+            $renderer->setDelimiters('[',']');
