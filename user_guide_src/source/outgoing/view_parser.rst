@@ -386,7 +386,7 @@ need to format the same data differently in several sections on the same page.
 Filters are commands that come after the pseudo-variable name, and are separated by the pipe symbol, ``|``::
 
 	// -55 is displayed as 55
-	{ value|abs  }
+	{ value|abs }
 
 If the parameter takes any arguments, they must be separated by commas and enclosed in parentheses::
 
