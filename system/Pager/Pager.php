@@ -181,6 +181,18 @@ class Pager implements PagerInterface
     }
 
     /**
+     * Set the total number of items in data store.
+     */
+    public function setTotal(int $total, string $group = 'default'): self
+    {
+        $this->ensureGroup($group);
+        $this->groups[$group]['total']     = $total;
+        $this->groups[$group]['pageCount'] = (int) ceil($total / $this->groups[$group]['perPage']);
+
+        return $this;
+    }
+
+    /**
      * Returns the total number of items in data store.
      */
     public function getTotal(string $group = 'default'): int
@@ -403,18 +415,26 @@ class Pager implements PagerInterface
      */
     protected function calculateCurrentPage(string $group)
     {
+        $this->groups[$group]['currentPage'] = $this->getRawCurrentPage($group);
+    }
+
+    /**
+     * Returns the raw Current Page value
+     */
+    public function getRawCurrentPage(string $group = 'default'): int
+    {
         if (array_key_exists($group, $this->segment)) {
             try {
-                $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
+                return (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
             } catch (HTTPException $e) {
-                $this->groups[$group]['currentPage'] = 1;
+                return 1;
             }
         } else {
             $pageSelector = $this->groups[$group]['pageSelector'];
 
             $page = (int) ($_GET[$pageSelector] ?? 1);
 
-            $this->groups[$group]['currentPage'] = $page < 1 ? 1 : $page;
+            return $page < 1 ? 1 : $page;
         }
     }
 }
