@@ -93,7 +93,7 @@ like this::
     ];
 
     echo $parser->setData($data)
-                 ->render('blog_template');
+                ->render('blog_template');
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
@@ -199,7 +199,7 @@ corresponding to your variable pair data. Consider this example::
     ];
 
     echo $parser->setData($data)
-                 ->render('blog_template');
+                ->render('blog_template');
 
 The value for the pseudo-variable ``blog_entries`` is a sequential
 array of associative arrays. The outer level does not have keys associated
@@ -241,7 +241,7 @@ an associative array of values, like a record from a database::
         'blog_heading' => 'My Blog Heading',
         'blog_entry'   => [
             'title' => 'Title 1',
-            'body' => 'Body 1',
+            'body'  => 'Body 1',
         ],
     ];
 
@@ -540,8 +540,8 @@ At its simplest, all you need to do to register a new plugin and make it ready f
 used within the template file. The value is any valid PHP callable, including static class methods, and closures::
 
     public $plugins = [
-        'foo'    => '\Some\Class::methodName',
-        'bar'    => function ($str, array $params=[]) {
+        'foo' => '\Some\Class::methodName',
+        'bar' => function ($str, array $params=[]) {
             return $str;
         },
     ];
@@ -566,7 +566,7 @@ If the callable is on its own, it is treated as a single tag, not a open/close o
 the return value from the plugin::
 
     public $plugins = [
-        'foo'    => '\Some\Class::methodName'
+        'foo' => '\Some\Class::methodName'
     ];
 
     // Tag is replaced by the return value of Some\Class::methodName static function.
@@ -590,12 +590,12 @@ template, they are ignored::
 
     $template = 'Hello, {firstname} {lastname}';
     $data = [
-        'title' => 'Mr',
+        'title'     => 'Mr',
         'firstname' => 'John',
-        'lastname' => 'Doe'
+        'lastname'  => 'Doe'
     ];
     echo $parser->setData($data)
-                 ->renderString($template);
+                ->renderString($template);
 
     // Result: Hello, John Doe
 
