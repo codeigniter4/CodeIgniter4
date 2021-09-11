@@ -411,6 +411,18 @@ Class Reference
 
                 Adds a field to the set that will be used to create a table. Usage:  See `Adding fields`_.
 
+    .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = ''])
+
+        :param    string|string[]    $fieldName: Name of a key field or an array of fields
+        :param    string    $tableName: Name of a parent table
+        :param    string|string[]    $tableField: Name of a parent table field or an array of fields
+        :param    string    $onUpdate: Desired action for the “on update”
+        :param    string    $onDelete: Desired action for the “on delete”
+        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
+        :rtype:    \CodeIgniter\Database\Forge
+
+        Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
+
     .. php:method:: addKey($key[, $primary = false[, $unique = false]])
 
         :param    mixed    $key: Name of a key field or an array of fields
