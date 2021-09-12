@@ -32,8 +32,8 @@ Upgrade Guide
 
 3. You have to change the validation rules. The new syntax is to set the rules as array in the controller::
 
-        'name' => 'required|min_length[3]',
     $isValid = $this->validate([
+        'name'  => 'required|min_length[3]',
         'email' => 'required|valid_email',
         'phone' => 'required|numeric|max_length[10]'
     ]);
@@ -152,9 +152,7 @@ Path: ``app/Controllers/``::
                 echo view('myform', [
                     'validation' => $this->validator,
                 ]);
-            }
-            else
-            {
+            } else {
                 echo view('formsuccess');
             }
         }
