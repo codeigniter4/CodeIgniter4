@@ -506,6 +506,8 @@ Additional parameters are indicated in square brackets and listed with a comma.
         'class' => 'SomeHandler',
     ];
 
+::
+
     use CodeIgniter\Entity\Cast\BaseCast;
 
     class SomeHandler extends BaseCast
