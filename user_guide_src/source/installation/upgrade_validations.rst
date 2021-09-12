@@ -32,8 +32,8 @@ Upgrade Guide
 
 3. You have to change the validation rules. The new syntax is to set the rules as array in the controller::
 
-    $input = $this->validate([
         'name' => 'required|min_length[3]',
+    $isValid = $this->validate([
         'email' => 'required|valid_email',
         'phone' => 'required|numeric|max_length[10]'
     ]);
