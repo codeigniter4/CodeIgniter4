@@ -86,6 +86,8 @@ Path: ``application/controllers/``::
 
                     $this->load->library('form_validation');
 
+                    // Set validation rules
+
                     if ($this->form_validation->run() == FALSE)
                     {
                             $this->load->view('myform');
@@ -144,8 +146,9 @@ Path: ``app/Controllers/``::
         {
             helper(['form', 'url']);
 
-            if (! $this->validate([]))
-            {
+            if (! $this->validate([
+                // Validation rules
+            ])) {
                 echo view('myform', [
                     'validation' => $this->validator,
                 ]);
