@@ -30,10 +30,10 @@ Upgrade Guide
 6. Replace ``extends CI_Migration`` with ``extends Migration``.
 7. The method names within the ``Forge`` class has been changed to use camelCase. For example:
 
-- ``$this->dbforge->add_field`` to ``$this->forge->addField``
-- ``$this->dbforge->add_key`` to ``$this->forge->addKey``
-- ``$this->dbforge->create_table`` to ``$this->forge->addTable``
-- ``$this->dbforge->drop_table`` to ``$this->forge->addTable``
+    - ``$this->dbforge->add_field`` to ``$this->forge->addField``
+    - ``$this->dbforge->add_key`` to ``$this->forge->addKey``
+    - ``$this->dbforge->create_table`` to ``$this->forge->addTable``
+    - ``$this->dbforge->drop_table`` to ``$this->forge->addTable``
 
 8. (optional) You can change the array syntax from ``array(...)`` to ``[...]``
 
@@ -119,3 +119,22 @@ Path: ``app/Database/Migrations``::
             $this->forge->dropTable('blog');
         }
     }
+
+Search & Replace
+================
+
+You can use to following table to search & replace your old CI3 files.
+
++------------------------------+----------------------------+
+|  Search                      | Replace                    |
++==============================+============================+
+| extends CI_Migration         | extends Migration          |
++------------------------------+----------------------------+
+| $this->dbforge->add_field    | $this->forge->addField     |
++------------------------------+----------------------------+
+| $this->dbforge->add_key      | $this->forge->addKey       |
++------------------------------+----------------------------+
+| $this->dbforge->create_table | $this->forge->createTable  |
++------------------------------+----------------------------+
+| $this->dbforge->drop_table   | $this->forge->dropTable    |
++------------------------------+----------------------------+
