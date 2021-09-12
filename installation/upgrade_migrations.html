@@ -43,8 +43,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrade Configuration" href="upgrade_configuration.html" />
-    <link rel="prev" title="Upgrade Controllers" href="upgrade_controllers.html" /> 
+    <link rel="next" title="Upgrade Pagination" href="upgrade_pagination.html" />
+    <link rel="prev" title="Upgrade Localization" href="upgrade_localization.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -363,6 +363,7 @@
 <li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
 <li><p><a class="reference internal" href="#upgrade-guide" id="id3">Upgrade Guide</a></p></li>
 <li><p><a class="reference internal" href="#code-example" id="id4">Code Example</a></p></li>
+<li><p><a class="reference internal" href="#search-replace" id="id5">Search &amp; Replace</a></p></li>
 </ul>
 </div>
 <div class="section" id="documentations">
@@ -385,22 +386,23 @@
 </div>
 <div class="section" id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>If your v3 project uses sequential migration names you have to change those to timestamp names.</p></li>
 <li><p>You have to move all migration files to the new folder <code class="docutils literal notranslate"><span class="pre">app/Database/Migrations</span></code>.</p></li>
 <li><p>Remove the following line <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code>.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Database\Migration;</span></code></p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Migration</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Migration</span></code>.</p></li>
-<li><p>The method names within the <code class="docutils literal notranslate"><span class="pre">Forge</span></code> class has been changed to use camelCase. For example:</p></li>
-</ol>
-<ul class="simple">
+<li><p>The method names within the <code class="docutils literal notranslate"><span class="pre">Forge</span></code> class has been changed to use camelCase. For example:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;dbforge-&gt;add_field</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge-&gt;addField</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;dbforge-&gt;add_key</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge-&gt;addKey</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;dbforge-&gt;create_table</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge-&gt;addTable</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;dbforge-&gt;drop_table</span></code> to <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge-&gt;addTable</span></code></p></li>
 </ul>
-<ol class="arabic simple" start="8">
+</div></blockquote>
+</li>
 <li><p>(optional) You can change the array syntax from <code class="docutils literal notranslate"><span class="pre">array(...)</span></code> to <code class="docutils literal notranslate"><span class="pre">[...]</span></code></p></li>
 </ol>
 </div>
@@ -487,6 +489,38 @@
 </div>
 </div>
 </div>
+<div class="section" id="search-replace">
+<h2><a class="toc-backref" href="#id5">Search &amp; Replace</a><a class="headerlink" href="#search-replace" title="Permalink to this headline">¶</a></h2>
+<p>You can use to following table to search &amp; replace your old CI3 files.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 52%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Search</p></th>
+<th class="head"><p>Replace</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>extends CI_Migration</p></td>
+<td><p>extends Migration</p></td>
+</tr>
+<tr class="row-odd"><td><p>$this-&gt;dbforge-&gt;add_field</p></td>
+<td><p>$this-&gt;forge-&gt;addField</p></td>
+</tr>
+<tr class="row-even"><td><p>$this-&gt;dbforge-&gt;add_key</p></td>
+<td><p>$this-&gt;forge-&gt;addKey</p></td>
+</tr>
+<tr class="row-odd"><td><p>$this-&gt;dbforge-&gt;create_table</p></td>
+<td><p>$this-&gt;forge-&gt;createTable</p></td>
+</tr>
+<tr class="row-even"><td><p>$this-&gt;dbforge-&gt;drop_table</p></td>
+<td><p>$this-&gt;forge-&gt;dropTable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -495,8 +529,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="upgrade_configuration.html" class="btn btn-neutral float-right" title="Upgrade Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="upgrade_controllers.html" class="btn btn-neutral float-left" title="Upgrade Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_pagination.html" class="btn btn-neutral float-right" title="Upgrade Pagination" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrade_localization.html" class="btn btn-neutral float-left" title="Upgrade Localization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
