@@ -21,11 +21,11 @@ Upgrade Guide
 =============
 1. Within the views change to following:
 
-- ``<?php echo $this->pagination->create_links(); ?>`` to ``<?= $pager->links() ?>``
+    - ``<?php echo $this->pagination->create_links(); ?>`` to ``<?= $pager->links() ?>``
 
 2. Within the controller you have to make the following changes:
 
-- You can use the built-in ``paginate()`` method on every Model. Have a look at the code example below to see how you setup the pagination on a specific model.
+    - You can use the built-in ``paginate()`` method on every Model. Have a look at the code example below to see how you setup the pagination on a specific model.
 
 
 Code Example

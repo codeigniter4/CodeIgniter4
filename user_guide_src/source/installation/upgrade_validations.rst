@@ -21,15 +21,15 @@ Upgrade Guide
 =============
 1. Within the view which contains the form you have to change:
 
-- ``<?php echo validation_errors(); ?>`` to ``<?= $validation->listErrors() ?>``
-- ``<?php echo form_open('form'); ?>`` to ``<?= form_open('form') ?>``
+    - ``<?php echo validation_errors(); ?>`` to ``<?= $validation->listErrors() ?>``
+    - ``<?php echo form_open('form'); ?>`` to ``<?= form_open('form') ?>``
 
 2. Within the controller you have to change the following:
 
-- ``$this->load->helper(array('form', 'url'));`` to ``helper(['form', 'url']);``
-- remove the line ``$this->load->library('form_validation');``
-- ``if($this->form_validation->run() == FALSE)`` to ``if (! $this->validate([]))``
-- ``$this->load->view('myform');`` to ``echo view('myform', ['validation' => $this->validator,]);``
+    - ``$this->load->helper(array('form', 'url'));`` to ``helper(['form', 'url']);``
+    - remove the line ``$this->load->library('form_validation');``
+    - ``if($this->form_validation->run() == FALSE)`` to ``if (! $this->validate([]))``
+    - ``$this->load->view('myform');`` to ``echo view('myform', ['validation' => $this->validator,]);``
 
 3. You have to change the validation rules. The new syntax is to set the rules as array in the controller::
 
