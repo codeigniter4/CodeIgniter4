@@ -25,8 +25,8 @@ Upgrade Guide
 
     public $globals = [
         'before' => [
-                //'honeypot'
-                'csrf'
+                //'honeypot',
+                'csrf',
         ]
     ];
 
@@ -41,8 +41,8 @@ Codeigniter Version 3.11
 ::
 
     $csrf = array(
-            'name' => $this->security->get_csrf_token_name(),
-            'hash' => $this->security->get_csrf_hash()
+        'name' => $this->security->get_csrf_token_name(),
+        'hash' => $this->security->get_csrf_hash()
     );
 
     ...
