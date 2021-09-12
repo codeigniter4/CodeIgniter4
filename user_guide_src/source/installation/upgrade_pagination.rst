@@ -15,7 +15,10 @@ Documentations
 
 What has been changed
 =====================
-- In CI4 the pagination is a built-in method in the Model class. You have to change the views and also the controller in order to use the new pagination library.
+- You have to change the views and also the controller in order to use the new pagination library.
+- If you want to customize the pagination links, you need to create View Templates.
+- In CI4 the pagination uses the actual page number only. You can't use the starting index (offset) for the items which is the default in CI3.
+- If you use ``CodeIgniter\Model``, you can use the built-in method in the Model class.
 
 Upgrade Guide
 =============
