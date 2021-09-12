@@ -409,7 +409,7 @@ to connect to as the first parameter.</p>
 <p>Permits you to create the database specified in the first parameter.
 Returns true/false based on success or failure:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Database created!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Database created!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -424,7 +424,7 @@ or will check if a database exists before create it (depending on DBMS).</p>
 <p>Permits you to drop the database specified in the first parameter.
 Returns true/false based on success or failure:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Database deleted!&#39;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Database deleted!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -465,10 +465,10 @@ include a ‘type’ key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a ‘constraint’ key.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 <span class="c1">// will translate to &quot;users VARCHAR(100)&quot; when the field is added.</span>
 </pre></div>
@@ -485,31 +485,31 @@ such as integer.</p></li>
 <li><p>unique/true : to generate a unique key for the field definition.</p></li>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
-        <span class="p">],</span>
-        <span class="s1">&#39;title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="p">],</span>
-        <span class="s1">&#39;author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span><span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
-                <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
-        <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="p">],</span>
-        <span class="s1">&#39;status&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span><span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;status&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -671,7 +671,7 @@ drivers to handle removal of tables with foreign keys.</p>
 accepts the same field array as above, and can be used for an unlimited
 number of additional fields.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">]</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// Executes: ALTER TABLE table_name ADD preferences TEXT</span>
@@ -682,12 +682,12 @@ AFTER and FIRST clauses to position the new column.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Will place the new column after the `another_field` column:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">]</span>
 <span class="p">];</span>
 
 <span class="c1">// Will place the new column at the start of the table definition:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -712,10 +712,10 @@ AFTER and FIRST clauses to position the new column.</p>
 alters an existing column rather than adding a new one. In order to
 change the name, you can add a “name” key into the field defining array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">modifyColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE table_name CHANGE old_name new_name TEXT</span>
@@ -761,10 +761,34 @@ change the name, you can add a “name” key into the field defining array.</p>
 <dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><p>CodeIgniterDatabaseForge</p>
+<p>Adds a field to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-fields">Adding fields</a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="addForeignKey">
+<code class="sig-name descname">addForeignKey</code><span class="sig-paren">(</span><em class="sig-param">$fieldName</em>, <em class="sig-param">$tableName</em>, <em class="sig-param">$tableField</em><span class="optional">[</span>, <em class="sig-param">$onUpdate = ''</em>, <em class="sig-param">$onDelete = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$fieldName</strong> (<em>string|string[]</em>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$tableName</strong> (<em>string</em>) – Name of a parent table</p></li>
+<li><p><strong>$tableField</strong> (<em>string|string[]</em>) – Name of a parent table field or an array of fields</p></li>
+<li><p><strong>$onUpdate</strong> (<em>string</em>) – Desired action for the “on update”</p></li>
+<li><p><strong>$onDelete</strong> (<em>string</em>) – Desired action for the “on delete”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
 </dd>
 </dl>
-<p>Adds a field to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-fields">Adding fields</a>.</p>
+<p>Adds a foreign key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-foreign-keys">Adding Foreign Keys</a>.</p>
 </dd></dl>
 
 <dl class="method">
