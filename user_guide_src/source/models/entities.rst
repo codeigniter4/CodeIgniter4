@@ -496,12 +496,12 @@ Additional parameters are indicated in square brackets and listed with a comma.
 
 ::
 
-    //Defining a type with parameters
+    // Defining a type with parameters
     protected $casts = [
         'some_attribute' => 'class[App\SomeClass, param2, param3]',
     ];
 
-    //Bind the type to the handler
+    // Bind the type to the handler
     protected $castHandlers = [
         'class' => 'SomeHandler',
     ];
