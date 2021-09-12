@@ -25,8 +25,8 @@ Upgrade Guide
 
     public $globals = [
         'before' => [
-                //'honeypot',
-                'csrf',
+            //'honeypot',
+            'csrf',
         ]
     ];
 
