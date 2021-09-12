@@ -83,23 +83,23 @@ Path: ``application/controllers/``::
 
     class Form extends CI_Controller {
 
-            public function index()
+        public function index()
+        {
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation');
+
+            // Set validation rules
+
+            if ($this->form_validation->run() == FALSE)
             {
-                    $this->load->helper(array('form', 'url'));
-
-                    $this->load->library('form_validation');
-
-                    // Set validation rules
-
-                    if ($this->form_validation->run() == FALSE)
-                    {
-                            $this->load->view('myform');
-                    }
-                    else
-                    {
-                            $this->load->view('formsuccess');
-                    }
+                    $this->load->view('myform');
             }
+            else
+            {
+                    $this->load->view('formsuccess');
+            }
+        }
     }
 
 Codeigniter Version 4.x
