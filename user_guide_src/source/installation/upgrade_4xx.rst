@@ -134,8 +134,21 @@ Upgrading Libraries
 .. toctree::
     :titlesonly:
 
-    upgrade_migrations
     upgrade_configuration
+    upgrade_database
+    upgrade_emails
+    upgrade_encryption
+    upgrade_file_upload
+    upgrade_html_tables
+    upgrade_localization
+    upgrade_migrations
+    upgrade_pagination
+    upgrade_responses
+    upgrade_routing
+    upgrade_security
+    upgrade_sessions
+    upgrade_validations
+    upgrade_view_parser
 
 .. note::
     More upgrade guides coming soon
