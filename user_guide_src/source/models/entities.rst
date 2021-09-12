@@ -70,7 +70,7 @@ Create the model first at **app/Models/UserModel.php** so that we can interact w
         protected $allowedFields = [
             'username', 'email', 'password',
         ];
-        protected $returnType    = 'App\Entities\User';
+        protected $returnType    = \App\Entities\User::class;
         protected $useTimestamps = true;
     }
 
@@ -464,7 +464,7 @@ Now you need to register it::
 
         //Bind the type to the handler
         protected $castHandlers = [
-            'base64' => 'App\Entity\Cast\CastBase64',
+            'base64' => \App\Entity\Cast\CastBase64::class,
         ];
     }
 
