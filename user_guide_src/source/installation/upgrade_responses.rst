@@ -39,8 +39,7 @@ Codeigniter Version 4.x
 -----------------------
 ::
 
-    $this->response->setStatusCode(404)
-               ->setBody($body);
+    $this->response->setStatusCode(404);
 
     ...
 
