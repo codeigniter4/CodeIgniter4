@@ -535,7 +535,7 @@ Checking for Changed Attributes
 You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check::
 
-    $user = new User();
+    $user = new \App\Entities\User();
     $user->hasChanged('name'); // false
 
     $user->name = 'Fred';
