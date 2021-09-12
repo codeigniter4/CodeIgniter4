@@ -22,7 +22,6 @@ Upgrade Guide
 1. Within the view which contains the form you have to change:
 
     - ``<?php echo validation_errors(); ?>`` to ``<?= $validation->listErrors() ?>``
-    - ``<?php echo form_open('form'); ?>`` to ``<?= form_open('form') ?>``
 
 2. Within the controller you have to change the following:
 
