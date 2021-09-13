@@ -28,7 +28,6 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
-use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
@@ -89,11 +88,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         // check on constant compare
         UnwrapFutureCompatibleIfPhpVersionRector::class => [
             __DIR__ . '/system/CodeIgniter.php',
-        ],
-
-        // casted to Entity via EntityTest->getCastEntity()
-        RecastingRemovalRector::class => [
-            __DIR__ . '/tests/system/Entity/EntityTest.php',
         ],
 
         // session handlers have the gc() method with underscored parameter `$max_lifetime`
