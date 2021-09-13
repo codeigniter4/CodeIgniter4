@@ -337,4 +337,3 @@ by treating ``RegionalSales`` as a "registrar". The resulting configuration prop
 
     $target   = 45;
     $campaign = "Winter Wonderland";
-
