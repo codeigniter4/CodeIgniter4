@@ -626,125 +626,105 @@ control the comparison:</p>
 </div>
 </div></blockquote>
 </li>
-<li><dl>
-<dt><strong>Custom string:</strong></dt><dd><p>You can write your own clauses manually:</p>
+<li><p><strong>Custom string:</strong></p>
+<blockquote>
+<div><p>You can write your own clauses manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you are using user-supplied data within the string, you MUST escape the
 data manually. Failure to do so could result in SQL injections.</p>
-</dd>
-</dl>
-</li>
-</ol>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">);</span>
 <span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=</span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2"> AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
 </div>
-<ol class="arabic">
-<li><dl>
-<dt><strong>Subqueries:</strong></dt><dd><p>You can use an anonymous function to create a subquery.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Subqueries:</strong></p>
+<blockquote>
+<div><p>You can use an anonymous function to create a subquery:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;MAX(advance_amount)&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="p">});</span>
 <span class="c1">// Produces: WHERE &quot;advance_amount&quot; &lt; (SELECT MAX(advance_amount) FROM &quot;orders&quot; WHERE &quot;id&quot; &gt; 2)</span>
 </pre></div>
 </div>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ol>
 <p><strong>$builder-&gt;orWhere()</strong></p>
 <p>This function is identical to the one above, except that multiple
-instances are joined by OR</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+instances are joined by OR:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhere</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p><strong>$builder-&gt;whereIn()</strong></p>
 <p>Generates a WHERE field IN (‘item’, ‘item’) SQL query joined with AND if
-appropriate</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+appropriate:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>You can use subqueries instead of an array of values.</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<p>You can use subqueries instead of an array of values:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
 <span class="c1">// Produces: WHERE &quot;id&quot; IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p><strong>$builder-&gt;orWhereIn()</strong></p>
 <p>Generates a <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with OR if
-appropriate</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+appropriate:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>You can use subqueries instead of an array of values.</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<p>You can use subqueries instead of an array of values:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
 
 <span class="c1">// Produces: OR &quot;id&quot; IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p><strong>$builder-&gt;whereNotIn()</strong></p>
 <p>Generates a WHERE field NOT IN (‘item’, ‘item’) SQL query joined with
-AND if appropriate</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+AND if appropriate:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>You can use subqueries instead of an array of values.</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<p>You can use subqueries instead of an array of values:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
 
 <span class="c1">// Produces: WHERE &quot;id&quot; NOT IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p><strong>$builder-&gt;orWhereNotIn()</strong></p>
 <p>Generates a <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with OR
-if appropriate</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+if appropriate:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>You can use subqueries instead of an array of values.</p>
-<blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
+<p>You can use subqueries instead of an array of values:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
 
 <span class="c1">// Produces: OR &quot;id&quot; NOT IN (SELECT &quot;job_id&quot; FROM &quot;users_jobs&quot; WHERE &quot;user_id&quot; = 3)</span>
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 <div class="section" id="looking-for-similar-data">
 <h2><a class="toc-backref" href="#id4">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline">¶</a></h2>
@@ -2807,7 +2787,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
     <p>
         &#169; Copyright 2019-2021 CodeIgniter Foundation.
       <span class="lastupdated">
-        Last updated on Sep 12, 2021.
+        Last updated on Sep 13, 2021.
       </span>
 
     </p>
