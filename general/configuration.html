@@ -608,14 +608,14 @@ already configured. In <strong>src/Config/Registrar.php</strong> there would be 
 the single <code class="docutils literal notranslate"><span class="pre">Pager()</span></code> method (note the case-sensitivity):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Registrar</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Pager</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
-        <span class="p">{</span>
-                <span class="k">return</span> <span class="p">[</span>
-                        <span class="s1">&#39;templates&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                                <span class="s1">&#39;module_pager&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MyModule\Views\Pager&#39;</span><span class="p">,</span>
-                        <span class="p">],</span>
-                <span class="p">];</span>
-        <span class="p">}</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Pager</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;templates&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;module_pager&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MyModule\Views\Pager&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
