@@ -64,12 +64,12 @@ Path: ``app/Config/Routes.php``::
 
     ...
 
-    $routes->add('posts', 'posts::index');
-    $routes->add('teams/create', 'teams::create');
-    $routes->add('teams/edit/(:any)', 'teams::edit/$1');
+    $routes->add('posts', 'Posts::index');
+    $routes->add('teams/create', 'Teams::create');
+    $routes->add('teams/edit/(:any)', 'Teams::edit/$1');
 
-    $routes->add('posts/create', 'posts::create');
-    $routes->add('posts/edit/(:any)', 'posts::edit/$1');
-    $routes->add('drivers/create', 'drivers::create');
-    $routes->add('drivers/edit/(:any)', 'drivers::edit/$1');
-    $routes->add('posts/(:any)', 'posts::view/$1');
+    $routes->add('posts/create', 'Posts::create');
+    $routes->add('posts/edit/(:any)', 'Posts::edit/$1');
+    $routes->add('drivers/create', 'Drivers::create');
+    $routes->add('drivers/edit/(:any)', 'Drivers::edit/$1');
+    $routes->add('posts/(:any)', 'Posts::view/$1');
