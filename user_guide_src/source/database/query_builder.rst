@@ -259,9 +259,7 @@ methods:
     Notice that the equal sign is added for you.
 
     If you use multiple function calls they will be chained together with
-    AND between them:
-
-    ::
+    AND between them::
 
         $builder->where('name', $name);
         $builder->where('title', $title);
@@ -271,9 +269,7 @@ methods:
 #. **Custom key/value method:**
 
     You can include an operator in the first parameter in order to
-    control the comparison:
-
-    ::
+    control the comparison::
 
         $builder->where('name !=', $name);
         $builder->where('id <', $id);
@@ -287,33 +283,30 @@ methods:
         $builder->where($array);
         // Produces: WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
 
-    You can include your own operators using this method as well:
-
-    ::
+    You can include your own operators using this method as well::
 
         $array = ['name !=' => $name, 'id <' => $id, 'date >' => $date];
         $builder->where($array);
 
 #. **Custom string:**
-    You can write your own clauses manually::
 
+    You can write your own clauses manually::
 
         $where = "name='Joe' AND status='boss' OR status='active'";
         $builder->where($where);
 
     If you are using user-supplied data within the string, you MUST escape the
     data manually. Failure to do so could result in SQL injections.
-::
+
+    ::
 
         $name = $builder->db->escape('Joe');
         $where = "name={$name} AND status='boss' OR status='active'";
         $builder->where($where);
 
-
 #. **Subqueries:**
-    You can use an anonymous function to create a subquery.
 
-    ::
+    You can use an anonymous function to create a subquery::
 
         $builder->where('advance_amount <', function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
@@ -323,48 +316,38 @@ methods:
 **$builder->orWhere()**
 
 This function is identical to the one above, except that multiple
-instances are joined by OR
+instances are joined by OR::
 
-    ::
-
-        $builder->where('name !=', $name);
-        $builder->orWhere('id >', $id);
-        // Produces: WHERE name != 'Joe' OR id > 50
+    $builder->where('name !=', $name);
+    $builder->orWhere('id >', $id);
+    // Produces: WHERE name != 'Joe' OR id > 50
 
 **$builder->whereIn()**
 
 Generates a WHERE field IN ('item', 'item') SQL query joined with AND if
-appropriate
+appropriate::
 
-    ::
+    $names = ['Frank', 'Todd', 'James'];
+    $builder->whereIn('username', $names);
+    // Produces: WHERE username IN ('Frank', 'Todd', 'James')
 
-        $names = ['Frank', 'Todd', 'James'];
-        $builder->whereIn('username', $names);
-        // Produces: WHERE username IN ('Frank', 'Todd', 'James')
+You can use subqueries instead of an array of values::
 
-You can use subqueries instead of an array of values.
-
-    ::
-
-        $builder->whereIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-        // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+    $builder->whereIn('id', function (BaseBuilder $builder) {
+        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+    });
+    // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->orWhereIn()**
 
 Generates a ``WHERE field IN ('item', 'item')`` SQL query joined with OR if
-appropriate
-
-    ::
+appropriate::
 
         $names = ['Frank', 'Todd', 'James'];
         $builder->orWhereIn('username', $names);
         // Produces: OR username IN ('Frank', 'Todd', 'James')
 
-You can use subqueries instead of an array of values.
-
-    ::
+You can use subqueries instead of an array of values::
 
         $builder->orWhereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
@@ -375,45 +358,36 @@ You can use subqueries instead of an array of values.
 **$builder->whereNotIn()**
 
 Generates a WHERE field NOT IN ('item', 'item') SQL query joined with
-AND if appropriate
+AND if appropriate::
 
-    ::
+    $names = ['Frank', 'Todd', 'James'];
+    $builder->whereNotIn('username', $names);
+    // Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
 
-        $names = ['Frank', 'Todd', 'James'];
-        $builder->whereNotIn('username', $names);
-        // Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
+You can use subqueries instead of an array of values::
 
-You can use subqueries instead of an array of values.
+    $builder->whereNotIn('id', function (BaseBuilder $builder) {
+        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+    });
 
-    ::
-
-        $builder->whereNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
+    // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 **$builder->orWhereNotIn()**
 
 Generates a ``WHERE field NOT IN ('item', 'item')`` SQL query joined with OR
-if appropriate
+if appropriate::
 
-    ::
+    $names = ['Frank', 'Todd', 'James'];
+    $builder->orWhereNotIn('username', $names);
+    // Produces: OR username NOT IN ('Frank', 'Todd', 'James')
 
-        $names = ['Frank', 'Todd', 'James'];
-        $builder->orWhereNotIn('username', $names);
-        // Produces: OR username NOT IN ('Frank', 'Todd', 'James')
+You can use subqueries instead of an array of values::
 
-You can use subqueries instead of an array of values.
+    $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
+        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
+    });
 
-    ::
-
-        $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+    // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 ************************
 Looking for Similar Data
