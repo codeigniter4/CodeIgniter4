@@ -9,11 +9,13 @@ Enhancements:
 
 - Added Cache config for reserved characters
 - The ``addForeignKey`` function of the ``Forge`` class can now define composite foreign keys in an array
+- Added ``Config\Session`` class to handle session configration
 
 Changes:
 
 Deprecations:
 
 - Deprecated ``CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS`` in favor of the new config property
+- Deprecated ``Config\App`` session properties in favor of the new session config class ``Config\Session``
 
 Bugs Fixed:

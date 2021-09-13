@@ -63,14 +63,15 @@ class DatabaseHandler extends BaseHandler
     public function __construct(AppConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
-        $this->table = $config->sessionSavePath;
+
+        $this->table = $this->savePath;
 
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
 
         // @phpstan-ignore-next-line
-        $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+        $this->DBGroup = config('Session')->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
         $this->db = Database::connect($this->DBGroup);
 

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Session\Handlers;
 
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -65,14 +66,33 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $cookieSecure = false;
 
     /**
-     * Cookie name to use
+     * The name of the session which is used as cookie name.
+     * It should only contain alphanumeric characters.
      *
      * @var string
      */
-    protected $cookieName;
+    protected $cookieName = 'ci_session';
 
     /**
-     * Match IP addresses for cookies?
+     * The number of SECONDS you want the session to last.
+     * Set to `0` means expire when the browser is closed.
+     *
+     * @var int
+     */
+    protected $lifetime = 7200;
+
+    /**
+     * The 'save path' for the session varies between
+     *
+     * @var array|string
+     */
+    protected $savePath;
+
+    /**
+     * Whether to match the user's IP address when reading the session data.
+     *
+     * NOTE: If you're using the database driver, don't forget to update
+     *       your session table's PRIMARY KEY when changing this setting.
      *
      * @var bool
      */
@@ -86,14 +106,6 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected $sessionID;
 
     /**
-     * The 'save path' for the session
-     * varies between
-     *
-     * @var array|string
-     */
-    protected $savePath;
-
-    /**
      * User's IP address.
      *
      * @var string
@@ -102,13 +114,18 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     public function __construct(AppConfig $config, string $ipAddress)
     {
+        /** @var SessionConfig $session */
+        $session = config('Session');
+        
+        $this->cookieName = $session->name ?? $config->sessionCookieName ?? $this->cookieName;
+        $this->lifetime   = $session->lifetime ?? $config->sessionExpiration ?? $this->lifetime;
+        $this->savePath   = $session->savePath ?? $config->sessionSavePath ?? $this->savePath;
+        $this->matchIP    = $session->matchIP ?? $config->sessionMatchIP ?? $this->matchIP;
+
         $this->cookiePrefix = $config->cookiePrefix;
         $this->cookieDomain = $config->cookieDomain;
         $this->cookiePath   = $config->cookiePath;
         $this->cookieSecure = $config->cookieSecure;
-        $this->cookieName   = $config->sessionCookieName;
-        $this->matchIP      = $config->sessionMatchIP;
-        $this->savePath     = $config->sessionSavePath;
         $this->ipAddress    = $ipAddress;
     }
 

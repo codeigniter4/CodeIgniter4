@@ -25,7 +25,7 @@ class FileHandler extends BaseHandler
      *
      * @var string
      */
-    protected $savePath;
+    protected $savePath = WRITEPATH . 'session';
 
     /**
      * The file handle
@@ -66,17 +66,8 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($config->sessionSavePath)) {
-            $this->savePath = rtrim($config->sessionSavePath, '/\\');
-            ini_set('session.save_path', $config->sessionSavePath);
-        } else {
-            $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
-
-            if (! $sessionPath) {
-                $sessionPath = WRITEPATH . 'session';
-            }
-
-            $this->savePath = $sessionPath;
+        if (! empty($this->savePath)) {
+            ini_set('session.save_path', $this->savePath);
         }
 
         $this->matchIP = $config->sessionMatchIP;

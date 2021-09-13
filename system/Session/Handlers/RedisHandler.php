@@ -50,11 +50,7 @@ class RedisHandler extends BaseHandler
      */
     protected $keyExists = false;
 
-    /**
-     * Number of seconds until the session ends.
-     *
-     * @var int
-     */
+    /** @deprecated */
     protected $sessionExpiration = 7200;
 
     /**
@@ -90,9 +86,9 @@ class RedisHandler extends BaseHandler
             $this->keyPrefix .= $this->ipAddress . ':';
         }
 
-        $this->sessionExpiration = empty($config->sessionExpiration)
-            ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
+        if (empty($this->lifetime)) {
+            $this->lifetime = (int) ini_get('session.gc_maxlifetime');
+        }
     }
 
     /**
@@ -181,7 +177,7 @@ class RedisHandler extends BaseHandler
             $this->redis->expire($this->lockKey, 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($data)) || $this->keyExists === false) {
-                if ($this->redis->set($this->keyPrefix . $id, $data, $this->sessionExpiration)) {
+                if ($this->redis->set($this->keyPrefix . $id, $data, $this->lifetime)) {
                     $this->fingerprint = $fingerprint;
                     $this->keyExists   = true;
 
@@ -191,7 +187,7 @@ class RedisHandler extends BaseHandler
                 return false;
             }
 
-            return $this->redis->expire($this->keyPrefix . $id, $this->sessionExpiration);
+            return $this->redis->expire($this->keyPrefix . $id, $this->lifetime);
         }
 
         return false;
