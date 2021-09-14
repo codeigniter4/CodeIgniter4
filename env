@@ -114,13 +114,13 @@
 # SESSION
 #--------------------------------------------------------------------
 
-# app.handler = 'CodeIgniter\Session\Handlers\FileHandler'
-# app.name = 'ci_session'
-# app.lifetime = 7200
-# app.savePath = null
-# app.matchIP = false
-# app.cooldown = 300
-# app.regenerate = false
+# session.handler = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.name = 'ci_session'
+# session.lifetime = 7200
+# session.savePath = null
+# session.matchIP = false
+# session.ttl = 300
+# session.regenerate = false
 
 #--------------------------------------------------------------------
 # LOGGER

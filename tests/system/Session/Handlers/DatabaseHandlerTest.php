@@ -48,7 +48,7 @@ final class DatabaseHandlerTest extends CIUnitTestCase
             'lifetime'   => 7200,
             'savePath'   => 'ci_sessions',
             'matchIP'    => false,
-            'cooldown'   => 300,
+            'ttl'        => 300,
             'regenerate' => false,
         ];
 

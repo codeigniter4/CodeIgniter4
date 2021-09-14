@@ -81,14 +81,14 @@ class Session extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
-     * Session Time to Update
+     * Session Time to Live
      * --------------------------------------------------------------------------
      *
      * How many seconds between CI regenerating the session ID.
      *
      * @var int
      */
-    public $cooldown = 300;
+    public $ttl = 300;
 
     /**
      * --------------------------------------------------------------------------

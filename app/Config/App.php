@@ -228,7 +228,7 @@ class App extends BaseConfig
      *
      * @var int
      *
-     * @deprecated use Config\Session::$cooldown property instead.
+     * @deprecated use Config\Session::$ttl property instead.
      */
     public $sessionTimeToUpdate = 300;
 

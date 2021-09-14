@@ -70,7 +70,6 @@ class DatabaseHandler extends BaseHandler
             throw SessionException::forMissingDatabaseTable();
         }
 
-        // @phpstan-ignore-next-line
         $this->DBGroup = config('Session')->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
         $this->db = Database::connect($this->DBGroup);

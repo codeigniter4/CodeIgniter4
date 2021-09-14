@@ -47,7 +47,7 @@ final class SessionTest extends CIUnitTestCase
             'lifetime'   => 7200,
             'savePath'   => null,
             'matchIP'    => false,
-            'cooldown'   => 300,
+            'ttl'        => 300,
             'regenerate' => false,
         ];
 
