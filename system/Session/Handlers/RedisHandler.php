@@ -50,7 +50,9 @@ class RedisHandler extends BaseHandler
      */
     protected $keyExists = false;
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     protected $sessionExpiration = 7200;
 
     /**

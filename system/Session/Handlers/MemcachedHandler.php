@@ -42,7 +42,9 @@ class MemcachedHandler extends BaseHandler
      */
     protected $lockKey;
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     protected $sessionExpiration = 7200;
 
     /**

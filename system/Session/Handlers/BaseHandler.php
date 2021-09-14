@@ -116,7 +116,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     {
         /** @var SessionConfig $session */
         $session = config('Session');
-        
+
         $this->cookieName = $session->name ?? $config->sessionCookieName ?? $this->cookieName;
         $this->lifetime   = $session->lifetime ?? $config->sessionExpiration ?? $this->lifetime;
         $this->savePath   = $session->savePath ?? $config->sessionSavePath ?? $this->savePath;
