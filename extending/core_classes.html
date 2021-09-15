@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Creating Core System Classes &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Creating Core System Classes &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Replacing Common Functions" href="common.html" />
     <link rel="prev" title="Extending CodeIgniter" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Extending CodeIgniter</a> &raquo;</li>
-        
       <li>Creating Core System Classes</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="creating-core-system-classes">
-<h1>Creating Core System Classes<a class="headerlink" href="#creating-core-system-classes" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="creating-core-system-classes">
+<h1>Creating Core System Classes<a class="headerlink" href="#creating-core-system-classes" title="Permalink to this headline"></a></h1>
 <p>Every time CodeIgniter runs there are several base classes that are initialized automatically as part of the core
 framework. It is possible, however, to swap any of the core system classes with your own version or even just extend
 the core versions.</p>
@@ -363,8 +271,8 @@ who would like to significantly alter the CodeIgniter core.</strong></p>
 <p>Messing with a core system class has a lot of implications, so make sure you know what you are doing before
 attempting it.</p>
 </div>
-<div class="section" id="system-class-list">
-<h2>System Class List<a class="headerlink" href="#system-class-list" title="Permalink to this headline">¶</a></h2>
+<section id="system-class-list">
+<h2>System Class List<a class="headerlink" href="#system-class-list" title="Permalink to this headline"></a></h2>
 <p>The following is a list of the core system files that are invoked every time CodeIgniter runs:</p>
 <ul class="simple">
 <li><p>Config\Services</p></li>
@@ -389,9 +297,9 @@ attempting it.</p>
 <li><p>CodeIgniter\View\View</p></li>
 <li><p>CodeIgniter\View\Escaper</p></li>
 </ul>
-</div>
-<div class="section" id="replacing-core-classes">
-<h2>Replacing Core Classes<a class="headerlink" href="#replacing-core-classes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="replacing-core-classes">
+<h2>Replacing Core Classes<a class="headerlink" href="#replacing-core-classes" title="Permalink to this headline"></a></h2>
 <p>To use one of your own system classes instead of a default one, ensure that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a>
 can find your class, that your new class extends the appropriate interface, and modify the appropriate
 <a class="reference internal" href="../concepts/services.html"><span class="doc">Service</span></a> to load your class in place of the core class.</p>
@@ -420,9 +328,9 @@ the core system class, you would create your class like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="extending-core-classes">
-<h2>Extending Core Classes<a class="headerlink" href="#extending-core-classes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="extending-core-classes">
+<h2>Extending Core Classes<a class="headerlink" href="#extending-core-classes" title="Permalink to this headline"></a></h2>
 <p>If all you need to is add some functionality to an existing library - perhaps add a method or two - then it’s overkill
 to recreate the entire library. In this case, it’s better to simply extend the class. Extending the class is nearly
 identical to replacing a class with one exception:</p>
@@ -462,58 +370,40 @@ identical to replacing a class with one exception:</p>
 </div>
 <p><strong>Tip:</strong>  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="common.html" class="btn btn-neutral float-right" title="Replacing Common Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Extending CodeIgniter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common.html" class="btn btn-neutral float-right" title="Replacing Common Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

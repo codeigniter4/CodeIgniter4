@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>HTTP Responses &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>HTTP Responses &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="API Response Trait" href="api_responses.html" />
     <link rel="prev" title="HTML Table Class" href="table.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Building Responses</a> &raquo;</li>
-        
       <li>HTTP Responses</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="http-responses">
-<h1>HTTP Responses<a class="headerlink" href="#http-responses" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="http-responses">
+<h1>HTTP Responses<a class="headerlink" href="#http-responses" title="Permalink to this headline"></a></h1>
 <p>The Response class extends the <a class="reference internal" href="../incoming/message.html"><span class="doc">HTTP Message Class</span></a> with methods only appropriate for
 a server responding to the client that called it.</p>
 <div class="contents local topic" id="contents">
@@ -375,15 +283,15 @@ a server responding to the client that called it.</p>
 <li><p><a class="reference internal" href="#class-reference" id="id10">Class Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="working-with-the-response">
-<h2><a class="toc-backref" href="#id1">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline">¶</a></h2>
+<section id="working-with-the-response">
+<h2><a class="toc-backref" href="#id1">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
 <p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it’s there for you.</p>
-<div class="section" id="setting-the-output">
-<h3><a class="toc-backref" href="#id2">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline">¶</a></h3>
+<section id="setting-the-output">
+<h3><a class="toc-backref" href="#id2">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline"></a></h3>
 <p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
 the response:</p>
@@ -407,9 +315,9 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setXML</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="setting-headers">
-<h3><a class="toc-backref" href="#id3">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="setting-headers">
+<h3><a class="toc-backref" href="#id3">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
 <p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
 with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
@@ -431,10 +339,10 @@ parameter. This is not case-sensitive.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="force-file-download">
-<h2><a class="toc-backref" href="#id4">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="force-file-download">
+<h2><a class="toc-backref" href="#id4">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
 <p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
@@ -465,9 +373,9 @@ pass <code class="docutils literal notranslate"><span class="pre">null</span></c
 <p>The response object MUST be returned for the download to be sent to the client. This allows the response
 to be passed through all <strong>after</strong> filters before being sent to the client.</p>
 </div>
-</div>
-<div class="section" id="http-caching">
-<h2><a class="toc-backref" href="#id5">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="http-caching">
+<h2><a class="toc-backref" href="#id5">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
 <p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
 this can lead to a huge performance boost to your application because it will tell the client that they don’t need
 to contact the getServer at all since nothing has changed. And you can’t get faster than that.</p>
@@ -489,9 +397,9 @@ to set the Cache values to what you need, through the <code class="docutils lite
 to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header. You are free to set all of the options exactly as you need for your specific
 situation. While most of the options are applied to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header, it intelligently handles
 the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
-</div>
-<div class="section" id="content-security-policy">
-<h2><a class="toc-backref" href="#id6">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="content-security-policy">
+<h2><a class="toc-backref" href="#id6">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline"></a></h2>
 <p>One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
 This forces you to whitelist every single source of content that is pulled in from your site’s HTML,
 including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don’t meet
@@ -507,8 +415,8 @@ visit the following sites:</p>
 <li><p><a class="reference external" href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">Introduction at HTML5Rocks</a></p></li>
 <li><p><a class="reference external" href="https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/">Article at SitePoint</a></p></li>
 </ul>
-<div class="section" id="turning-csp-on">
-<h3><a class="toc-backref" href="#id7">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline">¶</a></h3>
+<section id="turning-csp-on">
+<h3><a class="toc-backref" href="#id7">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline"></a></h3>
 <p>By default, support for this is off. To enable support in your application, edit the <code class="docutils literal notranslate"><span class="pre">CSPEnabled</span></code> value in
 <strong>app/Config/App.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$CSPEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
@@ -526,9 +434,9 @@ of your choice.</p>
 When an additional entry is added to a CSP directive, as shown below, it will be added
 to the CSP header appropriate for blocking or preventing. That can be overridden on a per
 call basis, by providing an optional second parameter to the adding method call.</p>
-</div>
-<div class="section" id="runtime-configuration">
-<h3><a class="toc-backref" href="#id8">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="runtime-configuration">
+<h3><a class="toc-backref" href="#id8">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h3>
 <p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$response-&gt;CSP</span></code>. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
@@ -574,9 +482,9 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span><span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="inline-content">
-<h3><a class="toc-backref" href="#id9">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="inline-content">
+<h3><a class="toc-backref" href="#id9">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline"></a></h3>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
 <code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
@@ -598,10 +506,10 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <span class="o">&lt;/</span><span class="nx">style</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="class-reference">
-<h2><a class="toc-backref" href="#id10">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id10">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -631,7 +539,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <code class="sig-name descname">CodeIgniter\HTTP\Response</code></dt>
 <dd><dl class="method">
 <dt id="getStatusCode">
-<code class="sig-name descname">getStatusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getStatusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current HTTP status code for this response</p>
@@ -649,7 +557,7 @@ will be thrown:</p>
 
 <dl class="method">
 <dt id="setStatusCode">
-<code class="sig-name descname">setStatusCode</code><span class="sig-paren">(</span><em class="sig-param">$code</em><span class="optional">[</span>, <em class="sig-param">$reason=''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setStatusCode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setStatusCode</code><span class="sig-paren">(</span><em class="sig-param">$code</em><span class="optional">[</span>, <em class="sig-param">$reason=''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setStatusCode" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -677,7 +585,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 
 <dl class="method">
 <dt id="getReasonPhrase">
-<code class="sig-name descname">getReasonPhrase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReasonPhrase" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getReasonPhrase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReasonPhrase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current reason phrase.</p>
@@ -694,7 +602,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 
 <dl class="method">
 <dt id="setDate">
-<code class="sig-name descname">setDate</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setDate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setDate</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setDate" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -717,7 +625,7 @@ for a custom status code, you can pass the reason phrase as the second parameter
 
 <dl class="method">
 <dt id="setContentType">
-<code class="sig-name descname">setContentType</code><span class="sig-paren">(</span><em class="sig-param">$mime</em><span class="optional">[</span>, <em class="sig-param">$charset='UTF-8'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setContentType" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setContentType</code><span class="sig-paren">(</span><em class="sig-param">$mime</em><span class="optional">[</span>, <em class="sig-param">$charset='UTF-8'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setContentType" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -747,7 +655,7 @@ pass the character set as the second parameter:</p>
 
 <dl class="method">
 <dt id="noCache">
-<code class="sig-name descname">noCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">noCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noCache" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current response instance.</p>
@@ -768,7 +676,7 @@ of all response messages:</p>
 
 <dl class="method">
 <dt id="setCache">
-<code class="sig-name descname">setCache</code><span class="sig-paren">(</span><em class="sig-param">$options</em><span class="sig-paren">)</span><a class="headerlink" href="#setCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCache</code><span class="sig-paren">(</span><em class="sig-param">$options</em><span class="sig-paren">)</span><a class="headerlink" href="#setCache" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -799,7 +707,7 @@ of all response messages:</p>
 
 <dl class="method">
 <dt id="setLastModified">
-<code class="sig-name descname">setLastModified</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setLastModified" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setLastModified</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setLastModified" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -839,7 +747,7 @@ this as it is handled automatically by CodeIgniter.</p>
 
 <dl class="method">
 <dt id="setCookie">
-<code class="sig-name descname">setCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httponly = false</em><span class="optional">[</span>, <em class="sig-param">$samesite = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httponly = false</em><span class="optional">[</span>, <em class="sig-param">$samesite = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -907,7 +815,7 @@ parameters:</p>
 
 <dl class="method">
 <dt id="deleteCookie">
-<code class="sig-name descname">deleteCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#deleteCookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deleteCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#deleteCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -939,7 +847,7 @@ cookie will be deleted across all that apply.</p>
 
 <dl class="method">
 <dt id="hasCookie">
-<code class="sig-name descname">hasCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hasCookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hasCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hasCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -966,7 +874,7 @@ has the prescribed value.</p>
 
 <dl class="method">
 <dt id="getCookie">
-<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -988,7 +896,7 @@ If no name is given, returns the array of <code class="docutils literal notransl
 
 <dl class="method">
 <dt id="getCookies">
-<code class="sig-name descname">getCookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getCookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookies" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie[]</span></code></p>
@@ -1001,58 +909,40 @@ request only.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="api_responses.html" class="btn btn-neutral float-right" title="API Response Trait" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="table.html" class="btn btn-neutral float-left" title="HTML Table Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_responses.html" class="btn btn-neutral float-right" title="API Response Trait" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

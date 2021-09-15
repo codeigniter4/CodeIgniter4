@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Running Your App &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Running Your App &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Upgrading From a Previous Version" href="upgrading.html" />
     <link rel="prev" title="Manual Installation" href="installing_manual.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Installation</a> &raquo;</li>
-        
       <li>Running Your App</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="running-your-app">
-<h1>Running Your App<a class="headerlink" href="#running-your-app" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="running-your-app">
+<h1>Running Your App<a class="headerlink" href="#running-your-app" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#initial-configuration-set-up" id="id2">Initial Configuration &amp; Set Up</a></p></li>
@@ -368,8 +276,8 @@ using virtualization, or using CodeIgniter’s command line tool for testing.
 This section addresses how to use each technique, and explains some of the pros and cons of them.</p>
 <p>If you’re new to CodeIgniter, please read the <a class="reference internal" href="../intro/index.html"><span class="doc">Getting Started</span></a>
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!</p>
-<div class="section" id="initial-configuration-set-up">
-<h2><a class="toc-backref" href="#id2">Initial Configuration &amp; Set Up</a><a class="headerlink" href="#initial-configuration-set-up" title="Permalink to this headline">¶</a></h2>
+<section id="initial-configuration-set-up">
+<h2><a class="toc-backref" href="#id2">Initial Configuration &amp; Set Up</a><a class="headerlink" href="#initial-configuration-set-up" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
 <li><p>Open the <strong>app/Config/App.php</strong> file with a text editor and
 set your base URL. If you need more flexibility, the baseURL may
@@ -393,9 +301,9 @@ you will need to modify the permissions for the <code class="docutils literal no
 your project, so that it is writable by the user or account used by your
 web server.</p>
 </div>
-</div>
-<div class="section" id="local-development-server">
-<h2><a class="toc-backref" href="#id3">Local Development Server</a><a class="headerlink" href="#local-development-server" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="local-development-server">
+<h2><a class="toc-backref" href="#id3">Local Development Server</a><a class="headerlink" href="#local-development-server" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter 4 comes with a local development server, leveraging PHP’s built-in web server
 with CodeIgniter routing. You can use the <code class="docutils literal notranslate"><span class="pre">serve</span></code> script to launch it,
 with the following command line in the main directory:</p>
@@ -431,15 +339,15 @@ set to the path of the PHP executable you want to use:</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="hosting-with-apache">
-<h2><a class="toc-backref" href="#id4">Hosting with Apache</a><a class="headerlink" href="#hosting-with-apache" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="hosting-with-apache">
+<h2><a class="toc-backref" href="#id4">Hosting with Apache</a><a class="headerlink" href="#hosting-with-apache" title="Permalink to this headline"></a></h2>
 <p>A CodeIgniter4 webapp is normally hosted on a web server.
 Apache’s <code class="docutils literal notranslate"><span class="pre">httpd</span></code> is the “standard” platform, and assumed in much of our documentation.</p>
 <p>Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from <a class="reference external" href="https://bitnami.com/stacks/infrastructure">Bitnami</a>.</p>
-<div class="section" id="htaccess">
-<h3>.htaccess<a class="headerlink" href="#htaccess" title="Permalink to this headline">¶</a></h3>
+<section id="htaccess">
+<h3>.htaccess<a class="headerlink" href="#htaccess" title="Permalink to this headline"></a></h3>
 <p>The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
 in our user guide.</p>
 <p>Make sure that the rewrite module is enabled (uncommented) in the main
@@ -456,9 +364,9 @@ in the “AllowOverride” setting:</p>
 <span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="virtual-hosting">
-<h3>Virtual Hosting<a class="headerlink" href="#virtual-hosting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="virtual-hosting">
+<h3>Virtual Hosting<a class="headerlink" href="#virtual-hosting" title="Permalink to this headline"></a></h3>
 <p>We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,</p>
 <p>Make sure that the virtual hosting module is enabled (uncommented) in the main
@@ -484,15 +392,15 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 </div>
 <p>If your project folder is not a subfolder of the Apache document root, then your
 &lt;VirtualHost&gt; element may need a nested &lt;Directory&gt; element to grant the web server access to the files.</p>
-</div>
-<div class="section" id="testing">
-<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
 <p>With the above configuration, your webapp would be accessed with the URL <code class="docutils literal notranslate"><span class="pre">http://myproject.local</span></code> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
-</div>
-</div>
-<div class="section" id="hosting-with-nginx">
-<h2><a class="toc-backref" href="#id5">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="hosting-with-nginx">
+<h2><a class="toc-backref" href="#id5">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
 <p>Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.</p>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
@@ -527,17 +435,17 @@ Here you can find an example configuration using PHP 7.3 FPM (unix sockets) unde
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="hosting-with-vagrant">
-<h2><a class="toc-backref" href="#id6">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="hosting-with-vagrant">
+<h2><a class="toc-backref" href="#id6">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline"></a></h2>
 <p>Virtualization is an effective way to test your webapp in the environment you
 plan to deploy on, even if you develop on a different one.
 Even if you are using the same platform for both, virtualization provides an
 isolated environment for testing.</p>
 <p>The codebase comes with a <code class="docutils literal notranslate"><span class="pre">VagrantFile.dist</span></code>, that can be copied to <code class="docutils literal notranslate"><span class="pre">VagrantFile</span></code>
 and tailored for your system, for instance enabling access to specific database or caching engines.</p>
-<div class="section" id="setting-up">
-<h3>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h3>
+<section id="setting-up">
+<h3>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <p>It assumes that you have installed <a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> and
 <a class="reference external" href="https://www.vagrantup.com/downloads.html">Vagrant</a>
 for your platform.</p>
@@ -545,9 +453,9 @@ for your platform.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">vagrant</span> <span class="nx">box</span> <span class="nx">add</span> <span class="nx">ubuntu</span><span class="o">/</span><span class="nx">bionic64</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id1">
-<h3>Testing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id1">
+<h3>Testing<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>Once set up, you can then launch your webapp inside a VM, with the command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">vagrant</span> <span class="nx">up</span>
 </pre></div>
@@ -555,10 +463,10 @@ for your platform.</p>
 <p>Your webapp will be accessible at <code class="docutils literal notranslate"><span class="pre">http://localhost:8080</span></code>, with the code coverage
 report for your build at <code class="docutils literal notranslate"><span class="pre">http://localhost:8081</span></code> and the user guide for
 it at <code class="docutils literal notranslate"><span class="pre">http://localhost:8082</span></code>.</p>
-</div>
-</div>
-<div class="section" id="bootstrapping-the-app">
-<h2><a class="toc-backref" href="#id7">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="bootstrapping-the-app">
+<h2><a class="toc-backref" href="#id7">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
 <p>In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
@@ -566,58 +474,40 @@ with a separate bootstrap script specifically for this scenario: <code class="do
 <p>Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your
 paths align with the expected directory structure for your installation method.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading From a Previous Version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="installing_manual.html" class="btn btn-neutral float-left" title="Manual Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading From a Previous Version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

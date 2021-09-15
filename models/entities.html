@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Using Entity Classes &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Using Entity Classes &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Managing Databases" href="../dbmgmt/index.html" />
     <link rel="prev" title="Using CodeIgniter’s Model" href="model.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Modeling Data</a> &raquo;</li>
-        
       <li>Using Entity Classes</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="using-entity-classes">
-<h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="using-entity-classes">
+<h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter supports Entity classes as a first-class citizen in it’s database layer, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that fits your needs better.</p>
@@ -381,8 +289,8 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id15">Checking for Changed Attributes</a></p></li>
 </ul>
 </div>
-<div class="section" id="entity-usage">
-<h2><a class="toc-backref" href="#id1">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this headline">¶</a></h2>
+<section id="entity-usage">
+<h2><a class="toc-backref" href="#id1">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this headline"></a></h2>
 <p>At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
 that row. The core feature, though, is that it doesn’t know anything about how to persist itself. That’s the
@@ -399,8 +307,8 @@ database when you’ve proven the concept works.</p>
 <span class="nx">created_at</span>  <span class="o">-</span> <span class="nx">datetime</span>
 </pre></div>
 </div>
-<div class="section" id="create-the-entity-class">
-<h3><a class="toc-backref" href="#id2">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this headline">¶</a></h3>
+<section id="create-the-entity-class">
+<h3><a class="toc-backref" href="#id2">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this headline"></a></h3>
 <p>Now create a new Entity class. Since there’s no default location to store these classes, and it doesn’t fit
 in with the existing directory structure, create a new directory at <strong>app/Entities</strong>. Create the
 Entity itself at <strong>app/Entities/User.php</strong>.</p>
@@ -417,9 +325,9 @@ Entity itself at <strong>app/Entities/User.php</strong>.</p>
 </pre></div>
 </div>
 <p>At its simplest, this is all you need to do, though we’ll make it more useful in a minute.</p>
-</div>
-<div class="section" id="create-the-model">
-<h3><a class="toc-backref" href="#id3">Create the Model</a><a class="headerlink" href="#create-the-model" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="create-the-model">
+<h3><a class="toc-backref" href="#id3">Create the Model</a><a class="headerlink" href="#create-the-model" title="Permalink to this headline"></a></h3>
 <p>Create the model first at <strong>app/Models/UserModel.php</strong> so that we can interact with it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -443,9 +351,9 @@ to include all of the fields that we want outside classes to change. The <code c
 are handled automatically by the class or the database, so we don’t want to change those. Finally, we’ve set our Entity
 class as the <code class="docutils literal notranslate"><span class="pre">$returnType</span></code>. This ensures that all methods on the model that return rows from the database will return
 instances of our User Entity class instead of an object or array like normal.</p>
-</div>
-<div class="section" id="working-with-the-entity-class">
-<h3><a class="toc-backref" href="#id4">Working With the Entity Class</a><a class="headerlink" href="#working-with-the-entity-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="working-with-the-entity-class">
+<h3><a class="toc-backref" href="#id4">Working With the Entity Class</a><a class="headerlink" href="#working-with-the-entity-class" title="Permalink to this headline"></a></h3>
 <p>Now that all of the pieces are in place, you would work with the Entity class as you would any other class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
@@ -481,9 +389,9 @@ a new row, or update an existing one.</p>
 <p>When we are making a call to the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> all the values from Entity are passed to the method, but when we
 call the <code class="docutils literal notranslate"><span class="pre">update()</span></code>, then only values that have changed are passed.</p>
 </div>
-</div>
-<div class="section" id="filling-properties-quickly">
-<h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="filling-properties-quickly">
+<h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline"></a></h3>
 <p>The Entity class also provides a method, <code class="docutils literal notranslate"><span class="pre">fill()</span></code> that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
 the model, only the fields in $allowedFields will actually be saved to the database, so you can store additional data
@@ -502,17 +410,17 @@ on your entities without worrying much about stray fields getting saved incorrec
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="bulk-accessing-properties">
-<h3><a class="toc-backref" href="#id6">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bulk-accessing-properties">
+<h3><a class="toc-backref" href="#id6">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Permalink to this headline"></a></h3>
 <p>The Entity class has two methods to extract all available properties into an array: <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> and <code class="docutils literal notranslate"><span class="pre">toRawArray()</span></code>.
 Using the raw version will bypass magic “getter” methods and casts. Both methods can take a boolean first parameter
 to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
 make the method recursive, in case of nested Entities.</p>
-</div>
-</div>
-<div class="section" id="handling-business-logic">
-<h2><a class="toc-backref" href="#id7">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="handling-business-logic">
+<h2><a class="toc-backref" href="#id7">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this headline"></a></h2>
 <p>While the examples above are convenient, they don’t help enforce any business logic. The base Entity class implements
 some smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods that will check for special methods and use those instead of using
 the attributes directly, allowing you to enforce any business logic or data conversion that you need.</p>
@@ -575,9 +483,9 @@ business logic and create objects that are pleasant to use.</p>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">setPassword</span><span class="p">(</span><span class="s1">&#39;my great password&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="data-mapping">
-<h2><a class="toc-backref" href="#id8">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="data-mapping">
+<h2><a class="toc-backref" href="#id8">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this headline"></a></h2>
 <p>At many points in your career, you will run into situations where the use of an application has changed and the
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
 class properties, but your database schema required snake_case names. These situations can be easily handled
@@ -640,11 +548,11 @@ class’ <code class="docutils literal notranslate"><span class="pre">$name</spa
 through the original <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>, also, as this is needed for the model to get the data back out and save it
 to the database. However, <code class="docutils literal notranslate"><span class="pre">unset</span></code> and <code class="docutils literal notranslate"><span class="pre">isset</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$name</span></code>, not on the original name,
 <code class="docutils literal notranslate"><span class="pre">full_name</span></code>.</p>
-</div>
-<div class="section" id="mutators">
-<h2><a class="toc-backref" href="#id9">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="date-mutators">
-<h3><a class="toc-backref" href="#id10">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mutators">
+<h2><a class="toc-backref" href="#id9">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline"></a></h2>
+<section id="date-mutators">
+<h3><a class="toc-backref" href="#id10">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline"></a></h3>
 <p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
 <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.</p>
@@ -673,9 +581,9 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 <span class="k">echo</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toDateString</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="property-casting">
-<h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="property-casting">
+<h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <strong>casts</strong> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
@@ -698,9 +606,9 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="array-json-casting">
-<h3><a class="toc-backref" href="#id12">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="array-json-casting">
+<h3><a class="toc-backref" href="#id12">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline"></a></h3>
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
 <li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
@@ -739,9 +647,9 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="csv-casting">
-<h3><a class="toc-backref" href="#id13">CSV Casting</a><a class="headerlink" href="#csv-casting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="csv-casting">
+<h3><a class="toc-backref" href="#id13">CSV Casting</a><a class="headerlink" href="#csv-casting" title="Permalink to this headline"></a></h3>
 <p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
 a simpler alternative will result in a string that uses less space and is more easily read
@@ -768,9 +676,9 @@ by humans:</p>
 <p class="admonition-title">Note</p>
 <p>Casting as CSV uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode</span></code> and <code class="docutils literal notranslate"><span class="pre">explode</span></code> methods and assumes all values are string-safe and free of commas. For more complex data casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
 </div>
-</div>
-<div class="section" id="custom-casting">
-<h3><a class="toc-backref" href="#id14">Custom casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="custom-casting">
+<h3><a class="toc-backref" href="#id14">Custom casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this headline"></a></h3>
 <p>You can define your own conversion types for getting and setting data.</p>
 <p>At first you need to create a handler class for your type.
 Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p>
@@ -873,10 +781,10 @@ Additional parameters are indicated in square brackets and listed with a comma.<
 the value <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be passed to the casting type handler.
 If casting type has predefined parameters, then <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be added to the end of the list.</p>
 </div>
-</div>
-</div>
-<div class="section" id="checking-for-changed-attributes">
-<h2><a class="toc-backref" href="#id15">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="checking-for-changed-attributes">
+<h2><a class="toc-backref" href="#id15">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline"></a></h2>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
@@ -890,58 +798,40 @@ attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../dbmgmt/index.html" class="btn btn-neutral float-right" title="Managing Databases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="model.html" class="btn btn-neutral float-left" title="Using CodeIgniter’s Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../dbmgmt/index.html" class="btn btn-neutral float-right" title="Managing Databases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

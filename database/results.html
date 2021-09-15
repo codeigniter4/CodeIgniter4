@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Generating Query Results &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Generating Query Results &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Query Helper Methods" href="helpers.html" />
     <link rel="prev" title="Queries" href="queries.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Working With Databases</a> &raquo;</li>
-        
       <li>Generating Query Results</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="generating-query-results">
-<h1>Generating Query Results<a class="headerlink" href="#generating-query-results" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="generating-query-results">
+<h1>Generating Query Results<a class="headerlink" href="#generating-query-results" title="Permalink to this headline"></a></h1>
 <p>There are several ways to generate query results:</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -363,8 +271,8 @@
 <li><p><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="result-arrays">
-<h2><a class="toc-backref" href="#id1">Result Arrays</a><a class="headerlink" href="#result-arrays" title="Permalink to this headline">¶</a></h2>
+<section id="result-arrays">
+<h2><a class="toc-backref" href="#id1">Result Arrays</a><a class="headerlink" href="#result-arrays" title="Permalink to this headline"></a></h2>
 <p><strong>getResult()</strong></p>
 <p>This method returns the query result as an array of <strong>objects</strong>, or
 <strong>an empty array</strong> on failure. Typically you’ll use this in a foreach
@@ -415,9 +323,9 @@ loop, like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="result-rows">
-<h2><a class="toc-backref" href="#id2">Result Rows</a><a class="headerlink" href="#result-rows" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="result-rows">
+<h2><a class="toc-backref" href="#id2">Result Rows</a><a class="headerlink" href="#result-rows" title="Permalink to this headline"></a></h2>
 <p><strong>getRow()</strong></p>
 <p>This method returns a single result row. If your query has more than
 one row, it returns only the first row. The result is returned as an
@@ -542,9 +450,9 @@ the returned value’s type:</p>
 <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getUnbufferedRow</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span>  <span class="c1">// associative array</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="custom-result-objects">
-<h2><a class="toc-backref" href="#id3">Custom Result Objects</a><a class="headerlink" href="#custom-result-objects" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="custom-result-objects">
+<h2><a class="toc-backref" href="#id3">Custom Result Objects</a><a class="headerlink" href="#custom-result-objects" title="Permalink to this headline"></a></h2>
 <p>You can have the results returned as an instance of a custom class instead
 of a <code class="docutils literal notranslate"><span class="pre">stdClass</span></code> or array, as the <code class="docutils literal notranslate"><span class="pre">getResult()</span></code> and <code class="docutils literal notranslate"><span class="pre">getResultArray()</span></code>
 methods allow. If the class is not already loaded into memory, the Autoloader
@@ -618,9 +526,9 @@ number of the results. The second parameter is the class name to instantiate.</p
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getCustomRowObject</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="result-helper-methods">
-<h2><a class="toc-backref" href="#id4">Result Helper Methods</a><a class="headerlink" href="#result-helper-methods" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="result-helper-methods">
+<h2><a class="toc-backref" href="#id4">Result Helper Methods</a><a class="headerlink" href="#result-helper-methods" title="Permalink to this headline"></a></h2>
 <p><strong>getFieldCount()</strong></p>
 <p>The number of FIELDS (columns) returned by the query. Make sure to call
 the method using your query result object:</p>
@@ -688,15 +596,15 @@ true on success or false on failure.</p>
 <p>Not all database drivers support this feature and will return false.
 Most notably - you won’t be able to use it with PDO.</p>
 </div>
-</div>
-<div class="section" id="class-reference">
-<h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\BaseResult</code></dt>
 <dd><dl class="method">
 <dt id="getResult">
-<code class="sig-name descname">getResult</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getResult" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getResult</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getResult" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -717,7 +625,7 @@ and <code class="docutils literal notranslate"><span class="pre">getCustomResult
 
 <dl class="method">
 <dt id="getResultArray">
-<code class="sig-name descname">getResultArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultArray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getResultArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultArray" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Array containing the fetched rows</p>
@@ -733,7 +641,7 @@ row is itself an associative array.</p>
 
 <dl class="method">
 <dt id="getResultObject">
-<code class="sig-name descname">getResultObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultObject" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getResultObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getResultObject" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Array containing the fetched rows</p>
@@ -749,7 +657,7 @@ row is an object of type <code class="docutils literal notranslate"><span class=
 
 <dl class="method">
 <dt id="getCustomResultObject">
-<code class="sig-name descname">getCustomResultObject</code><span class="sig-paren">(</span><em class="sig-param">$class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomResultObject" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getCustomResultObject</code><span class="sig-paren">(</span><em class="sig-param">$class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomResultObject" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -769,7 +677,7 @@ row is an instance of the specified class.</p>
 
 <dl class="method">
 <dt id="getRow">
-<code class="sig-name descname">getRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">[</span>, <em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">[</span>, <em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -791,7 +699,7 @@ row is an instance of the specified class.</p>
 
 <dl class="method">
 <dt id="getUnbufferedRow">
-<code class="sig-name descname">getUnbufferedRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUnbufferedRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getUnbufferedRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getUnbufferedRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -812,7 +720,7 @@ requested form.</p>
 
 <dl class="method">
 <dt id="getRowArray">
-<code class="sig-name descname">getRowArray</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowArray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getRowArray</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowArray" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -832,7 +740,7 @@ requested form.</p>
 
 <dl class="method">
 <dt id="getRowObject">
-<code class="sig-name descname">getRowObject</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowObject" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getRowObject</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getRowObject" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -851,7 +759,7 @@ requested form.</p>
 
 <dl class="method">
 <dt id="getCustomRowObject">
-<code class="sig-name descname">getCustomRowObject</code><span class="sig-paren">(</span><em class="sig-param">$n</em>, <em class="sig-param">$type</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomRowObject" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getCustomRowObject</code><span class="sig-paren">(</span><em class="sig-param">$n</em>, <em class="sig-param">$type</em><span class="sig-paren">)</span><a class="headerlink" href="#getCustomRowObject" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -872,7 +780,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="dataSeek">
-<code class="sig-name descname">dataSeek</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dataSeek" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dataSeek</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$n = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dataSeek" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -892,7 +800,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="setRow">
-<code class="sig-name descname">setRow</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setRow</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -909,7 +817,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getNextRow">
-<code class="sig-name descname">getNextRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getNextRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getNextRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getNextRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -928,7 +836,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getPreviousRow">
-<code class="sig-name descname">getPreviousRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPreviousRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getPreviousRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getPreviousRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -947,7 +855,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getFirstRow">
-<code class="sig-name descname">getFirstRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getFirstRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFirstRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getFirstRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -966,7 +874,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getLastRow">
-<code class="sig-name descname">getLastRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getLastRow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getLastRow</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'object'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getLastRow" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -985,7 +893,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getFieldCount">
-<code class="sig-name descname">getFieldCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldCount" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFieldCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldCount" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Number of fields in the result set</p>
@@ -1000,7 +908,7 @@ requested class.</p>
 
 <dl class="method">
 <dt id="getFieldNames">
-<code class="sig-name descname">getFieldNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldNames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFieldNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldNames" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Array of column names</p>
@@ -1015,7 +923,7 @@ result set.</p>
 
 <dl class="method">
 <dt id="getFieldData">
-<code class="sig-name descname">getFieldData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldData" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFieldData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getFieldData" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Array containing field meta-data</p>
@@ -1030,7 +938,7 @@ field meta-data.</p>
 
 <dl class="method">
 <dt id="getNumRows">
-<code class="sig-name descname">getNumRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getNumRows" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getNumRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getNumRows" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Number of rows in result set</p>
@@ -1044,7 +952,7 @@ field meta-data.</p>
 
 <dl class="method">
 <dt id="freeResult">
-<code class="sig-name descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">freeResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#freeResult" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>void</p>
@@ -1056,58 +964,40 @@ field meta-data.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="helpers.html" class="btn btn-neutral float-right" title="Query Helper Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="queries.html" class="btn btn-neutral float-left" title="Queries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="helpers.html" class="btn btn-neutral float-right" title="Query Helper Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

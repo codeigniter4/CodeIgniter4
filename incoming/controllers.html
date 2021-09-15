@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Controllers &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Controllers &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="URI Routing" href="routing.html" />
     <link rel="prev" title="Controllers and Routing" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Controllers and Routing</a> &raquo;</li>
-        
       <li>Controllers</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="controllers">
-<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="controllers">
+<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline"></a></h1>
 <p>Controllers are the heart of your application, as they determine how HTTP requests should be handled.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -373,8 +281,8 @@
 <li><p><a class="reference internal" href="#that-s-it" id="id12">That’s it!</a></p></li>
 </ul>
 </div>
-<div class="section" id="what-is-a-controller">
-<h2><a class="toc-backref" href="#id1">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this headline">¶</a></h2>
+<section id="what-is-a-controller">
+<h2><a class="toc-backref" href="#id1">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this headline"></a></h2>
 <p>A Controller is simply a class file that is named in a way that it can be associated with a URI.</p>
 <p>Consider this URI:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span>
@@ -382,9 +290,9 @@
 </div>
 <p>In the above example, CodeIgniter would attempt to find a controller named Helloworld.php and load it.</p>
 <p><strong>When a controller’s name matches the first segment of a URI, it will be loaded.</strong></p>
-</div>
-<div class="section" id="let-s-try-it-hello-world">
-<h2><a class="toc-backref" href="#id2">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="let-s-try-it-hello-world">
+<h2><a class="toc-backref" href="#id2">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this headline"></a></h2>
 <p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
 and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController. you can
 also extend the CodeIgniter\Controller if you do not need the functionality of the BaseController.</p>
@@ -471,9 +379,9 @@ If you want another naming convention you need to manually define it using the
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="methods">
-<h2><a class="toc-backref" href="#id3">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="methods">
+<h2><a class="toc-backref" href="#id3">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h2>
 <p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">index()</span></code>. The “index” method
 is always loaded by default if the <strong>second segment</strong> of the URI is
 empty. Another way to show your “Hello World” message would be this:</p>
@@ -506,9 +414,9 @@ controller gets called.</strong></p>
 </pre></div>
 </div>
 <p>You should see your new message.</p>
-</div>
-<div class="section" id="passing-uri-segments-to-your-methods">
-<h2><a class="toc-backref" href="#id4">Passing URI Segments to your methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="passing-uri-segments-to-your-methods">
+<h2><a class="toc-backref" href="#id4">Passing URI Segments to your methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline"></a></h2>
 <p>If your URI contains more than two segments they will be passed to your
 method as parameters.</p>
 <p>For example, let’s say you have a URI like this:</p>
@@ -536,9 +444,9 @@ method as parameters.</p>
 feature, the segments passed to your method will be the re-routed
 ones.</p>
 </div>
-</div>
-<div class="section" id="defining-a-default-controller">
-<h2><a class="toc-backref" href="#id5">Defining a Default Controller</a><a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="defining-a-default-controller">
+<h2><a class="toc-backref" href="#id5">Defining a Default Controller</a><a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested. Let’s try it
 with the Helloworld controller.</p>
@@ -560,9 +468,9 @@ see the “Hello World” message.</p>
 </div>
 <p>For more information, please refer to the “Routes Configuration Options” section of the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> documentation.</p>
-</div>
-<div class="section" id="remapping-method-calls">
-<h2><a class="toc-backref" href="#id6">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="remapping-method-calls">
+<h2><a class="toc-backref" href="#id6">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline"></a></h2>
 <p>As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method:</p>
@@ -606,9 +514,9 @@ to emulate CodeIgniter’s default behavior.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="private-methods">
-<h2><a class="toc-backref" href="#id7">Private methods</a><a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="private-methods">
+<h2><a class="toc-backref" href="#id7">Private methods</a><a class="headerlink" href="#private-methods" title="Permalink to this headline"></a></h2>
 <p>In some cases, you may want certain methods hidden from public access.
 To achieve this, simply declare the method as private or protected.
 That will prevent it from being served by a URL request. For example,
@@ -623,9 +531,9 @@ if you were to define a method like this for the <cite>Helloworld</cite> control
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span><span class="nx">utility</span><span class="o">/</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="organizing-your-controllers-into-sub-directories">
-<h2><a class="toc-backref" href="#id8">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="organizing-your-controllers-into-sub-directories">
+<h2><a class="toc-backref" href="#id8">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline"></a></h2>
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
@@ -652,9 +560,9 @@ called if the URL contains <em>only</em> the sub-directory. Simply put a control
 in there that matches the name of your ‘default_controller’ as specified in
 your <em>app/Config/Routes.php</em> file.</p>
 <p>CodeIgniter also permits you to remap your URIs using its <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
-</div>
-<div class="section" id="included-properties">
-<h2><a class="toc-backref" href="#id9">Included Properties</a><a class="headerlink" href="#included-properties" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="included-properties">
+<h2><a class="toc-backref" href="#id9">Included Properties</a><a class="headerlink" href="#included-properties" title="Permalink to this headline"></a></h2>
 <p>Every controller you create should extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> class.
 This class provides several features that are available to all of your controllers.</p>
 <p><strong>Request Object</strong></p>
@@ -686,8 +594,8 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 <p class="admonition-title">Note</p>
 <p>A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including YEAR, MONTH, and more.</p>
 </div>
-<div class="section" id="helpers">
-<h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<section id="helpers">
+<h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
 <p>You can define an array of helper files as a class property. Whenever the controller is loaded
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller:</p>
@@ -699,10 +607,10 @@ inside the controller:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="validating-data">
-<h2><a class="toc-backref" href="#id11">Validating data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="validating-data">
+<h2><a class="toc-backref" href="#id11">Validating data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline"></a></h2>
 <p>To simplify data checking, the controller also provides the convenience method <code class="docutils literal notranslate"><span class="pre">validate()</span></code>.
 The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
@@ -743,62 +651,44 @@ the $rules array with the name of the group as defined in <code class="docutils 
 <p class="admonition-title">Note</p>
 <p>Validation can also be handled automatically in the model, but sometimes it’s easier to do it in the controller. Where is up to you.</p>
 </div>
-</div>
-<div class="section" id="that-s-it">
-<h2><a class="toc-backref" href="#id12">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="that-s-it">
+<h2><a class="toc-backref" href="#id12">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline"></a></h2>
 <p>That, in a nutshell, is all there is to know about controllers.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="routing.html" class="btn btn-neutral float-right" title="URI Routing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Controllers and Routing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="routing.html" class="btn btn-neutral float-right" title="URI Routing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

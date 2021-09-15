@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Database Seeding &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Database Seeding &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Library Reference" href="../libraries/index.html" />
     <link rel="prev" title="Database Migrations" href="migration.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Managing Databases</a> &raquo;</li>
-        
       <li>Database Seeding</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="database-seeding">
-<h1>Database Seeding<a class="headerlink" href="#database-seeding" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="database-seeding">
+<h1>Database Seeding<a class="headerlink" href="#database-seeding" title="Permalink to this headline"></a></h1>
 <p>Database seeding is a simple way to add data into your database. It is especially useful during development where
 you need to populate the database with sample data that you can develop against, but it is not limited to that.
 Seeds can contain static data that you don’t want to include in a migration, like countries, or geo-coding tables,
@@ -385,8 +293,8 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="section" id="nesting-seeders">
-<h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline">¶</a></h2>
+<section id="nesting-seeders">
+<h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline"></a></h2>
 <p>Seeders can call other seeders, with the <strong>call()</strong> method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -415,9 +323,9 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-faker">
-<h2>Using Faker<a class="headerlink" href="#using-faker" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="using-faker">
+<h2>Using Faker<a class="headerlink" href="#using-faker" title="Permalink to this headline"></a></h2>
 <p>If you want to automate the generation of seed data, you can use
 the <a class="reference external" href="https://github.com/fakerphp/faker">Faker library</a>.</p>
 <p>To install Faker into your project:</p>
@@ -447,24 +355,24 @@ to access the instance.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-seeders">
-<h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="using-seeders">
+<h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline"></a></h2>
 <p>You can grab a copy of the main seeder through the database config class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
 <span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;TestSeeder&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="section" id="command-line-seeding">
-<h3>Command Line Seeding<a class="headerlink" href="#command-line-seeding" title="Permalink to this headline">¶</a></h3>
+<section id="command-line-seeding">
+<h3>Command Line Seeding<a class="headerlink" href="#command-line-seeding" title="Permalink to this headline"></a></h3>
 <p>You can also seed data from the command line, as part of the Migrations CLI tools, if you don’t want to create
 a dedicated controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-seed-files">
-<h3>Creating Seed Files<a class="headerlink" href="#creating-seed-files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="creating-seed-files">
+<h3>Creating Seed Files<a class="headerlink" href="#creating-seed-files" title="Permalink to this headline"></a></h3>
 <p>Using the command line, you can easily generate seed files.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">user</span> <span class="o">--</span><span class="nx">suffix</span>
 <span class="c1">// Output: UserSeeder.php file located at app/Database/Seeds directory.</span>
@@ -476,59 +384,41 @@ a dedicated controller:</p>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> is mapped to <code class="docutils literal notranslate"><span class="pre">app/Blog</span></code> directory, then this command will generate <code class="docutils literal notranslate"><span class="pre">MySeeder.php</span></code> at <code class="docutils literal notranslate"><span class="pre">app/Blog/Database/Seeds</span></code> directory.</p>
 <p>Supplying the <code class="docutils literal notranslate"><span class="pre">--force</span></code> option will overwrite existing files in destination.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../libraries/index.html" class="btn btn-neutral float-right" title="Library Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="migration.html" class="btn btn-neutral float-left" title="Database Migrations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../libraries/index.html" class="btn btn-neutral float-right" title="Library Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

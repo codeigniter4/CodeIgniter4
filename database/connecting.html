@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Connecting to your Database &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Connecting to your Database &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Queries" href="queries.html" />
     <link rel="prev" title="Database Configuration" href="configuration.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Working With Databases</a> &raquo;</li>
-        
       <li>Connecting to your Database</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="connecting-to-your-database">
-<h1>Connecting to your Database<a class="headerlink" href="#connecting-to-your-database" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="connecting-to-your-database">
+<h1>Connecting to your Database<a class="headerlink" href="#connecting-to-your-database" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#available-parameters" id="id1">Available Parameters</a></p></li>
@@ -381,16 +289,16 @@ and is provided for your convenience:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
 </pre></div>
 </div>
-<div class="section" id="available-parameters">
-<h2><a class="toc-backref" href="#id1">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this headline">¶</a></h2>
+<section id="available-parameters">
+<h2><a class="toc-backref" href="#id1">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
 <li><p>The database group name, a string that must match the config class’ property name. Default value is <code class="docutils literal notranslate"><span class="pre">$config-&gt;defaultGroup</span></code>.</p></li>
 <li><p>true/false (boolean). Whether to return the shared connection (see
 Connecting to Multiple Databases below).</p></li>
 </ol>
-</div>
-<div class="section" id="manually-connecting-to-a-database">
-<h2><a class="toc-backref" href="#id2">Manually Connecting to a Database</a><a class="headerlink" href="#manually-connecting-to-a-database" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="manually-connecting-to-a-database">
+<h2><a class="toc-backref" href="#id2">Manually Connecting to a Database</a><a class="headerlink" href="#manually-connecting-to-a-database" title="Permalink to this headline"></a></h2>
 <p>The first parameter of this function can <strong>optionally</strong> be used to
 specify a particular database group from your config file. Examples:</p>
 <p>To choose a specific group from your config file you can do this:</p>
@@ -399,17 +307,17 @@ specify a particular database group from your config file. Examples:</p>
 </div>
 <p>Where group_name is the name of the connection group from your config
 file.</p>
-</div>
-<div class="section" id="multiple-connections-to-same-database">
-<h2><a class="toc-backref" href="#id3">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="multiple-connections-to-same-database">
+<h2><a class="toc-backref" href="#id3">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this headline"></a></h2>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">connect()</span></code> method will return the same instance of the
 database connection every time. If you need to have a separate connection
 to the same database, send <code class="docutils literal notranslate"><span class="pre">false</span></code> as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="section" id="connecting-to-multiple-databases">
-<h3><a class="toc-backref" href="#id4">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this headline">¶</a></h3>
+<section id="connecting-to-multiple-databases">
+<h3><a class="toc-backref" href="#id4">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this headline"></a></h3>
 <p>If you need to connect to more than one database simultaneously you can
 do so as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db1</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_one&#39;</span><span class="p">);</span>
@@ -425,9 +333,9 @@ only need to use a different database on the same connection. You
 can switch to a different database when you need to, like this:
 <code class="docutils literal notranslate"><span class="pre">$db-&gt;setDatabase($database2_name);</span></code></p>
 </div>
-</div>
-<div class="section" id="connecting-with-custom-settings">
-<h3><a class="toc-backref" href="#id5">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="connecting-with-custom-settings">
+<h3><a class="toc-backref" href="#id5">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline"></a></h3>
 <p>You can pass in an array of database settings instead of a group name to get
 a connection that uses your custom settings. The array passed in must be
 the same format as the groups are defined in the configuration file:</p>
@@ -453,9 +361,9 @@ the same format as the groups are defined in the configuration file:</p>
 <span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="nv">$custom</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="reconnecting-keeping-the-connection-alive">
-<h3><a class="toc-backref" href="#id6">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="reconnecting-keeping-the-connection-alive">
+<h3><a class="toc-backref" href="#id6">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline"></a></h3>
 <p>If the database server’s idle timeout is exceeded while you’re doing
 some heavy PHP lifting (processing an image, for instance), you should
 consider pinging the server by using the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method before
@@ -469,67 +377,49 @@ does not ping the server but it closes the connection then connects again.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="manually-closing-the-connection">
-<h3><a class="toc-backref" href="#id7">Manually closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="manually-closing-the-connection">
+<h3><a class="toc-backref" href="#id7">Manually closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this headline"></a></h3>
 <p>While CodeIgniter intelligently takes care of closing your database
 connections, you can explicitly close the connection.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="queries.html" class="btn btn-neutral float-right" title="Queries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="configuration.html" class="btn btn-neutral float-left" title="Database Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="queries.html" class="btn btn-neutral float-right" title="Queries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

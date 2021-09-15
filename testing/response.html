@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Testing Responses &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Testing Responses &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Benchmarking" href="benchmark.html" />
     <link rel="prev" title="HTTP Feature Testing" href="feature.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Testing</a> &raquo;</li>
-        
       <li>Testing Responses</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="testing-responses">
-<h1>Testing Responses<a class="headerlink" href="#testing-responses" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="testing-responses">
+<h1>Testing Responses<a class="headerlink" href="#testing-responses" title="Permalink to this headline"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> class provides a number of helpful functions for parsing and testing responses
 from your test cases. Usually a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> will be provided for you as a result of your
 <a class="reference external" href="controllers.html">Controller Tests</a> or <a class="reference external" href="feature.html">HTTP Feature Tests</a>, but you can always
@@ -361,12 +269,12 @@ create your own directly using any <code class="docutils literal notranslate"><s
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
 </pre></div>
 </div>
-<div class="section" id="testing-the-response">
-<h2>Testing the Response<a class="headerlink" href="#testing-the-response" title="Permalink to this headline">¶</a></h2>
+<section id="testing-the-response">
+<h2>Testing the Response<a class="headerlink" href="#testing-the-response" title="Permalink to this headline"></a></h2>
 <p>Whether you have received a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> as a result of your tests or created one yourself,
 there are a number of new assertions that you can use in your tests.</p>
-<div class="section" id="accessing-request-response">
-<h3>Accessing Request/Response<a class="headerlink" href="#accessing-request-response" title="Permalink to this headline">¶</a></h3>
+<section id="accessing-request-response">
+<h3>Accessing Request/Response<a class="headerlink" href="#accessing-request-response" title="Permalink to this headline"></a></h3>
 <p><strong>request()</strong></p>
 <p>You can access directly the Request object, if it was set during testing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span> <span class="o">=</span> <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">();</span>
@@ -377,9 +285,9 @@ there are a number of new assertions that you can use in your tests.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">response</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="checking-response-status">
-<h3>Checking Response Status<a class="headerlink" href="#checking-response-status" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="checking-response-status">
+<h3>Checking Response Status<a class="headerlink" href="#checking-response-status" title="Permalink to this headline"></a></h3>
 <p><strong>isOK()</strong></p>
 <p>Returns a boolean true/false based on whether the response is perceived to be “ok”. This is primarily determined by
 a response status code in the 200 or 300’s.</p>
@@ -422,9 +330,9 @@ matches the uri given.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertStatus</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="session-assertions">
-<h3>Session Assertions<a class="headerlink" href="#session-assertions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="session-assertions">
+<h3>Session Assertions<a class="headerlink" href="#session-assertions" title="Permalink to this headline"></a></h3>
 <p><strong>assertSessionHas(string $key, $value = null)</strong></p>
 <p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable’s value
 matches what was specified.</p>
@@ -436,9 +344,9 @@ matches what was specified.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionMissin</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="header-assertions">
-<h3>Header Assertions<a class="headerlink" href="#header-assertions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="header-assertions">
+<h3>Header Assertions<a class="headerlink" href="#header-assertions" title="Permalink to this headline"></a></h3>
 <p><strong>assertHeader(string $key, $value = null)</strong></p>
 <p>Asserts that a header named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
 the values match.</p>
@@ -450,9 +358,9 @@ the values match.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="cookie-assertions">
-<h3>Cookie Assertions<a class="headerlink" href="#cookie-assertions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cookie-assertions">
+<h3>Cookie Assertions<a class="headerlink" href="#cookie-assertions" title="Permalink to this headline"></a></h3>
 <p><strong>assertCookie(string $key, $value = null, string $prefix = ‘’)</strong></p>
 <p>Asserts that a cookie named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
@@ -470,9 +378,9 @@ in as the second parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dom-helpers">
-<h3>DOM Helpers<a class="headerlink" href="#dom-helpers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dom-helpers">
+<h3>DOM Helpers<a class="headerlink" href="#dom-helpers" title="Permalink to this headline"></a></h3>
 <p>The response you get back contains a number of helper methods to inspect the HTML output within the response. These
 are useful for using within assertions in your tests.</p>
 <p>The <strong>see()</strong> method checks the text on the page to see if it exists either by itself, or more specifically within
@@ -525,9 +433,9 @@ values of the elements. Instead, they simply check that the elements exist on th
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeCheckboxIsChecked</span><span class="p">(</span><span class="s1">&#39;#bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dom-assertions">
-<h3>DOM Assertions<a class="headerlink" href="#dom-assertions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dom-assertions">
+<h3>DOM Assertions<a class="headerlink" href="#dom-assertions" title="Permalink to this headline"></a></h3>
 <p>You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
 assertions.</p>
 <p><strong>assertSee(string $search = null, string $element = null)</strong></p>
@@ -582,9 +490,9 @@ specific text:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">assertSeeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="working-with-json">
-<h3>Working With JSON<a class="headerlink" href="#working-with-json" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="working-with-json">
+<h3>Working With JSON<a class="headerlink" href="#working-with-json" title="Permalink to this headline"></a></h3>
 <p>Responses will frequently contain JSON responses, especially when working with API methods. The following methods
 can help to test the responses.</p>
 <p><strong>getJSON()</strong></p>
@@ -622,64 +530,46 @@ can help to test the responses.</p>
 </div>
 <p><strong>assertJSONExact($test)</strong></p>
 <p>Similar to <strong>assertJSONFragment()</strong>, but checks the entire JSON response to ensure exact matches.</p>
-</div>
-<div class="section" id="working-with-xml">
-<h3>Working With XML<a class="headerlink" href="#working-with-xml" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="working-with-xml">
+<h3>Working With XML<a class="headerlink" href="#working-with-xml" title="Permalink to this headline"></a></h3>
 <p><strong>getXML()</strong></p>
 <p>If your application returns XML, you can retrieve it through this method.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="benchmark.html" class="btn btn-neutral float-right" title="Benchmarking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="feature.html" class="btn btn-neutral float-left" title="HTTP Feature Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="benchmark.html" class="btn btn-neutral float-right" title="Benchmarking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

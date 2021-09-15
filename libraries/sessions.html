@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Session Library &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Session Library &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Throttler" href="throttler.html" />
     <link rel="prev" title="Security" href="security.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Library Reference</a> &raquo;</li>
-        
       <li>Session Library</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="session-library">
-<h1>Session Library<a class="headerlink" href="#session-library" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="session-library">
+<h1>Session Library<a class="headerlink" href="#session-library" title="Permalink to this headline"></a></h1>
 <p>The Session class permits you to maintain a user’s “state” and track their
 activity while they browse your site.</p>
 <p>CodeIgniter comes with a few session storage drivers, that you can see
@@ -385,10 +293,10 @@ in the last section of the table of contents:</p>
 </li>
 </ul>
 </div>
-<div class="section" id="using-the-session-class">
-<h2><a class="toc-backref" href="#id2">Using the Session Class</a><a class="headerlink" href="#using-the-session-class" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="initializing-a-session">
-<h3><a class="toc-backref" href="#id3">Initializing a Session</a><a class="headerlink" href="#initializing-a-session" title="Permalink to this headline">¶</a></h3>
+<section id="using-the-session-class">
+<h2><a class="toc-backref" href="#id2">Using the Session Class</a><a class="headerlink" href="#using-the-session-class" title="Permalink to this headline"></a></h2>
+<section id="initializing-a-session">
+<h3><a class="toc-backref" href="#id3">Initializing a Session</a><a class="headerlink" href="#initializing-a-session" title="Permalink to this headline"></a></h3>
 <p>Sessions will typically run globally with each page load, so the Session
 class should be magically initialized.</p>
 <p>To access and initialize the session:</p>
@@ -408,9 +316,9 @@ but does not take any configuration options.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span> <span class="o">=</span> <span class="nx">session</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-do-sessions-work">
-<h3><a class="toc-backref" href="#id4">How do Sessions work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="how-do-sessions-work">
+<h3><a class="toc-backref" href="#id4">How do Sessions work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline"></a></h3>
 <p>When a page is loaded, the session class will check to see if a valid
 session cookie is sent by the user’s browser. If a sessions cookie does
 <strong>not</strong> exist (or if it doesn’t match one stored on the server or has
@@ -427,8 +335,8 @@ automatic.</p>
 <p>Under CLI, the Session library will automatically halt itself,
 as this is a concept based entirely on the HTTP protocol.</p>
 </div>
-<div class="section" id="a-note-about-concurrency">
-<h4>A note about concurrency<a class="headerlink" href="#a-note-about-concurrency" title="Permalink to this headline">¶</a></h4>
+<section id="a-note-about-concurrency">
+<h4>A note about concurrency<a class="headerlink" href="#a-note-about-concurrency" title="Permalink to this headline"></a></h4>
 <p>Unless you’re developing a website with heavy AJAX usage, you can skip this
 section. If you are, however, and if you’re experiencing performance
 issues, then this note is exactly what you’re looking for.</p>
@@ -453,10 +361,10 @@ current request after you no longer need it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">destroy</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="what-is-session-data">
-<h3><a class="toc-backref" href="#id5">What is Session Data?</a><a class="headerlink" href="#what-is-session-data" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="what-is-session-data">
+<h3><a class="toc-backref" href="#id5">What is Session Data?</a><a class="headerlink" href="#what-is-session-data" title="Permalink to this headline"></a></h3>
 <p>Session data is simply an array associated with a particular session ID
 (cookie).</p>
 <p>If you’ve used sessions in PHP before, you should be familiar with PHP’s
@@ -468,9 +376,9 @@ as simple as manipulating (read, set and unset values) the <code class="docutils
 array.</p>
 <p>In addition, CodeIgniter also provides 2 special types of session data
 that are further explained below: flashdata and tempdata.</p>
-</div>
-<div class="section" id="retrieving-session-data">
-<h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="retrieving-session-data">
+<h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
 <p>Any piece of information from the session array is available through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span>
@@ -516,9 +424,9 @@ omit the item key (magic getter only works for single property values):</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="adding-session-data">
-<h3><a class="toc-backref" href="#id7">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="adding-session-data">
+<h3><a class="toc-backref" href="#id7">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Permalink to this headline"></a></h3>
 <p>Let’s say a particular user logs into your site. Once authenticated, you
 could add their username and e-mail address to the session, making that
 data globally available to you without having to run a database query when
@@ -558,17 +466,17 @@ supports this syntax:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="pushing-new-value-to-session-data">
-<h3><a class="toc-backref" href="#id8">Pushing new value to session data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pushing-new-value-to-session-data">
+<h3><a class="toc-backref" href="#id8">Pushing new value to session data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
 <p>The push method is used to push a new value onto a session value that is an array.
 For instance, if the ‘hobbies’ key contains an array of hobbies, you can add a new value onto the array like so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="removing-session-data">
-<h3><a class="toc-backref" href="#id9">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="removing-session-data">
+<h3><a class="toc-backref" href="#id9">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Permalink to this headline"></a></h3>
 <p>Just as with any other variable, unsetting a value in <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> can be
 done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]);</span>
@@ -593,9 +501,9 @@ session data array:</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="nv">$array_items</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="flashdata">
-<h3><a class="toc-backref" href="#id10">Flashdata</a><a class="headerlink" href="#flashdata" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="flashdata">
+<h3><a class="toc-backref" href="#id10">Flashdata</a><a class="headerlink" href="#flashdata" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter supports “flashdata”, or session data that will only be
 available for the next request, and is then automatically cleared.</p>
 <p>This can be very useful, especially for one-time informational, error or
@@ -654,9 +562,9 @@ You can either pass a single item or an array of flashdata items to keep.</p>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">([</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">,</span> <span class="s1">&#39;item3&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="tempdata">
-<h3><a class="toc-backref" href="#id11">Tempdata</a><a class="headerlink" href="#tempdata" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tempdata">
+<h3><a class="toc-backref" href="#id11">Tempdata</a><a class="headerlink" href="#tempdata" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter also supports “tempdata”, or session data with a specific
 expiration time. After the value expires, or the session expires or is
 deleted, the value is automatically removed.</p>
@@ -737,9 +645,9 @@ intend to reuse that same key in the same request, you’d want to use
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="destroying-a-session">
-<h3><a class="toc-backref" href="#id12">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="destroying-a-session">
+<h3><a class="toc-backref" href="#id12">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline"></a></h3>
 <p>To clear the current session (for example, during a logout), you may
 simply use either PHP’s <a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a>
 function, or the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method. Both will work in exactly the
@@ -764,9 +672,9 @@ the cookie that contained the session id:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="accessing-session-metadata">
-<h3><a class="toc-backref" href="#id13">Accessing session metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="accessing-session-metadata">
+<h3><a class="toc-backref" href="#id13">Accessing session metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
 <p>In previous CodeIgniter versions, the session data array included 4 items
 by default: ‘session_id’, ‘ip_address’, ‘user_agent’, ‘last_activity’.</p>
 <p>This was due to the specifics of how sessions worked, but is now no longer
@@ -781,10 +689,10 @@ accessing them:</p>
 <li><p>last_activity: Depends on the storage, no straightforward way. Sorry!</p></li>
 </ul>
 </div></blockquote>
-</div>
-</div>
-<div class="section" id="session-preferences">
-<h2><a class="toc-backref" href="#id14">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="session-preferences">
+<h2><a class="toc-backref" href="#id14">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter will usually make everything work out of the box. However,
 Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
@@ -902,9 +810,9 @@ Instead the HttpOnly parameter is always enabled, for security
 reasons. Additionally, the ‘cookiePrefix’ setting is completely
 ignored.</p>
 </div>
-</div>
-<div class="section" id="session-drivers">
-<h2><a class="toc-backref" href="#id15">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="session-drivers">
+<h2><a class="toc-backref" href="#id15">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline"></a></h2>
 <p>As already mentioned, the Session library comes with 4 handlers, or storage
 engines, that you can use:</p>
 <blockquote>
@@ -928,8 +836,8 @@ get yourself familiar with them (below) before you make that choice.</p>
 <p>The ArrayHandler is used during testing and stores all data within
 a PHP array, while preventing the data from being persisted.</p>
 </div>
-<div class="section" id="filehandler-driver-the-default">
-<h3><a class="toc-backref" href="#id16">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline">¶</a></h3>
+<section id="filehandler-driver-the-default">
+<h3><a class="toc-backref" href="#id16">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline"></a></h3>
 <p>The ‘FileHandler’ driver uses your file system for storing session data.</p>
 <p>It can safely be said that it works exactly like PHP’s own default session
 implementation, but in case this is an important detail for you, have it
@@ -957,8 +865,8 @@ permissions will probably break your application.</p>
 <span class="nb">chown</span> <span class="nx">www</span><span class="o">-</span><span class="nx">data</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
 </pre></div>
 </div>
-<div class="section" id="bonus-tip">
-<h4>Bonus Tip<a class="headerlink" href="#bonus-tip" title="Permalink to this headline">¶</a></h4>
+<section id="bonus-tip">
+<h4>Bonus Tip<a class="headerlink" href="#bonus-tip" title="Permalink to this headline"></a></h4>
 <p>Some of you will probably opt to choose another session driver because
 file storage is usually slower. This is only half true.</p>
 <p>A very basic test will probably trick you into believing that an SQL
@@ -969,10 +877,10 @@ consistently outperform almost all relational database setups.</p>
 <p>In addition, if performance is your only concern, you may want to look
 into using <a class="reference external" href="https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/">tmpfs</a>,
 (warning: external resource), which can make your sessions blazing fast.</p>
-</div>
-</div>
-<div class="section" id="databasehandler-driver">
-<h3><a class="toc-backref" href="#id17">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="databasehandler-driver">
+<h3><a class="toc-backref" href="#id17">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
 <p>The ‘DatabaseHandler’ driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
@@ -1049,9 +957,9 @@ support such cases. Use <code class="docutils literal notranslate"><span class="
 done processing session data if you’re having performance
 issues.</p>
 </div>
-</div>
-<div class="section" id="redishandler-driver">
-<h3><a class="toc-backref" href="#id18">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="redishandler-driver">
+<h3><a class="toc-backref" href="#id18">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Redis doesn’t have a locking mechanism exposed, locks for
@@ -1088,9 +996,9 @@ sufficient:</p>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="memcachedhandler-driver">
-<h3><a class="toc-backref" href="#id19">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="memcachedhandler-driver">
+<h3><a class="toc-backref" href="#id19">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Memcached doesn’t have a locking mechanism exposed, locks
@@ -1114,8 +1022,8 @@ being just a <code class="docutils literal notranslate"><span class="pre">host:p
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="section" id="id1">
-<h4>Bonus Tip<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<section id="id1">
+<h4>Bonus Tip<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
 <p>Multi-server configuration with an optional <em>weight</em> parameter as the
 third colon-separated (<code class="docutils literal notranslate"><span class="pre">:weight</span></code>) value is also supported, but we have
 to note that we haven’t tested if that is reliable.</p>
@@ -1126,60 +1034,42 @@ separate the multiple server paths with commas:</p>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="throttler.html" class="btn btn-neutral float-right" title="Throttler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="security.html" class="btn btn-neutral float-left" title="Security" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="throttler.html" class="btn btn-neutral float-right" title="Throttler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

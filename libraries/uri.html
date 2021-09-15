@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Working with URIs &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Working with URIs &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User Agent Class" href="user_agent.html" />
     <link rel="prev" title="Working with Uploaded Files" href="uploaded_files.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Library Reference</a> &raquo;</li>
-        
       <li>Working with URIs</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="working-with-uris">
-<h1>Working with URIs<a class="headerlink" href="#working-with-uris" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="working-with-uris">
+<h1>Working with URIs<a class="headerlink" href="#working-with-uris" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter provides an object oriented solution for working with URI’s in your application. Using this makes it
 simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
 relative URI to an existing one and have it resolved safely and correctly.</p>
@@ -380,8 +288,8 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 <li><p><a class="reference internal" href="#disable-throwing-exceptions" id="id14">Disable Throwing Exceptions</a></p></li>
 </ul>
 </div>
-<div class="section" id="creating-uri-instances">
-<h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline">¶</a></h2>
+<section id="creating-uri-instances">
+<h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline"></a></h2>
 <p>Creating a URI instance is as simple as creating a new class instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">();</span>
 </pre></div>
@@ -396,8 +304,8 @@ into its appropriate sections:</p>
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="section" id="the-current-uri">
-<h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline">¶</a></h3>
+<section id="the-current-uri">
+<h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline"></a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request.
 You can use one of the functions available in the <strong>url_helper</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -410,10 +318,10 @@ Assuming that you’re in a controller that extends <code class="docutils litera
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="uri-strings">
-<h2><a class="toc-backref" href="#id3">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="uri-strings">
+<h2><a class="toc-backref" href="#id3">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this headline"></a></h2>
 <p>Many times, all you really want is to get a string representation of a URI. This is easy to do by simply casting
 the URI as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -434,13 +342,13 @@ using the URI class’ static <code class="docutils literal notranslate"><span c
 settings defined in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>. If you need the exact, unaltered string representation
 then use <code class="docutils literal notranslate"><span class="pre">URI::createURIString()</span></code> instead.</p>
 </div>
-</div>
-<div class="section" id="the-uri-parts">
-<h2><a class="toc-backref" href="#id4">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-uri-parts">
+<h2><a class="toc-backref" href="#id4">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this headline"></a></h2>
 <p>Once you have a URI instance, you can set or retrieve any of the various parts of the URI. This section will provide
 details on what those parts are, and how to work with them.</p>
-<div class="section" id="scheme">
-<h3><a class="toc-backref" href="#id5">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this headline">¶</a></h3>
+<section id="scheme">
+<h3><a class="toc-backref" href="#id5">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this headline"></a></h3>
 <p>The scheme is frequently ‘http’ or ‘https’, but any scheme is supported, including ‘file’, ‘mailto’, etc.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 
@@ -448,9 +356,9 @@ details on what those parts are, and how to work with them.</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setScheme</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="authority">
-<h3><a class="toc-backref" href="#id6">Authority</a><a class="headerlink" href="#authority" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="authority">
+<h3><a class="toc-backref" href="#id6">Authority</a><a class="headerlink" href="#authority" title="Permalink to this headline"></a></h3>
 <p>Many URIs contain several elements that are collectively known as the ‘authority’. This includes any user info,
 the host and the port number. You can retrieve all of these pieces as one single string with the <code class="docutils literal notranslate"><span class="pre">getAuthority()</span></code>
 method, or you can manipulate the individual parts.</p>
@@ -477,9 +385,9 @@ until you turn it off again, so always make sure that you turn it off as soon as
 <p class="admonition-title">Note</p>
 <p>If the current port is the default port for the scheme it will never be displayed.</p>
 </div>
-</div>
-<div class="section" id="userinfo">
-<h3><a class="toc-backref" href="#id7">Userinfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="userinfo">
+<h3><a class="toc-backref" href="#id7">Userinfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline"></a></h3>
 <p>The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
 this as part of the Authority, you can also retrieve it yourself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user</span>
@@ -490,9 +398,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="host">
-<h3><a class="toc-backref" href="#id8">Host</a><a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="host">
+<h3><a class="toc-backref" href="#id8">Host</a><a class="headerlink" href="#host" title="Permalink to this headline"></a></h3>
 <p>The host portion of the URI is typically the domain name of the URL. This can be easily set and retrieved with the
 <code class="docutils literal notranslate"><span class="pre">getHost()</span></code> and <code class="docutils literal notranslate"><span class="pre">setHost()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
@@ -501,9 +409,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s1">&#39;anotherexample.com&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>    <span class="c1">// anotherexample.com</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="port">
-<h3><a class="toc-backref" href="#id9">Port</a><a class="headerlink" href="#port" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="port">
+<h3><a class="toc-backref" href="#id9">Port</a><a class="headerlink" href="#port" title="Permalink to this headline"></a></h3>
 <p>The port is an integer number between 0 and 65535. Each sheme has a default value associated with it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
 
@@ -512,9 +420,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 </pre></div>
 </div>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">setPort()</span></code> method, the port will be checked that it is within the valid range and assigned.</p>
-</div>
-<div class="section" id="path">
-<h3><a class="toc-backref" href="#id10">Path</a><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="path">
+<h3><a class="toc-backref" href="#id10">Path</a><a class="headerlink" href="#path" title="Permalink to this headline"></a></h3>
 <p>The path are all of the segments within the site itself. As expected, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods
 can be used to manipulate it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
@@ -528,9 +436,9 @@ can be used to manipulate it:</p>
 <p>When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
 characters, and remove dot segments for safety.</p>
 </div>
-</div>
-<div class="section" id="query">
-<h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="query">
+<h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
 <p>The query variables can be manipulated through the class using simple string representations. Query values can only
 be set as a string currently.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&#39;</span><span class="p">);</span>
@@ -582,9 +490,9 @@ you can use the <code class="docutils literal notranslate"><span class="pre">str
 If you want to use more liberal rules (which allow key names to contain dots), you can use a special method
 <code class="docutils literal notranslate"><span class="pre">useRawQueryString()</span></code> beforehand.</p>
 </div>
-</div>
-<div class="section" id="fragment">
-<h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="fragment">
+<h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline"></a></h3>
 <p>Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URL’s these are links
 to an on-page anchor. Media URI’s can make use of them in various other ways.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path#first-heading&#39;</span><span class="p">);</span>
@@ -593,10 +501,10 @@ to an on-page anchor. Media URI’s can make use of them in various other ways.<
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setFragment</span><span class="p">(</span><span class="s1">&#39;second-heading&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>    <span class="c1">// &#39;second-heading&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="uri-segments">
-<h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="uri-segments">
+<h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h2>
 <p>Each section of the path between the slashes is a single segment. The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// URI = http://example.com/users/15/profile</span>
@@ -637,9 +545,9 @@ what the values of the segments are. The segments start at 1 being the furthest 
 <span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="disable-throwing-exceptions">
-<h2><a class="toc-backref" href="#id14">Disable Throwing Exceptions</a><a class="headerlink" href="#disable-throwing-exceptions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="disable-throwing-exceptions">
+<h2><a class="toc-backref" href="#id14">Disable Throwing Exceptions</a><a class="headerlink" href="#disable-throwing-exceptions" title="Permalink to this headline"></a></h2>
 <p>By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag
 that will prevent throwing exceptions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Disable throwing exceptions</span>
@@ -649,58 +557,40 @@ that will prevent throwing exceptions.</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="user_agent.html" class="btn btn-neutral float-right" title="User Agent Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="uploaded_files.html" class="btn btn-neutral float-left" title="Working with Uploaded Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_agent.html" class="btn btn-neutral float-right" title="User Agent Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

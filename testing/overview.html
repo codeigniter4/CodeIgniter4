@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Testing &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Testing &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Testing Your Database" href="database.html" />
     <link rel="prev" title="Testing" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Testing</a> &raquo;</li>
-        
       <li>Testing</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="testing">
-<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="testing">
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter has been built to make testing both the framework and your application as simple as possible.
 Support for <code class="docutils literal notranslate"><span class="pre">PHPUnit</span></code> is built in, and the framework provides a number of convenient
 helper methods to make testing every aspect of your application as painless as possible.</p>
@@ -374,14 +282,14 @@ helper methods to make testing every aspect of your application as painless as p
 </li>
 </ul>
 </div>
-<div class="section" id="system-set-up">
-<h2><a class="toc-backref" href="#id2">System Set Up</a><a class="headerlink" href="#system-set-up" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="installing-phpunit">
-<h3><a class="toc-backref" href="#id3">Installing PHPUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline">¶</a></h3>
+<section id="system-set-up">
+<h2><a class="toc-backref" href="#id2">System Set Up</a><a class="headerlink" href="#system-set-up" title="Permalink to this headline"></a></h2>
+<section id="installing-phpunit">
+<h3><a class="toc-backref" href="#id3">Installing PHPUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter uses <a class="reference external" href="https://phpunit.de/">PHPUnit</a> as the basis for all of its testing. There are two ways to install
 PHPUnit to use within your system.</p>
-<div class="section" id="composer">
-<h4>Composer<a class="headerlink" href="#composer" title="Permalink to this headline">¶</a></h4>
+<section id="composer">
+<h4>Composer<a class="headerlink" href="#composer" title="Permalink to this headline"></a></h4>
 <p>The recommended method is to install it in your project using <a class="reference external" href="https://getcomposer.org/">Composer</a>. While it’s possible
 to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.</p>
@@ -395,26 +303,26 @@ tests for this project by typing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">./</span><span class="nx">vendor</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">phpunit</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="phar">
-<h4>Phar<a class="headerlink" href="#phar" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="phar">
+<h4>Phar<a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
 <p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-7.html">PHPUnit</a> site.
 This is a standalone file that should be placed within your project root.</p>
-</div>
-</div>
-</div>
-<div class="section" id="testing-your-application">
-<h2><a class="toc-backref" href="#id4">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="phpunit-configuration">
-<h3><a class="toc-backref" href="#id5">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="testing-your-application">
+<h2><a class="toc-backref" href="#id4">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline"></a></h2>
+<section id="phpunit-configuration">
+<h3><a class="toc-backref" href="#id5">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline"></a></h3>
 <p>The framework has a <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> file in the project root. This controls unit
 testing of the framework itself. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>, it will
 over-ride this.</p>
 <p>Your <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code> should exclude the <code class="docutils literal notranslate"><span class="pre">system</span></code> folder, as well as any <code class="docutils literal notranslate"><span class="pre">vendor</span></code> or
 <code class="docutils literal notranslate"><span class="pre">ThirdParty</span></code> folders, if you are unit testing your application.</p>
-</div>
-<div class="section" id="the-test-class">
-<h3><a class="toc-backref" href="#id6">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-test-class">
+<h3><a class="toc-backref" href="#id6">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h3>
 <p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code>. All tests
 are expected to be located in the <strong>tests/app</strong> directory by default.</p>
 <p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/app/Libraries/FooTest.php</strong>:</p>
@@ -457,8 +365,8 @@ have the correct namespace relative to <code class="docutils literal notranslate
 <p>Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
 </div>
 <p>When testing database results, you must use the <a class="reference external" href="database.html">DatabaseTestTrait</a> in your class.</p>
-<div class="section" id="staging">
-<h4>Staging<a class="headerlink" href="#staging" title="Permalink to this headline">¶</a></h4>
+<section id="staging">
+<h4>Staging<a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
 <p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods
 to help with staging and clean up:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">setUpBeforeClass</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
@@ -501,9 +409,9 @@ that or provide their own:</p>
     <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="traits">
-<h4>Traits<a class="headerlink" href="#traits" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="traits">
+<h4>Traits<a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
 <p>A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
 to run named for the trait itself. For example, if you needed to add authentication to some
@@ -524,9 +432,9 @@ logged in user:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="additional-assertions">
-<h4>Additional Assertions<a class="headerlink" href="#additional-assertions" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="additional-assertions">
+<h4>Additional Assertions<a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides additional unit testing assertions that you might find useful.</p>
 <p><strong>assertLogged($level, $expectedMessage)</strong></p>
 <p>Ensure that something you expected to be logged actually was:</p>
@@ -594,9 +502,9 @@ between expected and actual time, formatted as strings, is within the prescribed
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
-</div>
-<div class="section" id="accessing-protected-private-properties">
-<h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="accessing-protected-private-properties">
+<h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
 <p>When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.</p>
 <p><strong>getPrivateMethodInvoker($instance, $method)</strong></p>
@@ -634,10 +542,10 @@ parameter is the name of the property to set the value of. The third parameter i
 <span class="c1">// Do normal testing...</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="mocking-services">
-<h3><a class="toc-backref" href="#id7">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="mocking-services">
+<h3><a class="toc-backref" href="#id7">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
 <p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The <strong>Services</strong> class provides the following methods
@@ -666,9 +574,9 @@ class exactly. The second parameter is the instance to replace it with.</p>
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code>, <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
 </div>
-</div>
-<div class="section" id="mocking-factory-instances">
-<h3><a class="toc-backref" href="#id8">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mocking-factory-instances">
+<h3><a class="toc-backref" href="#id8">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
 <p>Similar to Services, you may find yourself needing to supply a pre-configured class instance
 during testing that will be used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">reset()</span></code>
 static methods like <strong>Services</strong>, but they take an additional preceding parameter for the
@@ -686,9 +594,9 @@ component name:</p>
 <p class="admonition-title">Note</p>
 <p>All component Factories are reset by default between each test. Modify your test case’s <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span></code> if you need instances to persist.</p>
 </div>
-</div>
-<div class="section" id="stream-filters">
-<h3><a class="toc-backref" href="#id9">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="stream-filters">
+<h3><a class="toc-backref" href="#id9">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline"></a></h3>
 <p><strong>CITestStreamFilter</strong> provides an alternate to these helper methods.</p>
 <p>You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP’s own STDOUT, or STDERR,
 might be helpful. The <code class="docutils literal notranslate"><span class="pre">CITestStreamFilter</span></code> helps you capture the output from the stream of your choice.</p>
@@ -712,59 +620,41 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="database.html" class="btn btn-neutral float-right" title="Testing Your Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="database.html" class="btn btn-neutral float-right" title="Testing Your Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

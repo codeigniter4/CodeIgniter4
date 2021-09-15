@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>View Parser &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>View Parser &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="HTML Table Class" href="table.html" />
     <link rel="prev" title="View Layouts" href="view_layouts.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Building Responses</a> &raquo;</li>
-        
       <li>View Parser</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="view-parser">
-<h1>View Parser<a class="headerlink" href="#view-parser" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="view-parser">
+<h1>View Parser<a class="headerlink" href="#view-parser" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-view-parser-class" id="id1">Using the View Parser Class</a></p>
@@ -416,8 +324,8 @@ However, some developers prefer to use some form of template engine if
 they work with designers who they feel would find some
 confusion working with PHP.</p>
 </div>
-<div class="section" id="using-the-view-parser-class">
-<h2><a class="toc-backref" href="#id1">Using the View Parser Class</a><a class="headerlink" href="#using-the-view-parser-class" title="Permalink to this headline">¶</a></h2>
+<section id="using-the-view-parser-class">
+<h2><a class="toc-backref" href="#id1">Using the View Parser Class</a><a class="headerlink" href="#using-the-view-parser-class" title="Permalink to this headline"></a></h2>
 <p>The simplest method to load the parser class is through its service:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$parser</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">parser</span><span class="p">();</span>
 </pre></div>
@@ -435,8 +343,8 @@ through the <strong>setDelimiters(left,right)</strong> method.</p>
 itself, and not like a conventional view PHP script. PHP code in such a script
 is ignored by the parser, and only substitutions are performed.</p>
 <p>This is purposeful: view files with no PHP.</p>
-<div class="section" id="what-it-does">
-<h3><a class="toc-backref" href="#id2">What It Does</a><a class="headerlink" href="#what-it-does" title="Permalink to this headline">¶</a></h3>
+<section id="what-it-does">
+<h3><a class="toc-backref" href="#id2">What It Does</a><a class="headerlink" href="#what-it-does" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Parser</span></code> class processes “PHP/HTML scripts” stored in the application’s view path.
 These scripts can not contain any PHP.</p>
 <p>Each view parameter (which we refer to as a pseudo-variable) triggers a substitution,
@@ -448,9 +356,9 @@ settings until you call its <code class="docutils literal notranslate"><span cla
 need to be unique, or a later parameter setting will over-ride an earlier one.</p>
 <p>This also impacts escaping parameter values for different contexts inside your
 script. You will have to give each escaped value a unique parameter name.</p>
-</div>
-<div class="section" id="parser-templates">
-<h3><a class="toc-backref" href="#id3">Parser templates</a><a class="headerlink" href="#parser-templates" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="parser-templates">
+<h3><a class="toc-backref" href="#id3">Parser templates</a><a class="headerlink" href="#parser-templates" title="Permalink to this headline"></a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">render()</span></code> method to parse (or render) simple templates,
 like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -471,9 +379,9 @@ file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
 <p class="admonition-title">Important</p>
 <p>If the file extension is omitted, then the views are expected to end with the .php extension.</p>
 </div>
-</div>
-<div class="section" id="parser-configuration-options">
-<h3><a class="toc-backref" href="#id4">Parser Configuration Options</a><a class="headerlink" href="#parser-configuration-options" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="parser-configuration-options">
+<h3><a class="toc-backref" href="#id4">Parser Configuration Options</a><a class="headerlink" href="#parser-configuration-options" title="Permalink to this headline"></a></h3>
 <p>Several options can be passed to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> or <code class="docutils literal notranslate"><span class="pre">renderString()</span></code> methods.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</p></li>
@@ -490,10 +398,10 @@ substitutions; default is <strong>true</strong></p></li>
 <span class="p">]);</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="substitution-variations">
-<h2><a class="toc-backref" href="#id5">Substitution Variations</a><a class="headerlink" href="#substitution-variations" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="substitution-variations">
+<h2><a class="toc-backref" href="#id5">Substitution Variations</a><a class="headerlink" href="#substitution-variations" title="Permalink to this headline"></a></h2>
 <p>There are three types of substitution supported: simple, looping, and nested.
 Substitutions are performed in the same sequence that pseudo-variables were added.</p>
 <p>The <strong>simple substitution</strong> performed by the parser is a one-to-one
@@ -516,8 +424,8 @@ constructs for conditional substitution.</p>
 <li><p>handle any nested/looping substitutions</p></li>
 <li><p>handle the remaining single substitutions</p></li>
 </ul>
-<div class="section" id="loop-substitutions">
-<h3><a class="toc-backref" href="#id6">Loop Substitutions</a><a class="headerlink" href="#loop-substitutions" title="Permalink to this headline">¶</a></h3>
+<section id="loop-substitutions">
+<h3><a class="toc-backref" href="#id6">Loop Substitutions</a><a class="headerlink" href="#loop-substitutions" title="Permalink to this headline"></a></h3>
 <p>A loop substitution happens when the value for a pseudo-variable is
 a sequential array of arrays, like an array of row settings.</p>
 <p>The above example code allows simple variables to be replaced. What if
@@ -589,9 +497,9 @@ an array and its public properties will be made available to the Parser.</p>
 <p>This is especially useful with the Entity classes, which has an asArray method
 that returns all public and protected properties (minus the _options property) and
 makes them available to the Parser.</p>
-</div>
-<div class="section" id="nested-substitutions">
-<h3><a class="toc-backref" href="#id7">Nested Substitutions</a><a class="headerlink" href="#nested-substitutions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="nested-substitutions">
+<h3><a class="toc-backref" href="#id7">Nested Substitutions</a><a class="headerlink" href="#nested-substitutions" title="Permalink to this headline"></a></h3>
 <p>A nested substitution happens when the value for a pseudo-variable is
 an associative array of values, like a record from a database:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -622,9 +530,9 @@ the variable pair loop for that variable.</p>
 </div>
 <p>If you would like the other pseudo-variables accessible inside the “blog_entry”
 scope, then make sure that the “cascadeData” option is set to true.</p>
-</div>
-<div class="section" id="comments">
-<h3><a class="toc-backref" href="#id8">Comments</a><a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="comments">
+<h3><a class="toc-backref" href="#id8">Comments</a><a class="headerlink" href="#comments" title="Permalink to this headline"></a></h3>
 <p>You can place comments in your templates that will be ignored and removed during parsing by wrapping the
 comments in a <code class="docutils literal notranslate"><span class="pre">{#</span>&#160; <span class="pre">#}</span></code> symbols.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="c1"># This comment is removed during parsing. #}</span>
@@ -636,9 +544,9 @@ comments in a <code class="docutils literal notranslate"><span class="pre">{#</s
 <span class="p">{</span><span class="o">/</span><span class="nx">blog_entry</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="cascading-data">
-<h3><a class="toc-backref" href="#id9">Cascading Data</a><a class="headerlink" href="#cascading-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cascading-data">
+<h3><a class="toc-backref" href="#id9">Cascading Data</a><a class="headerlink" href="#cascading-data" title="Permalink to this headline"></a></h3>
 <p>With both a nested and a loop substitution, you have the option of cascading
 data pairs into the inner substitution.</p>
 <p>The following example is not impacted by cascading:</p>
@@ -668,9 +576,9 @@ data pairs into the inner substitution.</p>
 <span class="c1">// Result: George lives in Red City on Mars.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="preventing-parsing">
-<h3><a class="toc-backref" href="#id10">Preventing Parsing</a><a class="headerlink" href="#preventing-parsing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="preventing-parsing">
+<h3><a class="toc-backref" href="#id10">Preventing Parsing</a><a class="headerlink" href="#preventing-parsing" title="Permalink to this headline"></a></h3>
 <p>You can specify portions of the page to not be parsed with the <code class="docutils literal notranslate"><span class="pre">{noparse}{/noparse}</span></code> tag pair. Anything in this
 section will stay exactly as it is, with no variable substitution, looping, etc, happening to the markup between the brackets.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nx">noparse</span><span class="p">}</span>
@@ -678,9 +586,9 @@ section will stay exactly as it is, with no variable substitution, looping, etc,
 <span class="p">{</span><span class="o">/</span><span class="nx">noparse</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="conditional-logic">
-<h3><a class="toc-backref" href="#id11">Conditional Logic</a><a class="headerlink" href="#conditional-logic" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="conditional-logic">
+<h3><a class="toc-backref" href="#id11">Conditional Logic</a><a class="headerlink" href="#conditional-logic" title="Permalink to this headline"></a></h3>
 <p>The Parser class supports some basic conditionals to handle <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>, and <code class="docutils literal notranslate"><span class="pre">elseif</span></code> syntax. All <code class="docutils literal notranslate"><span class="pre">if</span></code>
 blocks must be closed with an <code class="docutils literal notranslate"><span class="pre">endif</span></code> tag:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">$role</span><span class="o">==</span><span class="s1">&#39;admin&#39;</span><span class="p">}</span>
@@ -711,9 +619,9 @@ of the comparison operators you would normally, like <code class="docutils liter
 <p>In the background, conditionals are parsed using an <strong>eval()</strong>, so you must ensure that you take
 care with the user data that is used within conditionals, or you could open your application up to security risks.</p>
 </div>
-</div>
-<div class="section" id="escaping-data">
-<h3><a class="toc-backref" href="#id12">Escaping Data</a><a class="headerlink" href="#escaping-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="escaping-data">
+<h3><a class="toc-backref" href="#id12">Escaping Data</a><a class="headerlink" href="#escaping-data" title="Permalink to this headline"></a></h3>
 <p>By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">esc</span></code> method
 supports several different contexts, like general <strong>html</strong>, when it’s in an HTML <strong>attr</strong>, in <strong>css</strong>, etc. If nothing
 else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the <strong>esc</strong>
@@ -727,9 +635,9 @@ marks to the opening and closing braces:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">!</span> <span class="nx">unescaped_var</span> <span class="o">!</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="filters">
-<h3><a class="toc-backref" href="#id13">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="filters">
+<h3><a class="toc-backref" href="#id13">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
 <p>Any single variable substitution can have one or more filters applied to it to modify the way it is presented. These
 are not intended to drastically change the output, but provide ways to reuse the same variable data but with different
 presentations. The <strong>esc</strong> filter discussed above is one example. Dates are another common use case, where you might
@@ -748,8 +656,8 @@ left to right:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="nx">created_at</span><span class="o">|</span><span class="nb">date_modify</span><span class="p">(</span><span class="o">+</span><span class="mi">5</span> <span class="nx">days</span><span class="p">)</span><span class="o">|</span><span class="nb">date</span><span class="p">(</span><span class="nx">Y</span><span class="o">-</span><span class="nx">m</span><span class="o">-</span><span class="nx">d</span><span class="p">)</span> <span class="p">}</span>
 </pre></div>
 </div>
-<div class="section" id="provided-filters">
-<h4>Provided Filters<a class="headerlink" href="#provided-filters" title="Permalink to this headline">¶</a></h4>
+<section id="provided-filters">
+<h4>Provided Filters<a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h4>
 <p>The following filters are available when using the parser:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -929,9 +837,9 @@ lowercase, and each word capitalized.</p></td>
 </table>
 <p>See <a class="reference external" href="https://www.php.net/manual/en/numberformatter.create.php">PHP’s NumberFormatter</a> for details relevant to the
 “local_number” filter.</p>
-</div>
-<div class="section" id="custom-filters">
-<h4>Custom Filters<a class="headerlink" href="#custom-filters" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="custom-filters">
+<h4>Custom Filters<a class="headerlink" href="#custom-filters" title="Permalink to this headline"></a></h4>
 <p>You can easily create your own filters by editing <strong>app/Config/View.php</strong> and adding new entries to the
 <code class="docutils literal notranslate"><span class="pre">$filters</span></code> array. Each key is the name of the filter is called by in the view, and its value is any valid PHP
 callable:</p>
@@ -941,9 +849,9 @@ callable:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="php-native-functions-as-filters">
-<h4>PHP Native functions as Filters<a class="headerlink" href="#php-native-functions-as-filters" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="php-native-functions-as-filters">
+<h4>PHP Native functions as Filters<a class="headerlink" href="#php-native-functions-as-filters" title="Permalink to this headline"></a></h4>
 <p>You can use native php function as filters by editing <strong>app/Config/View.php</strong> and adding new entries to the
 <code class="docutils literal notranslate"><span class="pre">$filters</span></code> array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
 function prefixed with:</p>
@@ -952,10 +860,10 @@ function prefixed with:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="parser-plugins">
-<h3><a class="toc-backref" href="#id14">Parser Plugins</a><a class="headerlink" href="#parser-plugins" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="parser-plugins">
+<h3><a class="toc-backref" href="#id14">Parser Plugins</a><a class="headerlink" href="#parser-plugins" title="Permalink to this headline"></a></h3>
 <p>Plugins allow you to extend the parser, adding custom features for each project. They can be any PHP callable, making
 them very simple to implement. Within templates, plugins are specified by <code class="docutils literal notranslate"><span class="pre">{+</span> <span class="pre">+}</span></code> tags:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">+</span> <span class="nx">foo</span> <span class="o">+</span><span class="p">}</span> <span class="nx">inner</span> <span class="nx">content</span> <span class="p">{</span><span class="o">+</span> <span class="o">/</span><span class="nx">foo</span> <span class="o">+</span><span class="p">}</span>
@@ -977,8 +885,8 @@ key/value pairs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">+</span> <span class="k">include</span> <span class="nx">somefile</span><span class="o">.</span><span class="nx">php</span> <span class="o">+</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="section" id="provided-plugins">
-<h4>Provided Plugins<a class="headerlink" href="#provided-plugins" title="Permalink to this headline">¶</a></h4>
+<section id="provided-plugins">
+<h4>Provided Plugins<a class="headerlink" href="#provided-plugins" title="Permalink to this headline"></a></h4>
 <p>The following plugins are available when using the parser:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -1037,9 +945,9 @@ key/value pairs:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="registering-a-plugin">
-<h4>Registering a Plugin<a class="headerlink" href="#registering-a-plugin" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="registering-a-plugin">
+<h4>Registering a Plugin<a class="headerlink" href="#registering-a-plugin" title="Permalink to this headline"></a></h4>
 <p>At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
 <strong>app/Config/View.php</strong>, under the <strong>$plugins</strong> array. The key is the name of the plugin that is
 used within the template file. The value is any valid PHP callable, including static class methods, and closures:</p>
@@ -1086,11 +994,11 @@ the content between its tags:</p>
 <span class="p">{</span><span class="o">+</span> <span class="nx">foo</span> <span class="o">+</span><span class="p">}</span> <span class="nx">inner</span> <span class="nx">content</span> <span class="p">{</span><span class="o">+</span> <span class="o">/</span><span class="nx">foo</span> <span class="o">+</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="usage-notes">
-<h2><a class="toc-backref" href="#id15">Usage Notes</a><a class="headerlink" href="#usage-notes" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="usage-notes">
+<h2><a class="toc-backref" href="#id15">Usage Notes</a><a class="headerlink" href="#usage-notes" title="Permalink to this headline"></a></h2>
 <p>If you include substitution parameters that are not referenced in your
 template, they are ignored:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;Hello, {firstname} {lastname}&#39;</span><span class="p">;</span>
@@ -1138,8 +1046,8 @@ pair tag, but the closing variable pair tag is not rendered properly:</p>
 <span class="c1">// Result: Hello, John Doe (Mr{degree} {/degrees})</span>
 </pre></div>
 </div>
-<div class="section" id="view-fragments">
-<h3><a class="toc-backref" href="#id16">View Fragments</a><a class="headerlink" href="#view-fragments" title="Permalink to this headline">¶</a></h3>
+<section id="view-fragments">
+<h3><a class="toc-backref" href="#id16">View Fragments</a><a class="headerlink" href="#view-fragments" title="Permalink to this headline"></a></h3>
 <p>You do not have to use variable pairs to get the effect of iteration in
 your views. It is possible to use a view fragment for what would be inside
 a variable pair, and to control the iteration in your controller instead
@@ -1194,16 +1102,16 @@ using a view fragment:</p>
 <span class="o">&lt;/</span><span class="nx">ul</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="class-reference">
-<h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\View\Parser</code></dt>
 <dd><dl class="method">
 <dt id="render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1240,7 +1148,7 @@ substitutions are performed for each data pair.</p>
 
 <dl class="method">
 <dt id="renderString">
-<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1265,7 +1173,7 @@ substitutions are performed for each data pair.</p>
 
 <dl class="method">
 <dt id="setData">
-<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1290,7 +1198,7 @@ If ‘raw’, no escaping will happen.</p>
 
 <dl class="method">
 <dt id="setVar">
-<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value=null</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value=null</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1316,7 +1224,7 @@ If ‘raw’, no escaping will happen.</p>
 
 <dl class="method">
 <dt id="setDelimiters">
-<code class="sig-name descname">setDelimiters</code><span class="sig-paren">(</span><em class="sig-param">$leftDelimiter = '{'</em>, <em class="sig-param">$rightDelimiter = '}'</em><span class="sig-paren">)</span><a class="headerlink" href="#setDelimiters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setDelimiters</code><span class="sig-paren">(</span><em class="sig-param">$leftDelimiter = '{'</em>, <em class="sig-param">$rightDelimiter = '}'</em><span class="sig-paren">)</span><a class="headerlink" href="#setDelimiters" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1339,58 +1247,40 @@ If ‘raw’, no escaping will happen.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="table.html" class="btn btn-neutral float-right" title="HTML Table Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="view_layouts.html" class="btn btn-neutral float-left" title="View Layouts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="table.html" class="btn btn-neutral float-right" title="HTML Table Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

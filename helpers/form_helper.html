@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Form Helper &mdash; CodeIgniter 4.1.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
-  
-
-  
-  
-
-  
-
-  
+  <title>Form Helper &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="HTML Helper" href="html_helper.html" />
     <link rel="prev" title="Filesystem Helper" href="filesystem_helper.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
@@ -286,73 +235,32 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #DD4814" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CodeIgniter</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Helpers</a> &raquo;</li>
-        
       <li>Form Helper</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="form-helper">
-<h1>Form Helper<a class="headerlink" href="#form-helper" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="form-helper">
+<h1>Form Helper<a class="headerlink" href="#form-helper" title="Permalink to this headline"></a></h1>
 <p>The Form Helper file contains functions that assist in working with
 forms.</p>
 <div class="contents local topic" id="contents">
@@ -362,15 +270,15 @@ forms.</p>
 <li><p><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></p></li>
 </ul>
 </div>
-<div class="section" id="loading-this-helper">
-<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
+<section id="loading-this-helper">
+<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="escaping-field-values">
-<h2><a class="toc-backref" href="#id2">Escaping field values</a><a class="headerlink" href="#escaping-field-values" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="escaping-field-values">
+<h2><a class="toc-backref" href="#id2">Escaping field values</a><a class="headerlink" href="#escaping-field-values" title="Permalink to this headline"></a></h2>
 <p>You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you’ll need to use
 <a class="reference internal" href="../general/common_functions.html"><span class="doc">common function</span></a>
@@ -395,13 +303,13 @@ the form values will be automatically escaped, so there is no need
 to call this function. Use it only if you are creating your own
 form elements, which you would pass as strings.</p>
 </div>
-</div>
-<div class="section" id="available-functions">
-<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="available-functions">
+<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="form_open">
-<code class="sig-name descname">form_open</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$action = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_open</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$action = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -487,7 +395,7 @@ third parameter, like this:</p>
 
 <dl class="function">
 <dt id="form_open_multipart">
-<code class="sig-name descname">form_open_multipart</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$action = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open_multipart" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_open_multipart</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$action = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = ''</em><span class="optional">[</span>, <em class="sig-param">$hidden = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_open_multipart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -510,7 +418,7 @@ would like to use the form to upload files with.</p>
 
 <dl class="function">
 <dt id="form_hidden">
-<code class="sig-name descname">form_hidden</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_hidden" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_hidden</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_hidden" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -589,7 +497,7 @@ name/value string to create one field:</p>
 
 <dl class="function">
 <dt id="form_input">
-<code class="sig-name descname">form_input</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">[</span>, <em class="sig-param">$type = 'text'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_input" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_input</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">[</span>, <em class="sig-param">$type = 'text'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_input" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -656,7 +564,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 
 <dl class="function">
 <dt id="form_password">
-<code class="sig-name descname">form_password</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_password" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_password</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_password" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -678,7 +586,7 @@ function above except that it uses the “password” input type.</p>
 
 <dl class="function">
 <dt id="form_upload">
-<code class="sig-name descname">form_upload</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_upload" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_upload</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_upload" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -701,7 +609,7 @@ be used to upload files.</p>
 
 <dl class="function">
 <dt id="form_textarea">
-<code class="sig-name descname">form_textarea</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_textarea" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_textarea</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_textarea" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -728,7 +636,7 @@ you will instead specify <em>rows</em> and <em>cols</em>.</p>
 
 <dl class="function">
 <dt id="form_dropdown">
-<code class="sig-name descname">form_dropdown</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$options = []</em><span class="optional">[</span>, <em class="sig-param">$selected = []</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_dropdown" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_dropdown</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$options = []</em><span class="optional">[</span>, <em class="sig-param">$selected = []</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_dropdown" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -809,7 +717,7 @@ label.</p>
 
 <dl class="function">
 <dt id="form_multiselect">
-<code class="sig-name descname">form_multiselect</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$options = []</em><span class="optional">[</span>, <em class="sig-param">$selected = []</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_multiselect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_multiselect</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$options = []</em><span class="optional">[</span>, <em class="sig-param">$selected = []</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_multiselect" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -837,7 +745,7 @@ syntax, e.g., foo[].</p>
 
 <dl class="function">
 <dt id="form_fieldset">
-<code class="sig-name descname">form_fieldset</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$legend_text = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_fieldset</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$legend_text = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -893,7 +801,7 @@ second parameter if you prefer to set additional attributes:</p>
 
 <dl class="function">
 <dt id="form_fieldset_close">
-<code class="sig-name descname">form_fieldset_close</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset_close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_fieldset_close</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_fieldset_close" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -919,7 +827,7 @@ the tag. For example</p>
 
 <dl class="function">
 <dt id="form_checkbox">
-<code class="sig-name descname">form_checkbox</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$checked = false</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_checkbox" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_checkbox</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$checked = false</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_checkbox" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -973,7 +881,7 @@ fourth parameter:</p>
 
 <dl class="function">
 <dt id="form_radio">
-<code class="sig-name descname">form_radio</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$checked = false</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_radio" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_radio</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$checked = false</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_radio" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -996,7 +904,7 @@ function above except that it uses the “radio” input type.</p>
 
 <dl class="function">
 <dt id="form_label">
-<code class="sig-name descname">form_label</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$label_text = ''</em><span class="optional">[</span>, <em class="sig-param">$id = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_label" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_label</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$label_text = ''</em><span class="optional">[</span>, <em class="sig-param">$id = ''</em><span class="optional">[</span>, <em class="sig-param">$attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_label" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1033,7 +941,7 @@ third parameter if you prefer to set additional attributes.</p>
 
 <dl class="function">
 <dt id="form_submit">
-<code class="sig-name descname">form_submit</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_submit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_submit</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_submit" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1061,7 +969,7 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 
 <dl class="function">
 <dt id="form_reset">
-<code class="sig-name descname">form_reset</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_reset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_reset</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_reset" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1083,7 +991,7 @@ parameter lets you add extra data to your form, like JavaScript.</p>
 
 <dl class="function">
 <dt id="form_button">
-<code class="sig-name descname">form_button</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$content = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_button" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_button</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data = ''</em><span class="optional">[</span>, <em class="sig-param">$content = ''</em><span class="optional">[</span>, <em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_button" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1129,7 +1037,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 
 <dl class="function">
 <dt id="form_close">
-<code class="sig-name descname">form_close</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">form_close</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$extra = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#form_close" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1155,7 +1063,7 @@ the tag. For example:</p>
 
 <dl class="function">
 <dt id="set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$default = ''</em><span class="optional">[</span>, <em class="sig-param">$html_escape = true</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$default = ''</em><span class="optional">[</span>, <em class="sig-param">$html_escape = true</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_value" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1186,7 +1094,7 @@ i.e., <a class="reference internal" href="#form_input" title="form_input"><code 
 
 <dl class="function">
 <dt id="set_select">
-<code class="sig-name descname">set_select</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_select" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_select</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_select" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1219,7 +1127,7 @@ parameter lets you set an item as the default (use boolean true/false).</p>
 
 <dl class="function">
 <dt id="set_checkbox">
-<code class="sig-name descname">set_checkbox</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_checkbox" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_checkbox</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_checkbox" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1248,7 +1156,7 @@ lets you set an item as the default (use boolean true/false).</p>
 
 <dl class="function">
 <dt id="set_radio">
-<code class="sig-name descname">set_radio</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_radio" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_radio</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$default = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_radio" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1281,58 +1189,40 @@ class instead of the generic helper function.</p>
 </div>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="html_helper.html" class="btn btn-neutral float-right" title="HTML Helper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="filesystem_helper.html" class="btn btn-neutral float-left" title="Filesystem Helper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="html_helper.html" class="btn btn-neutral float-right" title="HTML Helper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">
-        Last updated on Sep 13, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Sep 15, 2021.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
