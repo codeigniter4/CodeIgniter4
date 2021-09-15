@@ -52,9 +52,9 @@ if [ "$FILES" != "" ]; then
     # Run on whole codebase to skip on unnecessary filtering
     # Run first on app, admin, public
     if [ -d /proc/cygdrive ]; then
-        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff --config=.no-header.php-cs-fixer.dist.php
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php
     else
-        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff --config=.no-header.php-cs-fixer.dist.php
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php
     fi
 
     if [ $? != 0 ]; then
@@ -64,9 +64,9 @@ if [ "$FILES" != "" ]; then
 
     # Next, run on system, tests, utils, and root PHP files
     if [ -d /proc/cygdrive ]; then
-        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff
     else
-        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no --diff
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff
     fi
 
     if [ $? != 0 ]; then
