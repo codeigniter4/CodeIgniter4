@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\OCI8;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseBuilder;
 
 /**
@@ -73,24 +74,24 @@ class Builder extends BaseBuilder
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
         $keys            = implode(', ', $keys);
-        $has_primary_key = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
+        $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
         // ORA-00001 measures
-        if ($has_primary_key) {
+        if ($hasPrimaryKey) {
             $sql                 = 'INSERT INTO ' . $table . ' (' . $keys . ") \n SELECT * FROM (\n";
-            $select_query_values = [];
+            $selectQueryValues = [];
 
-            for ($i = 0, $c = count($values); $i < $c; $i++) {
-                $select_query_values[] = 'SELECT ' . substr(substr($values[$i], 1), 0, -1) . ' FROM DUAL';
+            foreach ($values as $value) {
+                $selectQueryValues[] = 'SELECT ' . substr(substr($value, 1), 0, -1) . ' FROM DUAL';
             }
 
-            return $sql . implode("\n UNION ALL \n", $select_query_values) . "\n)";
+            return $sql . implode("\n UNION ALL \n", $selectQueryValues) . "\n)";
         }
 
         $sql = "INSERT ALL\n";
 
-        for ($i = 0, $c = count($values); $i < $c; $i++) {
-            $sql .= '	INTO ' . $table . ' (' . $keys . ') VALUES ' . $values[$i] . "\n";
+        foreach ($values as $value) {
+            $sql .= '	INTO ' . $table . ' (' . $keys . ') VALUES ' . $value . "\n";
         }
 
         return $sql . 'SELECT * FROM dual';
@@ -107,18 +108,18 @@ class Builder extends BaseBuilder
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
-        $field_names = array_map(static function ($column_name) {
-            return trim($column_name, '"');
+        $fieldNames = array_map(static function ($columnName) {
+            return trim($columnName, '"');
         }, $keys);
 
-        $unique_indexes = array_filter($this->db->getIndexData($table), static function ($index) use ($field_names) {
-            $has_all_fields = count(array_intersect($index->fields, $field_names)) === count($index->fields);
+        $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+            $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
-            return ($index->type === 'PRIMARY') && $has_all_fields;
+            return ($index->type === 'PRIMARY') && $hasAllFields;
         });
-        $replaceable_fields = array_filter($keys, static function ($column_name) use ($unique_indexes) {
-            foreach ($unique_indexes as $index) {
-                if (in_array(trim($column_name, '"'), $index->fields, true)) {
+        $replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes) {
+            foreach ($uniqueIndexes as $index) {
+                if (in_array(trim($columnName, '"'), $index->fields, true)) {
                     return false;
                 }
             }
@@ -128,31 +129,31 @@ class Builder extends BaseBuilder
 
         $sql = 'MERGE INTO ' . $table . "\n USING (SELECT ";
 
-        $sql .= implode(', ', array_map(static function ($column_name, $value) {
-            return $value . ' ' . $column_name;
+        $sql .= implode(', ', array_map(static function ($columnName, $value) {
+            return $value . ' ' . $columnName;
         }, $keys, $values));
 
         $sql .= ' FROM DUAL) "_replace" ON ( ';
 
-        $on_list   = [];
-        $on_list[] = '1 != 1';
+        $onList   = [];
+        $onList[] = '1 != 1';
 
-        foreach ($unique_indexes as $index) {
-            $on_list[] = '(' . implode(' AND ', array_map(static function ($column_name) use ($table) {
-                return $table . '."' . $column_name . '" = "_replace"."' . $column_name . '"';
+        foreach ($uniqueIndexes as $index) {
+            $onList[] = '(' . implode(' AND ', array_map(static function ($columnName) use ($table) {
+                return $table . '."' . $columnName . '" = "_replace"."' . $columnName . '"';
             }, $index->fields)) . ')';
         }
 
-        $sql .= implode(' OR ', $on_list) . ') WHEN MATCHED THEN UPDATE SET ';
+        $sql .= implode(' OR ', $onList) . ') WHEN MATCHED THEN UPDATE SET ';
 
-        $sql .= implode(', ', array_map(static function ($column_name) {
-            return $column_name . ' = "_replace".' . $column_name;
-        }, $replaceable_fields));
+        $sql .= implode(', ', array_map(static function ($columnName) {
+            return $columnName . ' = "_replace".' . $columnName;
+        }, $replaceableFields));
 
-        $sql .= ' WHEN NOT MATCHED THEN INSERT (' . implode(', ', $replaceable_fields) . ') VALUES ';
-        $sql .= ' (' . implode(', ', array_map(static function ($column_name) {
-            return '"_replace".' . $column_name;
-        }, $replaceable_fields)) . ')';
+        $sql .= ' WHEN NOT MATCHED THEN INSERT (' . implode(', ', $replaceableFields) . ') VALUES ';
+        $sql .= ' (' . implode(', ', array_map(static function ($columnName) {
+            return '"_replace".' . $columnName;
+        }, $replaceableFields)) . ')';
 
         return $sql;
     }
@@ -180,17 +181,17 @@ class Builder extends BaseBuilder
      * @param mixed $where The where clause
      * @param int   $limit The limit clause
      *
-     * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+     * @throws DatabaseException
      *
      * @return mixed
      */
-    public function delete($where = '', ?int $limit = null, bool $reset_data = true)
+    public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
         if (! empty($limit)) {
             $this->QBLimit = $limit;
         }
 
-        return parent::delete($where, null, $reset_data);
+        return parent::delete($where, null, $resetData);
     }
 
     /**

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\OCI8;
 
+use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\PreparedQueryInterface;
 
@@ -90,18 +91,18 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     public function _execute(array $data): bool
     {
         if (null === $this->statement) {
-            throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
+            throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
-        $last_key = 0;
+        $lastKey = 0;
 
         foreach (array_keys($data) as $key) {
             oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
-            $last_key = $key;
+            $lastKey = $key;
         }
 
         if ($this->isCollectRowId) {
-            oci_bind_by_name($this->statement, ':' . (++$last_key), $this->db->rowId, 255);
+            oci_bind_by_name($this->statement, ':' . (++$lastKey), $this->db->rowId, 255);
         }
 
         return oci_execute($this->statement, $this->db->commitMode);
@@ -126,10 +127,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
         // Track our current value
         $count = 0;
 
-        $sql = preg_replace_callback('/\?/', static function ($matches) use (&$count) {
+        return preg_replace_callback('/\?/', static function ($matches) use (&$count) {
             return ':' . ($count++);
         }, $sql);
-
-        return $sql;
     }
 }

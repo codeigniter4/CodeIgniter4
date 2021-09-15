@@ -19,6 +19,9 @@ use stdClass;
 
 /**
  * Connection for Postgre
+ *
+ * @property string|null $latestInsertedTableName
+ * @property int|null    $rowId
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
@@ -173,10 +176,10 @@ class Connection extends BaseConnection implements ConnectionInterface
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || ($version_string = oci_server_version($this->connID)) === false) {
+        if (! $this->connID || ($versionString = oci_server_version($this->connID)) === false) {
             return '';
         }
-        if (preg_match('#Release\s(\d+(?:\.\d+)+)#', $version_string, $match)) {
+        if (preg_match('#Release\s(\d+(?:\.\d+)+)#', $versionString, $match)) {
             return $this->dataCache['version'] = $match[1];
         }
 
@@ -188,7 +191,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @return bool|resource
      */
-    public function execute(string $sql)
+    protected function execute(string $sql)
     {
         try {
             if ($this->resetStmtId === true) {
@@ -261,9 +264,9 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      *
-     * @return \stdClass[]
+     * @return stdClass[]
      */
-    public function _fieldData(string $table): array
+    protected function _fieldData(string $table): array
     {
         if (strpos($table, '.') !== false) {
             sscanf($table, '%[^.].%s', $owner, $table);
@@ -311,9 +314,9 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      *
-     * @return \stdClass[]
+     * @return stdClass[]
      */
-    public function _indexData(string $table): array
+    protected function _indexData(string $table): array
     {
         if (strpos($table, '.') !== false) {
             sscanf($table, '%[^.].%s', $owner, $table);
@@ -360,9 +363,9 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      *
-     * @return \stdClass[]
+     * @return stdClass[]
      */
-    public function _foreignKeyData(string $table): array
+    protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
                  acc.constraint_name,
@@ -488,13 +491,13 @@ class Connection extends BaseConnection implements ConnectionInterface
         // Build the query string
         $sql = 'BEGIN ' . $package . '.' . $procedure . '(';
 
-        $have_cursor = false;
+        $haveCursor = false;
 
         foreach ($params as $param) {
             $sql .= $param['name'] . ',';
 
             if (isset($param['type']) && $param['type'] === OCI_B_CURSOR) {
-                $have_cursor = true;
+                $haveCursor = true;
             }
         }
         $sql = trim($sql, ',') . '); END;';
@@ -502,7 +505,7 @@ class Connection extends BaseConnection implements ConnectionInterface
         $this->resetStmtId = false;
         $this->stmtId      = oci_parse($this->connID, $sql);
         $this->bindParams($params);
-        $result            = $this->query($sql, false, $have_cursor);
+        $result            = $this->query($sql, false, $haveCursor);
         $this->resetStmtId = true;
 
         return $result;
@@ -572,34 +575,34 @@ class Connection extends BaseConnection implements ConnectionInterface
         }
 
         $indexs      = $this->getIndexData($this->latestInsertedTableName);
-        $field_datas = $this->getFieldData($this->latestInsertedTableName);
+        $fieldDatas = $this->getFieldData($this->latestInsertedTableName);
 
-        if (! $indexs || ! $field_datas) {
+        if (! $indexs || ! $fieldDatas) {
             return 0;
         }
 
-        $column_type_list    = array_column($field_datas, 'type', 'name');
-        $primary_column_name = '';
+        $columnTypeList    = array_column($fieldDatas, 'type', 'name');
+        $primaryColumnName = '';
 
         foreach ($indexs as $index) {
             if ($index->type !== 'PRIMARY' || count($index->fields) !== 1) {
                 continue;
             }
 
-            $primary_column_name = $this->protectIdentifiers($index->fields[0], false, false);
-            $primary_column_type = $column_type_list[$primary_column_name];
+            $primaryColumnName = $this->protectIdentifiers($index->fields[0], false, false);
+            $primaryColumnType = $columnTypeList[$primaryColumnName];
 
-            if ($primary_column_type !== 'NUMBER') {
+            if ($primaryColumnType !== 'NUMBER') {
                 continue;
             }
         }
 
-        if (! $primary_column_name) {
+        if (! $primaryColumnName) {
             return 0;
         }
 
         $table = $this->protectIdentifiers($this->latestInsertedTableName, true);
-        $query = $this->query('SELECT ' . $this->protectIdentifiers($primary_column_name, false) . ' SEQ FROM ' . $table . ' WHERE ROWID = ?', $this->rowId)->getRow();
+        $query = $this->query('SELECT ' . $this->protectIdentifiers($primaryColumnName, false) . ' SEQ FROM ' . $table . ' WHERE ROWID = ?', $this->rowId)->getRow();
 
         return (int) ($query->SEQ ?? 0);
     }

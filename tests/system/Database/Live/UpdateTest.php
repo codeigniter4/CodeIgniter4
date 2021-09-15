@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use Config\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -202,7 +203,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testSetWithoutEscape()
     {
         if ($this->db->DBDriver === 'OCI8') {
-            $forge = \Config\Database::forge($this->DBGroup);
+            $forge = Database::forge($this->DBGroup);
             $forge->modifyColumn('job', [
                 'description' => [
                     'name' => 'DESCRIPTION',

@@ -74,40 +74,40 @@ class Forge extends \CodeIgniter\Database\Forge
 
     /**
      * ALTER TABLE
-     *
-     * @param string $alter_type ALTER type
-     * @param string $table      Table name
-     * @param mixed  $field      Column definition
-     *
+     * 
+     * @param string $alterType ALTER type
+     * @param string $table Table name
+     * @param mixed $field Column definition
+     * 
      * @return string|string[]
      */
-    protected function _alterTable(string $alter_type, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $field)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
-        if ($alter_type === 'DROP') {
+        if ($alterType === 'DROP') {
             $fields = array_map(function ($field) {
                 return $this->db->escapeIdentifiers(trim($field));
             }, (is_string($field)) ? explode(',', $field) : $field);
 
             return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
         }
-        if ($alter_type === 'CHANGE') {
-            $alter_type = 'MODIFY';
+        if ($alterType === 'CHANGE') {
+            $alterType = 'MODIFY';
         }
 
-        $nullable_map = array_column($this->db->getFieldData($table), 'nullable', 'name');
+        $nullableMap = array_column($this->db->getFieldData($table), 'nullable', 'name');
         $sqls         = [];
 
         for ($i = 0, $c = count($field); $i < $c; $i++) {
-            if ($alter_type === 'MODIFY') {
+            if ($alterType === 'MODIFY') {
                 // If a null constraint is added to a column with a null constraint,
                 // ORA-01451 will occur,
                 // so add null constraint is used only when it is different from the current null constraint.
-                $is_want_to_add_null  = (strpos($field[$i]['null'], ' NOT') === false);
-                $current_null_addable = $nullable_map[$field[$i]['name']];
+                $isWantToAddNull  = (strpos($field[$i]['null'], ' NOT') === false);
+                $currentNullAddable = $nullableMap[$field[$i]['name']];
 
-                if ($is_want_to_add_null === $current_null_addable) {
+                if ($isWantToAddNull === $currentNullAddable) {
                     $field[$i]['null'] = '';
                 }
             }
@@ -123,7 +123,7 @@ class Forge extends \CodeIgniter\Database\Forge
                         . ' IS ' . $field[$i]['comment'];
                 }
 
-                if ($alter_type === 'MODIFY' && ! empty($field[$i]['new_name'])) {
+                if ($alterType === 'MODIFY' && ! empty($field[$i]['new_name'])) {
                     $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
                         . ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
                 }
@@ -132,7 +132,7 @@ class Forge extends \CodeIgniter\Database\Forge
             }
         }
 
-        $sql .= ' ' . $alter_type . ' ';
+        $sql .= ' ' . $alterType . ' ';
         $sql .= (count($field) === 1)
                 ? $field[0]
                 : '(' . implode(',', $field) . ')';
@@ -248,23 +248,23 @@ class Forge extends \CodeIgniter\Database\Forge
 
                 return;
 
-            default: return;
+            default:
         }
     }
 
     /**
      * Drop Table
-     *
+     * 
      * Generates a platform-specific DROP TABLE string
-     *
-     * @param string $table     Table name
-     * @param bool   $if_exists Whether to add an IF EXISTS condition
-     *
+     * 
+     * @param string $table Table name
+     * @param bool $ifExists Whether to add an IF EXISTS condition
+     * 
      * @return bool|string
      */
-    protected function _dropTable(string $table, bool $if_exists, bool $cascade)
+    protected function _dropTable(string $table, bool $ifExists, bool $cascade)
     {
-        $sql = parent::_dropTable($table, $if_exists, $cascade);
+        $sql = parent::_dropTable($table, $ifExists, $cascade);
 
         if ($sql !== true && $cascade === true) {
             $sql .= ' CASCADE CONSTRAINTS PURGE';
@@ -290,20 +290,18 @@ class Forge extends \CodeIgniter\Database\Forge
             'NO ACTION',
         ];
 
-        if (count($this->foreignKeys) > 0) {
-            foreach ($this->foreignKeys as $field => $fkey) {
-                $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_fk';
-                $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-                $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-                $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
-                $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
+        foreach ($this->foreignKeys as $fkey) {
+            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_fk';
+            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-                $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-                $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
-                if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                    $sql .= ' ON DELETE ' . $fkey['onDelete'];
-                }
+            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+                $sql .= ' ON DELETE ' . $fkey['onDelete'];
             }
         }
 

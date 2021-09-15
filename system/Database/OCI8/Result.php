@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\OCI8;
 
+use stdClass;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
@@ -33,8 +34,8 @@ class Result extends BaseResult implements ResultInterface
      */
     public function getFieldNames(): array
     {
-        return array_map(function ($field_index) {
-            return oci_field_name($this->resultID, $field_index);
+        return array_map(function ($fieldIndex) {
+            return oci_field_name($this->resultID, $fieldIndex);
         }, range(1, $this->getFieldCount()));
     }
 
@@ -43,11 +44,11 @@ class Result extends BaseResult implements ResultInterface
      */
     public function getFieldData(): array
     {
-        return array_map(function ($field_index) {
+        return array_map(function ($fieldIndex) {
             return (object) [
-                'name'       => oci_field_name($this->resultID, $field_index),
-                'type'       => oci_field_type($this->resultID, $field_index),
-                'max_length' => oci_field_size($this->resultID, $field_index),
+                'name'       => oci_field_name($this->resultID, $fieldIndex),
+                'type'       => oci_field_type($this->resultID, $fieldIndex),
+                'max_length' => oci_field_size($this->resultID, $fieldIndex),
                 // 'primary_key' = (int) ($data->flags & 2),
                 // 'default'     = $data->def,
             ];
@@ -99,7 +100,7 @@ class Result extends BaseResult implements ResultInterface
      *
      * @return bool|Entity|object
      */
-    protected function fetchObject(string $className = \stdClass::class)
+    protected function fetchObject(string $className = stdClass::class)
     {
         $row = oci_fetch_object($this->resultID);
 
