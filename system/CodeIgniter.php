@@ -922,8 +922,8 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli()) {
-            return;
+        if (is_cli() && ENVIRONMENT !== 'testing') {
+            return; // @codeCoverageIgnore
         }
         // Ignore AJAX requests
         if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
