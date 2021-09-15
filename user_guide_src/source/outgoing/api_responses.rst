@@ -162,14 +162,14 @@ Class Reference
     The response is an array with two elements: ``error`` and ``messages``. The ``error`` element contains the status
     code of the error. The ``messages`` element contains an array of error messages. It would look something like::
 
-	    $response = [
-	        'status'   => 400,
-	        'code'     => '321a',
-	        'messages' => [
-	            'Error message 1',
-	            'Error message 2',
-	        ],
-	    ];
+        $response = [
+            'status'   => 400,
+            'code'     => '321a',
+            'messages' => [
+                'Error message 1',
+                'Error message 2',
+            ],
+        ];
 
 .. php:method:: respondCreated($data = null[, string $message = ''])
 
@@ -179,8 +179,8 @@ Class Reference
 
     Sets the appropriate status code to use when a new resource was created, typically 201.::
 
-	    $user = $userModel->insert($data);
-	    return $this->respondCreated($user);
+        $user = $userModel->insert($data);
+        return $this->respondCreated($user);
 
 .. php:method:: respondDeleted($data = null[, string $message = ''])
 
@@ -192,8 +192,8 @@ Class Reference
 
     ::
 
-	    $user = $userModel->delete($id);
-	    return $this->respondDeleted(['id' => $id]);
+        $user = $userModel->delete($id);
+        return $this->respondDeleted(['id' => $id]);
 
 .. php:method:: respondNoContent(string $message = 'No Content')
 
@@ -205,8 +205,8 @@ Class Reference
 
     ::
 
-	    sleep(1);
-	    return $this->respondNoContent();
+        sleep(1);
+        return $this->respondNoContent();
 
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code = null[, string $message = '']])
 
@@ -220,7 +220,7 @@ Class Reference
 
     ::
 
-	    return $this->failUnauthorized('Invalid Auth token');
+        return $this->failUnauthorized('Invalid Auth token');
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
@@ -235,7 +235,7 @@ Class Reference
 
     ::
 
-    	return $this->failForbidden('Invalid API endpoint.');
+        return $this->failForbidden('Invalid API endpoint.');
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
@@ -248,7 +248,7 @@ Class Reference
 
     ::
 
-    	return $this->failNotFound('User 13 cannot be found.');
+        return $this->failNotFound('User 13 cannot be found.');
 
 .. php:method:: failValidationErrors($errors[, string $code=null[, string $message = '']])
 
@@ -261,7 +261,7 @@ Class Reference
 
     ::
 
-    	return $this->failValidationErrors($validation->getErrors());
+        return $this->failValidationErrors($validation->getErrors());
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -275,7 +275,7 @@ Class Reference
 
     ::
 
-    	return $this->failResourceExists('A user already exists with that email.');
+        return $this->failResourceExists('A user already exists with that email.');
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
@@ -289,7 +289,7 @@ Class Reference
 
     ::
 
-    	return $this->failResourceGone('That user has been previously deleted.');
+        return $this->failResourceGone('That user has been previously deleted.');
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
@@ -303,7 +303,7 @@ Class Reference
 
     ::
 
-    	return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
+        return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
 .. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
@@ -316,4 +316,4 @@ Class Reference
 
     ::
 
-    	return $this->failServerError('Server error.');
+        return $this->failServerError('Server error.');
