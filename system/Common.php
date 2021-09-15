@@ -767,7 +767,7 @@ if (! function_exists('log_message')) {
 
         // @codeCoverageIgnoreStart
         return Services::logger(true)
-            ->log($level, $message, $context);
+            ->{$level}($message, $context);
         // @codeCoverageIgnoreEnd
     }
 }
