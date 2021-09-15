@@ -302,29 +302,40 @@ should be returned for which response types.</p>
 <p>In this example, an HTTP status code of 201 is returned, with the generic status message, ‘Created’. Methods
 exist for the most common use cases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generic response method</span>
-<span class="nx">respond</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+
 <span class="c1">// Generic failure response</span>
-<span class="nx">fail</span><span class="p">(</span><span class="nv">$errors</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">fail</span><span class="p">(</span><span class="nv">$errors</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+
 <span class="c1">// Item created response</span>
-<span class="nx">respondCreated</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
 <span class="c1">// Item successfully deleted</span>
-<span class="nx">respondDeleted</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
 <span class="c1">// Command executed by no response required</span>
-<span class="nx">respondNoContent</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondNoContent</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
+
 <span class="c1">// Client isn&#39;t authorized</span>
-<span class="nx">failUnauthorized</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failUnauthorized</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Forbidden action</span>
-<span class="nx">failForbidden</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failForbidden</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Resource Not Found</span>
-<span class="nx">failNotFound</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Data did not validate</span>
-<span class="nx">failValidationError</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationError</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Resource already exists</span>
-<span class="nx">failResourceExists</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceExists</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Resource previously deleted</span>
-<span class="nx">failResourceGone</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceGone</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+
 <span class="c1">// Client made too many requests</span>
-<span class="nx">failTooManyRequests</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failTooManyRequests</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -333,13 +344,10 @@ exist for the most common use cases:</p>
 <p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:</p>
 <ul class="simple">
-<li><p>If $data is a string, it will be treated as HTML to send back to the client.</p></li>
-<li><dl class="simple">
-<dt>If $data is an array, it will be formatted according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value. If that is empty</dt><dd><p>it will try to negotiate the content type with what the client asked for, defaulting to JSON
-if nothing else has been specified within ConfigAPI.php, the <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property.</p>
-</dd>
-</dl>
-</li>
+<li><p>If data is a string, it will be treated as HTML to send back to the client.</p></li>
+<li><p>If data is an array, it will be formatted according to the controller’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;format</span></code> value. If that is empty,
+it will try to negotiate the content type with what the client asked for, defaulting to JSON
+if nothing else has been specified within <strong>Config/Format.php</strong>, the <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> property.</p></li>
 </ul>
 <p>To define the formatter that is used, edit <strong>Config/Format.php</strong>. The <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
@@ -380,7 +388,7 @@ JSON data will be sent back to the client.</p>
 </div>
 <dl class="method">
 <dt id="respond">
-<code class="sig-name descname">respond</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$statusCode=200</em><span class="optional">[</span>, <em class="sig-param">$message=''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">respond</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$statusCode = 200</em><span class="optional">[</span>, <em class="sig-param">$message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -406,7 +414,7 @@ be the final method in the script execution.</p>
 
 <dl class="method">
 <dt id="fail">
-<code class="sig-name descname">fail</code><span class="sig-paren">(</span><em class="sig-param">$messages</em><span class="optional">[</span>, <em class="sig-param">int $status=400</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message=''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">fail</code><span class="sig-paren">(</span><em class="sig-param">$messages</em><span class="optional">[</span>, <em class="sig-param">int $status = 400</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -507,7 +515,7 @@ meaningful reply to send back to the client, typically 204.</p>
 
 <dl class="method">
 <dt id="failUnauthorized">
-<code class="sig-name descname">failUnauthorized</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Unauthorized'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">failUnauthorized</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Unauthorized'</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
