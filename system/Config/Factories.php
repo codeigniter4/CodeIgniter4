@@ -17,7 +17,7 @@ use Config\Services;
 /**
  * Factories for creating instances.
  *
- * Factories allows dynamic loading of components by their path
+ * Factories allow dynamic loading of components by their path
  * and name. The "shared instance" implementation provides a
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
