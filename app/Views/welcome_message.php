@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Welcome to CodeIgniter 4!</title>
+	<title>CodeIgniter 4 REST API APP</title>
 	<meta name="description" content="The small framework with powerful features">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
@@ -151,7 +151,8 @@
 			padding-top: 0;
 		}
 		footer {
-			background-color: rgba(221, 72, 20, .8);
+			background-color: rgb
+			a(221, 72, 20, .8);
 			text-align: center;
 		}
 		footer .environment {
@@ -301,6 +302,7 @@
 
 		<p>&copy; <?= date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
 			open source licence.</p>
+			<p>S M Samnoon Abrar</p>
 
 	</div>
 
