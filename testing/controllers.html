@@ -462,13 +462,13 @@ on an unfiltered route you could add it to the Config:</p>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">FilterTestTrait</span><span class="p">;</span>
 
-            <span class="k">protected</span> <span class="k">function</span> <span class="nf">testFilterFailsOnAdminRoute</span><span class="p">()</span>
-            <span class="p">{</span>
-                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filtersConfig</span><span class="o">-&gt;</span><span class="na">globals</span><span class="p">[</span><span class="s1">&#39;before&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;admin-only-filter&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">testFilterFailsOnAdminRoute</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filtersConfig</span><span class="o">-&gt;</span><span class="na">globals</span><span class="p">[</span><span class="s1">&#39;before&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;admin-only-filter&#39;</span><span class="p">];</span>
 
-                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;unfiltered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
-            <span class="p">}</span>
-    <span class="o">...</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;unfiltered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="o">...</span>
 </pre></div>
 </div>
 </section>
@@ -485,10 +485,14 @@ a large performance advantage over Controller and HTTP Testing.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$route</strong> (<em>string</em>) – The URI to check</p></li>
-<li><p><strong>$position</strong> (<em>string</em>) – The filter method to check, “before” or “after”
-:returns:       Aliases for each filter that would have run
-:rtype: string[]</p></li>
+<li><p><strong>$position</strong> (<em>string</em>) – The filter method to check, “before” or “after”</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Aliases for each filter that would have run</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string[]</p>
 </dd>
 </dl>
 <p>Usage example:</p>
@@ -510,24 +514,27 @@ method using these properties to test your Filter code safely and check the resu
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$filter</strong> (<em>FilterInterface|string</em>) – The filter instance, class, or alias</p></li>
-<li><p><strong>$position</strong> (<em>string</em>) – The filter method to run, “before” or “after”
-:returns:       A callable method to run the simulated Filter event
-:rtype: Closure</p></li>
+<li><p><strong>$position</strong> (<em>string</em>) – The filter method to run, “before” or “after”</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A callable method to run the simulated Filter event</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Closure</p>
 </dd>
 </dl>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>        <span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
-                <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
+    <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
 
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
-        <span class="p">}</span>
-
-<span class="nx">Notice</span> <span class="nx">how</span> <span class="nx">the</span> <span class="sb">``</span><span class="nx">Closure</span><span class="sb">``</span> <span class="nx">can</span> <span class="nx">take</span> <span class="nx">input</span> <span class="nx">parameters</span> <span class="nx">which</span> <span class="nx">are</span> <span class="nx">passed</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">filter</span> <span class="nx">method</span><span class="o">.</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
+<p>Notice how the <code class="docutils literal notranslate"><span class="pre">Closure</span></code> can take input parameters which are passed to your filter method.</p>
 </dd></dl>
 
 </section>
