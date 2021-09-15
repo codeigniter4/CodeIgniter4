@@ -209,13 +209,13 @@ on an unfiltered route you could add it to the Config::
     {
         use FilterTestTrait;
 
-		protected function testFilterFailsOnAdminRoute()
-		{
-			$this->filtersConfig->globals['before'] = ['admin-only-filter'];
+        protected function testFilterFailsOnAdminRoute()
+        {
+            $this->filtersConfig->globals['before'] = ['admin-only-filter'];
 
-			$this->assertHasFilters('unfiltered/route', 'before');
-		}
-	...
+            $this->assertHasFilters('unfiltered/route', 'before');
+        }
+    ...
 
 Checking Routes
 ---------------
@@ -227,14 +227,14 @@ a large performance advantage over Controller and HTTP Testing.
 
 .. php:function:: getFiltersForRoute($route, $position)
 
-    :param	string	$route: The URI to check
-    :param	string	$position: The filter method to check, "before" or "after"
-	:returns:	Aliases for each filter that would have run
-	:rtype:	string[]
+    :param    string    $route: The URI to check
+    :param    string    $position: The filter method to check, "before" or "after"
+    :returns:    Aliases for each filter that would have run
+    :rtype:    string[]
 
     Usage example::
 
-		$result = $this->getFiltersForRoute('/', 'after'); // ['toolbar']
+        $result = $this->getFiltersForRoute('/', 'after'); // ['toolbar']
 
 Calling Filter Methods
 ----------------------
@@ -245,22 +245,22 @@ method using these properties to test your Filter code safely and check the resu
 
 .. php:function:: getFilterCaller($filter, $position)
 
-    :param	FilterInterface|string	$filter: The filter instance, class, or alias
-    :param	string	$position: The filter method to run, "before" or "after"
-	:returns:	A callable method to run the simulated Filter event
-	:rtype:	Closure
+    :param    FilterInterface|string    $filter: The filter instance, class, or alias
+    :param    string    $position: The filter method to run, "before" or "after"
+    :returns:    A callable method to run the simulated Filter event
+    :rtype:    Closure
 
     Usage example::
 
-		protected function testUnauthorizedAccessRedirects()
-		{
-			$caller = $this->getFilterCaller('permission', 'before');
-			$result = $caller('MayEditWidgets');
+        protected function testUnauthorizedAccessRedirects()
+        {
+            $caller = $this->getFilterCaller('permission', 'before');
+            $result = $caller('MayEditWidgets');
 
-			$this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
-		}
-	
-	Notice how the ``Closure`` can take input parameters which are passed to your filter method.
+            $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
+        }
+
+    Notice how the ``Closure`` can take input parameters which are passed to your filter method.
 
 Assertions
 ----------
