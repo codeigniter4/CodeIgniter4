@@ -74,10 +74,10 @@ Handling Response Types
 When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:
 
-* If $data is a string, it will be treated as HTML to send back to the client.
-* If $data is an array, it will be formatted according to the controller's ``$this->format`` value. If that is empty
-    it will try to negotiate the content type with what the client asked for, defaulting to JSON
-    if nothing else has been specified within Config\API.php, the ``$supportedResponseFormats`` property.
+* If data is a string, it will be treated as HTML to send back to the client.
+* If data is an array, it will be formatted according to the controller's ``$this->format`` value. If that is empty,
+  it will try to negotiate the content type with what the client asked for, defaulting to JSON
+  if nothing else has been specified within **Config/Format.php**, the ``$supportedResponseFormats`` property.
 
 To define the formatter that is used, edit **Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
