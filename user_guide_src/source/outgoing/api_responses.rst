@@ -43,29 +43,40 @@ In this example, an HTTP status code of 201 is returned, with the generic status
 exist for the most common use cases::
 
     // Generic response method
-    respond($data, 200);
+    $this->respond($data, 200);
+
     // Generic failure response
-    fail($errors, 400);
+    $this->fail($errors, 400);
+
     // Item created response
-    respondCreated($data);
+    $this->respondCreated($data);
+
     // Item successfully deleted
-    respondDeleted($data);
+    $this->respondDeleted($data);
+
     // Command executed by no response required
-    respondNoContent($message);
+    $this->respondNoContent($message);
+
     // Client isn't authorized
-    failUnauthorized($description);
+    $this->failUnauthorized($description);
+
     // Forbidden action
-    failForbidden($description);
+    $this->failForbidden($description);
+
     // Resource Not Found
-    failNotFound($description);
+    $this->failNotFound($description);
+
     // Data did not validate
-    failValidationError($description);
+    $this->failValidationError($description);
+
     // Resource already exists
-    failResourceExists($description);
+    $this->failResourceExists($description);
+
     // Resource previously deleted
-    failResourceGone($description);
+    $this->failResourceGone($description);
+
     // Client made too many requests
-    failTooManyRequests($description);
+    $this->failTooManyRequests($description);
 
 ***********************
 Handling Response Types
