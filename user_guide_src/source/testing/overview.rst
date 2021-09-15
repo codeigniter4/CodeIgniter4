@@ -159,19 +159,19 @@ to run named for the trait itself. For example, if you needed to add authenticat
 of your test cases you could create an authentication trait with a set up method to fake a
 logged in user::
 
-	trait AuthTrait
-	{
-		protected setUpAuthTrait()
-		{
-			$user = $this->createFakeUser();
-			$this->logInUser($user);
-		}
-	...
+    trait AuthTrait
+    {
+        protected setUpAuthTrait()
+        {
+            $user = $this->createFakeUser();
+            $this->logInUser($user);
+        }
+    ...
 
-	class AuthenticationFeatureTest
-	{
-		use AuthTrait;
-	...
+    class AuthenticationFeatureTest
+    {
+        use AuthTrait;
+    ...
 
 
 Additional Assertions

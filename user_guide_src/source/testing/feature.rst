@@ -29,20 +29,20 @@ are called if you implement your own methods.
 
     class TestFoo extends FeatureTestCase
     {
-    	use DatabaseTestTrait, FeatureTestTrait;
+        use DatabaseTestTrait, FeatureTestTrait;
 
         protected function setUp(): void
         {
             parent::setUp();
 
-			$this->myClassMethod();
+            $this->myClassMethod();
         }
 
         protected function tearDown(): void
         {
             parent::tearDown();
 
-			$this->anotherClassMethod();
+            $this->anotherClassMethod();
         }
     }
 
