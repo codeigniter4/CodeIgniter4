@@ -119,7 +119,7 @@ Class Reference
     return $this->setResponseFormat('json')->respond(['error' => false]);
 
 
-.. php:method:: respond($data[, $statusCode=200[, $message='']])
+.. php:method:: respond($data[, $statusCode = 200[, $message = '']])
 
     :param mixed  $data: The data to return to the client. Either string or array.
     :param int    $statusCode: The HTTP status code to return. Defaults to 200
@@ -138,7 +138,7 @@ Class Reference
     .. note:: Since it sets the status code and body on the active Response instance, this should always
         be the final method in the script execution.
 
-.. php:method:: fail($messages[, int $status=400[, string $code=null[, string $message='']]])
+.. php:method:: fail($messages[, int $status = 400[, string $code = null[, string $message = '']]])
 
     :param mixed $messages: A string or array of strings that contain error messages encountered.
     :param int   $status: The HTTP status code to return. Defaults to 400.
@@ -208,7 +208,7 @@ Class Reference
 	    sleep(1);
 	    return $this->respondNoContent();
 
-.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
+.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code = null[, string $message = '']])
 
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
