@@ -115,4 +115,4 @@ The following functions are available:
         echo number_to_roman(2534);  // Returns MMDXXXIV
 
     This function only handles numbers in the range 1 through 3999.
-    It will return null for any value outside that range .
+    It will return null for any value outside that range.
