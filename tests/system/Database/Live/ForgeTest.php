@@ -520,8 +520,8 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('forge_test_users', true, $attributes);
 
         $forgeTestInvoicesTableName = 'forge_test_invoices';
-        $userIdColumnName           = 'user_id';
-        $userSecondIdColumnName     = 'user_second_id';
+        $userIdColumnName           = 'users_id';
+        $userSecondIdColumnName     = 'users_second_id';
         $fields                     = [
             'id' => [
                 'type'       => 'INTEGER',
