@@ -59,7 +59,7 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 
 Validation rules can also be written in the array syntax.::
 
-	$email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+    $email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
 
 
 **promptByKey()**
@@ -199,6 +199,15 @@ on the right with their descriptions. By default, this will wrap back to the lef
 doesn't allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
 every line after the first line, so that you will have a crisp column edge on the left::
 
+    $titles = [
+        'task1a',
+        'task1abc',
+    ];
+    $descriptions = [
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        "Lorem Ipsum has been the industry's standard dummy text ever since the",
+    ];
+
     // Determine the maximum length of all titles
     // to determine the width of the left column
     $maxlen = max(array_map('strlen', $titles));
@@ -206,7 +215,11 @@ every line after the first line, so that you will have a crisp column edge on th
     for ($i = 0; $i < count($titles); $i++) {
         CLI::write(
             // Display the title on the left of the row
-            $titles[$i] . '   ' .
+            substr(
+                $titles[$i] . str_repeat(' ', $maxlen + 3),
+                0,
+                $maxlen + 3
+            ) .
             // Wrap the descriptions in a right-hand column
             // with its left side 3 characters wider than
             // the longest item on the left.
@@ -218,11 +231,12 @@ Would create something like this:
 
 .. code-block:: none
 
-    task1a   Lorem Ipsum is simply dummy
-               text of the printing and typesetting
-               industry.
-    task1abc   Lorem Ipsum has been the industry's
-               standard dummy text ever since the
+    task1a     Lorem Ipsum is simply dummy
+               text of the printing and
+               typesetting industry.
+    task1abc   Lorem Ipsum has been the
+               industry's standard dummy
+               text ever since the
 
 **newLine()**
 
