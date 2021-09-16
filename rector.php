@@ -9,6 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
@@ -131,4 +132,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $services->set(FixClassCaseSensitivityNameRector::class);
+    $services->set(SimplifyEmptyArrayCheckRector::class);
 };
