@@ -345,7 +345,24 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
-    public function testRunRedirectionWithHTTPCode301()
+    public function testStoresPreviousURL()
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $router = Services::router(null, Services::request(), false);
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        $this->assertArrayHasKey('_ci_previous_url', $_SESSION);
+        $this->assertSame('http://example.com/index.php', $_SESSION['_ci_previous_url']);
+    }
+
+    public function testNotStoresPreviousURL()
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -364,8 +381,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
-        $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertSame(301, $response->getStatusCode());
+
+        $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
     }
 
     /**

@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -921,11 +922,16 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli()) {
-            return;
+        if (is_cli() && ENVIRONMENT !== 'testing') {
+            return; // @codeCoverageIgnore
         }
         // Ignore AJAX requests
         if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
+            return;
+        }
+
+        // Ignore unroutable responses
+        if ($this->response instanceof DownloadResponse || $this->response instanceof RedirectResponse) {
             return;
         }
 
