@@ -59,7 +59,7 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 
 Validation rules can also be written in the array syntax.::
 
-	$email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+    $email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
 
 
 **promptByKey()**
