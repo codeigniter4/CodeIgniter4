@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\Live;
 
-use Config\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 
 /**
  * @group DatabaseLive

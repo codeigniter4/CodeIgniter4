@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\OCI8;
 
-use stdClass;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
+use stdClass;
 
 /**
  * Result for OCI

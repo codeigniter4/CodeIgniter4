@@ -11,8 +11,8 @@
 
 namespace CodeIgniter\Database\OCI8;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Builder for MySQLi
@@ -73,12 +73,12 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        $keys            = implode(', ', $keys);
+        $keys          = implode(', ', $keys);
         $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
         // ORA-00001 measures
         if ($hasPrimaryKey) {
-            $sql                 = 'INSERT INTO ' . $table . ' (' . $keys . ") \n SELECT * FROM (\n";
+            $sql               = 'INSERT INTO ' . $table . ' (' . $keys . ") \n SELECT * FROM (\n";
             $selectQueryValues = [];
 
             foreach ($values as $value) {

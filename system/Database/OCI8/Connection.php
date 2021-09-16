@@ -574,7 +574,7 @@ class Connection extends BaseConnection implements ConnectionInterface
             return 0;
         }
 
-        $indexs      = $this->getIndexData($this->latestInsertedTableName);
+        $indexs     = $this->getIndexData($this->latestInsertedTableName);
         $fieldDatas = $this->getFieldData($this->latestInsertedTableName);
 
         if (! $indexs || ! $fieldDatas) {

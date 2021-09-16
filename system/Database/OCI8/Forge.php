@@ -74,11 +74,11 @@ class Forge extends \CodeIgniter\Database\Forge
 
     /**
      * ALTER TABLE
-     * 
+     *
      * @param string $alterType ALTER type
-     * @param string $table Table name
-     * @param mixed $field Column definition
-     * 
+     * @param string $table     Table name
+     * @param mixed  $field     Column definition
+     *
      * @return string|string[]
      */
     protected function _alterTable(string $alterType, string $table, $field)
@@ -97,14 +97,14 @@ class Forge extends \CodeIgniter\Database\Forge
         }
 
         $nullableMap = array_column($this->db->getFieldData($table), 'nullable', 'name');
-        $sqls         = [];
+        $sqls        = [];
 
         for ($i = 0, $c = count($field); $i < $c; $i++) {
             if ($alterType === 'MODIFY') {
                 // If a null constraint is added to a column with a null constraint,
                 // ORA-01451 will occur,
                 // so add null constraint is used only when it is different from the current null constraint.
-                $isWantToAddNull  = (strpos($field[$i]['null'], ' NOT') === false);
+                $isWantToAddNull    = (strpos($field[$i]['null'], ' NOT') === false);
                 $currentNullAddable = $nullableMap[$field[$i]['name']];
 
                 if ($isWantToAddNull === $currentNullAddable) {
@@ -254,12 +254,12 @@ class Forge extends \CodeIgniter\Database\Forge
 
     /**
      * Drop Table
-     * 
+     *
      * Generates a platform-specific DROP TABLE string
-     * 
-     * @param string $table Table name
-     * @param bool $ifExists Whether to add an IF EXISTS condition
-     * 
+     *
+     * @param string $table    Table name
+     * @param bool   $ifExists Whether to add an IF EXISTS condition
+     *
      * @return bool|string
      */
     protected function _dropTable(string $table, bool $ifExists, bool $cascade)
