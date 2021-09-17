@@ -62,14 +62,14 @@ the core system class, you would create your class like this::
 
 Then  you would modify the ``routes`` service to load your class instead::
 
-	public static function routes(bool $getShared = true)
-	{
-		if ($getShared) {
-			return static::getSharedInstance('routes');
-		}
+    public static function routes(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('routes');
+        }
 
-		return new RouteCollection(static::locator(), config('Modules'));
-	}
+        return new RouteCollection(static::locator(), config('Modules'));
+    }
 
 Extending Core Classes
 ======================

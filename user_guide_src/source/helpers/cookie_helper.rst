@@ -22,16 +22,16 @@ The following functions are available:
 
 .. php:function:: set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false[, $sameSite = '']]]]]]]])
 
-    :param	mixed	$name: Cookie name *or* associative array of all of the parameters available to this function
-    :param	string	$value: Cookie value
-    :param	int	$expire: Number of seconds until expiration
-    :param	string	$domain: Cookie domain (usually: .yourdomain.com)
-    :param	string	$path: Cookie path
-    :param	string	$prefix: Cookie name prefix
-    :param	bool	$secure: Whether to only send the cookie through HTTPS
-    :param	bool	$httpOnly: Whether to hide the cookie from JavaScript
-    :param	string	$sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
-    :rtype:	void
+    :param    mixed    $name: Cookie name *or* associative array of all of the parameters available to this function
+    :param    string    $value: Cookie value
+    :param    int    $expire: Number of seconds until expiration
+    :param    string    $domain: Cookie domain (usually: .yourdomain.com)
+    :param    string    $path: Cookie path
+    :param    string    $prefix: Cookie name prefix
+    :param    bool    $secure: Whether to only send the cookie through HTTPS
+    :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
+    :param    string    $sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
+    :rtype:    void
 
     This helper function gives you friendlier syntax to set browser
     cookies. Refer to the :doc:`Response Library </outgoing/response>` for
@@ -40,10 +40,10 @@ The following functions are available:
 
 .. php:function:: get_cookie($index[, $xssClean = false])
 
-    :param	string	$index: Cookie name
-    :param	bool	$xss_clean: Whether to apply XSS filtering to the returned value
-    :returns:	The cookie value or null if not found
-    :rtype:	mixed
+    :param    string    $index: Cookie name
+    :param    bool    $xss_clean: Whether to apply XSS filtering to the returned value
+    :returns:    The cookie value or null if not found
+    :rtype:    mixed
 
     This helper function gives you friendlier syntax to get browser
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
