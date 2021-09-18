@@ -174,7 +174,7 @@ class Cell
             unset($newParams);
         }
 
-        if (is_array($params) && empty($params)) {
+        if ($params === []) {
             return [];
         }
 
