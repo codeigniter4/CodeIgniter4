@@ -262,7 +262,7 @@ if you were to define a method like this for the `Helloworld` controller::
 
 then trying to access it using the following URL will not work::
 
-	example.com/index.php/helloworld/utility/
+    example.com/index.php/helloworld/utility/
 
 Organizing Your Controllers into Sub-directories
 ================================================
