@@ -317,8 +317,8 @@ will provide it, so please check with your host to verify if you run into proble
 <p>You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
@@ -327,10 +327,10 @@ The options are described later in this document:</p>
 instance of the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> class. The second parameter is a URI instance. The third
 parameter is a Response object. The fourth parameter is the optional <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\CURLRequest</span><span class="p">(</span>
-        <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span>
-        <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(),</span>
-        <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Response</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">()),</span>
-        <span class="nv">$options</span>
+    <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span>
+    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(),</span>
+    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Response</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">()),</span>
+    <span class="nv">$options</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -347,7 +347,7 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
 
 <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;https://api.github.com/user&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;pass&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;pass&#39;</span><span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -376,7 +376,7 @@ each take the URL as the first parameter and an array of options as the second:<
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
 when working with APIs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">([</span>
-        <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/api/v1/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/api/v1/&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// GET http:example.com/api/v1/photos</span>
@@ -448,7 +448,7 @@ methods. The most commonly used methods let you determine the response itself.</
 
 <span class="c1">// Get all headers</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaders</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$name</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$name</span> <span class="o">.</span><span class="s1">&#39;: &#39;</span><span class="o">.</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$name</span> <span class="o">.</span><span class="s1">&#39;: &#39;</span><span class="o">.</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -459,7 +459,7 @@ methods. The most commonly used methods let you determine the response itself.</
 <p>The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
+    <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -488,8 +488,8 @@ allows you to modify how that works.</p>
 </div>
 <p>You can pass in array as the value of the <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option to specify new settings in place of the defaults:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;max&#39;</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="s1">&#39;protocols&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;https&#39;</span><span class="p">]</span> <span class="c1">// Force HTTPS domains only.</span>
+    <span class="s1">&#39;max&#39;</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;protocols&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;https&#39;</span><span class="p">]</span> <span class="c1">// Force HTTPS domains only.</span>
 <span class="p">]]);</span>
 </pre></div>
 </div>
@@ -577,10 +577,10 @@ the server’s error log.</p>
 the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. This will set the <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header to <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code>
 if it’s not already set:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;form_params&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;form_params&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -597,11 +597,11 @@ requests.</p>
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
 representing the header field values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span>
-        <span class="s1">&#39;headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;User-Agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;testing/1.0&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Accept&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;X-Foo&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Bar&#39;</span><span class="p">,</span> <span class="s1">&#39;Baz&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;User-Agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;testing/1.0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Accept&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;X-Foo&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;Bar&#39;</span><span class="p">,</span> <span class="s1">&#39;Baz&#39;</span><span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -643,8 +643,8 @@ the <a class="reference external" href="https://www.php.net/manual/en/class.curl
 of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an <cite>&#64;</cite>
 has been disabled. Any files that you want to send must be passed as instances of CURLFile:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$post_data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -720,7 +720,7 @@ or 1.1, 2.0 is currently unsupported.):</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 16, 2021.
+      <span class="lastupdated">Last updated on Sep 18, 2021.
       </span></p>
   </div>
 
