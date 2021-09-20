@@ -75,4 +75,7 @@ if [ "$FILES" != "" ]; then
     fi
 fi
 
+echo "Checking User Guide..."
+php ./admin/check-user-guide.php
+
 exit $?
