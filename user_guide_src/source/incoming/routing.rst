@@ -352,11 +352,19 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 Applying Filters
 ----------------
 
-You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
+You can alter the behavior of specific routes by supplying a filters to run before or after the controller. This is especially handy during authentication or api logging.
+The filters value can be a string or an array of strings:
+
+* matching the aliases defined in ``app/Config/Filters.php``.
+* filter classes
+
+::
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods::
+    $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+
+You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods. ``For filter aliases only``::
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 

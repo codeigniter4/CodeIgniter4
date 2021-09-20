@@ -318,10 +318,19 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
+     * @param string|string[] $name
+     *
      * @return Filters
      */
-    public function enableFilter(string $name, string $when = 'before')
+    public function enableFilter($name, string $when = 'before')
     {
+        if (is_array($name)) {
+            foreach ($name as $filter) {
+                $this->enableFilter($filter, $when);
+            }
+            return $this;
+        }
+
         // Get parameters and clean name
         if (strpos($name, ':') !== false) {
             [$name, $params] = explode(':', $name);
@@ -334,7 +343,9 @@ class Filters
             $this->arguments[$name] = $params;
         }
 
-        if (! array_key_exists($name, $this->config->aliases)) {
+        if (class_exists($name)) {
+            $this->config->aliases[$name] = $name;
+        } elseif (! array_key_exists($name, $this->config->aliases)) {
             throw FilterException::forNoAlias($name);
         }
 

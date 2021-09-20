@@ -12,6 +12,8 @@ Enhancements:
 
 Changes:
 
+- Now the value of the route filter can also be an array. Instead of an alias, the name of the filter class can be specified.
+
 Deprecations:
 
 - Deprecated ``CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS`` in favor of the new config property
