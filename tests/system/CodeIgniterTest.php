@@ -193,7 +193,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->useSafeOutput(true)->run();
         $output = ob_get_clean();
 
-        $this->assertStringContainsString("http://hellowworld.com", $output);
+        $this->assertStringContainsString('http://hellowworld.com', $output);
     }
 
     public function testResponseConfigEmpty()

@@ -328,6 +328,7 @@ class Filters
             foreach ($name as $filter) {
                 $this->enableFilter($filter, $when);
             }
+
             return $this;
         }
 

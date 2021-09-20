@@ -16,7 +16,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
-use Tests\Support\Filters\Customfilter;
 
 /**
  * @internal
