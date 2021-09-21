@@ -330,8 +330,8 @@ or source and destination into the constructor:</p>
 
 <span class="c1">// You may also add from outside the source, but the files will not be merged into subdirectories</span>
 <span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addFiles</span><span class="p">([</span>
-        <span class="s1">&#39;/opt/mail/susan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;/opt/mail/ubuntu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;/opt/mail/susan&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;/opt/mail/ubuntu&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="nv">$frameworkPublisher</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">SUPPORTPATH</span> <span class="o">.</span> <span class="s1">&#39;Images&#39;</span><span class="p">);</span>
 </pre></div>
@@ -359,12 +359,12 @@ the powerful <code class="docutils literal notranslate"><span class="pre">Autolo
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$publisher</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">();</span>
+    <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">();</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
-        <span class="p">{</span>
-                <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$publisher</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$publisher</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -411,23 +411,23 @@ You can set up <a class="reference internal" href="../cli/cli_commands.html"><sp
 
 <span class="k">class</span> <span class="nc">DailyPhoto</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-        <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Publication&#39;</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;publish:daily&#39;</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publishes the latest daily photo to the homepage.&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Publication&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;publish:daily&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publishes the latest daily photo to the homepage.&#39;</span><span class="p">;</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/path/to/photos/&#39;</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;assets/images&#39;</span><span class="p">);</span>
+
+        <span class="k">try</span>
         <span class="p">{</span>
-                <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/path/to/photos/&#39;</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;assets/images&#39;</span><span class="p">);</span>
-
-                <span class="k">try</span>
-                <span class="p">{</span>
-                        <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;daily_photo.jpg&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// `true` to enable overwrites</span>
-                <span class="p">}</span>
-                <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span>
-                <span class="p">{</span>
-                        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
-                <span class="p">}</span>
+            <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;daily_photo.jpg&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// `true` to enable overwrites</span>
         <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -451,42 +451,42 @@ to keep up with. You can create a publication definition in your project to sync
 
 <span class="k">class</span> <span class="nc">BootstrapPublisher</span> <span class="k">extends</span> <span class="nx">Publisher</span>
 <span class="p">{</span>
-        <span class="sd">/**</span>
-<span class="sd">         * Tell Publisher where to get the files.</span>
-<span class="sd">         * Since we will use Composer to download</span>
-<span class="sd">         * them we point to the &quot;vendor&quot; directory.</span>
-<span class="sd">         *</span>
-<span class="sd">         * @var string</span>
-<span class="sd">         */</span>
-        <span class="k">protected</span> <span class="nv">$source</span> <span class="o">=</span> <span class="s1">&#39;vendor/twbs/bootstrap/&#39;</span><span class="p">;</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Tell Publisher where to get the files.</span>
+<span class="sd">     * Since we will use Composer to download</span>
+<span class="sd">     * them we point to the &quot;vendor&quot; directory.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$source</span> <span class="o">=</span> <span class="s1">&#39;vendor/twbs/bootstrap/&#39;</span><span class="p">;</span>
 
-        <span class="sd">/**</span>
-<span class="sd">         * FCPATH is always the default destination,</span>
-<span class="sd">         * but we may want them to go in a sub-folder</span>
-<span class="sd">         * to keep things organized.</span>
-<span class="sd">         *</span>
-<span class="sd">         * @var string</span>
-<span class="sd">         */</span>
-        <span class="k">protected</span> <span class="nv">$destination</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;bootstrap&#39;</span><span class="p">;</span>
+    <span class="sd">/**</span>
+<span class="sd">     * FCPATH is always the default destination,</span>
+<span class="sd">     * but we may want them to go in a sub-folder</span>
+<span class="sd">     * to keep things organized.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$destination</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;bootstrap&#39;</span><span class="p">;</span>
 
-        <span class="sd">/**</span>
-<span class="sd">         * Use the &quot;publish&quot; method to indicate that this</span>
-<span class="sd">         * class is ready to be discovered and automated.</span>
-<span class="sd">         *</span>
-<span class="sd">         * @return boolean</span>
-<span class="sd">         */</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">publish</span><span class="p">()</span><span class="o">:</span> <span class="nx">bool</span>
-        <span class="p">{</span>
-                <span class="k">return</span> <span class="nv">$this</span>
-                        <span class="c1">// Add all the files relative to $source</span>
-                        <span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Use the &quot;publish&quot; method to indicate that this</span>
+<span class="sd">     * class is ready to be discovered and automated.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return boolean</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">publish</span><span class="p">()</span><span class="o">:</span> <span class="nx">bool</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span>
+            <span class="c1">// Add all the files relative to $source</span>
+            <span class="o">-&gt;</span><span class="na">addPath</span><span class="p">(</span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
 
-                        <span class="c1">// Indicate we only want the minimized versions</span>
-                        <span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.min.*&#39;</span><span class="p">)</span>
+            <span class="c1">// Indicate we only want the minimized versions</span>
+            <span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.min.*&#39;</span><span class="p">)</span>
 
-                        <span class="c1">// Merge-and-replace to retain the original directory structure</span>
-                        <span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-        <span class="p">}</span>
+            <span class="c1">// Merge-and-replace to retain the original directory structure</span>
+            <span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -501,24 +501,24 @@ to keep up with. You can create a publication definition in your project to sync
 <span class="k">public</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span>
 <span class="k">public</span><span class="o">/</span><span class="nx">robots</span><span class="o">.</span><span class="nx">txt</span>
 <span class="k">public</span><span class="o">/</span>
-        <span class="nx">bootstrap</span><span class="o">/</span>
-                <span class="nx">css</span><span class="o">/</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">utilities</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">grid</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">rtl</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">reboot</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">utilities</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">reboot</span><span class="o">.</span><span class="nx">rtl</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
-                        <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">grid</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
-                <span class="nx">js</span><span class="o">/</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">esm</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">bundle</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">bundle</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">esm</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
-                        <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
+    <span class="nx">bootstrap</span><span class="o">/</span>
+        <span class="nx">css</span><span class="o">/</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">utilities</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">grid</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">rtl</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">reboot</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">utilities</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">reboot</span><span class="o">.</span><span class="nx">rtl</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span>
+            <span class="nx">bootstrap</span><span class="o">-</span><span class="nx">grid</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">css</span><span class="o">.</span><span class="nx">map</span>
+        <span class="nx">js</span><span class="o">/</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">esm</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">bundle</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">bundle</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nx">esm</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
+            <span class="nx">bootstrap</span><span class="o">.</span><span class="nb">min</span><span class="o">.</span><span class="nx">js</span><span class="o">.</span><span class="nx">map</span>
 </pre></div>
 </div>
 </section>
@@ -537,41 +537,41 @@ into an application for use:</p>
 
 <span class="k">class</span> <span class="nc">AuthPublish</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-        <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Auth&#39;</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;auth:publish&#39;</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publish Auth components into the current application.&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Auth&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;auth:publish&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Publish Auth components into the current application.&#39;</span><span class="p">;</span>
 
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Use the Autoloader to figure out the module path</span>
+        <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;Math\\Auth&#39;</span><span class="p">);</span>
+
+        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPATH</span><span class="p">);</span>
+
+        <span class="k">try</span>
         <span class="p">{</span>
-                <span class="c1">// Use the Autoloader to figure out the module path</span>
-                <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;Math\\Auth&#39;</span><span class="p">);</span>
-
-                <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPATH</span><span class="p">);</span>
-
-                <span class="k">try</span>
-                <span class="p">{</span>
-                        <span class="c1">// Add only the desired components</span>
-                        <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-                                <span class="s1">&#39;Controllers&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;Database/Migrations&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;Models&#39;</span><span class="p">,</span>
-                        <span class="p">])</span><span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Be careful not to overwrite anything</span>
-                <span class="p">}</span>
-                <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span>
-                <span class="p">{</span>
-                        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
-                        <span class="k">return</span><span class="p">;</span>
-                <span class="p">}</span>
-
-                <span class="c1">// If publication succeeded then update namespaces</span>
-                <span class="k">foreach</span> <span class="p">(</span><span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">getPublished</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span>
-                <span class="p">{</span>
-                        <span class="c1">// Replace the namespace</span>
-                        <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
-                        <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;namespace Math\\Auth&#39;</span><span class="p">,</span> <span class="s1">&#39;namespace &#39;</span> <span class="o">.</span> <span class="nx">APP_NAMESPACE</span><span class="p">,</span> <span class="p">);</span>
-                        <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
-                <span class="p">}</span>
+            <span class="c1">// Add only the desired components</span>
+            <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
+                <span class="s1">&#39;Controllers&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Database/Migrations&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Models&#39;</span><span class="p">,</span>
+            <span class="p">])</span><span class="o">-&gt;</span><span class="na">merge</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Be careful not to overwrite anything</span>
         <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// If publication succeeded then update namespaces</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">getPublished</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Replace the namespace</span>
+            <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+            <span class="nv">$contents</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;namespace Math\\Auth&#39;</span><span class="p">,</span> <span class="s1">&#39;namespace &#39;</span> <span class="o">.</span> <span class="nx">APP_NAMESPACE</span><span class="p">,</span> <span class="p">);</span>
+            <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -637,8 +637,8 @@ and <code class="docutils literal notranslate"><span class="pre">getErrors()</sp
 Be mindful of duplicate basename collisions, for example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-        <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// This is bad! Only one file will remain at /home/destination/lead.png</span>
@@ -655,8 +655,8 @@ affect other files in the destination. Returns success or failure, use <code cla
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
-        <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metal/lead.png&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// Results in &quot;/home/destination/pencil/lead.png&quot; and &quot;/home/destination/metal/lead.png&quot;</span>
@@ -679,7 +679,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 18, 2021.
+      <span class="lastupdated">Last updated on Sep 21, 2021.
       </span></p>
   </div>
 
