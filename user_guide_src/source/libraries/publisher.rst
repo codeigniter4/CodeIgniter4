@@ -15,7 +15,7 @@ Loading the Library
 Because Publisher instances are specific to their source and destination this library is not available
 through ``Services`` but should be instantiated or extended directly. E.g.
 
-	$publisher = new \CodeIgniter\Publisher\Publisher();
+    $publisher = new \CodeIgniter\Publisher\Publisher();
 
 *****************
 Concept and Usage
@@ -38,41 +38,41 @@ On Demand
 
 Access ``Publisher`` directly by instantiating a new instance of the class::
 
-	$publisher = new \CodeIgniter\Publisher\Publisher();
+    $publisher = new \CodeIgniter\Publisher\Publisher();
 
 By default the source and destination will be set to ``ROOTPATH`` and ``FCPATH`` respectively, giving ``Publisher``
 easy access to take any file from your project and make it web-accessible. Alternatively you may pass a new source
 or source and destination into the constructor::
 
-	use CodeIgniter\Publisher\Publisher;
-	
-	$vendorPublisher = new Publisher(ROOTPATH . 'vendor');
-	$filterPublisher = new Publisher('/path/to/module/Filters', APPPATH . 'Filters');
+    use CodeIgniter\Publisher\Publisher;
+    
+    $vendorPublisher = new Publisher(ROOTPATH . 'vendor');
+    $filterPublisher = new Publisher('/path/to/module/Filters', APPPATH . 'Filters');
 
-	// Once the source and destination are set you may start adding relative input files
-	$frameworkPublisher = new Publisher(ROOTPATH . 'vendor/codeigniter4/codeigniter4');
+    // Once the source and destination are set you may start adding relative input files
+    $frameworkPublisher = new Publisher(ROOTPATH . 'vendor/codeigniter4/codeigniter4');
 
-	// All "path" commands are relative to $source
-	$frameworkPublisher->addPath('app/Config/Cookie.php');
+    // All "path" commands are relative to $source
+    $frameworkPublisher->addPath('app/Config/Cookie.php');
 
-	// You may also add from outside the source, but the files will not be merged into subdirectories
-	$frameworkPublisher->addFiles([
-		'/opt/mail/susan',
-		'/opt/mail/ubuntu',
-	]);
-	$frameworkPublisher->addDirectory(SUPPORTPATH . 'Images');
+    // You may also add from outside the source, but the files will not be merged into subdirectories
+    $frameworkPublisher->addFiles([
+        '/opt/mail/susan',
+        '/opt/mail/ubuntu',
+    ]);
+    $frameworkPublisher->addDirectory(SUPPORTPATH . 'Images');
 
 Once all the files are staged use one of the output commands (**copy()** or **merge()**) to process the staged files
 to their destination(s)::
 
-	// Place all files into $destination
-	$frameworkPublisher->copy();
+    // Place all files into $destination
+    $frameworkPublisher->copy();
 
-	// Place all files into $destination, overwriting existing files
-	$frameworkPublisher->copy(true);
+    // Place all files into $destination, overwriting existing files
+    $frameworkPublisher->copy(true);
 
-	// Place files into their relative $destination directories, overwriting and saving the boolean result
-	$result = $frameworkPublisher->merge(true);
+    // Place files into their relative $destination directories, overwriting and saving the boolean result
+    $result = $frameworkPublisher->merge(true);
 
 See the :ref:`reference` for a full description of available methods.
 
@@ -82,27 +82,27 @@ Automation and Discovery
 You may have regular publication tasks embedded as part of your application deployment or upkeep. ``Publisher`` leverages
 the powerful ``Autoloader`` to locate any child classes primed for publication::
 
-	use CodeIgniter\CLI\CLI;
-	use CodeIgniter\Publisher\Publisher;
-	
-	foreach (Publisher::discover() as $publisher)
-	{
-		$result = $publisher->publish();
+    use CodeIgniter\CLI\CLI;
+    use CodeIgniter\Publisher\Publisher;
+    
+    foreach (Publisher::discover() as $publisher)
+    {
+        $result = $publisher->publish();
 
-		if ($result === false)
-		{
-			CLI::error(get_class($publisher) . ' failed to publish!', 'red');
-		}
-	}
+        if ($result === false)
+        {
+            CLI::error(get_class($publisher) . ' failed to publish!', 'red');
+        }
+    }
 
 By default ``discover()`` will search for the "Publishers" directory across all namespaces, but you may specify a
 different directory and it will return any child classes found::
 
-	$memePublishers = Publisher::discover('CatGIFs');
+    $memePublishers = Publisher::discover('CatGIFs');
 
 Most of the time you will not need to handle your own discovery, just use the provided "publish" command::
 
-	> php spark publish
+    > php spark publish
 
 By default on your class extension ``publish()`` will add all files from your ``$source`` and merge them
 out to your destination, overwriting on collision.
@@ -134,40 +134,40 @@ You want to display a "photo of the day" image on your homepage. You have a feed
 need to get the actual file into a browsable location in your project at **public/images/daily_photo.jpg**.
 You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will handle this for you::
 
-	<?php
+    <?php
 
-	namespace App\Commands;
+    namespace App\Commands;
 
-	use CodeIgniter\CLI\BaseCommand;
-	use CodeIgniter\Publisher\Publisher;
-	use Throwable;
+    use CodeIgniter\CLI\BaseCommand;
+    use CodeIgniter\Publisher\Publisher;
+    use Throwable;
 
-	class DailyPhoto extends BaseCommand
-	{
-		protected $group       = 'Publication';
-		protected $name        = 'publish:daily';
-		protected $description = 'Publishes the latest daily photo to the homepage.';
+    class DailyPhoto extends BaseCommand
+    {
+        protected $group       = 'Publication';
+        protected $name        = 'publish:daily';
+        protected $description = 'Publishes the latest daily photo to the homepage.';
 
-		public function run(array $params)
-		{
-			$publisher = new Publisher('/path/to/photos/', FCPATH . 'assets/images');
+        public function run(array $params)
+        {
+            $publisher = new Publisher('/path/to/photos/', FCPATH . 'assets/images');
 
-			try
-			{
-				$publisher->addPath('daily_photo.jpg')->copy(true); // `true` to enable overwrites
-			}
-			catch (Throwable $e)
-			{
-				$this->showError($e);
-			}
-		}
-	}
+            try
+            {
+                $publisher->addPath('daily_photo.jpg')->copy(true); // `true` to enable overwrites
+            }
+            catch (Throwable $e)
+            {
+                $this->showError($e);
+            }
+        }
+    }
 
 Now running ``spark publish:daily`` will keep your homepage's image up-to-date. What if the photo is
 coming from an external API? You can use ``addUri()`` in place of ``addPath()`` to download the remote
 resource and publish it out instead::
 
-	$publisher->addUri('https://example.com/feeds/daily_photo.jpg')->copy(true);
+    $publisher->addUri('https://example.com/feeds/daily_photo.jpg')->copy(true);
 
 Asset Dependencies Example
 ==========================
@@ -176,82 +176,82 @@ You want to integrate the frontend library "Bootstrap" into your project, but th
 to keep up with. You can create a publication definition in your project to sync frontend assets by extending
 ``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
 
-	<?php
-	
-	namespace App\Publishers;
+    <?php
+    
+    namespace App\Publishers;
 
-	use CodeIgniter\Publisher\Publisher;
+    use CodeIgniter\Publisher\Publisher;
 
-	class BootstrapPublisher extends Publisher
-	{
-		/**
-		 * Tell Publisher where to get the files.
-		 * Since we will use Composer to download
-		 * them we point to the "vendor" directory.
-		 *
-		 * @var string
-		 */
-		protected $source = 'vendor/twbs/bootstrap/';
+    class BootstrapPublisher extends Publisher
+    {
+        /**
+         * Tell Publisher where to get the files.
+         * Since we will use Composer to download
+         * them we point to the "vendor" directory.
+         *
+         * @var string
+         */
+        protected $source = 'vendor/twbs/bootstrap/';
 
-		/**
-		 * FCPATH is always the default destination,
-		 * but we may want them to go in a sub-folder
-		 * to keep things organized.
-		 *
-		 * @var string
-		 */
-		protected $destination = FCPATH . 'bootstrap';
+        /**
+         * FCPATH is always the default destination,
+         * but we may want them to go in a sub-folder
+         * to keep things organized.
+         *
+         * @var string
+         */
+        protected $destination = FCPATH . 'bootstrap';
 
-		/**
-		 * Use the "publish" method to indicate that this
-		 * class is ready to be discovered and automated.
-		 *
-		 * @return boolean
-		 */
-		public function publish(): bool
-		{
-			return $this
-				// Add all the files relative to $source
-				->addPath('dist')
+        /**
+         * Use the "publish" method to indicate that this
+         * class is ready to be discovered and automated.
+         *
+         * @return boolean
+         */
+        public function publish(): bool
+        {
+            return $this
+                // Add all the files relative to $source
+                ->addPath('dist')
 
-				// Indicate we only want the minimized versions
-				->retainPattern('*.min.*')
+                // Indicate we only want the minimized versions
+                ->retainPattern('*.min.*')
 
-				// Merge-and-replace to retain the original directory structure
-				->merge(true);
-		}
-	}
+                // Merge-and-replace to retain the original directory structure
+                ->merge(true);
+        }
+    }
 
 Now add the dependency via Composer and call ``spark publish`` to run the publication::
 
-	> composer require twbs/bootstrap
-	> php spark publish
+    > composer require twbs/bootstrap
+    > php spark publish
 
 ... and you'll end up with something like this::
 
-	public/.htaccess
-	public/favicon.ico
-	public/index.php
-	public/robots.txt
-	public/
-		bootstrap/
-			css/
-				bootstrap.min.css
-				bootstrap-utilities.min.css.map
-				bootstrap-grid.min.css
-				bootstrap.rtl.min.css
-				bootstrap.min.css.map
-				bootstrap-reboot.min.css
-				bootstrap-utilities.min.css
-				bootstrap-reboot.rtl.min.css
-				bootstrap-grid.min.css.map
-			js/
-				bootstrap.esm.min.js
-				bootstrap.bundle.min.js.map
-				bootstrap.bundle.min.js
-				bootstrap.min.js
-				bootstrap.esm.min.js.map
-				bootstrap.min.js.map
+    public/.htaccess
+    public/favicon.ico
+    public/index.php
+    public/robots.txt
+    public/
+        bootstrap/
+            css/
+                bootstrap.min.css
+                bootstrap-utilities.min.css.map
+                bootstrap-grid.min.css
+                bootstrap.rtl.min.css
+                bootstrap.min.css.map
+                bootstrap-reboot.min.css
+                bootstrap-utilities.min.css
+                bootstrap-reboot.rtl.min.css
+                bootstrap-grid.min.css.map
+            js/
+                bootstrap.esm.min.js
+                bootstrap.bundle.min.js.map
+                bootstrap.bundle.min.js
+                bootstrap.min.js
+                bootstrap.esm.min.js.map
+                bootstrap.min.js.map
 
 Module Deployment Example
 =========================
@@ -260,59 +260,59 @@ You want to allow developers using your popular authentication module the abilit
 of your Migration, Controller, and Model. You can create your own module "publish" command to inject these components
 into an application for use::
 
-	<?php
+    <?php
 
-	namespace Math\Auth\Commands;
+    namespace Math\Auth\Commands;
 
-	use CodeIgniter\CLI\BaseCommand;
-	use CodeIgniter\Publisher\Publisher;
-	use Throwable;
+    use CodeIgniter\CLI\BaseCommand;
+    use CodeIgniter\Publisher\Publisher;
+    use Throwable;
 
-	class AuthPublish extends BaseCommand
-	{
-		protected $group       = 'Auth';
-		protected $name        = 'auth:publish';
-		protected $description = 'Publish Auth components into the current application.';
+    class AuthPublish extends BaseCommand
+    {
+        protected $group       = 'Auth';
+        protected $name        = 'auth:publish';
+        protected $description = 'Publish Auth components into the current application.';
 
-		public function run(array $params)
-		{
-			// Use the Autoloader to figure out the module path
-			$source = service('autoloader')->getNamespace('Math\\Auth');
+        public function run(array $params)
+        {
+            // Use the Autoloader to figure out the module path
+            $source = service('autoloader')->getNamespace('Math\\Auth');
 
-			$publisher = new Publisher($source, APPATH);
+            $publisher = new Publisher($source, APPATH);
 
-			try
-			{
-				// Add only the desired components
-				$publisher->addPaths([
-					'Controllers',
-					'Database/Migrations',
-					'Models',
-				])->merge(false); // Be careful not to overwrite anything
-			}
-			catch (Throwable $e)
-			{
-				$this->showError($e);
-				return;
-			}
+            try
+            {
+                // Add only the desired components
+                $publisher->addPaths([
+                    'Controllers',
+                    'Database/Migrations',
+                    'Models',
+                ])->merge(false); // Be careful not to overwrite anything
+            }
+            catch (Throwable $e)
+            {
+                $this->showError($e);
+                return;
+            }
 
-			// If publication succeeded then update namespaces
-			foreach ($publisher->getPublished() as $file)
-			{
-				// Replace the namespace
-				$contents = file_get_contents($file);
-				$contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, );
-				file_put_contents($file, $contents);
-			}
-		}
-	}
+            // If publication succeeded then update namespaces
+            foreach ($publisher->getPublished() as $file)
+            {
+                // Replace the namespace
+                $contents = file_get_contents($file);
+                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, );
+                file_put_contents($file, $contents);
+            }
+        }
+    }
 
 Now when your module users run ``php spark auth:publish`` they will have the following added to their project::
 
-	app/Controllers/AuthController.php
-	app/Database/Migrations/2017-11-20-223112_create_auth_tables.php.php
-	app/Models/LoginModel.php
-	app/Models/UserModel.php
+    app/Controllers/AuthController.php
+    app/Database/Migrations/2017-11-20-223112_create_auth_tables.php.php
+    app/Models/LoginModel.php
+    app/Models/UserModel.php
 
 .. _reference:
 
@@ -361,7 +361,7 @@ Downloads the contents of a URI using ``CURLRequest`` into the scratch workspace
 file to the list.
 
 .. note:: The CURL request made is a simple ``GET`` and uses the response body for the file contents. Some
-	remote files may need a custom request to be handled properly.
+    remote files may need a custom request to be handled properly.
 
 Outputting Files
 ================
@@ -380,14 +380,14 @@ to overwrite when there is already an existing file. Returns success or failure,
 and ``getErrors()`` to troubleshoot failures.
 Be mindful of duplicate basename collisions, for example::
 
-	$publisher = new Publisher('/home/source', '/home/destination');
-	$publisher->addPaths([
-		'pencil/lead.png',
-		'metal/lead.png',
-	]);
+    $publisher = new Publisher('/home/source', '/home/destination');
+    $publisher->addPaths([
+        'pencil/lead.png',
+        'metal/lead.png',
+    ]);
 
-	// This is bad! Only one file will remain at /home/destination/lead.png
-	$publisher->copy(true);
+    // This is bad! Only one file will remain at /home/destination/lead.png
+    $publisher->copy(true);
 
 **merge(bool $replace = true): bool**
 
@@ -400,11 +400,11 @@ affect other files in the destination. Returns success or failure, use ``getPubl
 
 Example::
 
-	$publisher = new Publisher('/home/source', '/home/destination');
-	$publisher->addPaths([
-		'pencil/lead.png',
-		'metal/lead.png',
-	]);
+    $publisher = new Publisher('/home/source', '/home/destination');
+    $publisher->addPaths([
+        'pencil/lead.png',
+        'metal/lead.png',
+    ]);
 
-	// Results in "/home/destination/pencil/lead.png" and "/home/destination/metal/lead.png"
-	$publisher->merge();
+    // Results in "/home/destination/pencil/lead.png" and "/home/destination/metal/lead.png"
+    $publisher->merge();
