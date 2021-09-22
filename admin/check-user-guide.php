@@ -20,15 +20,23 @@ class UserGuideCheck
 
     private function checkTab(array $files): void
     {
+        $errorFiles = [];
+
         foreach ($files as $file) {
             $contents = file_get_contents($file);
 
             if (strpos($contents, "\t") !== false) {
-                echo "{$file}\n";
-                echo "The user guide contains tab(s). Please replace tabs with spaces before commit.\n";
-
-                exit(1);
+                $errorFiles[] = $file;
             }
+        }
+
+        if ($errorFiles !== []) {
+            foreach ($errorFiles as $file) {
+                echo "{$file}\n";
+            }
+            echo "The user guide contains tab(s). Please replace tabs with spaces before commit.\n";
+
+            exit(1);
         }
     }
 }
