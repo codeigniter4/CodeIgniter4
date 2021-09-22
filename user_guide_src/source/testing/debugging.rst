@@ -60,7 +60,7 @@ Enabling the Toolbar
 ====================
 
 The toolbar is enabled by default in any environment *except* production. It will be shown whenever the
-constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
+constant CI_DEBUG is defined and its value is truthy. This is defined in the boot files (e.g.
 **app/Config/Boot/development.php**) and can be modified there to determine what environments it shows
 itself in.
 
