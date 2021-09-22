@@ -323,9 +323,12 @@ to help you debug and optimize.</p>
 <section id="enabling-the-toolbar">
 <h3><a class="toc-backref" href="#id5">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this headline"></a></h3>
 <p>The toolbar is enabled by default in any environment <em>except</em> production. It will be shown whenever the
-constant CI_DEBUG is defined and it’s value is positive. This is defined in the boot files (i.e.
-app/Config/Boot/development.php) and can be modified there to determine what environments it shows
-itself in.</p>
+constant CI_DEBUG is defined and its value is truthy. This is defined in the boot files (e.g.
+<strong>app/Config/Boot/development.php</strong>) and can be modified there to determine what environment to show.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Debug Toolbar is not displayed when your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code> setting (in <strong>app/Config/App.php</strong> or <code class="docutils literal notranslate"><span class="pre">app.baseURL</span></code> in <strong>.env</strong>) does not match your actual URL.</p>
+</div>
 <p>The toolbar itself is displayed as an <a class="reference internal" href="../incoming/filters.html"><span class="doc">After Filter</span></a>. You can stop it from ever
 running by removing it from the <code class="docutils literal notranslate"><span class="pre">$globals</span></code> property of <strong>app/Config/Filters.php</strong>.</p>
 <section id="choosing-what-to-show">
