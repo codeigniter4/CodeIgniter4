@@ -317,7 +317,7 @@ the core system class, you would create your class like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Then  you would modify the <code class="docutils literal notranslate"><span class="pre">routes</span></code> service to load your class instead:</p>
+<p>Then you would add the <code class="docutils literal notranslate"><span class="pre">routes</span></code> service in <strong>app/Config/Services.php</strong> to load your class instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nx">bool</span> <span class="nv">$getShared</span> <span class="o">=</span> <span class="k">true</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nv">$getShared</span><span class="p">)</span> <span class="p">{</span>
@@ -385,7 +385,7 @@ instead of the native ones (this is known as “method overriding”). This allo
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 21, 2021.
+      <span class="lastupdated">Last updated on Sep 22, 2021.
       </span></p>
   </div>
 
