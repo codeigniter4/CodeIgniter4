@@ -64,6 +64,8 @@ constant CI_DEBUG is defined and it's value is positive. This is defined in the 
 app/Config/Boot/development.php) and can be modified there to determine what environments it shows
 itself in.
 
+.. note:: The Debug Toolbar is not displayed when your ``baseURL`` setting (in **app/Config/App.php** or ``app.baseURL`` in **.env**) does not match your actual URL.
+
 The toolbar itself is displayed as an :doc:`After Filter </incoming/filters>`. You can stop it from ever
 running by removing it from the ``$globals`` property of **app/Config/Filters.php**.
 
