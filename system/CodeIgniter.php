@@ -690,7 +690,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|null
+     * @return string|string[]|null
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
