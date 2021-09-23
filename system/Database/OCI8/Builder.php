@@ -73,16 +73,19 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        $keys          = implode(', ', $keys);
+        $insertKeys    = implode(', ', $keys);
         $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
         // ORA-00001 measures
         if ($hasPrimaryKey) {
-            $sql               = 'INSERT INTO ' . $table . ' (' . $keys . ") \n SELECT * FROM (\n";
+            $sql               = 'INSERT INTO ' . $table . ' (' . $insertKeys . ") \n SELECT * FROM (\n";
             $selectQueryValues = [];
 
             foreach ($values as $value) {
-                $selectQueryValues[] = 'SELECT ' . substr(substr($value, 1), 0, -1) . ' FROM DUAL';
+                $selectValues = implode(',', array_map(static function ($value, $key) {
+                    return $value .' as '. $key;
+                }, explode(',', substr(substr($value, 1), 0, -1)), $keys));
+                $selectQueryValues[] = 'SELECT ' . $selectValues . ' FROM DUAL';
             }
 
             return $sql . implode("\n UNION ALL \n", $selectQueryValues) . "\n)";
@@ -91,7 +94,7 @@ class Builder extends BaseBuilder
         $sql = "INSERT ALL\n";
 
         foreach ($values as $value) {
-            $sql .= '	INTO ' . $table . ' (' . $keys . ') VALUES ' . $value . "\n";
+            $sql .= '	INTO ' . $table . ' (' . $insertKeys . ') VALUES ' . $value . "\n";
         }
 
         return $sql . 'SELECT * FROM dual';
