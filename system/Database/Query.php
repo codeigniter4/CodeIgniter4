@@ -275,12 +275,13 @@ class Query implements QueryInterface
     {
         $sql = $this->finalQueryString;
 
-        $hasNamedBinds = strpos($sql, '?') === false
+        $hasBinds      = strpos($sql, $this->bindMarker) !== false;
+        $hasNamedBinds = ! $hasBinds
             && preg_match('/:((?!=).+):/', $sql) === 1;
 
         if (empty($this->binds)
             || empty($this->bindMarker)
-            || (! $hasNamedBinds && strpos($sql, $this->bindMarker) === false)
+            || (! $hasNamedBinds && ! $hasBinds)
         ) {
             return;
         }
