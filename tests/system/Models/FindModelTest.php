@@ -218,7 +218,7 @@ final class FindModelTest extends LiveModelTestCase
             $this->assertSame(9, (int) $user->id);
         }
 
-        $user = $this->model->withDeleted()->first();
+        $user = $this->model->withDeleted()->select('id')->first();
         $this->assertSame(1, (int) $user->id);
     }
 
@@ -235,6 +235,8 @@ final class FindModelTest extends LiveModelTestCase
 
         if ($aggregate) {
             $this->model->select('sum('.$this->db->escapeIdentifiers('id').') as '.$this->db->escapeIdentifiers('id'));
+        } else {
+            $this->model->select('id');
         }
 
         if ($groupBy) {
@@ -245,7 +247,7 @@ final class FindModelTest extends LiveModelTestCase
         $user = $this->model->withDeleted()->first();
         $this->assertSame(1, (int) $user->id);
 
-        $user2 = $this->model->first();
+        $user2 = $this->model->select('id')->first();
         $this->assertSame(2, (int) $user2->id);
     }
 
