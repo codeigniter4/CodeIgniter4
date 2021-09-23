@@ -1017,6 +1017,11 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
+        // Do not protect identifiers and do not prefix, no swap prefix, there is nothing to do
+        if ($protectIdentifiers === false && $prefixSingle === false && $this->swapPre === '') {
+            return $item;
+        }
+
         // Convert tabs or multiple spaces into single spaces
         $item = preg_replace('/\s+/', ' ', trim($item));
 

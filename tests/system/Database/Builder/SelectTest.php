@@ -110,6 +110,20 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4311
+     */
+    public function testSelectWorksWithEscpaeFalse()
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('"numericValue1" + "numericValue2" AS "numericResult"', false);
+
+        $expected = 'SELECT "numericValue1" + "numericValue2" AS "numericResult" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testSelectMinWithNoAlias()
     {
         $builder = new BaseBuilder('invoices', $this->db);
