@@ -269,7 +269,7 @@ class Query implements QueryInterface
     /**
      * Escapes and inserts any binds into the finalQueryString object.
      *
-     * @see https://regex101.com/r/EUEhay/4
+     * @see https://regex101.com/r/EUEhay/5
      */
     protected function compileBinds()
     {
