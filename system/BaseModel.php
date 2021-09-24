@@ -1082,6 +1082,7 @@ abstract class BaseModel
         $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
         // Store it in the Pager library, so it can be paginated in the views.
         $this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
+        $page        = $pager->getCurrentPage( $group );
         $perPage     = $this->pager->getPerPage($group);
         $offset      = ($page - 1) * $perPage;
 
