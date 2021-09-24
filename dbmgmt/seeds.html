@@ -277,19 +277,19 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 
 <span class="k">class</span> <span class="nc">SimpleSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;darth@theempire.com&#39;</span>
-                <span class="p">];</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;darth@theempire.com&#39;</span>
+        <span class="p">];</span>
 
-                <span class="c1">// Simple Queries</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="c1">// Simple Queries</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
-                <span class="c1">// Using Query Builder</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-        <span class="p">}</span>
+        <span class="c1">// Using Query Builder</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -305,12 +305,12 @@ but organize the tasks into separate seeder files:</p>
 
 <span class="k">class</span> <span class="nc">TestSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;CountrySeeder&#39;</span><span class="p">);</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;JobSeeder&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;CountrySeeder&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;JobSeeder&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -318,8 +318,8 @@ but organize the tasks into separate seeder files:</p>
 anywhere the autoloader can find them. This is great for more modular code bases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
 <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;My\Database\Seeds\CountrySeeder&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;My\Database\Seeds\CountrySeeder&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -343,15 +343,15 @@ to access the instance.</p>
 
 <span class="k">class</span> <span class="nc">UserSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
 <span class="p">{</span>
-        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
-        <span class="p">{</span>
-                <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
 
-                <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
-                        <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
-                        <span class="s1">&#39;ip_address&#39;</span> <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">ipv4</span><span class="p">,</span>
-                <span class="p">]);</span>
-        <span class="p">}</span>
+        <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
+            <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
+            <span class="s1">&#39;ip_address&#39;</span> <span class="o">=&gt;</span> <span class="k">static</span><span class="o">::</span><span class="na">faker</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">ipv4</span><span class="p">,</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>

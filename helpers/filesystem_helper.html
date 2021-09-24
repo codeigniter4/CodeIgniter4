@@ -645,8 +645,8 @@ cause an error to be triggered if the path cannot be resolved.</p>
 <span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$directory</span><span class="p">);</span>  <span class="c1">// Prints &#39;/etc/php5/&#39;</span>
 
 <span class="nv">$non_existent_directory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/nowhere&#39;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>       <span class="c1">// Shows an error, as the path cannot be resolved</span>
-<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>      <span class="c1">// Prints &#39;/path/to/nowhere&#39;</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>   <span class="c1">// Shows an error, as the path cannot be resolved</span>
+<span class="k">echo</span> <span class="nx">set_realpath</span><span class="p">(</span><span class="nv">$non_existent_directory</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>  <span class="c1">// Prints &#39;/path/to/nowhere&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
