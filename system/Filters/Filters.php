@@ -334,7 +334,9 @@ class Filters
             $this->arguments[$name] = $params;
         }
 
-        if (! array_key_exists($name, $this->config->aliases)) {
+        if (class_exists($name)) {
+            $this->config->aliases[$name] = $name;
+        } elseif (! array_key_exists($name, $this->config->aliases)) {
             throw FilterException::forNoAlias($name);
         }
 
