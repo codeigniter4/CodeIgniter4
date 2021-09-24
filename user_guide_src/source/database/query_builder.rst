@@ -1251,7 +1251,7 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Resets the current Query Builder state. Useful when you want
-        to build a query that can be canceled under certain conditions.
+        to build a query that can be cancelled under certain conditions.
 
     .. php:method:: countAllResults([$reset = true])
 
