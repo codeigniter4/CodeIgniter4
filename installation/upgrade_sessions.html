@@ -286,16 +286,19 @@
 </section>
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>Wherever you use the Session Library replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('session');</span></code> with <code class="docutils literal notranslate"><span class="pre">$session</span> <span class="pre">=</span> <span class="pre">session();</span></code>.</p></li>
-<li><p>From that on you have to replace every line starting with <code class="docutils literal notranslate"><span class="pre">$this-&gt;session</span></code> with <code class="docutils literal notranslate"><span class="pre">$session</span></code> followed by the new method name.</p></li>
-</ol>
-<ul class="simple">
+<li><p>From that on you have to replace every line starting with <code class="docutils literal notranslate"><span class="pre">$this-&gt;session</span></code> with <code class="docutils literal notranslate"><span class="pre">$session</span></code> followed by the new method name.</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>To access session data use the syntax <code class="docutils literal notranslate"><span class="pre">$session-&gt;item</span></code> or <code class="docutils literal notranslate"><span class="pre">$session-&gt;get('item')</span></code> instead of the CI3 syntax <code class="docutils literal notranslate"><span class="pre">$this-&gt;session-&gt;name</span></code>.</p></li>
 <li><p>To set data use <code class="docutils literal notranslate"><span class="pre">$session-&gt;set($array);</span></code> instead of <code class="docutils literal notranslate"><span class="pre">$this-&gt;session-&gt;set_userdata($array);</span></code>.</p></li>
 <li><p>To remove data use <code class="docutils literal notranslate"><span class="pre">unset($_SESSION['some_name']);</span></code> or <code class="docutils literal notranslate"><span class="pre">$session-&gt;remove('some_name');</span></code> instead of <code class="docutils literal notranslate"><span class="pre">$this-&gt;session-&gt;unset_userdata('some_name');</span></code>.</p></li>
 <li><p>To mark session data as flasdata, which will only be available for the next request, use <code class="docutils literal notranslate"><span class="pre">$session-&gt;markAsFlashdata('item');</span></code> instead of <code class="docutils literal notranslate"><span class="pre">$this-&gt;session-&gt;mark_as_flash('item');`</span></code></p></li>
 </ul>
+</div></blockquote>
+</li>
+</ol>
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
