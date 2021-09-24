@@ -238,6 +238,23 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5114
+     */
+    public function testBindingWithTwoColons()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = ?",
+            [1]
+        );
+
+        $expected = "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = 1";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     public function testNamedBinds()
     {
         $query = new Query($this->db);

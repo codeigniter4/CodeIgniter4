@@ -269,17 +269,19 @@ class Query implements QueryInterface
     /**
      * Escapes and inserts any binds into the finalQueryString object.
      *
-     * @see https://regex101.com/r/EUEhay/4
+     * @see https://regex101.com/r/EUEhay/5
      */
     protected function compileBinds()
     {
         $sql = $this->finalQueryString;
 
-        $hasNamedBinds = preg_match('/:((?!=).+):/', $sql) === 1;
+        $hasBinds      = strpos($sql, $this->bindMarker) !== false;
+        $hasNamedBinds = ! $hasBinds
+            && preg_match('/:(?!=).+:/', $sql) === 1;
 
         if (empty($this->binds)
             || empty($this->bindMarker)
-            || (! $hasNamedBinds && strpos($sql, $this->bindMarker) === false)
+            || (! $hasNamedBinds && ! $hasBinds)
         ) {
             return;
         }
