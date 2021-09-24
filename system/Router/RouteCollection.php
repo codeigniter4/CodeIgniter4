@@ -512,7 +512,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *      $routes->add('news', 'Posts::index');
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -821,7 +821,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
@@ -841,7 +841,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to GET requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -853,7 +853,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to POST requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -865,7 +865,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PUT requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -877,7 +877,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to DELETE requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -889,7 +889,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to HEAD requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -901,7 +901,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PATCH requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -913,7 +913,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to OPTIONS requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -925,7 +925,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to command-line requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1083,7 +1083,7 @@ class RouteCollection implements RouteCollectionInterface
      * the request method(s) that this route will work for. They can be separated
      * by a pipe character "|" if there is more than one.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     protected function create(string $verb, string $from, $to, ?array $options = null)
     {

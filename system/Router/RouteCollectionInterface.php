@@ -28,8 +28,8 @@ interface RouteCollectionInterface
     /**
      * Adds a single route to the collection.
      *
-     * @param array|string $to
-     * @param array        $options
+     * @param array|Closure|string $to
+     * @param array                $options
      *
      * @return mixed
      */
