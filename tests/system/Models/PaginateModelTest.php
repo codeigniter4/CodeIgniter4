@@ -74,12 +74,9 @@ final class PaginateModelTest extends LiveModelTestCase
 	public function testPaginatePageOutOfRange(): void
     {
     	$this->createModel(ValidModel::class);
-    	$pager = $this->model->pager;
-    	// check underflow
     	$this->model->paginate(1,'default', -500);
-    	$this->assertSame(1, $pager->getCurrentPage());
-    	// check overflow
+    	$this->assertSame(1, $this->model->pager->getCurrentPage());
     	$this->model->paginate(1, 'default', 500);
-    	$this->assertSame($pager->getPageCount(),$pager->getCurrentPage());
+    	$this->assertSame($this->model->pager->getPageCount(),$this->model->pager->getCurrentPage());
     }
 }
