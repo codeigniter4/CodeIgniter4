@@ -707,7 +707,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      */
     public function getDatabase(): string
     {
-        if (!empty($this->database)) {
+        if (! empty($this->database)) {
             return $this->database;
         }
 

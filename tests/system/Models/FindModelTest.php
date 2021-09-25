@@ -168,7 +168,7 @@ final class FindModelTest extends LiveModelTestCase
             $this->model->groupBy('id');
         }
 
-        $user = $this->model->select('SUM('.$this->db->escapeIdentifiers('id').') as '.$this->db->escapeIdentifiers('total'))
+        $user = $this->model->select('SUM(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('total'))
             ->where('id >', 2)
             ->first();
         $this->assertSame($total, (int) $user->total);
@@ -197,11 +197,11 @@ final class FindModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         if ($aggregate) {
-            $this->model->select('SUM('.$this->db->escapeIdentifiers('id').') as '.$this->db->escapeIdentifiers('id'));
+            $this->model->select('SUM(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('id'));
         }
 
         if ($groupBy) {
-            if (!$aggregate) {
+            if (! $aggregate) {
                 $this->model->select('id');
             }
 
@@ -234,13 +234,12 @@ final class FindModelTest extends LiveModelTestCase
         $this->model->delete(1);
 
         if ($aggregate) {
-            $this->model->select('sum('.$this->db->escapeIdentifiers('id').') as '.$this->db->escapeIdentifiers('id'));
+            $this->model->select('sum(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('id'));
         } else {
             $this->model->select('id');
         }
 
         if ($groupBy) {
-
             $this->model->groupBy('id');
         }
 

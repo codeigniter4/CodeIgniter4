@@ -83,7 +83,7 @@ class Builder extends BaseBuilder
 
             foreach ($values as $value) {
                 $selectValues = implode(',', array_map(static function ($value, $key) {
-                    return $value .' as '. $key;
+                    return $value . ' as ' . $key;
                 }, explode(',', substr(substr($value, 1), 0, -1)), $keys));
                 $selectQueryValues[] = 'SELECT ' . $selectValues . ' FROM DUAL';
             }
