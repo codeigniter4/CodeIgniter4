@@ -372,8 +372,8 @@ resulting location is needed:</p>
 locating and working with groups of files across the filesystem. At its most basic, <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an index
 of files you set or build:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
-        <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
-        <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
+    <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
+    <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters&#39;</span><span class="p">);</span>
 </pre></div>
@@ -393,8 +393,8 @@ or retain files matching a certain regex or glob-style pattern:</p>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$files</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Moving &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">()</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>
-        <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITABLE</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">());</span>
+    <span class="k">echo</span> <span class="s1">&#39;Moving &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">()</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>
+    <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITABLE</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -409,10 +409,10 @@ or retain files matching a certain regex or glob-style pattern:</p>
 predefined collections without having to use their methods. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Files\FileCollection</span>
 <span class="p">{</span>
-        <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
-        <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -482,7 +482,7 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 24, 2021.
+      <span class="lastupdated">Last updated on Sep 25, 2021.
       </span></p>
   </div>
 

@@ -283,10 +283,10 @@ as it runs as a filter and has no manual interaction.</p>
 <p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong>
 and enabling the <cite>csrf</cite> filter globally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">// &#39;honeypot&#39;,</span>
-                <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="c1">// &#39;honeypot&#39;,</span>
+        <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -294,18 +294,18 @@ and enabling the <cite>csrf</cite> filter globally:</p>
 endpoints expecting externally POSTed content). You can add these URIs
 by adding them as exceptions in the filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
+    <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]],</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>Regular expressions are also supported (case-insensitive):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                    <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
-            <span class="p">],</span>
-    <span class="p">];</span>
+    <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, then
@@ -382,7 +382,7 @@ the second optional parameter, $relative_path to true.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 24, 2021.
+      <span class="lastupdated">Last updated on Sep 25, 2021.
       </span></p>
   </div>
 
