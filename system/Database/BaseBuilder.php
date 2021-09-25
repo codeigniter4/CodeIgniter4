@@ -1358,9 +1358,9 @@ class BaseBuilder
             if ($escape) {
                 $bind = $this->setBind($k, $v, $escape);
 
-                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":{$bind}:";
+                $this->QBSet[$this->db->protectIdentifiers($k, false)] = ":{$bind}:";
             } else {
-                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
+                $this->QBSet[$this->db->protectIdentifiers($k, false)] = $v;
             }
         }
 

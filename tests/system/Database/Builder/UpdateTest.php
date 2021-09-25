@@ -350,7 +350,7 @@ final class UpdateTest extends CIUnitTestCase
             ->where('id', 2)
             ->update(null, null, null);
 
-        $expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = 2';
+        $expectedSQL   = 'UPDATE "mytable" SET "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [
             'id' => [
                 2,
@@ -372,7 +372,7 @@ final class UpdateTest extends CIUnitTestCase
             ->where('id', 2)
             ->update(null, null, null);
 
-        $expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', field = field+1 WHERE "id" = 2';
+        $expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [
             'foo' => [
                 'bar',
