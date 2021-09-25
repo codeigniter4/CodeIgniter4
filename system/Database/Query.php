@@ -382,7 +382,7 @@ class Query implements QueryInterface
             'INTO',
             'VALUES',
             'UPDATE',
-            'OR ',
+            'OR',
             'HAVING',
             'OFFSET',
             'NOT IN',
@@ -407,9 +407,9 @@ class Query implements QueryInterface
         $sql = $this->finalQueryString;
 
         foreach ($highlight as $term) {
-            $from = $term;
-            $to   = '<strong>' . str_replace(' ', '&nbsp;', $term) . '</strong>';
-            $sql  = str_replace($from, $to, $sql);
+            $sql = preg_replace_callback('/\b' . preg_quote($term, '/') . '\b/', static function ($matches) {
+                return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
+            }, $sql);
         }
 
         return $sql;
