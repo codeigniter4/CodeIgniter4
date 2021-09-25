@@ -15,7 +15,7 @@ use CodeIgniter\Database\BaseUtils;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for MySQLi
+ * Utils for OCI8
  */
 class Utils extends BaseUtils
 {

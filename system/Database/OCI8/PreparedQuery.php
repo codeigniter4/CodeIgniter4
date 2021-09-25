@@ -16,7 +16,7 @@ use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
- * Prepared query for MySQLi
+ * Prepared query for OCI8
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
@@ -64,7 +64,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
      * override this method.
      *
      * @param array $options Passed to the connection's prepare statement.
-     *                       Unused in the MySQLi driver.
+     *                       Unused in the OCI8 driver.
      *
      * @return mixed
      */

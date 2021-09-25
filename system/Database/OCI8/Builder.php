@@ -15,7 +15,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Builder for MySQLi
+ * Builder for OCI8
  */
 class Builder extends BaseBuilder
 {

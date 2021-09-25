@@ -17,7 +17,7 @@ use CodeIgniter\Entity;
 use stdClass;
 
 /**
- * Result for OCI
+ * Result for OCI8
  */
 class Result extends BaseResult implements ResultInterface
 {

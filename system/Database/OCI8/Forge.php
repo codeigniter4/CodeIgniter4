@@ -12,7 +12,7 @@
 namespace CodeIgniter\Database\OCI8;
 
 /**
- * Forge for MySQLi
+ * Forge for OCI8
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
