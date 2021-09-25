@@ -100,6 +100,24 @@ class Registrar
             'failover' => [],
             'port'     => 1433,
         ],
+        'OCI8' => [
+            'DSN'      => 'localhost:1521/XEPDB1',
+            'hostname' => '',
+            'username' => 'ORACLE',
+            'password' => 'ORACLE',
+            'database' => '',
+            'DBDriver' => 'OCI8',
+            'DBPrefix' => 'db_',
+            'pConnect' => false,
+            'DBDebug'  => (ENVIRONMENT !== 'production'),
+            'charset'  => 'utf8',
+            'DBCollat' => 'utf8_general_ci',
+            'swapPre'  => '',
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
+            'failover' => [],
+        ],
     ];
 
     /**
