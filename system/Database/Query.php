@@ -396,8 +396,6 @@ class Query implements QueryInterface
             'AS',
             'AVG',
             'SUM',
-            '(',
-            ')',
         ];
 
         if (empty($this->finalQueryString)) {
@@ -406,17 +404,13 @@ class Query implements QueryInterface
 
         $sql = $this->finalQueryString;
 
-        $escapedTerms = array_map(static function ($term) {
-            return preg_quote($term, '/');
-        }, $highlight);
-
-        $search = '/\b(?:' . implode('|', $escapedTerms) . ')\b/';
+        $search = '/\b(?:' . implode('|', $highlight) . ')\b/';
 
         $sql = preg_replace_callback($search, static function ($matches) {
             return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
         }, $sql);
 
-        return $sql;
+        return str_replace(['(', ')'], ['<strong>(</strong>', '<strong>)</strong>'], $sql);
     }
 
     /**
