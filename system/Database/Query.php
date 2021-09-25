@@ -406,11 +406,15 @@ class Query implements QueryInterface
 
         $sql = $this->finalQueryString;
 
-        foreach ($highlight as $term) {
-            $sql = preg_replace_callback('/\b' . preg_quote($term, '/') . '\b/', static function ($matches) {
-                return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
-            }, $sql);
-        }
+        $escapedTerms = array_map(static function ($term) {
+            return preg_quote($term, '/');
+        }, $highlight);
+
+        $search = '/\b(?:' . implode('|', $escapedTerms) . ')\b/';
+
+        $sql = preg_replace_callback($search, static function ($matches) {
+            return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
+        }, $sql);
 
         return $sql;
     }
