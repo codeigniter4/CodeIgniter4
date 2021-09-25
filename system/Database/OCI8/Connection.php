@@ -707,10 +707,10 @@ class Connection extends BaseConnection implements ConnectionInterface
      */
     public function getDatabase(): string
     {
-        if (empty($this->database)) {
-            $this->database = $this->query('SELECT DEFAULT_TABLESPACE FROM USER_USERS')->getRow()->DEFAULT_TABLESPACE ?? '';
+        if (!empty($this->database)) {
+            return $this->database;
         }
 
-        return empty($this->database) ? '' : $this->database;
+        return $this->query('SELECT DEFAULT_TABLESPACE FROM USER_USERS')->getRow()->DEFAULT_TABLESPACE ?? '';
     }
 }
