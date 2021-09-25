@@ -372,23 +372,23 @@ class Query implements QueryInterface
             'FROM',
             'WHERE',
             'AND',
-            'LEFT&nbsp;JOIN',
-            'RIGHT&nbsp;JOIN',
+            'LEFT JOIN',
+            'RIGHT JOIN',
             'JOIN',
-            'ORDER&nbsp;BY',
-            'GROUP&nbsp;BY',
+            'ORDER BY',
+            'GROUP BY',
             'LIMIT',
             'INSERT',
             'INTO',
             'VALUES',
             'UPDATE',
-            'OR&nbsp;',
+            'OR ',
             'HAVING',
             'OFFSET',
-            'NOT&nbsp;IN',
+            'NOT IN',
             'IN',
             'LIKE',
-            'NOT&nbsp;LIKE',
+            'NOT LIKE',
             'COUNT',
             'MAX',
             'MIN',
@@ -407,7 +407,9 @@ class Query implements QueryInterface
         $sql = $this->finalQueryString;
 
         foreach ($highlight as $term) {
-            $sql = str_replace($term, '<strong>' . $term . '</strong>', $sql);
+            $from = $term;
+            $to   = '<strong>' . str_replace(' ', '&nbsp;', $term) . '</strong>';
+            $sql  = str_replace($from, $to, $sql);
         }
 
         return $sql;
