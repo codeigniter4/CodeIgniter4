@@ -124,7 +124,7 @@ final class InsertTest extends CIUnitTestCase
         $raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description:,:id:,:name:), (:description.1:,:id.1:,:name.1:)';
         $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
 
-        $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (1 + 2,2,1 + 1), (2 + 2,3,2 + 1)";
+        $expected = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (1 + 2,2,1 + 1), (2 + 2,3,2 + 1)';
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 

@@ -1340,7 +1340,7 @@ class BaseBuilder
      *
      * @param array|object|string $key    Field name, or an array of field/value pairs
      * @param mixed               $value  Field value, if $key is a single field
-     * @param bool|null           $escape Whether to escape values and identifiers
+     * @param bool|null           $escape Whether to escape values
      *
      * @return $this
      */

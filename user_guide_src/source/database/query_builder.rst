@@ -1701,7 +1701,7 @@ Class Reference
 
         :param mixed $key: Field name, or an array of field/value pairs
         :param mixed $value: Field value, if $key is a single field
-        :param bool    $escape: Whether to escape values and identifiers
+        :param bool    $escape: Whether to escape values
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
@@ -1710,7 +1710,7 @@ Class Reference
     .. php:method:: insert([$set = null[, $escape = null]])
 
         :param array $set: An associative array of field/value pairs
-        :param bool $escape: Whether to escape values and identifiers
+        :param bool $escape: Whether to escape values
         :returns:   ``true`` on success, ``false`` on failure
         :rtype:     bool
 
@@ -1719,7 +1719,7 @@ Class Reference
     .. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
 
         :param array $set: Data to insert
-        :param bool $escape: Whether to escape values and identifiers
+        :param bool $escape: Whether to escape values
         :param int $batch_size: Count of rows to insert at once
         :returns: Number of rows inserted or ``false`` on failure
         :rtype:    int|false
@@ -1734,7 +1734,7 @@ Class Reference
 
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
-        :param bool $escape: Whether to escape values and identifiers
+        :param bool $escape: Whether to escape values
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
@@ -1768,7 +1768,7 @@ Class Reference
 
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
-        :param bool    $escape: Whether to escape values and identifiers
+        :param bool    $escape: Whether to escape values
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
