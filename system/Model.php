@@ -714,21 +714,20 @@ class Model extends BaseModel
      */
     public function __call(string $name, array $params)
     {
-        $result = parent::__call($name, $params);
+        try {
+            $result = parent::__call($name, $params);
+        } catch (BadMethodCallException $e) {
+            $builder = $this->builder();
 
-        if ($result === null && method_exists($builder = $this->builder(), $name)) {
-            $result = $builder->{$name}(...$params);
-        }
-
-        if (empty($result)) {
-            if (! method_exists($this->builder(), $name)) {
+            if (! method_exists($builder, $name)) {
                 $className = static::class;
 
                 throw new BadMethodCallException('Call to undefined method ' . $className . '::' . $name);
             }
 
-            return $result;
+            $result = $builder->{$name}(...$params);
         }
+
 
         if ($result instanceof BaseBuilder) {
             return $this;
