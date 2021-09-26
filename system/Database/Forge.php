@@ -466,6 +466,8 @@ class Forge
 
                 return false;
             }
+
+            return true;
         }
 
         if (($result = $this->db->query($sql)) !== false) {
