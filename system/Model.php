@@ -728,7 +728,6 @@ class Model extends BaseModel
             $result = $builder->{$name}(...$params);
         }
 
-
         if ($result instanceof BaseBuilder) {
             return $this;
         }

@@ -11,9 +11,6 @@
 
 namespace CodeIgniter\Models;
 
-use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Entity\Entity;
-use stdClass;
 use Tests\Support\Models\UserModel;
 
 /**
