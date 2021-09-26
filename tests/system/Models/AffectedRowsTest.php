@@ -19,7 +19,7 @@ use Tests\Support\Models\UserModel;
 final class AffectedRowsTest extends LiveModelTestCase
 {
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4087
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5137
      */
     public function testAffectedRowsWithEmptyUpdate(): void
     {
