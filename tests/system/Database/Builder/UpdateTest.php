@@ -235,6 +235,59 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    public function testSetUpdateBatchWithoutEscape()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $escape  = false;
+
+        $builder->setUpdateBatch([
+            [
+                'id'          => 2,
+                'name'        => 'SUBSTRING(name, 1)',
+                'description' => 'SUBSTRING(description, 3)',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'SUBSTRING(name, 2)',
+                'description' => 'SUBSTRING(description, 4)',
+            ],
+        ], 'id', $escape);
+
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->updateBatch(null, 'id');
+
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $space = ' ';
+
+        $expected = <<<EOF
+            UPDATE "jobs" SET "name" = CASE{$space}
+            WHEN "id" = :id: THEN :name:
+            WHEN "id" = :id.1: THEN :name.1:
+            ELSE "name" END, "description" = CASE{$space}
+            WHEN "id" = :id: THEN :description:
+            WHEN "id" = :id.1: THEN :description.1:
+            ELSE "description" END
+            WHERE "id" IN(:id:,:id.1:)
+            EOF;
+
+        $this->assertSame($expected, $query->getOriginalQuery());
+
+        $expected = <<<EOF
+            UPDATE "jobs" SET "name" = CASE{$space}
+            WHEN "id" = 2 THEN SUBSTRING(name, 1)
+            WHEN "id" = 3 THEN SUBSTRING(name, 2)
+            ELSE "name" END, "description" = CASE{$space}
+            WHEN "id" = 2 THEN SUBSTRING(description, 3)
+            WHEN "id" = 3 THEN SUBSTRING(description, 4)
+            ELSE "description" END
+            WHERE "id" IN(2,3)
+            EOF;
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     public function testUpdateBatchThrowsExceptionWithNoData()
     {
         $builder = new BaseBuilder('jobs', $this->db);

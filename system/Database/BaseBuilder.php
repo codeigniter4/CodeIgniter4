@@ -2052,7 +2052,7 @@ class BaseBuilder
 
                 $bind = $this->setBind($k2, $v2, $escape);
 
-                $clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":{$bind}:";
+                $clean[$this->db->protectIdentifiers($k2, false)] = ":{$bind}:";
             }
 
             if ($indexSet === false) {
