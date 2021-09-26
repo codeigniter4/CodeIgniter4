@@ -489,7 +489,7 @@ class Forge
     }
 
     /**
-     * @return mixed
+     * @return bool|string
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
     {
