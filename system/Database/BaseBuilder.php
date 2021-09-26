@@ -1604,7 +1604,7 @@ class BaseBuilder
         $affectedRows = 0;
 
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
-            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
+            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
 
             if ($this->testMode) {
                 $affectedRows++;
@@ -1672,7 +1672,7 @@ class BaseBuilder
         }
 
         foreach ($keys as $k) {
-            $this->QBKeys[] = $this->db->protectIdentifiers($k, false, $escape);
+            $this->QBKeys[] = $this->db->protectIdentifiers($k, false);
         }
 
         return $this;
