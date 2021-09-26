@@ -24,7 +24,7 @@ final class CreateTableTest extends CIUnitTestCase
     {
         $dbMock = $this->getMockBuilder(MockConnection::class)
             ->setConstructorArgs([[]])
-            ->setMethods(['listTables'])
+            ->onlyMethods(['listTables'])
             ->getMock();
         $dbMock->expects($this->any())
             ->method('listTables')
