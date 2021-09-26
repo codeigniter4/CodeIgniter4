@@ -288,7 +288,7 @@ class Query implements QueryInterface
         }
 
         if (is_numeric(key(array_slice($binds, 0, 1)))) {
-            if (empty($this->bindMarker) || strpos($sql, $this->bindMarker) === false) {
+            if (empty($this->bindMarker)) {
                 return;
             }
 
@@ -296,10 +296,6 @@ class Query implements QueryInterface
 
             $this->finalQueryString = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
         } else {
-            if (! preg_match('/:(?!=).+:/', $sql)) {
-                return;
-            }
-
             // Reverse the binds so that duplicate named binds
             // will be processed prior to the original binds.
             $binds = array_reverse($binds);
