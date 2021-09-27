@@ -271,11 +271,7 @@ class Session implements SessionInterface
         setcookie(
             $this->sessionCookieName,
             session_id(),
-            1,
-            $this->cookie->getPath(),
-            $this->cookie->getDomain(),
-            $this->cookie->isSecure(),
-            true
+            ['expires' => 1, 'path' => $this->cookie->getPath(), 'domain' => $this->cookie->getDomain(), 'secure' => $this->cookie->isSecure(), 'httponly' => true]
         );
 
         session_regenerate_id(true);
