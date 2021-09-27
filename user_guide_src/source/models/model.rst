@@ -85,13 +85,13 @@ extra steps without repeating the constructor parameters, for example extending 
 
     class UserModel extends UserAuthModel
     {
-    	/**
-    	 * Called during initialization. Appends
-    	 * our custom field to the module's model.
-    	 */
+        /**
+         * Called during initialization. Appends
+         * our custom field to the module's model.
+         */
         protected function initialize()
         {
-        	$this->allowedFields[] = 'middlename';
+            $this->allowedFields[] = 'middlename';
         }
     }
 

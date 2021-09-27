@@ -42,13 +42,13 @@ through the following pages:
 Enjoy your exploration of the CodeIgniter framework.
 
 .. toctree::
-	:hidden:
-	:titlesonly:
+    :hidden:
+    :titlesonly:
 
-	static_pages
-	news_section
-	create_news_items
-	conclusion
+    static_pages
+    news_section
+    create_news_items
+    conclusion
 
 Getting Up and Running
 **********************
