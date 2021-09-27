@@ -121,11 +121,7 @@ abstract class BaseHandler implements SessionHandlerInterface
         return setcookie(
             $this->cookieName,
             '',
-            1,
-            $this->cookiePath,
-            $this->cookieDomain,
-            $this->cookieSecure,
-            true
+            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true]
         );
     }
 
