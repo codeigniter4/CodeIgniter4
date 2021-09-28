@@ -42,7 +42,7 @@ is available::
     if ($agent->isBrowser()) {
         $currentAgent = $agent->getBrowser().' '.$agent->getVersion();
     } elseif ($agent->isRobot()) {
-        $currentAgent = $this->agent->robot();
+        $currentAgent = $agent->getRobot();
     } elseif ($agent->isMobile()) {
         $currentAgent = $agent->getMobile();
     } else {
