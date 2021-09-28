@@ -2023,17 +2023,17 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for batch updating
      *
-     * @param array|object $key
+     * @param array|object $set An associative array or an object of field/value pairs
      *
      * @throws DatabaseException
      *
      * @return $this|null
      */
-    public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
+    public function setUpdateBatch($set, string $index = '', ?bool $escape = null)
     {
-        $key = $this->batchObjectToArray($key);
+        $set = $this->batchObjectToArray($set);
 
-        if (! is_array($key)) {
+        if (! is_array($set)) {
             return null;
         }
 
@@ -2041,7 +2041,7 @@ class BaseBuilder
             $escape = $this->db->protectIdentifiers;
         }
 
-        foreach ($key as $v) {
+        foreach ($set as $v) {
             $indexSet = false;
             $clean    = [];
 
