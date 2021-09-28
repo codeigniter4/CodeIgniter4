@@ -183,22 +183,45 @@ final class UpdateTest extends CIUnitTestCase
         $builder->update(null, null, null);
     }
 
-    public function testUpdateBatch()
+    public function updateDataProvider()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
-
-        $updateData = [
+        yield 'array' => [
             [
-                'id'          => 2,
-                'name'        => 'Comedian',
-                'description' => 'There\'s something in your teeth',
-            ],
-            [
-                'id'          => 3,
-                'name'        => 'Cab Driver',
-                'description' => 'I am yellow',
+                [
+                    'id'          => 2,
+                    'name'        => 'Comedian',
+                    'description' => 'There\'s something in your teeth',
+                ],
+                [
+                    'id'          => 3,
+                    'name'        => 'Cab Driver',
+                    'description' => 'I am yellow',
+                ],
             ],
         ];
+
+        yield 'object' => [
+            [
+                (object) [
+                    'id'          => 2,
+                    'name'        => 'Comedian',
+                    'description' => 'There\'s something in your teeth',
+                ],
+                (object) [
+                    'id'          => 3,
+                    'name'        => 'Cab Driver',
+                    'description' => 'I am yellow',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider updateDataProvider
+     */
+    public function testUpdateBatch(array $updateData)
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
 
         $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
         $builder->updateBatch($updateData, 'id');

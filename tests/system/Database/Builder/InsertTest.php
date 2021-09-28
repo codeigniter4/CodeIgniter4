@@ -68,22 +68,45 @@ final class InsertTest extends CIUnitTestCase
         $builder->testMode()->insert(null, true);
     }
 
-    public function testInsertBatch()
+    public function insertDataProvider()
     {
-        $builder = $this->db->table('jobs');
-
-        $insertData = [
+        yield 'array' => [
             [
-                'id'          => 2,
-                'name'        => 'Commedian',
-                'description' => 'There\'s something in your teeth',
-            ],
-            [
-                'id'          => 3,
-                'name'        => 'Cab Driver',
-                'description' => 'I am yellow',
+                [
+                    'id'          => 2,
+                    'name'        => 'Commedian',
+                    'description' => 'There\'s something in your teeth',
+                ],
+                [
+                    'id'          => 3,
+                    'name'        => 'Cab Driver',
+                    'description' => 'I am yellow',
+                ],
             ],
         ];
+
+        yield 'object' => [
+            [
+                (object) [
+                    'id'          => 2,
+                    'name'        => 'Commedian',
+                    'description' => 'There\'s something in your teeth',
+                ],
+                (object) [
+                    'id'          => 3,
+                    'name'        => 'Cab Driver',
+                    'description' => 'I am yellow',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider  insertDataProvider
+     */
+    public function testInsertBatch(array $insertData)
+    {
+        $builder = $this->db->table('jobs');
 
         $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
         $builder->insertBatch($insertData, true);
