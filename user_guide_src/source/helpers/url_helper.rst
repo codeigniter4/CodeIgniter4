@@ -23,7 +23,7 @@ The following functions are available:
     :param  string        $protocol: Protocol, e.g., 'http' or 'https'
     :param  \\Config\\App $altConfig: Alternate configuration to use
     :returns: Site URL
-    :rtype:	string
+    :rtype:    string
 
     Returns your site URL, as specified in your config file. The index.php
     file (or whatever you have set as your site **indexPage** in your config
@@ -83,10 +83,10 @@ The following functions are available:
 
 .. php:function:: current_url([$returnObject = false[, $request = null]])
 
-    :param	boolean	$returnObject: True if you would like a URI instance returned, instead of a string.
-    :param	IncomingRequest|null	$request: An alternate request to use for path detection; useful for testing.
+    :param    boolean    $returnObject: True if you would like a URI instance returned, instead of a string.
+    :param    IncomingRequest|null    $request: An alternate request to use for path detection; useful for testing.
     :returns: The current URL
-    :rtype:	string|\\CodeIgniter\\HTTP\\URI
+    :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
     Returns the full URL (including segments) of the page being currently
     viewed.
@@ -113,9 +113,9 @@ The following functions are available:
 
 .. php:function:: uri_string([$relative = false])
 
-    :param	boolean	$relative: True if you would like the string relative to baseURL
+    :param    boolean    $relative: True if you would like the string relative to baseURL
     :returns: A URI string
-    :rtype:	string
+    :rtype:    string
 
     Returns the path part of the current URL.
     For example, if your URL was this::
@@ -137,7 +137,7 @@ The following functions are available:
 
     :param \\Config\\App $altConfig: Alternate configuration to use
     :returns: 'index_page' value
-    :rtype:	string
+    :rtype:    string
 
     Returns your site **indexPage**, as specified in your config file.
     Example::
@@ -156,7 +156,7 @@ The following functions are available:
     :param  mixed         $attributes: HTML attributes
     :param  \\Config\\App $altConfig: Alternate configuration to use
     :returns: HTML hyperlink (anchor tag)
-    :rtype:	string
+    :rtype:    string
 
     Creates a standard HTML anchor link based on your local site URL.
 
