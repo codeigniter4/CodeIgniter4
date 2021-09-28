@@ -32,7 +32,7 @@ Class Reference
 
     .. php:method:: isValidIP($ip[, $which = ''])
 
-		.. important:: This method is deprecated.
+        .. important:: This method is deprecated.
 
         :param    string $ip: IP address
         :param    string $which: IP protocol ('ipv4' or 'ipv6')
@@ -57,7 +57,7 @@ Class Reference
 
     .. php:method:: getMethod([$upper = false])
 
-		.. important:: Use of the ``$upper`` parameter is deprecated.
+        .. important:: Use of the ``$upper`` parameter is deprecated.
 
         :param bool $upper: Whether to return the request method name in upper or lower case
         :returns: HTTP request method
@@ -120,7 +120,7 @@ Class Reference
         :param    string $method: Method name
         :param    mixed  $value:  Data to be added
         :returns: HTTP request method
-        :rtype:	Request
+        :rtype:    Request
 
         Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
 

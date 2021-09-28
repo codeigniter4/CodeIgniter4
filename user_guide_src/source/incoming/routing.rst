@@ -92,7 +92,7 @@ The ID will be set to “34”::
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup');
+    $routes->add('product/(:any)', 'Catalog::productLookup');
 
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
@@ -101,7 +101,7 @@ and the “productLookupByID” method passing in the match as a variable to the
 
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:any)', 'Catalog::productLookup/$1');
 
 will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
 Controller should take into account the maximum parameters::
@@ -115,7 +115,7 @@ Controller should take into account the maximum parameters::
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above::
 
-	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:segment)', 'Catalog::productLookup/$1');
 
 will only match product/123 and generate 404 errors for other example.
 

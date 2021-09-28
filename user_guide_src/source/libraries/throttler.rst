@@ -109,10 +109,10 @@ to apply only to POST requests, though API's might want to limit every request m
 this to incoming requests, you need to edit **/app/Config/Filters.php** and first add an alias to the
 filter::
 
-	public $aliases = [
-		...
-		'throttle' => \App\Filters\Throttle::class,
-	];
+    public $aliases = [
+        ...
+        'throttle' => \App\Filters\Throttle::class,
+    ];
 
 Next, we assign it to all POST requests made on the site::
 
