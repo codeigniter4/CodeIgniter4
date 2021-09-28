@@ -634,26 +634,25 @@ final class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $this->validation->setRules([
-            'configuration'   => 'required|check_object_rule'
+            'configuration' => 'required|check_object_rule',
         ]);
 
-        $data = (Object) array( 'configuration' => (Object)array( 'first' => 1, 'second' => 2 ) );
-        $this->validation->run( (array)$data );
+        $data = (object) ['configuration' => (object) ['first' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
         $this->assertSame([], $this->validation->getErrors());
 
         $this->validation->reset();
 
         $this->validation->setRules([
-            'configuration'   => 'required|check_object_rule'
+            'configuration' => 'required|check_object_rule',
         ]);
 
-        $data = (Object) array( 'configuration' => (Object)array( 'first1' => 1, 'second' => 2 ) );
-        $this->validation->run( (array)$data );
+        $data = (object) ['configuration' => (object) ['first1' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
 
         $this->assertSame([
-            'configuration'   => 'Validation.check_object_rule',
+            'configuration' => 'Validation.check_object_rule',
         ], $this->validation->getErrors());
-        
     }
 
     /**

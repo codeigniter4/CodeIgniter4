@@ -20,13 +20,12 @@ class TestRules
         return false;
     }
 
-    public function check_object_rule( Object $value, ?string $fields, array $data = [] )
+    public function check_object_rule(object $value, ?string $fields, array $data = [])
     {
         $find = false;
-        foreach( $value as $key => $val )
-        {
-            if( $key == 'first' )
-            {
+
+        foreach ($value as $key => $val) {
+            if ($key === 'first') {
                 $find = true;
             }
         }
