@@ -1718,7 +1718,7 @@ Class Reference
 
     .. php:method:: insertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
 
-        :param array $set: Data to insert
+        :param array $set: An array of field/value associative arrays or objects
         :param bool $escape: Whether to escape values and identifiers
         :param int $batch_size: Count of rows to insert at once
         :returns: Number of rows inserted or ``false`` on failure
@@ -1750,11 +1750,11 @@ Class Reference
 
         Compiles and executes an ``UPDATE`` statement.
 
-    .. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
+    .. php:method:: updateBatch([$set = null[, $index = null[, $batch_size = 100]]])
 
-        :param array $set: Field name, or an associative array of field/value pairs
-        :param string $value: Field value, if $set is a single field
-        :param int $batch_size: Count of conditions to group in a single query
+        :param  array    $set: An array of field/value associative arrays or objects
+        :param  string   $index: The where key
+        :param  int      $batch_size: Count of conditions to group in a single query
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
 
@@ -1764,11 +1764,11 @@ Class Reference
             multiple queries will be executed, each handling up to
             ``$batch_size`` field/value pairs.
 
-    .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+    .. php:method:: setUpdateBatch($set[, $index = ''[, $escape = null]])
 
-        :param mixed $key: Field name or an array of field/value pairs
-        :param string $value: Field value, if $key is a single field
-        :param bool    $escape: Whether to escape values and identifiers
+        :param  array   $set: An array of field/value associative arrays or objects
+        :param  string  $index: The where key
+        :param  bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
