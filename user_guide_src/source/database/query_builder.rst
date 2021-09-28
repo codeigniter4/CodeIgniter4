@@ -913,7 +913,7 @@ using ``$builder->insert()`` which resets values or reset directly using
 **$builder->insertBatch()**
 
 Generates an insert string based on the data you supply, and runs the
-query. You can either pass an **array** or an **object** to the
+query. You can either pass an array of **arrays** or **objects** to the
 function. Here is an example using an array::
 
     $data = [
@@ -932,7 +932,7 @@ function. Here is an example using an array::
     $builder->insertBatch($data);
     // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
 
-The first parameter is an associative array of values.
+The first parameter is an array of associative arrays of values.
 
 .. note:: All values are escaped automatically producing safer queries.
 
@@ -1086,7 +1086,7 @@ performing updates.
 **$builder->updateBatch()**
 
 Generates an update string based on the data you supply, and runs the query.
-You can either pass an **array** or an **object** to the function.
+You can either pass an array of **arrays** or **objects** to the function.
 Here is an example using an array::
 
     $data = [
@@ -1115,7 +1115,7 @@ Here is an example using an array::
     // ELSE `date` END
     // WHERE `title` IN ('My title','Another title')
 
-The first parameter is an associative array of values, the second parameter is the where key.
+The first parameter is an array of associative arrays of values, the second parameter is the where key.
 
 .. note:: All values are escaped automatically producing safer queries.
 
