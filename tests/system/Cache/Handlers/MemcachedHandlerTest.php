@@ -191,7 +191,14 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $this->assertFalse($this->memcachedHandler->getMetaData(self::$dummy));
 
         $actual = $this->memcachedHandler->getMetaData(self::$key1);
-        $this->assertLessThanOrEqual(60, $actual['expire'] - $time);
+
+        // This test is time-dependent, and depending on the timing,
+        // seconds in `$time` (e.g. 12:00:00.9999) and seconds of
+        // `$this->memcachedHandler->save()` (e.g. 12:00:01.0000)
+        // may be off by one second. In that case, the following calculation
+        // will result in maximum of (60 + 1).
+        $this->assertLessThanOrEqual(60 + 1, $actual['expire'] - $time);
+
         $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
         $this->assertSame('value', $actual['data']);
     }
