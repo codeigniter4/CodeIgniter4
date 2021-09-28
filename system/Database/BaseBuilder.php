@@ -2023,7 +2023,7 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for batch updating
      *
-     * @param array|object $set An associative array or an object of field/value pairs
+     * @param array $set An array of field/value associative arrays or objects
      *
      * @throws DatabaseException
      *
@@ -2471,7 +2471,7 @@ class BaseBuilder
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
-     * @param object $object
+     * @param array|object $object
      *
      * @return array
      */
