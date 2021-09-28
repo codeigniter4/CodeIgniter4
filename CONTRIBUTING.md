@@ -3,7 +3,7 @@
 ## Contributions
 
 We expect all contributions to conform to our
-[style guide](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.rst),
+[style guide]( https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/styleguide.md),
 be commented (inside the PHP source files), be documented (in the
 [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in
 the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
@@ -38,7 +38,7 @@ This might sound a bit tough, but it is required for us to maintain the quality 
 
 ### PHP Style
 
-All code must meet the [Style Guide](./contributing/styleguide.rst).
+All code must meet the [Style Guide](./contributing/styleguide.md).
 This makes certain that all submitted code is of the same format as the existing code and ensures that the codebase will be as readable as possible.
 
 ### Documentation
