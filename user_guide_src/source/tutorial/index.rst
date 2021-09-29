@@ -121,7 +121,7 @@ greeted by a screen looking something like this:
 There are a couple of things to note here:
 
 1. Hovering over the red header at the top reveals a ``search`` link that will open up
-   Google.com in a new tab and searching for the exception.
+   DuckDuckGo.com in a new tab and searching for the exception.
 2. Clicking the ``arguments`` link on any line in the Backtrace will expand a list of
    the arguments that were passed into that function call.
 
