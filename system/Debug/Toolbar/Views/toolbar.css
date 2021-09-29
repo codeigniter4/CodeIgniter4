@@ -292,7 +292,7 @@
   #debug-bar button {
     background-color: #FFFFFF; }
   #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #debug-bar table tbody tr:hover {
     background-color: #DFDFDF; }
   #debug-bar table tbody tr.current {
@@ -466,7 +466,7 @@
   #toolbarContainer.dark #debug-bar button {
     background-color: #252525; }
   #toolbarContainer.dark #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #toolbarContainer.dark #debug-bar table tbody tr:hover {
     background-color: #434343; }
   #toolbarContainer.dark #debug-bar table tbody tr.current {
@@ -559,7 +559,7 @@
   #toolbarContainer.light #debug-bar button {
     background-color: #FFFFFF; }
   #toolbarContainer.light #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #toolbarContainer.light #debug-bar table tbody tr:hover {
     background-color: #DFDFDF; }
   #toolbarContainer.light #debug-bar table tbody tr.current {
