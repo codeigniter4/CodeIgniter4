@@ -719,7 +719,7 @@ class Model extends BaseModel
 
         if (method_exists($this->db, $name)) {
             $result = $this->db->{$name}(...$params);
-        } else if (method_exists($builder, $name)) {
+        } elseif (method_exists($builder, $name)) {
             $result = $builder->{$name}(...$params);
         } else {
             $className = static::class;
