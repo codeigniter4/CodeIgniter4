@@ -722,9 +722,7 @@ class Model extends BaseModel
         } elseif (method_exists($builder, $name)) {
             $result = $builder->{$name}(...$params);
         } else {
-            $className = static::class;
-
-            throw new BadMethodCallException('Call to undefined method ' . $className . '::' . $name);
+            throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
         }
 
         if ($result instanceof BaseBuilder) {
