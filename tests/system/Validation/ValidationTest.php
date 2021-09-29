@@ -630,9 +630,6 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testRulesForObjectField()
     {
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
-
         $this->validation->setRules([
             'configuration' => 'required|check_object_rule',
         ]);
