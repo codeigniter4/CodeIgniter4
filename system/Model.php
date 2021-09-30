@@ -710,7 +710,7 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @return $this|null
+     * @return mixed
      */
     public function __call(string $name, array $params)
     {
