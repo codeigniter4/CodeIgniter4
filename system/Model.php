@@ -710,24 +710,19 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @return $this|null
+     * @return mixed
      */
     public function __call(string $name, array $params)
     {
-        $result = parent::__call($name, $params);
+        $builder = $this->builder();
+        $result  = null;
 
-        if ($result === null && method_exists($builder = $this->builder(), $name)) {
+        if (method_exists($this->db, $name)) {
+            $result = $this->db->{$name}(...$params);
+        } elseif (method_exists($builder, $name)) {
             $result = $builder->{$name}(...$params);
-        }
-
-        if (empty($result)) {
-            if (! method_exists($this->builder(), $name)) {
-                $className = static::class;
-
-                throw new BadMethodCallException('Call to undefined method ' . $className . '::' . $name);
-            }
-
-            return $result;
+        } else {
+            throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
         }
 
         if ($result instanceof BaseBuilder) {
