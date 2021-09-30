@@ -406,11 +406,9 @@ class Query implements QueryInterface
 
         $search = '/\b(?:' . implode('|', $highlight) . ')\b/';
 
-        $sql = preg_replace_callback($search, static function ($matches) {
+        return preg_replace_callback($search, static function ($matches) {
             return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
         }, $sql);
-
-        return str_replace(['(', ')'], ['<strong>(</strong>', '<strong>)</strong>'], $sql);
     }
 
     /**
