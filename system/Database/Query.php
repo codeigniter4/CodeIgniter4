@@ -376,6 +376,8 @@ class Query implements QueryInterface
             'RIGHT JOIN',
             'JOIN',
             'ORDER BY',
+            'ASC',
+            'DESC',
             'GROUP BY',
             'LIMIT',
             'INSERT',
