@@ -265,10 +265,7 @@
 	</div>
 </div>
 <style type="text/css">
-	<?php foreach ($styles as $name => $style) : ?>
-	.<?= $name ?> {
-		<?= $style ?>
-	}
-
-	<?php endforeach ?>
+<?php foreach ($styles as $name => $style): ?>
+<?= sprintf(".%s { %s }\n", $name, $style) ?>
+<?php endforeach ?>
 </style>
