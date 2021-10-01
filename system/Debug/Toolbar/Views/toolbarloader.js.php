@@ -44,7 +44,7 @@ function loadDoc(time) {
 				let PosBeg = responseText.indexOf( '>', responseText.lastIndexOf( '<style' ) ) + 1;
 				let PosEnd = responseText.indexOf( '</style>', PosBeg );
 				document.getElementById( 'debugbar_dynamic_style' ).innerHTML += responseText.substr( PosBeg, PosEnd - PosBeg );
-				responseText = responseText.substr( 0, PosBeg + 8 );
+				responseText = responseText.substr( 0, PosBeg - 8 );
 			}
 
 			toolbar.innerHTML = responseText;
