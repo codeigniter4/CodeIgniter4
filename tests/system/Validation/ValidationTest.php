@@ -628,6 +628,30 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $errors['Username']);
     }
 
+    public function testRulesForObjectField()
+    {
+        $this->validation->setRules([
+            'configuration' => 'required|check_object_rule',
+        ]);
+
+        $data = (object) ['configuration' => (object) ['first' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
+        $this->assertSame([], $this->validation->getErrors());
+
+        $this->validation->reset();
+
+        $this->validation->setRules([
+            'configuration' => 'required|check_object_rule',
+        ]);
+
+        $data = (object) ['configuration' => (object) ['first1' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
+
+        $this->assertSame([
+            'configuration' => 'Validation.check_object_rule',
+        ], $this->validation->getErrors());
+    }
+
     /**
      * @dataProvider arrayFieldDataProvider
      *

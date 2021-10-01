@@ -291,6 +291,8 @@ class Validation implements ValidationInterface
                 // if the $value is an array, convert it to as string representation
                 if (is_array($value)) {
                     $value = '[' . implode(', ', $value) . ']';
+                } elseif (is_object($value)) {
+                    $value = json_encode($value);
                 }
 
                 $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
