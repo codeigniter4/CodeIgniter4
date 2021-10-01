@@ -288,10 +288,6 @@ class Query implements QueryInterface
         }
 
         if (is_numeric(key(array_slice($binds, 0, 1)))) {
-            if (empty($this->bindMarker)) {
-                return;
-            }
-
             $ml = strlen($this->bindMarker);
 
             $this->finalQueryString = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
