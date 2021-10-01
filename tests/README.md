@@ -47,7 +47,7 @@ directory name after phpunit. All core tests are stored under **tests/system**.
 
 Individual tests can be run by including the relative path to the test file.
 
-	> ./phpunit tests/system/HTTP/RequestTest
+	> ./phpunit tests/system/HTTP/RequestTest.php
 
 You can run the tests without running the live database tests.
 
