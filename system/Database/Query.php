@@ -279,16 +279,11 @@ class Query implements QueryInterface
             return;
         }
 
-        if (! is_array($this->binds)) {
-            $binds     = [$this->binds];
-            $bindCount = 1;
-        } else {
-            $binds     = $this->binds;
-            $bindCount = count($binds);
-        }
+        $binds = (array) $this->binds;
 
         if (is_numeric(key(array_slice($binds, 0, 1)))) {
-            $ml = strlen($this->bindMarker);
+            $bindCount = count($binds);
+            $ml        = strlen($this->bindMarker);
 
             $this->finalQueryString = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
         } else {
