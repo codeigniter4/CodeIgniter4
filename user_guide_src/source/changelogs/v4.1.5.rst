@@ -12,6 +12,8 @@ Enhancements:
 
 Changes:
 
+- Always escape identifiers in the ``set``, ``setUpdateBatch``, and ``insertBatch`` functions in ``BaseBuilder``.
+
 Deprecations:
 
 - Deprecated ``CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS`` in favor of the new config property
