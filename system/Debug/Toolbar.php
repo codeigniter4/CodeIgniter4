@@ -406,6 +406,8 @@ class Toolbar
 
     /**
      * Inject debug toolbar into the response.
+     *
+     * @codeCoverageIgnore
      */
     public function respond()
     {
@@ -413,20 +415,20 @@ class Toolbar
             return;
         }
 
-        // @codeCoverageIgnoreStart
         $request = Services::request();
 
         // If the request contains '?debugbar then we're
         // simply returning the loading script
         if ($request->getGet('debugbar') !== null) {
-            // Let the browser know that we are sending javascript
             header('Content-Type: application/javascript');
 
             ob_start();
             include $this->config->viewsPath . 'toolbarloader.js.php';
             $output = ob_get_clean();
+            $output = substr($output, 8, -10); // trim the script tags
+            echo $output;
 
-            exit($output);
+            exit;
         }
 
         // Otherwise, if it includes ?debugbar_time, then
@@ -435,29 +437,24 @@ class Toolbar
             helper('security');
 
             // Negotiate the content-type to format the output
-            $format = $request->negotiate('media', [
-                'text/html',
-                'application/json',
-                'application/xml',
-            ]);
+            $format = $request->negotiate('media', ['text/html', 'application/json', 'application/xml']);
             $format = explode('/', $format)[1];
 
-            $file     = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
-            $filename = WRITEPATH . 'debugbar/' . $file . '.json';
+            $filename = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
+            $filename = WRITEPATH . 'debugbar/' . $filename . '.json';
 
-            // Show the toolbar
             if (is_file($filename)) {
-                $contents = $this->format(file_get_contents($filename), $format);
+                // Show the toolbar if it exists
+                echo $this->format(file_get_contents($filename), $format);
 
-                exit($contents);
+                exit;
             }
 
-            // File was not written or do not exists
+            // Filename not found
             http_response_code(404);
 
-            exit; // Exit here is needed to avoid load the index page
+            exit; // Exit here is needed to avoid loading the index page
         }
-        // @codeCoverageIgnoreEnd
     }
 
     /**
