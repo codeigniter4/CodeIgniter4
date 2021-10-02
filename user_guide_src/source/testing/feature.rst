@@ -14,7 +14,7 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestCase``
+Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestTrait``
 and ``CodeIgniter\Test\FeatureTestTrait`` traits. Since these testing tools rely on proper database
 staging you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called if you implement your own methods.
@@ -27,7 +27,7 @@ are called if you implement your own methods.
     use CodeIgniter\Test\DatabaseTestTrait;
     use CodeIgniter\Test\FeatureTestTrait;
 
-    class TestFoo extends FeatureTestCase
+    class TestFoo extends CIUnitTestCase
     {
         use DatabaseTestTrait, FeatureTestTrait;
 
