@@ -11,7 +11,7 @@ PHP Style
 =========
 
 All code must conform to our `Style Guide
-<./styleguide.rst>`_, which is
+<./styleguide.md>`_, which is
 essentially the `Allman indent style
 <https://en.wikipedia.org/wiki/Indent_style#Allman_style>`_, with
 elaboration on naming and readable operators.
