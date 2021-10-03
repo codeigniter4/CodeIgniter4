@@ -269,6 +269,9 @@
 <li><p>The <code class="docutils literal notranslate"><span class="pre">addForeignKey</span></code> function of the <code class="docutils literal notranslate"><span class="pre">Forge</span></code> class can now define composite foreign keys in an array</p></li>
 </ul>
 <p>Changes:</p>
+<ul class="simple">
+<li><p>Always escape identifiers in the <code class="docutils literal notranslate"><span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">setUpdateBatch</span></code>, and <code class="docutils literal notranslate"><span class="pre">insertBatch</span></code> functions in <code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code>.</p></li>
+</ul>
 <p>Deprecations:</p>
 <ul class="simple">
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS</span></code> in favor of the new config property</p></li>
@@ -288,7 +291,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 29, 2021.
+      <span class="lastupdated">Last updated on Oct 03, 2021.
       </span></p>
   </div>
 
