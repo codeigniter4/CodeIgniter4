@@ -44,7 +44,7 @@ method which you might want to override.
 
 The ``CodeIgniter\Test`` namespace has had significant improvements to help developers with their
 own test cases. Most notably test extensions have moved to Traits to make them easier to
-pick-and-choose across various test case needs. The ``DatabaseTestCase`` and ``FeatureTestCase``
+pick-and-choose across various test case needs. The ``CIDatabaseTestCase`` and ``FeatureTestCase``
 classes have been deprecated and their methods moved to ``DatabaseTestTrait`` and
 ``FeatureTestTrait`` respectively. Update your test cases to extend the main test case
 and use any traits you need. For example::
