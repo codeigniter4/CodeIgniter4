@@ -230,8 +230,15 @@ final class WhereTest extends CIUnitTestCase
             'description' => null,
         ]);
 
+        $ANSISQLDriverNames = ['OCI8'];
+        $lowerJobName       = sprintf('LOWER(%s.name)', $this->db->prefixTable('job'));
+
+        if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+            $lowerJobName = sprintf('LOWER("%s"."name")', $this->db->prefixTable('job'));
+        }
+
         $job = $builder
-            ->where(sprintf("LOWER({$this->db->protectIdentifiers('%s.name')})", 'job'), 'brewmaster')
+            ->where($lowerJobName, 'brewmaster')
             ->get()
             ->getResult();
         $this->assertCount(1, $job);

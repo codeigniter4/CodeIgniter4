@@ -168,7 +168,15 @@ final class FindModelTest extends LiveModelTestCase
             $this->model->groupBy('id');
         }
 
-        $user = $this->model->select('SUM(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('total'))
+        $ANSISQLDriverNames = ['OCI8'];
+
+        if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+            $this->model->select('SUM("id") as "total"');
+        } else {
+            $this->model->select('SUM(id) as total');
+        }
+
+        $user = $this->model
             ->where('id >', 2)
             ->first();
         $this->assertSame($total, (int) $user->total);
@@ -197,7 +205,13 @@ final class FindModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         if ($aggregate) {
-            $this->model->select('SUM(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('id'));
+            $ANSISQLDriverNames = ['OCI8'];
+
+            if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+                $this->model->select('SUM("id") as "id"');
+            } else {
+                $this->model->select('SUM(id) as id');
+            }
         }
 
         if ($groupBy) {
@@ -234,7 +248,13 @@ final class FindModelTest extends LiveModelTestCase
         $this->model->delete(1);
 
         if ($aggregate) {
-            $this->model->select('sum(' . $this->db->escapeIdentifiers('id') . ') as ' . $this->db->escapeIdentifiers('id'));
+            $ANSISQLDriverNames = ['OCI8'];
+
+            if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+                $this->model->select('SUM("id") as "id"');
+            } else {
+                $this->model->select('SUM(id) as id');
+            }
         } else {
             $this->model->select('id');
         }
