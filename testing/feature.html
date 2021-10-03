@@ -283,7 +283,7 @@ and more.</p>
 </div>
 <section id="the-test-class">
 <h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h2>
-<p>Feature testing requires that all of your test classes use the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\DatabaseTestCase</span></code>
+<p>Feature testing requires that all of your test classes use the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\DatabaseTestTrait</span></code>
 and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\FeatureTestTrait</span></code> traits. Since these testing tools rely on proper database
 staging you must always ensure that <code class="docutils literal notranslate"><span class="pre">parent::setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">parent::tearDown()</span></code>
 are called if you implement your own methods.</p>
@@ -294,7 +294,7 @@ are called if you implement your own methods.</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\FeatureTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">TestFoo</span> <span class="k">extends</span> <span class="nx">FeatureTestCase</span>
+<span class="k">class</span> <span class="nc">TestFoo</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">,</span> <span class="nx">FeatureTestTrait</span><span class="p">;</span>
 
