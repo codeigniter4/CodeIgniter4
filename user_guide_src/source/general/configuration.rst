@@ -183,6 +183,13 @@ the value from **.env** replaces the configuration file value.
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
 
+Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
+::
+
+    app_CSRFProtection = true
+    app_CSRFCookieName = csrf_cookie
+    app_CSPEnabled = true
+
 Environment Variables as Replacements for Data
 ==============================================
 
