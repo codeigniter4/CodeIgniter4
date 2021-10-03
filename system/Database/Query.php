@@ -372,23 +372,25 @@ class Query implements QueryInterface
             'FROM',
             'WHERE',
             'AND',
-            'LEFT&nbsp;JOIN',
-            'RIGHT&nbsp;JOIN',
+            'LEFT JOIN',
+            'RIGHT JOIN',
             'JOIN',
-            'ORDER&nbsp;BY',
-            'GROUP&nbsp;BY',
+            'ORDER BY',
+            'ASC',
+            'DESC',
+            'GROUP BY',
             'LIMIT',
             'INSERT',
             'INTO',
             'VALUES',
             'UPDATE',
-            'OR&nbsp;',
+            'OR',
             'HAVING',
             'OFFSET',
-            'NOT&nbsp;IN',
+            'NOT IN',
             'IN',
             'LIKE',
-            'NOT&nbsp;LIKE',
+            'NOT LIKE',
             'COUNT',
             'MAX',
             'MIN',
@@ -396,8 +398,6 @@ class Query implements QueryInterface
             'AS',
             'AVG',
             'SUM',
-            '(',
-            ')',
         ];
 
         if (empty($this->finalQueryString)) {
@@ -406,11 +406,11 @@ class Query implements QueryInterface
 
         $sql = $this->finalQueryString;
 
-        foreach ($highlight as $term) {
-            $sql = str_replace($term, '<strong>' . $term . '</strong>', $sql);
-        }
+        $search = '/\b(?:' . implode('|', $highlight) . ')\b/';
 
-        return $sql;
+        return preg_replace_callback($search, static function ($matches) {
+            return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
+        }, $sql);
     }
 
     /**
