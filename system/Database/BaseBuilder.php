@@ -1340,7 +1340,7 @@ class BaseBuilder
      *
      * @param array|object|string $key    Field name, or an array of field/value pairs
      * @param mixed               $value  Field value, if $key is a single field
-     * @param bool|null           $escape Whether to escape values and identifiers
+     * @param bool|null           $escape Whether to escape values
      *
      * @return $this
      */
@@ -1358,9 +1358,9 @@ class BaseBuilder
             if ($escape) {
                 $bind = $this->setBind($k, $v, $escape);
 
-                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":{$bind}:";
+                $this->QBSet[$this->db->protectIdentifiers($k, false)] = ":{$bind}:";
             } else {
-                $this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
+                $this->QBSet[$this->db->protectIdentifiers($k, false)] = $v;
             }
         }
 
@@ -1604,7 +1604,7 @@ class BaseBuilder
         $affectedRows = 0;
 
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
-            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
+            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
 
             if ($this->testMode) {
                 $affectedRows++;
@@ -1672,7 +1672,7 @@ class BaseBuilder
         }
 
         foreach ($keys as $k) {
-            $this->QBKeys[] = $this->db->protectIdentifiers($k, false, $escape);
+            $this->QBKeys[] = $this->db->protectIdentifiers($k, false);
         }
 
         return $this;
@@ -2052,7 +2052,7 @@ class BaseBuilder
 
                 $bind = $this->setBind($k2, $v2, $escape);
 
-                $clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":{$bind}:";
+                $clean[$this->db->protectIdentifiers($k2, false)] = ":{$bind}:";
             }
 
             if ($indexSet === false) {

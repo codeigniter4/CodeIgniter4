@@ -251,7 +251,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $set       An associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
@@ -559,7 +559,7 @@ class Model extends BaseModel
      *
      * @param mixed     $key    Field name, or an array of field/value pairs
      * @param mixed     $value  Field value, if $key is a single field
-     * @param bool|null $escape Whether to escape values and identifiers
+     * @param bool|null $escape Whether to escape values
      *
      * @return $this
      */

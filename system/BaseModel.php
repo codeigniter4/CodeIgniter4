@@ -366,7 +366,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $set       An associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
@@ -763,7 +763,7 @@ abstract class BaseModel
      * Compiles batch insert runs the queries, validating each row prior.
      *
      * @param array|null $set       an associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
