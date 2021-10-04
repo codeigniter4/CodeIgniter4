@@ -62,6 +62,14 @@ class Database extends BaseCollector
     protected static $queries = [];
 
     /**
+     * Array of connections used in a collected set
+     * of queries.
+     *
+     * @var array
+     */
+    protected static $activeConnections = [];
+
+    /**
      * Constructor
      */
     public function __construct()
