@@ -162,9 +162,14 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
-        return '(' . count(static::$queries) . ' Queries across ' .
-                ($countConnection = count(self::$activeConnections)) . ' Connection' .
-                ($countConnection > 1 ? 's' : '') . ')';
+        $connectionCount = count(static::$activeConnections);
+
+        return sprintf(
+            '(%d Queries across %d Connection%s)',
+            count(static::$queries),
+            $connectionCount,
+            $connectionCount > 1 ? 's' : ''
+        );
     }
 
     /**
