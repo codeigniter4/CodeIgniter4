@@ -1077,7 +1077,7 @@ final class ForgeTest extends CIUnitTestCase
         $attributes = [];
 
         if ($this->db->DBDriver === 'MySQLi') {
-            $keyName = 'id';
+            $keyName    = 'id';
             $attributes = ['ENGINE' => 'InnoDB'];
         }
 
