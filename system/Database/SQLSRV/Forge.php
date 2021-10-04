@@ -27,6 +27,13 @@ class Forge extends BaseForge
     protected $dropConstraintStr;
 
     /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr;
+
+    /**
      * CREATE DATABASE IF statement
      *
      * @todo missing charset, collat & check for existent
@@ -106,6 +113,7 @@ class Forge extends BaseForge
         $this->renameTableStr = 'EXEC sp_rename [' . $this->db->escapeIdentifiers($this->db->schema) . '.%s] , %s ;';
 
         $this->dropConstraintStr = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s DROP CONSTRAINT %s';
+        $this->dropIndexStr      = 'DROP INDEX %s ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.%s';
     }
 
     /**

@@ -426,6 +426,30 @@ class Forge
      *
      * @return BaseResult|bool|false|mixed|Query
      */
+    public function dropKey(string $table, string $keyName)
+    {
+        $sql = sprintf(
+            $this->dropIndexStr,
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+        );
+
+        if ($sql === false) { // @phpstan-ignore-line
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * @throws DatabaseException
+     *
+     * @return BaseResult|bool|false|mixed|Query
+     */
     public function dropForeignKey(string $table, string $foreignName)
     {
         $sql = sprintf(

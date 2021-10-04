@@ -40,6 +40,13 @@ class Forge extends BaseForge
     protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
 
     /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr = 'DROP INDEX %s ON %s';
+
+    /**
      * CREATE TABLE keys flag
      *
      * Whether table keys are created from within the
@@ -219,5 +226,21 @@ class Forge extends BaseForge
         $this->keys = [];
 
         return $sql;
+    }
+
+    /**
+     * @throws DatabaseException
+     *
+     * @return BaseResult|bool|false|mixed|Query
+     */
+    public function dropKey(string $table, string $keyName)
+    {
+        $sql = sprintf(
+            $this->dropIndexStr,
+            $this->db->escapeIdentifiers($keyName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+        );
+
+        return $this->db->query($sql);
     }
 }
