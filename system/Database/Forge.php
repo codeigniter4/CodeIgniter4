@@ -168,6 +168,13 @@ class Forge
     protected $dropConstraintStr;
 
     /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr = 'DROP INDEX %s ON %s';
+
+    /**
      * Constructor.
      */
     public function __construct(BaseConnection $db)
@@ -422,19 +429,21 @@ class Forge
     }
 
     /**
+     * Drop Key
+     *
      * @throws DatabaseException
      *
      * @return BaseResult|bool|false|mixed|Query
      */
-    public function dropKey(string $table, string $keyName)
+    public function dropKey(string $table, string $fieldName)
     {
         $sql = sprintf(
             $this->dropIndexStr,
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $fieldName),
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
         );
 
-        if ($sql === false) { // @phpstan-ignore-line
+        if ($sql === '') {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
