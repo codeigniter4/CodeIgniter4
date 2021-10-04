@@ -162,11 +162,13 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
+        $queryCount      = count(static::$queries);
         $connectionCount = count(static::$activeConnections);
 
         return sprintf(
-            '(%d Queries across %d Connection%s)',
-            count(static::$queries),
+            '(%d Quer%s across %d Connection%s)',
+            $queryCount,
+            $queryCount > 1 ? 'ies' : 'y',
             $connectionCount,
             $connectionCount > 1 ? 's' : ''
         );
