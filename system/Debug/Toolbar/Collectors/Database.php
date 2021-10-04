@@ -91,6 +91,12 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
+            $connection = $query->db->getDatabase();
+
+            if (! in_array($connection, self::$activeConnections, true)) {
+                self::$activeConnections[] = $connection;
+            }
+
             static::$queries[] = $query;
         }
     }
