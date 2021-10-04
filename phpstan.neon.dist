@@ -29,7 +29,6 @@ parameters:
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
 	ignoreErrors:
-		- '#Access to an undefined property CodeIgniter\\Database\\Forge::\$dropConstraintStr#'
 		- '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli|\$schema#'
 		- '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers|\$schema)#'
 		- '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
