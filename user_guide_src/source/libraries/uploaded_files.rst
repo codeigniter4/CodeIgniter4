@@ -106,15 +106,13 @@ Multiple files
 
 In controller::
 
-    if($imagefile = $this->request->getFiles())
-    {
-       foreach($imagefile['images'] as $img)
-       {
+    if ($imagefile = $this->request->getFiles()) {
+        foreach($imagefile['images'] as $img) {
             if ($img->isValid() && ! $img->hasMoved()) {
                 $newName = $img->getRandomName();
                 $img->move(WRITEPATH.'uploads', $newName);
             }
-       }
+        }
     }
 
 where the **images** is a loop from the form field name
