@@ -374,15 +374,13 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 </pre></div>
 </div>
 <p>In controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="nv">$imagefile</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">())</span>
-<span class="p">{</span>
-   <span class="k">foreach</span><span class="p">(</span><span class="nv">$imagefile</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$img</span><span class="p">)</span>
-   <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$imagefile</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$imagefile</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$img</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$img</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">hasMoved</span><span class="p">())</span> <span class="p">{</span>
             <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
             <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
         <span class="p">}</span>
-   <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -541,7 +539,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 03, 2021.
+      <span class="lastupdated">Last updated on Oct 05, 2021.
       </span></p>
   </div>
 
