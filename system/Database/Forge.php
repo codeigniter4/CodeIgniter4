@@ -161,6 +161,13 @@ class Forge
     protected $default = ' DEFAULT ';
 
     /**
+     * DROP CONSTRAINT statement
+     *
+     * @var string
+     */
+    protected $dropConstraintStr;
+
+    /**
      * Constructor.
      */
     public function __construct(BaseConnection $db)
@@ -427,7 +434,7 @@ class Forge
             $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
         );
 
-        if ($sql === false) { // @phpstan-ignore-line
+        if ($sql === '') {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
