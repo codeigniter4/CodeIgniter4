@@ -62,19 +62,11 @@ class Database extends BaseCollector
     protected static $queries = [];
 
     /**
-     * Array of connections used in a collected set
-     * of queries.
-     *
-     * @var array
-     */
-    protected static $activeConnections = [];
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->connections = \Config\Database::getConnections();
+        $this->getConnections();
     }
 
     /**
@@ -91,12 +83,6 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
-            $connection = $query->db->getDatabase();
-
-            if (! in_array($connection, self::$activeConnections, true)) {
-                self::$activeConnections[] = $connection;
-            }
-
             static::$queries[] = $query;
         }
     }
@@ -162,8 +148,10 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
+        $this->getConnections();
+
         $queryCount      = count(static::$queries);
-        $connectionCount = count(static::$activeConnections);
+        $connectionCount = count($this->connections);
 
         return sprintf(
             '(%d Quer%s across %d Connection%s)',
@@ -190,5 +178,13 @@ class Database extends BaseCollector
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+    }
+
+    /**
+     * Gets the connections from the database config
+     */
+    private function getConnections()
+    {
+        $this->connections = \Config\Database::getConnections();
     }
 }
