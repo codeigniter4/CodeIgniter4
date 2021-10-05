@@ -304,6 +304,17 @@ Execute a DROP FOREIGN KEY.
     // Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
     $forge->dropForeignKey('tablename','users_foreign');
 
+
+Dropping a Key
+======================
+
+Execute a DROP KEY.
+
+::
+
+    // Produces: DROP INDEX 'users_index' ON 'tablename'
+    $forge->dropKey('tablename','users_index');
+
 Renaming a table
 ================
 
