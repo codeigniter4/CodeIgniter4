@@ -291,6 +291,47 @@ and modified the <code class="docutils literal notranslate"><span class="pre">se
 <p>Update the definition of the session table. See the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> for the new definition.</p>
 <p>The change was introduced in v4.1.2. But due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4807">a bug</a>,
 the DatabaseHandler Driver did not work properly.</p>
+<p><strong>Multiple filters for a route</strong></p>
+<p>A new feature to set multiple filters for a route.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This feature is disabled by default. Because it breaks backward compatibility.</p>
+</div>
+<p>If you want to use this, you need to set the property <code class="docutils literal notranslate"><span class="pre">$multipleFilters</span></code> <code class="docutils literal notranslate"><span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">app/Config/Feature.php</span></code>.
+If you enable it:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::handleRequest()</span></code> uses</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\Filters::enableFilters()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">enableFilter()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter::tryToRouteIt()</span></code> uses</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::getFilters()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">getFilter()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::handle()</span></code> uses</dt><dd><ul>
+<li><p>the property <code class="docutils literal notranslate"><span class="pre">$filtersInfo</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">$filterInfo</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection::getFiltersForRoute()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">getFilterForRoute()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>If you extended the above classes, then you need to change them.</p>
+<p>The following methods and a property have been deprecated:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\Filters::enableFilter()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::getFilter()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection::getFilterForRoute()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection</span></code>’s property <code class="docutils literal notranslate"><span class="pre">$filterInfo</span></code></p></li>
+</ul>
+<p>See <em>Applying Filters</em> in <a class="reference internal" href="../incoming/routing.html"><span class="doc">Routing</span></a> for the functionality.</p>
 </section>
 
 
