@@ -16,12 +16,12 @@ Any dependencies must be able to be passed into the constructor. If you do need 
 of the other core packages, you can create that in the constructor using the
 Services class, as long as you provide a way for dependencies to override that::
 
-	public function __construct(Foo $foo=null)
-	{
-		$this->foo = $foo instanceOf Foo
-			? $foo
-			: \Config\Services::foo();
-	}
+    public function __construct(Foo $foo=null)
+    {
+        $this->foo = $foo instanceOf Foo
+            ? $foo
+            : \Config\Services::foo();
+    }
 
 Type hinting
 ============
