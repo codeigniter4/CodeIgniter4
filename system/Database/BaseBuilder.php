@@ -1260,6 +1260,7 @@ class BaseBuilder
         if ($direction === 'RANDOM') {
             $direction = '';
             $orderBy   = ctype_digit($orderBy) ? sprintf($this->randomKeyword[1], $orderBy) : $this->randomKeyword[0];
+            $escape    = false;
         } elseif ($direction !== '') {
             $direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
         }
