@@ -1269,8 +1269,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function callFunction(string $functionName, ...$params): bool
     {
-        $driver = strtolower($this->DBDriver);
-        $driver = ($driver === 'postgre' ? 'pg' : $driver) . '_';
+        $driver = $this->getDriverFunctionPrefix();
 
         if (strpos($driver, $functionName) === false) {
             $functionName = $driver . $functionName;
@@ -1285,6 +1284,14 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         return $functionName(...$params);
+    }
+
+    /**
+     * Get the prefix of the function to access the DB.
+     */
+    protected function getDriverFunctionPrefix(): string
+    {
+        return strtolower($this->DBDriver) . '_';
     }
 
     //--------------------------------------------------------------------
