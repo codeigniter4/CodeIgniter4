@@ -66,7 +66,7 @@ class Database extends BaseCollector
      */
     public function __construct()
     {
-        $this->connections = \Config\Database::getConnections();
+        $this->getConnections();
     }
 
     /**
@@ -148,8 +148,18 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
-        return '(' . count(static::$queries) . ' Queries across ' . ($countConnection = count($this->connections)) . ' Connection' .
-                ($countConnection > 1 ? 's' : '') . ')';
+        $this->getConnections();
+
+        $queryCount      = count(static::$queries);
+        $connectionCount = count($this->connections);
+
+        return sprintf(
+            '(%d Quer%s across %d Connection%s)',
+            $queryCount,
+            $queryCount > 1 ? 'ies' : 'y',
+            $connectionCount,
+            $connectionCount > 1 ? 's' : ''
+        );
     }
 
     /**
@@ -168,5 +178,13 @@ class Database extends BaseCollector
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+    }
+
+    /**
+     * Gets the connections from the database config
+     */
+    private function getConnections()
+    {
+        $this->connections = \Config\Database::getConnections();
     }
 }
