@@ -42,18 +42,18 @@ unset($rstFilesWithTabs);
 if ($normalizedRstFilesWithTabs !== []) {
     printf(
         "%s\n\n%s\n",
-        CLI::color('Tabs in RST files were detected:', 'white', 'red'),
+        CLI::color('Tabs in RST files were detected:', 'light_gray', 'red'),
         implode("\n", array_map(
             static function (string $file, array $parts): string {
                 return sprintf(
-                    "%s%s%s\n",
+                    "%s%s\n%s\n",
                     CLI::color('* in ', 'light_red'),
                     CLI::color($file, 'yellow'),
                     implode("\n", array_map(static function (array $line): string {
                         return sprintf(
                             '%s | %s',
                             str_pad($line['line'], 4, ' ', STR_PAD_LEFT),
-                            str_replace("\t", CLI::color('    ', 'black', 'red'), $line['code']),
+                            str_replace("\t", CLI::color('....', 'light_gray', 'red'), $line['code']),
                         );
                     }, $parts)),
                 );
