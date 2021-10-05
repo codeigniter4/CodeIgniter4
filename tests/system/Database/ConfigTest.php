@@ -40,7 +40,6 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-
     protected $dsnGroup = [
         'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
         'hostname' => '',
@@ -60,7 +59,6 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-
     protected $dsnGroupPostgre = [
         'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
         'hostname' => '',
@@ -80,7 +78,6 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 5432,
     ];
-
     protected $dsnGroupPostgreNative = [
         'DSN'      => 'pgsql:host=localhost;port=5432;dbname=database_name',
         'hostname' => '',

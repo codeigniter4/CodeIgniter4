@@ -24,6 +24,7 @@ final class ParserPluginTest extends CIUnitTestCase
      * @var Parser
      */
     protected $parser;
+
     /**
      * @var Validation
      */

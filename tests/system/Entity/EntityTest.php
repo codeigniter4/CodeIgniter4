@@ -930,14 +930,12 @@ final class EntityTest extends CIUnitTestCase
                 'default'    => 'sumfin',
                 'created_at' => null,
             ];
-
             protected $original = [
                 'foo'        => null,
                 'bar'        => null,
                 'default'    => 'sumfin',
                 'created_at' => null,
             ];
-
             protected $datamap = [
                 'createdAt' => 'created_at',
             ];
@@ -968,7 +966,6 @@ final class EntityTest extends CIUnitTestCase
                 'foo'    => null,
                 'simple' => null,
             ];
-
             protected $_original = [
                 'foo'    => null,
                 'simple' => null,
@@ -999,12 +996,10 @@ final class EntityTest extends CIUnitTestCase
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-
             protected $_original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-
             protected $datamap = [
                 'bar'          => 'foo',
                 'foo'          => 'bar',
@@ -1031,7 +1026,6 @@ final class EntityTest extends CIUnitTestCase
                 'twelfth'    => null,
                 'thirteenth' => null,
             ];
-
             protected $_original = [
                 'first'      => null,
                 'second'     => null,
@@ -1082,7 +1076,6 @@ final class EntityTest extends CIUnitTestCase
                 'integer_0'             => null,
                 'string_value_not_null' => 'value',
             ];
-
             protected $_original = [
                 'string_null'           => null,
                 'string_empty'          => null,
@@ -1111,7 +1104,6 @@ final class EntityTest extends CIUnitTestCase
                 'third'  => null,
                 'fourth' => null,
             ];
-
             protected $_original = [
                 'first'  => null,
                 'second' => null,
@@ -1126,7 +1118,6 @@ final class EntityTest extends CIUnitTestCase
                 'third'  => 'type[param1, param2,param3]',
                 'fourth' => '?type',
             ];
-
             protected $castHandlers = [
                 'base64'   => CastBase64::class,
                 'someType' => NotExtendsBaseCast::class,

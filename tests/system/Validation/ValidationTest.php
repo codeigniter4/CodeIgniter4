@@ -29,6 +29,7 @@ final class ValidationTest extends CIUnitTestCase
      * @var Validation
      */
     protected $validation;
+
     protected $config = [
         'ruleSets' => [
             Rules::class,

@@ -15,8 +15,7 @@ use Config\Autoload;
 
 class MockAutoload extends Autoload
 {
-    public $psr4 = [];
-
+    public $psr4     = [];
     public $classmap = [];
 
     public function __construct()

@@ -19,9 +19,7 @@ use CodeIgniter\Database\Query;
 class MockConnection extends BaseConnection
 {
     protected $returnValues = [];
-
     public $database;
-
     public $lastQuery;
 
     public function shouldReturn(string $method, $return)

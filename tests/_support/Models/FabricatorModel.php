@@ -16,17 +16,12 @@ use Faker\Generator;
 
 class FabricatorModel extends Model
 {
-    protected $table = 'job';
-
-    protected $returnType = 'object';
-
+    protected $table          = 'job';
+    protected $returnType     = 'object';
     protected $useSoftDeletes = true;
-
-    protected $useTimestamps = true;
-
-    protected $dateFormat = 'int';
-
-    protected $allowedFields = [
+    protected $useTimestamps  = true;
+    protected $dateFormat     = 'int';
+    protected $allowedFields  = [
         'name',
         'description',
     ];

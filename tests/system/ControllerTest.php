@@ -56,6 +56,7 @@ final class ControllerTest extends CIUnitTestCase
      * @var Response
      */
     protected $response;
+
     /**
      * @var LoggerInterface
      */
