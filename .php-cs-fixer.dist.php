@@ -35,8 +35,16 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    // @TODO Remove once live in coding-standard
-    'no_alternative_syntax' => ['fix_non_monolithic_code' => false],
+    // @TODO Remove once these are live in coding-standard
+    'assign_null_coalescing_to_coalesce_equal' => false, // requires 7.4+
+    'control_structure_continuation_position'  => ['position' => 'same_line'],
+    'empty_loop_condition'                     => ['style' => 'while'],
+    'integer_literal_case'                     => true,
+    'modernize_strpos'                         => false, // requires 8.0+
+    'no_alternative_syntax'                    => ['fix_non_monolithic_code' => false],
+    'no_space_around_double_colon'             => true,
+    'octal_notation'                           => false, // requires 8.1+
+    'string_length_to_empty'                   => true,
 ];
 
 $options = [
