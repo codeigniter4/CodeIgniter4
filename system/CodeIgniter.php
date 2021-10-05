@@ -364,8 +364,15 @@ class CodeIgniter
         // If any filters were specified within the routes file,
         // we need to ensure it's active for the current request
         if ($routeFilter !== null) {
-            $filters->enableFilter($routeFilter, 'before');
-            $filters->enableFilter($routeFilter, 'after');
+            $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+            if ($multipleFiltersEnabled) {
+                $filters->enableFilters($routeFilter, 'before');
+                $filters->enableFilters($routeFilter, 'after');
+            } else {
+                // for backward compatibility
+                $filters->enableFilter($routeFilter, 'before');
+                $filters->enableFilter($routeFilter, 'after');
+            }
         }
 
         $uri = $this->determinePath();
@@ -690,7 +697,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|null
+     * @return string|string[]|null
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
@@ -719,7 +726,13 @@ class CodeIgniter
 
         $this->benchmark->stop('routing');
 
-        return $this->router->getFilter();
+        // for backward compatibility
+        $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+        if (! $multipleFiltersEnabled) {
+            return $this->router->getFilter();
+        }
+
+        return $this->router->getFilters();
     }
 
     /**

@@ -16,6 +16,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Tests\Support\Filters\Customfilter;
 
 /**
  * @internal
@@ -527,6 +528,39 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('delete', $router->methodName());
         $this->assertSame('api-auth', $router->getFilter());
+    }
+
+    public function testRouteWorksWithClassnameFilter()
+    {
+        $collection = $this->collection;
+
+        $collection->add('foo', 'TestController::foo', ['filter' => Customfilter::class]);
+        $router = new Router($collection, $this->request);
+
+        $router->handle('foo');
+
+        $this->assertSame('\TestController', $router->controllerName());
+        $this->assertSame('foo', $router->methodName());
+        $this->assertSame('Tests\Support\Filters\Customfilter', $router->getFilter());
+    }
+
+    public function testRouteWorksWithMultipleFilters()
+    {
+        $feature                  = config('Feature');
+        $feature->multipleFilters = true;
+
+        $collection = $this->collection;
+
+        $collection->add('foo', 'TestController::foo', ['filter' => ['filter1', 'filter2:param']]);
+        $router = new Router($collection, $this->request);
+
+        $router->handle('foo');
+
+        $this->assertSame('\TestController', $router->controllerName());
+        $this->assertSame('foo', $router->methodName());
+        $this->assertSame(['filter1', 'filter2:param'], $router->getFilters());
+
+        $feature->multipleFilters = false;
     }
 
     /**

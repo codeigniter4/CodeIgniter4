@@ -319,6 +319,8 @@ class Filters
      * are passed to the filter when executed.
      *
      * @return Filters
+     *
+     * @deprecated Use enableFilters(). This method will be private.
      */
     public function enableFilter(string $name, string $when = 'before')
     {
@@ -334,7 +336,9 @@ class Filters
             $this->arguments[$name] = $params;
         }
 
-        if (! array_key_exists($name, $this->config->aliases)) {
+        if (class_exists($name)) {
+            $this->config->aliases[$name] = $name;
+        } elseif (! array_key_exists($name, $this->config->aliases)) {
             throw FilterException::forNoAlias($name);
         }
 
@@ -347,6 +351,24 @@ class Filters
         if (! isset($this->filters[$when][$name])) {
             $this->filters[$when][]    = $name;
             $this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Ensures that specific filters is on and enabled for the current request.
+     *
+     * Filters can have "arguments". This is done by placing a colon immediately
+     * after the filter name, followed by a comma-separated list of arguments that
+     * are passed to the filter when executed.
+     *
+     * @return Filters
+     */
+    public function enableFilters(array $names, string $when = 'before')
+    {
+        foreach ($names as $filter) {
+            $this->enableFilter($filter, $when);
         }
 
         return $this;

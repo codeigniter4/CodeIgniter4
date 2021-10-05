@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Modules;
+use Tests\Support\Filters\Customfilter;
 
 /**
  * @backupGlobals enabled
@@ -170,6 +171,29 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString("You want to see 'about' page.", $output);
+    }
+
+    public function testControllersRunFilterByClassName()
+    {
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('pages/about', static function () {
+            return Services::request()->url;
+        }, ['filter' => Customfilter::class]);
+
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('http://hellowworld.com', $output);
     }
 
     public function testResponseConfigEmpty()

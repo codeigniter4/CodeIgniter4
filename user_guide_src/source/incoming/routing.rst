@@ -352,15 +352,37 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 Applying Filters
 ----------------
 
-You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
+You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
+The value for the filter can be a string or an array of strings:
+
+* matching the aliases defined in ``app/Config/Filters.php``.
+* filter classnames
+
+See `Controller filters <filters.html>`_ for more information on setting up filters.
+
+**Alias filter**
+
+You specify an alias defined in ``app/Config/Filters.php`` for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods::
+You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods::
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
-See `Controller filters <filters.html>`_ for more information on setting up filters.
+**Classname filter**
+
+You specify a filter classname for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+
+**Multiple filters**
+
+.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See *Multiple filters for a route* in :doc:`/installation/upgrade_415` for the details.
+
+You specify an array for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
 
 Assigning Namespace
 -------------------
