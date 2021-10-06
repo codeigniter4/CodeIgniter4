@@ -279,7 +279,7 @@ trait RequestTrait
                 $filter !== FILTER_DEFAULT
                 || (
                     (is_numeric($flags) && $flags !== 0)
-                    || is_array($flags) && count($flags) > 0
+                    || is_array($flags) && $flags !== []
                 )
             )
         ) {
