@@ -7,7 +7,7 @@ We expect all contributions to conform to our
 be commented (inside the PHP source files), be documented (in the
 [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in
 the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
-There is a [Contributing to CodeIgniter](./contributing/README.rst) section in the repository which describes the contribution process; this page is an overview.
+There is a [Contributing to CodeIgniter](./contributing/README.md) section in the repository which describes the contribution process; this page is an overview.
 
 Note, we expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite
 to prove the code works. If pull requests are not accompanied by relevant tests, they will likely be closed.
@@ -24,7 +24,7 @@ Issues are a quick way to point out a bug. If you find a bug or documentation er
 2. The Issue has not already been fixed (check the develop branch or look for [closed Issues](https://github.com/codeigniter4/CodeIgniter4/issues?q=is%3Aissue+is%3Aclosed))
 3. It's not something really obvious that you can fix yourself
 
-Reporting Issues is helpful, but an even [better approach](./contributing/workflow.rst) is to send a
+Reporting Issues is helpful, but an even [better approach](./contributing/workflow.md) is to send a
 [Pull Request](https://help.github.com/en/articles/creating-a-pull-request), which is done by
 [Forking](https://help.github.com/en/articles/fork-a-repo) the main repository and making
 a [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project)
@@ -71,7 +71,7 @@ changes separate from each other and from whatever else you are doing with your 
 
 ### Signing
 
-You must [GPG-sign](./contributing/signing.rst) your work, certifying that you either wrote the work or
+You must [GPG-sign](./contributing/signing.md) your work, certifying that you either wrote the work or
 otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by"
 commit, but instead, a digitally signed one.
 
