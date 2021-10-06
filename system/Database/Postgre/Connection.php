@@ -145,6 +145,14 @@ class Connection extends BaseConnection
     }
 
     /**
+     * Get the prefix of the function to access the DB.
+     */
+    protected function getDriverFunctionPrefix(): string
+    {
+        return 'pg_';
+    }
+
+    /**
      * Returns the total number of rows affected by this query.
      */
     public function affectedRows(): int
