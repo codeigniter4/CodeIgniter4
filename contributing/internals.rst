@@ -70,7 +70,7 @@ The package itself will need its own sub-namespace
 that collects all related files into one grouping, like ``CodeIgniter\HTTP``.
 
 Files MUST be named the same as the class they hold, and they must match the
-:doc:`Style Guide <./styleguide.rst>`, meaning CamelCase class and file names.
+:doc:`Style Guide <./styleguide.md>`, meaning CamelCase class and file names.
 They should be in their own directory that matches the sub-namespace under the
 **system** directory.
 
