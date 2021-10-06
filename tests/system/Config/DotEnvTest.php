@@ -158,7 +158,7 @@ final class DotEnvTest extends CIUnitTestCase
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
 
-        $this->assertSame('complex', $_SERVER['SimpleConfig.simple.name']);
+        $this->assertSame('complex', $_SERVER['SimpleConfig_simple_name']);
     }
 
     public function testLoadsGetServerVar()

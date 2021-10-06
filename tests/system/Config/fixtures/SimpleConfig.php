@@ -44,4 +44,8 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 
     public $shortie;
     public $longie;
+    public $onedeep_value;
+    public $one_deep = [
+        'under_deep' => null,
+    ];
 }
