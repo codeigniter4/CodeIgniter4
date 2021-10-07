@@ -17,7 +17,7 @@ a virus) and make it look like another developer created it.
 
 The best solution, while not fool-proof, is to "securely sign" your
 commits. Such commits are digitally signed, with a GPG-key associated
-with your github account. It still isn't foolproof, because a malicious
+with your GitHub account. It still isn't foolproof, because a malicious
 developer could create a bogus email and account, but it is more
 reliable than an unsigned or a "signed-off by" commit.
 
@@ -32,7 +32,7 @@ Secure Signing
 --------------
 
 To verify your commits, you will need to setup a GPG key, and attach it
-to your github account.
+to your GitHub account.
 
 See the [git
 tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page

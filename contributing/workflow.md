@@ -42,7 +42,7 @@ Forking
 -------
 
 You work with a fork of the CodeIgniter4 repository. This is a copy of
-our repository, in your github account. You can make changes to your
+our repository, in your GitHub account. You can make changes to your
 forked repository, while you cannot do the same with the shared one -
 you have to submit pull requests to it instead.
 
@@ -174,7 +174,7 @@ Bring your feature branch up to date:
     git checkout new/mind-reader
     git merge develop
 
-And finally push your local branch to your github repository:
+And finally push your local branch to your GitHub repository:
 
     git push origin new/mind-reader
 
@@ -214,4 +214,4 @@ Cleanup
 -------
 
 If your PR is accepted and merged into the shared repository, you can
-delete that branch in your github repository as well as locally.
+delete that branch in your GitHub repository as well as locally.
