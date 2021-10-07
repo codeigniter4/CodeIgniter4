@@ -1,15 +1,6 @@
 Contributing to CodeIgniter
 ===========================
 
--   [Contribution guidelines](./guidelines.md)
--   [Contribution workflow](./workflow.md)
--   [Contribution signing](./signing.md)
--   [Contribution CSS](./css.md)
--   [Framework internals](./internals.md)
--   [CodeIgniter documentation](./documentation.rst)
--   [CodeIgniter Coding Style Guide](./styleguide.md)
--   [Developer's Certificate of Origin](../DCO.txt)
-
 CodeIgniter is a community driven project and accepts contributions of
 code and documentation from the community. These contributions are made
 in the form of Issues or [Pull
