@@ -13,7 +13,7 @@ projects outside of CodeIgniter. Basically, this means that any
 dependencies should be kept to a minimum. Any dependencies must be able
 to be passed into the constructor. If you do need to use one of the
 other core packages, you can create that in the constructor using the
-Services class, as long as you provide a way for dependencies to
+`Services` class, as long as you provide a way for dependencies to
 override that:
 
 ```php
