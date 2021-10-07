@@ -223,7 +223,7 @@ If you are using the command-line, you can do the following to update your fork 
 
 Your fork is now up to date. This should be done regularly and, at the least, before you submit a pull request.
 
-## Translations Installation
+## Translating System Messages
 
 If you wish to contribute to the system message translations,
 then fork and clone the [translations repository](https://github.com/codeigniter4/translations)
