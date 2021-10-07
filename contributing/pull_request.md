@@ -40,8 +40,13 @@ based on PSR-12.
 This makes certain that all submitted code is of the same format 
 as the existing code and ensures that the codebase will be as readable as possible.
 
-Our Style Guide is similar to PSR-1 and PSR-2, from PHP-FIG, but not
-necessarily the same or compatible.
+You can fix most of the coding style violations by running this command in your terminal:
+
+	composer cs-fix
+
+You can check the coding style violations:
+
+	composer cs
 
 ### Unit Testing
 
