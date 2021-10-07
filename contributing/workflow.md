@@ -192,13 +192,10 @@ Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
-<div class="admonition note">
 
-If you do not provide a title or description for your PR, the odds of it being summarily rejected
-
-:   rise astronomically.
-
-</div>
+**Note:**
+> If you do not provide a title or description for your PR, the odds of it being summarily rejected
+rise astronomically.
 
 When your PR is submitted, a continuous integration task will be
 triggered, running all the unit tests as well as any other checking we
