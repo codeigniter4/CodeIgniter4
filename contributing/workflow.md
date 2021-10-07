@@ -159,7 +159,7 @@ At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
 
 **Note:**
-> Remember to synch your local repo with the shared one before pushing!
+> Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
 
