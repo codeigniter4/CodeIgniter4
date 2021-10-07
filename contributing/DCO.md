@@ -1,5 +1,4 @@
-Developer's Certificate of Origin 1.1
-=====================================
+# Developer's Certificate of Origin 1.1
 
 By making a contribution to this project, I certify that:
 

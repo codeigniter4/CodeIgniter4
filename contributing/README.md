@@ -1,5 +1,4 @@
-Contributing to CodeIgniter
-===========================
+# Contributing to CodeIgniter
 
 CodeIgniter is a community driven project and accepts contributions of
 code and documentation from the community. These contributions are made

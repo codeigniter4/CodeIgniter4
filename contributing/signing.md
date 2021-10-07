@@ -1,5 +1,4 @@
-Contribution Signing
-====================
+# Contribution Signing
 
 We ask that contributions have code commits signed. **This is important
 in order to prove, as best we can, the provenance of contributions.**
@@ -28,8 +27,7 @@ performs an important role, we will insist that it be securely signed.
 
 Read below to find out how to sign your commits :)
 
-Secure Signing
---------------
+## Secure Signing
 
 To verify your commits, you will need to setup a GPG key, and attach it
 to your GitHub account.
@@ -57,8 +55,7 @@ The basic steps are
 Depending on your IDE, you may have to do your Git commits from your Git
 bash shell to use the **-S** option to force the secure signing.
 
-Commit Messages
----------------
+## Commit Messages
 
 Regardless of how you sign a commit, commit messages are important too.
 They communicate the intent of a specific change, concisely. They make

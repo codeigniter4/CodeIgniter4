@@ -1,5 +1,4 @@
-Contribution Workflow
-=====================
+# Contribution Workflow
 
 Much of the workflow for contributing to CodeIgniter (or any project)
 involves understanding how [Git](https://git-scm.com/) is used to manage
@@ -15,8 +14,7 @@ values for when you try these:
     ORIGIN_URL      // the cloning URL for your repository fork
     UPSTREAM_URL    // the cloning URL for the CodeIgniter4 repository
 
-Branching
----------
+## Branching
 
 CodeIgniter uses the
 [Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/)
@@ -38,8 +36,7 @@ but disagree with Y, meaning we cannot merge the request. Using the
 Git-Flow branching model you can create new branches for both of these
 features and send two requests.
 
-Forking
--------
+## Forking
 
 You work with a fork of the CodeIgniter4 repository. This is a copy of
 our repository, in your GitHub account. You can make changes to your
@@ -52,8 +49,7 @@ repository](https://github.com/codeigniter4/CodeIgniter4), click the
 **Fork** button in the top-right of the page, and choose which account
 or organization of yours should contain that fork.
 
-Cloning
--------
+## Cloning
 
 You *could* work on your repository using GitHub's web interface, but
 that is awkward. Most developers will clone their repository to their
@@ -68,8 +64,7 @@ Clone your repository, leaving a local folder for you to work with:
     cd ALL_PROJECTS
     git clone ORIGIN_URL
 
-Syncing develop
-----------------
+## Syncing develop
 
 Within your local repository, Git will have created an alias,
 **origin**, for the GitHub repository it is bound to. You want to create
@@ -99,8 +94,7 @@ precedence, even if it causes problems for other contributions.
 It is a good idea to synchronize repositories when the shared one
 changes.
 
-Branching Revisited
--------------------
+## Branching Revisited
 
 The top of this page talked about the **master** and **develop**
 branches. The *best practice* for your work is to create a *feature
@@ -120,8 +114,7 @@ creating:
 
 Saving changes only updates your local working area.
 
-Committing
-----------
+## Committing
 
 Your local changes need to be *committed* to save them in your local
 repository. This is where [contribution signing](./signing.md) comes
@@ -153,8 +146,7 @@ a starting point for your next session working with your repository.
 This is a good practice, as it is not always obvious which branch you
 are working in.
 
-Pushing Your Branch
--------------------
+## Pushing Your Branch
 
 At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
@@ -180,8 +172,7 @@ And finally push your local branch to your GitHub repository:
 
     git push --force origin new/mind-reader
 
-Pull Requests
--------------
+## Pull Requests
 
 On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
@@ -212,8 +203,7 @@ If your PR does not follow our contribution guidelines, or is
 incomplete, the codebase maintainers will comment on it, pointing out
 what needs fixing.
 
-Cleanup
--------
+## Cleanup
 
 If your PR is accepted and merged into the shared repository, you can
 delete that branch in your GitHub repository as well as locally.
