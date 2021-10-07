@@ -68,8 +68,8 @@ Clone your repository, leaving a local folder for you to work with:
     cd ALL_PROJECTS
     git clone ORIGIN_URL
 
-Synching
---------
+Synching develop
+----------------
 
 Within your local repository, Git will have created an alias,
 **origin**, for the GitHub repository it is bound to. You want to create
