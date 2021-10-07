@@ -99,7 +99,7 @@ changes.
 The top of this page talked about the **master** and **develop**
 branches. The *best practice* for your work is to create a *feature
 branch* locally, to hold a group of related changes (source, unit
-testing, documentation, change log, etc).
+testing, documentation, changelog, etc).
 
 This local branch should be named appropriately, for instance
 "fix/problem123" or "new/mind-reader". The slashes in these branch names

@@ -100,7 +100,7 @@ and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.di
 
 See [Writing CodeIgniter Documentation](./documentation.rst).
 
-### Change Log
+### Changelog
 
 The changelog, in the user guide root, needs to be kept up-to-date. Not
 all changes will need an entry in it, but new classes, major or BC
