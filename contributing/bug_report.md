@@ -17,8 +17,10 @@ to your own copy of the project. This will require you to use the version contro
 ## Support
 
 Please note that GitHub is not for general support questions! If you are
-having trouble using a feature of CodeIgniter, ask for help on our
-[forums](http://forum.codeigniter.com/) instead.
+having trouble using a feature, you can:
+
+- Start a new thread on our [Forums](http://forum.codeigniter.com/)
+- Ask your questions on [Slack](https://codeigniterchat.slack.com/)
 
 If you are not sure whether you are using something correctly or if you
 have found a bug, again - please ask on the forums first.
