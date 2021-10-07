@@ -83,7 +83,7 @@ Take the Router class as an example. The Router lives in the
 **system/Router/RouteCollection.php** and **system/Router/Router.php**
 respectively.
 
-### Interfaces
+## Interfaces
 
 Most base classes should have an interface defined for them. At the very
 least this allows them to be easily mocked and passed to other classes
@@ -96,7 +96,7 @@ The Router package mentioned above includes the
 `CodeIgniter\Router\RouterInterface` interfaces to provide the
 abstractions for the two classes in the package.
 
-### Handlers
+## Handlers
 
 When a package supports multiple "drivers", the convention is to place
 them in a **Handlers** directory, and name the child classes as
