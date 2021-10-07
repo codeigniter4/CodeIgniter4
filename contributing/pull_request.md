@@ -108,7 +108,7 @@ guide.
 CodeIgniter4 itself represents a significant backwards compatibility
 break with earlier versions of the framework.
 
-### Breaking Changes
+#### Breaking Changes
 
 In general, any change that would disrupt existing uses of the framework is considered a "breaking change" and will not be favorably considered. A few specific examples to pay attention to:
 
