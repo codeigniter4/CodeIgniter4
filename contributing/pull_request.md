@@ -1,5 +1,6 @@
 # Sending a Pull Request
 
+- [Developer's Certificate of Origin](./DCO.md)
 - [Contribution guidelines](./guidelines.md)
 - [Contribution workflow](./workflow.md)
 - [Contribution signing](./signing.md)
@@ -7,7 +8,6 @@
 - [Framework internals](./internals.md)
 - [CodeIgniter documentation](./documentation.rst)
 - [CodeIgniter Coding Style Guide](./styleguide.md)
-- [Developer's Certificate of Origin](./DCO.md)
 
 ## Contributions
 
