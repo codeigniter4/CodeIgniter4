@@ -294,6 +294,20 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    public function testNamedBindsDontGetReplacedAgain()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM posts WHERE content = :content: OR foobar = :foobar:',
+            ['content' => 'a placeholder looks like :foobar:', 'foobar' => 'bazqux']
+        );
+
+        $expected = "SELECT * FROM posts WHERE content = 'a placeholder looks like :foobar:' OR foobar = 'bazqux'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1705
      */
