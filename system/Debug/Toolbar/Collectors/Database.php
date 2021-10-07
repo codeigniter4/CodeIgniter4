@@ -57,7 +57,7 @@ class Database extends BaseCollector
      * The query instances that have been collected
      * through the DBQuery Event.
      *
-     * @var Query[]
+     * @var array
      */
     protected static $queries = [];
 
@@ -83,7 +83,19 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
-            static::$queries[] = $query;
+            if (! in_array($query->getQuery(), array_column(static::$queries, 'string', null), true)) {
+                static::$queries[] = [
+                    'query'     => $query,
+                    'string'    => $query->getQuery(),
+                    'duplicate' => false,
+                ];
+            } else {
+                static::$queries[] = [
+                    'query'     => $query,
+                    'string'    => $query->getQuery(),
+                    'duplicate' => true,
+                ];
+            }
         }
     }
 
@@ -110,8 +122,8 @@ class Database extends BaseCollector
             $data[] = [
                 'name'      => 'Query',
                 'component' => 'Database',
-                'start'     => $query->getStartTime(true),
-                'duration'  => $query->getDuration(),
+                'start'     => $query['query']->getStartTime(true),
+                'duration'  => $query['query']->getDuration(),
             ];
         }
 
@@ -123,10 +135,11 @@ class Database extends BaseCollector
      */
     public function display(): array
     {
-        $data['queries'] = array_map(static function (Query $query) {
+        $data['queries'] = array_map(static function (array $query) {
             return [
-                'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
-                'sql'      => $query->debugToolbarDisplay(),
+                'class'    => isset($query['duplicate']) ? 'duplicate' : '',
+                'duration' => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
+                'sql'      => $query['query']->debugToolbarDisplay(),
             ];
         }, static::$queries);
 
@@ -150,13 +163,18 @@ class Database extends BaseCollector
     {
         $this->getConnections();
 
-        $queryCount      = count(static::$queries);
+        $queryCount  = count(static::$queries);
+        $uniqueCount = count(array_filter(static::$queries, static function ($query) {
+            return $query['duplicate'] === false;
+        }));
         $connectionCount = count($this->connections);
 
         return sprintf(
-            '(%d Quer%s across %d Connection%s)',
+            '(%d total Quer%s, %d %s unique across %d Connection%s)',
             $queryCount,
             $queryCount > 1 ? 'ies' : 'y',
+            $uniqueCount,
+            $uniqueCount > 1 ? 'of them' : '',
             $connectionCount,
             $connectionCount > 1 ? 's' : ''
         );
