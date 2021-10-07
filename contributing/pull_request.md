@@ -12,7 +12,6 @@ We expect all contributions to conform to our
 be commented (inside the PHP source files), be documented (in the
 [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in
 the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
-There is a [Contributing to CodeIgniter](./README.md) section in the repository which describes the contribution process; this page is an overview.
 
 Note, we expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite
 to prove the code works. If pull requests are not accompanied by relevant tests, they will likely be closed.
