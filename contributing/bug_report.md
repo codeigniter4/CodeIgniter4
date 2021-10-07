@@ -1,5 +1,19 @@
 # Reporting a Bug
 
+## Issues
+
+Issues are a quick way to point out a bug. If you find a bug or documentation error in CodeIgniter then please make sure that:
+
+1. There is not already an open [Issue](https://github.com/codeigniter4/CodeIgniter4/issues)
+2. The Issue has not already been fixed (check the develop branch or look for [closed Issues](https://github.com/codeigniter4/CodeIgniter4/issues?q=is%3Aissue+is%3Aclosed))
+3. It's not something really obvious that you can fix yourself
+
+Reporting Issues is helpful, but an even [better approach](./contributing/workflow.md) is to send a
+[Pull Request](https://help.github.com/en/articles/creating-a-pull-request), which is done by
+[Forking](https://help.github.com/en/articles/fork-a-repo) the main repository and making
+a [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project)
+to your own copy of the project. This will require you to use the version control system called [Git](https://git-scm.com/).
+
 Issues are a quick way to point out a bug. If you find a bug or
 documentation error in CodeIgniter then please check a few things first:
 
