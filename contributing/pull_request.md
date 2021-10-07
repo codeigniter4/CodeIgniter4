@@ -1,13 +1,9 @@
 # Sending a Pull Request
 
 - [Developer's Certificate of Origin](./DCO.md)
-- [Contribution guidelines](./guidelines.md)
 - [Contribution workflow](./workflow.md)
-- [Contribution signing](./signing.md)
 - [Contribution CSS](./css.md)
 - [Framework internals](./internals.md)
-- [CodeIgniter documentation](./documentation.rst)
-- [CodeIgniter Coding Style Guide](./styleguide.md)
 
 ## Contributions
 
@@ -32,14 +28,20 @@ Before we look into how to contribute to CodeIgniter4, here are some guidelines.
 to pass these guidelines, they will be declined, and you will need to re-submit when you’ve made the changes.
 This might sound a bit tough, but it is required for us to maintain the quality of the codebase.
 
+- [Contribution guidelines](./guidelines.md)
+
 ### PHP Style
 
 All code must meet the [Style Guide](./contributing/styleguide.md).
 This makes certain that all submitted code is of the same format as the existing code and ensures that the codebase will be as readable as possible.
 
+- [CodeIgniter Coding Style Guide](./styleguide.md)
+
 ### Documentation
 
 If you change anything that requires a change to documentation, then you will need to add to the documentation. New classes, methods, parameters, changing default values, etc. are all changes that require a change to documentation. Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change, and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
+
+- [CodeIgniter documentation](./documentation.rst)
 
 ### Compatibility
 
@@ -70,6 +72,8 @@ changes separate from each other and from whatever else you are doing with your 
 You must [GPG-sign](./contributing/signing.md) your work, certifying that you either wrote the work or
 otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by"
 commit, but instead, a digitally signed one.
+
+- [Contribution signing](./signing.md)
 
 ### Static Analysis on PHP code
 
