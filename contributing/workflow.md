@@ -84,10 +84,11 @@ is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
     git checkout develop
-    git pull upstream develop
+    git fetch upstream
+    git merge upstream/develop
     git push origin develop
 
-You might get merge conflicts when you pull from upstream. It is your
+You might get merge conflicts when you merge. It is your
 responsibility to resolve those locally, so that you can continue
 collaborating with the shared repository. Basically, the shared
 repository is updated in the order that contributions are merged into
@@ -166,17 +167,18 @@ It is a lot easier to resolve conflicts at this stage.
 Synchronize your repository:
 
     git checkout develop
-    git pull upstream develop
+    git fetch upstream
+    git merge upstream/develop
     git push origin develop
 
 Bring your feature branch up to date:
 
     git checkout new/mind-reader
-    git merge develop
+    git rebase upstream/develop
 
 And finally push your local branch to your GitHub repository:
 
-    git push origin new/mind-reader
+    git push --force origin new/mind-reader
 
 Pull Requests
 -------------
