@@ -14,19 +14,6 @@ Reporting Issues is helpful, but an even [better approach](./contributing/workfl
 a [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project)
 to your own copy of the project. This will require you to use the version control system called [Git](https://git-scm.com/).
 
-Issues are a quick way to point out a bug. If you find a bug or
-documentation error in CodeIgniter then please check a few things first:
-
--   There is not already an open Issue
--   The issue has already been fixed (check the develop branch, or look
-    for closed Issues)
--   Is it something really obvious that you fix it yourself?
-
-Reporting issues is helpful but an even better approach is to send a
-Pull Request, which is done by "Forking" the main repository and
-committing to your own copy. This will require you to use the version
-control system called Git.
-
 Support
 -------
 
