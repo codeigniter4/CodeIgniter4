@@ -65,15 +65,23 @@ of a single CodeIgniter component.
 
 See the [PHPUnit website](https://phpunit.de/) for more information.
 
-### PHPDoc Comments
+### Comments
+
+#### PHPDoc Comments
 
 Source code should be commented using PHPDoc comment blocks. This means
 implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
 class/interface/trait, method and variable.
 
+Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious.
+
 See the [phpDocumentor website](https://phpdoc.org/) for more
 information.
+
+#### Code Comments
+
+Do not add comments that are superficial, duplicated, or stating the obvious.
 
 ### Documentation
 
