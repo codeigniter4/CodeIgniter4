@@ -27,12 +27,11 @@ override that:
 
 ## Type hinting
 
-PHP7 provides the ability to [type
-hint](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration)
-method parameters and return types. Use it where possible. Return type
-hinting is not always practical, but do try to make it work.
+PHP7 provides [Type declarations](https://www.php.net/manual/en/language.types.declarations.php)
+for method parameters and return types. Use it where possible. Return type
+declaration is not always practical, but do try to make it work.
 
-At this time, we are not using strict type hinting.
+At this time, we are not using [Strict typing](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict).
 
 ## Abstractions
 
