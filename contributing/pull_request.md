@@ -109,6 +109,15 @@ guide.
 CodeIgniter4 itself represents a significant backwards compatibility
 break with earlier versions of the framework.
 
+### Breaking Changes
+
+In general, any change that would disrupt existing uses of the framework is considered a "breaking change" and will not be favorably considered. A few specific examples to pay attention to:
+
+1. New classes/properties/constants in `system` are acceptable, but anything in the `app` directory that will be used in `system` should be backwards-compatible.
+2. Any changes to non-private methods must be backwards-compatible with the original definition.
+3. Deleting non-private properties or methods without prior deprecation notices is frowned upon and will likely be closed.
+4. Deleting or renaming public classes and interfaces, as well as those not marked as `@internal`, without prior deprecation notices or not providing fallback solutions will also not be favorably considered.
+
 ### Mergeability
 
 Your PRs need to be mergeable and GPG-signed before they will be
@@ -168,15 +177,6 @@ Rector, on the other hand, can be run on the specific files you modified or adde
 
 [1]: https://github.com/phpstan/phpstan-src
 [2]: https://github.com/rector/rector
-
-### Breaking Changes
-
-In general, any change that would disrupt existing uses of the framework is considered a "breaking change" and will not be favorably considered. A few specific examples to pay attention to:
-
-1. New classes/properties/constants in `system` are acceptable, but anything in the `app` directory that will be used in `system` should be backwards-compatible.
-2. Any changes to non-private methods must be backwards-compatible with the original definition.
-3. Deleting non-private properties or methods without prior deprecation notices is frowned upon and will likely be closed.
-4. Deleting or renaming public classes and interfaces, as well as those not marked as `@internal`, without prior deprecation notices or not providing fallback solutions will also not be favorably considered.
 
 ## How-to Guide
 
