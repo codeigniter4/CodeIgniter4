@@ -170,7 +170,7 @@ Bring your feature branch up to date:
 
 And finally push your local branch to your GitHub repository:
 
-    git push ---force-with-lease origin new/mind-reader
+    git push --force-with-lease origin new/mind-reader
 
 ## Pull Requests
 
