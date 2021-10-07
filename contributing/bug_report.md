@@ -14,8 +14,7 @@ Reporting Issues is helpful, but an even [better approach](./contributing/workfl
 a [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project)
 to your own copy of the project. This will require you to use the version control system called [Git](https://git-scm.com/).
 
-Support
--------
+## Support
 
 Please note that GitHub is not for general support questions! If you are
 having trouble using a feature of CodeIgniter, ask for help on our
@@ -24,8 +23,7 @@ having trouble using a feature of CodeIgniter, ask for help on our
 If you are not sure whether you are using something correctly or if you
 have found a bug, again - please ask on the forums first.
 
-Security
---------
+## Security
 
 Did you find a security issue in CodeIgniter?
 
@@ -37,8 +35,7 @@ If you've found a critical vulnerability, we'd be happy to credit you in
 our
 [ChangeLog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html).
 
-Tips for a Good Issue Report
-----------------------------
+## Tips for a Good Issue Report
 
 Use a descriptive subject line (eg parser library chokes on commas)
 rather than a vague one (eg. your code broke).
