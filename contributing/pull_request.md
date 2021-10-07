@@ -84,7 +84,7 @@ show up in more than one place.
 
 ### Change Log
 
-The change-log, in the user guide root, needs to be kept up-to-date. Not
+The changelog, in the user guide root, needs to be kept up-to-date. Not
 all changes will need an entry in it, but new classes, major or BC
 changes to existing classes should. Once we have a stable release, bug
 fixes would appear in the changelog too.
