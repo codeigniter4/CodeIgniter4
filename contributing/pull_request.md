@@ -52,7 +52,7 @@ You can check the coding style violations:
 ### Unit Testing
 
 Unit testing is expected for all CodeIgniter components. We use PHPUnit,
-and run unit tests using travis-ci for each PR submitted or changed.
+and run unit tests using GitHub Actions for each PR submitted or changed.
 
 In the CodeIgniter project, there is a `tests` folder, with a structure
 that parallels that of `system`.
