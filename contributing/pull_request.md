@@ -1,10 +1,5 @@
 # Sending a Pull Request
 
-- [Developer's Certificate of Origin](./DCO.md)
-- [Contribution workflow](./workflow.md)
-- [Contribution CSS](./css.md)
-- [CodeIgniter Internals Overview](./internals.md)
-
 ## Contributions
 
 We expect all contributions to conform to our
@@ -20,6 +15,12 @@ make it as painless for your contributions to be included as possible. If you ne
 running on your local machines, ask for help on the forums. We would be happy to help out.
 
 The [Open Source Guide](https://opensource.guide/) is a good first read for those new to contributing to open source!
+
+## CodeIgniter Internals Overview
+
+[CodeIgniter Internals Overview](./internals.md) should help contributors 
+understand how the core of the framework works. Specifically, it details the 
+information needed to create new packages for the core.
 
 ## Guidelines
 
@@ -103,6 +104,10 @@ manager Make sure that your PR descriptions help us decide if the
 contribution should be highlighted in the next release after it has been
 merged.
 
+### CSS
+
+See [Contribution CSS](./css.md).
+
 ### Compatibility
 
 CodeIgniter4 requires [PHP 7.3](https://php.net/releases/7_3_0.php).
@@ -161,10 +166,11 @@ changes separate from each other and from whatever else you are doing with your 
 ### Signing
 
 You must [GPG-sign](./signing.md) your work, certifying that you either wrote the work or
-otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by"
-commit, but instead, a digitally signed one.
+otherwise have the right to pass it on to an open-source project. See [Developer's Certificate of Origin](./DCO.md).
 
-- [Contribution signing](./signing.md)
+This is *not* just a "signed-off-by" commit, but instead, a digitally signed one.
+
+See [Contribution signing](./signing.md) for details.
 
 ### Static Analysis on PHP code
 
@@ -210,6 +216,8 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 The codebase maintainers will now be alerted to the submission and someone from the team will respond. If your change fails to meet the guidelines, it will be rejected or feedback will be provided to help you improve it.
 
 Once the maintainer handling your pull request is satisfied with it, they will approve the pull request and merge it into the "develop" branch. Your patch will now be part of the next release!
+
+See [Contribution workflow](./workflow.md) for Git workflow details.
 
 ### Keeping your fork up-to-date
 
