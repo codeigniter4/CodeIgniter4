@@ -3,7 +3,7 @@
 - [Developer's Certificate of Origin](./DCO.md)
 - [Contribution workflow](./workflow.md)
 - [Contribution CSS](./css.md)
-- [Framework internals](./internals.md)
+- [CodeIgniter Internals Overview](./internals.md)
 
 ## Contributions
 
