@@ -111,7 +111,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 
 1. Set up Git ([Windows](https://git-scm.com/download/win), [Mac](https://git-scm.com/download/mac), & [Linux](https://git-scm.com/download/linux)).
 2. Go to the [CodeIgniter4 repository](https://github.com/codeigniter4/CodeIgniter4).
-3. [Fork](https://help.github.com/en/articles/fork-a-repo) it (to your Github account).
+3. [Fork](https://help.github.com/en/articles/fork-a-repo) it (to your GitHub account).
 4. [Clone](https://help.github.com/en/articles/cloning-a-repository) your CodeIgniter repository: `git@github.com:\<your-name>/CodeIgniter4.git`
 5. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
 6. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.

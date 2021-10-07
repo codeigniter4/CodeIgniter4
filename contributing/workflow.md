@@ -47,7 +47,7 @@ forked repository, while you cannot do the same with the shared one -
 you have to submit pull requests to it instead.
 
 [Creating a fork](https://help.github.com/articles/fork-a-repo/) is done
-through the Github website. Navigate to [our
+through the GitHub website. Navigate to [our
 repository](https://github.com/codeigniter4/CodeIgniter4), click the
 **Fork** button in the top-right of the page, and choose which account
 or organization of yours should contain that fork.
@@ -55,11 +55,11 @@ or organization of yours should contain that fork.
 Cloning
 -------
 
-You *could* work on your repository using Github's web interface, but
+You *could* work on your repository using GitHub's web interface, but
 that is awkward. Most developers will clone their repository to their
 local system, and work with it there.
 
-On Github, navigate to your forked repository, click **Clone or
+On GitHub, navigate to your forked repository, click **Clone or
 download**, and copy the cloning URL shown. We will refer to this as
 ORIGIN\_URL.
 
@@ -72,7 +72,7 @@ Synching
 --------
 
 Within your local repository, Git will have created an alias,
-**origin**, for the Github repository it is bound to. You want to create
+**origin**, for the GitHub repository it is bound to. You want to create
 an alias for the shared repository as well, so that you can "synch" the
 two, making sure that your repository includes any other contributions
 that have been merged by us into the shared repo:
@@ -181,7 +181,7 @@ And finally push your local branch to your github repository:
 Pull Requests
 -------------
 
-On Github, you propose your changes one feature branch at a time, by
+On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
