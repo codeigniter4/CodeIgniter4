@@ -194,7 +194,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 1. Set up Git ([Windows](https://git-scm.com/download/win), [Mac](https://git-scm.com/download/mac), & [Linux](https://git-scm.com/download/linux)).
 2. Go to the [CodeIgniter4 repository](https://github.com/codeigniter4/CodeIgniter4).
 3. [Fork](https://help.github.com/en/articles/fork-a-repo) it (to your GitHub account).
-4. [Clone](https://help.github.com/en/articles/cloning-a-repository) your CodeIgniter repository: `git@github.com:\<your-name>/CodeIgniter4.git`
+4. [Clone](https://help.github.com/en/articles/cloning-a-repository) your CodeIgniter repository: `git@github.com:<your-name>/CodeIgniter4.git`
 5. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
 6. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 7. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
@@ -209,7 +209,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 
 The codebase maintainers will now be alerted to the submission and someone from the team will respond. If your change fails to meet the guidelines, it will be rejected or feedback will be provided to help you improve it.
 
-Once the maintainer handling your pull request is satisfied with it they will approve the pull request and merge it into the "develop" branch. Your patch will now be part of the next release!
+Once the maintainer handling your pull request is satisfied with it, they will approve the pull request and merge it into the "develop" branch. Your patch will now be part of the next release!
 
 ### Keeping your fork up-to-date
 
@@ -221,7 +221,7 @@ If you are using the command-line, you can do the following to update your fork 
 2. `git pull codeigniter develop`
 3. `git push origin develop`
 
-Your fork is now up to date. This should be done regularly and, at the least, before you submit a pull request.
+Your fork is now up-to-date. This should be done regularly and, at the least, before you submit a pull request.
 
 ## Translating System Messages
 
