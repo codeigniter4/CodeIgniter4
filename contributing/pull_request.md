@@ -71,15 +71,20 @@ information.
 
 ### Documentation
 
-If you change anything that requires a change to documentation, then you will need to add to the documentation. New classes, methods, parameters, changing default values, etc. are all changes that require a change to documentation. Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change, and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
-
-- [CodeIgniter documentation](./documentation.rst)
-
 The User Guide is an essential component of the CodeIgniter framework.
 
 Each framework component or group of components needs a corresponding
 section in the User Guide. Some of the more fundamental components will
 show up in more than one place.
+
+If you change anything that requires a change to documentation, 
+then you will need to add to the documentation. 
+New classes, methods, parameters, changing default values, etc. 
+are all changes that require a change to documentation. 
+Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change, 
+and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
+
+See [Writing CodeIgniter Documentation](./documentation.rst).
 
 ### Change Log
 
