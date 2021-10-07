@@ -61,7 +61,7 @@ See the [PHPUnit website](https://phpunit.de/) for more information.
 
 ### PHPDoc Comments
 
-Source code should be commented using PHPDoc comments blocks. Thie means
+Source code should be commented using PHPDoc comments blocks. This means
 implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
 class/interface/trait, method and variable.
