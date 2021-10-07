@@ -10,9 +10,7 @@ PHP Style
 ---------
 
 All code must conform to our [Style Guide](./styleguide.md), which is
-essentially the [Allman indent
-style](https://en.wikipedia.org/wiki/Indent_style#Allman_style), with
-elaboration on naming and readable operators.
+based on PSR-12.
 
 This makes certain that all code is the same format as the existing code
 and means it will be as readable as possible.
