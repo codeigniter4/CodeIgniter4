@@ -213,25 +213,11 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 13. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
 14. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
+See [Contribution workflow](./workflow.md) for Git workflow details.
+
 The codebase maintainers will now be alerted to the submission and someone from the team will respond. If your change fails to meet the guidelines, it will be rejected or feedback will be provided to help you improve it.
 
 Once the maintainer handling your pull request is satisfied with it, they will approve the pull request and merge it into the "develop" branch. Your patch will now be part of the next release!
-
-See [Contribution workflow](./workflow.md) for Git workflow details.
-
-### Keeping your fork up-to-date
-
-Unlike systems like Subversion, Git can have multiple remotes. A remote is the name for the URL of a Git repository. By default, your fork will have a remote named "origin", which points to your fork, but you can add another remote named "upstream", which points to `git://github.com/codeigniter4/CodeIgniter4.git`. This is a read-only remote, but you can pull from this develop branch to update your own.
-
-If you are using the command-line, you can do the following to update your fork to the latest changes:
-
-1. `git remote add upstream git://github.com/codeigniter4/CodeIgniter4.git`
-2. `git fetch upstream`
-3. `git checkout develop`
-4. `git mrege upstream/develop`
-5. `git push origin develop`
-
-Your fork is now up-to-date. This should be done regularly and, at the least, before you submit a pull request.
 
 ## Translating System Messages
 
