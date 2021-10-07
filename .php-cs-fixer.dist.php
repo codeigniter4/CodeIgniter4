@@ -34,7 +34,10 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    // @TODO Remove once live in coding-standard
+    'no_alternative_syntax' => ['fix_non_monolithic_code' => false],
+];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',

@@ -27,7 +27,10 @@ $finder = Finder::create()
     ])
     ->notName('#Logger\.php$#');
 
-$overrides = [];
+$overrides = [
+    // @TODO Remove once live in coding-standard
+    'no_alternative_syntax' => ['fix_non_monolithic_code' => false],
+];
 
 $options = [
     'cacheFile'    => 'build/.no-header.php-cs-fixer.cache',
