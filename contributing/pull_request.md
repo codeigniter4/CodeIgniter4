@@ -24,27 +24,22 @@ The [Open Source Guide](https://opensource.guide/) is a good first read for thos
 
 ## Guidelines
 
-Before we look into how to contribute to CodeIgniter4, here are some guidelines. If your Pull Requests fail
-to pass these guidelines, they will be declined, and you will need to re-submit when you’ve made the changes.
+Before we look into how to contribute to CodeIgniter4, here are some guidelines.
+Your Pull Requests (PRs) need to meet our guidelines.
+
+If your Pull Requests fail to pass these guidelines, they will be declined, 
+and you will need to re-submit when you’ve made the changes.
 This might sound a bit tough, but it is required for us to maintain the quality of the codebase.
 
-Your Pull Requests (PRs) need to meet our guidelines. If a PR fails to
-pass these guidelines, it will be declined and you will need to
-re-submit when you’ve made the changes. This might sound a bit tough,
-but it is required for us to maintain quality of the code-base.
-
 ### PHP Style
-
-All code must meet the [Style Guide](./styleguide.md).
-This makes certain that all submitted code is of the same format as the existing code and ensures that the codebase will be as readable as possible.
 
 - [CodeIgniter Coding Style Guide](./styleguide.md)
 
 All code must conform to our [Style Guide](./styleguide.md), which is
 based on PSR-12.
 
-This makes certain that all code is the same format as the existing code
-and means it will be as readable as possible.
+This makes certain that all submitted code is of the same format 
+as the existing code and ensures that the codebase will be as readable as possible.
 
 Our Style Guide is similar to PSR-1 and PSR-2, from PHP-FIG, but not
 necessarily the same or compatible.
@@ -102,8 +97,6 @@ merged.
 ### Compatibility
 
 CodeIgniter4 requires [PHP 7.3](https://php.net/releases/7_3_0.php).
-
-CodeIgniter4 requires PHP 7.3.
 
 ### Backwards Compatibility
 
