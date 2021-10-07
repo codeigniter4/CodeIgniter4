@@ -60,9 +60,9 @@ of a single CodeIgniter component.
 
 See the [PHPUnit website](https://phpunit.de/) for more information.
 
-### PHPdoc Comments
+### PHPDoc Comments
 
-Source code should be commented using PHPdoc comments blocks. Thie means
+Source code should be commented using PHPDoc comments blocks. Thie means
 implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
 class/interface/trait, method and variable.
