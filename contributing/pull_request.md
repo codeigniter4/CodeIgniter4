@@ -12,7 +12,7 @@ We expect all contributions to conform to our
 be commented (inside the PHP source files), be documented (in the
 [user guide](https://codeigniter4.github.io/userguide/)), and unit tested (in
 the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
-There is a [Contributing to CodeIgniter](./contributing/README.md) section in the repository which describes the contribution process; this page is an overview.
+There is a [Contributing to CodeIgniter](./README.md) section in the repository which describes the contribution process; this page is an overview.
 
 Note, we expect all code changes or bug-fixes to be accompanied by one or more tests added to our test suite
 to prove the code works. If pull requests are not accompanied by relevant tests, they will likely be closed.
@@ -32,7 +32,7 @@ This might sound a bit tough, but it is required for us to maintain the quality 
 
 ### PHP Style
 
-All code must meet the [Style Guide](./contributing/styleguide.md).
+All code must meet the [Style Guide](./styleguide.md).
 This makes certain that all submitted code is of the same format as the existing code and ensures that the codebase will be as readable as possible.
 
 - [CodeIgniter Coding Style Guide](./styleguide.md)
@@ -69,7 +69,7 @@ changes separate from each other and from whatever else you are doing with your 
 
 ### Signing
 
-You must [GPG-sign](./contributing/signing.md) your work, certifying that you either wrote the work or
+You must [GPG-sign](./signing.md) your work, certifying that you either wrote the work or
 otherwise have the right to pass it on to an open-source project. This is *not* just a "signed-off-by"
 commit, but instead, a digitally signed one.
 
