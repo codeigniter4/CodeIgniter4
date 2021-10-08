@@ -25,7 +25,7 @@ override that:
     }
 ```
 
-## Type hinting
+## Type declarations
 
 PHP7 provides [Type declarations](https://www.php.net/manual/en/language.types.declarations.php)
 for method parameters and return types. Use it where possible. Return type
