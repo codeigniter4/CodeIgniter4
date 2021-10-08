@@ -29,7 +29,7 @@ class Security implements SecurityInterface
     /**
      * CSRF Hash
      *
-     * Random hash for Cross Site Request Forgery protection cookie
+     * Random hash for Cross Site Request Forgery protection.
      *
      * @var string|null
      */
@@ -38,7 +38,7 @@ class Security implements SecurityInterface
     /**
      * CSRF Token Name
      *
-     * Token name for Cross Site Request Forgery protection cookie.
+     * Token name for Cross Site Request Forgery protection.
      *
      * @var string
      */
@@ -47,7 +47,7 @@ class Security implements SecurityInterface
     /**
      * CSRF Header Name
      *
-     * Token name for Cross Site Request Forgery protection cookie.
+     * Header name for Cross Site Request Forgery protection.
      *
      * @var string
      */
@@ -63,7 +63,7 @@ class Security implements SecurityInterface
     /**
      * CSRF Cookie Name
      *
-     * Cookie name for Cross Site Request Forgery protection cookie.
+     * Cookie name for Cross Site Request Forgery protection.
      *
      * @var string
      */

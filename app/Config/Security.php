@@ -11,7 +11,7 @@ class Security extends BaseConfig
      * CSRF Token Name
      * --------------------------------------------------------------------------
      *
-     * Token name for Cross Site Request Forgery protection cookie.
+     * Token name for Cross Site Request Forgery protection.
      *
      * @var string
      */
@@ -22,7 +22,7 @@ class Security extends BaseConfig
      * CSRF Header Name
      * --------------------------------------------------------------------------
      *
-     * Token name for Cross Site Request Forgery protection cookie.
+     * Header name for Cross Site Request Forgery protection.
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class Security extends BaseConfig
      * CSRF Cookie Name
      * --------------------------------------------------------------------------
      *
-     * Cookie name for Cross Site Request Forgery protection cookie.
+     * Cookie name for Cross Site Request Forgery protection.
      *
      * @var string
      */
