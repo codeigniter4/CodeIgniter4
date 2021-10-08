@@ -471,6 +471,8 @@
     background-color: #434343; }
   #toolbarContainer.dark #debug-bar table tbody tr.current {
     background-color: #FDC894; }
+  #toolbarContainer.dark #ci-database table tbody tr.duplicate {
+    background-color: #434343;}
     #toolbarContainer.dark #debug-bar table tbody tr.current td {
       color: #252525; }
     #toolbarContainer.dark #debug-bar table tbody tr.current:hover td {
@@ -564,6 +566,8 @@
     background-color: #DFDFDF; }
   #toolbarContainer.light #debug-bar table tbody tr.current {
     background-color: #FDC894; }
+  #toolbarContainer.light #ci-database table tbody tr.duplicate {
+    background-color: #DFDFDF;}
     #toolbarContainer.light #debug-bar table tbody tr.current:hover td {
       background-color: #DD4814;
       color: #FFFFFF; }
@@ -645,6 +649,3 @@
 
 .debug-bar-noverflow {
   overflow: hidden; }
-
-#ci-database table tbody tr.duplicate {
-  background-color: #DD4814;}
