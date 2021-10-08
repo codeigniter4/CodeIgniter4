@@ -206,7 +206,7 @@ class FileHandler extends BaseHandler
         $key = static::validateKey($key, $this->prefix);
 
         if (false === $data = $this->getItem($key)) {
-            return false; // This will return null in a future release
+            return false; // @TODO This will return null in a future release
         }
 
         return [
