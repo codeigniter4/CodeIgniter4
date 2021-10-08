@@ -31,7 +31,10 @@ PHP7 provides [Type declarations](https://www.php.net/manual/en/language.types.d
 for method parameters and return types. Use it where possible. Return type
 declaration is not always practical, but do try to make it work.
 
-At this time, we are not using [Strict typing](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict).
+At this time, shipped CI4 production code does not use 
+[Strict typing](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict), 
+and will not be any time soon. However, in the development phase, 
+there are internal classes (in `utils/`) that are strictly typed.
 
 ## Abstractions
 
