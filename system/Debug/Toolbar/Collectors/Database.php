@@ -83,10 +83,12 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
+            $queryString = $query->getQuery();
+
             static::$queries[] = [
                 'query'     => $query,
-                'string'    => $query->getQuery(),
-                'duplicate' => in_array($query->getQuery(), array_column(static::$queries, 'string', null), true),
+                'string'    => $queryString,
+                'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
             ];
         }
     }
