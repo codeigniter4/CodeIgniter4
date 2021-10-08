@@ -12,20 +12,14 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use Exception;
 
 /**
  * @internal
  */
-final class MemcachedHandlerTest extends CIUnitTestCase
+final class MemcachedHandlerTest extends AbstractHandlerTest
 {
-    private $handler;
-    private static $key1 = 'key1';
-    private static $key2 = 'key2';
-    private static $key3 = 'key3';
-
     private static function getKeyArray()
     {
         return [
@@ -35,7 +29,6 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         ];
     }
 
-    private static $dummy = 'dymmy';
     private $config;
 
     protected function setUp(): void
@@ -183,28 +176,13 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         $this->assertIsArray($this->handler->getCacheInfo());
     }
 
-    public function testGetMetaData()
-    {
-        $time = time();
-        $this->handler->save(self::$key1, 'value');
-
-        $this->assertFalse($this->handler->getMetaData(self::$dummy));
-
-        $actual = $this->handler->getMetaData(self::$key1);
-
-        // This test is time-dependent, and depending on the timing,
-        // seconds in `$time` (e.g. 12:00:00.9999) and seconds of
-        // `$this->memcachedHandler->save()` (e.g. 12:00:01.0000)
-        // may be off by one second. In that case, the following calculation
-        // will result in maximum of (60 + 1).
-        $this->assertLessThanOrEqual(60 + 1, $actual['expire'] - $time);
-
-        $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
-        $this->assertSame('value', $actual['data']);
-    }
-
     public function testIsSupported()
     {
         $this->assertTrue($this->handler->isSupported());
+    }
+
+    public function testGetMetaDataMiss()
+    {
+        $this->assertFalse($this->handler->getMetaData(self::$dummy));
     }
 }

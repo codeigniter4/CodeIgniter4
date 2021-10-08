@@ -12,19 +12,13 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
 /**
  * @internal
  */
-final class PredisHandlerTest extends CIUnitTestCase
+final class PredisHandlerTest extends AbstractHandlerTest
 {
-    private $handler;
-    private static $key1 = 'key1';
-    private static $key2 = 'key2';
-    private static $key3 = 'key3';
-
     private static function getKeyArray()
     {
         return [
@@ -34,7 +28,6 @@ final class PredisHandlerTest extends CIUnitTestCase
         ];
     }
 
-    private static $dummy = 'dymmy';
     private $config;
 
     protected function setUp(): void
@@ -178,19 +171,6 @@ final class PredisHandlerTest extends CIUnitTestCase
         $this->handler->save(self::$key1, 'value');
 
         $this->assertIsArray($this->handler->getCacheInfo());
-    }
-
-    public function testGetMetaData()
-    {
-        $time = time();
-        $this->handler->save(self::$key1, 'value');
-
-        $this->assertNull($this->handler->getMetaData(self::$dummy));
-
-        $actual = $this->handler->getMetaData(self::$key1);
-        $this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-        $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
-        $this->assertSame('value', $actual['data']);
     }
 
     public function testIsSupported()

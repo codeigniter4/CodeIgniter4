@@ -12,18 +12,14 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 
 /**
  * @internal
  */
-final class FileHandlerTest extends CIUnitTestCase
+final class FileHandlerTest extends AbstractHandlerTest
 {
     private static $directory = 'FileHandler';
-    private static $key1      = 'key1';
-    private static $key2      = 'key2';
-    private static $key3      = 'key3';
 
     private static function getKeyArray()
     {
@@ -34,8 +30,6 @@ final class FileHandlerTest extends CIUnitTestCase
         ];
     }
 
-    private static $dummy = 'dymmy';
-    private $handler;
     private $config;
 
     protected function setUp(): void
@@ -252,19 +246,6 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->handler->save(self::$key2, 'value');
     }
 
-    public function testGetMetaData()
-    {
-        $time = time();
-        $this->handler->save(self::$key1, 'value');
-
-        $this->assertFalse($this->handler->getMetaData(self::$dummy));
-
-        $actual = $this->handler->getMetaData(self::$key1);
-        $this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-        $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
-        $this->assertSame('value', $actual['data']);
-    }
-
     public function testGetCacheInfo()
     {
         $this->handler->save(self::$key1, 'value');
@@ -338,6 +319,11 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertArrayHasKey('writable', $actual);
         $this->assertArrayHasKey('executable', $actual);
         $this->assertArrayHasKey('fileperms', $actual);
+    }
+
+    public function testGetMetaDataMiss()
+    {
+        $this->assertFalse($this->handler->getMetaData(self::$dummy));
     }
 }
 
