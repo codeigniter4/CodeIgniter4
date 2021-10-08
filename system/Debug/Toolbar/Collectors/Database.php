@@ -130,8 +130,11 @@ class Database extends BaseCollector
     public function display(): array
     {
         $data['queries'] = array_map(static function (array $query) {
+            $isDuplicate = $query['duplicate'] === true;
+
             return [
-                'class'    => isset($query['duplicate']) ? 'duplicate' : '',
+                'hover'    => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'    => $isDuplicate ? 'duplicate' : '',
                 'duration' => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
                 'sql'      => $query['query']->debugToolbarDisplay(),
             ];
