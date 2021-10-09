@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Model;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
@@ -776,7 +777,12 @@ if (! function_exists('model')) {
     /**
      * More simple way of getting model instances from Factories
      *
-     * @return mixed
+     * @template T of Model
+     *
+     * @param class-string<T> $name
+     *
+     * @return T
+     * @phpstan-return Model
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
