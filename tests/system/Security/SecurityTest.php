@@ -22,6 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockCSRFCookie;
 use CodeIgniter\Test\Mock\MockSecurity;
+use Config\App as AppConfig;
 use Config\Security as SecurityConfig;
 
 /**
@@ -59,11 +60,18 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }
 
+    private function createSecurity(?AppConfig $appConfig = null, ?SecurityConfig $securityConfig = null): Security
+    {
+        $appConfig = $appConfig ?? new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig($securityConfig), config('Cookie')));
+
+        return $security;
+    }
+
     public function testCSRFVerifySetsCookieWhenNotPOST()
     {
-        $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+        $security = $this->createSecurity();
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -87,9 +95,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch()
     {
-        $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+        $security = $this->createSecurity();
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
@@ -120,9 +126,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyHeaderReturnsSelfOnMatch()
     {
-        $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+        $security = $this->createSecurity();
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
@@ -155,8 +159,7 @@ final class SecurityTest extends CIUnitTestCase
     public function testCSRFVerifyJsonReturnsSelfOnMatch()
     {
         $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+        $security  = $this->createSecurity($appConfig);
 
         $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
@@ -187,8 +190,7 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $securityConfig);
 
         $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig($securityConfig), config('Cookie')));
+        $security  = $this->createSecurity($appConfig, $securityConfig);
 
         $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
@@ -210,8 +212,7 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $securityConfig);
 
         $appConfig = new MockAppConfig();
-        $security  = new MockSecurity($appConfig);
-        $security->setCsrf(new MockCSRFCookie(new CSRFConfig($securityConfig), config('Cookie')));
+        $security  = $this->createSecurity($appConfig, $securityConfig);
 
         $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
