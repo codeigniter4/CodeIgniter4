@@ -12,20 +12,14 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
 use Exception;
 
 /**
  * @internal
  */
-final class MemcachedHandlerTest extends CIUnitTestCase
+final class MemcachedHandlerTest extends AbstractHandlerTest
 {
-    private $memcachedHandler;
-    private static $key1 = 'key1';
-    private static $key2 = 'key2';
-    private static $key3 = 'key3';
-
     private static function getKeyArray()
     {
         return [
@@ -35,7 +29,6 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         ];
     }
 
-    private static $dummy = 'dymmy';
     private $config;
 
     protected function setUp(): void
@@ -44,21 +37,21 @@ final class MemcachedHandlerTest extends CIUnitTestCase
 
         $this->config = new Cache();
 
-        $this->memcachedHandler = new MemcachedHandler($this->config);
+        $this->handler = new MemcachedHandler($this->config);
 
-        $this->memcachedHandler->initialize();
+        $this->handler->initialize();
     }
 
     protected function tearDown(): void
     {
         foreach (self::getKeyArray() as $key) {
-            $this->memcachedHandler->delete($key);
+            $this->handler->delete($key);
         }
     }
 
     public function testNew()
     {
-        $this->assertInstanceOf(MemcachedHandler::class, $this->memcachedHandler);
+        $this->assertInstanceOf(MemcachedHandler::class, $this->handler);
     }
 
     /**
@@ -69,13 +62,13 @@ final class MemcachedHandlerTest extends CIUnitTestCase
      */
     public function testGet()
     {
-        $this->memcachedHandler->save(self::$key1, 'value', 2);
+        $this->handler->save(self::$key1, 'value', 2);
 
-        $this->assertSame('value', $this->memcachedHandler->get(self::$key1));
-        $this->assertNull($this->memcachedHandler->get(self::$dummy));
+        $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
 
         CLI::wait(3);
-        $this->assertNull($this->memcachedHandler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$key1));
     }
 
     /**
@@ -86,40 +79,40 @@ final class MemcachedHandlerTest extends CIUnitTestCase
      */
     public function testRemember()
     {
-        $this->memcachedHandler->remember(self::$key1, 2, static function () {
+        $this->handler->remember(self::$key1, 2, static function () {
             return 'value';
         });
 
-        $this->assertSame('value', $this->memcachedHandler->get(self::$key1));
-        $this->assertNull($this->memcachedHandler->get(self::$dummy));
+        $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
 
         CLI::wait(3);
-        $this->assertNull($this->memcachedHandler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$key1));
     }
 
     public function testSave()
     {
-        $this->assertTrue($this->memcachedHandler->save(self::$key1, 'value'));
+        $this->assertTrue($this->handler->save(self::$key1, 'value'));
     }
 
     public function testSavePermanent()
     {
-        $this->assertTrue($this->memcachedHandler->save(self::$key1, 'value', 0));
-        $metaData = $this->memcachedHandler->getMetaData(self::$key1);
+        $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
+        $metaData = $this->handler->getMetaData(self::$key1);
 
         $this->assertNull($metaData['expire']);
         $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
         $this->assertSame('value', $metaData['data']);
 
-        $this->assertTrue($this->memcachedHandler->delete(self::$key1));
+        $this->assertTrue($this->handler->delete(self::$key1));
     }
 
     public function testDelete()
     {
-        $this->memcachedHandler->save(self::$key1, 'value');
+        $this->handler->save(self::$key1, 'value');
 
-        $this->assertTrue($this->memcachedHandler->delete(self::$key1));
-        $this->assertFalse($this->memcachedHandler->delete(self::$dummy));
+        $this->assertTrue($this->handler->delete(self::$key1));
+        $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
     public function testDeleteMatching()
@@ -127,14 +120,14 @@ final class MemcachedHandlerTest extends CIUnitTestCase
         // Not implemented for Memcached, should throw an exception
         $this->expectException(Exception::class);
 
-        $this->memcachedHandler->deleteMatching('key*');
+        $this->handler->deleteMatching('key*');
     }
 
     public function testIncrement()
     {
-        $this->memcachedHandler->save(self::$key1, 1);
+        $this->handler->save(self::$key1, 1);
 
-        $this->assertFalse($this->memcachedHandler->increment(self::$key1, 10));
+        $this->assertFalse($this->handler->increment(self::$key1, 10));
 
         $config                   = new Cache();
         $config->memcached['raw'] = true;
@@ -151,9 +144,9 @@ final class MemcachedHandlerTest extends CIUnitTestCase
 
     public function testDecrement()
     {
-        $this->memcachedHandler->save(self::$key1, 10);
+        $this->handler->save(self::$key1, 10);
 
-        $this->assertFalse($this->memcachedHandler->decrement(self::$key1, 1));
+        $this->assertFalse($this->handler->decrement(self::$key1, 1));
 
         $config                   = new Cache();
         $config->memcached['raw'] = true;
@@ -170,41 +163,26 @@ final class MemcachedHandlerTest extends CIUnitTestCase
 
     public function testClean()
     {
-        $this->memcachedHandler->save(self::$key1, 1);
-        $this->memcachedHandler->save(self::$key2, 'value');
+        $this->handler->save(self::$key1, 1);
+        $this->handler->save(self::$key2, 'value');
 
-        $this->assertTrue($this->memcachedHandler->clean());
+        $this->assertTrue($this->handler->clean());
     }
 
     public function testGetCacheInfo()
     {
-        $this->memcachedHandler->save(self::$key1, 'value');
+        $this->handler->save(self::$key1, 'value');
 
-        $this->assertIsArray($this->memcachedHandler->getCacheInfo());
-    }
-
-    public function testGetMetaData()
-    {
-        $time = time();
-        $this->memcachedHandler->save(self::$key1, 'value');
-
-        $this->assertFalse($this->memcachedHandler->getMetaData(self::$dummy));
-
-        $actual = $this->memcachedHandler->getMetaData(self::$key1);
-
-        // This test is time-dependent, and depending on the timing,
-        // seconds in `$time` (e.g. 12:00:00.9999) and seconds of
-        // `$this->memcachedHandler->save()` (e.g. 12:00:01.0000)
-        // may be off by one second. In that case, the following calculation
-        // will result in maximum of (60 + 1).
-        $this->assertLessThanOrEqual(60 + 1, $actual['expire'] - $time);
-
-        $this->assertLessThanOrEqual(1, $actual['mtime'] - $time);
-        $this->assertSame('value', $actual['data']);
+        $this->assertIsArray($this->handler->getCacheInfo());
     }
 
     public function testIsSupported()
     {
-        $this->assertTrue($this->memcachedHandler->isSupported());
+        $this->assertTrue($this->handler->isSupported());
+    }
+
+    public function testGetMetaDataMiss()
+    {
+        $this->assertFalse($this->handler->getMetaData(self::$dummy));
     }
 }
