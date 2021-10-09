@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Security\CSRF;
 
+use Config\App;
 use Config\Security as SecurityConfig;
 
 use function config;
@@ -90,7 +91,7 @@ class CSRFConfig
 
     public function __construct(?SecurityConfig $securityConfig = null)
     {
-        /** @var \Config\App */
+        /** @var App $config */
         $config = config('App');
 
         // If `Config/Security.php` does not exist
