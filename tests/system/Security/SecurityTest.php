@@ -16,11 +16,12 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Security\CSRF\CSRFConfig;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use CodeIgniter\Test\Mock\MockCSRFCookie;
 use CodeIgniter\Test\Mock\MockSecurity;
-use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 
 /**
@@ -60,7 +61,9 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifySetsCookieWhenNotPOST()
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -84,8 +87,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyPostReturnsSelfOnMatch()
     {
-        $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['foo']                = 'bar';
@@ -114,8 +120,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyHeaderReturnsSelfOnMatch()
     {
-        $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -145,8 +154,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testCSRFVerifyJsonReturnsSelfOnMatch()
     {
-        $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig(), config('Cookie')));
+
+        $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
         $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
 
@@ -170,12 +182,15 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithFalseSecurityRegenerateProperty()
     {
-        $config             = new SecurityConfig();
-        $config->regenerate = false;
-        Factories::injectMock('config', 'Security', $config);
+        $securityConfig             = new SecurityConfig();
+        $securityConfig->regenerate = false;
+        Factories::injectMock('config', 'Security', $securityConfig);
 
-        $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig($securityConfig), config('Cookie')));
+
+        $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -190,12 +205,15 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testRegenerateWithTrueSecurityRegenerateProperty()
     {
-        $config             = new SecurityConfig();
-        $config->regenerate = true;
-        Factories::injectMock('config', 'Security', $config);
+        $securityConfig             = new SecurityConfig();
+        $securityConfig->regenerate = true;
+        Factories::injectMock('config', 'Security', $securityConfig);
 
-        $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $appConfig = new MockAppConfig();
+        $security  = new MockSecurity($appConfig);
+        $security->setCsrf(new MockCSRFCookie(new CSRFConfig($securityConfig), config('Cookie')));
+
+        $request = new IncomingRequest($appConfig, new URI('http://badurl.com'), null, new UserAgent());
 
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -217,46 +235,5 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertIsString($security->getHeaderName());
         $this->assertIsString($security->getCookieName());
         $this->assertIsBool($security->shouldRedirect());
-    }
-
-    public function testSendingCookiesFalse(): void
-    {
-        $request = $this->createMock(IncomingRequest::class);
-        $request->method('isSecure')->willReturn(false);
-
-        $config = new CookieConfig();
-
-        $config->secure = true;
-        Factories::injectMock('config', CookieConfig::class, $config);
-
-        $security = $this->getMockBuilder(Security::class)
-            ->setConstructorArgs([new MockAppConfig()])
-            ->onlyMethods(['doSendCookie'])
-            ->getMock();
-
-        $sendCookie = $this->getPrivateMethodInvoker($security, 'sendCookie');
-
-        $security->expects($this->never())->method('doSendCookie');
-        $this->assertFalse($sendCookie($request));
-    }
-
-    public function testSendingGoodCookies(): void
-    {
-        $request = $this->createMock(IncomingRequest::class);
-        $request->method('isSecure')->willReturn(true);
-
-        $config = new MockAppConfig();
-
-        $config->cookieSecure = true;
-
-        $security = $this->getMockBuilder(Security::class)
-            ->setConstructorArgs([$config])
-            ->onlyMethods(['doSendCookie'])
-            ->getMock();
-
-        $sendCookie = $this->getPrivateMethodInvoker($security, 'sendCookie');
-
-        $security->expects($this->once())->method('doSendCookie');
-        $this->assertInstanceOf(Security::class, $sendCookie($request));
     }
 }

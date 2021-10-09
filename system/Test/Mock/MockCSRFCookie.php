@@ -11,8 +11,15 @@
 
 namespace CodeIgniter\Test\Mock;
 
-use CodeIgniter\Security\Security;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Security\CSRF\CSRFCookie;
 
-class MockSecurity extends Security
+class MockCSRFCookie extends CSRFCookie
 {
+    protected function sendCookie(RequestInterface $request): bool
+    {
+        $_COOKIE['csrf_cookie_name'] = $this->hash;
+
+        return true;
+    }
 }
