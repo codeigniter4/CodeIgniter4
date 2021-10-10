@@ -196,8 +196,8 @@ class Toolbar
 
             $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren ? '<nav></nav>' : '') . $row['name'];
             if (isset($row['query'])) {
-                $output .= 'br';
-                $output .= '<span class="debug-bar-ndisplay">' . $row['query'] . '</span>';
+                $output .= '<br>';
+                $output .= '<inline class="debug-bar-ndisplay">' . $row['query'] . '</inline>';
             }
             $output .= '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
