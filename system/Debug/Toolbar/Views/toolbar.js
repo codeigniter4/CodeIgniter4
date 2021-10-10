@@ -141,6 +141,15 @@ var ciDebugBar = {
 		}
 	},
 
+    /**
+	 * Toggle display of query strings on the timeline view
+	 */
+    toggleQueryString : function () {
+        var target = event.target;
+        var child = target.getElementsByClassName('debug-bar-ndisplay')['0'];
+        child.style.display = child.style.display == 'none' ? 'block' : 'none';
+    },
+
 	/**
 	 * Toggle display of timeline child elements
 	 *
