@@ -194,7 +194,12 @@ class Toolbar
                 $output .= '<tr>';
             }
 
-            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren ? '<nav></nav>' : '') . $row['name'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren ? '<nav></nav>' : '') . $row['name'];
+            if (isset($row['query'])) {
+                $output .= 'br';
+                $output .= '<span class="query hidden">' . $row['query'] . '</span>';
+            }
+            $output .= '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10 ' : '') . 'debug-bar-alignRight">' . number_format($row['duration'] * 1000, 2) . ' ms</td>';
             $output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
