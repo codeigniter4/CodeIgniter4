@@ -147,7 +147,10 @@ var ciDebugBar = {
     toggleQueryString : function () {
         var target = event.target;
         var child = target.getElementsByClassName('debug-bar-ndisplay')['0'];
-        child.style.display = child.style.display == 'none' ? 'block' : 'none';
+
+        if (child) {
+			child.style.display = child.style.display == 'none' ? 'block' : 'none';
+        }
     },
 
 	/**
