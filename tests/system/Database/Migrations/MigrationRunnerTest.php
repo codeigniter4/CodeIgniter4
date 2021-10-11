@@ -33,7 +33,6 @@ final class MigrationRunnerTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-
     protected $root;
     protected $start;
     protected $config;

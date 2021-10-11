@@ -23,7 +23,6 @@ use CodeIgniter\HTTP\CURLRequest;
 class MockCURLRequest extends CURLRequest
 {
     public $curl_options;
-
     protected $output = '';
 
     public function setOutput($output)

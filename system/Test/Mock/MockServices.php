@@ -19,7 +19,6 @@ class MockServices extends BaseService
     public $psr4 = [
         'Tests/Support' => TESTPATH . '_support/',
     ];
-
     public $classmap = [];
 
     public function __construct()
