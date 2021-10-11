@@ -312,7 +312,7 @@ Execute a DROP KEY.
 
 ::
 
-    // Produces: DROP INDEX 'users_index' ON 'tablename'
+    // Produces: DROP INDEX users_index ON tablename
     $forge->dropKey('tablename','users_index');
 
 Renaming a table
