@@ -125,22 +125,36 @@ class Security implements SecurityInterface
      */
     public function __construct(App $config)
     {
-        /** @var SecurityConfig $security */
+        /** @var SecurityConfig|null $security */
         $security = config('Security');
 
         // Store CSRF-related configurations
-        $this->tokenName  = $security->tokenName ?? $config->CSRFTokenName ?? $this->tokenName;
-        $this->headerName = $security->headerName ?? $config->CSRFHeaderName ?? $this->headerName;
-        $this->regenerate = $security->regenerate ?? $config->CSRFRegenerate ?? $this->regenerate;
-        $rawCookieName    = $security->cookieName ?? $config->CSRFCookieName ?? $this->cookieName;
+        if ($security) {
+            $this->tokenName  = $security->tokenName;
+            $this->headerName = $security->headerName;
+            $this->regenerate = $security->regenerate;
+            $rawCookieName    = $security->cookieName;
+            $expires          = $security->expires;
+        } else {
+            // `Config/Security.php` is absence
+            $this->tokenName  = $config->CSRFTokenName;
+            $this->headerName = $config->CSRFHeaderName;
+            $this->regenerate = $config->CSRFRegenerate;
+            $rawCookieName    = $config->CSRFCookieName;
+            $expires          = $config->CSRFExpire;
+        }
 
-        /** @var CookieConfig $cookie */
+        /** @var CookieConfig|null $cookie */
         $cookie = config('Cookie');
 
-        $cookiePrefix     = $cookie->prefix ?? $config->cookiePrefix;
-        $this->cookieName = $cookiePrefix . $rawCookieName;
-
-        $expires = $security->expires ?? $config->CSRFExpire ?? 7200;
+        if ($cookie) {
+            $cookiePrefix     = $cookie->prefix;
+            $this->cookieName = $cookiePrefix . $rawCookieName;
+        } else {
+            // `Config/Cookie.php` is absence
+            $cookiePrefix     = $config->cookiePrefix;
+            $this->cookieName = $cookiePrefix . $rawCookieName;
+        }
 
         Cookie::setDefaults($cookie);
         $this->cookie = new Cookie($rawCookieName, $this->generateHash(), [
