@@ -407,17 +407,22 @@ class Security implements SecurityInterface
 
             $this->hash = bin2hex(random_bytes(16));
 
-            $this->cookie = new Cookie(
-                $this->rawCookieName,
-                $this->hash,
-                [
-                    'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
-                ]
-            );
-            $this->sendCookie($this->request);
+            $this->saveHashInCookie();
         }
 
         return $this->hash;
+    }
+
+    protected function saveHashInCookie()
+    {
+        $this->cookie = new Cookie(
+            $this->rawCookieName,
+            $this->hash,
+            [
+                'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
+            ]
+        );
+        $this->sendCookie($this->request);
     }
 
     /**
