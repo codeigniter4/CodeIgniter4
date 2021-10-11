@@ -1,12 +1,10 @@
-Contribution CSS
-================
+# Contribution CSS
 
 CodeIgniter uses SASS to generate the debug toolbar's CSS. Therefore,
 you will need to install it first. You can find further instructions on
 the official website: <https://sass-lang.com/install>
 
-Compile SASS files
-------------------
+## Compile SASS files
 
 Open your terminal, and navigate to CodeIgniter's root folder. To
 generate the CSS file, use the following command:
@@ -20,8 +18,7 @@ this prevents a "cache" folder from being created
 - `admin/css/debug-toolbar/toolbar.scss` is the SASS source 
 - `system/Debug/Toolbar/Views/toolbar.css` is he CSS destination
 
-Color scheme
-------------
+## Color scheme
 
 **Themes**
 

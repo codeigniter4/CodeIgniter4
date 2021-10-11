@@ -1,5 +1,4 @@
-Contribution Workflow
-=====================
+# Contribution Workflow
 
 Much of the workflow for contributing to CodeIgniter (or any project)
 involves understanding how [Git](https://git-scm.com/) is used to manage
@@ -15,8 +14,7 @@ values for when you try these:
     ORIGIN_URL      // the cloning URL for your repository fork
     UPSTREAM_URL    // the cloning URL for the CodeIgniter4 repository
 
-Branching
----------
+## Branching
 
 CodeIgniter uses the
 [Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/)
@@ -38,28 +36,26 @@ but disagree with Y, meaning we cannot merge the request. Using the
 Git-Flow branching model you can create new branches for both of these
 features and send two requests.
 
-Forking
--------
+## Forking
 
 You work with a fork of the CodeIgniter4 repository. This is a copy of
-our repository, in your github account. You can make changes to your
+our repository, in your GitHub account. You can make changes to your
 forked repository, while you cannot do the same with the shared one -
 you have to submit pull requests to it instead.
 
 [Creating a fork](https://help.github.com/articles/fork-a-repo/) is done
-through the Github website. Navigate to [our
+through the GitHub website. Navigate to [our
 repository](https://github.com/codeigniter4/CodeIgniter4), click the
 **Fork** button in the top-right of the page, and choose which account
 or organization of yours should contain that fork.
 
-Cloning
--------
+## Cloning
 
-You *could* work on your repository using Github's web interface, but
+You *could* work on your repository using GitHub's web interface, but
 that is awkward. Most developers will clone their repository to their
 local system, and work with it there.
 
-On Github, navigate to your forked repository, click **Clone or
+On GitHub, navigate to your forked repository, click **Clone or
 download**, and copy the cloning URL shown. We will refer to this as
 ORIGIN\_URL.
 
@@ -68,11 +64,10 @@ Clone your repository, leaving a local folder for you to work with:
     cd ALL_PROJECTS
     git clone ORIGIN_URL
 
-Synching
---------
+## Syncing develop
 
 Within your local repository, Git will have created an alias,
-**origin**, for the Github repository it is bound to. You want to create
+**origin**, for the GitHub repository it is bound to. You want to create
 an alias for the shared repository as well, so that you can "synch" the
 two, making sure that your repository includes any other contributions
 that have been merged by us into the shared repo:
@@ -84,10 +79,11 @@ is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
     git checkout develop
-    git pull upstream develop
+    git fetch upstream
+    git merge upstream/develop
     git push origin develop
 
-You might get merge conflicts when you pull from upstream. It is your
+You might get merge conflicts when you merge. It is your
 responsibility to resolve those locally, so that you can continue
 collaborating with the shared repository. Basically, the shared
 repository is updated in the order that contributions are merged into
@@ -98,13 +94,12 @@ precedence, even if it causes problems for other contributions.
 It is a good idea to synchronize repositories when the shared one
 changes.
 
-Branching Revisited
--------------------
+## Branching Revisited
 
 The top of this page talked about the **master** and **develop**
 branches. The *best practice* for your work is to create a *feature
 branch* locally, to hold a group of related changes (source, unit
-testing, documentation, change log, etc).
+testing, documentation, changelog, etc).
 
 This local branch should be named appropriately, for instance
 "fix/problem123" or "new/mind-reader". The slashes in these branch names
@@ -119,8 +114,7 @@ creating:
 
 Saving changes only updates your local working area.
 
-Committing
-----------
+## Committing
 
 Your local changes need to be *committed* to save them in your local
 repository. This is where [contribution signing](./signing.md) comes
@@ -152,36 +146,35 @@ a starting point for your next session working with your repository.
 This is a good practice, as it is not always obvious which branch you
 are working in.
 
-Pushing Your Branch
--------------------
+## Pushing Your Branch
 
 At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
 
 **Note:**
-Remember to synch your local repo with the shared one before pushing!
+> Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
 
 Synchronize your repository:
 
     git checkout develop
-    git pull upstream develop
+    git fetch upstream
+    git merge upstream/develop
     git push origin develop
 
 Bring your feature branch up to date:
 
     git checkout new/mind-reader
-    git merge develop
+    git rebase upstream/develop
 
-And finally push your local branch to your github repository:
+And finally push your local branch to your GitHub repository:
 
-    git push origin new/mind-reader
+    git push --force-with-lease origin new/mind-reader
 
-Pull Requests
--------------
+## Pull Requests
 
-On Github, you propose your changes one feature branch at a time, by
+On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
@@ -192,13 +185,10 @@ Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
-<div class="admonition note">
 
-If you do not provide a title or description for your PR, the odds of it being summarily rejected
-
-:   rise astronomically.
-
-</div>
+**Note:**
+> If you do not provide a title or description for your PR, the odds of it being summarily rejected
+rise astronomically.
 
 When your PR is submitted, a continuous integration task will be
 triggered, running all the unit tests as well as any other checking we
@@ -213,8 +203,7 @@ If your PR does not follow our contribution guidelines, or is
 incomplete, the codebase maintainers will comment on it, pointing out
 what needs fixing.
 
-Cleanup
--------
+## Cleanup
 
 If your PR is accepted and merged into the shared repository, you can
-delete that branch in your github repository as well as locally.
+delete that branch in your GitHub repository as well as locally.

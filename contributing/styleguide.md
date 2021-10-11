@@ -16,6 +16,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 _Portions of the following rules are from and attributed to [PSR-12][psr12]. Even if we do not copy all the rules to this coding style guide explicitly, such uncopied rules SHALL still apply._
 
 [psr12]: https://www.php-fig.org/psr/psr-12/
+
 ## Implementation
 
 Our team uses [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to apply coding standard fixes automatically. If you would like to leverage these tools yourself visit the [Official CodeIgniter Coding Standard](https://github.com/CodeIgniter/coding-standard) repository for details.

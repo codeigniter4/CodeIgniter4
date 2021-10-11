@@ -1,5 +1,4 @@
-Contribution Signing
-====================
+# Contribution Signing
 
 We ask that contributions have code commits signed. **This is important
 in order to prove, as best we can, the provenance of contributions.**
@@ -17,7 +16,7 @@ a virus) and make it look like another developer created it.
 
 The best solution, while not fool-proof, is to "securely sign" your
 commits. Such commits are digitally signed, with a GPG-key associated
-with your github account. It still isn't foolproof, because a malicious
+with your GitHub account. It still isn't foolproof, because a malicious
 developer could create a bogus email and account, but it is more
 reliable than an unsigned or a "signed-off by" commit.
 
@@ -28,15 +27,14 @@ performs an important role, we will insist that it be securely signed.
 
 Read below to find out how to sign your commits :)
 
-Secure Signing
---------------
+## Secure Signing
 
 To verify your commits, you will need to setup a GPG key, and attach it
-to your github account.
+to your GitHub account.
 
 See the [git
 tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
-for directions on doing this. The complete story is part of [Github
+for directions on doing this. The complete story is part of [GitHub
 help](https://help.github.com/categories/gpg/).
 
 The basic steps are
@@ -44,7 +42,7 @@ The basic steps are
 -   [generate your GPG
     key](https://help.github.com/articles/generating-a-new-gpg-key/),
     and copy the ASCII representation of it.
--   [Add your GPG key to your Github
+-   [Add your GPG key to your GitHub
     account](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/).
 -   [Tell
     Git](https://help.github.com/articles/telling-git-about-your-gpg-key/)
@@ -57,8 +55,7 @@ The basic steps are
 Depending on your IDE, you may have to do your Git commits from your Git
 bash shell to use the **-S** option to force the secure signing.
 
-Commit Messages
----------------
+## Commit Messages
 
 Regardless of how you sign a commit, commit messages are important too.
 They communicate the intent of a specific change, concisely. They make
