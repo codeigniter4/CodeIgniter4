@@ -5,7 +5,7 @@ Explain what you have changed, and why.
 
 **Checklist:**
 - [ ] Securely signed commits
-- [ ] Component(s) with PHPdocs
+- [ ] Component(s) with PHPDoc blocks, only if necessary or adds value
 - [ ] Unit testing, with >80% coverage
 - [ ] User guide updated
 - [ ] Conforms to style guide
@@ -19,4 +19,3 @@ Explain what you have changed, and why.
 - Unsolicited pull requests will be considered, but there is no guarantee of acceptance
 - Pull requests should be from a feature branch in the contributor's fork of the repository
   to the develop branch of the project repository
-  
