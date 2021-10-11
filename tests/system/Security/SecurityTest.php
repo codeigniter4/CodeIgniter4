@@ -41,7 +41,11 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testBasicConfigIsSaved()
     {
-        $security = new Security(new MockAppConfig());
+        $config   = new MockAppConfig();
+        $security = $this->getMockBuilder(Security::class)
+            ->setConstructorArgs([$config])
+            ->onlyMethods(['doSendCookie'])
+            ->getMock();
 
         $hash = $security->getHash();
 
@@ -53,7 +57,11 @@ final class SecurityTest extends CIUnitTestCase
     {
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new Security(new MockAppConfig());
+        $config   = new MockAppConfig();
+        $security = $this->getMockBuilder(Security::class)
+            ->setConstructorArgs([$config])
+            ->onlyMethods(['doSendCookie'])
+            ->getMock();
 
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }

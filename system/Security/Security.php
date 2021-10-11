@@ -17,6 +17,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
+use Config\Services;
 
 /**
  * Class Security
@@ -77,8 +78,6 @@ class Security implements SecurityInterface
      * Defaults to two hours (in seconds).
      *
      * @var int
-     *
-     * @deprecated
      */
     protected $expires = 7200;
 
@@ -118,6 +117,18 @@ class Security implements SecurityInterface
     protected $samesite = Cookie::SAMESITE_LAX;
 
     /**
+     * @var RequestInterface
+     */
+    protected $request;
+
+    /**
+     * CSRF Cookie Name without Prefix
+     *
+     * @var string
+     */
+    private $rawCookieName;
+
+    /**
      * Constructor.
      *
      * Stores our configuration and fires off the init() method to setup
@@ -130,18 +141,18 @@ class Security implements SecurityInterface
 
         // Store CSRF-related configurations
         if ($security) {
-            $this->tokenName  = $security->tokenName;
-            $this->headerName = $security->headerName;
-            $this->regenerate = $security->regenerate;
-            $rawCookieName    = $security->cookieName;
-            $expires          = $security->expires;
+            $this->tokenName     = $security->tokenName;
+            $this->headerName    = $security->headerName;
+            $this->regenerate    = $security->regenerate;
+            $this->rawCookieName = $security->cookieName;
+            $this->expires       = $security->expires;
         } else {
             // `Config/Security.php` is absence
-            $this->tokenName  = $config->CSRFTokenName;
-            $this->headerName = $config->CSRFHeaderName;
-            $this->regenerate = $config->CSRFRegenerate;
-            $rawCookieName    = $config->CSRFCookieName;
-            $expires          = $config->CSRFExpire;
+            $this->tokenName     = $config->CSRFTokenName;
+            $this->headerName    = $config->CSRFHeaderName;
+            $this->regenerate    = $config->CSRFRegenerate;
+            $this->rawCookieName = $config->CSRFCookieName;
+            $this->expires       = $config->CSRFExpire;
         }
 
         /** @var CookieConfig|null $cookie */
@@ -149,17 +160,18 @@ class Security implements SecurityInterface
 
         if ($cookie) {
             $cookiePrefix     = $cookie->prefix;
-            $this->cookieName = $cookiePrefix . $rawCookieName;
+            $this->cookieName = $cookiePrefix . $this->rawCookieName;
         } else {
             // `Config/Cookie.php` is absence
             $cookiePrefix     = $config->cookiePrefix;
-            $this->cookieName = $cookiePrefix . $rawCookieName;
+            $this->cookieName = $cookiePrefix . $this->rawCookieName;
         }
 
         Cookie::setDefaults($cookie);
-        $this->cookie = new Cookie($rawCookieName, $this->generateHash(), [
-            'expires' => $expires === 0 ? 0 : time() + $expires,
-        ]);
+
+        $this->request = Services::request();
+
+        $this->generateHash();
     }
 
     /**
@@ -251,8 +263,7 @@ class Security implements SecurityInterface
             unset($_COOKIE[$this->cookieName]);
         }
 
-        $this->cookie = $this->cookie->withValue($this->generateHash());
-        $this->sendCookie($request);
+        $this->generateHash();
 
         log_message('info', 'CSRF token verified.');
 
@@ -395,6 +406,15 @@ class Security implements SecurityInterface
             }
 
             $this->hash = bin2hex(random_bytes(16));
+
+            $this->cookie = new Cookie(
+                $this->rawCookieName,
+                $this->hash,
+                [
+                    'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
+                ]
+            );
+            $this->sendCookie($this->request);
         }
 
         return $this->hash;
