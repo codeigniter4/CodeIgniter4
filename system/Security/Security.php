@@ -155,6 +155,15 @@ class Security implements SecurityInterface
             $this->expires       = $config->CSRFExpire;
         }
 
+        $this->configureCookie($config);
+
+        $this->request = Services::request();
+
+        $this->generateHash();
+    }
+
+    protected function configureCookie(App $config): void
+    {
         /** @var CookieConfig|null $cookie */
         $cookie = config('Cookie');
 
@@ -167,10 +176,6 @@ class Security implements SecurityInterface
             $cookiePrefix     = $config->cookiePrefix;
             $this->cookieName = $cookiePrefix . $this->rawCookieName;
         }
-
-        $this->request = Services::request();
-
-        $this->generateHash();
     }
 
     /**
