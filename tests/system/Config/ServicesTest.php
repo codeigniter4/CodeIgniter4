@@ -397,6 +397,8 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testSecurity()
     {
+        Services::injectMock('security', new MockSecurity(new App()));
+
         $result = Services::security();
         $this->assertInstanceOf(Security::class, $result);
     }
