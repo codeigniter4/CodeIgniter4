@@ -301,7 +301,7 @@ Execute a DROP FOREIGN KEY.
 
 ::
 
-    // Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
+    // Produces: ALTER TABLE tablename DROP FOREIGN KEY users_foreign
     $forge->dropForeignKey('tablename','users_foreign');
 
 Renaming a table
