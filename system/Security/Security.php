@@ -140,7 +140,7 @@ class Security implements SecurityInterface
         $security = config('Security');
 
         // Store CSRF-related configurations
-        if ($security) {
+        if ($security instanceof SecurityConfig) {
             $this->tokenName     = $security->tokenName;
             $this->headerName    = $security->headerName;
             $this->regenerate    = $security->regenerate;
