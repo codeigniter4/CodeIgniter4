@@ -228,25 +228,14 @@ class Security implements SecurityInterface
             return $this->sendCookie($request);
         }
 
-        // Does the token exist in POST, HEADER or optionally php:://input - json data.
-        if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
-            $tokenName = $request->header($this->headerName)->getValue();
-        } else {
-            $json = json_decode($request->getBody());
-
-            if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
-                $tokenName = $json->{$this->tokenName} ?? null;
-            } else {
-                $tokenName = null;
-            }
-        }
-
-        $token = $_POST[$this->tokenName] ?? $tokenName;
+        $token = $this->getPostedToken($request);
 
         // Does the tokens exist in both the POST/POSTed JSON and COOKIE arrays and match?
         if (! isset($token, $_COOKIE[$this->cookieName]) || ! hash_equals($token, $_COOKIE[$this->cookieName])) {
             throw SecurityException::forDisallowedAction();
         }
+
+        $json = json_decode($request->getBody());
 
         if (isset($_POST[$this->tokenName])) {
             // We kill this since we're done and we don't want to pollute the POST array.
@@ -268,6 +257,26 @@ class Security implements SecurityInterface
         log_message('info', 'CSRF token verified.');
 
         return $this;
+    }
+
+    protected function getPostedToken(RequestInterface $request): ?string
+    {
+        // Does the token exist in POST, HEADER or optionally php:://input - json data.
+        if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
+            $tokenName = $request->header($this->headerName)->getValue();
+        } else {
+            $json = json_decode($request->getBody());
+
+            if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
+                $tokenName = $json->{$this->tokenName} ?? null;
+            } else {
+                $tokenName = null;
+            }
+        }
+
+        $token = $_POST[$this->tokenName] ?? $tokenName;
+
+        return $token;
     }
 
     /**
