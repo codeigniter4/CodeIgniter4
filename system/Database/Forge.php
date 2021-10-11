@@ -433,13 +433,13 @@ class Forge
      *
      * @throws DatabaseException
      *
-     * @return BaseResult|bool|false|mixed|Query
+     * @return bool
      */
-    public function dropKey(string $table, string $fieldName)
+    public function dropKey(string $table, string $keyName)
     {
         $sql = sprintf(
             $this->dropIndexStr,
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $fieldName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
         );
 

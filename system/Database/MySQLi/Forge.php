@@ -224,13 +224,13 @@ class Forge extends BaseForge
     /**
      * Drop Key
      *
-     * @return BaseResult|bool|false|mixed|Query
+     * @return bool
      */
-    public function dropKey(string $table, string $fieldName)
+    public function dropKey(string $table, string $keyName)
     {
         $sql = sprintf(
             $this->dropIndexStr,
-            $this->db->escapeIdentifiers($fieldName),
+            $this->db->escapeIdentifiers($keyName),
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
         );
 
