@@ -161,13 +161,12 @@ class Security implements SecurityInterface
         if ($cookie instanceof CookieConfig) {
             $cookiePrefix     = $cookie->prefix;
             $this->cookieName = $cookiePrefix . $this->rawCookieName;
+            Cookie::setDefaults($cookie);
         } else {
             // `Config/Cookie.php` is absence
             $cookiePrefix     = $config->cookiePrefix;
             $this->cookieName = $cookiePrefix . $this->rawCookieName;
         }
-
-        Cookie::setDefaults($cookie);
 
         $this->request = Services::request();
 
