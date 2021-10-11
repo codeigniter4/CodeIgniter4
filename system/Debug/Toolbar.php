@@ -273,6 +273,17 @@ class Toolbar
         // We define ourselves as the first element of the array
         $element = array_shift($elements);
 
+        // If we are a query, add the formatted query string as our first child
+        if (array_key_exists('query', $element) && $element['query']) {
+            $element['children'][] = [
+                'name'      => $element['query'],
+                'component' => 'Query',
+                'start'     => $element['start'],
+                'duration'  => $element['duration'],
+                'end'       => $element['end'],
+            ];
+        }
+
         // If we have children behind us, collect and attach them to us
         while (! empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
             $element['children'][] = array_shift($elements);
