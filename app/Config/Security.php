@@ -57,7 +57,7 @@ class Security extends BaseConfig
      * CSRF Regenerate
      * --------------------------------------------------------------------------
      *
-     * Regenerate CSRF Token on every request.
+     * Regenerate CSRF Token on every submission.
      *
      * @var bool
      */
