@@ -274,9 +274,7 @@ class Security implements SecurityInterface
             }
         }
 
-        $token = $_POST[$this->tokenName] ?? $tokenName;
-
-        return $token;
+        return $_POST[$this->tokenName] ?? $tokenName;
     }
 
     /**
@@ -421,11 +419,9 @@ class Security implements SecurityInterface
 
     protected function isHashInCookie(): bool
     {
-        return (bool) (
-            isset($_COOKIE[$this->cookieName])
-            && is_string($_COOKIE[$this->cookieName])
-            && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
-        );
+        return isset($_COOKIE[$this->cookieName])
+        && is_string($_COOKIE[$this->cookieName])
+        && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1;
     }
 
     protected function saveHashInCookie()
