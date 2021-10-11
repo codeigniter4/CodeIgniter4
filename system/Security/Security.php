@@ -229,8 +229,8 @@ class Security implements SecurityInterface
         }
 
         // Does the token exist in POST, HEADER or optionally php:://input - json data.
-        if ($request->hasHeader($this->headerName) && ! empty($request->getHeader($this->headerName)->getValue())) {
-            $tokenName = $request->getHeader($this->headerName)->getValue();
+        if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
+            $tokenName = $request->header($this->headerName)->getValue();
         } else {
             $json = json_decode($request->getBody());
 
