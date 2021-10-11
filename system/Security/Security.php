@@ -407,10 +407,7 @@ class Security implements SecurityInterface
             // We don't necessarily want to regenerate it with
             // each page load since a page could contain embedded
             // sub-pages causing this feature to fail
-            if (isset($_COOKIE[$this->cookieName])
-                && is_string($_COOKIE[$this->cookieName])
-                && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
-            ) {
+            if ($this->isHashInCookie()) {
                 return $this->hash = $_COOKIE[$this->cookieName];
             }
 
@@ -420,6 +417,15 @@ class Security implements SecurityInterface
         }
 
         return $this->hash;
+    }
+
+    protected function isHashInCookie(): bool
+    {
+        return (bool) (
+            isset($_COOKIE[$this->cookieName])
+            && is_string($_COOKIE[$this->cookieName])
+            && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1
+        );
     }
 
     protected function saveHashInCookie()
