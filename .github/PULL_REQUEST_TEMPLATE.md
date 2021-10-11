@@ -5,7 +5,7 @@ Explain what you have changed, and why.
 
 **Checklist:**
 - [ ] Securely signed commits
-- [ ] Component(s) with PHPDocs
+- [ ] Component(s) with PHPDoc blocks, only if necessary or adds value
 - [ ] Unit testing, with >80% coverage
 - [ ] User guide updated
 - [ ] Conforms to style guide
