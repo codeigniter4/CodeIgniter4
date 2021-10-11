@@ -158,7 +158,7 @@ class Security implements SecurityInterface
         /** @var CookieConfig|null $cookie */
         $cookie = config('Cookie');
 
-        if ($cookie) {
+        if ($cookie instanceof CookieConfig) {
             $cookiePrefix     = $cookie->prefix;
             $this->cookieName = $cookiePrefix . $this->rawCookieName;
         } else {
