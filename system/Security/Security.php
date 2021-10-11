@@ -162,7 +162,7 @@ class Security implements SecurityInterface
         $this->generateHash();
     }
 
-    protected function configureCookie(App $config): void
+    private function configureCookie(App $config): void
     {
         /** @var CookieConfig|null $cookie */
         $cookie = config('Cookie');
@@ -263,7 +263,7 @@ class Security implements SecurityInterface
         return $this;
     }
 
-    protected function getPostedToken(RequestInterface $request): ?string
+    private function getPostedToken(RequestInterface $request): ?string
     {
         // Does the token exist in POST, HEADER or optionally php:://input - json data.
         if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
@@ -421,14 +421,14 @@ class Security implements SecurityInterface
         return $this->hash;
     }
 
-    protected function isHashInCookie(): bool
+    private function isHashInCookie(): bool
     {
         return isset($_COOKIE[$this->cookieName])
         && is_string($_COOKIE[$this->cookieName])
         && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1;
     }
 
-    protected function saveHashInCookie()
+    private function saveHashInCookie()
     {
         $this->cookie = new Cookie(
             $this->rawCookieName,
