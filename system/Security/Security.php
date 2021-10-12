@@ -119,7 +119,7 @@ class Security implements SecurityInterface
     /**
      * @var RequestInterface
      */
-    protected $request;
+    private $request;
 
     /**
      * CSRF Cookie Name without Prefix
