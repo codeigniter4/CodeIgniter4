@@ -120,6 +120,22 @@ than simply crashing. This can be turned off by editing the following config par
 
 Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
 
+=======================
+CSRF Protection Methods
+=======================
+
+By default, the Cookie based CSRF Protection is used. It is
+`Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
+on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
+
+You can also use Session based CSRF Protection. It is
+`Synchronizer Token Pattern <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern>`_.
+
+You can set to use the Session based CSRF protection by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $csrfProtection = 'session';
+
 *********************
 Other Helpful Methods
 *********************
