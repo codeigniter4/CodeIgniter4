@@ -141,18 +141,18 @@ class Security implements SecurityInterface
 
         // Store CSRF-related configurations
         if ($security instanceof SecurityConfig) {
-            $this->tokenName     = $security->tokenName;
-            $this->headerName    = $security->headerName;
-            $this->regenerate    = $security->regenerate;
-            $this->rawCookieName = $security->cookieName;
-            $this->expires       = $security->expires;
+            $this->tokenName     = $security->tokenName ?? $this->tokenName;
+            $this->headerName    = $security->headerName ?? $this->headerName;
+            $this->regenerate    = $security->regenerate ?? $this->regenerate;
+            $this->rawCookieName = $security->cookieName ?? $this->rawCookieName;
+            $this->expires       = $security->expires ?? $this->expires;
         } else {
             // `Config/Security.php` is absence
-            $this->tokenName     = $config->CSRFTokenName;
-            $this->headerName    = $config->CSRFHeaderName;
-            $this->regenerate    = $config->CSRFRegenerate;
-            $this->rawCookieName = $config->CSRFCookieName;
-            $this->expires       = $config->CSRFExpire;
+            $this->tokenName     = $config->CSRFTokenName ?? $this->tokenName;
+            $this->headerName    = $config->CSRFHeaderName ?? $this->headerName;
+            $this->regenerate    = $config->CSRFRegenerate ?? $this->regenerate;
+            $this->rawCookieName = $config->CSRFCookieName ?? $this->rawCookieName;
+            $this->expires       = $config->CSRFExpire ?? $this->expires;
         }
 
         $this->configureCookie($config);
