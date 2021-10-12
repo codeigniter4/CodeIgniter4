@@ -185,16 +185,18 @@ class Toolbar
 
         foreach ($rows as $row) {
             $hasChildren = isset($row['children']) && ! empty($row['children']);
+            $isQuery     = isset($row['query']) && ! empty($row['query']);
 
+            // Open controller timeline by default
             $open = $row['name'] === 'Controller';
 
-            if ($hasChildren) {
+            if ($hasChildren || $isQuery) {
                 $output .= '<tr class="timeline-parent' . ($open ? ' timeline-parent-open' : '') . '" id="timeline-' . $styleCount . '_parent" onclick="ciDebugBar.toggleChildRows(\'timeline-' . $styleCount . '\');">';
             } else {
                 $output .= '<tr>';
             }
 
-            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren ? '<nav></nav>' : '') . $row['name'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . (($hasChildren || $isQuery) ? '<nav></nav>' : '') . $row['name'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10 ' : '') . 'debug-bar-alignRight">' . number_format($row['duration'] * 1000, 2) . ' ms</td>';
             $output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
@@ -211,12 +213,22 @@ class Toolbar
             $styleCount++;
 
             // Add children if any
-            if ($hasChildren) {
+            if ($hasChildren || $isQuery) {
                 $output .= '<tr class="child-row" id="timeline-' . ($styleCount - 1) . '_children" style="' . ($open ? '' : 'display: none;') . '">';
                 $output .= '<td colspan="' . ($segmentCount + 3) . '" class="child-container">';
                 $output .= '<table class="timeline">';
                 $output .= '<tbody>';
-                $output .= $this->renderTimelineRecursive($row['children'], $startTime, $segmentCount, $segmentDuration, $styles, $styleCount, $level + 1, true);
+
+                if ($isQuery) {
+                    // Output query string if query
+                    $output .= '<tr>';
+                    $output .= '<td class="query-container" style="--level: ' . ($level + 1) . ';">' . $row['query'] . '</td>';
+                    $output .= '</tr>';
+                } else {
+                    // Recursively render children
+                    $output .= $this->renderTimelineRecursive($row['children'], $startTime, $segmentCount, $segmentDuration, $styles, $styleCount, $level + 1, true);
+                }
+
                 $output .= '</tbody>';
                 $output .= '</table>';
                 $output .= '</td>';
@@ -272,17 +284,6 @@ class Toolbar
     {
         // We define ourselves as the first element of the array
         $element = array_shift($elements);
-
-        // If we are a query, add the formatted query string as our first child
-        if (array_key_exists('query', $element) && $element['query']) {
-            $element['children'][] = [
-                'name'      => $element['query'],
-                'component' => 'Query',
-                'start'     => $element['start'],
-                'duration'  => $element['duration'],
-                'end'       => $element['end'],
-            ];
-        }
 
         // If we have children behind us, collect and attach them to us
         while (! empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
