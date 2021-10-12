@@ -24,8 +24,8 @@ This folder contains tools or docs useful for project maintainers.
     framework releases.  
     It could be downloaded, forked or potentially composer-installed.  
     This is a read-only repository.
--   **coding-standard** is the coding style standards repository.  
-    It contains PHP CodeSniffer rules to ensure consistent code style
+-   **coding-standard** <https://github.com/CodeIgniter/coding-standard> is the coding style standards repository.  
+    It contains PHP-CS-Fixer rules to ensure consistent code style
     within the framework itself.  
     It is meant to be composer-installed.
 -   **translations** is the repository holding official translations of
