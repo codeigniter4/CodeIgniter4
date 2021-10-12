@@ -11,8 +11,6 @@ We will try to manage the process somewhat, by adding a ["help wanted" label](ht
 specifically interested in at any point in time. Join the discussion for those issues and let us know
 if you want to take the lead on one of them.
 
-At this time, we are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
-
 - [Contributor Covenant Code of Conduct](../CODE_OF_CONDUCT.md)
 - [Reporting a Bug](./bug_report.md)
 - [Sending a Pull Request](./pull_request.md)
