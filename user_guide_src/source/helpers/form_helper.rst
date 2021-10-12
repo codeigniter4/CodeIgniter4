@@ -105,6 +105,8 @@ The following functions are available:
             <form action="http://example.com/index.php/u/sign-up" method="post" accept-charset="utf-8">
             <input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d" />
 
+        .. note:: To use auto generation of CSRF field, you need to turn CSRF filter on to the form page. In most cases it is requested using the `GET` method.
+
     **Adding Hidden Input Fields**
 
         Hidden fields can be added by passing an associative array to the
