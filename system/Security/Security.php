@@ -479,7 +479,7 @@ class Security implements SecurityInterface
         && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1;
     }
 
-    private function saveHashInCookie()
+    private function saveHashInCookie(): void
     {
         $this->cookie = new Cookie(
             $this->rawCookieName,
