@@ -23,6 +23,9 @@ If you find a case where you do need direct access though, you may load it throu
 Cross-site request forgery (CSRF)
 *********************************
 
+Enable CSRF Protection
+======================
+
 You can enable CSRF protection by altering your **app/Config/Filters.php**
 and enabling the `csrf` filter globally::
 
@@ -50,6 +53,9 @@ Regular expressions are also supported (case-insensitive)::
             'csrf' => ['except' => ['api/record/[0-9]+']],
         ],
     ];
+
+HTML Forms
+==========
 
 If you use the :doc:`form helper <../helpers/form_helper>`, then
 :func:`form_open()` will automatically insert a hidden csrf field in
@@ -80,11 +86,17 @@ meta tag for you::
     // Generates: <meta name="{csrf_header}" content="{csrf_hash}" />
     <?= csrf_meta() ?>
 
+The Order of Token Sent by Users
+================================
+
 The order of checking the availability of the CSRF token is as follows:
 
 1. ``$_POST`` array
-2. Http header
+2. HTTP header
 3. ``php://input`` (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again
+
+Tokens Regeneration
+===================
 
 Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
@@ -95,6 +107,9 @@ may alter this behavior by editing the following config parameter value in
 **app/Config/Security.php**::
 
     public $regenerate  = true;
+
+Redirection on Failure
+======================
 
 When a request fails the CSRF validation check, it will redirect to the previous page by default,
 setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
