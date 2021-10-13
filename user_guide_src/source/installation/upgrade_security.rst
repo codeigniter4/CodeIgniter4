@@ -30,8 +30,8 @@ Upgrade Guide
         ]
     ];
 
-2. Within your html forms you have to remove the csrf input which looks similar to ``<input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" />``.
-3. Now within your html forms you have to add ``<?= csrf_field() ?>`` somewhere in the form body, unless you are using ``form_open()``.
+2. Within your HTML forms you have to remove the CSRF input field which looks similar to ``<input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" />``.
+3. Now, within your HTML forms you have to add ``<?= csrf_field() ?>`` somewhere in the form body, unless you are using ``form_open()``.
 
 Code Example
 ============
