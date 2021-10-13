@@ -363,4 +363,29 @@ final class BaseQueryTest extends CIUnitTestCase
 
         $this->assertSame($expected, $query->getQuery());
     }
+
+    public function queryKeywords()
+    {
+        return [
+            0 => [
+                '<strong>SELECT</strong> `teams`.*, `players`.`player_id` <strong>AS</strong> `origin_id` <strong>FROM</strong> `teams` <strong>LEFT</strong> <strong>JOIN</strong> `players` <strong>ON</strong> `players`.`team_id` = `teams`.`team_id` <strong>WHERE</strong> `players`.`player_id` <strong>IN</strong> (\'1\') <strong>AND</strong> `teams`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong>',
+                'SELECT `teams`.*, `players`.`player_id` AS `origin_id` FROM `teams` LEFT JOIN `players` ON `players`.`team_id` = `teams`.`team_id` WHERE `players`.`player_id` IN (\'1\') AND `teams`.`deleted_at` IS NOT NULL',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider queryKeywords
+     *
+     * @param mixed $expected
+     * @param mixed $sql
+     */
+    public function testHighlightQueryKeywords($expected, $sql)
+    {
+        $query = new Query($this->db);
+        $query->setQuery($sql);
+        $query->getQuery();
+
+        $this->assertSame($expected, $query->debugToolbarDisplay());
+    }
 }
