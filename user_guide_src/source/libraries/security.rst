@@ -95,7 +95,7 @@ The order of checking the availability of the CSRF token is as follows:
 2. HTTP header
 3. ``php://input`` (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it
 
-Tokens Regeneration
+Token Regeneration
 ===================
 
 Tokens may be either regenerated on every submission (default) or
