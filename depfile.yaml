@@ -193,6 +193,7 @@ ruleset:
     - HTTP
   Security:
     - Cookie
+    - Session
     - HTTP
   Session:
     - Cookie
