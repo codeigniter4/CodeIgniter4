@@ -61,8 +61,8 @@ If you use the :doc:`form helper <../helpers/form_helper>`, then
 :func:`form_open()` will automatically insert a hidden csrf field in
 your forms.
 
-.. note:: To use auto generation of CSRF field, you need to turn CSRF filter on to the form page.
-    In most cases it is requested using the `GET` method.
+.. note:: To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page.
+    In most cases it is requested using the ``GET`` method.
 
 If not, then you can use the always available ``csrf_token()``
 and ``csrf_hash()`` functions
