@@ -278,7 +278,7 @@ class Security implements SecurityInterface
             }
         }
 
-        return $_POST[$this->tokenName] ?? $tokenName;
+        return $request->getPost($this->tokenName) ?? $tokenName;
     }
 
     /**
