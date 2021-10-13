@@ -301,8 +301,8 @@
 </pre></div>
 </div>
 </li>
-<li><p>Within you html forms you have to remove the csrf input which looks similar to <code class="docutils literal notranslate"><span class="pre">&lt;input</span> <span class="pre">type=&quot;hidden&quot;</span> <span class="pre">name=&quot;&lt;?=</span> <span class="pre">$csrf['name']</span> <span class="pre">?&gt;&quot;</span> <span class="pre">value=&quot;&lt;?=</span> <span class="pre">$csrf['hash']</span> <span class="pre">?&gt;&quot;</span> <span class="pre">/&gt;</span></code>.</p></li>
-<li><p>Now within your html forms you have to add <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">csrf_field()</span> <span class="pre">?&gt;</span></code> somewhere in the form body, unless you are using <code class="docutils literal notranslate"><span class="pre">form_open()</span></code>.</p></li>
+<li><p>Within your HTML forms you have to remove the CSRF input field which looks similar to <code class="docutils literal notranslate"><span class="pre">&lt;input</span> <span class="pre">type=&quot;hidden&quot;</span> <span class="pre">name=&quot;&lt;?=</span> <span class="pre">$csrf['name']</span> <span class="pre">?&gt;&quot;</span> <span class="pre">value=&quot;&lt;?=</span> <span class="pre">$csrf['hash']</span> <span class="pre">?&gt;&quot;</span> <span class="pre">/&gt;</span></code>.</p></li>
+<li><p>Now, within your HTML forms you have to add <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">csrf_field()</span> <span class="pre">?&gt;</span></code> somewhere in the form body, unless you are using <code class="docutils literal notranslate"><span class="pre">form_open()</span></code>.</p></li>
 </ol>
 </section>
 <section id="code-example">
@@ -355,7 +355,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 11, 2021.
+      <span class="lastupdated">Last updated on Oct 13, 2021.
       </span></p>
   </div>
 

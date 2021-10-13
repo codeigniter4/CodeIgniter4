@@ -265,8 +265,16 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></p></li>
-<li><p><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id2">Cross-site request forgery (CSRF)</a></p></li>
-<li><p><a class="reference internal" href="#other-helpful-methods" id="id3">Other Helpful Methods</a></p></li>
+<li><p><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id2">Cross-site request forgery (CSRF)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enable-csrf-protection" id="id3">Enable CSRF Protection</a></p></li>
+<li><p><a class="reference internal" href="#html-forms" id="id4">HTML Forms</a></p></li>
+<li><p><a class="reference internal" href="#the-order-of-token-sent-by-users" id="id5">The Order of Token Sent by Users</a></p></li>
+<li><p><a class="reference internal" href="#token-regeneration" id="id6">Token Regeneration</a></p></li>
+<li><p><a class="reference internal" href="#redirection-on-failure" id="id7">Redirection on Failure</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#other-helpful-methods" id="id8">Other Helpful Methods</a></p></li>
 </ul>
 </div>
 <section id="loading-the-library">
@@ -280,6 +288,8 @@ as it runs as a filter and has no manual interaction.</p>
 </section>
 <section id="cross-site-request-forgery-csrf">
 <h2><a class="toc-backref" href="#id2">Cross-site request forgery (CSRF)</a><a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
+<section id="enable-csrf-protection">
+<h3><a class="toc-backref" href="#id3">Enable CSRF Protection</a><a class="headerlink" href="#enable-csrf-protection" title="Permalink to this headline"></a></h3>
 <p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong>
 and enabling the <cite>csrf</cite> filter globally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
@@ -308,9 +318,18 @@ by adding them as exceptions in the filter:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
+</section>
+<section id="html-forms">
+<h3><a class="toc-backref" href="#id4">HTML Forms</a><a class="headerlink" href="#html-forms" title="Permalink to this headline"></a></h3>
 <p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, then
 <code class="xref py py-func docutils literal notranslate"><span class="pre">form_open()</span></code> will automatically insert a hidden csrf field in
-your forms. If not, then you can use the always available <code class="docutils literal notranslate"><span class="pre">csrf_token()</span></code>
+your forms.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page.
+In most cases it is requested using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> method.</p>
+</div>
+<p>If not, then you can use the always available <code class="docutils literal notranslate"><span class="pre">csrf_token()</span></code>
 and <code class="docutils literal notranslate"><span class="pre">csrf_hash()</span></code> functions</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;&lt;?= csrf_token() ?&gt;&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&lt;?= csrf_hash() ?&gt;&quot;</span> <span class="o">/&gt;</span>
 </pre></div>
@@ -330,12 +349,18 @@ meta tag for you:</p>
 <span class="o">&lt;?=</span> <span class="nx">csrf_meta</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
+</section>
+<section id="the-order-of-token-sent-by-users">
+<h3><a class="toc-backref" href="#id5">The Order of Token Sent by Users</a><a class="headerlink" href="#the-order-of-token-sent-by-users" title="Permalink to this headline"></a></h3>
 <p>The order of checking the availability of the CSRF token is as follows:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</p></li>
-<li><p>Http header</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bare in mind that this approach is the slowest one since we have to decode JSON and then encode it again</p></li>
+<li><p>HTTP header</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it</p></li>
 </ol>
+</section>
+<section id="token-regeneration">
+<h3><a class="toc-backref" href="#id6">Token Regeneration</a><a class="headerlink" href="#token-regeneration" title="Permalink to this headline"></a></h3>
 <p>Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result
@@ -346,6 +371,9 @@ may alter this behavior by editing the following config parameter value in
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$regenerate</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
+</section>
+<section id="redirection-on-failure">
+<h3><a class="toc-backref" href="#id7">Redirection on Failure</a><a class="headerlink" href="#redirection-on-failure" title="Permalink to this headline"></a></h3>
 <p>When a request fails the CSRF validation check, it will redirect to the previous page by default,
 setting an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message that you can display to the end user. This provides a nicer experience
 than simply crashing. This can be turned off by editing the following config parameter value in
@@ -355,8 +383,9 @@ than simply crashing. This can be turned off by editing the following config par
 </div>
 <p>Even when the redirect value is <strong>true</strong>, AJAX calls will not redirect, but will throw an error.</p>
 </section>
+</section>
 <section id="other-helpful-methods">
-<h2><a class="toc-backref" href="#id3">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Permalink to this headline"></a></h2>
 <p>You will never need to use most of the methods in the Security class directly. The following are methods that
 you might find helpful that are not related to the CSRF protection.</p>
 <p><strong>sanitizeFilename()</strong></p>
@@ -382,7 +411,7 @@ the second optional parameter, $relative_path to true.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 11, 2021.
+      <span class="lastupdated">Last updated on Oct 13, 2021.
       </span></p>
   </div>
 
