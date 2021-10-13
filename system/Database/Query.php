@@ -409,7 +409,8 @@ class Query implements QueryInterface
 
         $sql = $this->finalQueryString;
 
-        $search = '/\b(?:' . implode('|', $highlight) . ')\b/';
+        /** @see https://regex101.com/r/hUlrGN/1 */
+        $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^\']*\'(?:(?:[^\']*\'){2})*[^\']*$)/';
 
         return preg_replace_callback($search, static function ($matches) {
             return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';

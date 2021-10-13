@@ -367,9 +367,13 @@ final class BaseQueryTest extends CIUnitTestCase
     public function queryKeywords()
     {
         return [
-            0 => [
-                '<strong>SELECT</strong> `teams`.*, `players`.`player_id` <strong>AS</strong> `origin_id` <strong>FROM</strong> `teams` <strong>LEFT</strong> <strong>JOIN</strong> `players` <strong>ON</strong> `players`.`team_id` = `teams`.`team_id` <strong>WHERE</strong> `players`.`player_id` <strong>IN</strong> (\'1\') <strong>AND</strong> `teams`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong>',
-                'SELECT `teams`.*, `players`.`player_id` AS `origin_id` FROM `teams` LEFT JOIN `players` ON `players`.`team_id` = `teams`.`team_id` WHERE `players`.`player_id` IN (\'1\') AND `teams`.`deleted_at` IS NOT NULL',
+            'highlightKeyWords' => [
+                '<strong>SELECT</strong> `teams`.*, `players`.`player_id` <strong>AS</strong> `origin_id` <strong>FROM</strong> `teams` <strong>LEFT</strong> <strong>JOIN</strong> `players` <strong>ON</strong> `players`.`team_id` = `teams`.`team_id` <strong>WHERE</strong> `players`.`player_id` <strong>IN</strong> (\'1\') <strong>AND</strong> `teams`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong> <strong>LIMIT</strong> 1',
+                'SELECT `teams`.*, `players`.`player_id` AS `origin_id` FROM `teams` LEFT JOIN `players` ON `players`.`team_id` = `teams`.`team_id` WHERE `players`.`player_id` IN (\'1\') AND `teams`.`deleted_at` IS NOT NULL LIMIT 1',
+            ],
+            'ignoreKeyWordsInValues' => [
+                '<strong>SELECT</strong> * <strong>FROM</strong> `table` <strong>WHERE</strong> `table`.`column` = \'SELECT escaped keyword in value\' <strong>LIMIT</strong> 1',
+                'SELECT * FROM `table` WHERE `table`.`column` = \'SELECT escaped keyword in value\' LIMIT 1',
             ],
         ];
     }
