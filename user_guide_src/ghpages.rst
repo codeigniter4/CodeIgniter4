@@ -6,7 +6,7 @@ The intent is, eventually, for the in-progress user guide to be automatically
 generated as part of a PR merge. This writeup explains how it can be done manually
 in the meantime.
 
-The user guide takes advantage of Github pages, where the "gh-pages" branch of
+The user guide takes advantage of GitHub pages, where the "gh-pages" branch of
 a repo, containing HTML only, is accessible through `github.io
 <https://bcit-ci.github.io/CodeIgniter4>`_.
 

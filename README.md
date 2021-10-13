@@ -46,7 +46,7 @@ CodeIgniter is developed completely on a volunteer basis. As such, please give u
 for your issues to be reviewed. If you haven't heard from one of the team in that time period,
 feel free to leave a comment on the issue so that it gets brought back to our attention.
 
-We use Github issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
+We use GitHub issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
 We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
 FEATURE REQUESTS.
 
@@ -54,7 +54,7 @@ If you raise an issue here that pertains to support or a feature request, it wil
 be closed! If you are not sure if you have found a bug, raise a thread on the forum first -
 someone else may have encountered the same thing.
 
-Before raising a new Github issue, please check that your bug hasn't already
+Before raising a new GitHub issue, please check that your bug hasn't already
 been reported or fixed.
 
 We use pull requests (PRs) for CONTRIBUTIONS to the repository.
