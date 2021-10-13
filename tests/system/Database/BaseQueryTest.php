@@ -368,12 +368,12 @@ final class BaseQueryTest extends CIUnitTestCase
     {
         return [
             'highlightKeyWords' => [
-                '<strong>SELECT</strong> `teams`.*, `players`.`player_id` <strong>AS</strong> `origin_id` <strong>FROM</strong> `teams` <strong>LEFT</strong> <strong>JOIN</strong> `players` <strong>ON</strong> `players`.`team_id` = `teams`.`team_id` <strong>WHERE</strong> `players`.`player_id` <strong>IN</strong> (\'1\') <strong>AND</strong> `teams`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong> <strong>LIMIT</strong> 1',
-                'SELECT `teams`.*, `players`.`player_id` AS `origin_id` FROM `teams` LEFT JOIN `players` ON `players`.`team_id` = `teams`.`team_id` WHERE `players`.`player_id` IN (\'1\') AND `teams`.`deleted_at` IS NOT NULL LIMIT 1',
+                '<strong>SELECT</strong> `a`.*, `b`.`id` <strong>AS</strong> `b_id` <strong>FROM</strong> `a` <strong>LEFT</strong> <strong>JOIN</strong> `b` <strong>ON</strong> `b`.`a_id` = `a`.`id` <strong>WHERE</strong> `b`.`id` <strong>IN</strong> (\'1\') <strong>AND</strong> `a`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong> <strong>LIMIT</strong> 1',
+                'SELECT `a`.*, `b`.`id` AS `b_id` FROM `a` LEFT JOIN `b` ON `b`.`a_id` = `a`.`id` WHERE `b`.`id` IN (\'1\') AND `a`.`deleted_at` IS NOT NULL LIMIT 1',
             ],
             'ignoreKeyWordsInValues' => [
-                '<strong>SELECT</strong> * <strong>FROM</strong> `table` <strong>WHERE</strong> `table`.`column` = \'SELECT escaped keyword in value\' <strong>LIMIT</strong> 1',
-                'SELECT * FROM `table` WHERE `table`.`column` = \'SELECT escaped keyword in value\' LIMIT 1',
+                '<strong>SELECT</strong> * <strong>FROM</strong> `a` <strong>WHERE</strong> `a`.`col` = \'SELECT escaped keyword in value\' <strong>LIMIT</strong> 1',
+                'SELECT * FROM `a` WHERE `a`.`col` = \'SELECT escaped keyword in value\' LIMIT 1',
             ],
         ];
     }
