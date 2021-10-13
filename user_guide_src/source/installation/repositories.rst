@@ -2,7 +2,7 @@ CodeIgniter Repositories
 ########################
 
 The CodeIgniter 4 open source project has its own
-`Github organization <https://github.com/codeigniter4>`_.
+`GitHub organization <https://github.com/codeigniter4>`_.
 
 There are several development repositories, of interest to potential contributors:
 
@@ -33,7 +33,7 @@ are not directly contributed to.
 
 In all the above, the latest version of a repository can be downloaded
 by selecting the "releases" link in the secondary navbar inside
-the "Code" tab of its Github repository page. The current (in development) version of each can
+the "Code" tab of its GitHub repository page. The current (in development) version of each can
 be cloned or downloaded by selecting the "Clone or download" dropdown
 button on the right-hand side if the repository homepage.
 
@@ -54,7 +54,7 @@ CodeIgniter 4 Projects
 ======================
 
 We maintain a `codeigniter4projects <https://github.com/codeigniter4projects>`_ organization
-on Github as well, with projects that are not part of the framework,
+on GitHub as well, with projects that are not part of the framework,
 but which showcase it or make it easier to work with!
 
 +------------------+--------------+-----------------------------------------------------------------+
