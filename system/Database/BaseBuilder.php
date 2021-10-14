@@ -1590,7 +1590,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return false|int Number of rows inserted or FALSE on failure
+     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
     {
@@ -1617,12 +1617,13 @@ class BaseBuilder
         $table = $this->QBFrom[0];
 
         $affectedRows = 0;
+        $savedSQL     = [];
 
         for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
             $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
 
             if ($this->testMode) {
-                $affectedRows++;
+                $savedSQL[] = $sql;
             } else {
                 $this->db->query($sql, $this->binds, false);
                 $affectedRows += $this->db->affectedRows();
@@ -1633,7 +1634,7 @@ class BaseBuilder
             $this->resetWrite();
         }
 
-        return $affectedRows;
+        return $this->testMode ? $savedSQL : $affectedRows;
     }
 
     /**
