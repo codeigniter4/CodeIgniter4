@@ -18,7 +18,7 @@ use ErrorException;
 use stdClass;
 
 /**
- * Connection for Postgre
+ * Connection for OCI8
  *
  * @property string|null $latestInsertedTableName
  * @property int|null    $rowId
