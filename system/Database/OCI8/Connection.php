@@ -594,6 +594,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
             if ($primaryColumnType !== 'NUMBER') {
                 $primaryColumnName = '';
+
                 continue;
             }
         }
