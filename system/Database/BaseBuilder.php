@@ -1944,7 +1944,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return mixed Number of rows affected, SQL string, or FALSE on failure
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100)
     {
