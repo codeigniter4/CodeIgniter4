@@ -279,17 +279,18 @@ database.</p>
 <li><p><a class="reference internal" href="#creating-a-table" id="id8">Creating a table</a></p></li>
 <li><p><a class="reference internal" href="#dropping-a-table" id="id9">Dropping a table</a></p></li>
 <li><p><a class="reference internal" href="#dropping-a-foreign-key" id="id10">Dropping a Foreign Key</a></p></li>
-<li><p><a class="reference internal" href="#renaming-a-table" id="id11">Renaming a table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-key" id="id11">Dropping a Key</a></p></li>
+<li><p><a class="reference internal" href="#renaming-a-table" id="id12">Renaming a table</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#modifying-tables" id="id12">Modifying Tables</a></p>
+<li><p><a class="reference internal" href="#modifying-tables" id="id13">Modifying Tables</a></p>
 <ul>
-<li><p><a class="reference internal" href="#adding-a-column-to-a-table" id="id13">Adding a Column to a Table</a></p></li>
-<li><p><a class="reference internal" href="#dropping-columns-from-a-table" id="id14">Dropping Columns From a Table</a></p></li>
-<li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id15">Modifying a Column in a Table</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-column-to-a-table" id="id14">Adding a Column to a Table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-columns-from-a-table" id="id15">Dropping Columns From a Table</a></p></li>
+<li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id16">Modifying a Column in a Table</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id16">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id17">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="initializing-the-forge-class">
@@ -561,8 +562,16 @@ drivers to handle removal of tables with foreign keys.</p>
 </pre></div>
 </div>
 </section>
+<section id="dropping-a-key">
+<h3><a class="toc-backref" href="#id11">Dropping a Key</a><a class="headerlink" href="#dropping-a-key" title="Permalink to this headline"></a></h3>
+<p>Execute a DROP KEY.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: DROP INDEX `users_index` ON `tablename`</span>
+<span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span><span class="s1">&#39;users_index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="renaming-a-table">
-<h3><a class="toc-backref" href="#id11">Renaming a table</a><a class="headerlink" href="#renaming-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Renaming a table</a><a class="headerlink" href="#renaming-a-table" title="Permalink to this headline"></a></h3>
 <p>Executes a TABLE rename</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">&#39;old_table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;new_table_name&#39;</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE old_table_name RENAME TO new_table_name</span>
@@ -571,9 +580,9 @@ drivers to handle removal of tables with foreign keys.</p>
 </section>
 </section>
 <section id="modifying-tables">
-<h2><a class="toc-backref" href="#id12">Modifying Tables</a><a class="headerlink" href="#modifying-tables" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Modifying Tables</a><a class="headerlink" href="#modifying-tables" title="Permalink to this headline"></a></h2>
 <section id="adding-a-column-to-a-table">
-<h3><a class="toc-backref" href="#id13">Adding a Column to a Table</a><a class="headerlink" href="#adding-a-column-to-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Adding a Column to a Table</a><a class="headerlink" href="#adding-a-column-to-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;addColumn()</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
@@ -601,7 +610,7 @@ AFTER and FIRST clauses to position the new column.</p>
 </div>
 </section>
 <section id="dropping-columns-from-a-table">
-<h3><a class="toc-backref" href="#id14">Dropping Columns From a Table</a><a class="headerlink" href="#dropping-columns-from-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Dropping Columns From a Table</a><a class="headerlink" href="#dropping-columns-from-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;dropColumn()</strong></p>
 <p>Used to remove a column from a table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_to_drop&#39;</span><span class="p">);</span> <span class="c1">// to drop one single column</span>
@@ -614,7 +623,7 @@ AFTER and FIRST clauses to position the new column.</p>
 </div>
 </section>
 <section id="modifying-a-column-in-a-table">
-<h3><a class="toc-backref" href="#id15">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;modifyColumn()</strong></p>
 <p>The usage of this method is identical to <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
@@ -632,7 +641,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id16">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\Forge</code></dt>
@@ -915,7 +924,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 13, 2021.
+      <span class="lastupdated">Last updated on Oct 15, 2021.
       </span></p>
   </div>
 
