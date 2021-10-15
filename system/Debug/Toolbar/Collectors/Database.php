@@ -118,6 +118,7 @@ class Database extends BaseCollector
                 'component' => 'Database',
                 'start'     => $query['query']->getStartTime(true),
                 'duration'  => $query['query']->getDuration(),
+                'query'     => $query['query']->debugToolbarDisplay(),
             ];
         }
 
