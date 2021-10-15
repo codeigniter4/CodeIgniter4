@@ -1625,7 +1625,7 @@ class BaseBuilder
             if ($this->testMode) {
                 $savedSQL[] = $sql;
             } else {
-                $this->db->query($sql, $this->binds, false);
+                $this->db->query($sql, null, false);
                 $affectedRows += $this->db->affectedRows();
             }
         }
@@ -1679,7 +1679,7 @@ class BaseBuilder
             $clean = [];
 
             foreach ($row as $k => $rowValue) {
-                $clean[] = ':' . $this->setBind($k, $rowValue, $escape) . ':';
+                $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
             }
 
             $row = $clean;
