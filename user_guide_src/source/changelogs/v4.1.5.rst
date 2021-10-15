@@ -9,6 +9,7 @@ Enhancements:
 
 - Added Cache config for reserved characters
 - The ``addForeignKey`` function of the ``Forge`` class can now define composite foreign keys in an array
+- The ``dropKey`` function of the ``Forge`` class can remove key
 
 Changes:
 

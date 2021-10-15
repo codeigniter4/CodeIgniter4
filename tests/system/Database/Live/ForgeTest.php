@@ -1067,4 +1067,38 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->dropTable('forge_test_four', true);
     }
+
+    public function testDropKey()
+    {
+        $this->forge->dropTable('key_test_users', true);
+        $keyName = 'key_test_users_id';
+
+        $attributes = [];
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $keyName    = 'id';
+            $attributes = ['ENGINE' => 'InnoDB'];
+        }
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addKey('id');
+        $this->forge->createTable('key_test_users', true, $attributes);
+
+        $this->forge->dropKey('key_test_users', $keyName);
+
+        $foreignKeyData = $this->db->getIndexData('key_test_users');
+
+        $this->assertEmpty($foreignKeyData);
+
+        $this->forge->dropTable('key_test_users', true);
+    }
 }
