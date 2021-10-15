@@ -1610,23 +1610,37 @@ class BaseBuilder
 
                 return false; // @codeCoverageIgnore
             }
-
-            $this->setInsertBatch($set, '', $escape);
         }
+
+        $hasQBSet = ($set === null);
 
         $table = $this->QBFrom[0];
 
         $affectedRows = 0;
         $savedSQL     = [];
 
-        for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
-            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
+        if ($hasQBSet) {
+            $set = $this->QBSet;
+        }
+
+        for ($i = 0, $total = count($set); $i < $total; $i += $batchSize) {
+            if ($hasQBSet) {
+                $QBSet = array_slice($this->QBSet, $i, $batchSize);
+            } else {
+                $this->setInsertBatch(array_slice($set, $i, $batchSize), '', $escape);
+                $QBSet = $this->QBSet;
+            }
+            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, $QBSet);
 
             if ($this->testMode) {
                 $savedSQL[] = $sql;
             } else {
                 $this->db->query($sql, null, false);
                 $affectedRows += $this->db->affectedRows();
+            }
+
+            if (! $hasQBSet) {
+                $this->resetWrite();
             }
         }
 
