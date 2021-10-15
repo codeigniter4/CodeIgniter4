@@ -375,6 +375,10 @@ final class BaseQueryTest extends CIUnitTestCase
                 '<strong>SELECT</strong> * <strong>FROM</strong> `a` <strong>WHERE</strong> `a`.`col` = \'SELECT escaped keyword in value\' <strong>LIMIT</strong> 1',
                 'SELECT * FROM `a` WHERE `a`.`col` = \'SELECT escaped keyword in value\' LIMIT 1',
             ],
+            'escapeHtmlValues' => [
+                '<strong>SELECT</strong> \'&lt;s&gt;\' <strong>FROM</strong> dual',
+                'SELECT \'<s>\' FROM dual',
+            ],
         ];
     }
 

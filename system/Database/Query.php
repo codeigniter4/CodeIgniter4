@@ -407,7 +407,7 @@ class Query implements QueryInterface
             $this->compileBinds(); // @codeCoverageIgnore
         }
 
-        $sql = $this->finalQueryString;
+        $sql = htmlspecialchars($this->finalQueryString, ENT_COMPAT);
 
         /**
          * @see https://stackoverflow.com/a/20767160
