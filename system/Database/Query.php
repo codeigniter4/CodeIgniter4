@@ -407,13 +407,13 @@ class Query implements QueryInterface
             $this->compileBinds(); // @codeCoverageIgnore
         }
 
-        $sql = htmlspecialchars($this->finalQueryString, ENT_COMPAT);
+        $sql = esc($this->finalQueryString);
 
         /**
          * @see https://stackoverflow.com/a/20767160
-         * @see https://regex101.com/r/hUlrGN/1
+         * @see https://regex101.com/r/hUlrGN/4
          */
-        $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^\']*\'(?:(?:[^\']*\'){2})*[^\']*$)/';
+        $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^(&#039;)]*&#039;(?:(?:[^(&#039;)]*&#039;){2})*[^(&#039;)]*$)/';
 
         return preg_replace_callback($search, static function ($matches) {
             return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
