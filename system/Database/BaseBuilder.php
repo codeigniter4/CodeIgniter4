@@ -1602,14 +1602,12 @@ class BaseBuilder
 
                 return false; // @codeCoverageIgnore
             }
-        } else {
-            if (empty($set)) {
-                if (CI_DEBUG) {
-                    throw new DatabaseException('insertBatch() called with no data');
-                }
-
-                return false; // @codeCoverageIgnore
+        } elseif (empty($set)) {
+            if (CI_DEBUG) {
+                throw new DatabaseException('insertBatch() called with no data');
             }
+
+            return false; // @codeCoverageIgnore
         }
 
         $hasQBSet = ($set === null);
@@ -1690,7 +1688,7 @@ class BaseBuilder
 
             $clean = [];
 
-            foreach ($row as $k => $rowValue) {
+            foreach ($row as $rowValue) {
                 $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
             }
 
