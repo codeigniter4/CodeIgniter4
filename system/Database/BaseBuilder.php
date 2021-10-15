@@ -1975,17 +1975,15 @@ class BaseBuilder
 
                 return false; // @codeCoverageIgnore
             }
-        } else {
-            if (empty($set)) {
-                if (CI_DEBUG) {
-                    throw new DatabaseException('updateBatch() called with no data');
-                }
-
-                return false; // @codeCoverageIgnore
+        } elseif (empty($set)) {
+            if (CI_DEBUG) {
+                throw new DatabaseException('updateBatch() called with no data');
             }
 
-            $this->setUpdateBatch($set, $index);
+            return false; // @codeCoverageIgnore
         }
+
+        $hasQBSet = ($set === null);
 
         $table = $this->QBFrom[0];
 
@@ -1993,10 +1991,21 @@ class BaseBuilder
         $savedSQL     = [];
         $savedQBWhere = $this->QBWhere;
 
-        for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize) {
+        if ($hasQBSet) {
+            $set = $this->QBSet;
+        }
+
+        for ($i = 0, $total = count($set); $i < $total; $i += $batchSize) {
+            if ($hasQBSet) {
+                $QBSet = array_slice($this->QBSet, $i, $batchSize);
+            } else {
+                $this->setUpdateBatch(array_slice($set, $i, $batchSize), $index);
+                $QBSet = $this->QBSet;
+            }
+
             $sql = $this->_updateBatch(
                 $table,
-                array_slice($this->QBSet, $i, $batchSize),
+                $QBSet,
                 $this->db->protectIdentifiers($index)
             );
 
@@ -2005,6 +2014,10 @@ class BaseBuilder
             } else {
                 $this->db->query($sql, $this->binds, false);
                 $affectedRows += $this->db->affectedRows();
+            }
+
+            if (! $hasQBSet) {
+                $this->resetWrite();
             }
 
             $this->QBWhere = $savedQBWhere;
