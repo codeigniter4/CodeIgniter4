@@ -2076,9 +2076,8 @@ class BaseBuilder
                     $indexSet = true;
                 }
 
-                $bind = $this->setBind($k2, $v2, $escape);
-
-                $clean[$this->db->protectIdentifiers($k2, false)] = ":{$bind}:";
+                $clean[$this->db->protectIdentifiers($k2, false)]
+                    = $escape ? $this->db->escape($v2) : $v2;
             }
 
             if ($indexSet === false) {
