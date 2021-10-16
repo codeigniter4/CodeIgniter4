@@ -458,10 +458,10 @@ Preference                     Default                                      Opti
     unexpected results or be changed in the future. Please configure
     everything properly.
 
-.. note:: If ``sessionExpiration`` is set to ``0`` , the session.gc_maxlifetime
-    setting set by PHP in session management will be used as is
-    (often the default value of ``1440`` ). This needs to be changed using
-    php.ini etc. as needed.
+.. note:: If ``sessionExpiration`` is set to ``0``, the ``session.gc_maxlifetime``
+    setting set by PHP in session management will be used as-is
+    (often the default value of ``1440``). This needs to be changed in
+    ``php.ini`` or via ``ini_set()`` as needed.
 
 
 In addition to the values above, the cookie and native drivers apply the
