@@ -858,20 +858,33 @@ class CodeIgniter
     /**
      * Runs the controller, allowing for _remap methods to function.
      *
+     * CI4 supports three types of requests:
+     *  1. Web: URI segments become parameters, sent to Controllers via Routes,
+     *      output controlled by Headers to browser
+     *  2. Spark: accessed by CLI via the spark command, arguments are Command arguments,
+     *      sent to Commands by CommandRunner, output controlled by CLI class
+     *  3. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
+     *      sent to Controllers via Routes, output varies
+     *
      * @param mixed $class
      *
      * @return false|ResponseInterface|string|void
      */
     protected function runController($class)
     {
-        // If this is a console request then use the input segments as parameters
-        $params = $this->isSparked() ? $this->request->getSegments() : $this->router->params();
-
-        if (method_exists($class, '_remap')) {
-            $output = $class->_remap($this->method, ...$params);
+        if ($this->isSparked()) {
+            // This is a Spark request
+            /** @var CLIRequest $request */
+            $request = $this->request;
+            $params  = $request->getArgs();
         } else {
-            $output = $class->{$this->method}(...$params);
+            // This is a Web request or PHP CLI request
+            $params = $this->router->params();
         }
+
+        $output = method_exists($class, '_remap')
+            ? $class->_remap($this->method, ...$params)
+            : $class->{$this->method}(...$params);
 
         $this->benchmark->stop('controller');
 
