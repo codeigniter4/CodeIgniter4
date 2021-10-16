@@ -367,46 +367,53 @@ class Query implements QueryInterface
     {
         // Key words we want bolded
         static $highlight = [
-            'SELECT',
+            'AND',
+            'AS',
+            'ASC',
+            'AVG',
+            'BY',
+            'COUNT',
+            'DESC',
             'DISTINCT',
             'FROM',
-            'WHERE',
-            'AND',
-            'LEFT JOIN',
-            'RIGHT JOIN',
-            'JOIN',
-            'ORDER BY',
-            'ASC',
-            'DESC',
-            'GROUP BY',
-            'LIMIT',
+            'GROUP',
+            'HAVING',
+            'IN',
+            'INNER',
             'INSERT',
             'INTO',
-            'VALUES',
-            'UPDATE',
-            'OR',
-            'HAVING',
-            'OFFSET',
-            'NOT IN',
-            'IN',
+            'IS',
+            'JOIN',
+            'LEFT',
             'LIKE',
-            'NOT LIKE',
-            'COUNT',
+            'LIMIT',
             'MAX',
             'MIN',
+            'NOT',
+            'NULL',
+            'OFFSET',
             'ON',
-            'AS',
-            'AVG',
+            'OR',
+            'ORDER',
+            'RIGHT',
+            'SELECT',
             'SUM',
+            'UPDATE',
+            'VALUES',
+            'WHERE',
         ];
 
         if (empty($this->finalQueryString)) {
             $this->compileBinds(); // @codeCoverageIgnore
         }
 
-        $sql = $this->finalQueryString;
+        $sql = esc($this->finalQueryString);
 
-        $search = '/\b(?:' . implode('|', $highlight) . ')\b/';
+        /**
+         * @see https://stackoverflow.com/a/20767160
+         * @see https://regex101.com/r/hUlrGN/4
+         */
+        $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^(&#039;)]*&#039;(?:(?:[^(&#039;)]*&#039;){2})*[^(&#039;)]*$)/';
 
         return preg_replace_callback($search, static function ($matches) {
             return '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>';
