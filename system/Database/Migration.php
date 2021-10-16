@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
@@ -18,65 +18,56 @@ use Config\Database;
  */
 abstract class Migration
 {
-	/**
-	 * The name of the database group to use.
-	 *
-	 * @var string
-	 */
-	protected $DBGroup;
+    /**
+     * The name of the database group to use.
+     *
+     * @var string
+     */
+    protected $DBGroup;
 
-	/**
-	 * Database Connection instance
-	 *
-	 * @var ConnectionInterface
-	 */
-	protected $db;
+    /**
+     * Database Connection instance
+     *
+     * @var ConnectionInterface
+     */
+    protected $db;
 
-	/**
-	 * Database Forge instance.
-	 *
-	 * @var Forge
-	 */
-	protected $forge;
+    /**
+     * Database Forge instance.
+     *
+     * @var Forge
+     */
+    protected $forge;
 
-	//--------------------------------------------------------------------
-	/**
-	 * Constructor.
-	 *
-	 * @param Forge $forge
-	 */
-	public function __construct(Forge $forge = null)
-	{
-		$this->forge = ! is_null($forge) ? $forge : Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
+    /**
+     * Constructor.
+     *
+     * @param Forge $forge
+     */
+    public function __construct(?Forge $forge = null)
+    {
+        $this->forge = $forge ?? Database::forge($this->DBGroup ?? config('Database')->defaultGroup);
 
-		$this->db = $this->forge->getConnection();
-	}
+        $this->db = $this->forge->getConnection();
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the database group name this migration uses.
+     *
+     * @return string
+     */
+    public function getDBGroup(): ?string
+    {
+        return $this->DBGroup;
+    }
 
-	/**
-	 * Returns the database group name this migration uses.
-	 *
-	 * @return string
-	 */
-	public function getDBGroup(): ?string
-	{
-		return $this->DBGroup;
-	}
+    /**
+     * Perform a migration step.
+     */
+    abstract public function up();
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Perform a migration step.
-	 */
-	abstract public function up();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Revert a migration step.
-	 */
-	abstract public function down();
-
-	//--------------------------------------------------------------------
+    /**
+     * Revert a migration step.
+     */
+    abstract public function down();
 }

@@ -107,8 +107,7 @@ following code to your model.
 
     public function getNews($slug = false)
     {
-        if ($slug === false)
-        {
+        if ($slug === false) {
             return $this->findAll();
         }
 
@@ -243,7 +242,7 @@ add some code to the controller and create a new view. Go back to the
 
 ::
 
-    public function view($slug = NULL)
+    public function view($slug = null)
     {
         $model = new NewsModel();
 

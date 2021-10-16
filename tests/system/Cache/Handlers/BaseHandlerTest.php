@@ -1,66 +1,92 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-use stdClass;
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Cache\Handlers;
+
 use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
 
-class BaseHandlerTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class BaseHandlerTest extends CIUnitTestCase
 {
-	/**
-	 * @dataProvider invalidTypeProvider
-	 */
-	public function testValidateKeyInvalidType($input)
-	{
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('Cache key must be a string');
+    /**
+     * @dataProvider invalidTypeProvider
+     *
+     * @param mixed $input
+     */
+    public function testValidateKeyInvalidType($input)
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cache key must be a string');
 
-		BaseHandler::validateKey($input);
-	}
+        BaseHandler::validateKey($input);
+    }
 
-	public function invalidTypeProvider(): array
-	{
-		return [
-			[true],
-			[false],
-			[null],
-			[42],
-			[new stdClass],
-		];
-	}
+    public function invalidTypeProvider(): array
+    {
+        return [
+            [true],
+            [false],
+            [null],
+            [42],
+            [new stdClass()],
+        ];
+    }
 
-	public function testValidateKeySuccess()
-	{
-		$string = 'banana';
-		$result = BaseHandler::validateKey($string);
+    public function testValidateKeyUsesConfig()
+    {
+        config('Cache')->reservedCharacters = 'b';
 
-		$this->assertSame($string, $result);
-	}
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cache key contains reserved characters b');
 
-	public function testValidateKeySuccessWithPrefix()
-	{
-		$string = 'banana';
-		$result = BaseHandler::validateKey($string, 'prefix');
+        BaseHandler::validateKey('banana');
+    }
 
-		$this->assertSame('prefix' . $string, $result);
-	}
+    public function testValidateKeySuccess()
+    {
+        $string = 'banana';
+        $result = BaseHandler::validateKey($string);
 
-	public function testValidateExcessiveLength()
-	{
-		$string   = 'MoreThanTenCharacters';
-		$expected = md5($string);
+        $this->assertSame($string, $result);
+    }
 
-		$result = RestrictiveHandler::validateKey($string);
+    public function testValidateKeySuccessWithPrefix()
+    {
+        $string = 'banana';
+        $result = BaseHandler::validateKey($string, 'prefix');
 
-		$this->assertSame($expected, $result);
-	}
+        $this->assertSame('prefix' . $string, $result);
+    }
 
-	public function testValidateExcessiveLengthWithPrefix()
-	{
-		$string   = 'MoreThanTenCharacters';
-		$expected = 'prefix' . md5($string);
+    public function testValidateExcessiveLength()
+    {
+        $string   = 'MoreThanTenCharacters';
+        $expected = md5($string);
 
-		$result = RestrictiveHandler::validateKey($string, 'prefix');
+        $result = RestrictiveHandler::validateKey($string);
 
-		$this->assertSame($expected, $result);
-	}
+        $this->assertSame($expected, $result);
+    }
+
+    public function testValidateExcessiveLengthWithPrefix()
+    {
+        $string   = 'MoreThanTenCharacters';
+        $expected = 'prefix' . md5($string);
+
+        $result = RestrictiveHandler::validateKey($string, 'prefix');
+
+        $this->assertSame($expected, $result);
+    }
 }

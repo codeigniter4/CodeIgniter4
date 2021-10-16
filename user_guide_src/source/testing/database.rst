@@ -163,7 +163,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 
     $criteria = [
         'email'  => 'joe@example.com',
-        'active' => 1
+        'active' => 1,
     ];
     $this->dontSeeInDatabase('users', $criteria);
 
@@ -174,7 +174,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 
     $criteria = [
         'email'  => 'joe@example.com',
-        'active' => 1
+        'active' => 1,
     ];
     $this->seeInDatabase('users', $criteria);
 
@@ -194,7 +194,7 @@ array with the data to insert into the table.
 
     $data = [
         'email' => 'joe@example.com',
-        'name'  => 'Joe Cool'
+        'name'  => 'Joe Cool',
     ];
     $this->hasInDatabase('users', $data);
 
@@ -204,6 +204,6 @@ Asserts that a number of matching rows are found in the database that match ``$c
 ::
 
     $criteria = [
-        'active' => 1
+        'active' => 1,
     ];
     $this->seeNumRecords(2, 'users', $criteria);

@@ -1,97 +1,108 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use CodeIgniter\Config\Factories;
 use Config\Database;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class ConnectTest extends CIUnitTestCase
+final class ConnectTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	protected $group1;
+    protected $group1;
+    protected $group2;
+    protected $tests;
 
-	protected $group2;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected $tests;
+        $config = config('Database');
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->group1 = $config->default;
+        $this->group2 = $config->default;
+        $this->tests  = $config->tests;
 
-		$config = config('Database');
+        $this->group1['DBDriver'] = 'MySQLi';
+        $this->group2['DBDriver'] = 'Postgre';
+    }
 
-		$this->group1 = $config->default;
-		$this->group2 = $config->default;
-		$this->tests  = $config->tests;
+    public function testConnectWithMultipleCustomGroups()
+    {
+        // We should have our test database connection already.
+        $instances = $this->getPrivateProperty(Database::class, 'instances');
+        $this->assertCount(1, $instances);
 
-		$this->group1['DBDriver'] = 'MySQLi';
-		$this->group2['DBDriver'] = 'Postgre';
-	}
+        $db1 = Database::connect($this->group1);
+        $db2 = Database::connect($this->group2);
 
-	public function testConnectWithMultipleCustomGroups()
-	{
-		// We should have our test database connection already.
-		$instances = $this->getPrivateProperty(Database::class, 'instances');
-		$this->assertEquals(1, count($instances));
+        $this->assertNotSame($db1, $db2);
 
-		$db1 = Database::connect($this->group1);
-		$db2 = Database::connect($this->group2);
+        $instances = $this->getPrivateProperty(Database::class, 'instances');
+        $this->assertCount(3, $instances);
+    }
 
-		$this->assertNotSame($db1, $db2);
+    public function testConnectReturnsProvidedConnection()
+    {
+        $config = config('Database');
 
-		$instances = $this->getPrivateProperty(Database::class, 'instances');
-		$this->assertEquals(3, count($instances));
-	}
+        // This will be the tests database
+        $db = Database::connect();
+        $this->assertSame($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
-	public function testConnectReturnsProvidedConnection()
-	{
-		$config = config('Database');
+        // Get an instance of the system's default db so we have something to test with.
+        $db1 = Database::connect($this->group1);
+        $this->assertSame('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
 
-		// This will be the tests database
-		$db = Database::connect();
-		$this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
+        // If a connection is passed into connect, it should simply be returned to us...
+        $db2 = Database::connect($db1);
+        $this->assertSame($db1, $db2);
+    }
 
-		// Get an instance of the system's default db so we have something to test with.
-		$db1 = Database::connect($this->group1);
-		$this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
+    public function testConnectWorksWithGroupName()
+    {
+        $config = config('Database');
 
-		// If a connection is passed into connect, it should simply be returned to us...
-		$db2 = Database::connect($db1);
-		$this->assertSame($db1, $db2);
-	}
+        $db = Database::connect('tests');
+        $this->assertSame($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
 
-	public function testConnectWorksWithGroupName()
-	{
-		$config = config('Database');
+        $config                      = config('Database');
+        $config->default['DBDriver'] = 'MySQLi';
+        Factories::injectMock('config', 'Database', $config);
 
-		$db = Database::connect('tests');
-		$this->assertEquals($config->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
+        $db1 = Database::connect('default');
+        $this->assertNotInstanceOf(Connection::class, $db1);
+        $this->assertSame('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
+    }
 
-		$config                      = config('Database');
-		$config->default['DBDriver'] = 'MySQLi';
-		Factories::injectMock('config','Database', $config);
+    public function testConnectWithFailover()
+    {
+        $this->tests['failover'][] = $this->tests;
 
-		$db1 = Database::connect('default');
-		$this->assertNotInstanceOf(Connection::class, $db1);
-		$this->assertEquals('MySQLi', $this->getPrivateProperty($db1, 'DBDriver'));
-	}
+        unset($this->tests['failover'][0]['failover']);
 
-	public function testConnectWithFailover()
-	{
-		$this->tests['failover'][] = $this->tests;
+        $this->tests['username'] = 'wrong';
 
-		unset($this->tests['failover'][0]['failover']);
+        $db1 = Database::connect($this->tests);
 
-		$this->tests['username'] = 'wrong';
-
-		$db1 = Database::connect($this->tests);
-
-		$this->assertEquals($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
-		$this->assertTrue(count($db1->listTables()) >= 0);
-	}
+        $this->assertSame($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
+        $this->assertTrue(count($db1->listTables()) >= 0);
+    }
 }

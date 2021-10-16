@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace Tests\Support\Cache;
@@ -19,8 +19,8 @@ use CodeIgniter\Cache\Handlers\DummyHandler;
  */
 class RestrictiveHandler extends DummyHandler
 {
-	/**
-	 * Maximum key length.
-	 */
-	public const MAX_KEY_LENGTH = 10;
+    /**
+     * Maximum key length.
+     */
+    public const MAX_KEY_LENGTH = 10;
 }

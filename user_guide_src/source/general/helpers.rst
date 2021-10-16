@@ -122,10 +122,8 @@ functions::
     {
         $needle = is_array($needle) ? $needle : [$needle];
 
-        foreach ($needle as $item)
-        {
-            if (in_array($item, $haystack))
-            {
+        foreach ($needle as $item) {
+            if (in_array($item, $haystack, true)) {
                 return true;
             }
         }
@@ -137,6 +135,7 @@ functions::
     function random_element($array)
     {
         shuffle($array);
+
         return array_pop($array);
     }
 

@@ -19,8 +19,7 @@ The following example shows a common usage pattern within your controllers.
 
 ::
 
-    if (! $foo = cache('foo'))
-    {
+    if (! $foo = cache('foo')) {
         echo 'Saving to the cache!<br />';
         $foo = 'foobarbaz!';
 
@@ -59,6 +58,12 @@ more complex, multi-server setups.
 If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.
 
+**$ttl**
+
+The default number of seconds to save items when none is specified.
+WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
+to projects and modules. This will replace the hard-coded value in a future release.
+
 **$file**
 
 This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
@@ -87,7 +92,7 @@ Class Reference
     :rtype: mixed
 
     This method will attempt to fetch an item from the cache store. If the
-    item does not exist, the method will return NULL.
+    item does not exist, the method will return null.
 
     Example::
 
@@ -100,7 +105,7 @@ Class Reference
     :param Closure $callback: Callback to invoke when the cache item returns null
     :returns: The value of the cache item
     :rtype: mixed
-    
+
     Gets an item from the cache. If ``null`` was returned, this will invoke the callback
     and save the result. Either way, this will return the value.
 
@@ -130,7 +135,7 @@ Class Reference
     :rtype: bool
 
     This method will delete a specific item from the cache store. If item
-    deletion fails, the method will return FALSE.
+    deletion fails, the method will return false.
 
     Example::
 
@@ -168,7 +173,7 @@ Class Reference
     Example::
 
         // 'iterator' has a value of 2
-        $cache->increment('iterator');    // 'iterator' is now 3
+        $cache->increment('iterator'); // 'iterator' is now 3
         $cache->increment('iterator', 3); // 'iterator' is now 6
 
 .. php:method:: decrement($key[, $offset = 1]): mixed
@@ -183,7 +188,7 @@ Class Reference
     Example::
 
         // 'iterator' has a value of 6
-        $cache->decrement('iterator');    // 'iterator' is now 5
+        $cache->decrement('iterator'); // 'iterator' is now 5
         $cache->decrement('iterator', 2); // 'iterator' is now 3
 
 .. php:method:: clean()
@@ -192,7 +197,7 @@ Class Reference
     :rtype: bool
 
     This method will 'clean' the entire cache. If the deletion of the
-    cache files fails, the method will return FALSE.
+    cache files fails, the method will return false.
 
     Example::
 

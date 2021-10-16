@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter\Database\DatabaseTestCase;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\DatabaseTestCase;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -10,56 +21,58 @@ use Config\Services;
  * show $migrateOnce applies per test case file.
  *
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
+final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	/**
-	 * Should run db migration only once?
-	 *
-	 * @var boolean
-	 */
-	protected $migrateOnce = true;
+    /**
+     * Should run db migration only once?
+     *
+     * @var bool
+     */
+    protected $migrateOnce = true;
 
-	/**
-	 * Should the db be refreshed before test?
-	 *
-	 * @var boolean
-	 */
-	protected $refresh = true;
+    /**
+     * Should the db be refreshed before test?
+     *
+     * @var bool
+     */
+    protected $refresh = true;
 
-	/**
-	 * The namespace(s) to help us find the migration classes.
-	 * Empty is equivalent to running `spark migrate -all`.
-	 * Note that running "all" runs migrations in date order,
-	 * but specifying namespaces runs them in namespace order (then date)
-	 *
-	 * @var string|array|null
-	 */
-	protected $namespace = [
-		'Tests\Support\MigrationTestMigrations',
-	];
+    /**
+     * The namespace(s) to help us find the migration classes.
+     * Empty is equivalent to running `spark migrate -all`.
+     * Note that running "all" runs migrations in date order,
+     * but specifying namespaces runs them in namespace order (then date)
+     *
+     * @var array|string|null
+     */
+    protected $namespace = [
+        'Tests\Support\MigrationTestMigrations',
+    ];
 
-	public function setUp(): void
-	{
-		Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
+    protected function setUp(): void
+    {
+        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
 
-		parent::setUp();
-	}
+        parent::setUp();
+    }
 
-	public function testMigrationDone()
-	{
-		$this->seeInDatabase('foo', ['key' => 'foobar']);
+    public function testMigrationDone()
+    {
+        $this->seeInDatabase('foo', ['key' => 'foobar']);
 
-		// Drop table to make sure there is no foo table when
-		// DatabaseTestCaseMigrationOnce2Test runs
-		$this->dropTableFoo();
-	}
+        // Drop table to make sure there is no foo table when
+        // DatabaseTestCaseMigrationOnce2Test runs
+        $this->dropTableFoo();
+    }
 
-	private function dropTableFoo()
-	{
-		$forge = Database::forge();
-		$forge->dropTable('foo', true);
-	}
+    private function dropTableFoo()
+    {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+    }
 }

@@ -124,9 +124,9 @@ To save on typing, you can reuse variables that you've already specified in the 
 variable name within ``${...}``
 ::
 
-        BASE_DIR="/var/webroot/project-root"
-        CACHE_DIR="${BASE_DIR}/cache"
-        TMP_DIR="${BASE_DIR}/tmp"
+    BASE_DIR="/var/webroot/project-root"
+    CACHE_DIR="${BASE_DIR}/cache"
+    TMP_DIR="${BASE_DIR}/tmp"
 
 Namespaced Variables
 ====================
@@ -182,6 +182,13 @@ the value from **.env** replaces the configuration file value.
     app.CSPEnabled = true
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
+
+Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
+::
+
+    app_CSRFProtection = true
+    app_CSRFCookieName = csrf_cookie
+    app_CSPEnabled = true
 
 Environment Variables as Replacements for Data
 ==============================================
@@ -262,17 +269,17 @@ wish to supply an additional template to ``Pager`` without overwriting whatever 
 already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
 the single ``Pager()`` method (note the case-sensitivity)::
 
-	class Registrar
-	{
-		public static function Pager(): array
-		{
-			return [
-				'templates' => [
-					'module_pager' => 'MyModule\Views\Pager',
-				],
-			];
-		}
-	}
+    class Registrar
+    {
+        public static function Pager(): array
+        {
+            return [
+                'templates' => [
+                    'module_pager' => 'MyModule\Views\Pager',
+                ],
+            ];
+        }
+    }
 
 Registrar methods must always return an array, with keys corresponding to the properties
 of the target config file. Existing values are merged, and Registrar properties have
@@ -337,4 +344,3 @@ by treating ``RegionalSales`` as a "registrar". The resulting configuration prop
 
     $target   = 45;
     $campaign = "Winter Wonderland";
-

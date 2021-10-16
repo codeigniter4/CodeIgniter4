@@ -1,0 +1,22 @@
+Version 4.1.5
+=============
+
+Release Date: Not released
+
+**4.1.5 release of CodeIgniter4**
+
+Enhancements:
+
+- Added Cache config for reserved characters
+- The ``addForeignKey`` function of the ``Forge`` class can now define composite foreign keys in an array
+- The ``dropKey`` function of the ``Forge`` class can remove key
+
+Changes:
+
+- Always escape identifiers in the ``set``, ``setUpdateBatch``, and ``insertBatch`` functions in ``BaseBuilder``.
+
+Deprecations:
+
+- Deprecated ``CodeIgniter\\Cache\\Handlers\\BaseHandler::RESERVED_CHARACTERS`` in favor of the new config property
+
+Bugs Fixed:

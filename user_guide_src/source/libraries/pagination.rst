@@ -90,7 +90,7 @@ methods to keep the data separate::
         $data = [
             'users' => $userModel->paginate(10, 'group1'),
             'pages' => $pageModel->paginate(15, 'group2'),
-            'pager' => $userModel->pager
+            'pager' => $userModel->pager,
         ];
 
         echo view('users/index', $data);
@@ -154,9 +154,9 @@ Please note: ``$segment`` value cannot be greater than the number of URI segment
 
 If you in need to show many pagers on one page then additional parameter which will define a group could be helpful::
 
-	$pager = service('pager');
-	$pager->setPath('path/for/my-group', 'my-group'); // Additionally you could define path for every group.
-	$pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group');
+    $pager = service('pager');
+    $pager->setPath('path/for/my-group', 'my-group'); // Additionally you could define path for every group.
+    $pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group');
 
 Pagination library uses *page* query parameter for HTTP queries by default (if no group or *default* group name given) or *page_[groupName]* for custom group names.
 
@@ -189,7 +189,7 @@ that is used by editing **app/Config/Pager.php**::
 
     public $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-        'default_simple' => 'CodeIgniter\Pager\Views\default_simple'
+        'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
     ];
 
 This setting stores the alias and :doc:`namespaced view paths </outgoing/views>` for the view that
@@ -301,11 +301,11 @@ result set.
 Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
 title, which is just the number, and a boolean that tells whether the link is the current/active link or not::
 
-	$link = [
-		'active' => false,
-		'uri'    => 'http://example.com/foo?page=2',
-		'title'  => 1
-	];
+    $link = [
+        'active' => false,
+        'uri'    => 'http://example.com/foo?page=2',
+        'title'  => 1,
+    ];
 
 In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.
 

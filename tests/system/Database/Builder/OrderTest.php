@@ -1,60 +1,77 @@
-<?php namespace CodeIgniter\Database\Builder;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class OrderTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class OrderTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testOrderAscending()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-	//--------------------------------------------------------------------
+        $builder->orderBy('name', 'asc');
 
-	public function testOrderAscending()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+        $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
 
-		$builder->orderBy('name', 'asc');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" ASC';
+    public function testOrderDescending()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $builder->orderBy('name', 'desc');
 
-	//--------------------------------------------------------------------
+        $expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
 
-	public function testOrderDescending()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$builder->orderBy('name', 'desc');
+    public function testOrderRandom()
+    {
+        $builder = new BaseBuilder('user', $this->db);
 
-		$expectedSQL = 'SELECT * FROM "user" ORDER BY "name" DESC';
+        $builder->orderBy('name', 'random');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-	public function testOrderRandom()
-	{
-		$builder = new BaseBuilder('user', $this->db);
+    public function testOrderRandomWithRandomColumn()
+    {
+        $this->db->setPrefix('fail_');
+        $builder = new BaseBuilder('user', $this->db);
+        $this->setPrivateProperty($builder, 'randomKeyword', ['"SYSTEM"."RANDOM"']);
 
-		$builder->orderBy('name', 'random');
+        $builder->orderBy('name', 'random');
 
-		$expectedSQL = 'SELECT * FROM "user" ORDER BY RAND()';
+        $expectedSQL = 'SELECT * FROM "fail_user" ORDER BY "SYSTEM"."RANDOM"';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
-
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-/**
+/*
  * System URI Routing
  *
  * This file contains any routing to system tools, such as command-line
@@ -22,13 +22,13 @@ use CodeIgniter\Exceptions\PageNotFoundException;
  */
 
 // Prevent access to BaseController
-$routes->add('BaseController(:any)', function () {
-	throw PageNotFoundException::forPageNotFound();
+$routes->add('BaseController(:any)', static function () {
+    throw PageNotFoundException::forPageNotFound();
 });
 
 // Prevent access to initController method
-$routes->add('(:any)/initController', function () {
-	throw PageNotFoundException::forPageNotFound();
+$routes->add('(:any)/initController', static function () {
+    throw PageNotFoundException::forPageNotFound();
 });
 
 // Migrations

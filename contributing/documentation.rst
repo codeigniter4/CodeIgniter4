@@ -13,12 +13,12 @@ It is created automatically by inserting the following:
 
 ::
 
-	.. contents::
-		:local:
+    .. contents::
+        :local:
 
-	.. raw:: html
+    .. raw:: html
 
-	<div class="custom-index container"></div>
+    <div class="custom-index container"></div>
 
 .. contents::
   :local:
@@ -51,44 +51,44 @@ Headings are formed by using certain characters as underlines for a bit of
 text.  Major headings, like page titles and section headings also use
 overlines.  Other headings just use underlines, with the following hierarchy::
 
-	# with overline for page titles
-	* with overline for major sections
-	= for subsections
-	- for subsubsections
-	^ for subsubsubsections
-	" for subsubsubsubsections (!)
+    # with overline for page titles
+    * with overline for major sections
+    = for subsections
+    - for subsubsections
+    ^ for subsubsubsections
+    " for subsubsubsubsections (!)
 
 The :download:`TextMate ELDocs Bundle <./ELDocs.tmbundle.zip>` can help you
 create these with the following tab triggers::
 
-	title->
+    title->
 
-		##########
-		Page Title
-		##########
+        ##########
+        Page Title
+        ##########
 
-	sec->
+    sec->
 
-		*************
-		Major Section
-		*************
+        *************
+        Major Section
+        *************
 
-	sub->
+    sub->
 
-		Subsection
-		==========
+        Subsection
+        ==========
 
-	sss->
+    sss->
 
-		SubSubSection
-		-------------
+        SubSubSection
+        -------------
 
-	ssss->
+    ssss->
 
-		SubSubSubSection
-		^^^^^^^^^^^^^^^^
+        SubSubSubSection
+        ^^^^^^^^^^^^^^^^
 
-	sssss->
+    sssss->
 
-		SubSubSubSubSection (!)
-		"""""""""""""""""""""""
+        SubSubSubSubSection (!)
+        """""""""""""""""""""""

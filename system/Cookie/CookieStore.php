@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Cookie;
@@ -24,282 +24,227 @@ use Traversable;
  */
 class CookieStore implements Countable, IteratorAggregate
 {
-	/**
-	 * The cookie collection.
-	 *
-	 * @var array<string, Cookie>
-	 */
-	protected $cookies = [];
+    /**
+     * The cookie collection.
+     *
+     * @var array<string, Cookie>
+     */
+    protected $cookies = [];
 
-	/**
-	 * Creates a CookieStore from an array of `Set-Cookie` headers.
-	 *
-	 * @param string[] $headers
-	 * @param boolean  $raw
-	 *
-	 * @throws CookieException
-	 *
-	 * @return static
-	 */
-	public static function fromCookieHeaders(array $headers, bool $raw = false)
-	{
-		/**
-		 * @var Cookie[] $cookies
-		 */
-		$cookies = array_filter(array_map(function (string $header) use ($raw) {
-			try
-			{
-				return Cookie::fromHeaderString($header, $raw);
-			}
-			catch (CookieException $e)
-			{
-				log_message('error', $e->getMessage());
-				return false;
-			}
-		}, $headers));
+    /**
+     * Creates a CookieStore from an array of `Set-Cookie` headers.
+     *
+     * @param string[] $headers
+     *
+     * @throws CookieException
+     *
+     * @return static
+     */
+    public static function fromCookieHeaders(array $headers, bool $raw = false)
+    {
+        /**
+         * @var Cookie[] $cookies
+         */
+        $cookies = array_filter(array_map(static function (string $header) use ($raw) {
+            try {
+                return Cookie::fromHeaderString($header, $raw);
+            } catch (CookieException $e) {
+                log_message('error', $e->getMessage());
 
-		return new static($cookies);
-	}
+                return false;
+            }
+        }, $headers));
 
-	/**
-	 * @param Cookie[] $cookies
-	 *
-	 * @throws CookieException
-	 */
-	final public function __construct(array $cookies)
-	{
-		$this->validateCookies($cookies);
+        return new static($cookies);
+    }
 
-		foreach ($cookies as $cookie)
-		{
-			$this->cookies[$cookie->getId()] = $cookie;
-		}
-	}
+    /**
+     * @param Cookie[] $cookies
+     *
+     * @throws CookieException
+     */
+    final public function __construct(array $cookies)
+    {
+        $this->validateCookies($cookies);
 
-	/**
-	 * Checks if a `Cookie` object identified by name and
-	 * prefix is present in the collection.
-	 *
-	 * @param string      $name
-	 * @param string      $prefix
-	 * @param string|null $value
-	 *
-	 * @return boolean
-	 */
-	public function has(string $name, string $prefix = '', string $value = null): bool
-	{
-		$name = $prefix . $name;
+        foreach ($cookies as $cookie) {
+            $this->cookies[$cookie->getId()] = $cookie;
+        }
+    }
 
-		foreach ($this->cookies as $cookie)
-		{
-			if ($cookie->getPrefixedName() !== $name)
-			{
-				continue;
-			}
+    /**
+     * Checks if a `Cookie` object identified by name and
+     * prefix is present in the collection.
+     */
+    public function has(string $name, string $prefix = '', ?string $value = null): bool
+    {
+        $name = $prefix . $name;
 
-			if ($value === null)
-			{
-				return true; // for BC
-			}
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getPrefixedName() !== $name) {
+                continue;
+            }
 
-			return $cookie->getValue() === $value;
-		}
+            if ($value === null) {
+                return true; // for BC
+            }
 
-		return false;
-	}
+            return $cookie->getValue() === $value;
+        }
 
-	/**
-	 * Retrieves an instance of `Cookie` identified by a name and prefix.
-	 * This throws an exception if not found.
-	 *
-	 * @param string $name
-	 * @param string $prefix
-	 *
-	 * @throws CookieException
-	 *
-	 * @return Cookie
-	 */
-	public function get(string $name, string $prefix = ''): Cookie
-	{
-		$name = $prefix . $name;
+        return false;
+    }
 
-		foreach ($this->cookies as $cookie)
-		{
-			if ($cookie->getPrefixedName() === $name)
-			{
-				return $cookie;
-			}
-		}
+    /**
+     * Retrieves an instance of `Cookie` identified by a name and prefix.
+     * This throws an exception if not found.
+     *
+     * @throws CookieException
+     */
+    public function get(string $name, string $prefix = ''): Cookie
+    {
+        $name = $prefix . $name;
 
-		throw CookieException::forUnknownCookieInstance([$name, $prefix]);
-	}
+        foreach ($this->cookies as $cookie) {
+            if ($cookie->getPrefixedName() === $name) {
+                return $cookie;
+            }
+        }
 
-	/**
-	 * Store a new cookie and return a new collection. The original collection
-	 * is left unchanged.
-	 *
-	 * @param Cookie $cookie
-	 *
-	 * @return static
-	 */
-	public function put(Cookie $cookie)
-	{
-		$store = clone $this;
+        throw CookieException::forUnknownCookieInstance([$name, $prefix]);
+    }
 
-		$store->cookies[$cookie->getId()] = $cookie;
+    /**
+     * Store a new cookie and return a new collection. The original collection
+     * is left unchanged.
+     *
+     * @return static
+     */
+    public function put(Cookie $cookie)
+    {
+        $store = clone $this;
 
-		return $store;
-	}
+        $store->cookies[$cookie->getId()] = $cookie;
 
-	/**
-	 * Removes a cookie from a collection and returns an updated collection.
-	 * The original collection is left unchanged.
-	 *
-	 * Removing a cookie from the store **DOES NOT** delete it from the browser.
-	 * If you intend to delete a cookie *from the browser*, you must put an empty
-	 * value cookie with the same name to the store.
-	 *
-	 * @param string $name
-	 * @param string $prefix
-	 *
-	 * @return static
-	 */
-	public function remove(string $name, string $prefix = '')
-	{
-		$default = Cookie::setDefaults();
+        return $store;
+    }
 
-		$id = implode(';', [$prefix . $name, $default['path'], $default['domain']]);
+    /**
+     * Removes a cookie from a collection and returns an updated collection.
+     * The original collection is left unchanged.
+     *
+     * Removing a cookie from the store **DOES NOT** delete it from the browser.
+     * If you intend to delete a cookie *from the browser*, you must put an empty
+     * value cookie with the same name to the store.
+     *
+     * @return static
+     */
+    public function remove(string $name, string $prefix = '')
+    {
+        $default = Cookie::setDefaults();
 
-		$store = clone $this;
+        $id = implode(';', [$prefix . $name, $default['path'], $default['domain']]);
 
-		foreach (array_keys($store->cookies) as $index)
-		{
-			if ($index === $id)
-			{
-				unset($store->cookies[$index]);
-			}
-		}
+        $store = clone $this;
 
-		return $store;
-	}
+        foreach (array_keys($store->cookies) as $index) {
+            if ($index === $id) {
+                unset($store->cookies[$index]);
+            }
+        }
 
-	/**
-	 * Dispatches all cookies in store.
-	 *
-	 * @return void
-	 */
-	public function dispatch(): void
-	{
-		foreach ($this->cookies as $cookie)
-		{
-			$name    = $cookie->getPrefixedName();
-			$value   = $cookie->getValue();
-			$options = $cookie->getOptions();
+        return $store;
+    }
 
-			if ($cookie->isRaw())
-			{
-				$this->setRawCookie($name, $value, $options);
-			}
-			else
-			{
-				$this->setCookie($name, $value, $options);
-			}
-		}
+    /**
+     * Dispatches all cookies in store.
+     */
+    public function dispatch(): void
+    {
+        foreach ($this->cookies as $cookie) {
+            $name    = $cookie->getPrefixedName();
+            $value   = $cookie->getValue();
+            $options = $cookie->getOptions();
 
-		$this->clear();
-	}
+            if ($cookie->isRaw()) {
+                $this->setRawCookie($name, $value, $options);
+            } else {
+                $this->setCookie($name, $value, $options);
+            }
+        }
 
-	/**
-	 * Returns all cookie instances in store.
-	 *
-	 * @return array<string, Cookie>
-	 */
-	public function display(): array
-	{
-		return $this->cookies;
-	}
+        $this->clear();
+    }
 
-	/**
-	 * Clears the cookie collection.
-	 *
-	 * @return void
-	 */
-	public function clear(): void
-	{
-		$this->cookies = [];
-	}
+    /**
+     * Returns all cookie instances in store.
+     *
+     * @return array<string, Cookie>
+     */
+    public function display(): array
+    {
+        return $this->cookies;
+    }
 
-	/**
-	 * Gets the Cookie count in this collection.
-	 *
-	 * @return integer
-	 */
-	public function count(): int
-	{
-		return count($this->cookies);
-	}
+    /**
+     * Clears the cookie collection.
+     */
+    public function clear(): void
+    {
+        $this->cookies = [];
+    }
 
-	/**
-	 * Gets the iterator for the cookie collection.
-	 *
-	 * @return Traversable<string, Cookie>
-	 */
-	public function getIterator()
-	{
-		return new ArrayIterator($this->cookies);
-	}
+    /**
+     * Gets the Cookie count in this collection.
+     */
+    public function count(): int
+    {
+        return count($this->cookies);
+    }
 
-	/**
-	 * Validates all cookies passed to be instances of Cookie.
-	 *
-	 * @param array $cookies
-	 *
-	 * @throws CookieException
-	 *
-	 * @return void
-	 */
-	protected function validateCookies(array $cookies): void
-	{
-		foreach ($cookies as $index => $cookie)
-		{
-			$type = is_object($cookie) ? get_class($cookie) : gettype($cookie);
+    /**
+     * Gets the iterator for the cookie collection.
+     *
+     * @return Traversable<string, Cookie>
+     */
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->cookies);
+    }
 
-			if (! $cookie instanceof Cookie)
-			{
-				throw CookieException::forInvalidCookieInstance([static::class, Cookie::class, $type, $index]);
-			}
-		}
-	}
+    /**
+     * Validates all cookies passed to be instances of Cookie.
+     *
+     * @throws CookieException
+     */
+    protected function validateCookies(array $cookies): void
+    {
+        foreach ($cookies as $index => $cookie) {
+            $type = is_object($cookie) ? get_class($cookie) : gettype($cookie);
 
-	/**
-	 * Extracted call to `setrawcookie()` in order to run unit tests on it.
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @param string $name
-	 * @param string $value
-	 * @param array  $options
-	 *
-	 * @return void
-	 */
-	protected function setRawCookie(string $name, string $value, array $options): void
-	{
-		setrawcookie($name, $value, $options);
-	}
+            if (! $cookie instanceof Cookie) {
+                throw CookieException::forInvalidCookieInstance([static::class, Cookie::class, $type, $index]);
+            }
+        }
+    }
 
-	/**
-	 * Extracted call to `setcookie()` in order to run unit tests on it.
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @param string $name
-	 * @param string $value
-	 * @param array  $options
-	 *
-	 * @return void
-	 */
-	protected function setCookie(string $name, string $value, array $options): void
-	{
-		setcookie($name, $value, $options);
-	}
+    /**
+     * Extracted call to `setrawcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    protected function setRawCookie(string $name, string $value, array $options): void
+    {
+        setrawcookie($name, $value, $options);
+    }
+
+    /**
+     * Extracted call to `setcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    protected function setCookie(string $name, string $value, array $options): void
+    {
+        setcookie($name, $value, $options);
+    }
 }

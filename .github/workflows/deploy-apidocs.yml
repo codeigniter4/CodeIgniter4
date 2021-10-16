@@ -1,6 +1,6 @@
 # When changes are pushed to the develop branch,
 # build the current version of the API documentation
-# with phpDocumentor and deploy it to the api branch.
+# with phpDocumentor and deploy it to codeigniter4/api.
 name: Deploy API Documentation
 
 on:
@@ -9,13 +9,14 @@ on:
       - 'develop'
     paths:
       - 'system/**'
+      - '.github/workflows/deploy-apidocs.yml'
 
 jobs:
-
   build:
     name: Deploy to api
-    if: (github.repository == 'codeigniter4/CodeIgniter4')
-    runs-on: ubuntu-latest
+    if: github.repository == 'codeigniter4/CodeIgniter4'
+    runs-on: ubuntu-20.04
+
     steps:
       - name: Setup credentials
         run: |
@@ -37,37 +38,32 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
-          extensions: intl
+          php-version: '8.0'
+          tools: phive
+          coverage: none
 
-      - name: Install GraphViz for phpDocumentor
-        run: |
-          sudo apt install -yq graphviz
+      - name: Download latest phpDocumentor
+        working-directory: source
+        run: sudo phive --no-progress install --global --trust-gpg-keys 67F861C3D889C656 phpDocumentor
 
-      - name: Download phpDocumentor
+      - name: Prepare API repo
+        working-directory: api
         run: |
-          cd ./source
-          curl \
-            -L https://github.com/phpDocumentor/phpDocumentor/releases/download/v2.9.1/phpDocumentor.phar \
-            -o admin/phpDocumentor.phar
-
-      - name: Prepare
-        run: |
-          cd ./api
-          rm -rf ./api/docs*
-          mkdir -p ./api/docs
           git reset --hard master
+          rm -rfv docs
+          mkdir --parents --verbose docs
 
-      - name: Build
+      - name: Build API in source repo
+        working-directory: source
         run: |
-          cd ./source
-          chmod +x admin/phpDocumentor.phar
-          admin/phpDocumentor.phar
+          phpDocumentor run --ansi --verbose
           cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
-      - name: Deploy
+      - name: Deploy to API repo
+        working-directory: api
         run: |
-          cd ./api
           git add .
-          git commit -m "API sync for ${GITHUB_SHA}"
-          git push
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Updated API for commit ${GITHUB_SHA}"
+            git push origin master
+          fi

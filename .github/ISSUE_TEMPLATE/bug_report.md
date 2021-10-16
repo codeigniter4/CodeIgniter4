@@ -35,5 +35,6 @@ screenshots you deem necessary.
 
 **Context**
  - OS: [e.g. Windows 99]
- - Web server [e.g. Apache 1.2.3]
- - PHP version [e.g. 6.5.4]
+ - Web server: [e.g. Apache 1.2.3]
+ - PHP version: [e.g. 6.5.4]
+ - Database:  [e.g. MySQL]

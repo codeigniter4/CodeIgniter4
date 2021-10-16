@@ -1,82 +1,81 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class EscapeTest extends CIUnitTestCase
+final class EscapeTest extends CIUnitTestCase
 {
-	use DatabaseTestTrait;
+    use DatabaseTestTrait;
 
-	protected $refresh = false;
+    protected $refresh = false;
+    protected $char;
 
-	protected $char;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->char = $this->db->DBDriver === 'MySQLi' ? '\\' : "'";
+    }
 
-		$this->char = $this->db->DBDriver === 'MySQLi' ? '\\' : "'";
-	}
+    /**
+     * Ensures we don't have escaped - values...
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
+     */
+    public function testEscapeProtectsNegativeNumbers()
+    {
+        $this->assertSame("'-100'", $this->db->escape(-100));
+    }
 
-	//--------------------------------------------------------------------
+    public function testEscape()
+    {
+        $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
+        $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
 
-	/**
-	 * Ensures we don't have escaped - values...
-	 *
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
-	 */
-	public function testEscapeProtectsNegativeNumbers()
-	{
-		$this->assertEquals("'-100'", $this->db->escape(-100));
-	}
+        $this->assertSame($expected, $sql);
+    }
 
-	//--------------------------------------------------------------------
+    public function testEscapeString()
+    {
+        $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
+        $sql      = "SELECT * FROM brands WHERE name = '" . $this->db->escapeString("O'Doules") . "'";
 
-	public function testEscape()
-	{
-		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
-		$sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
+        $this->assertSame($expected, $sql);
+    }
 
-		$this->assertEquals($expected, $sql);
-	}
+    public function testEscapeLikeString()
+    {
+        $expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
+        $sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expected, $sql);
+    }
 
-	public function testEscapeString()
-	{
-		$expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
-		$sql      = "SELECT * FROM brands WHERE name = '" . $this->db->escapeString("O'Doules") . "'";
+    public function testEscapeLikeStringDirect()
+    {
+        if ($this->db->DBDriver === 'MySQLi') {
+            $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
+            $sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
 
-		$this->assertEquals($expected, $sql);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testEscapeLikeString()
-	{
-		$expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
-		$sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
-
-		$this->assertEquals($expected, $sql);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testEscapeLikeStringDirect()
-	{
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\_chars%'";
-			$sql      = "SHOW COLUMNS FROM brands WHERE column LIKE '" . $this->db->escapeLikeStringDirect('wild_chars') . "%'";
-
-			$this->assertEquals($expected, $sql);
-		}
-		else
-		{
-			$this->expectNotToPerformAssertions();
-		}
-	}
+            $this->assertSame($expected, $sql);
+        } else {
+            $this->expectNotToPerformAssertions();
+        }
+    }
 }

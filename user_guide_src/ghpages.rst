@@ -6,7 +6,7 @@ The intent is, eventually, for the in-progress user guide to be automatically
 generated as part of a PR merge. This writeup explains how it can be done manually
 in the meantime.
 
-The user guide takes advantage of Github pages, where the "gh-pages" branch of
+The user guide takes advantage of GitHub pages, where the "gh-pages" branch of
 a repo, containing HTML only, is accessible through `github.io
 <https://bcit-ci.github.io/CodeIgniter4>`_.
 
@@ -26,19 +26,19 @@ Re-generating the User Guide
 In the ``user_guide_src`` folder, you generate a conventional user guide,
 for testing, using the command::
 
-	make html
+    make html
 
 An additional target has been configured, which will generate the same
 HTML but inside the ``html`` folder of the second repo clone::
 
-	make ghpages
+    make ghpages
 
 After making this target, update the online user guide by switching to
 the ``CodeIgniter4-guide/html`` folder, and then::
 
-	git add .
-	git commit -S -m "Suitable comment"
-	git push origin gh-pages
+    git add .
+    git commit -S -m "Suitable comment"
+    git push origin gh-pages
 
 Process
 =======

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Entity\Cast;
@@ -20,33 +20,29 @@ use Exception;
  */
 class DatetimeCast extends BaseCast
 {
-	/**
-	 * @inheritDoc
-	 *
-	 * @throws Exception
-	 */
-	public static function get($value, array $params = [])
-	{
-		if ($value instanceof Time)
-		{
-			return $value;
-		}
+    /**
+     * {@inheritDoc}
+     *
+     * @throws Exception
+     */
+    public static function get($value, array $params = [])
+    {
+        if ($value instanceof Time) {
+            return $value;
+        }
 
-		if ($value instanceof DateTime)
-		{
-			return Time::instance($value);
-		}
+        if ($value instanceof DateTime) {
+            return Time::instance($value);
+        }
 
-		if (is_numeric($value))
-		{
-			return Time::createFromTimestamp($value);
-		}
+        if (is_numeric($value)) {
+            return Time::createFromTimestamp($value);
+        }
 
-		if (is_string($value))
-		{
-			return Time::parse($value);
-		}
+        if (is_string($value)) {
+            return Time::parse($value);
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 }

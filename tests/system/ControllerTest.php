@@ -1,4 +1,15 @@
-<?php namespace CodeIgniter;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
@@ -17,163 +28,156 @@ use Psr\Log\LoggerInterface;
  * we can exercise everything without blowing up :-/
  *
  * @backupGlobals enabled
+ *
+ * @internal
  */
-class ControllerTest extends CIUnitTestCase
+final class ControllerTest extends CIUnitTestCase
 {
+    /**
+     * @var CodeIgniter
+     */
+    protected $codeigniter;
 
-	/**
-	 * @var CodeIgniter
-	 */
-	protected $codeigniter;
+    /**
+     * @var Controller
+     */
+    protected $controller;
 
-	/**
-	 * @var Controller
-	 */
-	protected $controller;
+    /**
+     * Current request.
+     *
+     * @var Request
+     */
+    protected $request;
 
-	/**
-	 * Current request.
-	 *
-	 * @var Request
-	 */
-	protected $request;
+    /**
+     * Current response.
+     *
+     * @var Response
+     */
+    protected $response;
 
-	/**
-	 * Current response.
-	 *
-	 * @var Response
-	 */
-	protected $response;
-	/**
-	 * @var LoggerInterface
-	 */
-	protected $logger;
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->config      = new App();
+        $this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+        $this->response    = new Response($this->config);
+        $this->logger      = \Config\Services::logger();
+        $this->codeigniter = new MockCodeIgniter($this->config);
+    }
 
-		$this->config      = new App();
-		$this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
-		$this->response    = new Response($this->config);
-		$this->logger      = \Config\Services::logger();
-		$this->codeigniter = new MockCodeIgniter($this->config);
-	}
+    public function testConstructor()
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
+        $this->assertInstanceOf(Controller::class, $this->controller);
+    }
 
-	//--------------------------------------------------------------------
+    public function testConstructorHTTPS()
+    {
+        $original = $_SERVER;
+        $_SERVER  = ['HTTPS' => 'on'];
+        // make sure we can instantiate one
+        $this->controller         = new class () extends Controller {
+            protected $forceHTTPS = 1;
+        };
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-	public function testConstructor()
-	{
-		// make sure we can instantiate one
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
-		$this->assertInstanceOf(Controller::class, $this->controller);
-	}
+        $this->assertInstanceOf(Controller::class, $this->controller);
+        $_SERVER = $original; // restore so code coverage doesn't break
+    }
 
-	public function testConstructorHTTPS()
-	{
-		$original = $_SERVER;
-		$_SERVER  = ['HTTPS' => 'on'];
-		// make sure we can instantiate one
-		$this->controller = new Class() extends Controller
-		{
-			protected $forceHTTPS = 1;
-		};
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testCachePage()
+    {
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-		$this->assertInstanceOf(Controller::class, $this->controller);
-		$_SERVER = $original; // restore so code coverage doesn't break
-	}
+        $method = $this->getPrivateMethodInvoker($this->controller, 'cachePage');
+        $this->assertNull($method(10));
+    }
 
-	//--------------------------------------------------------------------
-	public function testCachePage()
-	{
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testValidate()
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-		$method = $this->getPrivateMethodInvoker($this->controller, 'cachePage');
-		$this->assertNull($method(10));
-	}
+        // and that we can attempt validation, with no rules
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $this->assertFalse($method([]));
+    }
 
-	public function testValidate()
-	{
-		// make sure we can instantiate one
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testValidateWithStringRulesNotFound()
+    {
+        $this->expectException(ValidationException::class);
 
-		// and that we can attempt validation, with no rules
-		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
-		$this->assertFalse($method([]));
-	}
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-	public function testValidateWithStringRulesNotFound()
-	{
-		$this->expectException(ValidationException::class);
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $this->assertFalse($method('signup'));
+    }
 
-		// make sure we can instantiate one
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
+    {
+        $validation         = config('Validation');
+        $validation->signup = [
+            'username' => 'required',
+        ];
+        $validation->signup_errors = [
+            'username' => [
+                'required' => 'You must choose a username.',
+            ],
+        ];
 
-		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
-		$this->assertFalse($method('signup'));
-	}
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-	public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
-	{
-		$validation                = config('Validation');
-		$validation->signup        = [
-			'username' => 'required',
-		];
-		$validation->signup_errors = [
-			'username' => [
-				'required' => 'You must choose a username.',
-			],
-		];
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $this->assertFalse($method('signup'));
+        $this->assertSame('You must choose a username.', Services::validation()->getError());
+    }
 
-		// make sure we can instantiate one
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testValidateWithStringRulesFoundUseMessagesParameter()
+    {
+        $validation         = config('Validation');
+        $validation->signup = [
+            'username' => 'required',
+        ];
 
-		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
-		$this->assertFalse($method('signup'));
-		$this->assertEquals('You must choose a username.', Services::validation()->getError());
-	}
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-	public function testValidateWithStringRulesFoundUseMessagesParameter()
-	{
-		$validation         = config('Validation');
-		$validation->signup = [
-			'username' => 'required',
-		];
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $this->assertFalse($method('signup', [
+            'username' => [
+                'required' => 'You must choose a username.',
+            ],
+        ]));
+        $this->assertSame('You must choose a username.', Services::validation()->getError());
+    }
 
-		// make sure we can instantiate one
-		$this->controller = new Controller();
-		$this->controller->initController($this->request, $this->response, $this->logger);
+    public function testHelpers()
+    {
+        $this->controller      = new class () extends Controller {
+            protected $helpers = [
+                'cookie',
+                'text',
+            ];
+        };
+        $this->controller->initController($this->request, $this->response, $this->logger);
 
-		$method = $this->getPrivateMethodInvoker($this->controller, 'validate');
-		$this->assertFalse($method('signup', [
-			'username' => [
-				'required' => 'You must choose a username.',
-			],
-		]));
-		$this->assertEquals('You must choose a username.', Services::validation()->getError());
-	}
-
-	//--------------------------------------------------------------------
-	public function testHelpers()
-	{
-		$this->controller = new Class() extends Controller
-		{
-			protected $helpers = [
-				'cookie',
-				'text',
-			];
-		};
-		$this->controller->initController($this->request, $this->response, $this->logger);
-
-		$this->assertInstanceOf(Controller::class, $this->controller);
-	}
-
+        $this->assertInstanceOf(Controller::class, $this->controller);
+    }
 }

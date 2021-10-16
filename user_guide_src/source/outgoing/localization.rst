@@ -125,7 +125,7 @@ It also support nested definition::
 
     'language_key' => [
         'nested' => [
-            'key' => 'The actual message to be shown.'
+            'key' => 'The actual message to be shown.',
         ],
     ],
 
@@ -278,8 +278,8 @@ Language files also allow nested arrays to make working with lists, etc... easie
             'Grapes',
             'Lemons',
             'Oranges',
-            'Strawberries'
-        ]
+            'Strawberries',
+        ],
     ];
 
     // Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"

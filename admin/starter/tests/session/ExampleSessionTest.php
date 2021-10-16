@@ -1,18 +1,15 @@
 <?php
 
-class ExampleSessionTest extends \Tests\Support\SessionTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+/**
+ * @internal
+ */
+final class ExampleSessionTest extends CIUnitTestCase
 {
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
-
-	public function testSessionSimple()
-	{
-		$this->session->set('logged_in', 123);
-
-		$value = $this->session->get('logged_in');
-
-		$this->assertEquals(123, $value);
-	}
+    public function testSessionSimple()
+    {
+        $this->session->set('logged_in', 123);
+        $this->assertSame(123, $this->session->get('logged_in'));
+    }
 }

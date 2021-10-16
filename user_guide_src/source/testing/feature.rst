@@ -14,7 +14,7 @@ and more.
 The Test Class
 ==============
 
-Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestCase``
+Feature testing requires that all of your test classes use the ``CodeIgniter\Test\DatabaseTestTrait``
 and ``CodeIgniter\Test\FeatureTestTrait`` traits. Since these testing tools rely on proper database
 staging you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called if you implement your own methods.
@@ -27,22 +27,22 @@ are called if you implement your own methods.
     use CodeIgniter\Test\DatabaseTestTrait;
     use CodeIgniter\Test\FeatureTestTrait;
 
-    class TestFoo extends FeatureTestCase
+    class TestFoo extends CIUnitTestCase
     {
-    	use DatabaseTestTrait, FeatureTestTrait;
+        use DatabaseTestTrait, FeatureTestTrait;
 
         protected function setUp(): void
         {
             parent::setUp();
 
-			$this->myClassMethod();
+            $this->myClassMethod();
         }
 
         protected function tearDown(): void
         {
             parent::tearDown();
 
-			$this->anotherClassMethod();
+            $this->anotherClassMethod();
         }
     }
 
@@ -61,7 +61,7 @@ populated, while a **post** request would have the **$_POST** array populated.
 
     // Submit a form
     $result = $this->call('post', 'contact'), [
-        'name' => 'Fred Flintstone',
+        'name'  => 'Fred Flintstone',
         'email' => 'flintyfred@example.com'
     ]);
 
@@ -83,11 +83,10 @@ You can use a custom collection of routes by passing an array of "routes" into t
 override any existing routes in the system::
 
     $routes = [
-       [ 'get', 'users', 'UserController::list' ]
-     ];
+        ['get', 'users', 'UserController::list'],
+    ];
 
-    $result = $this->withRoutes($routes)
-        ->get('users');
+    $result = $this->withRoutes($routes)->get('users');
 
 Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
@@ -102,11 +101,10 @@ that the current values of ``$_SESSION`` should be used. This is handy for testi
 ::
 
     $values = [
-        'logged_in' => 123
+        'logged_in' => 123,
     ];
 
-    $result = $this->withSession($values)
-        ->get('admin');
+    $result = $this->withSession($values)->get('admin');
 
     // Or...
 
@@ -121,7 +119,7 @@ You can set header values with the ``withHeaders()`` method. This takes an array
 passed as a header into the call.::
 
     $headers = [
-        'CONTENT_TYPE' => 'application/json'
+        'CONTENT_TYPE' => 'application/json',
     ];
 
     $result = $this->withHeaders($headers)->post('users');
@@ -132,8 +130,7 @@ Bypassing Events
 Events are handy to use in your application, but can be problematic during testing. Especially events that are used
 to send out emails. You can tell the system to skip any event handling with the ``skipEvents()`` method::
 
-    $result = $this->skipEvents()
-        ->post('users', $userInfo);
+    $result = $this->skipEvents()->post('users', $userInfo);
 
 Formatting The Request
 -----------------------
@@ -145,8 +142,7 @@ This is useful when testing JSON or XML API's so that you can set the request in
 ::
 
     // If your feature test contains this:
-    $result = $this->withBodyFormat('json')
-        ->post('users', $userInfo);
+    $result = $this->withBodyFormat('json')->post('users', $userInfo);
 
     // Your controller can then get the parameters passed in with:
     $userInfo = $this->request->getJson();
