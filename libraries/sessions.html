@@ -769,6 +769,13 @@ However, you should never rely on this behavior as it can cause
 unexpected results or be changed in the future. Please configure
 everything properly.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">sessionExpiration</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code>
+setting set by PHP in session management will be used as-is
+(often the default value of <code class="docutils literal notranslate"><span class="pre">1440</span></code>). This needs to be changed in
+<code class="docutils literal notranslate"><span class="pre">php.ini</span></code> or via <code class="docutils literal notranslate"><span class="pre">ini_set()</span></code> as needed.</p>
+</div>
 <p>In addition to the values above, the cookie and native drivers apply the
 following configuration values shared by the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a> and
 <a class="reference internal" href="security.html"><span class="doc">Security</span></a> classes:</p>
@@ -1051,7 +1058,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 15, 2021.
+      <span class="lastupdated">Last updated on Oct 16, 2021.
       </span></p>
   </div>
 
