@@ -13,6 +13,8 @@ namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockSecurity;
+use Config\App;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -26,6 +28,8 @@ final class CommonSingleServiceTest extends CIUnitTestCase
      */
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
+        Services::injectMock('security', new MockSecurity(new App()));
+
         $service1 = single_service($service);
         $service2 = single_service($service);
 
@@ -90,7 +94,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
                 continue;
             }
 
-            yield [$name];
+            yield $name => [$name];
         }
     }
 }

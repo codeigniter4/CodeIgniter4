@@ -22,6 +22,7 @@ use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
+use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
@@ -232,6 +233,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCSRFToken()
     {
+        Services::injectMock('security', new MockSecurity(new App()));
+
         $this->assertSame('csrf_test_name', csrf_token());
     }
 
