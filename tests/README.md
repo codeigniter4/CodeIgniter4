@@ -49,9 +49,9 @@ Individual tests can be run by including the relative path to the test file.
 
 	> ./phpunit tests/system/HTTP/RequestTest.php
 
-You can run the tests without running the live database tests.
+You can run the tests without running the live database and the live cache tests.
 
-	> ./phpunit --exclude-group DatabaseLive
+	> ./phpunit --exclude-group DatabaseLive,CacheLive
 
 ## Generating Code Coverage
 
