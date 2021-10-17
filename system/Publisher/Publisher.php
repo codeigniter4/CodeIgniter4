@@ -229,6 +229,7 @@ class Publisher extends FileCollection
         if ($this->scratch === null) {
             $this->scratch = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6)) . DIRECTORY_SEPARATOR;
             mkdir($this->scratch, 0700);
+            $this->scratch = realpath($this->scratch) . DIRECTORY_SEPARATOR;
         }
 
         return $this->scratch;
