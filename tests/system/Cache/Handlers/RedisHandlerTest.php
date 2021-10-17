@@ -15,6 +15,8 @@ use CodeIgniter\CLI\CLI;
 use Config\Cache;
 
 /**
+ * @group CacheLive
+ *
  * @internal
  */
 final class RedisHandlerTest extends AbstractHandlerTest

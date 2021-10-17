@@ -16,6 +16,8 @@ use Config\Cache;
 use Exception;
 
 /**
+ * @group CacheLive
+ *
  * @internal
  */
 final class MemcachedHandlerTest extends AbstractHandlerTest
