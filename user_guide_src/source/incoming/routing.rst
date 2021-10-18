@@ -238,7 +238,7 @@ run the filter before or after the controller. This is especially handy during a
         $routes->resource('users');
     });
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``.
+The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
 It is possible to nest groups within groups for finer organization if you need it::
 
@@ -355,14 +355,14 @@ Applying Filters
 You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
 The value for the filter can be a string or an array of strings:
 
-* matching the aliases defined in ``app/Config/Filters.php``.
+* matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
 See `Controller filters <filters.html>`_ for more information on setting up filters.
 
 **Alias filter**
 
-You specify an alias defined in ``app/Config/Filters.php`` for the filter value::
+You specify an alias defined in **app/Config/Filters.php** for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
@@ -477,7 +477,7 @@ Routes Configuration Options
 ============================
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of `/app/Config/Routes.php`.
+application's needs. These options are available at the top of **app/Config/Routes.php**.
 
 Default Namespace
 -----------------

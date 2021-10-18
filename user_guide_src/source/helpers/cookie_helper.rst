@@ -50,7 +50,7 @@ The following functions are available:
     detailed description of its use, as this function acts very
     similarly to ``IncomingRequest::getCookie()``, except it will also prepend
     the ``$cookiePrefix`` that you might've set in your
-    *app/Config/App.php* file.
+    **app/Config/App.php** file.
 
 .. php:function:: delete_cookie($name[, $domain = ''[, $path = '/'[, $prefix = '']]])
 

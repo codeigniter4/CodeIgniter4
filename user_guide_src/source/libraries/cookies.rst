@@ -431,7 +431,7 @@ Cookie Personalization
 
 Sane defaults are already in place inside the ``Cookie`` class to ensure the smooth creation of cookie
 objects. However, you may wish to define your own settings by changing the following settings in the
-``Config\Cookie`` class in ``app/Config/Cookie.php`` file.
+``Config\Cookie`` class in **app/Config/Cookie.php** file.
 
 ==================== ===================================== ========= =====================================================
 Setting              Options/ Types                        Default   Description
