@@ -288,7 +288,7 @@ one and place your controller classes within them.
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your 'default_controller' as specified in
-your *app/Config/Routes.php* file.
+your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
 

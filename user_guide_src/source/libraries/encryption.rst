@@ -62,7 +62,7 @@ You don't need to worry about it.
 Configuring the Library
 =======================
 
-The example above uses the configuration settings found in ``app/Config/Encryption.php``.
+The example above uses the configuration settings found in **app/Config/Encryption.php**.
 
 ========== ====================================================
 Option     Possible values (default in parentheses)
@@ -108,10 +108,10 @@ you can use the Encryption library's ``createKey()`` method.
     $key = sodium_crypto_secretbox_keygen();
     $key = \CodeIgniter\Encryption\Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
-The key can be stored in ``app/Config/Encryption.php``, or you can design
+The key can be stored in **app/Config/Encryption.php**, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
 
-To save your key to your ``app/Config/Encryption.php``, open the file
+To save your key to your **app/Config/Encryption.php**, open the file
 and set::
 
     public $key = 'YOUR KEY';

@@ -88,7 +88,7 @@ the final output, or even to filter the final output with a bad words filter.
 Configuring Filters
 *******************
 
-Once you've created your filters, you need to configure when they get run. This is done in ``app/Config/Filters.php``.
+Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php**.
 This file contains four properties that allow you to configure exactly when the filters run.
 
 $aliases

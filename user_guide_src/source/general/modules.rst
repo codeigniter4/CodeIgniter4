@@ -73,7 +73,7 @@ would be used.
 
 Another approach provided by CodeIgniter is to autoload these *non-class* files like how you would autoload
 your classes. All we need to do is provide the list of paths to those files and include them in the
-``$files`` property of your ``app/Config/Autoload.php`` file.
+``$files`` property of your **app/Config/Autoload.php** file.
 
 ::
 

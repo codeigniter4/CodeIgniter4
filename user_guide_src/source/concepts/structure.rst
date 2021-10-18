@@ -84,6 +84,6 @@ Modifying Directory Locations
 -----------------------------
 
 If you've relocated any of the main directories, you can change the configuration
-settings inside ``app/Config/Paths``.
+settings inside **app/Config/Paths.php**.
 
 Please read `Managing your Applications <../general/managing_apps.html>`_
