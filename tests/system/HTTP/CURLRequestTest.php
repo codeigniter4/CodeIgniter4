@@ -220,6 +220,46 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
+    public function testHeaderContentLengthNotSharedBetweenRequests()
+    {
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
+    }
+
+    /**
+     * @backupGlobals enabled
+     */
+    public function testHeaderContentLengthNotSharedBetweenClients()
+    {
+        $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
+
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+
+        $request = $this->getRequest($options);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
+    }
+
     public function testOptionsDelay()
     {
         $options = [
