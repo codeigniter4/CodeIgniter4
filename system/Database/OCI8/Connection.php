@@ -635,9 +635,7 @@ class Connection extends BaseConnection implements ConnectionInterface
              * Easy Connect string from these 3 settings, assuming
              * that the database field is a service name.
              */
-            $this->DSN = $this->hostname
-                . $easyConnectablePort
-                . $easyConnectableDatabase;
+            $this->DSN = $this->hostname . $easyConnectablePort . $easyConnectableDatabase;
 
             if (preg_match($this->validDSNs['ec'], $this->DSN)) {
                 return;
