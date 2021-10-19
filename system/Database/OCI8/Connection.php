@@ -90,6 +90,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * RowID
      *
+     * @used-by PreparedQuery::_execute()
      * @var int|null
      */
     public $rowId;
@@ -97,6 +98,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Latest inserted table name.
      *
+     * @used-by Builder::_insert()
      * @var string|null
      */
     public $latestInsertedTableName;
