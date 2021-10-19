@@ -19,9 +19,6 @@ use stdClass;
 
 /**
  * Connection for OCI8
- *
- * @property string|null $latestInsertedTableName
- * @property int|null    $rowId
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
