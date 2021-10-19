@@ -68,7 +68,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @var resource
      */
-    public $stmtId;
+    protected $stmtId;
 
     /**
      * Commit mode flag
@@ -82,7 +82,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @var resource
      */
-    public $cursorId;
+    protected $cursorId;
 
     /**
      * RowID
