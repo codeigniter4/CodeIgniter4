@@ -175,12 +175,12 @@ class Forge extends \CodeIgniter\Database\Forge
         }
 
         return $this->db->escapeIdentifiers($field['name'])
-               . ' ' . $field['type'] . $field['length']
-               . $field['unsigned']
-               . $field['default']
-               . $field['auto_increment']
-               . $field['null']
-               . $field['unique'];
+           . ' ' . $field['type'] . $field['length']
+           . $field['unsigned']
+           . $field['default']
+           . $field['auto_increment']
+           . $field['null']
+           . $field['unique'];
     }
 
     /**
