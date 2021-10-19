@@ -91,7 +91,7 @@ class Builder extends BaseBuilder
             $sql .= '	INTO ' . $table . ' (' . $insertKeys . ') VALUES ' . $value . "\n";
         }
 
-        return $sql . 'SELECT * FROM dual';
+        return $sql . 'SELECT * FROM DUAL';
     }
 
     /**
