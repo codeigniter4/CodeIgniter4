@@ -205,8 +205,8 @@ class Builder extends BaseBuilder
         }
 
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
-                . $this->compileWhereHaving('QBWhere')
-                . $this->compileOrderBy();
+            . $this->compileWhereHaving('QBWhere')
+            . $this->compileOrderBy();
     }
 
     /**
