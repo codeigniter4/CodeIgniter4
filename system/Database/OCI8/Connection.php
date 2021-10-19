@@ -384,7 +384,7 @@ class Connection extends BaseConnection implements ConnectionInterface
   WHERE ac.constraint_type = ' . $this->escape('R') . '
       AND acc.table_name = ' . $this->escape($table);
 
-        if (($query = $this->query($sql)) === false) {
+        if (false === $query = $this->query($sql)) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
         $query = $query->getResultObject();
