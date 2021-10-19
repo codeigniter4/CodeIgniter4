@@ -126,7 +126,7 @@ class Connection extends BaseConnection implements ConnectionInterface
             $this->buildDSN();
         }
 
-        $func = ($persistent === true) ? 'oci_pconnect' : 'oci_connect';
+        $func = $persistent ? 'oci_pconnect' : 'oci_connect';
 
         return empty($this->charset)
             ? $func($this->username, $this->password, $this->DSN)
@@ -208,7 +208,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
             oci_set_prefetch($this->stmtId, 1000);
 
-            return (oci_execute($this->stmtId, $this->commitMode)) ? $this->stmtId : false;
+            return oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
         } catch (ErrorException $e) {
             log_message('error', $e->getMessage());
 
@@ -291,11 +291,9 @@ class Connection extends BaseConnection implements ConnectionInterface
             $retval[$i]->name = $query[$i]->COLUMN_NAME;
             $retval[$i]->type = $query[$i]->DATA_TYPE;
 
-            $length = ($query[$i]->CHAR_LENGTH > 0)
-                ? $query[$i]->CHAR_LENGTH : $query[$i]->DATA_PRECISION;
-            if ($length === null) {
-                $length = $query[$i]->DATA_LENGTH;
-            }
+            $length = $query[$i]->CHAR_LENGTH > 0 ? $query[$i]->CHAR_LENGTH : $query[$i]->DATA_PRECISION;
+            $length = $length ?? $query[$i]->DATA_LENGTH;
+
             $retval[$i]->max_length = $length;
 
             $default = $query[$i]->DATA_DEFAULT;
