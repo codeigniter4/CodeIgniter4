@@ -49,8 +49,6 @@ class Result extends BaseResult implements ResultInterface
                 'name'       => oci_field_name($this->resultID, $fieldIndex),
                 'type'       => oci_field_type($this->resultID, $fieldIndex),
                 'max_length' => oci_field_size($this->resultID, $fieldIndex),
-                // 'primary_key' = (int) ($data->flags & 2),
-                // 'default'     = $data->def,
             ];
         }, range(1, $this->getFieldCount()));
     }
@@ -73,7 +71,7 @@ class Result extends BaseResult implements ResultInterface
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @return mixed
+     * @return false
      */
     public function dataSeek(int $n = 0)
     {

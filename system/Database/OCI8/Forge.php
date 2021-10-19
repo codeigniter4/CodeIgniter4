@@ -184,8 +184,6 @@ class Forge extends \CodeIgniter\Database\Forge
     }
 
     /**
-     * Field attribute TYPE
-     *
      * Performs a data type mapping between different databases.
      *
      * @return void
@@ -247,18 +245,11 @@ class Forge extends \CodeIgniter\Database\Forge
                 $attributes['TYPE']       = 'VARCHAR2';
 
                 return;
-
-            default:
         }
     }
 
     /**
-     * Drop Table
-     *
      * Generates a platform-specific DROP TABLE string
-     *
-     * @param string $table    Table name
-     * @param bool   $ifExists Whether to add an IF EXISTS condition
      *
      * @return bool|string
      */
@@ -275,11 +266,6 @@ class Forge extends \CodeIgniter\Database\Forge
         return $sql;
     }
 
-    /**
-     * Process foreign keys
-     *
-     * @param string $table Table name
-     */
     protected function _processForeignKeys(string $table): string
     {
         $sql = '';

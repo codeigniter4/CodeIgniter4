@@ -189,7 +189,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return bool|resource
+     * @return false|resource
      */
     protected function execute(string $sql)
     {
@@ -465,11 +465,10 @@ class Connection extends BaseConnection implements ConnectionInterface
     }
 
     /**
-     * Stored Procedure.  Executes a stored procedure
+     * Executes a stored procedure
      *
      * @param string $package   package name in which the stored procedure is in
      * @param string $procedure stored procedure name to execute
-     * @param array  $params    parameters
      *
      * @return mixed
      *
@@ -565,9 +564,6 @@ class Connection extends BaseConnection implements ConnectionInterface
             ];
     }
 
-    /**
-     * Insert ID
-     */
     public function insertID(): int
     {
         if (empty($this->rowId) || empty($this->latestInsertedTableName)) {

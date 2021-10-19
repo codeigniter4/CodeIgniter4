@@ -63,13 +63,7 @@ class Builder extends BaseBuilder
     protected $db;
 
     /**
-     * Insert batch statement
-     *
      * Generates a platform-specific insert string from the supplied data.
-     *
-     * @param string $table  Table name
-     * @param array  $keys   INSERT keys
-     * @param array  $values INSERT values
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -101,13 +95,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Replace statement
-     *
      * Generates a platform-specific replace string from the supplied data
-     *
-     * @param string $table  The table name
-     * @param array  $keys   The insert keys
-     * @param array  $values The insert values
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -162,14 +150,10 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Truncate statement
-     *
      * Generates a platform-specific truncate string from the supplied data
      *
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
-     *
-     * @param string $table The table name
      */
     protected function _truncate(string $table): string
     {
@@ -177,12 +161,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Delete
-     *
      * Compiles a delete string and runs the query
-     *
-     * @param mixed $where The where clause
-     * @param int   $limit The limit clause
      *
      * @throws DatabaseException
      *
@@ -198,11 +177,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Delete statement
-     *
      * Generates a platform-specific delete string from the supplied data
-     *
-     * @param string $table The table name
      */
     protected function _delete(string $table): string
     {
@@ -215,12 +190,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Update statement
-     *
      * Generates a platform-specific update string from the supplied data
-     *
-     * @param string $table  the Table name
-     * @param array  $values the Update data
      */
     protected function _update(string $table, array $values): string
     {
@@ -240,11 +210,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * LIMIT string
-     *
      * Generates a platform-specific LIMIT clause.
-     *
-     * @param string $sql SQL Query
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
@@ -274,13 +240,7 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Insert statement
-     *
      * Generates a platform-specific insert string from the supplied data
-     *
-     * @param string $table         The table name
-     * @param array  $keys          The insert keys
-     * @param array  $unescapedKeys The insert values
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
