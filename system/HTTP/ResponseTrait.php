@@ -468,7 +468,15 @@ trait ResponseTrait
 
         // Send all of our headers
         foreach (array_keys($this->getHeaders()) as $name) {
-            header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
+            // fix issue #5041 by taking into account multiple headers with the same name
+            $headerValue = $this->getHeader($name)->getValue();
+            if(is_array($headerValue)) {
+                foreach($headerValue as $h_value) {
+                    header($name . ': ' . $h_value, false, $this->getStatusCode());
+                }
+            } else {
+                header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
+            }
         }
 
         return $this;

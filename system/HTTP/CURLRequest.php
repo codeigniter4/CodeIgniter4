@@ -236,7 +236,12 @@ class CURLRequest extends Request
 
         if (array_key_exists('headers', $options) && is_array($options['headers'])) {
             foreach ($options['headers'] as $name => $value) {
-                $this->setHeader($name, $value);
+                // fix issue #5041 by taking into account multiple headers with the same name
+                if($this->hasHeader($name)) {
+                    $this->appendHeader($name, $value);
+                } else {
+                    $this->setHeader($name, $value);
+                }
             }
 
             unset($options['headers']);
