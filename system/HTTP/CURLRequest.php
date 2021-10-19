@@ -129,6 +129,9 @@ class CURLRequest extends Request
 
         $this->send($method, $url);
 
+        // Reset unshared configs
+        unset($this->config['multipart'], $this->config['form_params']);
+
         return $this->response;
     }
 
