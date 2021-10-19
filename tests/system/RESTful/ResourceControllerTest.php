@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourceController;
@@ -45,7 +46,7 @@ final class ResourceControllerTest extends CIUnitTestCase
     protected $codeigniter;
 
     /**
-     * @var \CodeIgniter\Router\RoutesCollection
+     * @var RouteCollection
      */
     protected $routes;
 
