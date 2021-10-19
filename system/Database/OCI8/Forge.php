@@ -104,7 +104,7 @@ class Forge extends \CodeIgniter\Database\Forge
                 // If a null constraint is added to a column with a null constraint,
                 // ORA-01451 will occur,
                 // so add null constraint is used only when it is different from the current null constraint.
-                $isWantToAddNull    = (strpos($field[$i]['null'], ' NOT') === false);
+                $isWantToAddNull    = strpos($field[$i]['null'], ' NOT') === false;
                 $currentNullAddable = $nullableMap[$field[$i]['name']];
 
                 if ($isWantToAddNull === $currentNullAddable) {
