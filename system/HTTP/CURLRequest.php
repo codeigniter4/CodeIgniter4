@@ -73,6 +73,16 @@ class CURLRequest extends Request
     protected $delay = 0.0;
 
     /**
+     * Request headers that are not shared between requests.
+     *
+     * @var string[]
+     */
+    private $unsharedHeaders = [
+        'Content-Length',
+        'Content-Type',
+    ];
+
+    /**
      * Takes an array of options to set the following possible class properties:
      *
      *  - baseURI
@@ -106,6 +116,11 @@ class CURLRequest extends Request
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
+        // Reset unshared headers
+        foreach ($this->unsharedHeaders as $header) {
+            $this->removeHeader($header);
+        }
+
         $this->parseOptions($options);
 
         $url = $this->prepareURL($url);
@@ -377,6 +392,29 @@ class CURLRequest extends Request
         $curlOptions[CURLOPT_HTTPHEADER] = $set;
 
         return $curlOptions;
+    }
+
+    /**
+     * Override
+     */
+    public function populateHeaders(): void
+    {
+        foreach (array_keys($_SERVER) as $key) {
+            if (sscanf($key, 'HTTP_%s', $header) === 1) {
+                // take SOME_HEADER and turn it into Some-Header
+                $header = str_replace('_', ' ', strtolower($header));
+                $header = str_replace(' ', '-', ucwords($header));
+
+                if (in_array($header, $this->unsharedHeaders, true)) {
+                    continue;
+                }
+
+                $this->setHeader($header, $_SERVER[$key]);
+
+                // Add us to the header map so we can find them case-insensitively
+                $this->headerMap[strtolower($header)] = $header;
+            }
+        }
     }
 
     /**
