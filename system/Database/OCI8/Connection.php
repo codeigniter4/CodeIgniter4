@@ -73,6 +73,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Commit mode flag
      *
+     * @used-by PreparedQuery::_execute()
      * @var int
      */
     public $commitMode = OCI_COMMIT_ON_SUCCESS;
