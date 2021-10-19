@@ -176,7 +176,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionHeadersUsingPopulate()
+    public function testOptionsHeadersUsingPopulate()
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
@@ -199,7 +199,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionHeadersNotUsingPopulate()
+    public function testOptionsHeadersNotUsingPopulate()
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
