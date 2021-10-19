@@ -347,7 +347,7 @@ class Connection extends BaseConnection implements ConnectionInterface
                 continue;
             }
 
-            $retVal[$row->INDEX_NAME]         = new \stdClass();
+            $retVal[$row->INDEX_NAME]         = new stdClass();
             $retVal[$row->INDEX_NAME]->name   = $row->INDEX_NAME;
             $retVal[$row->INDEX_NAME]->fields = [$row->COLUMN_NAME];
             $retVal[$row->INDEX_NAME]->type   = $constraintTypes[$row->CONSTRAINT_TYPE] ?? 'INDEX';
@@ -392,7 +392,7 @@ class Connection extends BaseConnection implements ConnectionInterface
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj                      = new \stdClass();
+            $obj                      = new stdClass();
             $obj->constraint_name     = $row->CONSTRAINT_NAME;
             $obj->table_name          = $row->TABLE_NAME;
             $obj->column_name         = $row->COLUMN_NAME;
