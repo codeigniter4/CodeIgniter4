@@ -133,7 +133,7 @@ class Forge extends \CodeIgniter\Database\Forge
         }
 
         $sql .= ' ' . $alterType . ' ';
-        $sql .= (count($field) === 1)
+        $sql .= count($field) === 1
                 ? $field[0]
                 : '(' . implode(',', $field) . ')';
 
