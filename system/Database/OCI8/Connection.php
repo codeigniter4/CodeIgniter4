@@ -624,8 +624,8 @@ class Connection extends BaseConnection implements ConnectionInterface
         }
 
         $isEasyConnectableHostName = $this->hostname !== '' && strpos($this->hostname, '/') === false && strpos($this->hostname, ':') === false;
-        $easyConnectablePort       = ((! empty($this->port) && ctype_digit($this->port)) ? ':' . $this->port : '');
-        $easyConnectableDatabase   = ($this->database !== '' ? '/' . ltrim($this->database, '/') : '');
+        $easyConnectablePort       = ! empty($this->port) && ctype_digit($this->port) ? ':' . $this->port : '';
+        $easyConnectableDatabase   = $this->database !== '' ? '/' . ltrim($this->database, '/') : '';
 
         if ($isEasyConnectableHostName && ($easyConnectablePort !== '' || $easyConnectableDatabase !== '')) {
             /* If the hostname field isn't empty, doesn't contain
