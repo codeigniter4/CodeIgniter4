@@ -225,9 +225,9 @@ class Builder extends BaseBuilder
         }
 
         $this->limitUsed = true;
+        $limitTemplateQuery = 'SELECT * FROM (SELECT INNER_QUERY.*, ROWNUM RNUM FROM (%s) INNER_QUERY WHERE ROWNUM < %d)' . ($offset ? ' WHERE RNUM >= %d' : '');
 
-        return 'SELECT * FROM (SELECT inner_query.*, rownum rnum FROM (' . $sql . ') inner_query WHERE rownum < ' . ($offset + $this->QBLimit + 1) . ')'
-            . ($offset ? ' WHERE rnum >= ' . ($offset + 1) : '');
+        return sprintf($limitTemplateQuery, $sql, $offset + $this->QBLimit + 1, $offset);
     }
 
     /**
@@ -244,10 +244,15 @@ class Builder extends BaseBuilder
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
-        // Has a strange design.
-        // Processing to get the table where the last insert was performed for insertId method.
         $this->db->latestInsertedTableName = $table;
+        $sql = 'INSERT %sINTO %s (%s) VALUES (%s) RETURNING ROWID INTO :CI_OCI8_ROWID';
 
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ') RETURNING ROWID INTO :CI_OCI8_ROWID';
+        return sprintf(
+            $sql,
+            $this->compileIgnore('insert'),
+            $table,
+            implode(', ', $keys),
+            implode(', ', $unescapedKeys)
+        );
     }
 }
