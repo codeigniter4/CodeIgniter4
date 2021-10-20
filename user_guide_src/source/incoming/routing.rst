@@ -360,6 +360,13 @@ The value for the filter can be a string or an array of strings:
 
 See `Controller filters <filters.html>`_ for more information on setting up filters.
 
+.. Warning:: If you set filters to routes in **app/Config/Routes.php**
+    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
+    When auto-routing is enabled, it may be possible that a controller can be accessed
+    via a different URL than the configured route,
+    in which case the filter you specified to the route will not be applied.
+    See :ref:`use-defined-routes-only` to disable auto-routing.
+
 **Alias filter**
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value::
@@ -539,6 +546,8 @@ URI segments, thus saving you additional route entries if you need to do that. T
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it::
 
     $routes->setTranslateURIDashes(true);
+
+.. _use-defined-routes-only:
 
 Use Defined Routes Only
 -----------------------
