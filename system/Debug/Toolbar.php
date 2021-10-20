@@ -434,10 +434,11 @@ class Toolbar
         if ($request->getGet('debugbar') !== null) {
             header('Content-Type: application/javascript');
 
+            echo sprintf("window.appUrl = '%s';%s", rtrim(site_url(), '/'), PHP_EOL);
+
             ob_start();
-            include $this->config->viewsPath . 'toolbarloader.js.php';
+            include $this->config->viewsPath . 'toolbarloader.js';
             $output = ob_get_clean();
-            $output = substr($output, 8, -10); // trim the script tags
             echo $output;
 
             exit;
