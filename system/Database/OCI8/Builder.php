@@ -223,7 +223,7 @@ class Builder extends BaseBuilder
                 $sql .= ' ORDER BY 1';
             }
 
-            return $sql . ' OFFSET ' . (int) $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
+            return $sql . ' OFFSET ' . $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
         }
 
         $this->limitUsed    = true;
