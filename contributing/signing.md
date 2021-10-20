@@ -32,25 +32,19 @@ Read below to find out how to sign your commits :)
 To verify your commits, you will need to setup a GPG key, and attach it
 to your GitHub account.
 
-See the [git
-tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
-for directions on doing this. The complete story is part of [GitHub
-help](https://help.github.com/categories/gpg/).
+See the [git tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
+for directions on doing this. The complete story is part of [GitHub help](https://help.github.com/categories/gpg/).
 
 The basic steps are
 
--   [generate your GPG
-    key](https://help.github.com/articles/generating-a-new-gpg-key/),
+- [generate your GPG key](https://help.github.com/articles/generating-a-new-gpg-key/),
     and copy the ASCII representation of it.
--   [Add your GPG key to your GitHub
-    account](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/).
--   [Tell
-    Git](https://help.github.com/articles/telling-git-about-your-gpg-key/)
+- [Add your GPG key to your GitHub account](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/).
+- [Tell Git](https://help.github.com/articles/telling-git-about-your-gpg-key/)
     about your GPG key.
--   [Set default
-    signing](https://help.github.com/articles/signing-commits-using-gpg/)
+- [Set default signing](https://help.github.com/articles/signing-commits-using-gpg/)
     to have all of your commits securely signed automatically.
--   Provide your GPG key passphrase, as prompted, when you do a commit.
+- Provide your GPG key passphrase, as prompted, when you do a commit.
 
 Depending on your IDE, you may have to do your Git commits from your Git
 bash shell to use the **-S** option to force the secure signing.
