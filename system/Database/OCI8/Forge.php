@@ -88,7 +88,7 @@ class Forge extends \CodeIgniter\Database\Forge
         if ($alterType === 'DROP') {
             $fields = array_map(function ($field) {
                 return $this->db->escapeIdentifiers(trim($field));
-            }, is_string($field)) ? explode(',', $field) : $field;
+            }, is_string($field) ? explode(',', $field) : $field);
 
             return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
         }
