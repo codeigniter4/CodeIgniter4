@@ -150,9 +150,12 @@ To try your form, visit your site using a URL similar to this one::
     example.com/index.php/form/
 
 If you submit the form you should simply see the form reload. That's
-because you haven't set up any validation rules yet.
+because you haven't set up any validation rules in ``$this->validate()`` yet.
 
-.. note:: Since you haven't told the **Validation class** to validate anything
+The ``validate()`` method is a method in the Controller. It uses
+the **Validation class** inside. See *Validating data* in :doc:`/incoming/controllers`.
+
+.. note:: Since you haven't told the ``validate()`` method to validate anything
     yet, it **returns false** (boolean false) **by default**. The ``validate()``
     method only returns true if it has successfully applied your rules without
     any of them failing.
@@ -162,9 +165,9 @@ Explanation
 
 You'll notice several things about the above pages:
 
-The form (Signup.php) is a standard web form with a couple of exceptions:
+The form (**Signup.php**) is a standard web form with a couple of exceptions:
 
-#. It uses a form helper to create the form opening. Technically, this
+#. It uses a :doc:`form helper </helpers/form_helper>` to create the form opening. Technically, this
    isn't necessary. You could create the form using standard HTML.
    However, the benefit of using the helper is that it generates the
    action URL for you, based on the URL in your config file. This makes
@@ -177,14 +180,30 @@ The form (Signup.php) is a standard web form with a couple of exceptions:
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
 
-The controller (Form.php) has one method: ``index()``. This method
-uses the Controller-provided validate method and loads the form helper and URL
+The controller (**Form.php**) has one method: ``index()``. This method
+uses the Controller-provided ``validate()`` method and loads the form helper and URL
 helper used by your view files. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
 
-Loading the Library
+Add Validation Rules
 ================================================
+
+Then add validation rules in the controller (**Form.php**)::
+
+            if (! $this->validate([
+                'username' => 'required',
+                'password' => 'required|min_length[10]',
+                'passconf' => 'required|matches[password]',
+                'email'    => 'required|valid_email',
+            ])) {
+                ...
+            }
+
+If you submit the form you should see the success page or the form with error messages.
+
+Loading the Library
+************************************************
 
 The library is loaded as a service named **validation**::
 
@@ -197,7 +216,7 @@ for including multiple Rulesets, and collections of rules that can be easily reu
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
 Setting Validation Rules
-================================================
+************************************************
 
 CodeIgniter lets you set as many validation rules as you need for a
 given field, cascading them in order. To set validation rules you
@@ -205,7 +224,7 @@ will use the ``setRule()``, ``setRules()``, or ``withRequest()``
 methods.
 
 setRule()
----------
+=========
 
 This method sets a single rule. It takes the name of the field as
 the first parameter, an optional label and a string with a pipe-delimited list of rules
@@ -218,7 +237,7 @@ the data is taken directly from $_POST, then it must be an exact match for
 the form input name.
 
 setRules()
-----------
+==========
 
 Like, ``setRule()``, but accepts an array of field names and their rules::
 
@@ -235,7 +254,7 @@ To give a labeled error message you can set up as::
     ]);
 
 withRequest()
--------------
+=============
 
 One of the most common times you will use the validation library is when validating
 data that was input from an HTTP Request. If desired, you can pass an instance of the
