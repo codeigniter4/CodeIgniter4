@@ -99,7 +99,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      * @used-by Builder::_insert()
      * @var string|null
      */
-    public $latestInsertedTableName;
+    public $lastInsertedTableName;
 
     /**
      * confirm DNS format.
@@ -564,12 +564,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 
     public function insertID(): int
     {
-        if (empty($this->rowId) || empty($this->latestInsertedTableName)) {
+        if (empty($this->rowId) || empty($this->lastInsertedTableName)) {
             return 0;
         }
 
-        $indexs     = $this->getIndexData($this->latestInsertedTableName);
-        $fieldDatas = $this->getFieldData($this->latestInsertedTableName);
+        $indexs     = $this->getIndexData($this->lastInsertedTableName);
+        $fieldDatas = $this->getFieldData($this->lastInsertedTableName);
 
         if (! $indexs || ! $fieldDatas) {
             return 0;
@@ -597,7 +597,7 @@ class Connection extends BaseConnection implements ConnectionInterface
             return 0;
         }
 
-        $table = $this->protectIdentifiers($this->latestInsertedTableName, true);
+        $table = $this->protectIdentifiers($this->lastInsertedTableName, true);
         $query = $this->query('SELECT ' . $this->protectIdentifiers($primaryColumnName, false) . ' SEQ FROM ' . $table . ' WHERE ROWID = ?', $this->rowId)->getRow();
 
         return (int) ($query->SEQ ?? 0);
