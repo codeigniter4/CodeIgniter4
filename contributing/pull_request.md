@@ -63,7 +63,8 @@ class would test the `Banana` class. There will be occasions when it is
 more convenient to have separate classes to test different functionality
 of a single CodeIgniter component.
 
-See the [PHPUnit website](https://phpunit.de/) for more information.
+See [Running System Tests](../tests/README.md) 
+and the [PHPUnit website](https://phpunit.de/) for more information.
 
 ### Comments
 
