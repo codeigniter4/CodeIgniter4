@@ -119,7 +119,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     }
 
     /**
-     * Replaces the ? placeholders with :1, :2, etc parameters for use
+     * Replaces the ? placeholders with :0, :1, etc parameters for use
      * within the prepared query.
      */
     public function parameterize(string $sql): string
