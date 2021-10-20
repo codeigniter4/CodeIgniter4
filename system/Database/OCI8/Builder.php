@@ -163,6 +163,8 @@ class Builder extends BaseBuilder
     /**
      * Compiles a delete string and runs the query
      *
+     * @param mixed $where
+     *
      * @throws DatabaseException
      *
      * @return mixed
@@ -224,7 +226,7 @@ class Builder extends BaseBuilder
             return $sql . ' OFFSET ' . (int) $offset . ' ROWS FETCH NEXT ' . $this->QBLimit . ' ROWS ONLY';
         }
 
-        $this->limitUsed = true;
+        $this->limitUsed    = true;
         $limitTemplateQuery = 'SELECT * FROM (SELECT INNER_QUERY.*, ROWNUM RNUM FROM (%s) INNER_QUERY WHERE ROWNUM < %d)' . ($offset ? ' WHERE RNUM >= %d' : '');
 
         return sprintf($limitTemplateQuery, $sql, $offset + $this->QBLimit + 1, $offset);
@@ -245,7 +247,7 @@ class Builder extends BaseBuilder
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
         $this->db->lastInsertedTableName = $table;
-        $sql = 'INSERT %sINTO %s (%s) VALUES (%s) RETURNING ROWID INTO :CI_OCI8_ROWID';
+        $sql                             = 'INSERT %sINTO %s (%s) VALUES (%s) RETURNING ROWID INTO :CI_OCI8_ROWID';
 
         return sprintf(
             $sql,
