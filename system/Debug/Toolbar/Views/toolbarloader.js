@@ -8,7 +8,7 @@ function loadDoc(time) {
 
     localStorage.setItem('debugbar-time-new', time);
 
-    let url = window.appUrl;
+    let url = '{url}';
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
