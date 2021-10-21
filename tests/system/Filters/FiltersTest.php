@@ -13,8 +13,10 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockAppConfig;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';
@@ -60,7 +62,8 @@ final class FiltersTest extends CIUnitTestCase
                 'cli' => ['foo'],
             ],
         ];
-        $filters = new Filters((object) $config, $this->request, $this->response);
+        $request = new CLIRequest(new MockAppConfig());
+        $filters = new Filters((object) $config, $request, $this->response);
 
         $expected = [
             'before' => ['foo'],
