@@ -46,6 +46,15 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars = new InvalidChars();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $_GET    = [];
+        $_POST   = [];
+        $_COOKIE = [];
+    }
+
     private function createRequest(): IncomingRequest
     {
         $config    = new MockAppConfig();
