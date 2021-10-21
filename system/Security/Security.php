@@ -270,7 +270,7 @@ class Security implements SecurityInterface
 
         $token = $this->getPostedToken($request);
 
-        // Does the tokens exist in both the POST/POSTed JSON and COOKIE arrays and match?
+        // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
             throw SecurityException::forDisallowedAction();
         }
