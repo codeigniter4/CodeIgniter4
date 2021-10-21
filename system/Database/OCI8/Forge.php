@@ -243,7 +243,6 @@ class Forge extends \CodeIgniter\Database\Forge
             case 'MEDIUMTEXT':
                 $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 4000;
                 $attributes['TYPE']       = 'VARCHAR2';
-                // no break
         }
     }
 
