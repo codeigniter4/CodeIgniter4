@@ -127,7 +127,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertTrue(count($_POST) === 1);
     }
 
-    public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -140,7 +140,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
@@ -153,6 +153,32 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
         $this->assertCount(1, $_POST);
+    }
+
+    public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'PUT';
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005b');
+
+        $security = new Security(new MockAppConfig());
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'PUT';
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+
+        $security = new Security(new MockAppConfig());
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
     }
 
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()

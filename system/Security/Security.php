@@ -259,13 +259,15 @@ class Security implements SecurityInterface
      *
      * @throws SecurityException
      *
-     * @return $this|false
+     * @return $this
      */
     public function verify(RequestInterface $request)
     {
-        // If it's not a POST request we will set the CSRF cookie.
-        if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
-            return $this->sendCookie($request);
+        // Protects POST, PUT, DELETE, PATCH
+        $method           = strtoupper($_SERVER['REQUEST_METHOD']);
+        $methodsToProtect = ['POST', 'PUT', 'DELETE', 'PATCH'];
+        if (! in_array($method, $methodsToProtect, true)) {
+            return $this;
         }
 
         $token = $this->getPostedToken($request);

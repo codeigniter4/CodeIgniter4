@@ -66,7 +66,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }
 
-    public function testCSRFVerifySetsCookieWhenNotPOST()
+    public function testGetHashSetsCookieWhenNotPOST()
     {
         $security = new MockSecurity(new MockAppConfig());
 
