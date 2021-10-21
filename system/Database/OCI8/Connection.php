@@ -386,8 +386,9 @@ class Connection extends BaseConnection implements ConnectionInterface
       AND accu.table_name = ccu.table_name
   WHERE ac.constraint_type = ' . $this->escape('R') . '
       AND acc.table_name = ' . $this->escape($table);
+        $query = $this->query($sql);
 
-        if (false === $query = $this->query($sql)) {
+        if ($query === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
         $query = $query->getResultObject();
