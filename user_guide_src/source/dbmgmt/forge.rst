@@ -46,7 +46,7 @@ or will check if a database exists before create it (depending on DBMS).
 ::
 
     $forge->createDatabase('my_db', true);
-    // gives CREATE DATABASE IF NOT EXISTS my_db
+    // gives CREATE DATABASE IF NOT EXISTS `my_db`
     // or will check if a database exists
 
 **$forge->dropDatabase('db_name')**
@@ -182,7 +182,7 @@ Primary Key.
 ::
 
     $forge->addField('id');
-    // gives id INT(9) NOT NULL AUTO_INCREMENT
+    // gives `id` INT(9) NOT NULL AUTO_INCREMENT
 
 Adding Keys
 ===========
@@ -280,10 +280,10 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
 
 ::
 
-    // Produces: DROP TABLE table_name
+    // Produces: DROP TABLE `table_name`
     $forge->dropTable('table_name');
 
-    // Produces: DROP TABLE IF EXISTS table_name
+    // Produces: DROP TABLE IF EXISTS `table_name`
     $forge->dropTable('table_name', true);
 
 A third parameter can be passed to add a "CASCADE" option, which might be required for some
@@ -291,7 +291,7 @@ drivers to handle removal of tables with foreign keys.
 
 ::
 
-    // Produces: DROP TABLE table_name CASCADE
+    // Produces: DROP TABLE `table_name` CASCADE
     $forge->dropTable('table_name', false, true);
 
 Dropping a Foreign Key
@@ -301,7 +301,7 @@ Execute a DROP FOREIGN KEY.
 
 ::
 
-    // Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
+    // Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`
     $forge->dropForeignKey('tablename','users_foreign');
 
 
@@ -323,7 +323,7 @@ Executes a TABLE rename
 ::
 
     $forge->renameTable('old_table_name', 'new_table_name');
-    // gives ALTER TABLE old_table_name RENAME TO new_table_name
+    // gives ALTER TABLE `old_table_name` RENAME TO `new_table_name`
 
 ****************
 Modifying Tables
@@ -344,7 +344,7 @@ number of additional fields.
         'preferences' => ['type' => 'TEXT']
     ];
     $forge->addColumn('table_name', $fields);
-    // Executes: ALTER TABLE table_name ADD preferences TEXT
+    // Executes: ALTER TABLE `table_name` ADD `preferences` TEXT
 
 If you are using MySQL or CUBIRD, then you can take advantage of their
 AFTER and FIRST clauses to position the new column.
@@ -397,7 +397,7 @@ change the name, you can add a "name" key into the field defining array.
         ],
     ];
     $forge->modifyColumn('table_name', $fields);
-    // gives ALTER TABLE table_name CHANGE old_name new_name TEXT
+    // gives ALTER TABLE `table_name` CHANGE `old_name` `new_name` TEXT
 
 ***************
 Class Reference
