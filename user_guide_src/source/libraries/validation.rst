@@ -928,6 +928,6 @@ is_image                Yes         Fails if the file cannot be determined to be
 
 The file validation rules apply for both single and multiple file uploads.
 
-.. note:: You can also use any native PHP functions that permit up
-    to two parameters, where at least one is required (to pass
-    the field data).
+.. note:: You can also use any native PHP functions that return boolean and
+    permit at least one parameter, the field data to validate.
+    The Validation library **never alters the data** to validate.
