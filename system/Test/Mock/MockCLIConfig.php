@@ -24,7 +24,6 @@ class MockCLIConfig extends App
     public $cookieHTTPOnly   = false;
     public $cookieSameSite   = 'Lax';
     public $proxyIPs         = '';
-    public $CSRFProtection   = false;
     public $CSRFTokenName    = 'csrf_test_name';
     public $CSRFCookieName   = 'csrf_cookie_name';
     public $CSRFExpire       = 7200;

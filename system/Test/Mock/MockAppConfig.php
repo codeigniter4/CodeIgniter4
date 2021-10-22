@@ -24,7 +24,6 @@ class MockAppConfig extends App
     public $cookieHTTPOnly   = false;
     public $cookieSameSite   = 'Lax';
     public $proxyIPs         = '';
-    public $CSRFProtection   = false;
     public $CSRFTokenName    = 'csrf_test_name';
     public $CSRFHeaderName   = 'X-CSRF-TOKEN';
     public $CSRFCookieName   = 'csrf_cookie_name';
