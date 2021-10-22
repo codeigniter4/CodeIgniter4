@@ -53,3 +53,20 @@ The following methods and a property have been deprecated:
 - ``CodeIgniter\Router\RouteCollection``'s property ``$filterInfo``
 
 See *Applying Filters* in :doc:`Routing </incoming/routing>` for the functionality.
+
+**CSRF Protection**
+
+Because of a bug fix,
+now CSRF protection works on not only **POST** but also **PUT/PATCH/DELETE** requests when CSRF filter is applied.
+
+When you use **PUT/PATCH/DELETE** requests, you need to send CSRF token. Or remove the CSRF filter
+for such requests if you don't need CSRF protection for them.
+
+If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**::
+
+    public $methods = [
+        'get'  => ['csrf'],
+        'post' => ['csrf'],
+    ];
+
+Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.

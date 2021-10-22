@@ -23,6 +23,9 @@ If you find a case where you do need direct access though, you may load it throu
 Cross-site request forgery (CSRF)
 *********************************
 
+.. warning:: The CSRF Protection is only available for **POST/PUT/PATCH/DELETE** requests.
+    Requests for other methods are not protected.
+
 Enable CSRF Protection
 ======================
 
@@ -52,6 +55,13 @@ Regular expressions are also supported (case-insensitive)::
         'before' => [
             'csrf' => ['except' => ['api/record/[0-9]+']],
         ],
+    ];
+
+It is also possible to enable the CSRF filter only for specific methods::
+
+    public $methods = [
+        'get'  => ['csrf'],
+        'post' => ['csrf'],
     ];
 
 HTML Forms
