@@ -165,7 +165,7 @@ the configuration class properties are left unchanged. In this usage, the prefix
 the full (case-sensitive) namespace of the class.
 ::
 
-    Config\App.CSRFCookieName = csrf_cookie
+    Config\App.forceGlobalSecureRequests = true
     Config\App.CSPEnabled = true
 
 
@@ -176,7 +176,7 @@ the configuration class name. If the short prefix matches the class name,
 the value from **.env** replaces the configuration file value.
 ::
 
-    app.CSRFCookieName = csrf_cookie
+    app.forceGlobalSecureRequests = true
     app.CSPEnabled = true
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
@@ -184,7 +184,7 @@ the value from **.env** replaces the configuration file value.
 Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
 ::
 
-    app_CSRFCookieName = csrf_cookie
+    app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
 
 Environment Variables as Replacements for Data
