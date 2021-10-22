@@ -2,7 +2,15 @@
 Upgrading from 4.1.4 to 4.1.5
 #############################
 
-**Changes for set() method in BaseBuilder and Model class**
+.. contents::
+    :local:
+    :depth: 1
+
+Breaking Changes
+================
+
+Changes for set() method in BaseBuilder and Model class
+-------------------------------------------------------
 
 The casting for the ``$value`` parameter has been removed to fix a bug where passing parameters as array and string
 to the ``set()`` method were handled differently. If you extended the ``BaseBuilder`` class or ``Model`` class yourself
@@ -10,7 +18,8 @@ and modified the ``set()`` method, then you need to change its definition from
 ``public function set($key, ?string $value = '', ?bool $escape = null)`` to
 ``public function set($key, $value = '', ?bool $escape = null)``.
 
-**Session DatabaseHandler's database table change**
+Session DatabaseHandler's database table change
+-----------------------------------------------
 
 The types of the following columns in the session table have been changed for optimization.
 
@@ -26,7 +35,29 @@ Update the definition of the session table. See the :doc:`/libraries/sessions` f
 The change was introduced in v4.1.2. But due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4807>`_,
 the DatabaseHandler Driver did not work properly.
 
-**Multiple filters for a route**
+CSRF Protection
+---------------
+
+Because of a bug fix,
+now CSRF protection works on not only **POST** but also **PUT/PATCH/DELETE** requests when CSRF filter is applied.
+
+When you use **PUT/PATCH/DELETE** requests, you need to send CSRF token. Or remove the CSRF filter
+for such requests if you don't need CSRF protection for them.
+
+If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**::
+
+    public $methods = [
+        'get'  => ['csrf'],
+        'post' => ['csrf'],
+    ];
+
+Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
+
+Breaking Enhancements
+=====================
+
+Multiple filters for a route
+----------------------------
 
 A new feature to set multiple filters for a route.
 
@@ -54,19 +85,11 @@ The following methods and a property have been deprecated:
 
 See *Applying Filters* in :doc:`Routing </incoming/routing>` for the functionality.
 
-**CSRF Protection**
+Project Files
+=============
 
-Because of a bug fix,
-now CSRF protection works on not only **POST** but also **PUT/PATCH/DELETE** requests when CSRF filter is applied.
+Content Changes
+---------------
 
-When you use **PUT/PATCH/DELETE** requests, you need to send CSRF token. Or remove the CSRF filter
-for such requests if you don't need CSRF protection for them.
-
-If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**::
-
-    public $methods = [
-        'get'  => ['csrf'],
-        'post' => ['csrf'],
-    ];
-
-Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
+All Changes
+-----------
