@@ -33,8 +33,7 @@ On the receiving end, the script must:
    be someone else's existing username, or perhaps even a reserved word.
    Etc.
 #. Sanitize the data for security.
-#. Pre-format the data if needed (Does the data need to be trimmed? HTML
-   encoded? Etc.)
+#. Pre-format the data if needed.
 #. Prep the data for insertion in the database.
 
 Although there is nothing terribly complex about the above process, it
