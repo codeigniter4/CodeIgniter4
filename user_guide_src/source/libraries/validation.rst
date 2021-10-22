@@ -232,7 +232,7 @@ that should be applied::
     $validation->setRule('username', 'Username', 'required');
 
 The **field name** must match the key of any data array that is sent in. If
-the data is taken directly from $_POST, then it must be an exact match for
+the data is taken directly from ``$_POST``, then it must be an exact match for
 the form input name.
 
 setRules()
@@ -439,7 +439,7 @@ Validation Placeholders
 
 The Validation class provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
-the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
+the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
 replaced by the **value** of the matched incoming field. An example should clarify this::
 
     $validation->setRules([
@@ -686,7 +686,7 @@ a boolean true or false value signifying true if it passed the test or false if 
     }
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
-within errors. In custom rules, you may provide error messages by accepting a $error variable by reference in the
+within errors. In custom rules, you may provide error messages by accepting a ``$error`` variable by reference in the
 second parameter::
 
     public function even(string $str, string &$error = null): bool
@@ -710,7 +710,7 @@ Allowing Parameters
 ===================
 
 If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
-the parameter string, and an array with all of the data that was submitted the form. The $data array is especially handy
+the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on::
 
     public function required_with($str, string $fields, array $data): bool
