@@ -51,6 +51,8 @@ class IncomingRequest extends Request
      * Set automatically based on Config setting.
      *
      * @var bool
+     *
+     * @deprecated Not used
      */
     protected $enableCSRF = false;
 
