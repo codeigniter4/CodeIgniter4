@@ -117,7 +117,7 @@ filter::
 Next, we assign it to all POST requests made on the site::
 
     public $methods = [
-        'post' => ['throttle', 'CSRF'],
+        'post' => ['throttle', 'csrf'],
     ];
 
 And that's all there is to it. Now all POST requests made on the site will have to be rate limited.
