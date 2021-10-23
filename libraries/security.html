@@ -381,7 +381,20 @@ than simply crashing. This can be turned off by editing the following config par
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$redirect</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Even when the redirect value is <strong>true</strong>, AJAX calls will not redirect, but will throw an error.</p>
+<p>Even when the redirect value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, AJAX calls will not redirect, but will throw an error.</p>
+<section id="csrf-protection-methods">
+<h4>CSRF Protection Methods<a class="headerlink" href="#csrf-protection-methods" title="Permalink to this headline"></a></h4>
+<p>By default, the Cookie based CSRF Protection is used. It is
+<a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie">Double Submit Cookie</a>
+on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
+<p>You can also use Session based CSRF Protection. It is
+<a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern">Synchronizer Token Pattern</a>.</p>
+<p>You can set to use the Session based CSRF protection by editing the following config parameter value in
+<strong>app/Config/Security.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$csrfProtection</span> <span class="o">=</span> <span class="s1">&#39;session&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="other-helpful-methods">
@@ -391,8 +404,8 @@ you might find helpful that are not related to the CSRF protection.</p>
 <p><strong>sanitizeFilename()</strong></p>
 <p>Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.</p>
-<p>If it is acceptable for the user input to include relative paths, e.g., file/in/some/approved/folder.txt, you can set
-the second optional parameter, $relative_path to true.</p>
+<p>If it is acceptable for the user input to include relative paths, e.g., <strong>file/in/some/approved/folder.txt</strong>, you can set
+the second optional parameter, <code class="docutils literal notranslate"><span class="pre">$relativePath</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$security</span><span class="o">-&gt;</span><span class="na">sanitizeFilename</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;filepath&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
@@ -411,7 +424,7 @@ the second optional parameter, $relative_path to true.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 21, 2021.
+      <span class="lastupdated">Last updated on Oct 23, 2021.
       </span></p>
   </div>
 
