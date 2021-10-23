@@ -443,7 +443,7 @@ class Filters
         }
 
         // Request method won't be set for CLI-based requests
-        $method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
+        $method = strtolower($this->request->getMethod()) ?? 'cli';
 
         if (array_key_exists($method, $this->config->methods)) {
             $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);

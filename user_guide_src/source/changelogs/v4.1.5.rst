@@ -5,6 +5,12 @@ Release Date: Not released
 
 **4.1.5 release of CodeIgniter4**
 
+BREAKING:
+
+Fixed `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/2913>`_ on CSRF protection.
+Now CSRF protection works on PUT/PATCH/DELETE requests when CSRF filter is applied.
+If you use such requests, you need to send CSRF token.
+
 Enhancements:
 
 - Added Cache config for reserved characters

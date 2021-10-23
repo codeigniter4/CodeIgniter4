@@ -259,18 +259,20 @@ class Security implements SecurityInterface
      *
      * @throws SecurityException
      *
-     * @return $this|false
+     * @return $this
      */
     public function verify(RequestInterface $request)
     {
-        // If it's not a POST request we will set the CSRF cookie.
-        if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
-            return $this->sendCookie($request);
+        // Protects POST, PUT, DELETE, PATCH
+        $method           = strtoupper($request->getMethod());
+        $methodsToProtect = ['POST', 'PUT', 'DELETE', 'PATCH'];
+        if (! in_array($method, $methodsToProtect, true)) {
+            return $this;
         }
 
         $token = $this->getPostedToken($request);
 
-        // Does the tokens exist in both the POST/POSTed JSON and COOKIE arrays and match?
+        // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
             throw SecurityException::forDisallowedAction();
         }
