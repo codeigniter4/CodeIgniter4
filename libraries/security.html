@@ -288,6 +288,11 @@ as it runs as a filter and has no manual interaction.</p>
 </section>
 <section id="cross-site-request-forgery-csrf">
 <h2><a class="toc-backref" href="#id2">Cross-site request forgery (CSRF)</a><a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The CSRF Protection is only available for <strong>POST/PUT/PATCH/DELETE</strong> requests.
+Requests for other methods are not protected.</p>
+</div>
 <section id="enable-csrf-protection">
 <h3><a class="toc-backref" href="#id3">Enable CSRF Protection</a><a class="headerlink" href="#enable-csrf-protection" title="Permalink to this headline"></a></h3>
 <p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong>
@@ -315,6 +320,13 @@ by adding them as exceptions in the filter:</p>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
     <span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>It is also possible to enable the CSRF filter only for specific methods:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>

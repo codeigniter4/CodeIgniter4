@@ -332,6 +332,19 @@ If you enable it:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection</span></code>’s property <code class="docutils literal notranslate"><span class="pre">$filterInfo</span></code></p></li>
 </ul>
 <p>See <em>Applying Filters</em> in <a class="reference internal" href="../incoming/routing.html"><span class="doc">Routing</span></a> for the functionality.</p>
+<p><strong>CSRF Protection</strong></p>
+<p>Because of a bug fix,
+now CSRF protection works on not only <strong>POST</strong> but also <strong>PUT/PATCH/DELETE</strong> requests when CSRF filter is applied.</p>
+<p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send CSRF token. Or remove the CSRF filter
+for such requests if you don’t need CSRF protection for them.</p>
+<p>If you want the same behavior as the previous version, set the CSRF filter like the following in <strong>app/Config/Filters.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
 </section>
 
 
