@@ -118,7 +118,23 @@ than simply crashing. This can be turned off by editing the following config par
 
     public $redirect = false;
 
-Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
+Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
+
+=======================
+CSRF Protection Methods
+=======================
+
+By default, the Cookie based CSRF Protection is used. It is
+`Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
+on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
+
+You can also use Session based CSRF Protection. It is
+`Synchronizer Token Pattern <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern>`_.
+
+You can set to use the Session based CSRF protection by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $csrfProtection = 'session';
 
 *********************
 Other Helpful Methods
@@ -132,8 +148,8 @@ you might find helpful that are not related to the CSRF protection.
 Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.
 
-If it is acceptable for the user input to include relative paths, e.g., file/in/some/approved/folder.txt, you can set
-the second optional parameter, $relative_path to true.
+If it is acceptable for the user input to include relative paths, e.g., **file/in/some/approved/folder.txt**, you can set
+the second optional parameter, ``$relativePath`` to ``true``.
 ::
 
     $path = $security->sanitizeFilename($request->getVar('filepath'));
