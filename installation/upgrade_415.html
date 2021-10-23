@@ -262,13 +262,25 @@
              
   <section id="upgrading-from-4-1-4-to-4-1-5">
 <h1>Upgrading from 4.1.4 to 4.1.5<a class="headerlink" href="#upgrading-from-4-1-4-to-4-1-5" title="Permalink to this headline"></a></h1>
-<p><strong>Changes for set() method in BaseBuilder and Model class</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id2">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id3">Project Files</a></p></li>
+</ul>
+</div>
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<section id="changes-for-set-method-in-basebuilder-and-model-class">
+<h3>Changes for set() method in BaseBuilder and Model class<a class="headerlink" href="#changes-for-set-method-in-basebuilder-and-model-class" title="Permalink to this headline"></a></h3>
 <p>The casting for the <code class="docutils literal notranslate"><span class="pre">$value</span></code> parameter has been removed to fix a bug where passing parameters as array and string
 to the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method were handled differently. If you extended the <code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> class or <code class="docutils literal notranslate"><span class="pre">Model</span></code> class yourself
 and modified the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method, then you need to change its definition from
 <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">set($key,</span> <span class="pre">?string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">?bool</span> <span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null)</span></code> to
 <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">set($key,</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">?bool</span> <span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null)</span></code>.</p>
-<p><strong>Session DatabaseHandler’s database table change</strong></p>
+</section>
+<section id="session-databasehandler-s-database-table-change">
+<h3>Session DatabaseHandler’s database table change<a class="headerlink" href="#session-databasehandler-s-database-table-change" title="Permalink to this headline"></a></h3>
 <p>The types of the following columns in the session table have been changed for optimization.</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -291,7 +303,27 @@ and modified the <code class="docutils literal notranslate"><span class="pre">se
 <p>Update the definition of the session table. See the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session Library</span></a> for the new definition.</p>
 <p>The change was introduced in v4.1.2. But due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4807">a bug</a>,
 the DatabaseHandler Driver did not work properly.</p>
-<p><strong>Multiple filters for a route</strong></p>
+</section>
+<section id="csrf-protection">
+<h3>CSRF Protection<a class="headerlink" href="#csrf-protection" title="Permalink to this headline"></a></h3>
+<p>Because of a bug fix,
+now CSRF protection works on not only <strong>POST</strong> but also <strong>PUT/PATCH/DELETE</strong> requests when CSRF filter is applied.</p>
+<p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send CSRF token. Or remove the CSRF filter
+for such requests if you don’t need CSRF protection for them.</p>
+<p>If you want the same behavior as the previous version, set the CSRF filter like the following in <strong>app/Config/Filters.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
+</section>
+</section>
+<section id="breaking-enhancements">
+<h2><a class="toc-backref" href="#id2">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<section id="multiple-filters-for-a-route">
+<h3>Multiple filters for a route<a class="headerlink" href="#multiple-filters-for-a-route" title="Permalink to this headline"></a></h3>
 <p>A new feature to set multiple filters for a route.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -332,19 +364,17 @@ If you enable it:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection</span></code>’s property <code class="docutils literal notranslate"><span class="pre">$filterInfo</span></code></p></li>
 </ul>
 <p>See <em>Applying Filters</em> in <a class="reference internal" href="../incoming/routing.html"><span class="doc">Routing</span></a> for the functionality.</p>
-<p><strong>CSRF Protection</strong></p>
-<p>Because of a bug fix,
-now CSRF protection works on not only <strong>POST</strong> but also <strong>PUT/PATCH/DELETE</strong> requests when CSRF filter is applied.</p>
-<p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send CSRF token. Or remove the CSRF filter
-for such requests if you don’t need CSRF protection for them.</p>
-<p>If you want the same behavior as the previous version, set the CSRF filter like the following in <strong>app/Config/Filters.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
-<span class="p">];</span>
-</pre></div>
-</div>
-<p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
+</section>
+</section>
+<section id="project-files">
+<h2><a class="toc-backref" href="#id3">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<section id="content-changes">
+<h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+</section>
+<section id="all-changes">
+<h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+</section>
+</section>
 </section>
 
 
