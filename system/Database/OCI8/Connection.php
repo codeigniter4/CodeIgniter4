@@ -585,7 +585,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
     public function insertID(): int
     {
-        if (empty($this->rowId) || empty($this->lastInsertedTableName)) {
+        if (empty($this->lastInsertedTableName)) {
             return 0;
         }
 
@@ -609,8 +609,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 
             if ($primaryColumnType !== 'NUMBER') {
                 $primaryColumnName = '';
-
-                continue;
             }
         }
 
@@ -618,8 +616,9 @@ class Connection extends BaseConnection implements ConnectionInterface
             return 0;
         }
 
-        $table = $this->protectIdentifiers($this->lastInsertedTableName, true);
-        $query = $this->query('SELECT ' . $this->protectIdentifiers($primaryColumnName, false) . ' SEQ FROM ' . $table . ' WHERE ROWID = ?', $this->rowId)->getRow();
+        $query = $this->query('SELECT DATA_DEFAULT FROM USER_TAB_COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ?', [$this->lastInsertedTableName, $primaryColumnName])->getRow();
+        $lastInsertValue = str_replace('nextval', 'currval', $query->DATA_DEFAULT ?? '0');
+        $query = $this->query(sprintf('SELECT %s SEQ FROM DUAL', $lastInsertValue))->getRow();
 
         return (int) ($query->SEQ ?? 0);
     }
