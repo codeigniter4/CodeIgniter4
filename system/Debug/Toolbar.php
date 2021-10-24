@@ -435,9 +435,9 @@ class Toolbar
             header('Content-Type: application/javascript');
 
             ob_start();
-            include $this->config->viewsPath . 'toolbarloader.js.php';
+            include $this->config->viewsPath . 'toolbarloader.js';
             $output = ob_get_clean();
-            $output = substr($output, 8, -10); // trim the script tags
+            $output = str_replace('{url}', rtrim(site_url(), '/'), $output);
             echo $output;
 
             exit;

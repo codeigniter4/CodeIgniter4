@@ -1,7 +1,3 @@
-<?php if (ENVIRONMENT === 'testing') {
-    return;
-} ?>
-<script>
 document.addEventListener('DOMContentLoaded', loadDoc, false);
 
 function loadDoc(time) {
@@ -12,7 +8,7 @@ function loadDoc(time) {
 
     localStorage.setItem('debugbar-time-new', time);
 
-    let url = "<?= rtrim(site_url(), '/') ?>";
+    let url = '{url}';
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
@@ -89,4 +85,3 @@ function newXHR() {
 }
 
 window.XMLHttpRequest = newXHR;
-</script>
