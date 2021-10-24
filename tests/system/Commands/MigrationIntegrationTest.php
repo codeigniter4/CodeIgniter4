@@ -58,9 +58,6 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         stream_filter_remove($this->streamFilter);
     }
 
-    /**
-     * @runTestsInSeparateProcesses
-     */
     public function testMigrationWithRollbackHasSameNameFormat(): void
     {
         command('migrate -n App');
