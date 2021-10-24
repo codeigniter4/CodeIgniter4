@@ -27,6 +27,14 @@ final class LastInsertIDTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
+    public function setUp(){
+        parent::setUp();
+
+        if ($this->db->DBDriver !== 'OCI8') {
+            $this->markTestSkipped('Only OCI8 has its own implementation.');
+        }
+    }
+
     public function testGetInsertIDWithInsert()
     {
         $jobData = [
