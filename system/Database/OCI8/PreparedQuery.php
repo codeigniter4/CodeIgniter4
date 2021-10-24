@@ -28,35 +28,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     protected $db;
 
     /**
-     * Is collect row id
-     *
-     * @var bool
-     */
-    private $isCollectRowId;
-
-    /**
-     * Prepares the query against the database, and saves the connection
-     * info necessary to execute the query later.
-     *
-     * NOTE: This version is based on SQL code. Child classes should
-     * override this method.
-     *
-     * @param array $options Passed to the connection's prepare statement.
-     *
-     * @return mixed
-     */
-    public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
-    {
-        $this->isCollectRowId = false;
-
-        if (substr($sql, strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID')) === 'RETURNING ROWID INTO :CI_OCI8_ROWID') {
-            $this->isCollectRowId = true;
-        }
-
-        return parent::prepare($sql, $options, $queryClass);
-    }
-
-    /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
      *
@@ -99,10 +70,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
         foreach (array_keys($data) as $key) {
             oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
             $lastKey = $key;
-        }
-
-        if ($this->isCollectRowId) {
-            oci_bind_by_name($this->statement, ':' . (++$lastKey), $this->db->rowId, 255);
         }
 
         return oci_execute($this->statement, $this->db->commitMode);

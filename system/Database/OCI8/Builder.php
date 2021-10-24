@@ -240,21 +240,4 @@ class Builder extends BaseBuilder
         $this->limitUsed = false;
         parent::resetSelect();
     }
-
-    /**
-     * Generates a platform-specific insert string from the supplied data
-     */
-    protected function _insert(string $table, array $keys, array $unescapedKeys): string
-    {
-        $this->db->lastInsertedTableName = $table;
-        $sql                             = 'INSERT %sINTO %s (%s) VALUES (%s) RETURNING ROWID INTO :CI_OCI8_ROWID';
-
-        return sprintf(
-            $sql,
-            $this->compileIgnore('insert'),
-            $table,
-            implode(', ', $keys),
-            implode(', ', $unescapedKeys)
-        );
-    }
 }

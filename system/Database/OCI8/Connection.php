@@ -87,18 +87,9 @@ class Connection extends BaseConnection implements ConnectionInterface
     protected $cursorId;
 
     /**
-     * RowID
-     *
-     * @used-by PreparedQuery::_execute()
-     *
-     * @var int|null
-     */
-    public $rowId;
-
-    /**
      * Latest inserted table name.
      *
-     * @used-by Builder::_insert()
+     * @used-by PreparedQuery::_execute()
      *
      * @var string|null
      */
@@ -205,13 +196,16 @@ class Connection extends BaseConnection implements ConnectionInterface
                 $this->stmtId = oci_parse($this->connID, $sql);
             }
 
-            if (strpos($sql, 'RETURNING ROWID INTO :CI_OCI8_ROWID') !== false) {
-                oci_bind_by_name($this->stmtId, ':CI_OCI8_ROWID', $this->rowId, 255);
-            }
-
             oci_set_prefetch($this->stmtId, 1000);
 
-            return oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
+            $result = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
+            $insertTableName = $this->parseInsertTableName($sql);
+
+            if ($result && $insertTableName !== '') {
+                $this->lastInsertedTableName = $insertTableName;
+            }
+
+            return $result;
         } catch (ErrorException $e) {
             log_message('error', $e->getMessage());
 
@@ -222,6 +216,29 @@ class Connection extends BaseConnection implements ConnectionInterface
 
         return false;
     }
+
+    /**
+     * Get the table name for the insert statement from sql.
+     *
+     * @param string $sql
+     *
+     * @return string
+     */
+    public function parseInsertTableName(string $sql): string {
+        $commentStrippedSql = preg_replace(['/\/\*(.|\n)*?\*\//m', '/^-- .*/'], '', $sql);
+        $isInsertQuery = strpos(strtoupper(ltrim($commentStrippedSql)), 'INSERT') === 0;
+
+        if (!$isInsertQuery) {
+            return '';
+        }
+
+        preg_match('/(?is)\b(?:into)\s+("?\w+"?)/', $commentStrippedSql, $match);
+        $tableName = $match[1] ?? '';
+        $tableName = strpos($tableName, '"') === 0 ? trim($tableName, '"') : strtoupper($tableName);
+
+        return $tableName;
+    }
+
 
     /**
      * Returns the total number of rows affected by this query.
