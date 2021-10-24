@@ -79,15 +79,15 @@ class Response extends Message implements MessageInterface, ResponseInterface
         410 => 'Gone',
         411 => 'Length Required',
         412 => 'Precondition Failed',
-        413 => 'Request Entity Too Large',
-        414 => 'Request-URI Too Long',
+        413 => 'Content Too Large', // https://www.iana.org/assignments/http-status-codes/http-status-codes.xml
+        414 => 'URI Too Long', // https://www.iana.org/assignments/http-status-codes/http-status-codes.xml
         415 => 'Unsupported Media Type',
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
         418 => "I'm a teapot", // April's Fools joke; http://www.ietf.org/rfc/rfc2324.txt
         // 419 (Authentication Timeout) is a non-standard status code with unknown origin
         421 => 'Misdirected Request', // http://www.iana.org/go/rfc7540 Section 9.1.2
-        422 => 'Unprocessable Entity', // http://www.iana.org/go/rfc4918
+        422 => 'Unprocessable Content', // https://www.iana.org/assignments/http-status-codes/http-status-codes.xml
         423 => 'Locked', // http://www.iana.org/go/rfc4918
         424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
         425 => 'Too Early', // https://datatracker.ietf.org/doc/draft-ietf-httpbis-replay/
