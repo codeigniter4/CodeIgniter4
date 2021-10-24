@@ -69,9 +69,6 @@ final class PreparedQueryTest extends CIUnitTestCase
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
 
-        if ($this->db->DBDriver === 'OCI8') {
-            $expected .= ' RETURNING ROWID INTO ?';
-        }
 
         $this->assertSame($expected, $this->query->getQueryString());
     }

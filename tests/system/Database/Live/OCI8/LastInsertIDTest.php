@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live\OCI8;
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -55,6 +56,20 @@ final class LastInsertIDTest extends CIUnitTestCase
 INSERT /* INTO "db_misc" */ INTO "db_job"  ("name", "description") VALUES (' INTO "abc"', ?)
 SQL;
         $this->db->query($sql, ['Discount!']);
+        $actual = $this->db->insertID();
+
+        $this->assertSame($actual, 5);
+    }
+
+    public function testGetInsertIDWithPreparedQuery()
+    {
+        $query = $this->db->prepare(static function ($db) {
+            $sql = 'INSERT INTO "db_job" ("name", "description") VALUES (?, ?)';
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $query->execute('foo', 'bar');
         $actual = $this->db->insertID();
 
         $this->assertSame($actual, 5);

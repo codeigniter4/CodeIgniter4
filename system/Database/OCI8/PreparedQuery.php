@@ -28,6 +28,13 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     protected $db;
 
     /**
+     * Latest inserted table name.
+     *
+     * @var string|null
+     */
+    private $lastInsertTableName;
+
+    /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
      *
@@ -52,6 +59,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
             $this->errorString = $error['message'] ?? '';
         }
 
+        $this->lastInsertTableName = $this->db->parseInsertTableName($sql);
+
         return $this;
     }
 
@@ -72,7 +81,13 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
             $lastKey = $key;
         }
 
-        return oci_execute($this->statement, $this->db->commitMode);
+        $result = oci_execute($this->statement, $this->db->commitMode);
+
+        if ($result && $this->lastInsertTableName !== '') {
+            $this->db->lastInsertedTableName = $this->lastInsertTableName;
+        }
+
+        return $result;
     }
 
     /**
