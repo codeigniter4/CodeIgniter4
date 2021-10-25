@@ -66,11 +66,23 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
     }
 
-    public function testGetHashSetsCookieWhenNotPOST()
+    public function testGetHashSetsCookieWhenGETWithoutCSRFCookie()
     {
         $security = new MockSecurity(new MockAppConfig());
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $security->verify(new Request(new MockAppConfig()));
+
+        $this->assertSame($_COOKIE['csrf_cookie_name'], $security->getHash());
+    }
+
+    public function testGetHashReturnsCSRFCookieWhenGETWithCSRFCookie()
+    {
+        $_SERVER['REQUEST_METHOD']   = 'GET';
+        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+
+        $security = new MockSecurity(new MockAppConfig());
 
         $security->verify(new Request(new MockAppConfig()));
 
