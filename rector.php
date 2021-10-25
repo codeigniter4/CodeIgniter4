@@ -37,11 +37,13 @@ use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRect
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
-use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
-use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
-use Rector\Php71\Rector\List_\ListToArrayDestructRector;
+use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
+use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
+use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
+use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -51,7 +53,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::DEAD_CODE);
-    $containerConfigurator->import(SetList::PHP_73);
+    $containerConfigurator->import(LevelSetList::UP_TO_PHP_73);
 
     $parameters = $containerConfigurator->parameters();
 
@@ -95,6 +97,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         UnderscoreToCamelCaseVariableNameRector::class => [
             __DIR__ . '/system/Session/Handlers',
         ],
+
+        // may cause load view files directly when detecting class that
+        // make warning
+        StringClassNameToClassConstantRector::class,
+
+        // sometime too detail
+        CountOnNullRector::class,
+
+        // may not be unitialized on purpose
+        AddDefaultValueForUndefinedVariableRector::class,
+
+        // use mt_rand instead of random_int on purpose on non-cryptographically random
+        RandomFunctionRector::class,
     ]);
 
     // auto import fully qualified class names
@@ -123,12 +138,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(ChangeArrayPushToArrayAssignRector::class);
     $services->set(UnnecessaryTernaryExpressionRector::class);
     $services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
-    $services->set(TernaryToNullCoalescingRector::class);
-    $services->set(ListToArrayDestructRector::class);
     $services->set(RemoveVarTagFromClassConstantRector::class);
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
-    $services->set(RemoveExtraParametersRector::class);
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $services->set(FixClassCaseSensitivityNameRector::class);
