@@ -311,7 +311,7 @@ getting more privileges than they are entitled to.</p>
 <h3>CodeIgniter provisions<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="../libraries/sessions.html">Session</a> library</p></li>
-<li><p><a class="reference external" href="../incoming/incomingrequest.html">HTTP library</a> provides for CSRF validation</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
 <li><p>Easy to add third party authentication</p></li>
 </ul>
 </section>
@@ -320,16 +320,16 @@ getting more privileges than they are entitled to.</p>
 <h2>A3 Cross Site Scripting (XSS)<a class="headerlink" href="#a3-cross-site-scripting-xss" title="Permalink to this headline"></a></h2>
 <p>Insufficient input validation where one user can add content to a web site
 that can be malicious when viewed by other users to the web site.</p>
-<section id="id4">
-<h3>OWASP recommendations<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<section id="id3">
+<h3>OWASP recommendations<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: output encode all user data as per output context; set input constraints</p></li>
 <li><p>Controller: positive input validation</p></li>
 <li><p>Tips: only process trustworthy data; do not store data HTML encoded in DB</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<section id="id4">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>esc function</p></li>
 <li><p>Form validation library</p></li>
@@ -342,16 +342,16 @@ that can be malicious when viewed by other users to the web site.</p>
 access to objects based on user-supplied input. As a result of this vulnerability
 attackers can bypass authorization and access resources in the system directly,
 for example database records or files.</p>
-<section id="id6">
-<h3>OWASP recommendations<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
+<section id="id5">
+<h3>OWASP recommendations<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: don’t expose internal data; use random reference maps</p></li>
 <li><p>Controller: obtain data from trusted sources or random reference maps</p></li>
 <li><p>Model: validate user roles before updating data</p></li>
 </ul>
 </section>
-<section id="id7">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
+<section id="id6">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Form validation library</p></li>
 <li><p>Easy to add third party authentication</p></li>
@@ -362,16 +362,16 @@ for example database records or files.</p>
 <h2>A5 Security Misconfiguration<a class="headerlink" href="#a5-security-misconfiguration" title="Permalink to this headline"></a></h2>
 <p>Improper configuration of an application architecture can lead to mistakes
 that might compromise the security of the whole architecture.</p>
-<section id="id8">
-<h3>OWASP recommendations<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
+<section id="id7">
+<h3>OWASP recommendations<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: harden web and application servers; use HTTP strict transport security</p></li>
 <li><p>Controller: harden web and application servers; protect your XML stack</p></li>
 <li><p>Model: harden database servers</p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
+<section id="id8">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Sanity checks during bootstrap</p></li>
 </ul>
@@ -383,16 +383,16 @@ that might compromise the security of the whole architecture.</p>
 Such data can include user credentials and credit cards. As a rule of thumb,
 if data must be protected when it is stored, it must be protected also during
 transmission.</p>
-<section id="id10">
-<h3>OWASP recommendations<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
+<section id="id9">
+<h3>OWASP recommendations<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: use TLS1.2; use strong ciphers and hashes; do not send keys or hashes to browser</p></li>
 <li><p>Controller: use strong ciphers and hashes</p></li>
 <li><p>Model: mandate strong encrypted communications with servers</p></li>
 </ul>
 </section>
-<section id="id11">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h3>
+<section id="id10">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Session keys stored encrypted</p></li>
 </ul>
@@ -404,19 +404,19 @@ transmission.</p>
 Such data can include user credentials and credit cards. As a rule of thumb,
 if data must be protected when it is stored, it must be protected also during
 transmission.</p>
-<section id="id12">
-<h3>OWASP recommendations<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
+<section id="id11">
+<h3>OWASP recommendations<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: ensure that non-web data is outside the web root; validate users and roles; send CSRF tokens</p></li>
 <li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
 <li><p>Model: validate roles</p></li>
 </ul>
 </section>
-<section id="id13">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h3>
+<section id="id12">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Public folder, with application and system outside</p></li>
-<li><p><a class="reference external" href="../incoming/incomingrequest.html">HTTP library</a> provides for CSRF validation</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
 </ul>
 </section>
 </section>
@@ -424,18 +424,18 @@ transmission.</p>
 <h2>A8 Cross Site Request Forgery (CSRF)<a class="headerlink" href="#a8-cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
 <p>CSRF is an attack that forces an end user to execute unwanted actions on a web
 application in which he/she is currently authenticated.</p>
-<section id="id15">
-<h3>OWASP recommendations<a class="headerlink" href="#id15" title="Permalink to this headline"></a></h3>
+<section id="id13">
+<h3>OWASP recommendations<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: validate users and roles; send CSRF tokens</p></li>
 <li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
 <li><p>Model: validate roles</p></li>
 </ul>
 </section>
-<section id="id16">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id16" title="Permalink to this headline"></a></h3>
+<section id="id14">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="../incoming/incomingrequest.html">HTTP library</a> provides for CSRF validation</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
 </ul>
 </section>
 </section>
@@ -443,14 +443,14 @@ application in which he/she is currently authenticated.</p>
 <h2>A9 Using Components with Known Vulnerabilities<a class="headerlink" href="#a9-using-components-with-known-vulnerabilities" title="Permalink to this headline"></a></h2>
 <p>Many applications have known vulnerabilities and known attack strategies that
 can be exploited in order to gain remote control or to exploit data.</p>
-<section id="id18">
-<h3>OWASP recommendations<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h3>
+<section id="id15">
+<h3>OWASP recommendations<a class="headerlink" href="#id15" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Don’t use any of these</p></li>
 </ul>
 </section>
-<section id="id19">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id19" title="Permalink to this headline"></a></h3>
+<section id="id16">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id16" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Third party libraries incorporated must be vetted</p></li>
 </ul>
@@ -460,16 +460,16 @@ can be exploited in order to gain remote control or to exploit data.</p>
 <h2>A10 Unvalidated Redirects and Forwards<a class="headerlink" href="#a10-unvalidated-redirects-and-forwards" title="Permalink to this headline"></a></h2>
 <p>Faulty business logic or injected actionable code could redirect the user
 inappropriately.</p>
-<section id="id20">
-<h3>OWASP recommendations<a class="headerlink" href="#id20" title="Permalink to this headline"></a></h3>
+<section id="id17">
+<h3>OWASP recommendations<a class="headerlink" href="#id17" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Presentation: don’t use URL redirection; use random indirect references</p></li>
 <li><p>Controller: don’t use URL redirection; use random indirect references</p></li>
 <li><p>Model: validate roles</p></li>
 </ul>
 </section>
-<section id="id21">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id21" title="Permalink to this headline"></a></h3>
+<section id="id18">
+<h3>CodeIgniter provisions<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="../incoming/incomingrequest.html">HTTP library</a> provides for …</p></li>
 <li><p><a class="reference external" href="../libraries/sessions.html">Session</a> library provides flashdata</p></li>
@@ -490,7 +490,7 @@ inappropriately.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 23, 2021.
+      <span class="lastupdated">Last updated on Oct 25, 2021.
       </span></p>
   </div>
 

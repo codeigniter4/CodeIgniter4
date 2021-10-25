@@ -428,8 +428,7 @@ property. If it matches an existing configuration property, the environment vari
 value will replace the corresponding value from the configuration file. If there is no match,
 the configuration class properties are left unchanged. In this usage, the prefix must be
 the full (case-sensitive) namespace of the class.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSRFProtection</span> <span class="o">=</span> <span class="k">true</span>
-<span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSRFCookieName</span> <span class="o">=</span> <span class="nx">csrf_cookie</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Config\App</span><span class="o">.</span><span class="nx">forceGlobalSecureRequests</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">Config\App</span><span class="o">.</span><span class="nx">CSPEnabled</span> <span class="o">=</span> <span class="k">true</span>
 </pre></div>
 </div>
@@ -440,8 +439,7 @@ the full (case-sensitive) namespace of the class.</p>
 <p>The same holds for a <em>short prefix</em>, which is a namespace using only the lowercase version of
 the configuration class name. If the short prefix matches the class name,
 the value from <strong>.env</strong> replaces the configuration file value.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">CSRFProtection</span> <span class="o">=</span> <span class="k">true</span>
-<span class="nx">app</span><span class="o">.</span><span class="nx">CSRFCookieName</span> <span class="o">=</span> <span class="nx">csrf_cookie</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">forceGlobalSecureRequests</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">app</span><span class="o">.</span><span class="nx">CSPEnabled</span> <span class="o">=</span> <span class="k">true</span>
 </pre></div>
 </div>
@@ -450,8 +448,7 @@ the value from <strong>.env</strong> replaces the configuration file value.</p>
 <p>When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
 </div>
 <p>Some environments do not permit variable name with dots. In such case, you could also use <code class="docutils literal notranslate"><span class="pre">_</span></code> as a seperator.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app_CSRFProtection</span> <span class="o">=</span> <span class="k">true</span>
-<span class="nx">app_CSRFCookieName</span> <span class="o">=</span> <span class="nx">csrf_cookie</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app_forceGlobalSecureRequests</span> <span class="o">=</span> <span class="k">true</span>
 <span class="nx">app_CSPEnabled</span> <span class="o">=</span> <span class="k">true</span>
 </pre></div>
 </div>
@@ -610,7 +607,7 @@ by treating <code class="docutils literal notranslate"><span class="pre">Regiona
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 23, 2021.
+      <span class="lastupdated">Last updated on Oct 25, 2021.
       </span></p>
   </div>
 
