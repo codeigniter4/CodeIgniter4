@@ -61,8 +61,8 @@ final class FiltersTest extends CIUnitTestCase
                 'cli' => ['foo'],
             ],
         ];
-        $request = new CLIRequest(new MockAppConfig());
-        $filters = new Filters((object) $config, $request, $this->response);
+        $this->request = new CLIRequest(new MockAppConfig());
+        $filters       = new Filters((object) $config, $this->request, $this->response);
 
         $expected = [
             'before' => ['foo'],
