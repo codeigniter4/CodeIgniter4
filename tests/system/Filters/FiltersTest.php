@@ -781,7 +781,7 @@ final class FiltersTest extends CIUnitTestCase
 
     public function testEnableNonFilter()
     {
-        $this->expectException('CodeIgniter\Filters\Exceptions\FilterException');
+        $this->expectException(FilterException::class);
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
