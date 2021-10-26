@@ -24,8 +24,6 @@ Available static functions
 
 The following functions are available:
 
-**autoTypography()**
-
 .. php:function:: autoTypography($str[, $reduce_linebreaks = false])
 
     :param    string    $str: Input string
@@ -45,8 +43,6 @@ The following functions are available:
         function you may want to consider :doc:`caching <../general/caching>` your
         pages.
 
-**formatCharacters()**
-
 .. php:function:: formatCharacters($str)
 
     :param    string    $str: Input string
@@ -61,17 +57,15 @@ The following functions are available:
 
         $string = $typography->formatCharacters($string);
 
-**nl2brExceptPre()**
-
 .. php:function:: nl2brExceptPre($str)
 
     :param    string    $str: Input string
     :returns:    String with HTML-formatted line breaks
     :rtype:    string
 
-    Converts newlines to <br /> tags unless they appear within <pre> tags.
+    Converts newlines to ``<br />`` tags unless they appear within ``<pre>`` tags.
     This function is identical to the native PHP ``nl2br()`` function,
-    except that it ignores <pre> tags.
+    except that it ignores ``<pre>`` tags.
 
     Usage example::
 
