@@ -34,7 +34,6 @@ require_once __DIR__ . '/fixtures/Role.php';
  */
 final class FiltersTest extends CIUnitTestCase
 {
-    protected $request;
     protected $response;
 
     protected function setUp(): void
