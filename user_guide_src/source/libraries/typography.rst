@@ -24,8 +24,6 @@ Available static functions
 
 The following functions are available:
 
-**autoTypography()**
-
 .. php:function:: autoTypography($str[, $reduce_linebreaks = false])
 
     :param    string    $str: Input string
@@ -45,8 +43,6 @@ The following functions are available:
         function you may want to consider :doc:`caching <../general/caching>` your
         pages.
 
-**formatCharacters()**
-
 .. php:function:: formatCharacters($str)
 
     :param    string    $str: Input string
@@ -60,8 +56,6 @@ The following functions are available:
     Usage example::
 
         $string = $typography->formatCharacters($string);
-
-**nl2brExceptPre()**
 
 .. php:function:: nl2brExceptPre($str)
 
