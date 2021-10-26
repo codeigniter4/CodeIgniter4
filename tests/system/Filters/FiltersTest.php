@@ -50,11 +50,19 @@ final class FiltersTest extends CIUnitTestCase
 
         Services::autoloader()->addNamespace($defaults);
 
+        $_SERVER = [];
+
         $this->response = Services::response();
     }
 
     public function testProcessMethodDetectsCLI()
     {
+        $_SERVER['argv'] = [
+            'spark',
+            'list',
+        ];
+        $_SERVER['argc'] = 2;
+
         $config = [
             'aliases' => ['foo' => ''],
             'methods' => [
