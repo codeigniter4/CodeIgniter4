@@ -38,21 +38,16 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->connection   = Database::connect();
 
         parent::setUp();
+
+        $file = WRITEPATH . 'foobar.db';
+        if (file_exists($file)) {
+            unlink($file);
+        }
     }
 
     protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
-
-        if ($this->connection instanceof Connection) {
-            $file = WRITEPATH . 'foobar.db';
-
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        } else {
-            Database::forge()->dropDatabase('foobar');
-        }
 
         parent::tearDown();
     }
