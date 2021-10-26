@@ -30,7 +30,7 @@ General Adjustments
 
 **Downloads**
 
-- CI4 is still available as a ready-to-run zip or tarball, which includes the user guide (though in the `docs` subfolder).
+- CI4 is still available as a ready-to-run zip or tarball.
 - It can also be installed using Composer.
 
 **Namespaces**
