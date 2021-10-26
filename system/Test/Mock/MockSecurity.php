@@ -11,15 +11,12 @@
 
 namespace CodeIgniter\Test\Mock;
 
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Security\Security;
 
 class MockSecurity extends Security
 {
-    protected function sendCookie(RequestInterface $request)
+    protected function doSendCookie(): void
     {
         $_COOKIE['csrf_cookie_name'] = $this->hash;
-
-        return $this;
     }
 }
