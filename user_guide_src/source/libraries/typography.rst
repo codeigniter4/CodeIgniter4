@@ -63,9 +63,9 @@ The following functions are available:
     :returns:    String with HTML-formatted line breaks
     :rtype:    string
 
-    Converts newlines to <br /> tags unless they appear within <pre> tags.
+    Converts newlines to ``<br />`` tags unless they appear within ``<pre>`` tags.
     This function is identical to the native PHP ``nl2br()`` function,
-    except that it ignores <pre> tags.
+    except that it ignores ``<pre>`` tags.
 
     Usage example::
 
