@@ -341,7 +341,7 @@ are expected to be located in the <strong>tests/app</strong> directory by defaul
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To test one of your models, you might end up with something like this in <code class="docutils literal notranslate"><span class="pre">tests/app/Models/OneOfMyModelsTest.php</span></code>:</p>
+<p>To test one of your models, you might end up with something like this in <strong>tests/app/Models/OneOfMyModelsTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -458,7 +458,7 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEventTriggered</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertHeaderEmitted($header, $ignoreCase=false)</strong></p>
+<p><strong>assertHeaderEmitted($header, $ignoreCase = false)</strong></p>
 <p>Ensure that a header or cookie was actually emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 
@@ -471,7 +471,7 @@ logged in user:</p>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
-<p><strong>assertHeaderNotEmitted($header, $ignoreCase=false)</strong></p>
+<p><strong>assertHeaderNotEmitted($header, $ignoreCase = false)</strong></p>
 <p>Ensure that a header or cookie was not emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 
@@ -484,7 +484,7 @@ in PHPunit</a>.</p>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
-<p><strong>assertCloseEnough($expected, $actual, $message=’’, $tolerance=1)</strong></p>
+<p><strong>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
 <p>For extended execution time testing, tests that the absolute difference
 between expected and actual time is within the prescribed tolerance.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
@@ -493,7 +493,7 @@ between expected and actual time is within the prescribed tolerance.:</p>
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
-<p><strong>assertCloseEnoughString($expected, $actual, $message=’’, $tolerance=1)</strong></p>
+<p><strong>assertCloseEnoughString($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
 <p>For extended execution time testing, tests that the absolute difference
 between expected and actual time, formatted as strings, is within the prescribed tolerance.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
