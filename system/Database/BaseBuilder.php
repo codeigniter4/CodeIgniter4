@@ -666,9 +666,9 @@ class BaseBuilder
                 $bind = $this->setBind($k, $v, $escape);
 
                 if (empty($op)) {
-                    $k .= ' =';
+                    $op = ' =';
                 } else {
-                    $k .= " {$op}";
+                    $op = " {$op}";
                 }
 
                 if ($v instanceof Closure) {
@@ -679,13 +679,16 @@ class BaseBuilder
                 }
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
-                $k .= ' IS NULL';
+                $op = ' IS NULL';
             } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
-                $k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
+                $k  = substr($k, 0, $match[0][1]);
+                $op = $match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL';
+            } else {
+                $op = '';
             }
 
             $this->{$qbKey}[] = [
-                'condition' => $prefix . $k . $v,
+                'condition' => $prefix . $k . $op . $v,
                 'escape'    => $escape,
             ];
         }
