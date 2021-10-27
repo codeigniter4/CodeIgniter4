@@ -661,12 +661,9 @@ class BaseBuilder
                     if (substr($k, -1 * strlen($op)) === $op) {
                         $k = rtrim(strrev(preg_replace(strrev('/' . $op . '/'), strrev(''), strrev($k), 1)));
                     }
-                }
-
-                if (empty($op)) {
-                    $op = ' =';
-                } else {
                     $op = " {$op}";
+                } else {
+                    $op = ' =';
                 }
 
                 if ($v instanceof Closure) {
