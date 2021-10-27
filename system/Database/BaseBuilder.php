@@ -670,7 +670,7 @@ class BaseBuilder
 
                 if ($v instanceof Closure) {
                     $builder = $this->cleanClone();
-                    $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+                    $v       = ' (' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
                 } else {
                     $bind = $this->setBind($k, $v, $escape);
                     $v    = " :{$bind}:";
