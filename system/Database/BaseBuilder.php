@@ -659,9 +659,11 @@ class BaseBuilder
                     $op = trim(current($op));
 
                     if (substr($k, -strlen($op)) === $op) {
-                        $k = rtrim(substr($k, 0, -strlen($op)));
+                        $k  = rtrim(substr($k, 0, -strlen($op)));
+                        $op = " {$op}";
+                    } else {
+                        $op = '';
                     }
-                    $op = " {$op}";
                 } else {
                     $op = ' =';
                 }
