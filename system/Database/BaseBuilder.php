@@ -663,8 +663,6 @@ class BaseBuilder
                     }
                 }
 
-                $bind = $this->setBind($k, $v, $escape);
-
                 if (empty($op)) {
                     $op = ' =';
                 } else {
@@ -675,7 +673,8 @@ class BaseBuilder
                     $builder = $this->cleanClone();
                     $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
                 } else {
-                    $v = " :{$bind}:";
+                    $bind = $this->setBind($k, $v, $escape);
+                    $v    = " :{$bind}:";
                 }
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
