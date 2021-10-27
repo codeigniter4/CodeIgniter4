@@ -29,9 +29,7 @@ use Config\App;
 use Config\Logger;
 use Config\Modules;
 use InvalidArgumentException;
-use RuntimeException;
 use stdClass;
-use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
 
 /**
@@ -477,43 +475,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
                 'FCPATH' . $ds . 'index.php',
             ],
         ];
-    }
-
-    public function testHelperWithFatalLocatorThrowsException()
-    {
-        // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
-        Services::injectMock('locator', $locator);
-
-        try {
-            helper('baguette');
-            $exception = false;
-        } catch (RuntimeException $e) {
-            $exception = true;
-        }
-
-        $this->assertTrue($exception);
-        Services::reset();
-    }
-
-    public function testHelperLoadsOnce()
-    {
-        // Load it the first time
-        helper('baguette');
-
-        // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
-        Services::injectMock('locator', $locator);
-
-        try {
-            helper('baguette');
-            $exception = false;
-        } catch (RuntimeException $e) {
-            $exception = true;
-        }
-
-        $this->assertFalse($exception);
-        Services::reset();
     }
 
     public function testIsCli()
