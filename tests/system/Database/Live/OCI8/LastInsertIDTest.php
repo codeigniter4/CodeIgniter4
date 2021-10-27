@@ -27,7 +27,7 @@ final class LastInsertIDTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-    public function setUp(){
+    public function setUp(): void {
         parent::setUp();
 
         if ($this->db->DBDriver !== 'OCI8') {
