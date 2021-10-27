@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -45,7 +46,11 @@ final class CreateDatabaseTest extends CIUnitTestCase
                 unlink($file);
             }
         } else {
-            Database::forge()->dropDatabase('foobar');
+            $util = (new DatabaseFactory())->loadUtils($this->connection);
+
+            if ($util->databaseExists('foobar')) {
+                Database::forge()->dropDatabase('foobar');
+            }
         }
     }
 
