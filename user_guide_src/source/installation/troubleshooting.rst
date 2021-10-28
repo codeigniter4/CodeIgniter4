@@ -65,7 +65,7 @@ unrecoverable error, which we don't want to show to the viewer of
 the webapp, for better security.
 
 You can see the error in the debug toolbar display by setting your environment to
-"development" (in `.env`), and reloading the page.
+"development" (in **.env**), and reloading the page.
 
 Don't forget to reset the environment to "production" once you fix the problem!
 
