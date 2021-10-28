@@ -560,7 +560,7 @@ if (! function_exists('helper')) {
     {
         static $loaded = [];
 
-        $loader = Services::locator(true);
+        $loader = Services::locator();
 
         if (! is_array($filenames)) {
             $filenames = [$filenames];
@@ -596,18 +596,14 @@ if (! function_exists('helper')) {
 
                 $includes[] = $path;
                 $loaded[]   = $filename;
-            }
-
-            // No namespaces, so search in all available locations
-            else {
+            } else {
+                // No namespaces, so search in all available locations
                 $paths = $loader->search('Helpers/' . $filename);
 
                 foreach ($paths as $path) {
-                    if (strpos($path, APPPATH) === 0) {
-                        // @codeCoverageIgnoreStart
+                    if (strpos($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
                         $appHelper = $path;
-                    // @codeCoverageIgnoreEnd
-                    } elseif (strpos($path, SYSTEMPATH) === 0) {
+                    } elseif (strpos($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
                         $systemHelper = $path;
                     } else {
                         $localIncludes[] = $path;
@@ -617,10 +613,8 @@ if (! function_exists('helper')) {
 
                 // App-level helpers should override all others
                 if (! empty($appHelper)) {
-                    // @codeCoverageIgnoreStart
                     $includes[] = $appHelper;
                     $loaded[]   = $filename;
-                    // @codeCoverageIgnoreEnd
                 }
 
                 // All namespaced files get added in next
