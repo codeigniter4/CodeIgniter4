@@ -96,7 +96,6 @@ final class CommonHelperTest extends CIUnitTestCase
         }
 
         $this->assertTrue($exception);
-        Services::reset();
     }
 
     public function testHelperLoadsOnce()
@@ -116,7 +115,6 @@ final class CommonHelperTest extends CIUnitTestCase
         }
 
         $this->assertFalse($exception);
-        Services::reset();
     }
 
     public function testHelperLoadsAppHelperFirst(): void
