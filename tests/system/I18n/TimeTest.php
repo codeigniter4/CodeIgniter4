@@ -28,7 +28,7 @@ final class TimeTest extends CIUnitTestCase
         parent::setUp();
 
         helper('date');
-        Locale::setDefault('America/Chicago');
+        Locale::setDefault('en_US');
     }
 
     public function testNewTimeNow()
