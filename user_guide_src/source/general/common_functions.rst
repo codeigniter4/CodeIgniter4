@@ -63,7 +63,7 @@ Service Accessors
     or return a default value if it is not found. Will format boolean values
     to actual booleans instead of string representations.
 
-    Especially useful when used in conjunction with .env files for setting
+    Especially useful when used in conjunction with **.env** files for setting
     values that are specific to the environment itself, like database
     settings, API keys, etc.
 

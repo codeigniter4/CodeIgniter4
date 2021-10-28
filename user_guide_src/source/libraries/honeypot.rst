@@ -36,7 +36,7 @@ Customizing Honeypot
 =====================
 
 Honeypot can be customized. The fields below can be set either in
-**app/Config/Honeypot.php** or in ``.env``.
+**app/Config/Honeypot.php** or in **.env**.
 
 * ``hidden`` - true|false to control visibility of the honeypot field; default is ``true``
 * ``label`` - HTML label for the honeypot field, default is 'Fill This Field'

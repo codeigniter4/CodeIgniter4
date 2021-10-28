@@ -191,15 +191,15 @@ Environment Variables as Replacements for Data
 ==============================================
 
 It is very important to always remember that environment variables contained in your **.env** are
-**only replacements for existing data**. This means that you cannot expect to fill your ``.env`` with all
+**only replacements for existing data**. This means that you cannot expect to fill your **.env** with all
 the replacements for your configurations but have nothing to receive these replacements in the
 related configuration file(s).
 
-The ``.env`` only serves to fill or replace the values in your configuration files. That said, your
+The **.env** only serves to fill or replace the values in your configuration files. That said, your
 configuration files should have a container or receiving property for those. Adding so many variables in
-your ``.env`` with nothing to contain them in the receiving end is useless.
+your **.env** with nothing to contain them in the receiving end is useless.
 
-Simply put, you cannot just put ``app.myNewConfig = foo`` in your ``.env`` and expect your ``Config\App``
+Simply put, you cannot just put ``app.myNewConfig = foo`` in your **.env** and expect your ``Config\App``
 to magically have that property and value at run time.
 
 Treating Environment Variables as Arrays

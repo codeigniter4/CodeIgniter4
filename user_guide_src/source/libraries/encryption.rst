@@ -153,7 +153,7 @@ the library.
     // or
     public $key = 'base64:<your-base64-encoded-key>'
 
-Similarly, you can use these prefixes in your ``.env`` file, too!
+Similarly, you can use these prefixes in your **.env** file, too!
 ::
 
     // For hex2bin
