@@ -728,10 +728,10 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters
+        $list = $filters
             ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
-            ->initialize('admin/foo/bar');
-        $list = $filters->getFilters();
+            ->initialize('admin/foo/bar')
+            ->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));
     }
@@ -744,11 +744,11 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $filters = $filters
+        $list = $filters
             ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
             ->initialize('admin/foo/bar')
-            ->initialize();
-        $list = $filters->getFilters();
+            ->initialize()
+            ->getFilters();
 
         $this->assertTrue(in_array('another', $list['before'], true));
     }
