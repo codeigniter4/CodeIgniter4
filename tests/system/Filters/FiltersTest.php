@@ -17,6 +17,8 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use Config\Filters as FiltersConfig;
+use LogicException;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';
@@ -54,11 +56,35 @@ final class FiltersTest extends CIUnitTestCase
         $this->response = Services::response();
     }
 
-    private function createFilters($config, $request = null): Filters
+    private function createFilters(FiltersConfig $config, $request = null): Filters
     {
         $request = $request ?? Services::request();
 
         return new Filters($config, $request, $this->response);
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $classname
+     *
+     * @return T
+     */
+    private function createConfigFromArray(string $classname, array $config)
+    {
+        $configObj = new $classname();
+
+        foreach ($config as $key => $value) {
+            if (property_exists($configObj, $key)) {
+                $configObj->{$key} = $value;
+            } else {
+                throw new LogicException(
+                    'No such property: ' . $classname . '::$' . $key
+                );
+            }
+        }
+
+        return $configObj;
     }
 
     public function testProcessMethodDetectsCLI()
@@ -71,12 +97,14 @@ final class FiltersTest extends CIUnitTestCase
 
         $config = [
             'aliases' => ['foo' => ''],
+            'globals' => [],
             'methods' => [
                 'cli' => ['foo'],
             ],
         ];
-        $filters = $this->createFilters(
-            (object) $config,
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters(
+            $filtersConfig,
             new CLIRequest(new MockAppConfig())
         );
 
@@ -93,11 +121,13 @@ final class FiltersTest extends CIUnitTestCase
 
         $config = [
             'aliases' => ['foo' => ''],
+            'globals' => [],
             'methods' => [
                 'get' => ['foo'],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $expected = [
             'before' => ['foo'],
@@ -115,12 +145,14 @@ final class FiltersTest extends CIUnitTestCase
                 'foo' => '',
                 'bar' => '',
             ],
+            'globals' => [],
             'methods' => [
                 'post' => ['foo'],
                 'get'  => ['bar'],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $expected = [
             'before' => ['bar'],
@@ -138,12 +170,14 @@ final class FiltersTest extends CIUnitTestCase
                 'foo' => '',
                 'bar' => '',
             ],
+            'globals' => [],
             'methods' => [
                 'post' => ['foo'],
                 'get'  => ['bar'],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $expected = [
             'before' => [],
@@ -172,7 +206,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $expected = [
             'before' => [
@@ -219,7 +254,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -241,6 +277,7 @@ final class FiltersTest extends CIUnitTestCase
                 'bar' => '',
                 'baz' => '',
             ],
+            'globals' => [],
             'filters' => [
                 'foo' => [
                     'before' => ['admin/*'],
@@ -248,7 +285,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -268,6 +306,7 @@ final class FiltersTest extends CIUnitTestCase
                 'bar' => '',
                 'baz' => '',
             ],
+            'globals' => [],
             'filters' => [
                 'foo' => [
                     'before' => ['admin/*'],
@@ -275,7 +314,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'users/foo/bar';
         $expected = [
@@ -320,7 +360,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -360,7 +401,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -385,7 +427,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $this->expectException(FilterException::class);
 
@@ -404,7 +447,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
@@ -423,7 +467,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $this->expectException(FilterException::class);
 
@@ -442,7 +487,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
@@ -461,7 +507,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => ['google'],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $response = $filters->run($uri, 'after');
@@ -480,7 +527,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $response = $filters->run($uri, 'before');
@@ -506,7 +554,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after' => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $response = $filters->run($uri, 'before');
@@ -534,7 +583,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -566,7 +616,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -599,7 +650,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -631,7 +683,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -657,7 +710,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->addFilter('Some\Class', 'some_alias');
         $filters = $filters->initialize('admin/foo/bar');
@@ -672,7 +726,8 @@ final class FiltersTest extends CIUnitTestCase
 
         $config        = [];
         $this->request = Services::request();
-        $filters       = new Filters((object) $config, $this->request, $this->response);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = new Filters($filtersConfig, $this->request, $this->response);
 
         $filters = $filters
             ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
@@ -686,8 +741,9 @@ final class FiltersTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $config  = [];
-        $filters = $this->createFilters((object) $config);
+        $config        = [];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters
             ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
@@ -709,7 +765,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilter('google', 'before');
@@ -729,7 +786,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilter('role:admin , super', 'before');
@@ -760,7 +818,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilter('role', 'before');
@@ -791,7 +850,8 @@ final class FiltersTest extends CIUnitTestCase
                 'after'  => [],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
         $filters->enableFilter('goggle', 'before');
@@ -828,7 +888,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/foo/bar';
         $expected = [
@@ -857,6 +918,7 @@ final class FiltersTest extends CIUnitTestCase
                 'bar'  => '',
                 'frak' => '',
             ],
+            'globals' => [],
             'filters' => [
                 'frak' => [
                     'before' => ['admin*'],
@@ -864,7 +926,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri    = 'admin';
         $actual = $filters->initialize($uri)->getFilters();
@@ -902,7 +965,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri    = 'admin';
         $actual = $filters->initialize($uri)->getFilters();
@@ -950,7 +1014,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin123';
         $expected = [
@@ -994,7 +1059,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri      = 'admin/123';
         $expected = [
@@ -1026,7 +1092,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
@@ -1050,7 +1117,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters->run('admin/foo/bar', 'before');
 
@@ -1072,13 +1140,15 @@ final class FiltersTest extends CIUnitTestCase
             'aliases' => [
                 'foo' => '',
             ],
+            'globals' => [],
             'filters' => [
                 'foo' => [
                     'before' => ['admin*'],
                 ],
             ],
         ];
-        $filters = $this->createFilters((object) $config);
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
 
         $uri = 'admin';
         $this->assertSame(['foo'], $filters->initialize($uri)->getFilters()['before']);
