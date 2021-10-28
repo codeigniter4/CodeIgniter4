@@ -176,29 +176,6 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionsHeadersUsingPopulate()
-    {
-        $_SERVER['HTTP_HOST']            = 'site1.com';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
-        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
-
-        $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ];
-
-        $request = $this->getRequest($options);
-        $request->get('example');
-        // we fill the Accept-Language header from _SERVER when no headers are defined for the request
-        $this->assertSame('en-US', $request->header('Accept-Language')->getValue());
-        // but we skip Host header - since it would corrupt the request
-        $this->assertNull($request->header('Host'));
-        // and Accept-Encoding
-        $this->assertNull($request->header('Accept-Encoding'));
-    }
-
-    /**
-     * @backupGlobals enabled
-     */
     public function testOptionsHeadersNotUsingPopulate()
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';

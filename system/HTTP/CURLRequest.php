@@ -368,56 +368,23 @@ class CURLRequest extends Request
     }
 
     /**
-     * Takes all headers current part of this request and adds them
-     * to the cURL request.
+     * Adds $this->headers to the cURL request.
      */
     protected function applyRequestHeaders(array $curlOptions = []): array
     {
         if (empty($this->headers)) {
-            $this->populateHeaders();
-            // Otherwise, it will corrupt the request
-            $this->removeHeader('Host');
-            $this->removeHeader('Accept-Encoding');
-        }
-
-        $headers = $this->headers();
-
-        if (empty($headers)) {
             return $curlOptions;
         }
 
         $set = [];
 
-        foreach (array_keys($headers) as $name) {
+        foreach (array_keys($this->headers) as $name) {
             $set[] = $name . ': ' . $this->getHeaderLine($name);
         }
 
         $curlOptions[CURLOPT_HTTPHEADER] = $set;
 
         return $curlOptions;
-    }
-
-    /**
-     * Override
-     */
-    public function populateHeaders(): void
-    {
-        foreach (array_keys($_SERVER) as $key) {
-            if (sscanf($key, 'HTTP_%s', $header) === 1) {
-                // take SOME_HEADER and turn it into Some-Header
-                $header = str_replace('_', ' ', strtolower($header));
-                $header = str_replace(' ', '-', ucwords($header));
-
-                if (in_array($header, $this->unsharedHeaders, true)) {
-                    continue;
-                }
-
-                $this->setHeader($header, $_SERVER[$key]);
-
-                // Add us to the header map so we can find them case-insensitively
-                $this->headerMap[strtolower($header)] = $header;
-            }
-        }
     }
 
     /**
