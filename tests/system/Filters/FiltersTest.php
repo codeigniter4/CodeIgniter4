@@ -725,9 +725,8 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config        = [];
-        $this->request = Services::request();
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = new Filters($filtersConfig, $this->request, $this->response);
+        $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters
             ->addFilter('Some\OtherClass', 'another', 'before', 'globals')
