@@ -64,7 +64,7 @@ final class ServicesTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         $_SERVER = $this->original;
-        Services::reset();
+        $this->resetServices();
     }
 
     public function testCanReplaceFrameworkServices()

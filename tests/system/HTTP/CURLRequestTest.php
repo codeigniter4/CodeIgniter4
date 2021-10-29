@@ -32,7 +32,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
         $this->request = $this->getRequest();
     }
 

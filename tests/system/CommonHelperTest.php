@@ -32,7 +32,7 @@ final class CommonHelperTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        Services::reset();
+        $this->resetServices();
         parent::setUp();
         $this->cleanUpDummyHelpers();
     }
@@ -41,7 +41,7 @@ final class CommonHelperTest extends CIUnitTestCase
     {
         parent::tearDown();
         $this->cleanUpDummyHelpers();
-        Services::reset();
+        $this->resetServices();
     }
 
     private function createDummyHelpers(): void

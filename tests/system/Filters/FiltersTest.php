@@ -40,7 +40,7 @@ final class FiltersTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Services::reset();
+        $this->resetServices();
 
         $defaults = [
             'Config'        => APPPATH . 'Config',
