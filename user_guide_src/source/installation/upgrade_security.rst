@@ -13,15 +13,15 @@ Documentations
 - :doc:`Security Documentation Codeigniter 4.X </libraries/security>`
 
 .. note::
-    If you use the `form helper </user_guide/helpers/form_helper.html>`_, then form_open() will automatically insert a hidden csrf field in your forms. So you do not have to upgrade this by yourself.
+    If you use the `form helper </user_guide/helpers/form_helper.html>`_, then form_open() will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.
 
 What has been changed
 =====================
-- The method to implement csrf tokens to html forms has been changed.
+- The method to implement CSRF tokens to html forms has been changed.
 
 Upgrade Guide
 =============
-1. To enable csrf protection in CI4 you have to enable it in ``app/Config/Filters.php``::
+1. To enable CSRF protection in CI4 you have to enable it in ``app/Config/Filters.php``::
 
     public $globals = [
         'before' => [
