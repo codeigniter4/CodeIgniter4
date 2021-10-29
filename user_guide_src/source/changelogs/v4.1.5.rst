@@ -13,7 +13,7 @@ BREAKING
 ========
 
 - Fixed `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/2913>`_ on CSRF protection. Now CSRF protection works on PUT/PATCH/DELETE requests when CSRF filter is applied. If you use such requests, you need to send CSRF token.
-- In the previous version, ``CURLRequest`` sends request headers from the browser, because of a bug. Since this version it does not send them.
+- In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the browser, due to a bug. As of this version, it does not send them.
 
 Enhancements
 ============
