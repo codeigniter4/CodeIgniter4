@@ -116,11 +116,6 @@ class CURLRequest extends Request
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
-        // Reset unshared headers
-        foreach ($this->unsharedHeaders as $header) {
-            $this->removeHeader($header);
-        }
-
         $this->parseOptions($options);
 
         $url = $this->prepareURL($url);
@@ -129,6 +124,10 @@ class CURLRequest extends Request
 
         $this->send($method, $url);
 
+        // Reset unshared headers
+        foreach ($this->unsharedHeaders as $header) {
+            $this->removeHeader($header);
+        }
         // Reset unshared configs
         unset($this->config['multipart'], $this->config['form_params']);
 

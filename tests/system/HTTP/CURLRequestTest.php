@@ -912,7 +912,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->request->setJSON($params)->post('/post');
 
         $this->assertSame(json_encode($params), $this->request->getBody());
-        $this->assertSame('application/json', $this->request->getHeaderLine('Content-Type'));
+        $this->assertSame(
+            'Content-Type: application/json',
+            $this->request->curl_options[CURLOPT_HTTPHEADER][0]
+        );
     }
 
     public function testHTTPv1()
