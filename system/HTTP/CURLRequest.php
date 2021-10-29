@@ -42,7 +42,14 @@ class CURLRequest extends Request
      *
      * @var array
      */
-    protected $config = [
+    protected $config;
+
+    /**
+     * The default setting values
+     *
+     * @var array
+     */
+    private $defaultConfig = [
         'timeout'         => 0.0,
         'connect_timeout' => 150,
         'debug'           => false,
@@ -80,6 +87,13 @@ class CURLRequest extends Request
     private $defaultOptions;
 
     /**
+     * Whether share options between requests or not.
+     *
+     * @var bool
+     */
+    private $shareOptions;
+
+    /**
      * Takes an array of options to set the following possible class properties:
      *
      *  - baseURI
@@ -102,6 +116,8 @@ class CURLRequest extends Request
         $this->response       = $response;
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
+        $this->config         = $this->defaultConfig;
+        $this->shareOptions   = $config->CURLRequestShareOptions ?? true;
 
         $this->parseOptions($options);
     }
@@ -122,15 +138,24 @@ class CURLRequest extends Request
 
         $this->send($method, $url);
 
+        if ($this->shareOptions === false) {
+            $this->resetOptions();
+        }
+
+        return $this->response;
+    }
+
+    private function resetOptions()
+    {
         // Reset headers
         $this->headers   = [];
         $this->headerMap = [];
-        // Reset unshared configs
-        unset($this->config['multipart'], $this->config['form_params']);
+
+        // Reset configs
+        $this->config = $this->defaultConfig;
+
         // Set the default options for next request
         $this->parseOptions($this->defaultOptions);
-
-        return $this->response;
     }
 
     /**

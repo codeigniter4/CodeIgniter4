@@ -36,11 +36,13 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->request = $this->getRequest();
     }
 
-    protected function getRequest(array $options = [])
+    protected function getRequest(array $options = [], $shareOptions = true)
     {
-        $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $uri                          = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $app                          = new App();
+        $app->CURLRequestShareOptions = $shareOptions;
 
-        return new MockCURLRequest(($app = new App()), $uri, new Response($app), $options);
+        return new MockCURLRequest(($app), $uri, new Response($app), $options);
     }
 
     /**
@@ -197,12 +199,12 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
-    public function testHeaderContentLengthNotSharedBetweenRequests()
+    public function testHeaderContentLengthNotSharedBetweenRequestsWhenSharedOptionsFalse()
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
         ];
-        $request = $this->getRequest($options);
+        $request = $this->getRequest($options, false);
 
         $request->post('example', [
             'form_params' => [
