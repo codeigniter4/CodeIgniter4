@@ -225,7 +225,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
         ];
-        $request = $this->getRequest($options, false);
+        $request = $this->getRequest($options);
 
         $request->post('example', [
             'form_params' => [
