@@ -30,15 +30,16 @@ $modified = [];
 $file = __DIR__ . DIRECTORY_SEPARATOR . 'composer.json';
 
 if (is_file($file)) {
-    if ($contents = file_get_contents($file)) {
-        if ($array = json_decode($contents, true)) {
+    $contents = file_get_contents($file);
+
+    if ((string) $contents !== '') {
+        $array = json_decode($contents, true);
+
+        if (is_array($array)) {
             if ($dev) {
                 $array['minimum-stability'] = 'dev';
                 $array['prefer-stable']     = true;
-
-                if (! isset($array['repositories'])) {
-                    $array['repositories'] = [];
-                }
+                $array['repositories']      = $array['repositories'] ?? [];
 
                 $found = false;
 
@@ -111,8 +112,8 @@ foreach ($files as $file) {
     }
 }
 
-if (empty($modified)) {
-    echo 'No files modified' . PHP_EOL;
+if ($modified !== []) {
+    echo 'No files modified.' . PHP_EOL;
 } else {
     echo 'The following files were modified:' . PHP_EOL;
 
