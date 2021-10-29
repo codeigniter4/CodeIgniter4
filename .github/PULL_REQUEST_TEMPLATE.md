@@ -10,7 +10,7 @@ Explain what you have changed, and why.
 - [ ] User guide updated
 - [ ] Conforms to style guide
 
----------Remove from here down in your description----------
+<!--
 
 **Notes**
 - Pull requests must be in English
@@ -19,3 +19,5 @@ Explain what you have changed, and why.
 - Unsolicited pull requests will be considered, but there is no guarantee of acceptance
 - Pull requests should be from a feature branch in the contributor's fork of the repository
   to the develop branch of the project repository
+
+-->
