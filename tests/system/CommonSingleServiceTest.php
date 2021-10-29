@@ -11,6 +11,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
@@ -42,6 +43,17 @@ final class CommonSingleServiceTest extends CIUnitTestCase
      */
     public function testSingleServiceWithAtLeastOneParamSupplied(string $service): void
     {
+        if ($service === 'commands') {
+            $locator = $this->getMockBuilder(FileLocator::class)
+                ->setConstructorArgs([Services::autoloader()])
+                ->onlyMethods(['listFiles'])
+                ->getMock();
+
+            // `Commands::discoverCommand()` is an expensive operation
+            $locator->method('listFiles')->with('Commands/')->willReturn([]);
+            Services::injectMock('locator', $locator);
+        }
+
         $params = [];
         $method = new ReflectionMethod(Services::class, $service);
 
@@ -52,6 +64,10 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         $this->assertSame(get_class($service1), get_class($service2));
         $this->assertNotSame($service1, $service2);
+
+        if ($service === 'commands') {
+            $this->resetServices();
+        }
     }
 
     public function testSingleServiceWithAllParamsSupplied(): void
@@ -76,25 +92,33 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
     public static function serviceNamesProvider(): iterable
     {
-        $methods = (new ReflectionClass(Services::class))->getMethods(ReflectionMethod::IS_PUBLIC);
+        static $services = [];
+        static $excl     = [
+            '__callStatic',
+            'serviceExists',
+            'reset',
+            'resetSingle',
+            'injectMock',
+            'encrypter', // Encrypter needs a starter key
+            'session', // Headers already sent
+        ];
 
-        foreach ($methods as $method) {
-            $name = $method->getName();
-            $excl = [
-                '__callStatic',
-                'serviceExists',
-                'reset',
-                'resetSingle',
-                'injectMock',
-                'encrypter', // Encrypter needs a starter key
-                'session', // Headers already sent
-            ];
+        if ($services === []) {
+            $methods = (new ReflectionClass(Services::class))->getMethods(ReflectionMethod::IS_PUBLIC);
 
-            if (in_array($name, $excl, true)) {
-                continue;
+            foreach ($methods as $method) {
+                $name = $method->getName();
+
+                if (in_array($name, $excl, true)) {
+                    continue;
+                }
+
+                $services[$name] = [$name];
             }
 
-            yield $name => [$name];
+            ksort($services);
         }
+
+        yield from $services;
     }
 }
