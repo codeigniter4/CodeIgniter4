@@ -199,6 +199,27 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
+    public function testOptionsAreSharedBetweenRequests()
+    {
+        $options = [
+            'form_params' => ['studio' => 1],
+            'user_agent'  => 'CodeIgniter Framework v4',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->request('POST', 'https://realestate1.example.com');
+
+        $this->assertSame('https://realestate1.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+
+        $request->request('POST', 'https://realestate2.example.com');
+
+        $this->assertSame('https://realestate2.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+    }
+
     /**
      * @backupGlobals enabled
      */
