@@ -112,7 +112,7 @@ foreach ($files as $file) {
     }
 }
 
-if ($modified !== []) {
+if ($modified === []) {
     echo 'No files modified.' . PHP_EOL;
 } else {
     echo 'The following files were modified:' . PHP_EOL;
