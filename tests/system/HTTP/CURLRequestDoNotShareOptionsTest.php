@@ -21,7 +21,7 @@ use CURLFile;
 /**
  * @internal
  */
-final class CURLRequestTest extends CIUnitTestCase
+final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
     /**
      * @var MockCURLRequest
@@ -40,7 +40,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         $uri                          = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
         $app                          = new App();
-        $app->CURLRequestShareOptions = true;
+        $app->CURLRequestShareOptions = false;
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
     }
@@ -197,6 +197,23 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertNull($request->header('Accept-Language'));
         $this->assertSame('www.foo.com', $request->header('Host')->getValue());
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
+    }
+
+    public function testHeaderContentLengthNotSharedBetweenRequests()
+    {
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options, false);
+
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
     }
 
     /**
