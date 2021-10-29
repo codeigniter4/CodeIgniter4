@@ -77,7 +77,7 @@ class CURLRequest extends Request
      *
      * @var string[]
      */
-    private $unsharedHeaders = [
+    protected $unsharedHeaders = [
         'Content-Length',
         'Content-Type',
     ];
