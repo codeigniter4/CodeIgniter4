@@ -73,14 +73,11 @@ class CURLRequest extends Request
     protected $delay = 0.0;
 
     /**
-     * Request headers that are not shared between requests.
+     * Default options. Applied to all requests.
      *
-     * @var string[]
+     * @var array
      */
-    protected $unsharedHeaders = [
-        'Content-Length',
-        'Content-Type',
-    ];
+    private $defaultOptions;
 
     /**
      * Takes an array of options to set the following possible class properties:
@@ -102,8 +99,9 @@ class CURLRequest extends Request
 
         parent::__construct($config);
 
-        $this->response = $response;
-        $this->baseURI  = $uri->useRawQueryString();
+        $this->response       = $response;
+        $this->baseURI        = $uri->useRawQueryString();
+        $this->defaultOptions = $options;
 
         $this->parseOptions($options);
     }
@@ -124,12 +122,13 @@ class CURLRequest extends Request
 
         $this->send($method, $url);
 
-        // Reset unshared headers
-        foreach ($this->unsharedHeaders as $header) {
-            $this->removeHeader($header);
-        }
+        // Reset headers
+        $this->headers   = [];
+        $this->headerMap = [];
         // Reset unshared configs
         unset($this->config['multipart'], $this->config['form_params']);
+        // Set the default options for next request
+        $this->parseOptions($this->defaultOptions);
 
         return $this->response;
     }
