@@ -54,7 +54,7 @@ final class ResourceControllerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
