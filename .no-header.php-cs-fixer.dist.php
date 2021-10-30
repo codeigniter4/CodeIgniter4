@@ -25,7 +25,10 @@ $finder = Finder::create()
         __DIR__ . '/app',
         __DIR__ . '/public',
     ])
-    ->notName('#Logger\.php$#');
+    ->notName('#Logger\.php$#')
+    ->append([
+        __DIR__ . '/admin/starter/builds',
+    ]);
 
 $overrides = [];
 
