@@ -81,7 +81,7 @@ class CURLRequest extends Request
     protected $delay = 0.0;
 
     /**
-     * Default options. Applied to all requests.
+     * The default options from the constructor. Applied to all requests.
      *
      * @var array
      */
@@ -89,6 +89,9 @@ class CURLRequest extends Request
 
     /**
      * Whether share options between requests or not.
+     *
+     * If true, all the options won't be reset between requests.
+     * It may cause an error request with unnecessary headers.
      *
      * @var bool
      */
@@ -149,6 +152,9 @@ class CURLRequest extends Request
         return $this->response;
     }
 
+    /**
+     * Reset all options to default.
+     */
     protected function resetOptions()
     {
         // Reset headers
