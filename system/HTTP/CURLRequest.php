@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Config\CURLRequest as ConfigCURLRequest;
 use InvalidArgumentException;
 
 /**
@@ -116,9 +117,12 @@ class CURLRequest extends Request
         $this->response       = $response;
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
-        $this->config         = $this->defaultConfig;
-        $this->shareOptions   = $config->CURLRequestShareOptions ?? true;
 
+        /** @var ConfigCURLRequest|null $configCURLRequest */
+        $configCURLRequest  = config('CURLRequest');
+        $this->shareOptions = $configCURLRequest->shareOptions ?? true;
+
+        $this->config = $this->defaultConfig;
         $this->parseOptions($options);
     }
 

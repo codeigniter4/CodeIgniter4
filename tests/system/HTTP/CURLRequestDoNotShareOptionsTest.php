@@ -11,11 +11,13 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
 
 /**
@@ -38,9 +40,12 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
     protected function getRequest(array $options = [])
     {
-        $uri                          = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
-        $app                          = new App();
-        $app->CURLRequestShareOptions = false;
+        $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $app = new App();
+
+        $config               = new ConfigCURLRequest();
+        $config->shareOptions = false;
+        Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
     }

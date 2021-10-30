@@ -461,15 +461,4 @@ class App extends BaseConfig
      * @var bool
      */
     public $CSPEnabled = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * CURLRequest Share Options
-     * --------------------------------------------------------------------------
-     *
-     * Whether share options between requests or not.
-     *
-     * @var bool
-     */
-    public $CURLRequestShareOptions = true;
 }
