@@ -111,6 +111,22 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereAssociateArrayKeyHasEqualValueIsNull()
+    {
+        $builder = $this->db->table('users');
+
+        $where = [
+            'deleted_at =' => null,
+        ];
+
+        $expectedSQL   = 'SELECT * FROM "users" WHERE "deleted_at" IS NULL';
+        $expectedBinds = [];
+
+        $builder->where($where);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testWhereCustomString()
     {
         $builder = $this->db->table('jobs');
