@@ -50,7 +50,7 @@ class CURLRequest extends Request
      *
      * @var array
      */
-    private $defaultConfig = [
+    protected $defaultConfig = [
         'timeout'         => 0.0,
         'connect_timeout' => 150,
         'debug'           => false,
@@ -149,7 +149,7 @@ class CURLRequest extends Request
         return $this->response;
     }
 
-    private function resetOptions()
+    protected function resetOptions()
     {
         // Reset headers
         $this->headers   = [];
