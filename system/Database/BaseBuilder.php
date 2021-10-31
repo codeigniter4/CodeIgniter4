@@ -2529,8 +2529,8 @@ class BaseBuilder
             return true;
         }
 
-        if (empty($this->isLiteralStr)) {
-            $this->isLiteralStr = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
+        if ($this->isLiteralStr === []) {
+            $this->isLiteralStr = $this->db->escapeChar !== '"' ? ['"', "'"] : ["'"];
         }
 
         return in_array($str[0], $this->isLiteralStr, true);
@@ -2612,10 +2612,10 @@ class BaseBuilder
      */
     protected function hasOperator(string $str): bool
     {
-        return (bool) preg_match(
+        return preg_match(
             '/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i',
             trim($str)
-        );
+        ) === 1;
     }
 
     /**
@@ -2625,8 +2625,8 @@ class BaseBuilder
      */
     protected function getOperator(string $str, bool $list = false)
     {
-        if (empty($this->pregOperators)) {
-            $_les = ($this->db->likeEscapeStr !== '')
+        if ($this->pregOperators === []) {
+            $_les = $this->db->likeEscapeStr !== ''
                 ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/')
                 : '';
             $this->pregOperators = [
