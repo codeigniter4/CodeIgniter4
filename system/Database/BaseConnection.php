@@ -239,6 +239,13 @@ abstract class BaseConnection implements ConnectionInterface
     public $likeEscapeChar = '!';
 
     /**
+     * RegExp used to escape identifiers
+     *
+     * @var array
+     */
+    protected $pregEscapeChar = [];
+
+    /**
      * Holds previously looked up data
      * for performance reasons.
      *
@@ -1119,29 +1126,27 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
-        static $pregEc = [];
-
-        if (empty($pregEc)) {
+        if (empty($this->pregEscapeChar)) {
             if (is_array($this->escapeChar)) {
-                $pregEc = [
+                $this->pregEscapeChar = [
                     preg_quote($this->escapeChar[0], '/'),
                     preg_quote($this->escapeChar[1], '/'),
                     $this->escapeChar[0],
                     $this->escapeChar[1],
                 ];
             } else {
-                $pregEc[0] = $pregEc[1] = preg_quote($this->escapeChar, '/');
-                $pregEc[2] = $pregEc[3] = $this->escapeChar;
+                $this->pregEscapeChar[0] = $this->pregEscapeChar[1] = preg_quote($this->escapeChar, '/');
+                $this->pregEscapeChar[2] = $this->pregEscapeChar[3] = $this->escapeChar;
             }
         }
 
         foreach ($this->reservedIdentifiers as $id) {
             if (strpos($item, '.' . $id) !== false) {
-                return preg_replace('/' . $pregEc[0] . '?([^' . $pregEc[1] . '\.]+)' . $pregEc[1] . '?\./i', $pregEc[2] . '$1' . $pregEc[3] . '.', $item);
+                return preg_replace('/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i', $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '.', $item);
             }
         }
 
-        return preg_replace('/' . $pregEc[0] . '?([^' . $pregEc[1] . '\.]+)' . $pregEc[1] . '?(\.)?/i', $pregEc[2] . '$1' . $pregEc[3] . '$2', $item);
+        return preg_replace('/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i', $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2', $item);
     }
 
     /**
