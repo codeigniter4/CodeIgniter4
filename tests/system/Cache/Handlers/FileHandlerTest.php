@@ -20,6 +20,7 @@ use Config\Cache;
 final class FileHandlerTest extends AbstractHandlerTest
 {
     private static $directory = 'FileHandler';
+    private $config;
 
     private static function getKeyArray()
     {
@@ -29,8 +30,6 @@ final class FileHandlerTest extends AbstractHandlerTest
             self::$key3,
         ];
     }
-
-    private $config;
 
     protected function setUp(): void
     {

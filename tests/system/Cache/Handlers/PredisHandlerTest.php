@@ -21,6 +21,8 @@ use Config\Cache;
  */
 final class PredisHandlerTest extends AbstractHandlerTest
 {
+    private $config;
+
     private static function getKeyArray()
     {
         return [
@@ -29,8 +31,6 @@ final class PredisHandlerTest extends AbstractHandlerTest
             self::$key3,
         ];
     }
-
-    private $config;
 
     protected function setUp(): void
     {

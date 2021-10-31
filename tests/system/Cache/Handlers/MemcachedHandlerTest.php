@@ -22,6 +22,8 @@ use Exception;
  */
 final class MemcachedHandlerTest extends AbstractHandlerTest
 {
+    private $config;
+
     private static function getKeyArray()
     {
         return [
@@ -30,8 +32,6 @@ final class MemcachedHandlerTest extends AbstractHandlerTest
             self::$key3,
         ];
     }
-
-    private $config;
 
     protected function setUp(): void
     {
