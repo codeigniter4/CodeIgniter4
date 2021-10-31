@@ -2612,7 +2612,10 @@ class BaseBuilder
      */
     protected function hasOperator(string $str): bool
     {
-        return (bool) preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', trim($str));
+        return (bool) preg_match(
+            '/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i',
+            trim($str)
+        );
     }
 
     /**
@@ -2623,7 +2626,9 @@ class BaseBuilder
     protected function getOperator(string $str, bool $list = false)
     {
         if (empty($this->pregOperators)) {
-            $_les       = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
+            $_les = ($this->db->likeEscapeStr !== '')
+                ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/')
+                : '';
             $this->pregOperators = [
                 '\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
                 '\s*<>?\s*', // <, <>
@@ -2640,7 +2645,11 @@ class BaseBuilder
             ];
         }
 
-        return preg_match_all('/' . implode('|', $this->pregOperators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
+        return preg_match_all(
+            '/' . implode('|', $this->pregOperators) . '/i',
+            $str,
+            $match
+        ) ? ($list ? $match[0] : $match[0][0]) : false;
     }
 
     /**
