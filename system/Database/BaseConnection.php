@@ -1142,11 +1142,19 @@ abstract class BaseConnection implements ConnectionInterface
 
         foreach ($this->reservedIdentifiers as $id) {
             if (strpos($item, '.' . $id) !== false) {
-                return preg_replace('/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i', $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '.', $item);
+                return preg_replace(
+                    '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
+                    $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '.',
+                    $item
+                );
             }
         }
 
-        return preg_replace('/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i', $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2', $item);
+        return preg_replace(
+            '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i',
+            $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2',
+            $item
+        );
     }
 
     /**
