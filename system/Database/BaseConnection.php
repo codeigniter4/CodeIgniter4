@@ -1126,7 +1126,7 @@ abstract class BaseConnection implements ConnectionInterface
             return $item;
         }
 
-        if (empty($this->pregEscapeChar)) {
+        if ($this->pregEscapeChar === []) {
             if (is_array($this->escapeChar)) {
                 $this->pregEscapeChar = [
                     preg_quote($this->escapeChar[0], '/'),
