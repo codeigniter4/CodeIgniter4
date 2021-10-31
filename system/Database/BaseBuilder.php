@@ -245,6 +245,20 @@ class BaseBuilder
     ];
 
     /**
+     * Strings that determine if a string represents a literal value or a field name
+     *
+     * @var string[]
+     */
+    protected $isLiteralStr = [];
+
+    /**
+     * RegExp used to get operators
+     *
+     * @var string[]
+     */
+    protected $pregOperators = [];
+
+    /**
      * Constructor
      *
      * @param array|string $tableName
@@ -2515,13 +2529,11 @@ class BaseBuilder
             return true;
         }
 
-        static $_str;
-
-        if (empty($_str)) {
-            $_str = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
+        if (empty($this->isLiteralStr)) {
+            $this->isLiteralStr = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
         }
 
-        return in_array($str[0], $_str, true);
+        return in_array($str[0], $this->isLiteralStr, true);
     }
 
     /**
@@ -2610,11 +2622,9 @@ class BaseBuilder
      */
     protected function getOperator(string $str, bool $list = false)
     {
-        static $_operators;
-
-        if (empty($_operators)) {
+        if (empty($this->pregOperators)) {
             $_les       = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
-            $_operators = [
+            $this->pregOperators = [
                 '\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
                 '\s*<>?\s*', // <, <>
                 '\s*>\s*', // >
@@ -2630,7 +2640,7 @@ class BaseBuilder
             ];
         }
 
-        return preg_match_all('/' . implode('|', $_operators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
+        return preg_match_all('/' . implode('|', $this->pregOperators) . '/i', $str, $match) ? ($list ? $match[0] : $match[0][0]) : false;
     }
 
     /**
