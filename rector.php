@@ -117,8 +117,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
 
     $services = $containerConfigurator->services();
-    $services->load('Symplify\\PackageBuilder\\', __DIR__ . '/vendor/symplify/package-builder/src');
-
     $services->set(UnderscoreToCamelCaseVariableNameRector::class);
     $services->set(SimplifyUselessVariableRector::class);
     $services->set(RemoveAlwaysElseRector::class);
