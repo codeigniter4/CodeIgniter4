@@ -181,7 +181,6 @@ class Table
             $new[] = $temp;
         } while (count($array) > 0);
 
-        // @phpstan-ignore-next-line
         return $new;
     }
 
