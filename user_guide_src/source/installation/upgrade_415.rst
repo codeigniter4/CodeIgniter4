@@ -66,7 +66,7 @@ Query Builder changes
 
 For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.
 
-- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` changed.
+- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` has changed. It no longer returns the query with the binded parameters, but the actual query that was run.
 - If ``testMode`` is ``true``, ``insertBatch()`` will return an SQL string array instead of the number of affected rows that were wrong.
 
 Breaking Enhancements
