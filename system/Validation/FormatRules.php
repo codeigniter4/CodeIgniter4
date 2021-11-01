@@ -305,19 +305,15 @@ class FormatRules
             return false;
         }
 
-        if ($validSchemes === null) {
-            $validSchemes = 'http,https,mailto,tel,sms';
-        }
+        $scheme       = strtolower(parse_url($str, PHP_URL_SCHEME));
+        $validSchemes = explode(
+            ',',
+            strtolower($validSchemes ?? 'http,https,mailto,tel,sms')
+        );
 
-        $scheme           = strtolower(parse_url($str, PHP_URL_SCHEME));
-        $validSchemes     = strtolower($validSchemes);
-        $validSchemeArray = explode(',', $validSchemes);
-
-        if (! in_array(($scheme), $validSchemeArray, true)) {
-            return false;
-        }
-
-        return filter_var($str, FILTER_VALIDATE_URL) !== false;
+        return ! in_array($scheme, $validSchemes, true)
+            ? false
+            : filter_var($str, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
