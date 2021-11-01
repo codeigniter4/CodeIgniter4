@@ -165,6 +165,8 @@ class ContentSecurityPolicy
     protected $validSources = [
         'self',
         'none',
+        'unsafe-hashes',
+        'strict-dynamic',
         'unsafe-inline',
         'unsafe-eval',
     ];
@@ -589,6 +591,9 @@ class ContentSecurityPolicy
         }
 
         // Replace style placeholders with nonces
+        // Skip nonces if unsafe-inline is declared!
+        $ignore_nonce = is_array($this->styleSrc) && (array_key_exists('unsafe-inline', $this->styleSrc));
+        
         $body = preg_replace_callback('/{csp-style-nonce}/', function () {
             $nonce = bin2hex(random_bytes(12));
 
@@ -598,6 +603,9 @@ class ContentSecurityPolicy
         }, $body);
 
         // Replace script placeholders with nonces
+        
+        $ignore_nonce = is_array($this->scriptSrc) && (array_key_exists('unsafe-inline', $this->scriptSrc));
+        
         $body = preg_replace_callback('/{csp-script-nonce}/', function () {
             $nonce = bin2hex(random_bytes(12));
 
