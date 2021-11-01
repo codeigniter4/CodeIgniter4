@@ -18,7 +18,7 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- system/Test/bootstrap.php
-	excludes_analyse:
+	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
