@@ -104,7 +104,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
         $underscorePosition = strpos($nodeName, '_');
         // underscore not found, or in the first char, skip
-        if ($underscorePosition === false || $underscorePosition === 0) {
+        if ((int) $underscorePosition === 0) {
             return null;
         }
 
