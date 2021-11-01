@@ -23,7 +23,7 @@ use CURLFile;
 /**
  * @internal
  */
-final class CURLRequestTest extends CIUnitTestCase
+final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
     /**
      * @var MockCURLRequest
@@ -34,7 +34,7 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetServices();
+        Services::reset();
         $this->request = $this->getRequest();
     }
 
@@ -44,7 +44,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $app = new App();
 
         $config               = new ConfigCURLRequest();
-        $config->shareOptions = true;
+        $config->shareOptions = false;
         Factories::injectMock('config', 'CURLRequest', $config);
 
         return new MockCURLRequest(($app), $uri, new Response($app), $options);
@@ -204,7 +204,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
-    public function testOptionsAreSharedBetweenRequests()
+    public function testDefaultOptionsAreSharedBetweenRequests()
     {
         $options = [
             'form_params' => ['studio' => 1],
@@ -223,6 +223,23 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('https://realestate2.example.com', $request->curl_options[CURLOPT_URL]);
         $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
         $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+    }
+
+    public function testHeaderContentLengthNotSharedBetweenRequests()
+    {
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
     }
 
     /**

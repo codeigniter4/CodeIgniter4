@@ -19,6 +19,21 @@ to change very little to move over to use Guzzle.
     in your version of PHP. This is a very common library that is typically available but not all hosts
     will provide it, so please check with your host to verify if you run into problems.
 
+**********************
+Config for CURLRequest
+**********************
+
+Sharing Options
+===============
+
+Due to historical reasons, by default, the CURLRequest shares all the options between requests.
+If you send more than one request with an instance of the class,
+this behavior may cause an error request with unnecessary headers.
+
+You can change the behavior by editing the following config parameter value in **app/Config/CURLRequest.php** to ``false``::
+
+    public $shareOptions = false;
+
 *******************
 Loading the Library
 *******************
@@ -38,9 +53,11 @@ The options are described later in this document::
     ];
     $client = \Config\Services::curlrequest($options);
 
+.. note:: When ``$shareOptions`` is false, the default options passed to the class constructor will be used for all requests. Other options will be reset after sending a request.
+
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
 instance of the ``Config\App`` class. The second parameter is a URI instance. The third
-parameter is a Response object. The fourth parameter is the optional ``$options`` array::
+parameter is a Response object. The fourth parameter is the optional default ``$options`` array::
 
     $client = new \CodeIgniter\HTTP\CURLRequest(
         new \Config\App(),
@@ -69,6 +86,8 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
     $response = $client->request('GET', 'https://api.github.com/user', [
         'auth' => ['user', 'pass'],
     ]);
+
+.. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.
 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
 available to you::

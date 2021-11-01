@@ -53,6 +53,14 @@ If you want the same behavior as the previous version, set the CSRF filter like 
 
 Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
 
+CURLRequest header change
+-------------------------
+
+In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the browser.
+The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading.
+In this case, add the necessary headers manually.
+See `CURLRequest Class <../libraries/curlrequest.html#headers>`_ for how to add.
+
 Breaking Enhancements
 =====================
 
