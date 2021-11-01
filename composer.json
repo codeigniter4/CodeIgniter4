@@ -19,7 +19,6 @@
         "fakerphp/faker": "^1.9",
         "friendsofphp/php-cs-fixer": "^3.1",
         "mikey179/vfsstream": "^1.6",
-        "nette/utils": "^3.2",
         "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
         "phpstan/phpstan": "^1.0",
