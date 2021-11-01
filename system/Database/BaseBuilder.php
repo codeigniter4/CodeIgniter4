@@ -1983,7 +1983,7 @@ class BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        $hasQBSet = ($set === null);
+        $hasQBSet = $set === null;
 
         $table = $this->QBFrom[0];
 
