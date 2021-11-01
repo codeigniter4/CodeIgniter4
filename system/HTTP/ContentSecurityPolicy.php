@@ -592,27 +592,31 @@ class ContentSecurityPolicy
 
         // Replace style placeholders with nonces
         // Skip nonces if unsafe-inline is declared!
-        $ignore_nonce = is_array($this->styleSrc) && (array_key_exists('unsafe-inline', $this->styleSrc));
+        $ignore_nonce = is_array($this->styleSrc) && array_key_exists('unsafe-inline', $this->styleSrc);
         
-        $body = preg_replace_callback('/{csp-style-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
+        if(!$ignore_nonce) {
+            $body = preg_replace_callback('/{csp-style-nonce}/', function () {
+                $nonce = bin2hex(random_bytes(12));
 
-            $this->styleSrc[] = 'nonce-' . $nonce;
+                $this->styleSrc[] = 'nonce-' . $nonce;
 
-            return "nonce=\"{$nonce}\"";
-        }, $body);
+                return "nonce=\"{$nonce}\"";
+            }, $body);
+        }
 
         // Replace script placeholders with nonces
         
-        $ignore_nonce = is_array($this->scriptSrc) && (array_key_exists('unsafe-inline', $this->scriptSrc));
+        $ignore_nonce = is_array($this->scriptSrc) && array_key_exists('unsafe-inline', $this->scriptSrc);
         
-        $body = preg_replace_callback('/{csp-script-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
+        if(!$ignore_nonce) {
+            $body = preg_replace_callback('/{csp-script-nonce}/', function () {
+                $nonce = bin2hex(random_bytes(12));
 
-            $this->scriptSrc[] = 'nonce-' . $nonce;
+                $this->scriptSrc[] = 'nonce-' . $nonce;
 
-            return "nonce=\"{$nonce}\"";
-        }, $body);
+                return "nonce=\"{$nonce}\"";
+            }, $body);
+        }
 
         $response->setBody($body);
     }
