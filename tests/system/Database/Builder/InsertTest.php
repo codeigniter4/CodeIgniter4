@@ -91,6 +91,11 @@ final class InsertTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(Query::class, $query);
 
+        $raw = <<<'SQL'
+            INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')
+            SQL;
+        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
+
         $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
