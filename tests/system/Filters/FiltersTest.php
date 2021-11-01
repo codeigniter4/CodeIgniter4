@@ -77,11 +77,13 @@ final class FiltersTest extends CIUnitTestCase
         foreach ($config as $key => $value) {
             if (property_exists($configObj, $key)) {
                 $configObj->{$key} = $value;
-            } else {
-                throw new LogicException(
-                    'No such property: ' . $classname . '::$' . $key
-                );
+
+                continue;
             }
+
+            throw new LogicException(
+                'No such property: ' . $classname . '::$' . $key
+            );
         }
 
         return $configObj;
