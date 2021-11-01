@@ -17,10 +17,7 @@ use Config\CURLRequest as ConfigCURLRequest;
 use InvalidArgumentException;
 
 /**
- * Class OutgoingRequest
- *
- * A lightweight HTTP client for sending synchronous HTTP requests
- * via cURL.
+ * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
  */
 class CURLRequest extends Request
 {
@@ -109,10 +106,7 @@ class CURLRequest extends Request
     public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {
         if (! function_exists('curl_version')) {
-            // we won't see this during travis-CI
-            // @codeCoverageIgnoreStart
-            throw HTTPException::forMissingCurl();
-            // @codeCoverageIgnoreEnd
+            throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
 
         parent::__construct($config);
@@ -141,7 +135,7 @@ class CURLRequest extends Request
 
         $url = $this->prepareURL($url);
 
-        $method = filter_var($method, FILTER_SANITIZE_STRING);
+        $method = esc(strip_tags($method));
 
         $this->send($method, $url);
 
