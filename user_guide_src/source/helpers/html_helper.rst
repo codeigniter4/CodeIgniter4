@@ -32,7 +32,7 @@ The following functions are available:
     :returns:   HTML image tag
     :rtype: string
 
-    Lets you create HTML <img /> tags. The first parameter contains the
+    Lets you create HTML ``<img />`` tags. The first parameter contains the
     image source. Example::
 
         echo img('images/picture.jpg');
@@ -99,7 +99,7 @@ The following functions are available:
     :returns:   HTML link tag
     :rtype: string
 
-    Lets you create HTML <link /> tags. This is useful for stylesheet links,
+    Lets you create HTML ``<link />`` tags. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
     *type*, *title*, *media* and *indexPage*.
 
@@ -139,7 +139,7 @@ The following functions are available:
     :returns:   HTML script tag
     :rtype: string
 
-    Lets you create HTML <script></script> tags. The parameters is *src*, with optional *indexPage*.
+    Lets you create HTML ``<script></script>`` tags. The parameters is *src*, with optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -284,8 +284,8 @@ The following functions are available:
     :returns:   HTML-formatted ordered list
     :rtype: string
 
-    Identical to :php:func:`ul()`, only it produces the <ol> tag for
-    ordered lists instead of <ul>.
+    Identical to :php:func:`ul()`, only it produces the ``<ol>`` tag for
+    ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
@@ -359,7 +359,7 @@ The following functions are available:
     :returns:                            HTML-formatted audio element
     :rtype: string
 
-    Identical to :php:func:`video()`, only it produces the <audio> tag instead of <video>.
+    Identical to :php:func:`video()`, only it produces the ``<audio>`` tag instead of ``<video>``.
 
 .. php:function:: source($src = ''[, $type = false[, $attributes = '']])
 
@@ -369,7 +369,7 @@ The following functions are available:
     :returns:   HTML source tag
     :rtype: string
 
-    Lets you create HTML <source /> tags. The first parameter contains the
+    Lets you create HTML ``<source />`` tags. The first parameter contains the
     source source. Example::
 
         echo source('movie.mp4', 'video/mp4', 'class="test"');
@@ -384,7 +384,7 @@ The following functions are available:
     :returns:   HTML embed tag
     :rtype: string
 
-    Lets you create HTML <embed /> tags. The first parameter contains the
+    Lets you create HTML ``<embed />`` tags. The first parameter contains the
     embed source. Example::
 
         echo embed('movie.mov', 'video/quicktime', 'class="test"');
@@ -399,7 +399,7 @@ The following functions are available:
     :returns:   HTML object tag
     :rtype: string
 
-    Lets you create HTML <object /> tags. The first parameter contains the
+    Lets you create HTML ``<object />`` tags. The first parameter contains the
     object data. Example::
 
         echo object('movie.swf', 'application/x-shockwave-flash', 'class="test"');
@@ -433,7 +433,7 @@ The following functions are available:
     :returns:   HTML param tag
     :rtype: string
 
-    Lets you create HTML <param /> tags. The first parameter contains the
+    Lets you create HTML ``<param />`` tags. The first parameter contains the
     param source. Example::
 
         echo param('movie.mov', 'video/quicktime', 'class="test"');
