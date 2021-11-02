@@ -15,6 +15,7 @@ use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -26,7 +27,7 @@ final class PreparedQueryTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    private $seed      = CITestSeeder::class;
 
     /**
      * @var BasePreparedQuery|null
