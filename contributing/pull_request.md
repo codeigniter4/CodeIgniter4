@@ -199,6 +199,10 @@ Rector, on the other hand, can be run on the specific files you modified or adde
 
 	vendor/bin/rector process --dry-run path/to/file
 
+If you run it without `--dry-run`, Rector will fix the code:
+
+	vendor/bin/rector process path/to/file
+
 [1]: https://github.com/phpstan/phpstan-src
 [2]: https://github.com/rector/rector
 
