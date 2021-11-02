@@ -1201,7 +1201,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         if (is_numeric($str) && $str < 0) {
-            return "'{$str}'";
+            return "{$str}";
         }
 
         return $str ?? 'NULL';

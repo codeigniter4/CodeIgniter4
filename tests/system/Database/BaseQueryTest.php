@@ -346,6 +346,24 @@ final class BaseQueryTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4973
+     */
+    public function testSetQueryBindsWithSetEscapeNegativeIntegers()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM product WHERE date_pickup < DateAdd(month, ?, Convert(date, GetDate())',
+            [-6],
+            true
+        );
+
+        $expected = 'SELECT * FROM product WHERE date_pickup < DateAdd(month, -6, Convert(date, GetDate())';
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2762
      */
     public function testSetQueryBinds()
