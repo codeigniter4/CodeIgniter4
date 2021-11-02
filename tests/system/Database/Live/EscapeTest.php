@@ -40,7 +40,7 @@ final class EscapeTest extends CIUnitTestCase
      */
     public function testEscapeProtectsNegativeNumbers()
     {
-        $this->assertSame('-100', $this->db->escape(-100));
+        $this->assertSame(-100, $this->db->escape(-100));
     }
 
     public function testEscape()
