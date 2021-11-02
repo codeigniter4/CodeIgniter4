@@ -565,7 +565,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param mixed ...$binds
      *
-     * @return BaseResult|bool|Query
+     * @return BaseResult|bool|Query BaseResult when “read” type query, bool when “write” type query, Query when prepared query
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -955,6 +955,8 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param array|string $item
+     * @param bool         $prefixSingle Prefix an item with no segments?
+     * @param bool         $fieldExists  Supplied $item contains a field name?
      *
      * @return array|string
      */
