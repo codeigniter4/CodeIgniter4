@@ -26,8 +26,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = true;
-    private $seed      = CITestSeeder::class;
+    protected $seed = CITestSeeder::class;
 
     /**
      * @var BasePreparedQuery|null
