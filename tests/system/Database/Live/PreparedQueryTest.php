@@ -28,16 +28,36 @@ final class PreparedQueryTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
+    /**
+     * @var BasePreparedQuery|null
+     */
+    private $query;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->query = null;
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        if ($this->query !== null) {
+            $this->query->close();
+        }
+    }
+
     public function testPrepareReturnsPreparedQuery()
     {
-        $query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db) {
             return $db->table('user')->insert([
                 'name'  => 'a',
                 'email' => 'b@example.com',
             ]);
         });
 
-        $this->assertInstanceOf(BasePreparedQuery::class, $query);
+        $this->assertInstanceOf(BasePreparedQuery::class, $this->query);
 
         $ec  = $this->db->escapeChar;
         $pre = $this->db->DBPrefix;
@@ -54,20 +74,19 @@ final class PreparedQueryTest extends CIUnitTestCase
         } else {
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
-        $this->assertSame($expected, $query->getQueryString());
 
-        $query->close();
+        $this->assertSame($expected, $this->query->getQueryString());
     }
 
     public function testPrepareReturnsManualPreparedQuery()
     {
-        $query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
             return (new Query($db))->setQuery($sql);
         });
 
-        $this->assertInstanceOf(BasePreparedQuery::class, $query);
+        $this->assertInstanceOf(BasePreparedQuery::class, $this->query);
 
         $pre = $this->db->DBPrefix;
 
@@ -78,14 +97,12 @@ final class PreparedQueryTest extends CIUnitTestCase
         }
 
         $expected = "INSERT INTO {$pre}user (name, email, country) VALUES ({$placeholders})";
-        $this->assertSame($expected, $query->getQueryString());
-
-        $query->close();
+        $this->assertSame($expected, $this->query->getQueryString());
     }
 
     public function testExecuteRunsQueryAndReturnsResultObject()
     {
-        $query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db) {
             return $db->table('user')->insert([
                 'name'    => 'a',
                 'email'   => 'b@example.com',
@@ -93,18 +110,16 @@ final class PreparedQueryTest extends CIUnitTestCase
             ]);
         });
 
-        $query->execute('foo', 'foo@example.com', 'US');
-        $query->execute('bar', 'bar@example.com', 'GB');
+        $this->query->execute('foo', 'foo@example.com', 'US');
+        $this->query->execute('bar', 'bar@example.com', 'GB');
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
-
-        $query->close();
     }
 
     public function testExecuteRunsQueryAndReturnsManualResultObject()
     {
-        $query = $this->db->prepare(static function ($db) {
+        $this->query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
 
             if ($db->DBDriver === 'SQLSRV') {
@@ -114,12 +129,10 @@ final class PreparedQueryTest extends CIUnitTestCase
             return (new Query($db))->setQuery($sql);
         });
 
-        $query->execute('foo', 'foo@example.com', '');
-        $query->execute('bar', 'bar@example.com', '');
+        $this->query->execute('foo', 'foo@example.com', '');
+        $this->query->execute('bar', 'bar@example.com', '');
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
-
-        $query->close();
     }
 }
