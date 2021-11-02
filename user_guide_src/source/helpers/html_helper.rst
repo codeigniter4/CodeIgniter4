@@ -471,7 +471,7 @@ The following functions are available:
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
     The following is a list of the pre-defined doctype choices. These are configurable,
-    pulled from `application/Config/DocTypes.php`, or they could be over-ridden in your `.env` configuration.
+    pulled from **app/Config/DocTypes.php**, or they could be over-ridden in your **.env** configuration.
 
     =============================== =================== ==================================================================================================================================================
     Document type                   Option              Result
