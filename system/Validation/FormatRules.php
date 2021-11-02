@@ -311,9 +311,8 @@ class FormatRules
             strtolower($validSchemes ?? 'http,https,mailto,tel,sms')
         );
 
-        return ! in_array($scheme, $validSchemes, true)
-            ? false
-            : filter_var($str, FILTER_VALIDATE_URL) !== false;
+        return in_array($scheme, $validSchemes, true)
+            && filter_var($str, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
