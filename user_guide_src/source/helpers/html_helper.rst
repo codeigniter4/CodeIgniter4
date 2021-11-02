@@ -27,7 +27,7 @@ The following functions are available:
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
     :param  string|array  $src:  Image source URI, or array of attributes and values
-    :param  bool    $indexPage:  Whether to treat $src as a routed URI string
+    :param  bool    $indexPage:  Whether to treat ``$src`` as a routed URI string
     :param  mixed   $attributes: Additional HTML attributes
     :returns:   HTML image tag
     :rtype: string
@@ -83,7 +83,7 @@ The following functions are available:
 
         $src = img_data('path/img_without_extension', 'image/png'); // data:image/png;base64,HT5A822...
 
-    Note that $path must exist and be a readable image format supported by the ``data:`` protocol.
+    Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol.
     This function is not recommended for very large files, but it provides a convenient way
     of serving images from your app that are not web-accessible (e.g., in **public/**).
 
@@ -94,7 +94,7 @@ The following functions are available:
     :param  string  $type:      Type of the related document
     :param  string  $title:     Link title
     :param  string  $media:     Media type
-    :param  bool    $indexPage: Whether to treat $src as a routed URI string
+    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
     :param  string  $hreflang:  Hreflang type
     :returns:   HTML link tag
     :rtype: string
@@ -135,7 +135,7 @@ The following functions are available:
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
     :param  mixed  $src: The source name of a JavaScript file
-    :param  bool    $indexPage: Whether to treat $src as a routed URI string
+    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
     :returns:   HTML script tag
     :rtype: string
 
