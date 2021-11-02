@@ -79,7 +79,7 @@ The following functions are available:
         echo img($src);
 
     There is an optional second parameter to specify the MIME type, otherwise the
-    function will use your Mimes config to guess.
+    function will use your Mimes config to guess::
 
         $src = img_data('path/img_without_extension', 'image/png'); // data:image/png;base64,HT5A822...
 
