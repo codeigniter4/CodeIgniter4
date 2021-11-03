@@ -144,7 +144,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function close()
     {
-        if (! is_object($this->statement)) {
+        if (! is_object($this->statement) || ! method_exists($this->statement, 'close')) {
             return;
         }
 
