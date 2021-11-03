@@ -153,6 +153,19 @@ the **Modules** config file, described above.
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
 
+Filters
+=======
+
+By default, :doc:`filters </incoming/filters>` are automatically scanned for within modules.
+It can be turned off in the **Modules** config file, described above.
+
+.. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
+    It will cause errors if you attempt to redefine that class.
+
+In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use.::
+
+    $filters->aliases['menus'] = MenusFilter::class;
+
 Controllers
 ===========
 
