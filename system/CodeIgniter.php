@@ -363,9 +363,6 @@ class CodeIgniter
         // Start up the filters
         $filters = Services::filters();
 
-        // Discover filters
-        $filters->initialize(strtolower($uri));
-
         // If any filters were specified within the routes file,
         // we need to ensure it's active for the current request
         if ($routeFilter !== null) {

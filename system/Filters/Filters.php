@@ -107,6 +107,10 @@ class Filters
         $this->setResponse($response);
 
         $this->modules = $modules ?? config('Modules');
+
+        if ($this->modules->shouldDiscover('filters')) {
+            $this->discoverFilters();
+        }
     }
 
     /**
@@ -223,10 +227,6 @@ class Filters
     {
         if ($this->initialized === true) {
             return $this;
-        }
-
-        if ($this->modules->shouldDiscover('filters')) {
-            $this->discoverFilters();
         }
 
         $this->processGlobals($uri);
