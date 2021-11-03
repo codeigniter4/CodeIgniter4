@@ -13,6 +13,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use Generator;
 use stdClass;
 use Tests\Support\Validation\TestRules;
 
@@ -24,9 +25,9 @@ final class RulesTest extends CIUnitTestCase
     /**
      * @var Validation
      */
-    protected $validation;
+    private $validation;
 
-    protected $config = [
+    private $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -47,111 +48,43 @@ final class RulesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
-
-        $_FILES = [];
     }
 
-    // Rules Tests
-
-    public function testRequiredNull()
+    /**
+     * @dataProvider provideRequiredCases
+     */
+    public function testRequired(array $data, bool $expected): void
     {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'required|alpha',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['foo' => 'required']);
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function testRequiredTrueString()
+    public function provideRequiredCases(): Generator
     {
-        $data = [
-            'foo' => 123,
+        yield from [
+            [['foo' => null], false],
+            [['foo' => 123], true],
+            [['foo' => null, 'bar' => 123], false],
+            [['foo' => [123]], true],
+            [['foo' => []], false],
+            [['foo' => new stdClass()], true],
         ];
-
-        $this->validation->setRules([
-            'foo' => 'required',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testRequiredFalseString()
-    {
-        $data = [
-            'foo' => null,
-            'bar' => 123,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'required',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testRequiredTrueArray()
-    {
-        $data = [
-            'foo' => [123],
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'required',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testRequiredFalseArray()
-    {
-        $data = [
-            'foo' => [],
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'required',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testRequiredObject()
-    {
-        $data = [
-            'foo' => new stdClass(),
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'required',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
     }
 
     /**
      * @dataProvider ifExistProvider
-     *
-     * @param $rules
-     * @param $data
-     * @param $expected
      */
-    public function testIfExist($rules, $data, $expected)
+    public function testIfExist(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);
-
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function ifExistProvider()
+    public function ifExistProvider(): Generator
     {
-        return [
+        yield from [
             [
                 ['foo' => 'required'],
                 ['foo' => ''],
@@ -188,22 +121,17 @@ final class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider emptysProvider
-     *
-     * @param $rules
-     * @param $data
-     * @param $expected
+     * @dataProvider providePermitEmptyCases
      */
-    public function testEmptys($rules, $data, $expected)
+    public function testPermitEmpty(array $rules, array $data, bool $expected): void
     {
         $this->validation->setRules($rules);
-
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function emptysProvider()
+    public function providePermitEmptyCases(): Generator
     {
-        return [
+        yield from [
             [
                 ['foo' => 'permit_empty'],
                 ['foo' => ''],
@@ -297,23 +225,13 @@ final class RulesTest extends CIUnitTestCase
                 true,
             ],
             [
-                [
-                    'foo' => 'permit_empty|required_with[bar]',
-                ],
-                [
-                    'foo' => 0.0,
-                    'bar' => 1,
-                ],
+                ['foo' => 'permit_empty|required_with[bar]'],
+                ['foo' => 0.0, 'bar' => 1],
                 true,
             ],
             [
-                [
-                    'foo' => 'permit_empty|required_with[bar]',
-                ],
-                [
-                    'foo' => '',
-                    'bar' => 1,
-                ],
+                ['foo' => 'permit_empty|required_with[bar]'],
+                ['foo' => '', 'bar' => 1],
                 false,
             ],
             [
@@ -327,837 +245,281 @@ final class RulesTest extends CIUnitTestCase
                 true,
             ],
             [
-                [
-                    'foo' => 'permit_empty|required_without[bar]',
-                ],
-                [
-                    'foo' => 0.0,
-                    'bar' => 1,
-                ],
+                ['foo' => 'permit_empty|required_without[bar]'],
+                ['foo' => 0.0, 'bar' => 1],
                 true,
             ],
             [
-                [
-                    'foo' => 'permit_empty|required_without[bar]',
-                ],
-                [
-                    'foo' => '',
-                    'bar' => 1,
-                ],
+                ['foo' => 'permit_empty|required_without[bar]'],
+                ['foo' => '', 'bar' => 1],
                 true,
             ],
         ];
     }
 
-    public function testMatchesNull()
+    /**
+     * @dataProvider provideMatchesCases
+     */
+    public function testMatches(array $data, bool $expected): void
     {
-        $data = [
-            'foo' => null,
-            'bar' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'matches[bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
+        $this->validation->setRules(['foo' => 'matches[bar]']);
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function testMatchesTrue()
+    public function provideMatchesCases(): Generator
     {
-        $data = [
-            'foo' => 'match',
-            'bar' => 'match',
+        yield from [
+            [['foo' => null, 'bar' => null], true],
+            [['foo' => 'match', 'bar' => 'match'], true],
+            [['foo' => 'match', 'bar' => 'nope'], false],
         ];
-
-        $this->validation->setRules([
-            'foo' => 'matches[bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
     }
 
-    public function testMatchesFalse()
+    /**
+     * @dataProvider provideMatchesNestedCases
+     */
+    public function testMatchesNested(array $data, bool $expected): void
     {
-        $data = [
-            'foo' => 'match',
-            'bar' => 'nope',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'matches[bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['nested.foo' => 'matches[nested.bar]']);
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function testMatcheNestedsTrue()
+    public function provideMatchesNestedCases(): Generator
     {
-        $data = [
-            'nested' => [
-                'foo' => 'match',
-                'bar' => 'match',
-            ],
+        yield from [
+            [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
+            [['nested' => ['foo' => 'match', 'bar' => 'nope']], false],
         ];
-
-        $this->validation->setRules([
-            'nested.foo' => 'matches[nested.bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
     }
 
-    public function testMatchesNestedFalse()
+    /**
+     * @dataProvider provideMatchesCases
+     */
+    public function testDiffers(array $data, bool $expected): void
     {
-        $data = [
-            'nested' => [
-                'foo' => 'match',
-                'bar' => 'nope',
-            ],
-        ];
-
-        $this->validation->setRules([
-            'nested.foo' => 'matches[nested.bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['foo' => 'differs[bar]']);
+        $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function testDiffersNull()
+    /**
+     * @dataProvider provideMatchesNestedCases
+     */
+    public function testDiffersNested(array $data, bool $expected): void
     {
-        $data = [
-            'foo' => null,
-            'bar' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'differs[bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['nested.foo' => 'differs[nested.bar]']);
+        $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function testDiffersTrue()
+    /**
+     * @dataProvider provideEqualsCases
+     */
+    public function testEquals(array $data, string $param, bool $expected): void
     {
-        $data = [
-            'foo' => 'match',
-            'bar' => 'nope',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'differs[bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
+        $this->validation->setRules(['foo' => "equals[{$param}]"]);
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function testDiffersFalse()
+    public function provideEqualsCases(): Generator
     {
-        $data = [
-            'foo' => 'match',
-            'bar' => 'match',
+        yield from [
+            'null'   => [['foo' => null], '', false],
+            'empty'  => [['foo' => ''], '', true],
+            'fail'   => [['foo' => 'bar'], 'notbar', false],
+            'pass'   => [['foo' => 'bar'], 'bar', true],
+            'casing' => [['foo' => 'bar'], 'Bar', false],
         ];
-
-        $this->validation->setRules([
-            'foo' => 'differs[bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
     }
 
-    public function testDiffersNestedTrue()
+    /**
+     * @dataProvider provideMinLengthCases
+     */
+    public function testMinLength(?string $data, string $length, bool $expected): void
     {
-        $data = [
-            'nested' => [
-                'foo' => 'match',
-                'bar' => 'nope',
-            ],
-        ];
-
-        $this->validation->setRules([
-            'nested.foo' => 'differs[nested.bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
+        $this->validation->setRules(['foo' => "min_length[{$length}]"]);
+        $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function testDiffersNestedFalse()
+    public function provideMinLengthCases(): Generator
     {
-        $data = [
-            'nested' => [
-                'foo' => 'match',
-                'bar' => 'match',
-            ],
+        yield from [
+            'null'    => [null, '2', false],
+            'less'    => ['bar', '2', true],
+            'equal'   => ['bar', '3', true],
+            'greater' => ['bar', '4', false],
         ];
-
-        $this->validation->setRules([
-            'nested.foo' => 'differs[nested.bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
     }
 
-    public function testEqualsNull()
+    /**
+     * @dataProvider provideMinLengthCases
+     */
+    public function testMaxLength(?string $data, string $length, bool $expected): void
     {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'equals[]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['foo' => "max_length[{$length}]"]);
+        $this->assertSame(! $expected || $length === '3', $this->validation->run(['foo' => $data]));
     }
 
-    public function testEqualsEmptyIsEmpty()
+    public function testMaxLengthReturnsFalseWithNonNumericVal(): void
     {
-        $data = [
-            'foo' => '',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'equals[]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
+        $this->validation->setRules(['foo' => 'max_length[bar]']);
+        $this->assertFalse($this->validation->run(['foo' => 'bar']));
     }
 
-    public function testEqualsReturnsFalseOnFailure()
+    /**
+     * @dataProvider provideExactLengthCases
+     */
+    public function testExactLength(?string $data, bool $expected): void
     {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'equals[notbar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
+        $this->validation->setRules(['foo' => 'exact_length[3]']);
+        $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function testEqualsReturnsTrueOnSuccess()
+    public function provideExactLengthCases(): Generator
     {
-        $data = [
-            'foo' => 'bar',
+        yield from [
+            'null'    => [null, false],
+            'exact'   => ['bar', true],
+            'less'    => ['ba', false],
+            'greater' => ['bars', false],
         ];
-
-        $this->validation->setRules([
-            'foo' => 'equals[bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
     }
 
-    public function testEqualsReturnsFalseOnCaseMismatch()
+    public function testExactLengthDetectsBadLength(): void
     {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'equals[Bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testNotEqualsNull()
-    {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'not_equals[]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testNotEqualsEmptyIsEmpty()
-    {
-        $data = [
-            'foo' => '',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'not_equals[]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testNotEqualsReturnsFalseOnFailure()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'not_equals[bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testNotEqualsReturnsTrueOnSuccess()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'not_equals[notbar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testNotEqualsReturnsTrueOnCaseMismatch()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'not_equals[Bar]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMinLengthNull()
-    {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'min_length[3]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testMinLengthReturnsTrueWithSuccess()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'min_length[2]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMinLengthReturnsTrueWithExactLength()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'min_length[3]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMinLengthReturnsFalseWhenWrong()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'min_length[4]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testMaxLengthNull()
-    {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'max_length[1]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMaxLengthReturnsFalseWithNonNumericVal()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'max_length[bar]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testMaxLengthReturnsTrueWithSuccess()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'max_length[4]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMaxLengthReturnsTrueWithExactLength()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'max_length[3]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testMaxLengthReturnsFalseWhenWrong()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'max_length[2]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testExactLengthNull()
-    {
-        $data = [
-            'foo' => null,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'exact_length[3]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testExactLengthReturnsTrueOnSuccess()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'exact_length[3]',
-        ]);
-
-        $this->assertTrue($this->validation->run($data));
-    }
-
-    public function testExactLengthDetectsBadLength()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'exact_length[abc]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testExactLengthReturnsFalseWhenShort()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'exact_length[2]',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testExactLengthReturnsFalseWhenLong()
-    {
-        $data = [
-            'foo' => 'bar',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'exact_length[4]',
-        ]);
-
+        $data = ['foo' => 'bar'];
+        $this->validation->setRules(['foo' => 'exact_length[abc]']);
         $this->assertFalse($this->validation->run($data));
     }
 
     /**
      * @dataProvider greaterThanProvider
-     *
-     * @param $str
-     * @param $expected
-     * @param mixed $first
-     * @param mixed $second
      */
-    public function testGreaterThan($first, $second, $expected)
+    public function testGreaterThan(?string $first, ?string $second, bool $expected): void
     {
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "greater_than[{$second}]",
-        ]);
-
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "greater_than[{$second}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanProvider()
+    public function greaterThanProvider(): Generator
     {
-        return [
-            [
-                '-10',
-                '-11',
-                true,
-            ],
-            [
-                '10',
-                '9',
-                true,
-            ],
-            [
-                '10',
-                '10',
-                false,
-            ],
-            [
-                '10',
-                'a',
-                false,
-            ],
-            [
-                '10a',
-                '10',
-                false,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
+        yield from [
+            ['-10', '-11', true],
+            ['10', '9', true],
+            ['10', '10', false],
+            ['10', 'a', false],
+            ['10a', '10', false],
+            [null, null, false],
         ];
     }
 
     /**
      * @dataProvider greaterThanEqualProvider
-     *
-     * @param $str
-     * @param $expected
-     * @param mixed $first
-     * @param mixed $second
      */
-    public function testGreaterThanEqual($first, $second, $expected)
+    public function testGreaterThanEqual(?string $first, ?string $second, bool $expected): void
     {
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "greater_than_equal_to[{$second}]",
-        ]);
-
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "greater_than_equal_to[{$second}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanEqualProvider()
+    public function greaterThanEqualProvider(): Generator
     {
-        return [
-            [
-                '0',
-                '0',
-                true,
-            ],
-            [
-                '1',
-                '0',
-                true,
-            ],
-            [
-                '-1',
-                '0',
-                false,
-            ],
-            [
-                '10a',
-                '0',
-                false,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
-            [
-                1,
-                null,
-                true,
-            ],
-            [
-                null,
-                1,
-                false,
-            ],
+        yield from [
+            ['0', '0', true],
+            ['1', '0', true],
+            ['-1', '0', false],
+            ['10a', '0', false],
+            [null, null, false],
+            ['1', null, true],
+            [null, '1', false],
         ];
     }
 
     /**
      * @dataProvider lessThanProvider
-     *
-     * @param $str
-     * @param $expected
-     * @param mixed $first
-     * @param mixed $second
      */
-    public function testLessThan($first, $second, $expected)
+    public function testLessThan(?string $first, ?string $second, bool $expected): void
     {
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "less_than[{$second}]",
-        ]);
-
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "less_than[{$second}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanProvider()
+    public function lessThanProvider(): Generator
     {
-        return [
-            [
-                '4',
-                '5',
-                true,
-            ],
-            [
-                '-1',
-                '0',
-                true,
-            ],
-            [
-                '4',
-                '4',
-                false,
-            ],
-            [
-                '10a',
-                '5',
-                false,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
-            [
-                1,
-                null,
-                false,
-            ],
-            [
-                null,
-                1,
-                false,
-            ],
+        yield from [
+            ['-10', '-11', false],
+            ['9', '10', true],
+            ['10', '9', false],
+            ['10', '10', false],
+            ['10', 'a', true],
+            ['10a', '10', false],
+            [null, null, false],
         ];
     }
 
     /**
      * @dataProvider lessThanEqualProvider
-     *
-     * @param $str
-     * @param $expected
-     * @param mixed $first
-     * @param mixed $second
      */
-    public function testLessEqualThan($first, $second, $expected)
+    public function testLessEqualThan(?string $first, ?string $second, bool $expected): void
     {
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "less_than_equal_to[{$second}]",
-        ]);
-
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "less_than_equal_to[{$second}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanEqualProvider()
+    public function lessThanEqualProvider(): Generator
     {
-        return [
-            [
-                '-1',
-                '0',
-                true,
-            ],
-            [
-                '-1',
-                '-1',
-                true,
-            ],
-            [
-                '4',
-                '4',
-                true,
-            ],
-            [
-                '0',
-                '-1',
-                false,
-            ],
-            [
-                '10a',
-                '0',
-                false,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
-            [
-                null,
-                1,
-                false,
-            ],
-            [
-                1,
-                null,
-                false,
-            ],
+        yield from [
+            ['0', '0', true],
+            ['1', '0', false],
+            ['-1', '0', true],
+            ['10a', '0', false],
+            [null, null, false],
+            ['1', null, false],
+            [null, '1', false],
         ];
     }
 
     /**
      * @dataProvider inListProvider
-     *
-     * @param string $first
-     * @param string $second
-     * @param bool   $expected
      */
-    public function testInList($first, $second, $expected)
+    public function testInList(?string $first, ?string $second, bool $expected): void
     {
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "in_list[{$second}]",
-        ]);
-
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "in_list[{$second}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
     /**
      * @dataProvider inListProvider
-     *
-     * @param string $first
-     * @param string $second
-     * @param bool   $expected
      */
-    public function testNotInList($first, $second, $expected)
+    public function testNotInList(?string $first, ?string $second, bool $expected): void
     {
-        $expected = ! $expected;
-
-        $data = [
-            'foo' => $first,
-        ];
-
-        $this->validation->setRules([
-            'foo' => "not_in_list[{$second}]",
-        ]);
-
-        $this->assertSame($expected, $this->validation->run($data));
+        $data = ['foo' => $first];
+        $this->validation->setRules(['foo' => "not_in_list[{$second}]"]);
+        $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function inListProvider()
+    public function inListProvider(): Generator
     {
-        return [
-            [
-                'red',
-                'red,Blue,123',
-                true,
-            ],
-            [
-                'Blue',
-                'red, Blue,123',
-                true,
-            ],
-            [
-                'Blue',
-                'red,Blue,123',
-                true,
-            ],
-            [
-                '123',
-                'red,Blue,123',
-                true,
-            ],
-            [
-                'Red',
-                'red,Blue,123',
-                false,
-            ],
-            [
-                ' red',
-                'red,Blue,123',
-                false,
-            ],
-            [
-                '1234',
-                'red,Blue,123',
-                false,
-            ],
-            [
-                null,
-                'red,Blue,123',
-                false,
-            ],
-            [
-                'red',
-                null,
-                false,
-            ],
+        yield from [
+            ['red', 'red,Blue,123', true],
+            ['Blue', 'red, Blue,123', true],
+            ['Blue', 'red,Blue,123', true],
+            ['123', 'red,Blue,123', true],
+            ['Red', 'red,Blue,123', false],
+            [' red', 'red,Blue,123', false],
+            ['1234', 'red,Blue,123', false],
+            [null, 'red,Blue,123', false],
+            ['red', null, false],
         ];
     }
 
     /**
      * @dataProvider requiredWithProvider
-     *
-     * @param $check
-     * @param $expected
-     * @param mixed $field
      */
-    public function testRequiredWith($field, $check, $expected = false)
+    public function testRequiredWith(?string $field, ?string $check, bool $expected): void
     {
         $data = [
             'foo'   => 'bar',
@@ -1171,46 +533,19 @@ final class RulesTest extends CIUnitTestCase
             ],
         ];
 
-        $this->validation->setRules([
-            $field => "required_with[{$check}]",
-        ]);
-
+        $this->validation->setRules([$field => "required_with[{$check}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithProvider()
+    public function requiredWithProvider(): Generator
     {
-        return [
-            [
-                'nope',
-                'bar',
-                false,
-            ],
-            [
-                'foo',
-                'bar',
-                true,
-            ],
-            [
-                'nope',
-                'baz',
-                true,
-            ],
-            [
-                null,
-                null,
-                true,
-            ],
-            [
-                null,
-                'foo',
-                false,
-            ],
-            [
-                'foo',
-                null,
-                true,
-            ],
+        yield from [
+            ['nope', 'bar', false],
+            ['foo', 'bar', true],
+            ['nope', 'baz', true],
+            [null, null, true],
+            [null, 'foo', false],
+            ['foo', null, true],
             [
                 'array.emptyField1',
                 'array.emptyField2',
@@ -1236,12 +571,8 @@ final class RulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider requiredWithoutProvider
-     *
-     * @param $check
-     * @param $expected
-     * @param mixed $field
      */
-    public function testRequiredWithout($field, $check, $expected = false)
+    public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
     {
         $data = [
             'foo'   => 'bar',
@@ -1255,41 +586,18 @@ final class RulesTest extends CIUnitTestCase
             ],
         ];
 
-        $this->validation->setRules([
-            $field => "required_without[{$check}]",
-        ]);
-
+        $this->validation->setRules([$field => "required_without[{$check}]"]);
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithoutProvider()
+    public function requiredWithoutProvider(): Generator
     {
-        return [
-            [
-                'nope',
-                'bars',
-                false,
-            ],
-            [
-                'foo',
-                'nope',
-                true,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
-            [
-                null,
-                'foo',
-                true,
-            ],
-            [
-                'foo',
-                null,
-                true,
-            ],
+        yield from [
+            ['nope', 'bars', false],
+            ['foo', 'nope', true],
+            [null, null, false],
+            [null, 'foo', true],
+            ['foo', null, true],
             [
                 'array.emptyField1',
                 'array.emptyField2',
