@@ -116,7 +116,7 @@ class Filters
     /**
      * If discoverFilters is enabled in Config then system will try to
      * auto-discover custom filters files in Namespaces and allow access to
-     * the config object via the variable $customfilters as with the routes file
+     * the config object via the variable $filters as with the routes file
      *
      * Sample :
      * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
@@ -215,11 +215,9 @@ class Filters
      * The resulting $this->filters is an array of only filters
      * that should be applied to this request.
      *
-     * We go ahead an process the entire tree because we'll need to
+     * We go ahead and process the entire tree because we'll need to
      * run through both a before and after and don't want to double
      * process the rows.
-     *
-     * @param string $uri
      *
      * @return Filters
      */
