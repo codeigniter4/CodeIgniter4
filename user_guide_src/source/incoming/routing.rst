@@ -562,6 +562,9 @@ to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
     $routes->setAutoRoute(false);
 
+.. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI is accessible by the GET method, the CSRF protection will not work.
+
 404 Override
 ------------
 
