@@ -19,6 +19,7 @@ use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use Config\Services;
+use LogicException;
 
 /**
  * Class Security
@@ -30,6 +31,7 @@ class Security implements SecurityInterface
 {
     public const CSRF_PROTECTION_COOKIE  = 'cookie';
     public const CSRF_PROTECTION_SESSION = 'session';
+    public const CSRF_HASH_BYTES         = 16;
 
     /**
      * CSRF Protection Method
@@ -39,6 +41,13 @@ class Security implements SecurityInterface
      * @var string 'cookie' or 'session'
      */
     protected $csrfProtection = self::CSRF_PROTECTION_COOKIE;
+
+    /**
+     * CSRF Token Randomization
+     *
+     * @var bool
+     */
+    protected $tokenRandomize = false;
 
     /**
      * CSRF Hash
@@ -167,6 +176,7 @@ class Security implements SecurityInterface
             $this->regenerate     = $security->regenerate ?? $this->regenerate;
             $this->rawCookieName  = $security->cookieName ?? $this->rawCookieName;
             $this->expires        = $security->expires ?? $this->expires;
+            $this->tokenRandomize = $security->tokenRandomize ?? $this->tokenRandomize;
         } else {
             // `Config/Security.php` is absence
             $this->tokenName     = $config->CSRFTokenName ?? $this->tokenName;
@@ -270,7 +280,8 @@ class Security implements SecurityInterface
             return $this;
         }
 
-        $token = $this->getPostedToken($request);
+        $token = $this->tokenRandomize ? $this->derandomize($this->getPostedToken($request))
+            : $this->getPostedToken($request);
 
         // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
@@ -329,7 +340,33 @@ class Security implements SecurityInterface
      */
     public function getHash(): ?string
     {
-        return $this->hash;
+        return $this->tokenRandomize ? $this->randomize($this->hash) : $this->hash;
+    }
+
+    /**
+     * Randomize hash to avoid BREACH attacks.
+     */
+    protected function randomize(string $hash): string
+    {
+        $key   = random_bytes(self::CSRF_HASH_BYTES);
+        $value = hex2bin($hash);
+
+        if ($value === false) {
+            throw new LogicException('$hash is invalid: ' . $hash);
+        }
+
+        return bin2hex(($value ^ $key) . $key);
+    }
+
+    /**
+     * Derandomize the token.
+     */
+    protected function derandomize(string $token): string
+    {
+        $key   = substr($token, -self::CSRF_HASH_BYTES * 2);
+        $value = substr($token, 0, self::CSRF_HASH_BYTES * 2);
+
+        return bin2hex(hex2bin($value) ^ hex2bin($key));
     }
 
     /**
@@ -461,7 +498,7 @@ class Security implements SecurityInterface
                 return $this->hash = $this->session->get($this->tokenName);
             }
 
-            $this->hash = bin2hex(random_bytes(16));
+            $this->hash = bin2hex(random_bytes(self::CSRF_HASH_BYTES));
 
             if ($this->isCSRFCookie()) {
                 $this->saveHashInCookie();
