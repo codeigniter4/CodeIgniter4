@@ -111,7 +111,7 @@ following code to your model.
             return $this->findAll();
         }
 
-        return return $this->where(['slug' => $slug])->first();
+        return $this->where(['slug' => $slug])->first();
     }
 
 With this code, you can perform two different queries. You can get all
