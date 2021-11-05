@@ -42,7 +42,7 @@ the slug from our title in the model. Create a new view at
         <input type="input" name="title" /><br />
 
         <label for="body">Text</label>
-        <textarea name="body"></textarea><br />
+        <textarea name="body" cols="45" rows="4"></textarea><br />
 
         <input type="submit" name="submit" value="Create news item" />
     </form>
