@@ -69,15 +69,19 @@ final class InvalidCharsTest extends CIUnitTestCase
         return $request;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBeforeDoNothingWhenCLIRequest()
     {
         $cliRequest = new CLIRequest(new MockAppConfig());
 
-        $ret = $this->invalidChars->before($cliRequest);
-
-        $this->assertNull($ret);
+        $this->invalidChars->before($cliRequest);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBeforeValidString()
     {
         $_POST['val'] = [
@@ -85,9 +89,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         ];
         $_COOKIE['val'] = 'valid string';
 
-        $ret = $this->invalidChars->before($this->request);
-
-        $this->assertNull($ret);
+        $this->invalidChars->before($this->request);
     }
 
     public function testBeforeInvalidUTF8StringCausesException()
@@ -104,7 +106,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function testBeforeInvalidControllCharCausesException()
+    public function testBeforeInvalidControlCharCausesException()
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in cookie:');
@@ -116,6 +118,8 @@ final class InvalidCharsTest extends CIUnitTestCase
     }
 
     /**
+     * @doesNotPerformAssertions
+     *
      * @dataProvider stringWithLineBreakAndTabProvider
      *
      * @param string $input
@@ -124,9 +128,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     {
         $_GET['val'] = $input;
 
-        $ret = $this->invalidChars->before($this->request);
-
-        $this->assertNull($ret);
+        $this->invalidChars->before($this->request);
     }
 
     public function stringWithLineBreakAndTabProvider()
@@ -152,9 +154,7 @@ final class InvalidCharsTest extends CIUnitTestCase
 
         $_GET['val'] = $input;
 
-        $ret = $this->invalidChars->before($this->request);
-
-        $this->assertNull($ret);
+        $this->invalidChars->before($this->request);
     }
 
     public function stringWithControlCharsProvider()
