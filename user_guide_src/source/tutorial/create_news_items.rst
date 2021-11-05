@@ -82,7 +82,7 @@ validation <../libraries/validation>` library to do this.
     }
 
 The code above adds a lot of functionality. First we load the NewsModel.
-After that, we check if we deal with the ``POST`` request and then
+After that, we check if we deal with the **POST** request and then
 the Controller-provided helper function is used to validate
 the $_POST fields. In this case, the title and text fields are required.
 
@@ -96,7 +96,7 @@ was submitted **and** passed all the rules, the model is called. This
 takes care of passing the news item into the model.
 This contains a new function ``url_title()``. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
-the string you pass it, replacing all spaces by dashes (-) and makes
+the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 

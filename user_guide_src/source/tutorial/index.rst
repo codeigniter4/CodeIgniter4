@@ -61,7 +61,7 @@ From your command line type the following:
 
     composer create-project codeigniter4/appstarter ci-news
 
-This creates a new folder, ci-news, which contains your application code, with
+This creates a new folder, **ci-news**, which contains your application code, with
 CodeIgniter installed in the vendor folder.
 
 By default, CodeIgniter starts up in production mode. This is a safety feature
@@ -71,7 +71,7 @@ So first let's fix that. Copy or rename the ``env`` file to ``.env``. Open it up
 This file contains server-specific settings. This means you never will need to
 commit any sensitive information to your version control system. It includes
 some of the most common ones you want to enter already, though they are all commented
-out. So uncomment the line with CI_ENVIRONMENT on it, and change ``production`` to
+out. So uncomment the line with ``CI_ENVIRONMENT`` on it, and change ``production`` to
 ``development``::
 
     CI_ENVIRONMENT = development

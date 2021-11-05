@@ -63,7 +63,7 @@ displays the CodeIgniter welcome page.
 The ``Pages`` class is extending the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
-(*system/Controller.php*).
+(**system/Controller.php**).
 
 The **controller is what will become the center of every request** to
 your web application. Like any PHP class, you refer to
@@ -99,7 +99,7 @@ includes the following code:
     </body>
     </html>
 
-.. note:: If you look closely in **header.php** template we are using an **esc()**
+.. note:: If you look closely in **header.php** template we are using an ``esc()``
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
 
@@ -163,7 +163,7 @@ is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
-.. note:: Any files and directory names passed into the **view()** function MUST
+.. note:: Any files and directory names passed into the ``view()`` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it
     :doc:`here </outgoing/views>`.
@@ -269,5 +269,5 @@ You should see something like the following:
     :align: center
 
 .. note:: When manually specifying routes, it is recommended to disable
-    auto-routing by setting ``$routes->setAutoRoute(false);`` in the Routes.php file.
+    auto-routing by setting ``$routes->setAutoRoute(false);`` in the **Routes.php** file.
     This ensures that only routes you define can be accessed.

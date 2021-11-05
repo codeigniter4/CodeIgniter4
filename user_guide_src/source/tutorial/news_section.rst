@@ -228,7 +228,7 @@ and add the next piece of code.
     <?php endif ?>
 
 
-.. note:: We are again using using **esc()** to help prevent XSS attacks.
+.. note:: We are again using using ``esc()`` to help prevent XSS attacks.
     But this time we also passed "url" as a second parameter. That's because
     attack patterns are different depending on the context in which the output
     is used. You can read more about it :doc:`here </general/common_functions>`.
