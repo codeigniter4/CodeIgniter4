@@ -7,9 +7,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! Before you begin, please
-        ensure that there are no existing issues, whether still open or closed, related
-        to your report. If there is, your report will be closed promptly.
+        Thanks for taking the time to fill out this bug report!
+
+        Before you begin, **please ensure that there are no existing issues,
+        whether still open or closed, related to your report**.
+        If there is, your report will be closed promptly.
+
+        And if you are not using the [latest version](https://github.com/codeigniter4/CodeIgniter4/releases) of CodeIgniter, please update.
+
+        ---
 
   - type: dropdown
     id: php-version
