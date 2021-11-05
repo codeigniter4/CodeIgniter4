@@ -181,8 +181,8 @@ Congratulations
 You just completed your first CodeIgniter4 application!
 
 The image underneath shows your project's **app** folder,
-with all of the files that you created in green.
-The two modified configuration files (Database & Routes) are not shown.
+with all of the files that you created in red.
+The two modified configuration files (**Config/Routes.php** & **Config/Filters.php**) are not shown.
 
 .. image:: ../images/tutorial9.png
     :align: left
