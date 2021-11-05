@@ -66,7 +66,7 @@ methods and variables defined in the ``CodeIgniter\Controller`` class
 (*system/Controller.php*).
 
 The **controller is what will become the center of every request** to
-your web application. Like any php class, you refer to
+your web application. Like any PHP class, you refer to
 it within your controllers as ``$this``.
 
 Now that you've created your first method, it's time to make some basic page
