@@ -84,7 +84,7 @@ validation <../libraries/validation>` library to do this.
 The code above adds a lot of functionality. First we load the NewsModel.
 After that, we check if we deal with the **POST** request and then
 the Controller-provided helper function is used to validate
-the $_POST fields. In this case, the title and text fields are required.
+the user input data. In this case, the POST data, and the title and text fields are required.
 
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read :doc:`more about this library
