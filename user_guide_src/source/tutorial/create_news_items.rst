@@ -119,9 +119,9 @@ or if the row already exists and should be updated, based on the presence
 of a primary key. In this case, there is no ``id`` field passed to it,
 so it will insert a new row into it's table, **news**.
 
-However, by default the insert and update methods in the model will
+However, by default the insert and update methods in the Model will
 not actually save any data because it doesn't know what fields are
-safe to be updated. Edit the model to provide it a list of updatable
+safe to be updated. Edit the **NewsModel** to provide it a list of updatable
 fields in the ``$allowedFields`` property.
 
 ::
