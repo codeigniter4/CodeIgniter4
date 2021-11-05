@@ -280,10 +280,10 @@ to create the table, but you should be aware that this can be done programmatica
 once you are more familiar with CodeIgniter; you can read about <a class="reference internal" href="../dbmgmt/migration.html"><span class="doc">Migrations</span></a>
 and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Seeds</span></a> to create more useful database setups later.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="nx">news</span> <span class="p">(</span>
-    <span class="nx">id</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
-    <span class="nx">title</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="nx">slug</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="nx">body</span> <span class="nx">text</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="nx">id</span> <span class="nx">INT</span> <span class="nx">UNSIGNED</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
+    <span class="nx">title</span> <span class="nx">VARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="nx">slug</span> <span class="nx">VARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="nx">body</span> <span class="nx">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
     <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">),</span>
     <span class="nx">KEY</span> <span class="nx">slug</span> <span class="p">(</span><span class="nx">slug</span><span class="p">)</span>
 <span class="p">);</span>
@@ -353,22 +353,20 @@ following code to your model.</p>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span>
-                <span class="o">-&gt;</span><span class="na">where</span><span class="p">([</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">])</span>
-                <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">([</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>With this code, you can perform two different queries. You can get all
-news records, or get a news item by its <a class="reference external" href="#">slug</a>. You might have
-noticed that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable wasn’t sanitized before running the
+news records, or get a news item by its slug. You might have
+noticed that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable wasn’t escaped before running the
 query; <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> does this for you.</p>
 <p>The two methods used here, <code class="docutils literal notranslate"><span class="pre">findAll()</span></code> and <code class="docutils literal notranslate"><span class="pre">first()</span></code>, are provided
-by the Model class. They already know the table to use based on the <code class="docutils literal notranslate"><span class="pre">$table</span></code>
+by the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code> class. They already know the table to use based on the <code class="docutils literal notranslate"><span class="pre">$table</span></code>
 property we set in <strong>NewsModel</strong> class, earlier. They are helper methods
 that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
-<code class="docutils literal notranslate"><span class="pre">findAll()</span></code> returns an array of objects.</p>
+<code class="docutils literal notranslate"><span class="pre">findAll()</span></code> returns an array of array.</p>
 </section>
 <section id="display-the-news">
 <h2>Display the news<a class="headerlink" href="#display-the-news" title="Permalink to this headline"></a></h2>
@@ -388,14 +386,14 @@ a new <code class="docutils literal notranslate"><span class="pre">News</span></
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(</span><span class="nv">$slug</span><span class="p">);</span>
     <span class="p">}</span>
@@ -408,7 +406,11 @@ which provides a couple of helper methods, and makes sure that you have
 access to the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> and <code class="docutils literal notranslate"><span class="pre">Response</span></code> objects, as well as the
 <code class="docutils literal notranslate"><span class="pre">Logger</span></code> class, for saving information to disk.</p>
 <p>Next, there are two methods, one to view all news items, and one for a specific
-news item. You can see that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed to the model’s
+news item.</p>
+<p>Next, the <code class="docutils literal notranslate"><span class="pre">model()</span></code> function is used to create the <strong>NewsModel</strong> instance.
+This is a helper function. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.
+You could also write <code class="docutils literal notranslate"><span class="pre">$model</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">NewsModel();</span></code>, if you don’t use it.</p>
+<p>You can see that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed to the model’s
 method in the second method. The model is using this slug to identify the
 news item to be returned.</p>
 <p>Now the data is retrieved by the controller through our model, but
@@ -416,7 +418,7 @@ nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method to look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
+    <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
     <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;news&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(),</span>
@@ -436,7 +438,7 @@ view to render the news items. Create <strong>app/Views/news/overview.php</stron
 and add the next piece of code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$news</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$news</span><span class="p">))</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$news</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$news</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$news</span> <span class="k">as</span> <span class="nv">$news_item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
@@ -449,7 +451,7 @@ and add the next piece of code.</p>
 
     <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">else</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">else</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>No News<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 
@@ -460,7 +462,7 @@ and add the next piece of code.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We are again using using <strong>esc()</strong> to help prevent XSS attacks.
+<p>We are again using using <code class="docutils literal notranslate"><span class="pre">esc()</span></code> to help prevent XSS attacks.
 But this time we also passed “url” as a second parameter. That’s because
 attack patterns are different depending on the context in which the output
 is used. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.</p>
@@ -476,13 +478,12 @@ add some code to the controller and create a new view. Go back to the
 <code class="docutils literal notranslate"><span class="pre">News</span></code> controller and update the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method with the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
+    <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
     <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(</span><span class="nv">$slug</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]))</span>
-    <span class="p">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="s1">&#39;Cannot find the news item: &#39;</span><span class="o">.</span> <span class="nv">$slug</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="s1">&#39;Cannot find the news item: &#39;</span> <span class="o">.</span> <span class="nv">$slug</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
@@ -534,7 +535,7 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 02, 2021.
+      <span class="lastupdated">Last updated on Nov 05, 2021.
       </span></p>
   </div>
 

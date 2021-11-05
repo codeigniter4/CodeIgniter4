@@ -265,6 +265,18 @@
 you haven’t written any information to the database yet. In this section,
 you’ll expand your news controller and model created earlier to include
 this functionality.</p>
+<section id="enable-csrf-filter">
+<h2>Enable CSRF Filter<a class="headerlink" href="#enable-csrf-filter" title="Permalink to this headline"></a></h2>
+<p>Before creating a form, let’s enable the CSRF protection.</p>
+<p>Open the <strong>app/Config/Filters.php</strong> file and update the <code class="docutils literal notranslate"><span class="pre">$methods</span></code> property like the following:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>It configures the CSRF filter to be enabled for all <strong>POST</strong> requests.
+You can read more about the CSRF protection in <a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library.</p>
+</section>
 <section id="create-a-form">
 <h2>Create a form<a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
 <p>To input data into the database, you need to create a form where you can
@@ -274,7 +286,7 @@ the slug from our title in the model. Create a new view at
 <strong>app/Views/news/create.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;validation&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/news/create&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
     <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">csrf_field</span><span class="p">()</span> <span class="cp">?&gt;</span>
@@ -283,14 +295,14 @@ the slug from our title in the model. Create a new view at
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;input&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;body&quot;</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;body&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;body&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;45&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;4&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Create news item&quot;</span> <span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>There are probably only two things here that look unfamiliar. The
-<code class="docutils literal notranslate"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function is used to report
+<code class="docutils literal notranslate"><span class="pre">service('validation')-&gt;listErrors()</span></code> function is used to report
 errors related to form validation. The <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> function creates
 a hidden input with a CSRF token that helps protect against some common attacks.</p>
 <p>Go back to your <code class="docutils literal notranslate"><span class="pre">News</span></code> controller. You’re going to do two things here,
@@ -299,7 +311,7 @@ passed the validation rules. You’ll use the <a class="reference internal" href
 validation</span></a> library to do this.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NewsModel</span><span class="p">();</span>
+    <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;post&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]|max_length[255]&#39;</span><span class="p">,</span>
@@ -312,7 +324,6 @@ validation</span></a> library to do this.</p>
         <span class="p">]);</span>
 
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/success&#39;</span><span class="p">);</span>
-
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Create a news item&#39;</span><span class="p">]);</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/create&#39;</span><span class="p">);</span>
@@ -322,9 +333,9 @@ validation</span></a> library to do this.</p>
 </pre></div>
 </div>
 <p>The code above adds a lot of functionality. First we load the NewsModel.
-After that, we check if we deal with the <code class="docutils literal notranslate"><span class="pre">POST</span></code> request and then
+After that, we check if we deal with the <strong>POST</strong> request and then
 the Controller-provided helper function is used to validate
-the $_POST fields. In this case, the title and text fields are required.</p>
+the user input data. In this case, the POST data, and the title and text fields are required.</p>
 <p>CodeIgniter has a powerful validation library as demonstrated
 above. You can read <a class="reference internal" href="../libraries/validation.html"><span class="doc">more about this library
 here</span></a>.</p>
@@ -334,7 +345,7 @@ was submitted <strong>and</strong> passed all the rules, the model is called. Th
 takes care of passing the news item into the model.
 This contains a new function <code class="docutils literal notranslate"><span class="pre">url_title()</span></code>. This function -
 provided by the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL helper</span></a> - strips down
-the string you pass it, replacing all spaces by dashes (-) and makes
+the string you pass it, replacing all spaces by dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.</p>
 <p>After this, a view is loaded to display a success message. Create a view at
@@ -352,9 +363,9 @@ used will determine whether the information should be inserted
 or if the row already exists and should be updated, based on the presence
 of a primary key. In this case, there is no <code class="docutils literal notranslate"><span class="pre">id</span></code> field passed to it,
 so it will insert a new row into it’s table, <strong>news</strong>.</p>
-<p>However, by default the insert and update methods in the model will
+<p>However, by default the insert and update methods in the Model will
 not actually save any data because it doesn’t know what fields are
-safe to be updated. Edit the model to provide it a list of updatable
+safe to be updated. Edit the <strong>NewsModel</strong> to provide it a list of updatable
 fields in the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -399,8 +410,8 @@ Add some news and check out the different pages you made.</p>
 <h2>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this headline"></a></h2>
 <p>You just completed your first CodeIgniter4 application!</p>
 <p>The image underneath shows your project’s <strong>app</strong> folder,
-with all of the files that you created in green.
-The two modified configuration files (Database &amp; Routes) are not shown.</p>
+with all of the files that you created in red.
+The two modified configuration files (<strong>Config/Routes.php</strong> &amp; <strong>Config/Filters.php</strong>) are not shown.</p>
 <img alt="../_images/tutorial9.png" class="align-left" src="../_images/tutorial9.png" />
 </section>
 </section>
@@ -417,7 +428,7 @@ The two modified configuration files (Database &amp; Routes) are not shown.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 02, 2021.
+      <span class="lastupdated">Last updated on Nov 05, 2021.
       </span></p>
   </div>
 
