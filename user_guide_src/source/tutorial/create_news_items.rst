@@ -6,6 +6,20 @@ you haven't written any information to the database yet. In this section,
 you'll expand your news controller and model created earlier to include
 this functionality.
 
+Enable CSRF Filter
+------------------
+
+Before creating a form, let's enable the CSRF protection.
+
+Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following::
+
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+
+It configures the CSRF filter to be enabled for all **POST** requests.
+You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
+
 Create a form
 -------------
 
