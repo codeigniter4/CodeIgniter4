@@ -60,6 +60,12 @@ one argument named ``$page``. It also has an ``index()`` method, the same
 as the default controller found in **app/Controllers/Home.php**; that method
 displays the CodeIgniter welcome page.
 
+.. note:: There are two ``view()`` functions referred to in this tutorial.
+    One is the class method created with ``public function view($page = 'home')``
+    and ``echo view('welcome_message')`` for displaying a view.
+    Both are *technically* a function. But when you create a function in a class,
+    it's called a method.
+
 The ``Pages`` class is extending the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
@@ -102,12 +108,6 @@ includes the following code:
 .. note:: If you look closely in **header.php** template we are using an ``esc()``
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
-
-.. warning:: There are two **view()** functions referred to in this tutorial.
-    One is the class method created with ``public function view($page = 'home')``
-    and ``echo view('welcome_message');`` for displaying a view.
-    Both are *technically* a function. But when you create a function in a class,
-    it's called a method.
 
 Adding logic to the controller
 -------------------------------------------------------
