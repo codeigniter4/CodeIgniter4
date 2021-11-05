@@ -33,7 +33,7 @@ the slug from our title in the model. Create a new view at
 
     <h2><?= esc($title) ?></h2>
 
-    <?= \Config\Services::validation()->listErrors() ?>
+    <?= service('validation')->listErrors() ?>
 
     <form action="/news/create" method="post">
         <?= csrf_field() ?>
@@ -48,7 +48,7 @@ the slug from our title in the model. Create a new view at
     </form>
 
 There are probably only two things here that look unfamiliar. The
-``\Config\Services::validation()->listErrors()`` function is used to report
+``service('validation')->listErrors()`` function is used to report
 errors related to form validation. The ``csrf_field()`` function creates
 a hidden input with a CSRF token that helps protect against some common attacks.
 
@@ -61,7 +61,7 @@ validation <../libraries/validation>` library to do this.
 
     public function create()
     {
-        $model = new NewsModel();
+        $model = model(NewsModel::class);
 
         if ($this->request->getMethod() === 'post' && $this->validate([
             'title' => 'required|min_length[3]|max_length[255]',
@@ -74,7 +74,6 @@ validation <../libraries/validation>` library to do this.
             ]);
 
             echo view('news/success');
-
         } else {
             echo view('templates/header', ['title' => 'Create a news item']);
             echo view('news/create');
