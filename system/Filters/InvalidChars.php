@@ -13,7 +13,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use RuntimeException;
+use CodeIgniter\Security\Exceptions\SecurityException;
 
 /**
  * InvalidChars filter.
@@ -89,9 +89,7 @@ class InvalidChars implements FilterInterface
             return $value;
         }
 
-        throw new RuntimeException(
-            'Invalid UTF-8 characters in ' . $this->source . ': ' . $value
-        );
+        throw SecurityException::forInvalidUTF8Chars($this->source, $value);
     }
 
     /**
@@ -113,8 +111,6 @@ class InvalidChars implements FilterInterface
             return $value;
         }
 
-        throw new RuntimeException(
-            'Invalid Control characters in ' . $this->source . ': ' . $value
-        );
+        throw SecurityException::forInvalidControlChars($this->source, $value);
     }
 }

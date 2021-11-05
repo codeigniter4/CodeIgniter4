@@ -15,9 +15,9 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
-use RuntimeException;
 
 /**
  * @internal
@@ -92,7 +92,7 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function testBeforeInvalidUTF8StringCausesException()
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid UTF-8 characters in post:');
 
         $sjisString   = mb_convert_encoding('SJISの文字列です。', 'SJIS');
@@ -106,7 +106,7 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function testBeforeInvalidControllCharCausesException()
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in cookie:');
 
         $stringWithNullChar = "String contains null char and line break.\0\n";
@@ -147,7 +147,7 @@ final class InvalidCharsTest extends CIUnitTestCase
      */
     public function testCheckControlStringWithControlCharsCausesException($input)
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in get:');
 
         $_GET['val'] = $input;
