@@ -214,7 +214,7 @@ final class FormatRulesTest extends CIUnitTestCase
             [
                 'mailto:support@codeigniter.com',
                 true,
-                true,
+                false,
             ],
             [
                 '//example.com',

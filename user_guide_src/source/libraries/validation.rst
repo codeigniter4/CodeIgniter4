@@ -863,12 +863,11 @@ valid_ip                No         Fails if the supplied IP is not valid.       
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".
-valid_url_strict        Yes        Fails if field does not contain a valid URL.  valid_url_strict[http,https]
+valid_url_strict        Yes        Fails if field does not contain a valid URL.  valid_url_strict[https]
                                    Roughly equivalent to a "fail anything that
                                    would not be a clickable link." You can
                                    optionally specify a list of valid schemas.
-                                   If not specified,
-                                   ``http,https,mailto,tel,sms`` are valid.
+                                   If not specified, ``http,https`` are valid.
 valid_date              No         Fails if field does not contain a valid date. valid_date[d/m/Y]
                                    Accepts an optional parameter to matches
                                    a date format.
