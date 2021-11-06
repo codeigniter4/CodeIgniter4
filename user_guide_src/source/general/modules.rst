@@ -101,7 +101,17 @@ This is configured in the file **app/Config/Modules.php**.
 The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php**.
 
 To make auto-discovery work for our **Blog** namespace, we need to make one small adjustment.
-**Acme** needs to be changed to **Acme\\Blog** because each "module" within the namespace needs to be fully defined. Once your module folder path is defined, the discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
+**Acme** needs to be changed to **Acme\\Blog** because each "module" within the namespace needs to be fully defined.
+
+::
+
+    public $psr4 = [
+        APP_NAMESPACE => APPPATH, // For custom namespace
+        'Config'      => APPPATH . 'Config',
+        'Acme\Blog'   => ROOTPATH . 'acme/Blog', // Change
+    ];
+
+Once your module folder path is defined, the discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
 
 Enable/Disable Discover
 =======================
@@ -142,6 +152,19 @@ the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
+
+Filters
+=======
+
+By default, :doc:`filters </incoming/filters>` are automatically scanned for within modules.
+It can be turned off in the **Modules** config file, described above.
+
+.. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
+    It will cause errors if you attempt to redefine that class.
+
+In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use.::
+
+    $filters->aliases['menus'] = MenusFilter::class;
 
 Controllers
 ===========
