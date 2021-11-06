@@ -141,7 +141,7 @@ class UploadedFile extends File implements UploadedFileInterface
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         try {
-            move_uploaded_file($this->path, $destination);
+            $this->hasMoved = move_uploaded_file($this->path, $destination);
         } catch (Exception $e) {
             $error   = error_get_last();
             $message = isset($error['message']) ? strip_tags($error['message']) : '';
@@ -154,7 +154,6 @@ class UploadedFile extends File implements UploadedFileInterface
         // Success, so store our new information
         $this->path     = $targetPath;
         $this->name     = basename($destination);
-        $this->hasMoved = true;
 
         return true;
     }
