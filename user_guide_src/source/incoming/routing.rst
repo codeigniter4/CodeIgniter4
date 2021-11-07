@@ -119,8 +119,12 @@ routes. With the examples URLs from above::
 
 will only match product/123 and generate 404 errors for other example.
 
-.. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
-    routes, described below, as it is more secure. It will also provide a slight performance increase, since
+.. warning:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
+    routes, described below, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
+    will not work.
+
+.. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
 
@@ -557,6 +561,9 @@ controllers and methods as described above. You can disable this automatic match
 to only those defined by you, by setting the ``setAutoRoute()`` option to false::
 
     $routes->setAutoRoute(false);
+
+.. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
 404 Override
 ------------
