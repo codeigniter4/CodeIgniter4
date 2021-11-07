@@ -358,6 +358,8 @@ class CodeIgniter
     {
         $routeFilter = $this->tryToRouteIt($routes);
 
+        $uri = $this->determinePath();
+
         // Start up the filters
         $filters = Services::filters();
 
@@ -374,8 +376,6 @@ class CodeIgniter
                 $filters->enableFilter($routeFilter, 'after');
             }
         }
-
-        $uri = $this->determinePath();
 
         // Never run filters when running through Spark cli
         if (! defined('SPARKED')) {

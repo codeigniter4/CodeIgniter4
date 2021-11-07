@@ -458,6 +458,24 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('http://hellowworld.com', $request->url);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4720
+     */
+    public function testAllCustomFiltersAreDiscoveredInConstructor()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => [],
+            'globals' => [],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $configFilters = $this->getPrivateProperty($filters, 'config');
+        $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
+    }
+
     public function testRunThrowsWithInvalidClassType()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
