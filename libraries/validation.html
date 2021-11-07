@@ -1313,17 +1313,28 @@ Accepts an optional parameter of ‘ipv4’ or
 </tr>
 <tr class="row-even"><td><p>valid_url</p></td>
 <td><p>No</p></td>
-<td><p>Fails if field does not contain a valid URL.</p></td>
+<td><p>Fails if field does not contain (loosely) a
+URL. Includes simple strings that could be
+hostnames, like “codeigniter”.</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>valid_date</p></td>
+<tr class="row-odd"><td><p>valid_url_strict</p></td>
+<td><p>Yes</p></td>
+<td><p>Fails if field does not contain a valid URL.
+You can optionally specify a list of valid
+schemas. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
+are valid. This rule uses
+PHP’s <code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
+<td><p>valid_url_strict[https]</p></td>
+</tr>
+<tr class="row-even"><td><p>valid_date</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field does not contain a valid date.
 Accepts an optional parameter to matches
 a date format.</p></td>
 <td><p>valid_date[d/m/Y]</p></td>
 </tr>
-<tr class="row-even"><td><p>valid_cc_number</p></td>
+<tr class="row-odd"><td><p>valid_cc_number</p></td>
 <td><p>Yes</p></td>
 <td><p>Verifies that the credit card number matches
 the format used by the specified provider.
@@ -1447,7 +1458,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 06, 2021.
+      <span class="lastupdated">Last updated on Nov 07, 2021.
       </span></p>
   </div>
 
