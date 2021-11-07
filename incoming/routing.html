@@ -426,10 +426,16 @@ routes. With the examples URLs from above:</p>
 </pre></div>
 </div>
 <p>will only match product/123 and generate 404 errors for other example.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>While the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method is convenient, it is recommended to always use the HTTP-verb-based
-routes, described below, as it is more secure. It will also provide a slight performance increase, since
+routes, described below, as it is more secure. If you use the <a class="reference internal" href="../libraries/security.html"><span class="doc">CSRF protection</span></a>, it does not protect <strong>GET</strong>
+requests. If the URI specified in the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method is accessible by the GET method, the CSRF protection
+will not work.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the HTTP-verb-based routes will also provide a slight performance increase, since
 only routes that match the current request method are stored, resulting in fewer routes to scan through
 when trying to find a match.</p>
 </div>
@@ -849,6 +855,11 @@ controllers and methods as described above. You can disable this automatic match
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use the <a class="reference internal" href="../libraries/security.html"><span class="doc">CSRF protection</span></a>, it does not protect <strong>GET</strong>
+requests. If the URI is accessible by the GET method, the CSRF protection will not work.</p>
 </div>
 </section>
 <section id="override">
