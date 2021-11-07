@@ -159,7 +159,7 @@ Class Reference
         $cache->deleteMatching('*_suffix'); // deletes all items of which keys end with "_suffix"
 
     For more information on glob-style syntax, please see
-        `https://en.wikipedia.org/wiki/Glob_(programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
+    `https://en.wikipedia.org/wiki/Glob_(programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
 
 .. php:method:: increment($key[, $offset = 1]): mixed
 
