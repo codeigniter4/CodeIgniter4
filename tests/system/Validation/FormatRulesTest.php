@@ -88,7 +88,7 @@ final class FormatRulesTest extends CIUnitTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testValidURL(?string $url, bool $expected)
+    public function testValidURL(?string $url, bool $isLoose, bool $isStrict)
     {
         $data = [
             'foo' => $url,
@@ -98,7 +98,36 @@ final class FormatRulesTest extends CIUnitTestCase
             'foo' => 'valid_url',
         ]);
 
-        $this->assertSame($expected, $this->validation->run($data));
+        $this->assertSame($isLoose, $this->validation->run($data));
+    }
+
+    /**
+     * @dataProvider urlProvider
+     */
+    public function testValidURLStrict(?string $url, bool $isLoose, bool $isStrict)
+    {
+        $data = [
+            'foo' => $url,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'valid_url_strict',
+        ]);
+
+        $this->assertSame($isStrict, $this->validation->run($data));
+    }
+
+    public function testValidURLStrictWithSchema()
+    {
+        $data = [
+            'foo' => 'http://www.codeigniter.com',
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'valid_url_strict[https]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
     }
 
     public function urlProvider()
@@ -107,60 +136,90 @@ final class FormatRulesTest extends CIUnitTestCase
             [
                 'www.codeigniter.com',
                 true,
+                false,
             ],
             [
                 'http://codeigniter.com',
                 true,
+                true,
             ],
-            //https://bugs.php.net/bug.php?id=51192
+            // https://bugs.php.net/bug.php?id=51192
             [
                 'http://accept-dashes.tld',
+                true,
                 true,
             ],
             [
                 'http://reject_underscores',
                 false,
+                false,
             ],
-            // https://github.com/codeigniter4/CodeIgniter/issues/4415
+            // https://github.com/bcit-ci/CodeIgniter/issues/4415
             [
                 'http://[::1]/ipv6',
+                true,
                 true,
             ],
             [
                 'htt://www.codeigniter.com',
                 false,
+                false,
             ],
             [
                 '',
+                false,
+                false,
+            ],
+            // https://github.com/codeigniter4/CodeIgniter4/issues/3156
+            [
+                'codeigniter',
+                true,   // What?
                 false,
             ],
             [
                 'code igniter',
                 false,
+                false,
             ],
             [
                 null,
                 false,
+                false,
             ],
             [
                 'http://',
-                true,
-            ], // this is apparently valid!
+                true,   // Why?
+                false,
+            ],
             [
                 'http:///oops.com',
+                false,
                 false,
             ],
             [
                 '123.com',
                 true,
+                false,
             ],
             [
                 'abc.123',
                 true,
+                false,
             ],
             [
                 'http:8080//abc.com',
+                true,   // Insane?
+                false,
+            ],
+            [
+                'mailto:support@codeigniter.com',
                 true,
+                false,
+            ],
+            [
+                '//example.com',
+                false,
+                false,
             ],
         ];
     }

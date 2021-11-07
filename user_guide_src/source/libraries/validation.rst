@@ -860,7 +860,14 @@ valid_emails            No         Fails if any value provided in a comma
 valid_ip                No         Fails if the supplied IP is not valid.        valid_ip[ipv6]
                                    Accepts an optional parameter of ‘ipv4’ or
                                    ‘ipv6’ to specify an IP format.
-valid_url               No         Fails if field does not contain a valid URL.
+valid_url               No         Fails if field does not contain (loosely) a
+                                   URL. Includes simple strings that could be
+                                   hostnames, like "codeigniter".
+valid_url_strict        Yes        Fails if field does not contain a valid URL.  valid_url_strict[https]
+                                   You can optionally specify a list of valid
+                                   schemas. If not specified, ``http,https``
+                                   are valid. This rule uses
+                                   PHP's ``FILTER_VALIDATE_URL``.
 valid_date              No         Fails if field does not contain a valid date. valid_date[d/m/Y]
                                    Accepts an optional parameter to matches
                                    a date format.
