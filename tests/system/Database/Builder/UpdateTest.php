@@ -210,19 +210,6 @@ final class UpdateTest extends CIUnitTestCase
 
         $expected = <<<EOF
             UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = :id: THEN :name:
-            WHEN "id" = :id.1: THEN :name.1:
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = :id: THEN :description:
-            WHEN "id" = :id.1: THEN :description.1:
-            ELSE "description" END
-            WHERE "id" IN(:id:,:id.1:)
-            EOF;
-
-        $this->assertSame($expected, $query->getOriginalQuery());
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
             WHEN "id" = 2 THEN 'Comedian'
             WHEN "id" = 3 THEN 'Cab Driver'
             ELSE "name" END, "description" = CASE{$space}
@@ -260,19 +247,6 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertInstanceOf(MockQuery::class, $query);
 
         $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = :id: THEN :name:
-            WHEN "id" = :id.1: THEN :name.1:
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = :id: THEN :description:
-            WHEN "id" = :id.1: THEN :description.1:
-            ELSE "description" END
-            WHERE "id" IN(:id:,:id.1:)
-            EOF;
-
-        $this->assertSame($expected, $query->getOriginalQuery());
 
         $expected = <<<EOF
             UPDATE "jobs" SET "name" = CASE{$space}

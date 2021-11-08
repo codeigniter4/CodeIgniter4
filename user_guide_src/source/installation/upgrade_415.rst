@@ -61,6 +61,14 @@ The bug was fixed. If your requests depend on the headers, your requests might f
 In this case, add the necessary headers manually.
 See `CURLRequest Class <../libraries/curlrequest.html#headers>`_ for how to add.
 
+Query Builder changes
+---------------------
+
+For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.
+
+- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` has changed. It no longer returns the query with the binded parameters, but the actual query that was run.
+- If ``testMode`` is ``true``, ``insertBatch()`` will return an SQL string array instead of the number of affected rows. This change was made so that the returned data type is the same as the ``updateBatch()`` method.
+
 Breaking Enhancements
 =====================
 
