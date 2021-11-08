@@ -22,8 +22,7 @@ final class GetNumRowsTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     /**
      * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class

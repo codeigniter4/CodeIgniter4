@@ -110,6 +110,7 @@
 # SECURITY
 #--------------------------------------------------------------------
 
+# security.csrfProtection = 'cookie'
 # security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'
 # security.cookieName = 'csrf_cookie_name'
@@ -123,3 +124,9 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# CURLRequest
+#--------------------------------------------------------------------
+
+# curlrequest.shareOptions = true

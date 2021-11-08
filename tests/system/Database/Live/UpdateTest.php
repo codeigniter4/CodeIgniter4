@@ -25,8 +25,7 @@ final class UpdateTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     public function testUpdateSetsAllWithoutWhere()
     {
@@ -209,6 +208,25 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase('job', [
             'name'        => 'Developer',
             'description' => 'Developer',
+        ]);
+    }
+
+    public function testSetWithBoolean()
+    {
+        $this->db->table('type_test')
+            ->set('type_boolean', false)
+            ->update();
+
+        $this->seeInDatabase('type_test', [
+            'type_boolean' => false,
+        ]);
+
+        $this->db->table('type_test')
+            ->set('type_boolean', true)
+            ->update();
+
+        $this->seeInDatabase('type_test', [
+            'type_boolean' => true,
         ]);
     }
 }

@@ -11,11 +11,13 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
 
 /**
@@ -32,15 +34,20 @@ final class CURLRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
         $this->request = $this->getRequest();
     }
 
     protected function getRequest(array $options = [])
     {
         $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $app = new App();
 
-        return new MockCURLRequest(($app = new App()), $uri, new Response($app), $options);
+        $config               = new ConfigCURLRequest();
+        $config->shareOptions = true;
+        Factories::injectMock('config', 'CURLRequest', $config);
+
+        return new MockCURLRequest(($app), $uri, new Response($app), $options);
     }
 
     /**
@@ -176,30 +183,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionHeadersUsingPopulate()
-    {
-        $_SERVER['HTTP_HOST']            = 'site1.com';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
-        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
-
-        $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ];
-
-        $request = $this->getRequest($options);
-        $request->get('example');
-        // we fill the Accept-Language header from _SERVER when no headers are defined for the request
-        $this->assertSame('en-US', $request->header('Accept-Language')->getValue());
-        // but we skip Host header - since it would corrupt the request
-        $this->assertNull($request->header('Host'));
-        // and Accept-Encoding
-        $this->assertNull($request->header('Accept-Encoding'));
-    }
-
-    /**
-     * @backupGlobals enabled
-     */
-    public function testOptionHeadersNotUsingPopulate()
+    public function testOptionsHeadersNotUsingPopulate()
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
@@ -218,6 +202,50 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertNull($request->header('Accept-Language'));
         $this->assertSame('www.foo.com', $request->header('Host')->getValue());
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
+    }
+
+    public function testOptionsAreSharedBetweenRequests()
+    {
+        $options = [
+            'form_params' => ['studio' => 1],
+            'user_agent'  => 'CodeIgniter Framework v4',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->request('POST', 'https://realestate1.example.com');
+
+        $this->assertSame('https://realestate1.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+
+        $request->request('POST', 'https://realestate2.example.com');
+
+        $this->assertSame('https://realestate2.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+    }
+
+    /**
+     * @backupGlobals enabled
+     */
+    public function testHeaderContentLengthNotSharedBetweenClients()
+    {
+        $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
+
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+
+        $request = $this->getRequest($options);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
     }
 
     public function testOptionsDelay()
@@ -895,7 +923,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->request->setJSON($params)->post('/post');
 
         $this->assertSame(json_encode($params), $this->request->getBody());
-        $this->assertSame('application/json', $this->request->getHeaderLine('Content-Type'));
+        $this->assertSame(
+            'Content-Type: application/json',
+            $this->request->curl_options[CURLOPT_HTTPHEADER][0]
+        );
     }
 
     public function testHTTPv1()

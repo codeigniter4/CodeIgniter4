@@ -94,6 +94,10 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('banana', $config->dessert);
         // null property should not be affected
         $this->assertNull($config->QEMPTYSTR);
+        // property name with underscore
+        $this->assertSame('bar', $config->onedeep_value);
+        // array property name with underscore and key with underscore
+        $this->assertSame('foo', $config->one_deep['under_deep']);
     }
 
     public function testPrefixedValues()

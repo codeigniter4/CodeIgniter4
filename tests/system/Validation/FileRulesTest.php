@@ -24,6 +24,7 @@ final class FileRulesTest extends CIUnitTestCase
      * @var Validation
      */
     protected $validation;
+
     protected $config = [
         'ruleSets' => [
             Rules::class,

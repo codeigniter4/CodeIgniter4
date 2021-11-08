@@ -29,6 +29,7 @@ final class PagerTest extends CIUnitTestCase
      * @var \CodeIgniter\Pager\Pager
      */
     protected $pager;
+
     protected $config;
 
     protected function setUp(): void

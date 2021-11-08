@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -44,7 +45,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.1.4';
+    public const CI_VERSION = '4.1.5';
 
     private const MIN_PHP_VERSION = '7.3';
 
@@ -357,21 +358,31 @@ class CodeIgniter
     {
         $routeFilter = $this->tryToRouteIt($routes);
 
-        // Run "before" filters
+        $uri = $this->determinePath();
+
+        // Start up the filters
         $filters = Services::filters();
 
         // If any filters were specified within the routes file,
         // we need to ensure it's active for the current request
         if ($routeFilter !== null) {
-            $filters->enableFilter($routeFilter, 'before');
-            $filters->enableFilter($routeFilter, 'after');
+            $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+            if ($multipleFiltersEnabled) {
+                $filters->enableFilters($routeFilter, 'before');
+                $filters->enableFilters($routeFilter, 'after');
+            } else {
+                // for backward compatibility
+                $filters->enableFilter($routeFilter, 'before');
+                $filters->enableFilter($routeFilter, 'after');
+            }
         }
-
-        $uri = $this->determinePath();
 
         // Never run filters when running through Spark cli
         if (! defined('SPARKED')) {
+            // Run "before" filters
+            $this->benchmark->start('before_filters');
             $possibleResponse = $filters->run($uri, 'before');
+            $this->benchmark->stop('before_filters');
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
@@ -410,8 +421,11 @@ class CodeIgniter
         // Never run filters when running through Spark cli
         if (! defined('SPARKED')) {
             $filters->setResponse($this->response);
+
             // Run "after" filters
+            $this->benchmark->start('after_filters');
             $response = $filters->run($uri, 'after');
+            $this->benchmark->stop('after_filters');
         } else {
             $response = $this->response;
 
@@ -490,7 +504,9 @@ class CodeIgniter
      */
     protected function startBenchmark()
     {
-        $this->startTime = microtime(true);
+        if ($this->startTime === null) {
+            $this->startTime = microtime(true);
+        }
 
         $this->benchmark = Services::timer();
         $this->benchmark->start('total_execution', $this->startTime);
@@ -681,7 +697,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|null
+     * @return string|string[]|null
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
@@ -710,7 +726,13 @@ class CodeIgniter
 
         $this->benchmark->stop('routing');
 
-        return $this->router->getFilter();
+        // for backward compatibility
+        $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+        if (! $multipleFiltersEnabled) {
+            return $this->router->getFilter();
+        }
+
+        return $this->router->getFilters();
     }
 
     /**
@@ -913,11 +935,16 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli()) {
-            return;
+        if (is_cli() && ENVIRONMENT !== 'testing') {
+            return; // @codeCoverageIgnore
         }
         // Ignore AJAX requests
         if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
+            return;
+        }
+
+        // Ignore unroutable responses
+        if ($this->response instanceof DownloadResponse || $this->response instanceof RedirectResponse) {
             return;
         }
 

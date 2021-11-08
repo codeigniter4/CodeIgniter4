@@ -30,6 +30,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @var RouteCollection
      */
     protected $routes;
+
     protected $request;
     protected $config;
 

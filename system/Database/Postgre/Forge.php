@@ -33,6 +33,13 @@ class Forge extends BaseForge
     protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr = 'DROP INDEX %s';
+
+    /**
      * UNSIGNED support
      *
      * @var array

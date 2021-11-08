@@ -142,6 +142,28 @@ var ciDebugBar = {
 	},
 
 	/**
+	 * Toggle display of timeline child elements
+	 *
+	 * @param obj
+	 */
+	toggleChildRows : function (obj) {
+		if (typeof obj == 'string')
+		{
+			par = document.getElementById(obj + '_parent')
+			obj = document.getElementById(obj + '_children');
+		}
+
+		if (par && obj)
+		{
+			obj.style.display = obj.style.display == 'none' ? '' : 'none';
+			par.classList.toggle('timeline-parent-open');
+		}
+	},
+
+
+	//--------------------------------------------------------------------
+
+	/**
 	 *   Toggle tool bar from full to icon and icon to full
 	 */
 	toggleToolbar : function () {

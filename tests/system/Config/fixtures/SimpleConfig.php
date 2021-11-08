@@ -25,7 +25,8 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
     public $simple = [
         'name' => null,
     ];
-    // properties for environment over-ride testing
+
+    // properties for environment override testing
     public $alpha   = 'one';
     public $bravo   = 'two';
     public $charlie = 'three';
@@ -41,7 +42,10 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
         'doctor'  => 'Bones',
         'comms'   => 'Uhuru',
     ];
-
     public $shortie;
     public $longie;
+    public $onedeep_value;
+    public $one_deep = [
+        'under_deep' => null,
+    ];
 }

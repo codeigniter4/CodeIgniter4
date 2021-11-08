@@ -161,6 +161,20 @@ class Forge
     protected $default = ' DEFAULT ';
 
     /**
+     * DROP CONSTRAINT statement
+     *
+     * @var string
+     */
+    protected $dropConstraintStr;
+
+    /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr = 'DROP INDEX %s ON %s';
+
+    /**
      * Constructor.
      */
     public function __construct(BaseConnection $db)
@@ -351,12 +365,25 @@ class Forge
                     throw new InvalidArgumentException('Field information is required for that operation.');
                 }
 
-                $this->fields[] = $field;
+                $fieldName = explode(' ', $field, 2)[0];
+                $fieldName = trim($fieldName, '`\'"');
+
+                $this->fields[$fieldName] = $field;
             }
         }
 
         if (is_array($field)) {
-            $this->fields = array_merge($this->fields, $field);
+            foreach ($field as $idx => $f) {
+                if (is_string($f)) {
+                    $this->addField($f);
+
+                    continue;
+                }
+
+                if (is_array($f)) {
+                    $this->fields = array_merge($this->fields, [$idx => $f]);
+                }
+            }
         }
 
         return $this;
@@ -365,24 +392,66 @@ class Forge
     /**
      * Add Foreign Key
      *
+     * @param string|string[] $fieldName
+     * @param string|string[] $tableField
+     *
      * @throws DatabaseException
      *
      * @return Forge
      */
-    public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '')
     {
-        if (! isset($this->fields[$fieldName])) {
-            throw new DatabaseException(lang('Database.fieldNotExists', [$fieldName]));
+        $fieldName  = (array) $fieldName;
+        $tableField = (array) $tableField;
+        $errorNames = [];
+
+        foreach ($fieldName as $name) {
+            if (! isset($this->fields[$name])) {
+                $errorNames[] = $name;
+            }
         }
 
-        $this->foreignKeys[$fieldName] = [
-            'table'    => $tableName,
-            'field'    => $tableField,
-            'onDelete' => strtoupper($onDelete),
-            'onUpdate' => strtoupper($onUpdate),
+        if ($errorNames !== []) {
+            $errorNames[0] = implode(', ', $errorNames);
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $this->foreignKeys[] = [
+            'field'          => $fieldName,
+            'referenceTable' => $tableName,
+            'referenceField' => $tableField,
+            'onDelete'       => strtoupper($onDelete),
+            'onUpdate'       => strtoupper($onUpdate),
         ];
 
         return $this;
+    }
+
+    /**
+     * Drop Key
+     *
+     * @throws DatabaseException
+     *
+     * @return bool
+     */
+    public function dropKey(string $table, string $keyName)
+    {
+        $sql = sprintf(
+            $this->dropIndexStr,
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+        );
+
+        if ($sql === '') {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        return $this->db->query($sql);
     }
 
     /**
@@ -398,7 +467,7 @@ class Forge
             $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
         );
 
-        if ($sql === false) { // @phpstan-ignore-line
+        if ($sql === '') {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
@@ -437,6 +506,8 @@ class Forge
 
                 return false;
             }
+
+            return true;
         }
 
         if (($result = $this->db->query($sql)) !== false) {
@@ -458,7 +529,7 @@ class Forge
     }
 
     /**
-     * @return mixed
+     * @return bool|string
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
     {
@@ -761,7 +832,7 @@ class Forge
         $fields = [];
 
         foreach ($this->fields as $key => $attributes) {
-            if (is_int($key) && ! is_array($attributes)) {
+            if (! is_array($attributes)) {
                 $fields[] = ['_literal' => $attributes];
 
                 continue;
@@ -996,11 +1067,15 @@ class Forge
             'SET DEFAULT',
         ];
 
-        foreach ($this->foreignKeys as $field => $fkey) {
-            $nameIndex = $table . '_' . $field . '_foreign';
+        foreach ($this->foreignKeys as $fkey) {
+            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($nameIndex)
-                . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['table']) . ' (' . $this->db->escapeIdentifiers($fkey['field']) . ')';
+            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
                 $sql .= ' ON DELETE ' . $fkey['onDelete'];

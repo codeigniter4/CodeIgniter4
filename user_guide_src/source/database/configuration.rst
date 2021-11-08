@@ -9,7 +9,7 @@ Database Configuration
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at **app/Config/Database.php**. You can also set
-database connection values in the .env file. See below for more details.
+database connection values in the **.env** file. See below for more details.
 
 The config settings are stored in a class property that is an array with this
 prototype::
@@ -162,7 +162,7 @@ within the class' constructor::
 Configuring With .env File
 --------------------------
 
-You can also save your configuration values within a ``.env`` file with the current server's
+You can also save your configuration values within a **.env** file with the current server's
 database settings. You only need to enter the values that change from what is in the
 default group's configuration settings. The values should be name following this format, where
 ``default`` is the group name::

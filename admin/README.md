@@ -9,7 +9,6 @@ This folder contains tools or docs useful for project maintainers.
     In addition to the framework source, it includes unit testing and documentation source.  
     The three repositories following are built from this one as part of the release workflow.  
     This repo is meant to be forked by contributors.
-
 -   **framework** is the released developer repository.  
     It contains all the main pieces of the framework that developers would use to
     build their apps, but not the framework unit testing or the user guide source.  
@@ -25,9 +24,8 @@ This folder contains tools or docs useful for project maintainers.
     framework releases.  
     It could be downloaded, forked or potentially composer-installed.  
     This is a read-only repository.
-
--   **coding-standard** is the coding style standards repository.  
-    It contains PHP CodeSniffer rules to ensure consistent code style
+-   **coding-standard** <https://github.com/CodeIgniter/coding-standard> is the coding style standards repository.  
+    It contains PHP-CS-Fixer rules to ensure consistent code style
     within the framework itself.  
     It is meant to be composer-installed.
 -   **translations** is the repository holding official translations of

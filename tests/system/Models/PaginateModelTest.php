@@ -70,4 +70,13 @@ final class PaginateModelTest extends LiveModelTestCase
         $this->assertCount(3, $data);
         $this->assertSame(3, $this->model->pager->getDetails()['total']);
     }
+
+    public function testPaginatePageOutOfRange(): void
+    {
+        $this->createModel(ValidModel::class);
+        $this->model->paginate(1, 'default', -500);
+        $this->assertSame(1, $this->model->pager->getCurrentPage());
+        $this->model->paginate(1, 'default', 500);
+        $this->assertSame($this->model->pager->getPageCount(), $this->model->pager->getCurrentPage());
+    }
 }

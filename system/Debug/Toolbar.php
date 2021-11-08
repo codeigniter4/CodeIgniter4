@@ -149,7 +149,7 @@ class Toolbar
 
         $data['vars']['response'] = [
             'statusCode'  => $response->getStatusCode(),
-            'reason'      => esc($response->getReason()),
+            'reason'      => esc($response->getReasonPhrase()),
             'contentType' => esc($response->getHeaderLine('content-type')),
         ];
 
@@ -167,16 +167,38 @@ class Toolbar
      */
     protected function renderTimeline(array $collectors, float $startTime, int $segmentCount, int $segmentDuration, array &$styles): string
     {
+        $rows       = $this->collectTimelineData($collectors);
+        $styleCount = 0;
+
+        // Use recursive render function
+        return $this->renderTimelineRecursive($rows, $startTime, $segmentCount, $segmentDuration, $styles, $styleCount);
+    }
+
+    /**
+     * Recursively renders timeline elements and their children.
+     */
+    protected function renderTimelineRecursive(array $rows, float $startTime, int $segmentCount, int $segmentDuration, array &$styles, int &$styleCount, int $level = 0, bool $isChild = false): string
+    {
         $displayTime = $segmentCount * $segmentDuration;
-        $rows        = $this->collectTimelineData($collectors);
-        $output      = '';
-        $styleCount  = 0;
+
+        $output = '';
 
         foreach ($rows as $row) {
-            $output .= '<tr>';
-            $output .= "<td>{$row['name']}</td>";
-            $output .= "<td>{$row['component']}</td>";
-            $output .= "<td class='debug-bar-alignRight'>" . number_format($row['duration'] * 1000, 2) . ' ms</td>';
+            $hasChildren = isset($row['children']) && ! empty($row['children']);
+            $isQuery     = isset($row['query']) && ! empty($row['query']);
+
+            // Open controller timeline by default
+            $open = $row['name'] === 'Controller';
+
+            if ($hasChildren || $isQuery) {
+                $output .= '<tr class="timeline-parent' . ($open ? ' timeline-parent-open' : '') . '" id="timeline-' . $styleCount . '_parent" onclick="ciDebugBar.toggleChildRows(\'timeline-' . $styleCount . '\');">';
+            } else {
+                $output .= '<tr>';
+            }
+
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren || $isQuery ? '<nav></nav>' : '') . $row['name'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width10 ' : '') . 'debug-bar-alignRight">' . number_format($row['duration'] * 1000, 2) . ' ms</td>';
             $output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
 
             $offset = ((((float) $row['start'] - $startTime) * 1000) / $displayTime) * 100;
@@ -189,6 +211,29 @@ class Toolbar
             $output .= '</tr>';
 
             $styleCount++;
+
+            // Add children if any
+            if ($hasChildren || $isQuery) {
+                $output .= '<tr class="child-row" id="timeline-' . ($styleCount - 1) . '_children" style="' . ($open ? '' : 'display: none;') . '">';
+                $output .= '<td colspan="' . ($segmentCount + 3) . '" class="child-container">';
+                $output .= '<table class="timeline">';
+                $output .= '<tbody>';
+
+                if ($isQuery) {
+                    // Output query string if query
+                    $output .= '<tr>';
+                    $output .= '<td class="query-container" style="--level: ' . ($level + 1) . ';">' . $row['query'] . '</td>';
+                    $output .= '</tr>';
+                } else {
+                    // Recursively render children
+                    $output .= $this->renderTimelineRecursive($row['children'], $startTime, $segmentCount, $segmentDuration, $styles, $styleCount, $level + 1, true);
+                }
+
+                $output .= '</tbody>';
+                $output .= '</table>';
+                $output .= '</td>';
+                $output .= '</tr>';
+            }
         }
 
         return $output;
@@ -213,8 +258,50 @@ class Toolbar
         }
 
         // Sort it
+        $sortArray = [
+            array_column($data, 'start'), SORT_NUMERIC, SORT_ASC,
+            array_column($data, 'duration'), SORT_NUMERIC, SORT_DESC,
+            &$data,
+        ];
+
+        array_multisort(...$sortArray);
+
+        // Add end time to each element
+        array_walk($data, static function (&$row) {
+            $row['end'] = $row['start'] + $row['duration'];
+        });
+
+        // Group it
+        $data = $this->structureTimelineData($data);
 
         return $data;
+    }
+
+    /**
+     * Arranges the already sorted timeline data into a parent => child structure.
+     */
+    protected function structureTimelineData(array $elements): array
+    {
+        // We define ourselves as the first element of the array
+        $element = array_shift($elements);
+
+        // If we have children behind us, collect and attach them to us
+        while (! empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
+            $element['children'][] = array_shift($elements);
+        }
+
+        // Make sure our children know whether they have children, too
+        if (isset($element['children'])) {
+            $element['children'] = $this->structureTimelineData($element['children']);
+        }
+
+        // If we have no younger siblings, we can return
+        if (empty($elements)) {
+            return [$element];
+        }
+
+        // Make sure our younger siblings know their relatives, too
+        return array_merge([$element], $this->structureTimelineData($elements));
     }
 
     /**
@@ -331,6 +418,8 @@ class Toolbar
 
     /**
      * Inject debug toolbar into the response.
+     *
+     * @codeCoverageIgnore
      */
     public function respond()
     {
@@ -338,20 +427,20 @@ class Toolbar
             return;
         }
 
-        // @codeCoverageIgnoreStart
         $request = Services::request();
 
         // If the request contains '?debugbar then we're
         // simply returning the loading script
         if ($request->getGet('debugbar') !== null) {
-            // Let the browser know that we are sending javascript
             header('Content-Type: application/javascript');
 
             ob_start();
-            include $this->config->viewsPath . 'toolbarloader.js.php';
+            include $this->config->viewsPath . 'toolbarloader.js';
             $output = ob_get_clean();
+            $output = str_replace('{url}', rtrim(site_url(), '/'), $output);
+            echo $output;
 
-            exit($output);
+            exit;
         }
 
         // Otherwise, if it includes ?debugbar_time, then
@@ -360,29 +449,24 @@ class Toolbar
             helper('security');
 
             // Negotiate the content-type to format the output
-            $format = $request->negotiate('media', [
-                'text/html',
-                'application/json',
-                'application/xml',
-            ]);
+            $format = $request->negotiate('media', ['text/html', 'application/json', 'application/xml']);
             $format = explode('/', $format)[1];
 
-            $file     = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
-            $filename = WRITEPATH . 'debugbar/' . $file . '.json';
+            $filename = sanitize_filename('debugbar_' . $request->getGet('debugbar_time'));
+            $filename = WRITEPATH . 'debugbar/' . $filename . '.json';
 
-            // Show the toolbar
             if (is_file($filename)) {
-                $contents = $this->format(file_get_contents($filename), $format);
+                // Show the toolbar if it exists
+                echo $this->format(file_get_contents($filename), $format);
 
-                exit($contents);
+                exit;
             }
 
-            // File was not written or do not exists
+            // Filename not found
             http_response_code(404);
 
-            exit; // Exit here is needed to avoid load the index page
+            exit; // Exit here is needed to avoid loading the index page
         }
-        // @codeCoverageIgnoreEnd
     }
 
     /**

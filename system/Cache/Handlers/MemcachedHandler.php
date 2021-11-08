@@ -251,7 +251,7 @@ class MemcachedHandler extends BaseHandler
 
         // if not an array, don't try to count for PHP7.2
         if (! is_array($stored) || count($stored) !== 3) {
-            return false; // This will return null in a future release
+            return false; // @TODO This will return null in a future release
         }
 
         [$data, $time, $limit] = $stored;

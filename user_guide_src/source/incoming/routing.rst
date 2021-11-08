@@ -68,7 +68,7 @@ Placeholders Description
 (:num)       will match any integer.
 (:alpha)     will match any string of alphabetic characters
 (:alphanum)  will match any string of alphabetic characters or integers, or any combination of the two.
-(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
+(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids.
 ============ ===========================================================================================================
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
@@ -92,7 +92,7 @@ The ID will be set to “34”::
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup');
+    $routes->add('product/(:any)', 'Catalog::productLookup');
 
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
@@ -101,7 +101,7 @@ and the “productLookupByID” method passing in the match as a variable to the
 
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:any)', 'Catalog::productLookup/$1');
 
 will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
 Controller should take into account the maximum parameters::
@@ -115,12 +115,16 @@ Controller should take into account the maximum parameters::
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above::
 
-	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:segment)', 'Catalog::productLookup/$1');
 
 will only match product/123 and generate 404 errors for other example.
 
-.. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
-    routes, described below, as it is more secure. It will also provide a slight performance increase, since
+.. warning:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
+    routes, described below, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
+    will not work.
+
+.. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
 
@@ -238,7 +242,7 @@ run the filter before or after the controller. This is especially handy during a
         $routes->resource('users');
     });
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``.
+The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
 It is possible to nest groups within groups for finer organization if you need it::
 
@@ -352,15 +356,44 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 Applying Filters
 ----------------
 
-You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
+You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
+The value for the filter can be a string or an array of strings:
+
+* matching the aliases defined in **app/Config/Filters.php**.
+* filter classnames
+
+See `Controller filters <filters.html>`_ for more information on setting up filters.
+
+.. Warning:: If you set filters to routes in **app/Config/Routes.php**
+    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
+    When auto-routing is enabled, it may be possible that a controller can be accessed
+    via a different URL than the configured route,
+    in which case the filter you specified to the route will not be applied.
+    See :ref:`use-defined-routes-only` to disable auto-routing.
+
+**Alias filter**
+
+You specify an alias defined in **app/Config/Filters.php** for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods::
+You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods::
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
-See `Controller filters <filters.html>`_ for more information on setting up filters.
+**Classname filter**
+
+You specify a filter classname for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+
+**Multiple filters**
+
+.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See *Multiple filters for a route* in :doc:`/installation/upgrade_415` for the details.
+
+You specify an array for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
 
 Assigning Namespace
 -------------------
@@ -455,7 +488,7 @@ Routes Configuration Options
 ============================
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of `/app/Config/Routes.php`.
+application's needs. These options are available at the top of **app/Config/Routes.php**.
 
 Default Namespace
 -----------------
@@ -518,6 +551,8 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 
     $routes->setTranslateURIDashes(true);
 
+.. _use-defined-routes-only:
+
 Use Defined Routes Only
 -----------------------
 
@@ -526,6 +561,9 @@ controllers and methods as described above. You can disable this automatic match
 to only those defined by you, by setting the ``setAutoRoute()`` option to false::
 
     $routes->setAutoRoute(false);
+
+.. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
 404 Override
 ------------

@@ -7,8 +7,8 @@ from your test cases. Usually a ``TestResponse`` will be provided for you as a r
 `Controller Tests <controllers.html>`_ or `HTTP Feature Tests <feature.html>`_, but you can always
 create your own directly using any ``ResponseInterface``::
 
-	$result = new \CodeIgniter\Test\TestResponse($response);
-	$result->assertOK();
+    $result = new \CodeIgniter\Test\TestResponse($response);
+    $result->assertOK();
 
 Testing the Response
 ====================
@@ -299,8 +299,8 @@ This method will return the body of the response as a JSON string::
 
 You can use this method to determine if ``$response`` actually holds JSON content::
 
-	// Verify the response is JSON
-	$this->assertTrue($result->getJSON() !== false)
+    // Verify the response is JSON
+    $this->assertTrue($result->getJSON() !== false)
 
 .. note:: Be aware that the JSON string will be pretty-printed in the result.
 

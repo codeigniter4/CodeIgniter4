@@ -19,7 +19,6 @@ use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
 use ErrorException;
 use Throwable;
-use function error_reporting;
 
 /**
  * Exceptions manager
@@ -64,17 +63,11 @@ class Exceptions
      */
     protected $response;
 
-    /**
-     * Constructor.
-     */
     public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
     {
         $this->ob_level = ob_get_level();
-
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-
-        $this->config = $config;
-
+        $this->config   = $config;
         $this->request  = $request;
         $this->response = $response;
     }
@@ -82,17 +75,13 @@ class Exceptions
     /**
      * Responsible for registering the error, exception and shutdown
      * handling of our application.
+     *
+     * @codeCoverageIgnore
      */
     public function initialize()
     {
-        // Set the Exception Handler
         set_exception_handler([$this, 'exceptionHandler']);
-
-        // Set the Error Handler
         set_error_handler([$this, 'errorHandler']);
-
-        // Set the handler for shutdown to catch Parse errors
-        // Do we need this in PHP7?
         register_shutdown_function([$this, 'shutdownHandler']);
     }
 
@@ -105,12 +94,8 @@ class Exceptions
      */
     public function exceptionHandler(Throwable $exception)
     {
-        [
-            $statusCode,
-            $exitCode,
-        ] = $this->determineCodes($exception);
+        [$statusCode, $exitCode] = $this->determineCodes($exception);
 
-        // Log it
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', $exception->getMessage() . "\n{trace}", [
                 'trace' => $exception->getTraceAsString(),
@@ -119,8 +104,7 @@ class Exceptions
 
         if (! is_cli()) {
             $this->response->setStatusCode($statusCode);
-            $header = "HTTP/{$this->request->getProtocolVersion()} {$this->response->getStatusCode()} {$this->response->getReason()}";
-            header($header, true, $statusCode);
+            header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
 
             if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
@@ -142,6 +126,8 @@ class Exceptions
      * This seems to be primarily when a user triggers it with trigger_error().
      *
      * @throws ErrorException
+     *
+     * @codeCoverageIgnore
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
@@ -149,24 +135,27 @@ class Exceptions
             return;
         }
 
-        // Convert it to an exception and pass it along.
         throw new ErrorException($message, 0, $severity, $file, $line);
     }
 
     /**
      * Checks to see if any errors have happened during shutdown that
      * need to be caught and handle them.
+     *
+     * @codeCoverageIgnore
      */
     public function shutdownHandler()
     {
         $error = error_get_last();
 
-        // If we've got an error that hasn't been displayed, then convert
-        // it to an Exception and use the Exception handler to display it
-        // to the user.
-        // Fatal Error?
-        if ($error !== null && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
-            $this->exceptionHandler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
+        if ($error === null) {
+            return;
+        }
+
+        ['type' => $type, 'message' => $message, 'file' => $file, 'line' => $line] = $error;
+
+        if (in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
+            $this->exceptionHandler(new ErrorException($message, $type, 0, $file, $line));
         }
     }
 
@@ -222,20 +211,25 @@ class Exceptions
             $viewFile = $altPath . $altView;
         }
 
-        // Prepare the vars
-        $vars = $this->collectVars($exception, $statusCode);
-        extract($vars);
+        if (! isset($viewFile)) {
+            echo 'The error view files were not found. Cannot render exception trace.';
 
-        // Render it
+            exit(1);
+        }
+
         if (ob_get_level() > $this->ob_level + 1) {
             ob_end_clean();
         }
 
-        ob_start();
-        include $viewFile; // @phpstan-ignore-line
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        echo $buffer;
+        echo(function () use ($exception, $statusCode, $viewFile): string {
+            $vars = $this->collectVars($exception, $statusCode);
+            extract($vars, EXTR_SKIP);
+
+            ob_start();
+            include $viewFile;
+
+            return ob_get_clean();
+        })();
     }
 
     /**
@@ -244,7 +238,8 @@ class Exceptions
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
         $trace = $exception->getTrace();
-        if (! empty($this->config->sensitiveDataInTrace)) {
+
+        if ($this->config->sensitiveDataInTrace !== []) {
             $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
         }
 
@@ -279,11 +274,11 @@ class Exceptions
             }
         }
 
-        if (! is_iterable($trace) && is_object($trace)) {
+        if (is_object($trace)) {
             $trace = get_object_vars($trace);
         }
 
-        if (is_iterable($trace)) {
+        if (is_array($trace)) {
             foreach ($trace as $pathKey => $subarray) {
                 $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
             }
@@ -298,19 +293,18 @@ class Exceptions
         $statusCode = abs($exception->getCode());
 
         if ($statusCode < 100 || $statusCode > 599) {
-            $exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
-            if ($exitStatus > EXIT__AUTO_MAX) { // 125 is EXIT__AUTO_MAX
-                $exitStatus = EXIT_ERROR; // EXIT_ERROR
+            $exitStatus = $statusCode + EXIT__AUTO_MIN;
+
+            if ($exitStatus > EXIT__AUTO_MAX) {
+                $exitStatus = EXIT_ERROR;
             }
+
             $statusCode = 500;
         } else {
-            $exitStatus = 1; // EXIT_ERROR
+            $exitStatus = EXIT_ERROR;
         }
 
-        return [
-            $statusCode ?: 500,
-            $exitStatus,
-        ];
+        return [$statusCode, $exitStatus];
     }
 
     //--------------------------------------------------------------------
@@ -318,8 +312,6 @@ class Exceptions
     //--------------------------------------------------------------------
 
     /**
-     * Clean Path
-     *
      * This makes nicer looking paths for the error output.
      */
     public static function cleanPath(string $file): string
@@ -354,6 +346,7 @@ class Exceptions
         if ($bytes < 1024) {
             return $bytes . 'B';
         }
+
         if ($bytes < 1048576) {
             return round($bytes / 1024, 2) . 'KB';
         }
@@ -390,18 +383,16 @@ class Exceptions
         $source = str_replace(["\r\n", "\r"], "\n", $source);
         $source = explode("\n", highlight_string($source, true));
         $source = str_replace('<br />', "\n", $source[1]);
-
         $source = explode("\n", str_replace("\r\n", "\n", $source));
 
         // Get just the part to show
-        $start = $lineNumber - (int) round($lines / 2);
-        $start = $start < 0 ? 0 : $start;
+        $start = max($lineNumber - (int) round($lines / 2), 0);
 
         // Get just the lines we need to display, while keeping line numbers...
         $source = array_splice($source, $start, $lines, true); // @phpstan-ignore-line
 
         // Used to format the line number in the source
-        $format = '% ' . strlen(sprintf('%s', $start + $lines)) . 'd';
+        $format = '% ' . strlen((string) ($start + $lines)) . 'd';
 
         $out = '';
         // Because the highlighting may have an uneven number
@@ -412,11 +403,11 @@ class Exceptions
 
         foreach ($source as $n => $row) {
             $spans += substr_count($row, '<span') - substr_count($row, '</span');
-
             $row = str_replace(["\r", "\n"], ['', ''], $row);
 
             if (($n + $start + 1) === $lineNumber) {
                 preg_match_all('#<[^>]+>#', $row, $tags);
+
                 $out .= sprintf(
                     "<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
                     $n + $start + 1,

@@ -19,7 +19,7 @@ and much, much more.
 Enabling Kint
 =============
 
-By default, Kint is enabled in **development** and **testing** environments only. This can be altered by modifying
+By default, Kint is enabled in **development** and **testing** :doc:`environments </general/environments>` only. This can be altered by modifying
 the ``$useKint`` value in the environment configuration section of the main **index.php** file::
 
     $useKint = true;
@@ -59,10 +59,11 @@ to help you debug and optimize.
 Enabling the Toolbar
 ====================
 
-The toolbar is enabled by default in any environment *except* production. It will be shown whenever the
-constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
-app/Config/Boot/development.php) and can be modified there to determine what environments it shows
-itself in.
+The toolbar is enabled by default in any :doc:`environment </general/environments>` *except* **production**. It will be shown whenever the
+constant CI_DEBUG is defined and its value is truthy. This is defined in the boot files (e.g.
+**app/Config/Boot/development.php**) and can be modified there to determine what environment to show.
+
+.. note:: The Debug Toolbar is not displayed when your ``baseURL`` setting (in **app/Config/App.php** or ``app.baseURL`` in **.env**) does not match your actual URL.
 
 The toolbar itself is displayed as an :doc:`After Filter </incoming/filters>`. You can stop it from ever
 running by removing it from the ``$globals`` property of **app/Config/Filters.php**.

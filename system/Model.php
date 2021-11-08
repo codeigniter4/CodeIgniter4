@@ -251,7 +251,7 @@ class Model extends BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $set       An associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
@@ -557,13 +557,13 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param array|string $key    Field name, or an array of field/value pairs
-     * @param string|null  $value  Field value, if $key is a single field
-     * @param bool|null    $escape Whether to escape values and identifiers
+     * @param mixed     $key    Field name, or an array of field/value pairs
+     * @param mixed     $value  Field value, if $key is a single field
+     * @param bool|null $escape Whether to escape values
      *
      * @return $this
      */
-    public function set($key, ?string $value = '', ?bool $escape = null)
+    public function set($key, $value = '', ?bool $escape = null)
     {
         $data = is_array($key) ? $key : [$key => $value];
 
@@ -710,24 +710,19 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @return $this|null
+     * @return mixed
      */
     public function __call(string $name, array $params)
     {
-        $result = parent::__call($name, $params);
+        $builder = $this->builder();
+        $result  = null;
 
-        if ($result === null && method_exists($builder = $this->builder(), $name)) {
+        if (method_exists($this->db, $name)) {
+            $result = $this->db->{$name}(...$params);
+        } elseif (method_exists($builder, $name)) {
             $result = $builder->{$name}(...$params);
-        }
-
-        if (empty($result)) {
-            if (! method_exists($this->builder(), $name)) {
-                $className = static::class;
-
-                throw new BadMethodCallException('Call to undefined method ' . $className . '::' . $name);
-            }
-
-            return $result;
+        } else {
+            throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
         }
 
         if ($result instanceof BaseBuilder) {

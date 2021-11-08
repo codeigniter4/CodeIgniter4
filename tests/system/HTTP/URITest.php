@@ -861,7 +861,7 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedNoIndex()
     {
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
@@ -888,7 +888,7 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedWithIndex()
     {
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/index.php/controller/method';
@@ -915,7 +915,7 @@ final class URITest extends CIUnitTestCase
 
     public function testForceGlobalSecureRequests()
     {
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';

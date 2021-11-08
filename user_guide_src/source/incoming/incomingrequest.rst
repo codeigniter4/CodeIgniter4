@@ -272,15 +272,15 @@ You can work with the current URI string (the path relative to your baseURL) usi
 Note that this relative path on the shared instance of ``IncomingRequest`` is what the :doc:`URL Helper </helpers/url_helper>`
 functions use, so this is a helpful way to "spoof" an incoming request for testing::
 
-	class MyMenuTest extends CIUnitTestCase
-	{
-		public function testActiveLinkUsesCurrentUrl()
-		{
-			service('request')->setPath('users/list');
-			$menu = new MyMenu();
-			$this->assertTrue('users/list', $menu->getActiveLink());
-		}
-	}
+    class MyMenuTest extends CIUnitTestCase
+    {
+        public function testActiveLinkUsesCurrentUrl()
+        {
+            service('request')->setPath('users/list');
+            $menu = new MyMenu();
+            $this->assertTrue('users/list', $menu->getActiveLink());
+        }
+    }
 
 Uploaded Files
 --------------
@@ -476,13 +476,13 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
         :noindex:
 
-        :param	mixed	$index: COOKIE name
+        :param    mixed    $index: COOKIE name
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:	    $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
-        :rtype:	mixed
+        :returns:        $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
+        :rtype:    mixed
 
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
 
@@ -500,13 +500,13 @@ The methods provided by the parent classes that are available are:
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
         :noindex:
 
-        :param	mixed	$index: Value name
+        :param    mixed    $index: Value name
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:	    $_SERVER item value if found, null if not
-        :rtype:	mixed
+        :returns:        $_SERVER item value if found, null if not
+        :rtype:    mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
         methods, only it fetches getServer data (``$_SERVER``)::
@@ -532,17 +532,17 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getPath()
 
-        :returns:	    The current URI path relative to ``$_SERVER['SCRIPT_NAME']``
-        :rtype:	string
+        :returns:        The current URI path relative to ``$_SERVER['SCRIPT_NAME']``
+        :rtype:    string
 
         This is the safest method to determine the "current URI", since ``IncomingRequest::$uri``
         may not be aware of the complete App configuration for base URLs.
 
     .. php:method:: setPath($path)
 
-        :param	string	$path: The relative path to use as the current URI
-        :returns:	    This Incoming Request
-        :rtype:	IncomingRequest
+        :param    string    $path: The relative path to use as the current URI
+        :returns:        This Incoming Request
+        :rtype:    IncomingRequest
 
         Used mostly just for testing purposes, this allows you to set the relative path
         value for the current request instead of relying on URI detection. This will also

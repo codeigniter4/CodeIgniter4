@@ -111,7 +111,7 @@ class Registrar
     {
         $config = [];
 
-        // Under Github Actions, we can set an ENV var named 'DB'
+        // Under GitHub Actions, we can set an ENV var named 'DB'
         // so that we can test against multiple databases.
         if ($group = getenv('DB')) {
             if (! empty(self::$dbConfig[$group])) {
@@ -120,5 +120,19 @@ class Registrar
         }
 
         return $config;
+    }
+
+    /**
+     * Demonstrates Publisher security.
+     *
+     * @see PublisherRestrictionsTest::testRegistrarsNotAllowed()
+     *
+     * @return array
+     */
+    public static function Publisher()
+    {
+        return [
+            'restrictions' => [SUPPORTPATH => '*'],
+        ];
     }
 }

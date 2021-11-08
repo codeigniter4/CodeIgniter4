@@ -1,18 +1,15 @@
 <?php
 
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Models\ExampleModel;
 
 /**
  * @internal
  */
-final class ExampleDatabaseTest extends \Tests\Support\DatabaseTestCase
+final class ExampleDatabaseTest extends CIUnitTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Extra code to run before each test
-    }
+    use DatabaseTestTrait;
 
     public function testModelFindAll()
     {

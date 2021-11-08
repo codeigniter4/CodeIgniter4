@@ -23,6 +23,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Model;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
@@ -559,7 +560,7 @@ if (! function_exists('helper')) {
     {
         static $loaded = [];
 
-        $loader = Services::locator(true);
+        $loader = Services::locator();
 
         if (! is_array($filenames)) {
             $filenames = [$filenames];
@@ -595,18 +596,14 @@ if (! function_exists('helper')) {
 
                 $includes[] = $path;
                 $loaded[]   = $filename;
-            }
-
-            // No namespaces, so search in all available locations
-            else {
+            } else {
+                // No namespaces, so search in all available locations
                 $paths = $loader->search('Helpers/' . $filename);
 
                 foreach ($paths as $path) {
-                    if (strpos($path, APPPATH) === 0) {
-                        // @codeCoverageIgnoreStart
+                    if (strpos($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
                         $appHelper = $path;
-                    // @codeCoverageIgnoreEnd
-                    } elseif (strpos($path, SYSTEMPATH) === 0) {
+                    } elseif (strpos($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
                         $systemHelper = $path;
                     } else {
                         $localIncludes[] = $path;
@@ -616,10 +613,8 @@ if (! function_exists('helper')) {
 
                 // App-level helpers should override all others
                 if (! empty($appHelper)) {
-                    // @codeCoverageIgnoreStart
                     $includes[] = $appHelper;
                     $loaded[]   = $filename;
-                    // @codeCoverageIgnoreEnd
                 }
 
                 // All namespaced files get added in next
@@ -644,19 +639,11 @@ if (! function_exists('is_cli')) {
     /**
      * Check if PHP was invoked from the command line.
      *
-     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in CLI
+     * @codeCoverageIgnore Cannot be tested fully as PHPUnit always run in php-cli
      */
     function is_cli(): bool
     {
-        if (PHP_SAPI === 'cli') {
-            return true;
-        }
-
         if (defined('STDIN')) {
-            return true;
-        }
-
-        if (stristr(PHP_SAPI, 'cgi') && getenv('TERM')) {
             return true;
         }
 
@@ -725,8 +712,23 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
-        return Services::language($locale)
-            ->getLine($line, $args);
+        $language = Services::language();
+
+        // Get active locale
+        $activeLocale = $language->getLocale();
+
+        if ($locale && $locale !== $activeLocale) {
+            $language->setLocale($locale);
+        }
+
+        $line = $language->getLine($line, $args);
+
+        if ($locale && $locale !== $activeLocale) {
+            // Reset to active locale
+            $language->setLocale($activeLocale);
+        }
+
+        return $line;
     }
 }
 
@@ -769,7 +771,12 @@ if (! function_exists('model')) {
     /**
      * More simple way of getting model instances from Factories
      *
-     * @return mixed
+     * @template T of Model
+     *
+     * @param class-string<T> $name
+     *
+     * @return T
+     * @phpstan-return Model
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
@@ -819,9 +826,7 @@ if (! function_exists('redirect')) {
     /**
      * Convenience method that works with the current global $request and
      * $router instances to redirect using named/reverse-routed routes
-     * to determine the URL to go to. If nothing is found, will treat
-     * as a traditional redirect and pass the string in, letting
-     * $response->redirect() determine the correct method and code.
+     * to determine the URL to go to.
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *

@@ -99,6 +99,80 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testUpdateWithSetAsInt()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set('age', 22)->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "age" = 22 WHERE "id" = 1';
+        $expectedBinds = [
+            'age' => [
+                22,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateWithSetAsBoolean()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set('manager', true)->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "manager" = 1 WHERE "id" = 1';
+        $expectedBinds = [
+            'manager' => [
+                true,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateWithSetAsArray()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $builder->testMode()->set(['name' => 'Programmer', 'age' => 22, 'manager' => true])->where('id', 1)->update(null, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\', "age" = 22, "manager" = 1 WHERE "id" = 1';
+        $expectedBinds = [
+            'name' => [
+                'Programmer',
+                true,
+            ],
+            'age' => [
+                22,
+                true,
+            ],
+            'manager' => [
+                true,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testUpdateThrowsExceptionWithNoData()
     {
         $builder = new BaseBuilder('jobs', $this->db);
@@ -136,24 +210,51 @@ final class UpdateTest extends CIUnitTestCase
 
         $expected = <<<EOF
             UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = :id: THEN :name:
-            WHEN "id" = :id.1: THEN :name.1:
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = :id: THEN :description:
-            WHEN "id" = :id.1: THEN :description.1:
-            ELSE "description" END
-            WHERE "id" IN(:id:,:id.1:)
-            EOF;
-
-        $this->assertSame($expected, $query->getOriginalQuery());
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
             WHEN "id" = 2 THEN 'Comedian'
             WHEN "id" = 3 THEN 'Cab Driver'
             ELSE "name" END, "description" = CASE{$space}
             WHEN "id" = 2 THEN 'There''s something in your teeth'
             WHEN "id" = 3 THEN 'I am yellow'
+            ELSE "description" END
+            WHERE "id" IN(2,3)
+            EOF;
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetUpdateBatchWithoutEscape()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+        $escape  = false;
+
+        $builder->setUpdateBatch([
+            [
+                'id'          => 2,
+                'name'        => 'SUBSTRING(name, 1)',
+                'description' => 'SUBSTRING(description, 3)',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'SUBSTRING(name, 2)',
+                'description' => 'SUBSTRING(description, 4)',
+            ],
+        ], 'id', $escape);
+
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->updateBatch(null, 'id');
+
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(MockQuery::class, $query);
+
+        $space = ' ';
+
+        $expected = <<<EOF
+            UPDATE "jobs" SET "name" = CASE{$space}
+            WHEN "id" = 2 THEN SUBSTRING(name, 1)
+            WHEN "id" = 3 THEN SUBSTRING(name, 2)
+            ELSE "name" END, "description" = CASE{$space}
+            WHEN "id" = 2 THEN SUBSTRING(description, 3)
+            WHEN "id" = 3 THEN SUBSTRING(description, 4)
             ELSE "description" END
             WHERE "id" IN(2,3)
             EOF;
@@ -276,7 +377,7 @@ final class UpdateTest extends CIUnitTestCase
             ->where('id', 2)
             ->update(null, null, null);
 
-        $expectedSQL   = 'UPDATE "mytable" SET field = field+1 WHERE "id" = 2';
+        $expectedSQL   = 'UPDATE "mytable" SET "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [
             'id' => [
                 2,
@@ -298,7 +399,7 @@ final class UpdateTest extends CIUnitTestCase
             ->where('id', 2)
             ->update(null, null, null);
 
-        $expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', field = field+1 WHERE "id" = 2';
+        $expectedSQL   = 'UPDATE "mytable" SET "foo" = \'bar\', "field" = field+1 WHERE "id" = 2';
         $expectedBinds = [
             'foo' => [
                 'bar',

@@ -19,8 +19,6 @@ use Config\Services;
 use InvalidArgumentException;
 
 /**
- * Class RouteCollection
- *
  * @todo Implement nested resource routing (See CakePHP)
  */
 class RouteCollection implements RouteCollectionInterface
@@ -512,7 +510,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *      $routes->add('news', 'Posts::index');
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -663,10 +661,11 @@ class RouteCollection implements RouteCollectionInterface
         // resources are sent to, we need to have a new name
         // to store the values in.
         $newName = implode('\\', array_map('ucfirst', explode('/', $name)));
+
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
         if (isset($options['controller'])) {
-            $newName = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+            $newName = ucfirst(esc(strip_tags($options['controller'])));
         }
 
         // In order to allow customization of allowed id values
@@ -756,10 +755,11 @@ class RouteCollection implements RouteCollectionInterface
         // resources are sent to, we need to have a new name
         // to store the values in.
         $newName = implode('\\', array_map('ucfirst', explode('/', $name)));
+
         // If a new controller is specified, then we replace the
         // $name value with the name of the new controller.
         if (isset($options['controller'])) {
-            $newName = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+            $newName = ucfirst(esc(strip_tags($options['controller'])));
         }
 
         // In order to allow customization of allowed id values
@@ -821,7 +821,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
@@ -841,7 +841,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to GET requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -853,7 +853,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to POST requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -865,7 +865,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PUT requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -877,7 +877,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to DELETE requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -889,7 +889,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to HEAD requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -901,7 +901,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PATCH requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -913,7 +913,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to OPTIONS requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -925,7 +925,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to command-line requests.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1040,12 +1040,35 @@ class RouteCollection implements RouteCollectionInterface
      *    'role:admin,manager'
      *
      * has a filter of "role", with parameters of ['admin', 'manager'].
+     *
+     * @deprecated Use getFiltersForRoute()
      */
     public function getFilterForRoute(string $search, ?string $verb = null): string
     {
         $options = $this->loadRoutesOptions($verb);
 
         return $options[$search]['filter'] ?? '';
+    }
+
+    /**
+     * Returns the filters that should be applied for a single route, along
+     * with any parameters it might have. Parameters are found by splitting
+     * the parameter name on a colon to separate the filter name from the parameter list,
+     * and the splitting the result on commas. So:
+     *
+     *    'role:admin,manager'
+     *
+     * has a filter of "role", with parameters of ['admin', 'manager'].
+     */
+    public function getFiltersForRoute(string $search, ?string $verb = null): array
+    {
+        $options = $this->loadRoutesOptions($verb);
+
+        if (is_string($options[$search]['filter'])) {
+            return [$options[$search]['filter']];
+        }
+
+        return $options[$search]['filter'] ?? [];
     }
 
     /**
@@ -1083,7 +1106,7 @@ class RouteCollection implements RouteCollectionInterface
      * the request method(s) that this route will work for. They can be separated
      * by a pipe character "|" if there is more than one.
      *
-     * @param array|string $to
+     * @param array|Closure|string $to
      */
     protected function create(string $verb, string $from, $to, ?array $options = null)
     {

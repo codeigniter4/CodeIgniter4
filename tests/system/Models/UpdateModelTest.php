@@ -166,7 +166,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -186,7 +185,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -315,7 +313,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [

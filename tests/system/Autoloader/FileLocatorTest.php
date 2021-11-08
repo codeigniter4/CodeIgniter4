@@ -261,7 +261,7 @@ final class FileLocatorTest extends CIUnitTestCase
     public function testGetClassNameFromClassFile()
     {
         $this->assertSame(
-            __CLASS__,
+            self::class,
             $this->locator->getClassname(__FILE__)
         );
     }

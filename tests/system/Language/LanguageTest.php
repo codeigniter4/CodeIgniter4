@@ -272,6 +272,23 @@ final class LanguageTest extends CIUnitTestCase
     }
 
     /**
+     * Test if after using lang() with a locale the Language class keep the locale after return the $line
+     */
+    public function testLangKeepLocale()
+    {
+        $this->lang = Services::language('en', true);
+
+        lang('Language.languageGetLineInvalidArgumentException');
+        $this->assertSame('en', $this->lang->getLocale());
+
+        lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
+        $this->assertSame('en', $this->lang->getLocale());
+
+        lang('Language.languageGetLineInvalidArgumentException');
+        $this->assertSame('en', $this->lang->getLocale());
+    }
+
+    /**
      * Testing base locale vs variants, with fallback to English.
      *
      * Key	en	ab	ac-CD

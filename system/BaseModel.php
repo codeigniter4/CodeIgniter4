@@ -366,7 +366,7 @@ abstract class BaseModel
      * This methods works only with dbCalls
      *
      * @param array|null $set       An associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
@@ -763,7 +763,7 @@ abstract class BaseModel
      * Compiles batch insert runs the queries, validating each row prior.
      *
      * @param array|null $set       an associative array of insert values
-     * @param bool|null  $escape    Whether to escape values and identifiers
+     * @param bool|null  $escape    Whether to escape values
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
@@ -1031,6 +1031,10 @@ abstract class BaseModel
             return false;
         }
 
+        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, (array) $data)) {
+            $data[$this->updatedField] = $this->setDate();
+        }
+
         return $this->doReplace($data, $returnSQL);
     }
 
@@ -1079,7 +1083,7 @@ abstract class BaseModel
         // Store it in the Pager library, so it can be paginated in the views.
         $this->pager = $pager->store($group, $page, $perPage, $this->countAllResults(false), $segment);
         $perPage     = $this->pager->getPerPage($group);
-        $offset      = ($page - 1) * $perPage;
+        $offset      = ($pager->getCurrentPage($group) - 1) * $perPage;
 
         return $this->findAll($perPage, $offset);
     }

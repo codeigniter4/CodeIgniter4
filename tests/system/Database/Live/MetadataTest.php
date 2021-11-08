@@ -52,6 +52,10 @@ final class MetadataTest extends CIUnitTestCase
             $prefix . 'without_auto_increment',
             $prefix . 'ip_table',
         ];
+
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'], true)) {
+            $this->expectedTables[] = $prefix . 'ci_sessions';
+        }
     }
 
     public function testListTables()

@@ -22,9 +22,9 @@ use CodeIgniter\Test\DatabaseTestTrait;
 final class LimitTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
-    protected $refresh = true;
 
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     public function testLimit()
     {

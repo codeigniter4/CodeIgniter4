@@ -12,7 +12,8 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\Database as DatabaseFactory;
+use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;
@@ -38,21 +39,24 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->connection   = Database::connect();
 
         parent::setUp();
+
+        if ($this->connection instanceof SQLite3Connection) {
+            $file = WRITEPATH . 'foobar.db';
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        } else {
+            $util = (new DatabaseFactory())->loadUtils($this->connection);
+
+            if ($util->databaseExists('foobar')) {
+                Database::forge()->dropDatabase('foobar');
+            }
+        }
     }
 
     protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
-
-        if ($this->connection instanceof Connection) {
-            $file = WRITEPATH . 'foobar.db';
-
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        } else {
-            Database::forge()->dropDatabase('foobar');
-        }
 
         parent::tearDown();
     }
@@ -70,7 +74,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     public function testSqliteDatabaseDuplicated()
     {
-        if (! $this->connection instanceof Connection) {
+        if (! $this->connection instanceof SQLite3Connection) {
             $this->markTestSkipped('Needs to run on SQLite3.');
         }
 
@@ -83,7 +87,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     public function testOtherDriverDuplicatedDatabase()
     {
-        if ($this->connection instanceof Connection) {
+        if ($this->connection instanceof SQLite3Connection) {
             $this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
         }
 
