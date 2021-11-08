@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.1.4 to 4.1.5 &mdash; CodeIgniter 4.1.4 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>Upgrading from 4.1.4 to 4.1.5 &mdash; CodeIgniter 4.1.5 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -383,11 +383,44 @@ If you enable it:</p>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id3">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space
+will break your application. All changes noted here are optional until the next major version,
+and any mandatory changes will be covered in the sections above.</p>
+</div>
 <section id="content-changes">
 <h3>Content Changes<a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/CURLRequest.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cache.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Feature.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Generators.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Publisher.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/welcome_message.php</span></code></p></li>
+</ul>
 </section>
 <section id="all-changes">
 <h3>All Changes<a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<p>This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no effect on the runtime:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/CURLRequest.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Cache.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Feature.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Generators.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Kint.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Publisher.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Config/Security.php</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">app/Views/welcome_message.php</span></code></p></li>
+</ul>
 </section>
 </section>
 </section>

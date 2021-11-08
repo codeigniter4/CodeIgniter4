@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.0.x to 4.0.4 &mdash; CodeIgniter 4.1.5 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>Version 4.1.6 &mdash; CodeIgniter 4.1.5 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -18,9 +18,7 @@
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrading from 3.x to 4.x" href="upgrade_4xx.html" />
-    <link rel="prev" title="Upgrading from 4.0.4 to 4.0.5" href="upgrade_405.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,14 +45,14 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -249,9 +247,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Installation</a> &raquo;</li>
-          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
-      <li>Upgrading from 4.0.x to 4.0.4</li>
+      <li>Version 4.1.6</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -260,31 +256,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-4-0-x-to-4-0-4">
-<h1>Upgrading from 4.0.x to 4.0.4<a class="headerlink" href="#upgrading-from-4-0-x-to-4-0-4" title="Permalink to this headline"></a></h1>
-<p>CodeIgniter 4.0.4 fixes a bug in the implementation of <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a>, breaking
-code implementing the <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>.</p>
-<p><strong>Update FilterInterface declarations</strong></p>
-<p>The method signatures for <code class="docutils literal notranslate"><span class="pre">after()</span></code> and <code class="docutils literal notranslate"><span class="pre">before()</span></code> must be updated to include <code class="docutils literal notranslate"><span class="pre">$arguments</span></code>. The function
-definitions should be changed from:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
-<span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
-</pre></div>
+  <section id="version-4-1-6">
+<h1>Version 4.1.6<a class="headerlink" href="#version-4-1-6" title="Permalink to this headline"></a></h1>
+<p>Release Date: Not released</p>
+<p><strong>4.1.6 release of CodeIgniter4</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+</ul>
 </div>
-<p>to:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
-<span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
-</pre></div>
-</div>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+</section>
+<section id="enhancements">
+<h2><a class="toc-backref" href="#id2">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+</section>
+<section id="changes">
+<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+</section>
+<section id="deprecations">
+<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+</section>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_405.html" class="btn btn-neutral float-left" title="Upgrading from 4.0.4 to 4.0.5" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_4xx.html" class="btn btn-neutral float-right" title="Upgrading from 3.x to 4.x" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
