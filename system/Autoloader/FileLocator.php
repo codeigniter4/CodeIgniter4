@@ -55,6 +55,7 @@ class FileLocator
 
         // Standardize slashes to handle nested directories.
         $file = strtr($file, '/', '\\');
+        $file = ltrim($file, '\\');
 
         $segments = explode('\\', $file);
 
@@ -64,23 +65,20 @@ class FileLocator
         }
 
         $paths    = [];
-        $prefix   = '';
         $filename = '';
 
         // Namespaces always comes with arrays of paths
         $namespaces = $this->autoloader->getNamespace();
 
-        while (! empty($segments)) {
-            $prefix .= empty($prefix) ? array_shift($segments) : '\\' . array_shift($segments);
+        foreach (array_keys($namespaces) as $namespace) {
+            if (substr($file, 0, strlen($namespace)) === $namespace) {
+                // There may be sub-namespaces of the same vendor,
+                // so overwrite them with namespaces found later.
+                $paths = $namespaces[$namespace];
 
-            if (empty($namespaces[$prefix])) {
-                continue;
+                $fileWithoutNamespace = substr($file, strlen($namespace));
+                $filename             = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
             }
-
-            $paths = $namespaces[$prefix];
-
-            $filename = implode('/', $segments);
-            break;
         }
 
         // if no namespaces matched then quit
