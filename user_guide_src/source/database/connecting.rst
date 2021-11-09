@@ -61,7 +61,7 @@ If you need to connect to more than one database simultaneously you can
 do so as follows::
 
     $db1 = \Config\Database::connect('group_one');
-    $db  = \Config\Database::connect('group_two');
+    $db2 = \Config\Database::connect('group_two');
 
 Note: Change the words "group_one" and "group_two" to the specific
 group names you are connecting to.
