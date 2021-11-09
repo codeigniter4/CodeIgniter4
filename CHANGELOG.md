@@ -6,30 +6,30 @@
 
 **Fixed bugs:**
 
-* Fixes and enhancements to Exceptions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5052
 * Fix entity name generation when bundled in model by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5055
-* Fix variable variable `$$id` in RedisHandler by @Terrorboy in https://github.com/codeigniter4/CodeIgniter4/pull/5062
-* Previous Responses by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5034
+* Fix `Model::__call` throwing `BadMethodCallException` on empty results by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5139
+* Fixed an issue where the dropForeginKey method would execute an empty query when the dropConstraintStr property was empty. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5173
+* Update 'updated_at' when enabled in replace() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4684
 * Fix query binding with two colons in query by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5117
 * Fixed the problem that _createTable does not take into account that it returns true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5133
-* Fix color not updated in several places of the precompiled CSS by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5155
-* Fix `Model::__call` throwing `BadMethodCallException` on empty results by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5139
-* Error when value is an object - validating api data by @daycry in https://github.com/codeigniter4/CodeIgniter4/pull/5142
-* Fix debugbar styles printing by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5100
-* Fix highlighting in database debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5129
-* Fixed an issue where the dropForeginKey method would execute an empty query when the dropConstraintStr property was empty. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5173
-* Fix debug toolbar db connection count by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5172
 * Fixed a problem with not run escape for identities in like when `insensitiveSearch` is true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5170
 * Fixed an issue where an unnecessary prefix was given when the random number was a column. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5179
+* Error when value is an object - validating api data by @daycry in https://github.com/codeigniter4/CodeIgniter4/pull/5142
+* Fix color not updated in several places of the precompiled CSS by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5155
+* Fix debugbar styles printing by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5100
+* Fix highlighting in database debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5129
+* Fix debug toolbar db connection count by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5172
 * Fix CSRF filter does not work when set it to only post by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5194
 * Fix GC issue when session lifetime is set to 0 by @lf-uraku-yuki in https://github.com/codeigniter4/CodeIgniter4/pull/4744
 * Fix wrong helper path resolution by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5246
 * Fix: remove CURLRequest headers sharing from $_SERVER by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5249
 * Fix Localization not working/being ignored for 404 page by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5267
 * fix: module filters are not discovered when using route filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5280
-* Update 'updated_at' when enabled in replace() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4684
 * IncomingRequest - Trim trailing slash by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/4974
+* Previous Responses by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5034
 * (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
+* Fix variable variable `$$id` in RedisHandler by @Terrorboy in https://github.com/codeigniter4/CodeIgniter4/pull/5062
+* Fixes and enhancements to Exceptions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5052
 
 **Implemented enhancements:**
 
