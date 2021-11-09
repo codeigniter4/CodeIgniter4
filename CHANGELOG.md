@@ -33,17 +33,16 @@
 
 **Implemented enhancements:**
 
-* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
-* Multiple filters for a route and classname filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5128
 * feat: `_` can be used as separators in environment variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5156
+* Multiple filters for a route and classname filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5128
 * Feature - Mark duplicate queries by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5185
 * [Debug] Add formatted query string to timeline. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5196
-* Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171
 * [Debug] Improve keyword highlighting and escaping of query strings.  by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5200
+* Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
+* Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
 * Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
 * Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
 * feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
-* Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
 
 **Merged pull requests:**
 
