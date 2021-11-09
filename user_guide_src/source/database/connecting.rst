@@ -15,7 +15,7 @@ database available globally in that class.
     $db = \Config\Database::connect();
 
 If the above function does **not** contain any information in the first
-parameter it will connect to the default group specified in your database config
+parameter, it will connect to the default group specified in your database config
 file. For most people, this is the preferred method of use.
 
 A convenience method exists that is purely a wrapper around the above line
