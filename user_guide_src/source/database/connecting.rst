@@ -26,8 +26,10 @@ and is provided for your convenience::
 Available Parameters
 --------------------
 
-#. The database group name, a string that must match the config class' property name. Default value is ``$config->defaultGroup``.
-#. true/false (boolean). Whether to return the shared connection (see
+**\\Config\\Database::connect($group = null, bool $getShared = true): BaseConnection**
+
+#. ``$group``: The database group name, a string that must match the config class' property name. Default value is ``$config->defaultGroup``.
+#. ``$getShared``: true/false (boolean). Whether to return the shared connection (see
    Connecting to Multiple Databases below).
 
 Manually Connecting to a Database
