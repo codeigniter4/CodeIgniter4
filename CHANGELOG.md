@@ -20,6 +20,7 @@
 * Fix highlighting in database debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5129
 * Fix debug toolbar db connection count by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5172
 * Fix CSRF filter does not work when set it to only post by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5194
+* Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
 * Fix GC issue when session lifetime is set to 0 by @lf-uraku-yuki in https://github.com/codeigniter4/CodeIgniter4/pull/4744
 * Fix wrong helper path resolution by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5246
 * Fix: remove CURLRequest headers sharing from $_SERVER by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5249
@@ -42,7 +43,6 @@
 * Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
 * Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
 * Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
-* Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
 * feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
 
 **Merged pull requests:**
