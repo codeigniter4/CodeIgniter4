@@ -63,7 +63,7 @@ do so as follows::
     $db1 = \Config\Database::connect('group_one');
     $db2 = \Config\Database::connect('group_two');
 
-Note: Change the words "group_one" and "group_two" to the specific
+Note: Change the words ``group_one`` and ``group_two`` to the specific
 group names you are connecting to.
 
 .. note:: You don't need to create separate database configurations if you
