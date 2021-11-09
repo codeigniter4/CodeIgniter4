@@ -50,30 +50,17 @@
 * Merge branch '4.2' by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5060
 * Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
 * Remove unintended dead code in pre-commit by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5116
-* Fix Forge test by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5135
 * Adjust orange color in debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5136
-* Fix MemcachedHandlerTest::testGetMetaData() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5147
 * fix typo by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/5124
 * (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
 * Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
-* Refactor/optimise starter's tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5158
-* Add unit test to ensure named binds don't get replaced in binded values by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5184
-* Fix Cache testGetMetaData() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5189
 * Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
 * Rename toolbar loader to be a regular JS file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5224
-* Remove invalid @runTestsInSeparateProcesses by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5217
 * [HTTP] Update Http Status Description based on latest iana.org by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5235
 * Remove CSRF properties by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5231
-* Fix Publisher test failures on macOS by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5211
-* Add CSRF test by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5236
-* Fix TimeTest::testToFormattedDateString() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5245
-* Fix CreateDatabaseTest::testCreateDatabase() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5244
-* Replace explicit calls to `Services::reset()` in tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5259
 * Remove static variables for PHP 8.1 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5262
-* Speed up `CommonSingleServiceTest` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5258
 * Replace usage of `FILTER_SANITIZE_STRING` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5263
 * Simplify logic of `number_to_roman` function by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5270
-* Refactor FiltersTest.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5242
 * Fix compatibility of `PgSql\Result` on closing the result instance by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5279
 * Fix compatibility of Postgres result for PHP 8.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5278
 
