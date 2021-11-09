@@ -14,6 +14,7 @@
 * Fixed the problem that _createTable does not take into account that it returns true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5133
 * Fixed a problem with not run escape for identities in like when `insensitiveSearch` is true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5170
 * Fixed an issue where an unnecessary prefix was given when the random number was a column. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5179
+* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
 * Error when value is an object - validating api data by @daycry in https://github.com/codeigniter4/CodeIgniter4/pull/5142
 * Fix color not updated in several places of the precompiled CSS by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5155
 * Fix debugbar styles printing by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5100
@@ -40,7 +41,6 @@
 * [Debug] Add formatted query string to timeline. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5196
 * [Debug] Improve keyword highlighting and escaping of query strings.  by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5200
 * Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171
-* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
 * Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
 * Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
 * feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
