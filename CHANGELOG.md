@@ -51,7 +51,6 @@
 * Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
 * Remove unintended dead code in pre-commit by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5116
 * Adjust orange color in debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5136
-* fix typo by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/5124
 * (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
 * Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
 * Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
