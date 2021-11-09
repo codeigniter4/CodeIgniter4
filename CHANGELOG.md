@@ -4,6 +4,12 @@
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.4...v4.1.5)
 
+**Fixed bugs:**
+
+**Implemented enhancements:**
+
+**Merged pull requests:**
+
 * Fixes and enhancements to Exceptions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5052
 * Add entry to changelog for initial PHP 8.1 changes by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5054
 * Apply NoCodeSeparatorCommentFixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5053
@@ -182,7 +188,8 @@
 * Prep for 4.1.5 release by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5293
 * 4.1.5 Ready code by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5294
 
-## New Contributors
+**New Contributors**
+
 * @Terrorboy made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5062
 * @vlakoff made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5136
 * @Felipebros made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5152
