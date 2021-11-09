@@ -33,6 +33,18 @@
 
 **Implemented enhancements:**
 
+* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
+* Multiple filters for a route and classname filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5128
+* feat: `_` can be used as separators in environment variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5156
+* Feature - Mark duplicate queries by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5185
+* [Debug] Add formatted query string to timeline. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5196
+* Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171
+* [Debug] Improve keyword highlighting and escaping of query strings.  by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5200
+* Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
+* Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
+* feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
+* Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
+
 **Merged pull requests:**
 
 * Add entry to changelog for initial PHP 8.1 changes by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5054
@@ -93,15 +105,12 @@
 * docs: fix Google.com to DuckDuckGo.com by @Felipebros in https://github.com/codeigniter4/CodeIgniter4/pull/5153
 * chore(deps-dev): update rector/rector requirement from 0.11.55 to 0.11.56 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5154
 * docs: fix tests/README by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5166
-* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
 * docs: fix classname for testing by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5169
 * docs: fix coding style in uploaded_files.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5174
 * fix typo by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/5124
-* Multiple filters for a route and classname filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5128
 * (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
 * Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
 * Add tabs detector for RST files by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5165
-* feat: `_` can be used as separators in environment variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5156
 * chore(deps-dev): update rector/rector requirement from 0.11.56 to 0.11.57 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5177
 * docs: fix 404 links to sytle guide by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5167
 * docs: convert `contributing/*.rst` to `*.md` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5180
@@ -111,7 +120,6 @@
 * Add unit test to ensure named binds don't get replaced in binded values by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5184
 * Fix  PHPDoc for Security by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5187
 * Fix Cache testGetMetaData() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5189
-* Feature - Mark duplicate queries by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5185
 * Remove coverage.txt by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5188
 * chore: add Database in bug report template by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5182
 * Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
@@ -123,9 +131,6 @@
 * Update CSRF related docs by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5198
 * docs: Github -> GitHub by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5203
 * chore(deps-dev): update rector/rector requirement from 0.11.57 to 0.11.58 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5204
-* [Debug] Add formatted query string to timeline. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5196
-* Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171
-* [Debug] Improve keyword highlighting and escaping of query strings.  by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5200
 * docs: small improvement in debugging by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5208
 * Add `@group CacheLive` to tests by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5209
 * docs: remove link to Model in routing.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5210
@@ -138,8 +143,6 @@
 * chore(deps-dev): update rector/rector requirement from 0.11.59 to 0.11.60 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5225
 * Improve tests/README.md by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5221
 * add escape to identifiers for document. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5195
-* Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
-* Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
 * docs: improve Upgrading 4.1.5 page format by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5232
 * Rename toolbar loader to be a regular JS file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5224
 * Remove invalid @runTestsInSeparateProcesses by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5217
@@ -182,10 +185,8 @@
 * Update bug report template by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5287
 * docs: update Tutorial by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5285
 * docs: improve modules.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5281
-* feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
 * docs: improve routing.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5284
 * docs: fix RST format in caching.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5291
-* Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
 * Prep for 4.1.5 release by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5293
 * 4.1.5 Ready code by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5294
 
