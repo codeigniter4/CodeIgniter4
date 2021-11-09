@@ -47,10 +47,8 @@
 
 **Merged pull requests:**
 
-* Add entry to changelog for initial PHP 8.1 changes by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5054
 * Apply NoCodeSeparatorCommentFixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5053
 * Merge branch '4.2' by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5060
-* Document new coding style guide by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4825
 * Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
 * Fix typo in Config/Factories.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5092
 * Remove unintended dead code in pre-commit by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5116
@@ -62,16 +60,11 @@
 * Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
 * Refactor/optimise starter's tests by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5158
 * Add unit test to ensure named binds don't get replaced in binded values by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5184
-* Fix  PHPDoc for Security by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5187
 * Fix Cache testGetMetaData() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5189
 * Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
-* Add `@group CacheLive` to tests by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5209
-* Fix typo in @var classname in Tests by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5216
-* add escape to identifiers for document. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5195
 * Rename toolbar loader to be a regular JS file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5224
 * Remove invalid @runTestsInSeparateProcesses by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5217
 * [HTTP] Update Http Status Description based on latest iana.org by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5235
-* Fix user guide on CSRF by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5230
 * Remove CSRF properties by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5231
 * Fix Publisher test failures on macOS by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5211
 * Add CSRF test by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5236
