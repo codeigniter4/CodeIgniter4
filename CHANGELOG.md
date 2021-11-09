@@ -47,7 +47,6 @@
 
 **Merged pull requests:**
 
-* Apply NoCodeSeparatorCommentFixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5053
 * Merge branch '4.2' by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5060
 * Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
 * Fix typo in Config/Factories.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5092
