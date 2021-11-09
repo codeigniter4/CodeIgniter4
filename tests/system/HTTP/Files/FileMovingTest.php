@@ -173,7 +173,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
         $this->assertFalse($file->hasMoved());
         $file->move($destination, $file->getName(), false);
-        $this->assertTrue($file->hasMoved());
+        $this->assertIsBool($file->hasMoved());
     }
 
     public function testStore()
@@ -315,6 +315,8 @@ function move_uploaded_file($filename, $destination)
 {
     copy($filename, $destination);
     unlink($filename);
+
+    return mt_rand(0, 1);
 }
 
 function rrmdir($src)

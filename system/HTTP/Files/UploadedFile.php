@@ -152,10 +152,10 @@ class UploadedFile extends File implements UploadedFileInterface
         @chmod($targetPath, 0777 & ~umask());
 
         // Success, so store our new information
-        $this->path     = $targetPath;
-        $this->name     = basename($destination);
+        $this->path = $targetPath;
+        $this->name = basename($destination);
 
-        return true;
+        return $this->hasMoved;
     }
 
     /**
