@@ -179,7 +179,7 @@ class Table
             }
 
             $new[] = $temp;
-        } while (count($array) > 0);
+        } while ($array !== []);
 
         return $new;
     }
