@@ -30,6 +30,7 @@
 * fix: module filters are not discovered when using route filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5280
 * Update 'updated_at' when enabled in replace() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4684
 * IncomingRequest - Trim trailing slash by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/4974
+* (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
 
 **Implemented enhancements:**
 
@@ -51,7 +52,6 @@
 * Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
 * Remove unintended dead code in pre-commit by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5116
 * Adjust orange color in debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5136
-* (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
 * Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
 * Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
 * Rename toolbar loader to be a regular JS file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5224
