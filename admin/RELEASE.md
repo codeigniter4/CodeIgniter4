@@ -4,6 +4,17 @@
 > Updated for `4.1.2` on May 17, 2021.
 > -MGatner
 
+## Labeling PRs
+
+To auto-generate changelog, each PR to be listed in changelog must have one of the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
+- **bug** ... PRs that fix bugs
+- **enhancement** ... PRs to improve existing functionalities
+- **new feature** ... PRs for new features
+- **refactor** ... PRs to refactor
+
+And PRs that have the breaking changes must have the following label:
+- **breaking change** ... PRs that may break existing functionalities
+
 ## Preparation
 
 * Work off direct clones of the repos so the release branches persist for a time
