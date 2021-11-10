@@ -35,6 +35,9 @@ final class FileMovingTest extends CIUnitTestCase
         }
 
         $_FILES = [];
+
+        // Set the mock's return value to true
+        move_uploaded_file('', '', true);
     }
 
     protected function tearDown(): void
@@ -262,7 +265,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file->move($destination, $file->getName(), false);
     }
 
-    public function testFailedMove()
+    public function testFailedMoveBecauseOfWarning()
     {
         $_FILES = [
             'userfile' => [
@@ -285,6 +288,41 @@ final class FileMovingTest extends CIUnitTestCase
         $file       = $collection->getFile('userfile');
 
         $this->expectException(HTTPException::class);
+        $file->move($destination, $file->getName(), false);
+    }
+
+    public function testFailedMoveBecauseOfFalseReturned()
+    {
+        $finalFilename = 'fileA';
+
+        $_FILES = [
+            'userfile1' => [
+                'name'     => $finalFilename . '.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile1'));
+
+        $destination = $this->destination;
+
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+
+        $file = $collection->getFile('userfile1');
+
+        // Set the mock's return value to false
+        move_uploaded_file('', '', false);
+
+        $this->expectException(HTTPException::class);
+
         $file->move($destination, $file->getName(), false);
     }
 }
@@ -311,10 +349,20 @@ function is_uploaded_file($filename)
  * This overwrite is for testing the move operation.
  */
 
-function move_uploaded_file($filename, $destination)
+function move_uploaded_file($filename, $destination, ?bool $setReturnValue = null)
 {
+    static $return = true;
+
+    if ($setReturnValue !== null) {
+        $return = $setReturnValue;
+
+        return true;
+    }
+
     copy($filename, $destination);
     unlink($filename);
+
+    return $return;
 }
 
 function rrmdir($src)
