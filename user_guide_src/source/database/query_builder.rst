@@ -295,14 +295,14 @@ methods:
         $where = "name='Joe' AND status='boss' OR status='active'";
         $builder->where($where);
 
-    If you are using user-supplied data within the string, you MUST escape the
+.. warning:: If you are using user-supplied data within the string, you MUST escape the
     data manually. Failure to do so could result in SQL injections.
 
     ::
 
-        $name = $builder->db->escape('Joe');
-        $where = "name={$name} AND status='boss' OR status='active'";
-        $builder->where($where);
+    $name = $builder->db->escape('Joe');
+    $where = "name={$name} AND status='boss' OR status='active'";
+    $builder->where($where);
 
 #. **Subqueries:**
 
