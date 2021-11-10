@@ -225,6 +225,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 12. Make sure the tests pass to have a higher chance of merging.
 13. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
 14. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+15. Label your pull request with the appropriate label if you can.
 
 See [Contribution workflow](./workflow.md) for Git workflow details.
 

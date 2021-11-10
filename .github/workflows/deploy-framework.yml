@@ -40,11 +40,11 @@ jobs:
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
-            const release = await github.repos.getLatestRelease({
+            const release = await github.rest.repos.getLatestRelease({
               owner: context.repo.owner,
               repo: context.repo.repo
             })
-            github.repos.createRelease({
+            github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: 'framework',
               tag_name: release.data.tag_name,
@@ -85,11 +85,11 @@ jobs:
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
-            const release = await github.repos.getLatestRelease({
+            const release = await github.rest.repos.getLatestRelease({
               owner: context.repo.owner,
               repo: context.repo.repo
             })
-            github.repos.createRelease({
+            github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: 'appstarter',
               tag_name: release.data.tag_name,

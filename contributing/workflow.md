@@ -185,7 +185,6 @@ Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
-
 **Note:**
 > If you do not provide a title or description for your PR, the odds of it being summarily rejected
 rise astronomically.
@@ -202,6 +201,19 @@ tests. You don't need to raise a new PR.
 If your PR does not follow our contribution guidelines, or is
 incomplete, the codebase maintainers will comment on it, pointing out
 what needs fixing.
+
+### Labeling PRs
+
+If you have the privilege of labeling PRs, you can help the maintainers.
+
+Label your PRs with the one of the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
+- **bug** ... PRs that fix bugs
+- **enhancement** ... PRs to improve existing functionalities
+- **new feature** ... PRs for new features
+- **refactor** ... PRs to refactor
+
+And if your PRs have the breaking changes, label the following label:
+- **breaking change** ... PRs that may break existing functionalities
 
 ## Cleanup
 

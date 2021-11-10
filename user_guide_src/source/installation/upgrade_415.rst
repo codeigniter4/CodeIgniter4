@@ -61,6 +61,14 @@ The bug was fixed. If your requests depend on the headers, your requests might f
 In this case, add the necessary headers manually.
 See `CURLRequest Class <../libraries/curlrequest.html#headers>`_ for how to add.
 
+Query Builder changes
+---------------------
+
+For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.
+
+- When you use ``insertBatch()`` and ``updateBatch()``, the return value of ``$query->getOriginalQuery()`` has changed. It no longer returns the query with the binded parameters, but the actual query that was run.
+- If ``testMode`` is ``true``, ``insertBatch()`` will return an SQL string array instead of the number of affected rows. This change was made so that the returned data type is the same as the ``updateBatch()`` method.
+
 Breaking Enhancements
 =====================
 
@@ -96,8 +104,40 @@ See *Applying Filters* in :doc:`Routing </incoming/routing>` for the functionali
 Project Files
 =============
 
+Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+
+.. note:: Except in very rare cases for bug fixes, no changes made to files for the project space
+    will break your application. All changes noted here are optional until the next major version,
+    and any mandatory changes will be covered in the sections above.
+
 Content Changes
 ---------------
 
+The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:
+
+* ``app/Config/CURLRequest.php``
+* ``app/Config/Cache.php``
+* ``app/Config/Feature.php``
+* ``app/Config/Generators.php``
+* ``app/Config/Publisher.php``
+* ``app/Config/Security.php``
+* ``app/Views/welcome_message.php``
+
 All Changes
 -----------
+
+This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no effect on the runtime:
+
+* ``app/Config/CURLRequest.php``
+* ``app/Config/Cache.php``
+* ``app/Config/Feature.php``
+* ``app/Config/Generators.php``
+* ``app/Config/Kint.php``
+* ``app/Config/Publisher.php``
+* ``app/Config/Security.php``
+* ``app/Views/welcome_message.php``

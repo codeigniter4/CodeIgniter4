@@ -268,7 +268,10 @@ class FormatRules
     }
 
     /**
-     * Checks a URL to ensure it's formed correctly.
+     * Checks a string to ensure it is (loosely) a URL.
+     *
+     * Warning: this rule will pass basic strings like
+     * "banana"; use valid_url_strict for a stricter rule.
      *
      * @param string $str
      */
@@ -289,6 +292,27 @@ class FormatRules
         $str = 'http://' . $str;
 
         return filter_var($str, FILTER_VALIDATE_URL) !== false;
+    }
+
+    /**
+     * Checks a URL to ensure it's formed correctly.
+     *
+     * @param string|null $validSchemes comma separated list of allowed schemes
+     */
+    public function valid_url_strict(?string $str = null, ?string $validSchemes = null): bool
+    {
+        if (empty($str)) {
+            return false;
+        }
+
+        $scheme       = strtolower(parse_url($str, PHP_URL_SCHEME));
+        $validSchemes = explode(
+            ',',
+            strtolower($validSchemes ?? 'http,https')
+        );
+
+        return in_array($scheme, $validSchemes, true)
+            && filter_var($str, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
