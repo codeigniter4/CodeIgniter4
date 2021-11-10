@@ -12,7 +12,7 @@ To auto-generate changelog, each PR to be listed in changelog must have one of t
 - **new feature** ... PRs for new features
 - **refactor** ... PRs to refactor
 
-And a PRs that has the breaking changes must have the following label:
+And PRs that have the breaking changes must have the following label:
 - **breaking change** ... PRs that may break existing functionalities
 
 ## Preparation
