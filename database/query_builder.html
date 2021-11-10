@@ -541,6 +541,11 @@ control the comparison:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>If you are using user-supplied data within the string, you MUST escape the
 data manually. Failure to do so could result in SQL injections.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">);</span>
@@ -548,8 +553,8 @@ data manually. Failure to do so could result in SQL injections.</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
 </div>
-</div></blockquote>
-</li>
+</div>
+<ol class="arabic">
 <li><p><strong>Subqueries:</strong></p>
 <blockquote>
 <div><p>You can use an anonymous function to create a subquery:</p>
