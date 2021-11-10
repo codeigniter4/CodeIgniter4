@@ -31,10 +31,7 @@ final class CommandRunnerTest extends CIUnitTestCase
      */
     private static $logger;
 
-    /**
-     * @var CommandRunner
-     */
-    private static $runner;
+    private static CommandRunner $runner;
 
     public static function setUpBeforeClass(): void
     {

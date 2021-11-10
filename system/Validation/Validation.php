@@ -107,7 +107,7 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        $data = $data ?? $this->data;
+        $data ??= $this->data;
 
         // i.e. is_unique
         $data['DBGroup'] = $dbGroup;
@@ -307,8 +307,6 @@ class Validation implements ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
-     *
-     * @param IncomingRequest|RequestInterface $request
      */
     public function withRequest(RequestInterface $request): ValidationInterface
     {

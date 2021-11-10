@@ -551,9 +551,7 @@ class Router implements RouterInterface
      */
     protected function scanControllers(array $segments): array
     {
-        $segments = array_filter($segments, static function ($segment) {
-            return $segment !== '';
-        });
+        $segments = array_filter($segments, static fn ($segment) => $segment !== '');
         // numerically reindex the array, removing gaps
         $segments = array_values($segments);
 

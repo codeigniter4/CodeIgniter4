@@ -20,9 +20,9 @@ use Config\Cache;
  */
 final class CacheFactoryTest extends CIUnitTestCase
 {
-    private static $directory = 'CacheFactory';
-    private $cacheFactory;
-    private $config;
+    private static string $directory = 'CacheFactory';
+    private CacheFactory $cacheFactory;
+    private Cache $config;
 
     protected function setUp(): void
     {

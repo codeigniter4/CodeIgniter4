@@ -38,7 +38,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     /**
      * @var string CSRF protection hash
      */
-    private $hash = '8b9218a55906f9dcc1dc263dce7f005a';
+    private string $hash = '8b9218a55906f9dcc1dc263dce7f005a';
 
     protected function setUp(): void
     {

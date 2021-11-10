@@ -25,7 +25,7 @@ use Tests\Support\Autoloader\FatalLocator;
  */
 final class CommonHelperTest extends CIUnitTestCase
 {
-    private $dummyHelpers = [
+    private array $dummyHelpers = [
         APPPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
         SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'foobarbaz_helper.php',
     ];

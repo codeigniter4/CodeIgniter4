@@ -191,7 +191,7 @@ class Parser extends View
             }
         }
 
-        $this->tempData = $this->tempData ?? $this->data;
+        $this->tempData ??= $this->data;
         $this->tempData = array_merge($this->tempData, $data);
 
         return $this;

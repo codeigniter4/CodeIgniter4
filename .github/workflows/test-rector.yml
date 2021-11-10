@@ -7,6 +7,7 @@ on:
     branches:
       - 'develop'
       - '4.*'
+      - 'php74'
     paths:
       - 'app/**'
       - 'system/**'

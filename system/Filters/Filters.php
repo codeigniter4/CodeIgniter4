@@ -292,7 +292,7 @@ class Filters
      */
     public function addFilter(string $class, ?string $alias = null, string $when = 'before', string $section = 'globals')
     {
-        $alias = $alias ?? md5($class);
+        $alias ??= md5($class);
 
         if (! isset($this->config->{$section})) {
             $this->config->{$section} = [];

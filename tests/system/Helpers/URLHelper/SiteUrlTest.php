@@ -28,10 +28,7 @@ use Config\App;
  */
 final class SiteUrlTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
+    private App $config;
 
     public static function setUpBeforeClass(): void
     {

@@ -20,8 +20,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class EnvironmentCommandTest extends CIUnitTestCase
 {
     private $streamFilter;
-    private $envPath       = ROOTPATH . '.env';
-    private $backupEnvPath = ROOTPATH . '.env.backup';
+    private string $envPath       = ROOTPATH . '.env';
+    private string $backupEnvPath = ROOTPATH . '.env.backup';
 
     protected function setUp(): void
     {

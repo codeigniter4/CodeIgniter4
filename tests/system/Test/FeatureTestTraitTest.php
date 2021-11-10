@@ -38,9 +38,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Hello World';
-                },
+                static fn () => 'Hello World',
             ],
         ]);
         $response = $this->get('home');
@@ -55,9 +53,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'add',
                 'home',
-                static function () {
-                    return 'Hello Earth';
-                },
+                static fn () => 'Hello Earth',
             ],
         ]);
         $response = $this->call('get', 'home');
@@ -75,9 +71,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                static function () {
-                    return 'Hello Mars';
-                },
+                static fn () => 'Hello Mars',
             ],
         ]);
         $response = $this->post('home');
@@ -91,9 +85,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                static function () {
-                    return 'Hello ' . service('request')->getPost('foo') . '!';
-                },
+                static fn () => 'Hello ' . service('request')->getPost('foo') . '!',
             ],
         ]);
         $response = $this->post('home', ['foo' => 'Mars']);
@@ -107,9 +99,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'put',
                 'home',
-                static function () {
-                    return 'Hello Pluto';
-                },
+                static fn () => 'Hello Pluto',
             ],
         ]);
         $response = $this->put('home');
@@ -123,9 +113,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'patch',
                 'home',
-                static function () {
-                    return 'Hello Jupiter';
-                },
+                static fn () => 'Hello Jupiter',
             ],
         ]);
         $response = $this->patch('home');
@@ -139,9 +127,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'options',
                 'home',
-                static function () {
-                    return 'Hello George';
-                },
+                static fn () => 'Hello George',
             ],
         ]);
         $response = $this->options('home');
@@ -155,9 +141,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'delete',
                 'home',
-                static function () {
-                    return 'Hello Wonka';
-                },
+                static fn () => 'Hello Wonka',
             ],
         ]);
         $response = $this->delete('home');
@@ -171,9 +155,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Home';
-                },
+                static fn () => 'Home',
             ],
         ])->withSession([
             'fruit'    => 'apple',
@@ -195,9 +177,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Home';
-                },
+                static fn () => 'Home',
             ],
         ])->withSession()->get('home');
 

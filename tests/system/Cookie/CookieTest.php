@@ -24,10 +24,7 @@ use LogicException;
  */
 final class CookieTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {

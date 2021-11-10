@@ -80,9 +80,7 @@ class FileCollection implements Countable, IteratorAggregate
     {
         $directory = self::resolveDirectory($directory);
 
-        return array_filter($files, static function (string $value) use ($directory): bool {
-            return strpos($value, $directory) === 0;
-        });
+        return array_filter($files, static fn (string $value): bool => strpos($value, $directory) === 0);
     }
 
     /**
@@ -105,9 +103,7 @@ class FileCollection implements Countable, IteratorAggregate
             $pattern = "#{$pattern}#";
         }
 
-        return array_filter($files, static function ($value) use ($pattern) {
-            return (bool) preg_match($pattern, basename($value));
-        });
+        return array_filter($files, static fn ($value) => (bool) preg_match($pattern, basename($value)));
     }
 
     //--------------------------------------------------------------------

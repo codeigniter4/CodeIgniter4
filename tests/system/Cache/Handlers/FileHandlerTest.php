@@ -19,8 +19,8 @@ use Config\Cache;
  */
 final class FileHandlerTest extends AbstractHandlerTest
 {
-    private static $directory = 'FileHandler';
-    private $config;
+    private static string $directory = 'FileHandler';
+    private Cache $config;
 
     private static function getKeyArray()
     {
@@ -119,9 +119,7 @@ final class FileHandlerTest extends AbstractHandlerTest
      */
     public function testRemember()
     {
-        $this->handler->remember(self::$key1, 2, static function () {
-            return 'value';
-        });
+        $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
         $this->assertSame('value', $this->handler->get(self::$key1));
         $this->assertNull($this->handler->get(self::$dummy));
@@ -328,8 +326,8 @@ final class FileHandlerTest extends AbstractHandlerTest
 
 final class BaseTestFileHandler extends FileHandler
 {
-    private static $directory = 'FileHandler';
-    private $config;
+    private static string $directory = 'FileHandler';
+    private Cache $config;
 
     public function __construct()
     {

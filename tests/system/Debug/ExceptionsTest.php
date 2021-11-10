@@ -25,10 +25,7 @@ final class ExceptionsTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    /**
-     * @var Exceptions
-     */
-    private $exception;
+    private \CodeIgniter\Debug\Exceptions $exception;
 
     protected function setUp(): void
     {

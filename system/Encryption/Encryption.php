@@ -80,7 +80,7 @@ class Encryption
      */
     public function __construct(?EncryptionConfig $config = null)
     {
-        $config = $config ?? new EncryptionConfig();
+        $config ??= new EncryptionConfig();
 
         $this->key    = $config->key;
         $this->driver = $config->driver;

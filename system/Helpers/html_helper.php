@@ -156,7 +156,7 @@ if (! function_exists('img_data')) {
         $data = base64_encode($data);
 
         // Figure out the type (Hail Mary to JPEG)
-        $mime = $mime ?? Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
+        $mime ??= Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
 
         return 'data:' . $mime . ';base64,' . $data;
     }

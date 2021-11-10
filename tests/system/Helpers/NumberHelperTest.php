@@ -83,17 +83,17 @@ final class NumberHelperTest extends CIUnitTestCase
 
     public function testMbFormat()
     {
-        $this->assertSame('3.3 MB', number_to_size(3456789, 1, 'en_US'));
+        $this->assertSame('3.3 MB', number_to_size(3_456_789, 1, 'en_US'));
     }
 
     public function testGbFormat()
     {
-        $this->assertSame('1.8 GB', number_to_size(1932735283.2, 1, 'en_US'));
+        $this->assertSame('1.8 GB', number_to_size(1_932_735_283.2, 1, 'en_US'));
     }
 
     public function testTbFormat()
     {
-        $this->assertSame('112,283.3 TB', number_to_size(123456789123456789, 1, 'en_US'));
+        $this->assertSame('112,283.3 TB', number_to_size(123_456_789_123_456_789, 1, 'en_US'));
     }
 
     public function testThousands()

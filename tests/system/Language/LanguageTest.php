@@ -21,10 +21,7 @@ use Tests\Support\Language\SecondMockLanguage;
  */
 final class LanguageTest extends CIUnitTestCase
 {
-    /**
-     * @var MockLanguage
-     */
-    private $lang;
+    private Language $lang;
 
     protected function setUp(): void
     {

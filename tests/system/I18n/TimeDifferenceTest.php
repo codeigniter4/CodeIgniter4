@@ -41,16 +41,16 @@ final class TimeDifferenceTest extends CIUnitTestCase
         $this->assertSame(-365, $obj->getWeeks());
         $this->assertSame(-2557, $obj->getDays());
         $this->assertSame(-61368, $obj->getHours());
-        $this->assertSame(-3682080, $obj->getMinutes());
-        $this->assertSame(-220924800, $obj->getSeconds());
+        $this->assertSame(-3_682_080, $obj->getMinutes());
+        $this->assertSame(-220_924_800, $obj->getSeconds());
 
         $this->assertSame(-7, $obj->years);
         $this->assertSame(-84, $obj->months);
         $this->assertSame(-365, $obj->weeks);
         $this->assertSame(-2557, $obj->days);
         $this->assertSame(-61368, $obj->hours);
-        $this->assertSame(-3682080, $obj->minutes);
-        $this->assertSame(-220924800, $obj->seconds);
+        $this->assertSame(-3_682_080, $obj->minutes);
+        $this->assertSame(-220_924_800, $obj->seconds);
 
         $this->assertSame($diff / YEAR, $obj->getYears(true));
         $this->assertSame($diff / MONTH, $obj->getMonths(true));
