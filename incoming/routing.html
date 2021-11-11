@@ -498,11 +498,12 @@ a simple view:</p>
 <p>While the add() method is simple to use, it is often handier to work with multiple routes at once, using
 the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method. Instead of calling the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Catalog::productLookupById&#39;</span><span class="p">;</span>
-<span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;product/(:alphanum)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Catalog::productLookupByName&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$multipleRoutes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;product/(:num)&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Catalog::productLookupById&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;product/(:alphanum)&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Catalog::productLookupByName&#39;</span><span class="p">,</span>
+<span class="p">];</span>
 
-<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$routes</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$multipleRoutes</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -715,7 +716,7 @@ or, in the case of <code class="docutils literal notranslate"><span class="pre">
 <h3><a class="toc-backref" href="#id19">Limit to Hostname</a><a class="headerlink" href="#limit-to-hostname" title="Permalink to this headline"></a></h3>
 <p>You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the “hostname” option along with the desired domain to allow it on as part of the options array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;accounts.example.com&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;accounts.example.com&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>This example would only allow the specified hosts to work if the domain exactly matched “accounts.example.com”.
