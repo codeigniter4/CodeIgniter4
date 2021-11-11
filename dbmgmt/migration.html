@@ -590,12 +590,12 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
 <dl class="method">
 <dt id="regress">
-<code class="sig-name descname">regress</code><span class="sig-paren">(</span><em class="sig-param">$batch</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">regress</code><span class="sig-paren">(</span><em class="sig-param">$targetBatch</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$batch</strong> (<em>mixed</em>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means “three batches back”)</p></li>
-<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
+<li><p><strong>$targetBatch</strong> (<em>int</em>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means “three batches back”)</p></li>
+<li><p><strong>$group</strong> (<em>?string</em>) – database group name, if null default database group will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -698,7 +698,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 10, 2021.
+      <span class="lastupdated">Last updated on Nov 11, 2021.
       </span></p>
   </div>
 
