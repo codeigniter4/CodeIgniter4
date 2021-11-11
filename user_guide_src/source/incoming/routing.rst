@@ -188,11 +188,12 @@ While the add() method is simple to use, it is often handier to work with multip
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
-    $routes = [];
-    $routes['product/(:num)'] = 'Catalog::productLookupById';
-    $routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
+    $multipleRoutes = [
+        'product/(:num)'      => 'Catalog::productLookupById',
+        'product/(:alphanum)' => 'Catalog::productLookupByName',
+    ];
 
-    $collection->map($routes);
+    $routes->map($multipleRoutes);
 
 Redirecting Routes
 ==================
@@ -415,7 +416,7 @@ Limit to Hostname
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array::
 
-    $collection->get('from', 'to', ['hostname' => 'accounts.example.com']);
+    $routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
 
 This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
 It would not work under the main site at "example.com".
