@@ -80,6 +80,8 @@ class DatabaseHandler extends BaseHandler
             $this->platform = 'mysql';
         } elseif (strpos($driver, 'postgre') !== false) {
             $this->platform = 'postgre';
+        } elseif (strpos($driver, 'sqlite3') !== false) {
+            $this->platform = 'sqlite3';
         }
     }
 
@@ -175,7 +177,7 @@ class DatabaseHandler extends BaseHandler
                 'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($data) : $data,
             ];
 
-            if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
+            if (! $this->db->table($this->table)->set('timestamp', ($this->platform === 'sqlite3' ? "strftime('%Y-%m-%d %H:%M:%S', 'now')" : 'now()'), false)->insert($insertData)) {
                 return $this->fail();
             }
 
@@ -197,7 +199,7 @@ class DatabaseHandler extends BaseHandler
             $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($data) : $data;
         }
 
-        if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
+        if (! $builder->set('timestamp', ($this->platform === 'sqlite3' ? "strftime('%Y-%m-%d %H:%M:%S', 'now')" : 'now()'), false)->update($updateData)) {
             return $this->fail();
         }
 
@@ -256,7 +258,7 @@ class DatabaseHandler extends BaseHandler
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
-        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
+        return $this->db->table($this->table)->where('timestamp <', ($this->platform === 'sqlite3' ? "strftime('%Y-%m-%d %H:%M:%S', 'now')" : 'now()') . " - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
     }
 
     /**
