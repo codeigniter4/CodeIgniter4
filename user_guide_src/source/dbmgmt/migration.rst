@@ -300,10 +300,10 @@ Class Reference
         This locates migrations for a namespace (or all namespaces), determines which migrations
         have not yet been run, and runs them in order of their version (namespaces intermingled).
 
-    .. php:method:: regress($batch, $group)
+    .. php:method:: regress($targetBatch, $group)
 
-        :param    mixed    $batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
-        :param    mixed    $group: database group name, if null default database group will be used.
+        :param    int    $targetBatch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
+        :param    ?string    $group: database group name, if null default database group will be used.
         :returns:    ``true`` on success, ``false`` on failure or no migrations are found
         :rtype:    bool
 
