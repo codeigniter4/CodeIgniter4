@@ -300,7 +300,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $_GET     = ['foo' => 'bar'];
         $_POST    = [
             'bar'    => 'baz',
-            'zibble' => serialize('fritz'),
+            'zibble' => 'fritz',
         ];
 
         $response = new RedirectResponse(new App());
