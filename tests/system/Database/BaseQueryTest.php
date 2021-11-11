@@ -238,6 +238,23 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5114
+     */
+    public function testBindingWithTwoColons()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = ?",
+            [1]
+        );
+
+        $expected = "SELECT mytable.id, DATE_FORMAT(mytable.created_at,'%d/%m/%Y %H:%i:%s') AS created_at_uk FROM mytable WHERE mytable.id = 1";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     public function testNamedBinds()
     {
         $query = new Query($this->db);
@@ -273,6 +290,20 @@ final class BaseQueryTest extends CIUnitTestCase
         $query->setQuery('SELECT * FROM users WHERE sitemap = :sitemap: OR site = :site:', ['sitemap' => 'sitemap', 'site' => 'site']);
 
         $expected = "SELECT * FROM users WHERE sitemap = 'sitemap' OR site = 'site'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testNamedBindsDontGetReplacedAgain()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM posts WHERE content = :content: OR foobar = :foobar:',
+            ['content' => 'a placeholder looks like :foobar:', 'foobar' => 'bazqux']
+        );
+
+        $expected = "SELECT * FROM posts WHERE content = 'a placeholder looks like :foobar:' OR foobar = 'bazqux'";
 
         $this->assertSame($expected, $query->getQuery());
     }
@@ -331,5 +362,38 @@ final class BaseQueryTest extends CIUnitTestCase
         $expected = 'SELECT @factorA := 1, @factorB := 2';
 
         $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function queryKeywords()
+    {
+        return [
+            'highlightKeyWords' => [
+                '<strong>SELECT</strong> `a`.*, `b`.`id` <strong>AS</strong> `b_id` <strong>FROM</strong> `a` <strong>LEFT</strong> <strong>JOIN</strong> `b` <strong>ON</strong> `b`.`a_id` = `a`.`id` <strong>WHERE</strong> `b`.`id` <strong>IN</strong> (&#039;1&#039;) <strong>AND</strong> `a`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong> <strong>LIMIT</strong> 1',
+                'SELECT `a`.*, `b`.`id` AS `b_id` FROM `a` LEFT JOIN `b` ON `b`.`a_id` = `a`.`id` WHERE `b`.`id` IN (\'1\') AND `a`.`deleted_at` IS NOT NULL LIMIT 1',
+            ],
+            'ignoreKeyWordsInValues' => [
+                '<strong>SELECT</strong> * <strong>FROM</strong> `a` <strong>WHERE</strong> `a`.`col` = &#039;SELECT escaped keyword in value&#039; <strong>LIMIT</strong> 1',
+                'SELECT * FROM `a` WHERE `a`.`col` = \'SELECT escaped keyword in value\' LIMIT 1',
+            ],
+            'escapeHtmlValues' => [
+                '<strong>SELECT</strong> &#039;&lt;s&gt;&#039; <strong>FROM</strong> dual',
+                'SELECT \'<s>\' FROM dual',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider queryKeywords
+     *
+     * @param mixed $expected
+     * @param mixed $sql
+     */
+    public function testHighlightQueryKeywords($expected, $sql)
+    {
+        $query = new Query($this->db);
+        $query->setQuery($sql);
+        $query->getQuery();
+
+        $this->assertSame($expected, $query->debugToolbarDisplay());
     }
 }

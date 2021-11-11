@@ -291,6 +291,8 @@ class Validation implements ValidationInterface
                 // if the $value is an array, convert it to as string representation
                 if (is_array($value)) {
                     $value = '[' . implode(', ', $value) . ']';
+                } elseif (is_object($value)) {
+                    $value = json_encode($value);
                 }
 
                 $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
@@ -672,20 +674,41 @@ class Validation implements ValidationInterface
      */
     protected function splitRules(string $rules): array
     {
-        $nonEscapeBracket = '((?<!\\\\)(?:\\\\\\\\)*[\[\]])';
-        $pipeNotInBracket = sprintf(
-            '/\|(?=(?:[^\[\]]*%s[^\[\]]*%s)*(?![^\[\]]*%s))/',
-            $nonEscapeBracket,
-            $nonEscapeBracket,
-            $nonEscapeBracket
-        );
+        if (strpos($rules, '|') === false) {
+            return [$rules];
+        }
 
-        $_rules = preg_split($pipeNotInBracket, $rules);
+        $string = $rules;
+        $rules  = [];
+        $length = strlen($string);
+        $cursor = 0;
 
-        return array_unique($_rules);
+        while ($cursor < $length) {
+            $pos = strpos($string, '|', $cursor);
+
+            if ($pos === false) {
+                // we're in the last rule
+                $pos = $length;
+            }
+
+            $rule = substr($string, $cursor, $pos - $cursor);
+
+            while (
+                (substr_count($rule, '[') - substr_count($rule, '\['))
+                !== (substr_count($rule, ']') - substr_count($rule, '\]'))
+            ) {
+                // the pipe is inside the brackets causing the closing bracket to
+                // not be included. so, we adjust the rule to include that portion.
+                $pos  = strpos($string, '|', $cursor + strlen($rule) + 1) ?: $length;
+                $rule = substr($string, $cursor, $pos - $cursor);
+            }
+
+            $rules[] = $rule;
+            $cursor += strlen($rule) + 1; // +1 to exclude the pipe
+        }
+
+        return array_unique($rules);
     }
-
-    // Misc
 
     /**
      * Resets the class to a blank slate. Should be called whenever

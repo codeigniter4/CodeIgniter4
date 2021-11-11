@@ -39,8 +39,6 @@ class Builder extends BaseBuilder
     ];
 
     /**
-     * Compile Ignore Statement
-     *
      * Checks if the ignore option is supported by
      * the Database Driver for the specific statement.
      *
@@ -122,13 +120,11 @@ class Builder extends BaseBuilder
      * we simply do a DELETE and an INSERT on the first key/value
      * combo, assuming that it's either the primary key or a unique key.
      *
-     * @param array $set An associative array of insert values
+     * @param array|null $set An associative array of insert values
      *
      * @throws DatabaseException
      *
      * @return mixed
-     *
-     * @internal
      */
     public function replace(?array $set = null)
     {
@@ -145,18 +141,27 @@ class Builder extends BaseBuilder
         }
 
         $table = $this->QBFrom[0];
+        $set   = $this->binds;
+
+        array_walk($set, static function (array &$item) {
+            $item = $item[0];
+        });
 
         $key   = array_key_first($set);
         $value = $set[$key];
 
         $builder = $this->db->table($table);
-        $exists  = $builder->where("{$key} = {$value}", null, false)->get()->getFirstRow();
+        $exists  = $builder->where($key, $value, true)->get()->getFirstRow();
 
-        if (empty($exists)) {
+        if (empty($exists) && $this->testMode) {
+            $result = $this->getCompiledInsert();
+        } elseif (empty($exists)) {
             $result = $builder->insert($set);
+        } elseif ($this->testMode) {
+            $result = $this->where($key, $value, true)->getCompiledUpdate();
         } else {
-            array_pop($set);
-            $result = $builder->update($set, "{$key} = {$value}");
+            array_shift($set);
+            $result = $builder->where($key, $value, true)->update($set);
         }
 
         unset($builder);

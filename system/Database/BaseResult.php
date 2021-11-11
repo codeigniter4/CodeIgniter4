@@ -28,7 +28,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result ID
      *
-     * @var bool|object|resource
+     * @var false|object|resource
      */
     public $resultID;
 

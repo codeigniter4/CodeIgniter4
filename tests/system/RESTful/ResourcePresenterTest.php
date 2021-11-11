@@ -13,6 +13,7 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockResourcePresenter;
@@ -39,7 +40,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
     protected $codeigniter;
 
     /**
-     * @var \CodeIgniter\Router\RoutesCollection
+     * @var RouteCollection
      */
     protected $routes;
 
@@ -47,7 +48,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 

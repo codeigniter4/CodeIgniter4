@@ -205,6 +205,27 @@ Options:
 * ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
+make:validation
+---------------
+
+Creates a new validation file.
+
+Usage:
+======
+::
+
+    make:validation <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the validation class. **[REQUIRED]**
+
+Options:
+========
+* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix``: Append the component suffix to the generated class name.
+* ``--force``: Set this flag to overwrite existing files on destination.
+
 .. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
     class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
     to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This

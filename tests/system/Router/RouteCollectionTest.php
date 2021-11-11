@@ -950,7 +950,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        //The second parameter is either the new URI to redirect to, or the name of a named route.
+        // The second parameter is either the new URI to redirect to, or the name of a named route.
         $routes->addRedirect('users', 'users/index', 307);
 
         $expected = [

@@ -11,20 +11,20 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "kint-php/kint": "^3.3",
-        "laminas/laminas-escaper": "^2.8",
+        "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
+        "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.1",
         "mikey179/vfsstream": "^1.6",
-        "nexusphp/cs-config": "^3.1",
+        "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
-        "phpstan/phpstan": "^0.12.91",
+        "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.11.40",
-        "symplify/package-builder": "^9.3"
+        "rector/rector": "0.12.3"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"
@@ -59,7 +59,21 @@
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
         "analyze": "phpstan analyse",
-        "test": "phpunit"
+        "test": "phpunit",
+        "cs": [
+            "php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php",
+            "php-cs-fixer fix --verbose --dry-run --diff"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix --verbose --diff --config=.no-header.php-cs-fixer.dist.php",
+            "php-cs-fixer fix --verbose --diff"
+        ]
+    },
+    "scripts-descriptions": {
+        "analyze": "Run static analysis",
+        "test": "Run unit tests",
+        "cs": "Check the coding style",
+        "cs-fix": "Fix the coding style"
     },
     "support": {
         "forum": "http://forum.codeigniter.com/",

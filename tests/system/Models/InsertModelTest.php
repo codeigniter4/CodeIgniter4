@@ -157,7 +157,7 @@ final class InsertModelTest extends LiveModelTestCase
 
     public function testInsertBatchNewEntityWithDateTime(): void
     {
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -165,7 +165,6 @@ final class InsertModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -215,7 +214,7 @@ final class InsertModelTest extends LiveModelTestCase
     {
         $this->createModel(UserModel::class);
 
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -223,7 +222,6 @@ final class InsertModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [

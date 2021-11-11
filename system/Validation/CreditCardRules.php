@@ -189,7 +189,7 @@ class CreditCardRules
         }
 
         // Make sure we have a valid length
-        if (strlen($ccNumber) === 0) {
+        if ((string) $ccNumber === '') {
             return false;
         }
 

@@ -29,10 +29,10 @@ The following functions are available:
 
 .. php:function:: number_to_size($num[, $precision = 1[, $locale = null])
 
-    :param	mixed	$num: Number of bytes
-    :param	int	$precision: Floating point precision
-    :returns:	Formatted data size string, or false if the provided value is not numeric
-    :rtype:	string
+    :param      mixed     $num: Number of bytes
+    :param      int       $precision: Floating point precision
+    :returns:   Formatted data size string, or false if the provided value is not numeric
+    :rtype:     string
 
     Formats numbers as bytes, based on size, and adds the appropriate
     suffix. Examples::
@@ -64,11 +64,11 @@ The following functions are available:
 
 .. php:function:: number_to_amount($num[, $precision = 1[, $locale = null])
 
-    :param	mixed	$num: Number to format
-    :param	int	$precision: Floating point precision
-    :param  string $locale: The locale to use for formatting
-    :returns:	A human-readable version of the string, or false if the provided value is not numeric
-    :rtype:	string
+    :param      mixed     $num: Number to format
+    :param      int       $precision: Floating point precision
+    :param      string    $locale: The locale to use for formatting
+    :returns:   A human-readable version of the string, or false if the provided value is not numeric
+    :rtype:     string
 
     Converts a number into a human-readable version, like **123.4 trillion**
     for numbers up to the quadrillions. Examples::
@@ -115,4 +115,4 @@ The following functions are available:
         echo number_to_roman(2534);  // Returns MMDXXXIV
 
     This function only handles numbers in the range 1 through 3999.
-    It will return null for any value outside that range .
+    It will return null for any value outside that range.

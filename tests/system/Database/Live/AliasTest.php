@@ -24,8 +24,7 @@ final class AliasTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     public function testAlias()
     {

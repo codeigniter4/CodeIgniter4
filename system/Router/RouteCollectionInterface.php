@@ -28,8 +28,8 @@ interface RouteCollectionInterface
     /**
      * Adds a single route to the collection.
      *
-     * @param array|string $to
-     * @param array        $options
+     * @param array|Closure|string $to
+     * @param array                $options
      *
      * @return mixed
      */
@@ -92,8 +92,6 @@ interface RouteCollectionInterface
      * defined routes.
      *
      * If FALSE, will stop searching and do NO automatic routing.
-     *
-     * @return RouteCollectionInterface
      */
     public function setAutoRoute(bool $value): self;
 
@@ -105,8 +103,6 @@ interface RouteCollectionInterface
      * This setting is passed to the Router class and handled there.
      *
      * @param callable|null $callable
-     *
-     * @return RouteCollectionInterface
      */
     public function set404Override($callable = null): self;
 

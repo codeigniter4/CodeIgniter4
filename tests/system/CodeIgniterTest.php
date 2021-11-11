@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Modules;
+use Tests\Support\Filters\Customfilter;
 
 /**
  * @backupGlobals enabled
@@ -35,7 +36,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Services::reset();
+        $this->resetServices();
 
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
@@ -170,6 +171,29 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString("You want to see 'about' page.", $output);
+    }
+
+    public function testControllersRunFilterByClassName()
+    {
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('pages/about', static function () {
+            return Services::request()->url;
+        }, ['filter' => Customfilter::class]);
+
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('http://hellowworld.com', $output);
     }
 
     public function testResponseConfigEmpty()
@@ -345,7 +369,24 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
-    public function testRunRedirectionWithHTTPCode301()
+    public function testStoresPreviousURL()
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $router = Services::router(null, Services::request(), false);
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        $this->assertArrayHasKey('_ci_previous_url', $_SESSION);
+        $this->assertSame('http://example.com/index.php', $_SESSION['_ci_previous_url']);
+    }
+
+    public function testNotStoresPreviousURL()
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -364,8 +405,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
-        $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertSame(301, $response->getStatusCode());
+
+        $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
     }
 
     /**

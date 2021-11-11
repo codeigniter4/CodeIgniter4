@@ -45,9 +45,9 @@ class Migration_Create_test_tables extends Migration
             'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
         ])->addKey('id', true)->createTable('misc', true);
 
-        //Database Type test table
-        //missing types :
-        //TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
+        // Database Type test table
+        // missing types :
+        // TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
         // id must be interger else SQLite3 error on not null for autoinc field
         $data_type_fields = [
             'id'              => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
@@ -70,6 +70,7 @@ class Migration_Create_test_tables extends Migration
             'type_double'     => ['type' => 'DOUBLE', 'null' => true],
             'type_decimal'    => ['type' => 'DECIMAL', 'constraint' => '18,4', 'null' => true],
             'type_blob'       => ['type' => 'BLOB', 'null' => true],
+            'type_boolean'    => ['type' => 'BOOLEAN', 'null' => true],
         ];
 
         if ($this->db->DBDriver === 'Postgre') {
@@ -127,6 +128,29 @@ class Migration_Create_test_tables extends Migration
             'ip'  => ['type' => 'VARCHAR', 'constraint' => 100],
             'ip2' => ['type' => 'VARCHAR', 'constraint' => 100],
         ])->createTable('ip_table', true);
+
+        // Database session table
+        if ($this->db->DBDriver === 'MySQLi') {
+            $this->forge->addField([
+                'id'         => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
+                'ip_address' => ['type' => 'VARCHAR', 'constraint' => 45, 'null' => false],
+                'timestamp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                'data' => ['type' => 'BLOB', 'null' => false],
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->createTable('ci_sessions', true);
+        }
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $this->forge->addField([
+                'id' => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
+                'ip_address inet NOT NULL',
+                'timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                "data bytea DEFAULT '' NOT NULL",
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->createTable('ci_sessions', true);
+        }
     }
 
     public function down()
@@ -140,5 +164,9 @@ class Migration_Create_test_tables extends Migration
         $this->forge->dropTable('stringifypkey', true);
         $this->forge->dropTable('without_auto_increment', true);
         $this->forge->dropTable('ip_table', true);
+
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'], true)) {
+            $this->forge->dropTable('ci_sessions', true);
+        }
     }
 }

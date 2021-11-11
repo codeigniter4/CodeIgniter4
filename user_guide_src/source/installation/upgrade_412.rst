@@ -15,13 +15,13 @@ and View Parser). Update your projects accordingly.
 Cache handlers had wildly different compatibility for keys. The updated cache drivers now pass
 all keys through validation, roughly matching PSR-6's recommendations:
 
-	A string of at least one character that uniquely identifies a cached item. Implementing libraries
-	MUST support keys consisting of the characters A-Z, a-z, 0-9, _, and . in any order in UTF-8 encoding
-	and a length of up to 64 characters. Implementing libraries MAY support additional characters and
-	encodings or longer lengths, but must support at least that minimum. Libraries are responsible for
-	their own escaping of key strings as appropriate, but MUST be able to return the original unmodified
-	key string. The following characters are reserved for future extensions and MUST NOT be supported by
-	implementing libraries: ``{}()/\@:``
+    A string of at least one character that uniquely identifies a cached item. Implementing libraries
+    MUST support keys consisting of the characters A-Z, a-z, 0-9, _, and . in any order in UTF-8 encoding
+    and a length of up to 64 characters. Implementing libraries MAY support additional characters and
+    encodings or longer lengths, but must support at least that minimum. Libraries are responsible for
+    their own escaping of key strings as appropriate, but MUST be able to return the original unmodified
+    key string. The following characters are reserved for future extensions and MUST NOT be supported by
+    implementing libraries: ``{}()/\@:``
 
 Update your projects to remove any invalid cache keys.
 
@@ -44,7 +44,7 @@ method which you might want to override.
 
 The ``CodeIgniter\Test`` namespace has had significant improvements to help developers with their
 own test cases. Most notably test extensions have moved to Traits to make them easier to
-pick-and-choose across various test case needs. The ``DatabaseTestCase`` and ``FeatureTestCase``
+pick-and-choose across various test case needs. The ``CIDatabaseTestCase`` and ``FeatureTestCase``
 classes have been deprecated and their methods moved to ``DatabaseTestTrait`` and
 ``FeatureTestTrait`` respectively. Update your test cases to extend the main test case
 and use any traits you need. For example::
@@ -114,7 +114,7 @@ All Changes
 -----------
 
 This is a list of all files in the project space that received changes;
-many will be simple comments or formatting that have no affect on the runtime:
+many will be simple comments or formatting that have no effect on the runtime:
 
 * ``app/Config/App.php``
 * ``app/Config/Autoload.php``

@@ -64,7 +64,7 @@ class DOMParser
         // converts all special characters to utf-8
         $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
 
-        //turning off some errors
+        // turning off some errors
         libxml_use_internal_errors(true);
 
         if (! $this->dom->loadHTML($content)) {

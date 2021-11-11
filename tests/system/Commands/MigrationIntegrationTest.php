@@ -20,10 +20,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class MigrationIntegrationTest extends CIUnitTestCase
 {
     private $streamFilter;
-
     private $migrationFileFrom = SUPPORTPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
-
-    private $migrationFileTo = APPPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
+    private $migrationFileTo   = APPPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
 
     protected function setUp(): void
     {
@@ -60,9 +58,6 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         stream_filter_remove($this->streamFilter);
     }
 
-    /**
-     * @runTestsInSeparateProcesses
-     */
     public function testMigrationWithRollbackHasSameNameFormat(): void
     {
         command('migrate -n App');

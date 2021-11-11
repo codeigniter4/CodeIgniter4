@@ -29,8 +29,7 @@ final class ForgeTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
     /**
      * @var Forge
@@ -372,6 +371,8 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testForeignKey()
     {
+        $this->forge->dropTable('forge_test_users', true);
+
         $attributes = [];
 
         if ($this->db->DBDriver === 'MySQLi') {
@@ -427,6 +428,172 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_users', true);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4986
+     */
+    public function testForeignKeyAddingWithStringFields()
+    {
+        if ($this->db->DBDriver !== 'MySQLi') {
+            $this->markTestSkipped('Testing only on MySQLi but fix expands to all DBs.');
+        }
+
+        $attributes = ['ENGINE' => 'InnoDB'];
+
+        $this->forge->addField([
+            '`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            '`name` VARCHAR(255) NOT NULL',
+        ])->createTable('forge_test_users', true, $attributes);
+
+        $this->forge
+            ->addField([
+                '`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+                '`users_id` INT(11) NOT NULL',
+                '`name` VARCHAR(255) NOT NULL',
+            ])
+            ->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE')
+            ->createTable('forge_test_invoices', true, $attributes);
+
+        $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices')[0];
+
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_foreign', $foreignKeyData->constraint_name);
+        $this->assertSame('users_id', $foreignKeyData->column_name);
+        $this->assertSame('id', $foreignKeyData->foreign_column_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices', $foreignKeyData->table_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_users', $foreignKeyData->foreign_table_name);
+
+        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable('forge_test_users', true);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4310
+     */
+    public function testCompositeForeignKey()
+    {
+        $attributes = [];
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = ['ENGINE' => 'InnoDB'];
+        }
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'second_id' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addPrimaryKey(['id', 'second_id']);
+        $this->forge->createTable('forge_test_users', true, $attributes);
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'users_id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'users_second_id' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey(['users_id', 'users_second_id'], 'forge_test_users', ['id', 'second_id'], 'CASCADE', 'CASCADE');
+
+        $this->forge->createTable('forge_test_invoices', true, $attributes);
+
+        $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->assertSame('users_id to db_forge_test_users.id', $foreignKeyData[0]->constraint_name);
+            $this->assertSame(0, $foreignKeyData[0]->sequence);
+            $this->assertSame('users_second_id to db_forge_test_users.second_id', $foreignKeyData[1]->constraint_name);
+            $this->assertSame(1, $foreignKeyData[1]->sequence);
+        } else {
+            $haystack = ['users_id', 'users_second_id'];
+            $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign', $foreignKeyData[0]->constraint_name);
+            $this->assertContains($foreignKeyData[0]->column_name, $haystack);
+
+            $secondIdKey = $this->db->DBDriver === 'Postgre' ? 2 : 1;
+            $this->assertSame($this->db->DBPrefix . 'forge_test_invoices_users_id_users_second_id_foreign', $foreignKeyData[$secondIdKey]->constraint_name);
+            $this->assertContains($foreignKeyData[$secondIdKey]->column_name, $haystack);
+        }
+        $this->assertSame($this->db->DBPrefix . 'forge_test_invoices', $foreignKeyData[0]->table_name);
+        $this->assertSame($this->db->DBPrefix . 'forge_test_users', $foreignKeyData[0]->foreign_table_name);
+
+        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable('forge_test_users', true);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4310
+     */
+    public function testCompositeForeignKeyFieldNotExistException()
+    {
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('Field `user_id, user_second_id` not found.');
+
+        $attributes = [];
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = ['ENGINE' => 'InnoDB'];
+        }
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'second_id' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addPrimaryKey(['id', 'second_id']);
+        $this->forge->createTable('forge_test_users', true, $attributes);
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'users_id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'users_second_id' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addKey('id', true);
+        $this->forge->addForeignKey(['user_id', 'user_second_id'], 'forge_test_users', ['id', 'second_id'], 'CASCADE', 'CASCADE');
+
+        $this->forge->createTable('forge_test_invoices', true, $attributes);
+    }
+
     public function testForeignKeyFieldNotExistException()
     {
         $this->expectException(DatabaseException::class);
@@ -473,6 +640,8 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testDropForeignKey()
     {
+        $this->forge->dropTable('forge_test_users', true);
+
         $attributes = [];
 
         if ($this->db->DBDriver === 'MySQLi') {
@@ -897,5 +1066,39 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertFalse($this->db->fieldExists('name', 'forge_test_four'));
 
         $this->forge->dropTable('forge_test_four', true);
+    }
+
+    public function testDropKey()
+    {
+        $this->forge->dropTable('key_test_users', true);
+        $keyName = 'key_test_users_id';
+
+        $attributes = [];
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $keyName    = 'id';
+            $attributes = ['ENGINE' => 'InnoDB'];
+        }
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addKey('id');
+        $this->forge->createTable('key_test_users', true, $attributes);
+
+        $this->forge->dropKey('key_test_users', $keyName);
+
+        $foreignKeyData = $this->db->getIndexData('key_test_users');
+
+        $this->assertEmpty($foreignKeyData);
+
+        $this->forge->dropTable('key_test_users', true);
     }
 }

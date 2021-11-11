@@ -15,7 +15,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Config\Database;
-use Exception;
+use ReturnTypeWillChange;
 
 /**
  * Session handler using current Database for storage
@@ -58,27 +58,24 @@ class DatabaseHandler extends BaseHandler
     protected $rowExists = false;
 
     /**
-     * Constructor
+     * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
-
-        // Determine Table
         $this->table = $config->sessionSavePath;
 
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
 
-        // Get DB Connection
         // @phpstan-ignore-next-line
         $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
 
         $this->db = Database::connect($this->DBGroup);
 
-        // Determine Database type
         $driver = strtolower(get_class($this->db));
+
         if (strpos($driver, 'mysql') !== false) {
             $this->platform = 'mysql';
         } elseif (strpos($driver, 'postgre') !== false) {
@@ -87,16 +84,12 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Open
+     * Re-initialize existing session, or creates a new one.
      *
-     * Ensures we have an initialized database connection.
-     *
-     * @param string $savePath Path to session files' directory
-     * @param string $name     Session cookie name
-     *
-     * @throws Exception
+     * @param string $path The path where to store/retrieve the session
+     * @param string $name The session name
      */
-    public function open($savePath, $name): bool
+    public function open($path, $name): bool
     {
         if (empty($this->db->connID)) {
             $this->db->initialize();
@@ -106,30 +99,29 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Read
+     * Reads the session data from the session storage, and returns the results.
      *
-     * Reads session data and acquires a lock
+     * @param string $id The session ID
      *
-     * @param string $sessionID Session ID
-     *
-     * @return string Serialized session data
+     * @return false|string Returns an encoded string of the read data.
+     *                      If nothing was read, it must return false.
      */
-    public function read($sessionID): string
+    #[ReturnTypeWillChange]
+    public function read($id)
     {
-        if ($this->lockSession($sessionID) === false) {
+        if ($this->lockSession($id) === false) {
             $this->fingerprint = md5('');
 
             return '';
         }
 
-        // Needed by write() to detect session_regenerate_id() calls
         if (! isset($this->sessionID)) {
-            $this->sessionID = $sessionID;
+            $this->sessionID = $id;
         }
 
         $builder = $this->db->table($this->table)
             ->select($this->platform === 'postgre' ? "encode(data, 'base64') AS data" : 'data')
-            ->where('id', $sessionID);
+            ->where('id', $id);
 
         if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
@@ -160,70 +152,62 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Write
+     * Writes the session data to the session storage.
      *
-     * Writes (create / update) session data
-     *
-     * @param string $sessionID   Session ID
-     * @param string $sessionData Serialized session data
+     * @param string $id   The session ID
+     * @param string $data The encoded session data
      */
-    public function write($sessionID, $sessionData): bool
+    public function write($id, $data): bool
     {
         if ($this->lock === false) {
             return $this->fail();
         }
 
-        // Was the ID regenerated?
-        if ($sessionID !== $this->sessionID) {
+        if ($this->sessionID !== $id) {
             $this->rowExists = false;
-            $this->sessionID = $sessionID;
+            $this->sessionID = $id;
         }
 
         if ($this->rowExists === false) {
             $insertData = [
-                'id'         => $sessionID,
+                'id'         => $id,
                 'ip_address' => $this->ipAddress,
-                'timestamp'  => 'now()',
-                'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($sessionData) : $sessionData,
+                'data'       => $this->platform === 'postgre' ? '\x' . bin2hex($data) : $data,
             ];
 
-            if (! $this->db->table($this->table)->insert($insertData)) {
+            if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
                 return $this->fail();
             }
 
-            $this->fingerprint = md5($sessionData);
+            $this->fingerprint = md5($data);
             $this->rowExists   = true;
 
             return true;
         }
 
-        $builder = $this->db->table($this->table)->where('id', $sessionID);
+        $builder = $this->db->table($this->table)->where('id', $id);
 
         if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
         }
 
-        $updateData = [
-            'timestamp' => 'now()',
-        ];
+        $updateData = [];
 
-        if ($this->fingerprint !== md5($sessionData)) {
-            $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($sessionData) : $sessionData;
+        if ($this->fingerprint !== md5($data)) {
+            $updateData['data'] = ($this->platform === 'postgre') ? '\x' . bin2hex($data) : $data;
         }
 
-        if (! $builder->update($updateData)) {
+        if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
             return $this->fail();
         }
 
-        $this->fingerprint = md5($sessionData);
+        $this->fingerprint = md5($data);
 
         return true;
     }
 
     /**
-     * Close
-     *
-     * Releases locks and closes file descriptor.
+     * Closes the current session.
      */
     public function close(): bool
     {
@@ -231,16 +215,14 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Destroy
+     * Destroys a session
      *
-     * Destroys the current session.
-     *
-     * @param string $sessionID
+     * @param string $id The session ID being destroyed
      */
-    public function destroy($sessionID): bool
+    public function destroy($id): bool
     {
         if ($this->lock) {
-            $builder = $this->db->table($this->table)->where('id', $sessionID);
+            $builder = $this->db->table($this->table)->where('id', $id);
 
             if ($this->matchIP) {
                 $builder = $builder->where('ip_address', $this->ipAddress);
@@ -261,18 +243,20 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Garbage Collector
+     * Cleans up expired sessions.
      *
-     * Deletes expired sessions
+     * @param int $max_lifetime Sessions that have not updated
+     *                          for the last max_lifetime seconds will be removed.
      *
-     * @param int $maxlifetime Maximum lifetime of sessions
+     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    public function gc($maxlifetime): bool
+    #[ReturnTypeWillChange]
+    public function gc($max_lifetime)
     {
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
-        $interval  = implode($separator, ['', "{$maxlifetime} second", '']);
+        $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
-        return $this->db->table($this->table)->delete("timestamp < now() - INTERVAL {$interval}") ? true : $this->fail();
+        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
     }
 
     /**

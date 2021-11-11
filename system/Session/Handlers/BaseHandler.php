@@ -100,9 +100,6 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected $ipAddress;
 
-    /**
-     * Constructor
-     */
     public function __construct(AppConfig $config, string $ipAddress)
     {
         $this->cookiePrefix = $config->cookiePrefix;
@@ -124,11 +121,7 @@ abstract class BaseHandler implements SessionHandlerInterface
         return setcookie(
             $this->cookieName,
             '',
-            1,
-            $this->cookiePath,
-            $this->cookieDomain,
-            $this->cookieSecure,
-            true
+            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true]
         );
     }
 
@@ -155,12 +148,11 @@ abstract class BaseHandler implements SessionHandlerInterface
     }
 
     /**
-     * Fail
-     *
      * Drivers other than the 'files' one don't (need to) use the
      * session.save_path INI setting, but that leads to confusing
      * error messages emitted by PHP when open() or write() fail,
      * as the message contains session.save_path ...
+     *
      * To work around the problem, the drivers will call this method
      * so that the INI is set just in time for the error message to
      * be properly generated.

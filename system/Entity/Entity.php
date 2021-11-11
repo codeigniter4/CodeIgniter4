@@ -27,6 +27,7 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 /**
  * Entity encapsulation, for use with CodeIgniter\Model
@@ -40,7 +41,7 @@ class Entity implements JsonSerializable
      *
      * Example:
      *  $datamap = [
-     *      'db_name' => 'class_name'
+     *      'class_name' => 'db_name'
      *  ];
      */
     protected $datamap = [];
@@ -353,7 +354,7 @@ class Entity implements JsonSerializable
             $type = substr($type, 1);
         }
 
-        //In order not to create a separate handler for the
+        // In order not to create a separate handler for the
         // json-array type, we transform the required one.
         $type = $type === 'json-array' ? 'json[array]' : $type;
 
@@ -363,7 +364,7 @@ class Entity implements JsonSerializable
 
         $params = [];
 
-        //Attempt to retrieve additional parameters if specified
+        // Attempt to retrieve additional parameters if specified
         // type[param, param2,param3]
         if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches)) {
             $type   = $matches[1];
@@ -390,24 +391,11 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Cast as JSON
-     *
-     * @param mixed $value
-     *
-     * @throws CastException
-     *
-     * @return mixed
-     */
-    private function castAsJson($value, bool $asArray = false)
-    {
-        return JsonCast::get($value, $asArray ? ['array'] : []);
-    }
-
-    /**
      * Support for json_encode()
      *
-     * @return array|mixed
+     * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();

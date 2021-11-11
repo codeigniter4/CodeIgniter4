@@ -51,6 +51,8 @@ class IncomingRequest extends Request
      * Set automatically based on Config setting.
      *
      * @var bool
+     *
+     * @deprecated Not used
      */
     protected $enableCSRF = false;
 
@@ -534,6 +536,10 @@ class IncomingRequest extends Request
         helper('array');
 
         $data = dot_array_search($index, $this->getJSON(true));
+
+        if ($data === null) {
+            return null;
+        }
 
         if (! is_array($data)) {
             $filter = $filter ?? FILTER_DEFAULT;

@@ -127,7 +127,7 @@ class UploadedFile extends File implements UploadedFileInterface
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
         $targetPath = rtrim($targetPath, '/') . '/';
-        $targetPath = $this->setPath($targetPath); //set the target path
+        $targetPath = $this->setPath($targetPath); // set the target path
 
         if ($this->hasMoved) {
             throw HTTPException::forAlreadyMoved();
@@ -169,7 +169,7 @@ class UploadedFile extends File implements UploadedFileInterface
     {
         if (! is_dir($path)) {
             mkdir($path, 0777, true);
-            //create the index.html file
+            // create the index.html file
             if (! is_file($path . 'index.html')) {
                 $file = fopen($path . 'index.html', 'x+b');
                 fclose($file);

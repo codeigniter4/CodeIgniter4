@@ -22,15 +22,6 @@ use Config\App;
  */
 final class TestCaseTest extends CIUnitTestCase
 {
-    //  protected function tearDown(): void
-    //  {
-    //      $buffer = ob_clean();
-    //      if (ob_get_level() > 0)
-    //      {
-    //          ob_end_clean();
-    //      }
-    //  }
-    //
     public function testGetPrivatePropertyWithObject()
     {
         $obj    = new __TestForReflectionHelper();
@@ -86,7 +77,6 @@ final class TestCaseTest extends CIUnitTestCase
         $response->send();
         ob_end_clean();
 
-        // Did PHPunit do its thing?
         $this->assertHeaderEmitted('Content-type: text/html;');
         $this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
     }

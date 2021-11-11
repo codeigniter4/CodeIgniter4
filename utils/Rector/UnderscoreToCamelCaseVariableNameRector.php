@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Utils\Rector;
 
-use Nette\Utils\Strings;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Variable;
@@ -21,8 +20,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
-use Rector\NodeTypeResolver\Node\AttributeKey;
-use Symplify\PackageBuilder\Strings\StringFormatConverter;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -42,17 +39,10 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
      */
     private $reservedKeywordAnalyzer;
 
-    /**
-     * @var StringFormatConverter
-     */
-    private $stringFormatConverter;
-
     public function __construct(
-        ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
-        StringFormatConverter $stringFormatConverter
+        ReservedKeywordAnalyzer $reservedKeywordAnalyzer
     ) {
         $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
-        $this->stringFormatConverter   = $stringFormatConverter;
     }
 
     public function getRuleDefinition(): RuleDefinition
@@ -100,19 +90,20 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             return null;
         }
 
-        if (! Strings::contains($nodeName, '_')) {
-            return null;
-        }
-
         if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName)) {
             return null;
         }
 
-        if ($nodeName[0] === '_') {
+        $underscorePosition = strpos($nodeName, '_');
+        // underscore not found, or in the first char, skip
+        if ((int) $underscorePosition === 0) {
             return null;
         }
 
-        $camelCaseName = $this->stringFormatConverter->underscoreAndHyphenToCamelCase($nodeName);
+        $replaceUnderscoreToSpace = str_replace('_', ' ', $nodeName);
+        $uppercaseFirstChar       = ucwords($replaceUnderscoreToSpace);
+        $camelCaseName            = lcfirst(str_replace(' ', '', $uppercaseFirstChar));
+
         if ($camelCaseName === 'this') {
             return null;
         }
@@ -125,24 +116,13 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
     private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
     {
-        $parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
+        $parentClassMethodOrFunction = $this->betterNodeFinder->findParentByTypes($variable, [ClassMethod::class, Function_::class]);
 
-        while ($parentNode) {
-            /**
-             * @var ClassMethod|Function_ $parentNode
-             */
-            $parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
-
-            if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_) {
-                break;
-            }
-        }
-
-        if ($parentNode === null) {
+        if ($parentClassMethodOrFunction === null) {
             return;
         }
 
-        $docComment = $parentNode->getDocComment();
+        $docComment = $parentClassMethodOrFunction->getDocComment();
         if ($docComment === null) {
             return;
         }
@@ -152,11 +132,11 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             return;
         }
 
-        if (! Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName))) {
+        if (! preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText)) {
             return;
         }
 
-        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentNode);
+        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentClassMethodOrFunction);
         $paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
 
         foreach ($paramTagValueNodes as $paramTagValueNode) {
@@ -166,6 +146,6 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             }
         }
 
-        $parentNode->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
+        $parentClassMethodOrFunction->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
     }
 }

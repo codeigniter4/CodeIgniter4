@@ -363,8 +363,6 @@ class Pager implements PagerInterface
 
     /**
      * Sets only allowed queries on pagination links.
-     *
-     * @return Pager
      */
     public function only(array $queries): self
     {

@@ -60,13 +60,19 @@ one argument named ``$page``. It also has an ``index()`` method, the same
 as the default controller found in **app/Controllers/Home.php**; that method
 displays the CodeIgniter welcome page.
 
+.. note:: There are two ``view()`` functions referred to in this tutorial.
+    One is the class method created with ``public function view($page = 'home')``
+    and ``echo view('welcome_message')`` for displaying a view.
+    Both are *technically* a function. But when you create a function in a class,
+    it's called a method.
+
 The ``Pages`` class is extending the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
-(*system/Controller.php*).
+(**system/Controller.php**).
 
 The **controller is what will become the center of every request** to
-your web application. Like any php class, you refer to
+your web application. Like any PHP class, you refer to
 it within your controllers as ``$this``.
 
 Now that you've created your first method, it's time to make some basic page
@@ -99,15 +105,9 @@ includes the following code:
     </body>
     </html>
 
-.. note:: If you look closely in **header.php** template we are using an **esc()**
+.. note:: If you look closely in **header.php** template we are using an ``esc()``
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
-
-.. warning:: There are two **view()** functions referred to in this tutorial.
-    One is the class method created with ``public function view($page = 'home')``
-    and ``echo view('welcome_message');`` for displaying a view.
-    Both are *technically* a function. But when you create a function in a class,
-    it's called a method.
 
 Adding logic to the controller
 -------------------------------------------------------
@@ -129,8 +129,7 @@ in the ``Pages`` controller created above:
 
     public function view($page = 'home')
     {
-        if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.php'))
-        {
+        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
             // Whoops, we don't have a page for that!
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
@@ -138,7 +137,7 @@ in the ``Pages`` controller created above:
         $data['title'] = ucfirst($page); // Capitalize the first letter
 
         echo view('templates/header', $data);
-        echo view('pages/'.$page, $data);
+        echo view('pages/' . $page, $data);
         echo view('templates/footer', $data);
     }
 
@@ -164,7 +163,7 @@ is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
-.. note:: Any files and directory names passed into the **view()** function MUST
+.. note:: Any files and directory names passed into the ``view()`` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it
     :doc:`here </outgoing/views>`.
@@ -257,7 +256,7 @@ arguments.
 More information about routing can be found in the URI Routing
 :doc:`documentation </incoming/routing>`.
 
-Here, the second rule in the ``$routes`` array matches **any** request
+Here, the second rule in the ``$routes`` object matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
 
@@ -270,5 +269,5 @@ You should see something like the following:
     :align: center
 
 .. note:: When manually specifying routes, it is recommended to disable
-    auto-routing by setting ``$routes->setAutoRoute(false);`` in the Routes.php file.
+    auto-routing by setting ``$routes->setAutoRoute(false);`` in the **Routes.php** file.
     This ensures that only routes you define can be accessed.

@@ -27,10 +27,10 @@ and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
 ::
 
     CREATE TABLE news (
-        id int(11) NOT NULL AUTO_INCREMENT,
-        title varchar(128) NOT NULL,
-        slug varchar(128) NOT NULL,
-        body text NOT NULL,
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        title VARCHAR(128) NOT NULL,
+        slug VARCHAR(128) NOT NULL,
+        body TEXT NOT NULL,
         PRIMARY KEY (id),
         KEY slug (slug)
     );
@@ -107,27 +107,24 @@ following code to your model.
 
     public function getNews($slug = false)
     {
-        if ($slug === false)
-        {
+        if ($slug === false) {
             return $this->findAll();
         }
 
-        return $this->asArray()
-                    ->where(['slug' => $slug])
-                    ->first();
+        return $this->where(['slug' => $slug])->first();
     }
 
 With this code, you can perform two different queries. You can get all
-news records, or get a news item by its `slug <#>`_. You might have
-noticed that the ``$slug`` variable wasn't sanitized before running the
+news records, or get a news item by its slug. You might have
+noticed that the ``$slug`` variable wasn't escaped before running the
 query; :doc:`Query Builder <../database/query_builder>` does this for you.
 
 The two methods used here, ``findAll()`` and ``first()``, are provided
-by the Model class. They already know the table to use based on the ``$table``
+by the ``CodeIgniter\Model`` class. They already know the table to use based on the ``$table``
 property we set in **NewsModel** class, earlier. They are helper methods
 that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
-``findAll()`` returns an array of objects.
+``findAll()`` returns an array of array.
 
 Display the news
 -------------------------------------------------------
@@ -151,14 +148,14 @@ a new ``News`` controller is defined. Create the new controller at
     {
         public function index()
         {
-            $model = new NewsModel();
+            $model = model(NewsModel::class);
 
             $data['news'] = $model->getNews();
         }
 
         public function view($slug = null)
         {
-            $model = new NewsModel();
+            $model = model(NewsModel::class);
 
             $data['news'] = $model->getNews($slug);
         }
@@ -171,7 +168,13 @@ access to the current ``Request`` and ``Response`` objects, as well as the
 ``Logger`` class, for saving information to disk.
 
 Next, there are two methods, one to view all news items, and one for a specific
-news item. You can see that the ``$slug`` variable is passed to the model's
+news item.
+
+Next, the ``model()`` function is used to create the **NewsModel** instance.
+This is a helper function. You can read more about it :doc:`here </general/common_functions>`.
+You could also write ``$model = new NewsModel();``, if you don't use it.
+
+You can see that the ``$slug`` variable is passed to the model's
 method in the second method. The model is using this slug to identify the
 news item to be returned.
 
@@ -181,7 +184,7 @@ the views. Modify the ``index()`` method to look like this::
 
     public function index()
     {
-        $model = new NewsModel();
+        $model = model(NewsModel::class);
 
         $data = [
             'news'  => $model->getNews(),
@@ -203,7 +206,7 @@ and add the next piece of code.
 
     <h2><?= esc($title) ?></h2>
 
-    <?php if (! empty($news) && is_array($news)) : ?>
+    <?php if (! empty($news) && is_array($news)): ?>
 
         <?php foreach ($news as $news_item): ?>
 
@@ -216,7 +219,7 @@ and add the next piece of code.
 
         <?php endforeach; ?>
 
-    <?php else : ?>
+    <?php else: ?>
 
         <h3>No News</h3>
 
@@ -225,7 +228,7 @@ and add the next piece of code.
     <?php endif ?>
 
 
-.. note:: We are again using using **esc()** to help prevent XSS attacks.
+.. note:: We are again using using ``esc()`` to help prevent XSS attacks.
     But this time we also passed "url" as a second parameter. That's because
     attack patterns are different depending on the context in which the output
     is used. You can read more about it :doc:`here </general/common_functions>`.
@@ -243,15 +246,14 @@ add some code to the controller and create a new view. Go back to the
 
 ::
 
-    public function view($slug = NULL)
+    public function view($slug = null)
     {
-        $model = new NewsModel();
+        $model = model(NewsModel::class);
 
         $data['news'] = $model->getNews($slug);
 
-        if (empty($data['news']))
-        {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: '. $slug);
+        if (empty($data['news'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: ' . $slug);
         }
 
         $data['title'] = $data['news']['title'];

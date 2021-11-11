@@ -39,7 +39,6 @@ final class BaseConnectionTest extends CIUnitTestCase
         'strictOn' => true,
         'failover' => [],
     ];
-
     protected $failoverOptions = [
         'DSN'      => '',
         'hostname' => 'localhost',

@@ -155,12 +155,12 @@ class Typography
                 continue;
             }
 
-            //  Force a newline to make sure end tags get processed by _format_newlines()
+            // Force a newline to make sure end tags get processed by _format_newlines()
             if ($i === $c) {
                 $chunks[$i] .= "\n";
             }
 
-            //  Convert Newlines into <p> and <br /> tags
+            // Convert Newlines into <p> and <br /> tags
             $str .= $this->formatNewLines($chunks[$i]);
         }
 

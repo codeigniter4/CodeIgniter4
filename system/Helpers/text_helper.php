@@ -395,10 +395,8 @@ if (! function_exists('word_wrap')) {
         }
 
         // Put our markers back
-        if (! empty($unwrap)) {
-            foreach ($unwrap as $key => $val) {
-                $output = str_replace('{{unwrapped' . $key . '}}', $val, $output);
-            }
+        foreach ($unwrap as $key => $val) {
+            $output = str_replace('{{unwrapped' . $key . '}}', $val, $output);
         }
 
         // remove any trailing newline

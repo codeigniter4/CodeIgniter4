@@ -37,7 +37,7 @@ You can set format an array into either JSON or XML and set the content type hea
 
     $data = [
         'success' => true,
-        'id' => 123
+        'id' => 123,
     ];
 
     return $this->response->setJSON($data);
@@ -80,10 +80,10 @@ to your computer. This sets the appropriate headers to make it happen.
 The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
 file data.
 
-If you set the second parameter to NULL and ``$filename`` is an existing, readable
+If you set the second parameter to null and ``$filename`` is an existing, readable
 file path, then its content will be read instead.
 
-If you set the third parameter to boolean TRUE, then the actual file MIME type
+If you set the third parameter to boolean true, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
 handler for that type - it can use it.
 
@@ -394,7 +394,7 @@ The methods provided by the parent class that are available are:
         followed by the response body. For the main application response, you do not need to call
         this as it is handled automatically by CodeIgniter.
 
-    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE[, $samesite = null]]]]]]]])
+    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
 
         :param mixed $name: Cookie name or an array of parameters
         :param string $value: Cookie value
@@ -423,8 +423,8 @@ The methods provided by the parent class that are available are:
                 'domain' => '.some-domain.com',
                 'path'   => '/',
                 'prefix' => 'myprefix_',
-                'secure' => TRUE,
-                'httponly' => FALSE,
+                'secure' => true,
+                'httponly' => false,
                 'samesite' => 'Lax'
             ];
 

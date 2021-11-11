@@ -29,6 +29,7 @@ final class PagerTest extends CIUnitTestCase
      * @var \CodeIgniter\Pager\Pager
      */
     protected $pager;
+
     protected $config;
 
     protected function setUp(): void
@@ -241,7 +242,7 @@ final class PagerTest extends CIUnitTestCase
         $expected = current_url(true);
         $expected = (string) $expected->setQuery('page_foo=3');
 
-        $this->assertSame((string) $expected, $this->pager->getNextPageURI('foo'));
+        $this->assertSame($expected, $this->pager->getNextPageURI('foo'));
     }
 
     public function testGetNextURIReturnsNullOnLastPage()
@@ -270,7 +271,7 @@ final class PagerTest extends CIUnitTestCase
         $expected = current_url(true);
         $expected = (string) $expected->setQuery('page_foo=1');
 
-        $this->assertSame((string) $expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertSame($expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testGetNextURIReturnsNullOnFirstPage()
@@ -292,7 +293,7 @@ final class PagerTest extends CIUnitTestCase
 
         $this->pager->store('foo', $_GET['page_foo'] - 1, 12, 70);
 
-        $this->assertSame((string) $expected, $this->pager->getNextPageURI('foo'));
+        $this->assertSame($expected, $this->pager->getNextPageURI('foo'));
     }
 
     public function testGetPreviousURIWithQueryStringUsesCurrentURI()
@@ -306,7 +307,7 @@ final class PagerTest extends CIUnitTestCase
 
         $this->pager->store('foo', $_GET['page_foo'] + 1, 12, 70);
 
-        $this->assertSame((string) $expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertSame($expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testGetOnlyQueries()
@@ -453,7 +454,7 @@ final class PagerTest extends CIUnitTestCase
         $expected = current_url(true);
         $expected = (string) $expected->setQuery('page_foo=1');
 
-        $this->assertSame((string) $expected, $this->pager->getPreviousPageURI('foo'));
+        $this->assertSame($expected, $this->pager->getPreviousPageURI('foo'));
     }
 
     public function testAccessPageMoreThanPageCountGetLastPage()

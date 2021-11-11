@@ -18,6 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Generator;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -28,8 +29,9 @@ final class ValidationTest extends CIUnitTestCase
     /**
      * @var Validation
      */
-    protected $validation;
-    protected $config = [
+    private $validation;
+
+    private $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -71,66 +73,44 @@ final class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        Services::reset(true);
-
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
-
-        $_FILES = [];
     }
 
-    public function testSetRulesStoresRules()
+    public function testSetRulesStoresRules(): void
     {
         $rules = [
             'foo' => 'bar|baz',
             'bar' => 'baz|belch',
         ];
-
         $this->validation->setRules($rules);
-
         $this->assertSame($rules, $this->validation->getRules());
     }
 
-    public function testRunReturnsFalseWithNothingToDo()
+    public function testRunReturnsFalseWithNothingToDo(): void
     {
         $this->validation->setRules([]);
-
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testRunDoesTheBasics()
+    public function testRunDoesTheBasics(): void
     {
-        $data = [
-            'foo' => 'notanumber',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $data = ['foo' => 'notanumber'];
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->assertFalse($this->validation->run($data));
     }
 
-    public function testRunReturnsLocalizedErrors()
+    public function testRunReturnsLocalizedErrors(): void
     {
-        $data = [
-            'foo' => 'notanumber',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $data = ['foo' => 'notanumber'];
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->assertFalse($this->validation->run($data));
         $this->assertSame('Validation.is_numeric', $this->validation->getError('foo'));
     }
 
-    public function testRunWithCustomErrors()
+    public function testRunWithCustomErrors(): void
     {
-        $data = [
-            'foo' => 'notanumber',
-        ];
+        $data = ['foo' => 'notanumber'];
 
         $messages = [
             'foo' => [
@@ -138,26 +118,23 @@ final class ValidationTest extends CIUnitTestCase
             ],
         ];
 
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ], $messages);
-
+        $this->validation->setRules(['foo' => 'is_numeric'], $messages);
         $this->validation->run($data);
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
     }
 
-    public function testCheck()
+    public function testCheck(): void
     {
         $this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
     }
 
-    public function testCheckLocalizedError()
+    public function testCheckLocalizedError(): void
     {
         $this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
         $this->assertSame('Validation.is_numeric', $this->validation->getError());
     }
 
-    public function testCheckCustomError()
+    public function testCheckCustomError(): void
     {
         $this->validation->check('notanumber', 'is_numeric', [
             'is_numeric' => 'Nope. Not a number.',
@@ -165,122 +142,87 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('Nope. Not a number.', $this->validation->getError());
     }
 
-    public function testGetErrors()
+    public function testGetErrors(): void
     {
-        $data = [
-            'foo' => 'notanumber',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $data = ['foo' => 'notanumber'];
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->run($data);
-
         $this->assertSame(['foo' => 'Validation.is_numeric'], $this->validation->getErrors());
     }
 
-    public function testGetErrorsWhenNone()
+    public function testGetErrorsWhenNone(): void
     {
-        $_SESSION = [];
-
-        $data = [
-            'foo' => 123,
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $data = ['foo' => 123];
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->run($data);
-
         $this->assertSame([], $this->validation->getErrors());
     }
 
-    public function testSetErrors()
+    public function testSetErrors(): void
     {
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->setError('foo', 'Nadda');
-
         $this->assertSame(['foo' => 'Nadda'], $this->validation->getErrors());
     }
 
-    public function testRulesReturnErrors()
+    public function testRulesReturnErrors(): void
     {
-        $this->validation->setRules([
-            'foo' => 'customError',
-        ]);
-
+        $this->validation->setRules(['foo' => 'customError']);
         $this->validation->run(['foo' => 'bar']);
-
         $this->assertSame(['foo' => 'My lovely error'], $this->validation->getErrors());
     }
 
-    public function testGroupsReadFromConfig()
+    public function testGroupsReadFromConfig(): void
     {
-        $data = [
-            'foo' => 'bar',
-        ];
-
+        $data = ['foo' => 'bar'];
         $this->assertFalse($this->validation->run($data, 'groupA'));
         $this->assertSame('Shame, shame. Too short.', $this->validation->getError('foo'));
     }
 
-    public function testGroupsReadFromConfigValid()
+    public function testGroupsReadFromConfigValid(): void
     {
-        $data = [
-            'foo' => 'barsteps',
-        ];
-
+        $data = ['foo' => 'barsteps'];
         $this->assertTrue($this->validation->run($data, 'groupA'));
     }
 
-    public function testGetRuleGroup()
+    public function testGetRuleGroup(): void
     {
         $this->assertSame([
             'foo' => 'required|min_length[5]',
         ], $this->validation->getRuleGroup('groupA'));
     }
 
-    public function testGetRuleGroupException()
+    public function testGetRuleGroupException(): void
     {
         $this->expectException(ValidationException::class);
         $this->validation->getRuleGroup('groupZ');
     }
 
-    public function testSetRuleGroup()
+    public function testSetRuleGroup(): void
     {
         $this->validation->setRuleGroup('groupA');
-
         $this->assertSame([
             'foo' => 'required|min_length[5]',
         ], $this->validation->getRules());
     }
 
-    public function testSetRuleGroupException()
+    public function testSetRuleGroupException(): void
     {
         $this->expectException(ValidationException::class);
-
         $this->validation->setRuleGroup('groupZ');
     }
 
-    public function testSetRuleGroupWithCustomErrorMessage()
+    public function testSetRuleGroupWithCustomErrorMessage(): void
     {
         $this->validation->reset();
         $this->validation->setRuleGroup('login');
-        $this->validation->run([
-            'username' => 'codeigniter',
-        ]);
-
+        $this->validation->run(['username' => 'codeigniter']);
         $this->assertSame([
             'password' => 'custom password required error msg.',
         ], $this->validation->getErrors());
     }
 
-    public function testRunGroupWithCustomErrorMessage()
+    public function testRunGroupWithCustomErrorMessage(): void
     {
         $this->validation->reset();
         $this->validation->run([
@@ -295,28 +237,20 @@ final class ValidationTest extends CIUnitTestCase
     /**
      * @dataProvider rulesSetupProvider
      *
-     * @param mixed $rules
-     * @param mixed $expected
-     * @param mixed $errors
+     * @param string|string[] $rules
+     * @param string          $expected
      */
-    public function testRulesSetup($rules, $expected, $errors = [])
+    public function testRulesSetup($rules, $expected, array $errors = [])
     {
-        $data = [
-            'foo' => '',
-        ];
-
-        $this->validation->setRules([
-            'foo' => $rules,
-        ], $errors);
-
+        $data = ['foo' => ''];
+        $this->validation->setRules(['foo' => $rules], $errors);
         $this->validation->run($data);
-
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
-    public function rulesSetupProvider()
+    public function rulesSetupProvider(): Generator
     {
-        return [
+        yield from [
             [
                 'min_length[10]',
                 'The foo field must be at least 10 characters in length.',
@@ -365,7 +299,7 @@ final class ValidationTest extends CIUnitTestCase
         ];
     }
 
-    public function testSetRulesRemovesErrorsArray()
+    public function testSetRulesRemovesErrorsArray(): void
     {
         $rules = [
             'foo' => [
@@ -378,13 +312,11 @@ final class ValidationTest extends CIUnitTestCase
         ];
 
         $this->validation->setRules($rules, []);
-
         $this->validation->run(['foo' => 'abc']);
-
         $this->assertSame('The Foo Bar field is very short.', $this->validation->getError('foo'));
     }
 
-    public function testInvalidRule()
+    public function testInvalidRule(): void
     {
         $this->expectException(ValidationException::class);
 
@@ -394,13 +326,11 @@ final class ValidationTest extends CIUnitTestCase
         ];
         $this->validation->setRules($rules);
 
-        $data = [
-            'foo' => '',
-        ];
+        $data = ['foo' => ''];
         $this->validation->run($data);
     }
 
-    public function testRawInput()
+    public function testRawInput(): void
     {
         $rawstring = 'username=admin001&role=administrator&usepass=0';
 
@@ -418,7 +348,7 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getErrors());
     }
 
-    public function testJsonInput()
+    public function testJsonInput(): void
     {
         $data = [
             'username' => 'admin001',
@@ -448,194 +378,152 @@ final class ValidationTest extends CIUnitTestCase
         unset($_SERVER['CONTENT_TYPE']);
     }
 
-    public function testHasRule()
+    public function testHasRule(): void
     {
         $this->validation->setRuleGroup('groupA');
-
         $this->assertTrue($this->validation->hasRule('foo'));
     }
 
-    public function testNotARealGroup()
+    public function testNotARealGroup(): void
     {
         $this->expectException(ValidationException::class);
         $this->validation->setRuleGroup('groupX');
         $this->validation->getRuleGroup('groupX');
     }
 
-    public function testBadTemplate()
+    public function testBadTemplate(): void
     {
         $this->expectException(ValidationException::class);
         $this->validation->listErrors('obviouslyBadTemplate');
     }
 
-    public function testShowNonError()
+    public function testShowNonError(): void
     {
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->setError('foo', 'Nadda');
-
         $this->assertSame('', $this->validation->showError('bogus'));
     }
 
-    public function testShowBadTemplate()
+    public function testShowBadTemplate(): void
     {
         $this->expectException(ValidationException::class);
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->setError('foo', 'Nadda');
-
         $this->assertSame('We should never get here', $this->validation->showError('foo', 'bogus_template'));
     }
 
-    public function testNoRuleSetsSetup()
+    public function testNoRuleSetsSetup(): void
     {
         $this->expectException(ValidationException::class);
 
         $this->config['ruleSets'] = null;
         $this->validation         = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
-
-        $data = [
-            'foo' => '',
-        ];
-
-        $this->validation->run($data);
+        $this->validation->run(['foo' => '']);
     }
 
-    public function testNotCustomRuleGroup()
+    public function testNotCustomRuleGroup(): void
     {
         $this->expectException(ValidationException::class);
-
-        $data = [
-            'foo' => '',
-        ];
-
+        $data = ['foo' => ''];
         $this->validation->run($data, 'GeorgeRules');
     }
 
-    public function testNotRealCustomRule()
+    public function testNotRealCustomRule(): void
     {
         $this->expectException(ValidationException::class);
-
-        $data = [
-            'foo' => '',
-        ];
-
+        $data = ['foo' => ''];
         $this->validation->run($data, 'groupX');
     }
 
-    public function testHasError()
+    public function testHasError(): void
     {
-        $data = [
-            'foo' => 'notanumber',
-        ];
-
-        $this->validation->setRules([
-            'foo' => 'is_numeric',
-        ]);
-
+        $data = ['foo' => 'notanumber'];
+        $this->validation->setRules(['foo' => 'is_numeric']);
         $this->validation->run($data);
-
         $this->assertTrue($this->validation->hasError('foo'));
     }
 
-    public function testSplitRulesTrue()
+    public function testSplitRulesTrue(): void
     {
-        $data = [
-            'phone' => '0987654321',
-        ];
-
         $this->validation->setRules([
             'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
         ]);
-
-        $result = $this->validation->run($data);
-
-        $this->assertTrue($result);
+        $this->assertTrue($this->validation->run(['phone' => '0987654321']));
     }
 
-    public function testSplitRulesFalse()
+    public function testSplitRulesFalse(): void
     {
-        $data = [
-            'phone' => '09876543214',
-        ];
-
         $this->validation->setRules([
             'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
         ]);
-
-        $result = $this->validation->run($data);
-
-        $this->assertFalse($result);
+        $this->assertFalse($this->validation->run(['phone' => '09876543214']));
     }
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1201
      */
-    public function testSplitNotRegex()
+    public function testSplitNotRegex(): void
     {
         $method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
-
         $result = $method('uploaded[avatar]|max_size[avatar,1024]');
-
         $this->assertSame('uploaded[avatar]', $result[0]);
     }
 
-    public function testSplitRegex()
+    public function testSplitRegex(): void
     {
         $method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
-
         $result = $method('required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]');
-
         $this->assertSame('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
     }
 
-    public function testTagReplacement()
+    public function testTagReplacement(): void
     {
-        // data
-        $data = [
-            'Username' => 'Pizza',
-        ];
-
-        // rules
-        $this->validation->setRules([
-            'Username' => 'min_length[6]',
-        ], [
-            'Username' => [
+        $data = ['Username' => 'Pizza'];
+        $this->validation->setRules(
+            ['Username' => 'min_length[6]'],
+            ['Username' => [
                 'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.',
-            ],
-        ]);
-
-        // run validation
+            ]]
+        );
         $this->validation->run($data);
-
-        // $errors should contain an associative array
         $errors = $this->validation->getErrors();
 
-        // if "Username" doesn't exist in errors
         if (! isset($errors['Username'])) {
             $this->fail('Unable to find "Username"');
         }
 
-        // expected error message
         $expected = 'Supplied value (Pizza) for Username must have at least 6 characters.';
-
-        // check if they are the same!
         $this->assertSame($expected, $errors['Username']);
+    }
+
+    public function testRulesForObjectField(): void
+    {
+        $this->validation->setRules([
+            'configuration' => 'required|check_object_rule',
+        ]);
+
+        $data = (object) ['configuration' => (object) ['first' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
+        $this->assertSame([], $this->validation->getErrors());
+
+        $this->validation->reset();
+        $this->validation->setRules([
+            'configuration' => 'required|check_object_rule',
+        ]);
+
+        $data = (object) ['configuration' => (object) ['first1' => 1, 'second' => 2]];
+        $this->validation->run((array) $data);
+
+        $this->assertSame([
+            'configuration' => 'Validation.check_object_rule',
+        ], $this->validation->getErrors());
     }
 
     /**
      * @dataProvider arrayFieldDataProvider
-     *
-     * @param mixed $body
-     * @param mixed $rules
-     * @param mixed $results
      */
-    public function testRulesForArrayField($body, $rules, $results)
+    public function testRulesForArrayField(array $body, array $rules, array $results)
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -647,9 +535,9 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($results, $this->validation->getErrors());
     }
 
-    public function arrayFieldDataProvider()
+    public function arrayFieldDataProvider(): Generator
     {
-        return [
+        yield from [
             'all_rules_should_pass' => [
                 'body' => [
                     'foo' => [
@@ -703,7 +591,7 @@ final class ValidationTest extends CIUnitTestCase
         ];
     }
 
-    public function testRulesForSingleRuleWithAsteriskWillReturnNoError()
+    public function testRulesForSingleRuleWithAsteriskWillReturnNoError(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -730,7 +618,7 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame([], $this->validation->getErrors());
     }
 
-    public function testRulesForSingleRuleWithAsteriskWillReturnError()
+    public function testRulesForSingleRuleWithAsteriskWillReturnError(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -760,7 +648,7 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    public function testRulesForSingleRuleWithSingleValue()
+    public function testRulesForSingleRuleWithSingleValue(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -781,7 +669,7 @@ final class ValidationTest extends CIUnitTestCase
         ], $this->validation->getErrors());
     }
 
-    public function testTranslatedLabel()
+    public function testTranslatedLabel(): void
     {
         $rules = [
             'foo' => [
@@ -791,13 +679,11 @@ final class ValidationTest extends CIUnitTestCase
         ];
 
         $this->validation->setRules($rules, []);
-
         $this->validation->run(['foo' => 'abc']);
-
         $this->assertSame('The Foo Bar Translated field must be at least 10 characters in length.', $this->validation->getError('foo'));
     }
 
-    public function testTranslatedLabelIsMissing()
+    public function testTranslatedLabelIsMissing(): void
     {
         $rules = [
             'foo' => [
@@ -807,13 +693,11 @@ final class ValidationTest extends CIUnitTestCase
         ];
 
         $this->validation->setRules($rules, []);
-
         $this->validation->run(['foo' => 'abc']);
-
         $this->assertSame('The Foo.bar.is.missing field must be at least 10 characters in length.', $this->validation->getError('foo'));
     }
 
-    public function testTranslatedLabelWithCustomErrorMessage()
+    public function testTranslatedLabelWithCustomErrorMessage(): void
     {
         $rules = [
             'foo' => [
@@ -826,46 +710,32 @@ final class ValidationTest extends CIUnitTestCase
         ];
 
         $this->validation->setRules($rules, []);
-
         $this->validation->run(['foo' => 'abc']);
-
         $this->assertSame('The Foo Bar Translated field is very short.', $this->validation->getError('foo'));
     }
 
-    public function testTranslatedLabelTagReplacement()
+    public function testTranslatedLabelTagReplacement(): void
     {
-        // data
-        $data = [
-            'Username' => 'Pizza',
-        ];
+        $data = ['Username' => 'Pizza'];
 
-        // rules
-        $this->validation->setRules([
-            'Username' => [
+        $this->validation->setRules(
+            ['Username' => [
                 'label' => 'Foo.bar',
                 'rules' => 'min_length[6]',
-            ],
-        ], [
-            'Username' => [
+            ]],
+            ['Username' => [
                 'min_length' => 'Foo.bar.min_length2',
-            ],
-        ]);
+            ]]
+        );
 
-        // run validation
         $this->validation->run($data);
-
-        // $errors should contain an associative array
         $errors = $this->validation->getErrors();
 
-        // if "Username" doesn't exist in errors
         if (! isset($errors['Username'])) {
             $this->fail('Unable to find "Username"');
         }
 
-        // expected error message
         $expected = 'Supplied value (Pizza) for Foo Bar Translated must have at least 6 characters.';
-
-        // check if they are the same!
         $this->assertSame($expected, $errors['Username']);
     }
 
@@ -880,7 +750,7 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function dotNotationForIfExistProvider()
+    public function dotNotationForIfExistProvider(): Generator
     {
         yield 'dot-on-end-fail' => [
             false,
@@ -982,6 +852,65 @@ final class ValidationTest extends CIUnitTestCase
                 ['foo' => 'baz'],
                 ['foo' => ['boz']],
             ]],
+        ];
+    }
+
+    /**
+     * @dataProvider provideStringRulesCases
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
+     */
+    public function testSplittingOfComplexStringRules(string $input, array $expected): void
+    {
+        $splitter = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+        $this->assertSame($expected, $splitter($input));
+    }
+
+    public function provideStringRulesCases(): iterable
+    {
+        yield [
+            'required',
+            ['required'],
+        ];
+
+        yield [
+            'required|numeric',
+            ['required', 'numeric'],
+        ];
+
+        yield [
+            'required|max_length[500]|hex',
+            ['required', 'max_length[500]', 'hex'],
+        ];
+
+        yield [
+            'required|numeric|regex_match[/[a-zA-Z]+/]',
+            ['required', 'numeric', 'regex_match[/[a-zA-Z]+/]'],
+        ];
+
+        yield [
+            'required|max_length[500]|regex_match[/^;"\'{}\[\]^<>=/]',
+            ['required', 'max_length[500]', 'regex_match[/^;"\'{}\[\]^<>=/]'],
+        ];
+
+        yield [
+            'regex_match[/^;"\'{}\[\]^<>=/]|regex_match[/[^a-z0-9.\|_]+/]',
+            ['regex_match[/^;"\'{}\[\]^<>=/]', 'regex_match[/[^a-z0-9.\|_]+/]'],
+        ];
+
+        yield [
+            'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+            ['required', 'regex_match[/^(01[2689]|09)[0-9]{8}$/]', 'numeric'],
+        ];
+
+        yield [
+            'required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]',
+            ['required', 'regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', 'max_length[10]'],
+        ];
+
+        yield [
+            'required|regex_match[/^(01|2689|09)[0-9]{8}$/]|numeric',
+            ['required', 'regex_match[/^(01|2689|09)[0-9]{8}$/]', 'numeric'],
         ];
     }
 }

@@ -262,7 +262,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityProperties()
     {
-        $power             = new class() extends Entity {
+        $power             = new class () extends Entity {
             public $foo    = 'bar';
             protected $bar = 'baz';
 
@@ -292,7 +292,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityObjectProperties()
     {
-        $power                    = new class() extends Entity {
+        $power                    = new class () extends Entity {
             protected $attributes = [
                 'foo'     => 'bar',
                 'bar'     => 'baz',
@@ -953,7 +953,7 @@ final class ParserTest extends CIUnitTestCase
         $this->parser->setData(['testString' => 'Hello World']);
         $this->assertSame($expected, $this->parser->renderString($pattern, [], false));
         $this->assertArrayNotHasKey('testString', $this->parser->getData());
-        //last set data is not saved
+        // last set data is not saved
         $this->parser->setData(['testString' => 'Hello World']);
         $this->assertSame($expected, $this->parser->renderString($pattern, [], true));
         $this->assertArrayHasKey('testString', $this->parser->getData());

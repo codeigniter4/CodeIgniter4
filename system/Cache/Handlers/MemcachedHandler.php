@@ -138,7 +138,7 @@ class MemcachedHandler extends BaseHandler
             }
         } elseif ($this->memcached instanceof Memcache) {
             $flags = false;
-            $data  = $this->memcached->get($key, $flags); // @phpstan-ignore-line
+            $data  = $this->memcached->get($key, $flags);
 
             // check for unmatched key (i.e. $flags is untouched)
             if ($flags === false) {
@@ -220,7 +220,7 @@ class MemcachedHandler extends BaseHandler
 
         $key = static::validateKey($key, $this->prefix);
 
-        //FIXME: third parameter isn't other handler actions.
+        // FIXME: third parameter isn't other handler actions.
         // @phpstan-ignore-next-line
         return $this->memcached->decrement($key, $offset, $offset, 60);
     }
@@ -251,7 +251,7 @@ class MemcachedHandler extends BaseHandler
 
         // if not an array, don't try to count for PHP7.2
         if (! is_array($stored) || count($stored) !== 3) {
-            return false; // This will return null in a future release
+            return false; // @TODO This will return null in a future release
         }
 
         [$data, $time, $limit] = $stored;

@@ -29,7 +29,7 @@ final class MigrationTest extends CIUnitTestCase
 
     public function testDBGroup()
     {
-        $migration             = new class() extends Migration {
+        $migration             = new class () extends Migration {
             protected $DBGroup = 'tests';
 
             public function up()

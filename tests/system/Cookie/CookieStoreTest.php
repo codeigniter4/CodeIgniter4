@@ -110,7 +110,7 @@ final class CookieStoreTest extends CIUnitTestCase
         $prod = $cookies['prod']->getOptions();
 
         /**
-         * @var MockObject&CookieStore
+         * @var MockObject&CookieStore $store
          */
         $store = $this->getMockBuilder(CookieStore::class)
             ->setConstructorArgs([$cookies])

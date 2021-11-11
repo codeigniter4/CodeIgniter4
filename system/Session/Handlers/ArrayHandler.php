@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Exception;
+use ReturnTypeWillChange;
 
 /**
  * Session handler using static array for storage.
@@ -22,51 +22,43 @@ class ArrayHandler extends BaseHandler
     protected static $cache = [];
 
     /**
-     * Open
+     * Re-initialize existing session, or creates a new one.
      *
-     * Ensures we have an initialized database connection.
-     *
-     * @param string $savePath Path to session files' directory
-     * @param string $name     Session cookie name
-     *
-     * @throws Exception
+     * @param string $path The path where to store/retrieve the session
+     * @param string $name The session name
      */
-    public function open($savePath, $name): bool
+    public function open($path, $name): bool
     {
         return true;
     }
 
     /**
-     * Read
+     * Reads the session data from the session storage, and returns the results.
      *
-     * Reads session data and acquires a lock
+     * @param string $id The session ID
      *
-     * @param string $sessionID Session ID
-     *
-     * @return string Serialized session data
+     * @return false|string Returns an encoded string of the read data.
+     *                      If nothing was read, it must return false.
      */
-    public function read($sessionID): string
+    #[ReturnTypeWillChange]
+    public function read($id)
     {
         return '';
     }
 
     /**
-     * Write
+     * Writes the session data to the session storage.
      *
-     * Writes (create / update) session data
-     *
-     * @param string $sessionID   Session ID
-     * @param string $sessionData Serialized session data
+     * @param string $id   The session ID
+     * @param string $data The encoded session data
      */
-    public function write($sessionID, $sessionData): bool
+    public function write($id, $data): bool
     {
         return true;
     }
 
     /**
-     * Close
-     *
-     * Releases locks and closes file descriptor.
+     * Closes the current session.
      */
     public function close(): bool
     {
@@ -74,26 +66,26 @@ class ArrayHandler extends BaseHandler
     }
 
     /**
-     * Destroy
+     * Destroys a session
      *
-     * Destroys the current session.
-     *
-     * @param string $sessionID
+     * @param string $id The session ID being destroyed
      */
-    public function destroy($sessionID): bool
+    public function destroy($id): bool
     {
         return true;
     }
 
     /**
-     * Garbage Collector
+     * Cleans up expired sessions.
      *
-     * Deletes expired sessions
+     * @param int $max_lifetime Sessions that have not updated
+     *                          for the last max_lifetime seconds will be removed.
      *
-     * @param int $maxlifetime Maximum lifetime of sessions
+     * @return false|int Returns the number of deleted sessions on success, or false on failure.
      */
-    public function gc($maxlifetime): bool
+    #[ReturnTypeWillChange]
+    public function gc($max_lifetime)
     {
-        return true;
+        return 1;
     }
 }

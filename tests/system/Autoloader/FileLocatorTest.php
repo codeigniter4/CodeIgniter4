@@ -39,8 +39,11 @@ final class FileLocatorTest extends CIUnitTestCase
                 TESTPATH,
                 SYSTEMPATH,
             ],
-            'Errors' => APPPATH . 'Views/errors',
-            'System' => SUPPORTPATH . 'Autoloader/system',
+            'Errors'              => APPPATH . 'Views/errors',
+            'System'              => SUPPORTPATH . 'Autoloader/system',
+            'CodeIgniter\\Devkit' => [
+                TESTPATH . '_support/',
+            ],
         ]);
 
         $this->locator = new FileLocator($autoloader);
@@ -123,6 +126,15 @@ final class FileLocatorTest extends CIUnitTestCase
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
+    }
+
+    public function testLocateFileCanFindNamespacedViewWhenVendorHasTwoNamespaces()
+    {
+        $file = '\CodeIgniter\Devkit\View\Views/simple';
+
+        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     public function testLocateFileNotFoundExistingNamespace()
@@ -261,7 +273,7 @@ final class FileLocatorTest extends CIUnitTestCase
     public function testGetClassNameFromClassFile()
     {
         $this->assertSame(
-            __CLASS__,
+            self::class,
             $this->locator->getClassname(__FILE__)
         );
     }

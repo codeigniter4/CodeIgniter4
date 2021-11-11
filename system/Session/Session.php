@@ -182,7 +182,7 @@ class Session implements SessionInterface
         $this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
         $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-        /** @var CookieConfig */
+        /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
         $this->cookie = new Cookie($this->sessionCookieName, '', [
@@ -271,11 +271,7 @@ class Session implements SessionInterface
         setcookie(
             $this->sessionCookieName,
             session_id(),
-            1,
-            $this->cookie->getPath(),
-            $this->cookie->getDomain(),
-            $this->cookie->isSecure(),
-            true
+            ['expires' => 1, 'path' => $this->cookie->getPath(), 'domain' => $this->cookie->getDomain(), 'secure' => $this->cookie->isSecure(), 'httponly' => true]
         );
 
         session_regenerate_id(true);
@@ -310,7 +306,7 @@ class Session implements SessionInterface
 
         if (! isset($this->sessionExpiration)) {
             $this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
-        } else {
+        } elseif ($this->sessionExpiration > 0) {
             ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
         }
 
@@ -565,7 +561,7 @@ class Session implements SessionInterface
     public function __get(string $key)
     {
         // Note: Keep this order the same, just in case somebody wants to
-        //       use 'session_id' as a session data key, for whatever reason
+        // use 'session_id' as a session data key, for whatever reason
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }

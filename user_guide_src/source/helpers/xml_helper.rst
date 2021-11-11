@@ -22,12 +22,12 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: xml_convert($str[, $protect_all = FALSE])
+.. php:function:: xml_convert($str[, $protect_all = false])
 
     :param string $str: the text string to convert
     :param bool $protect_all: Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g., &foo;
     :returns: XML-converted string
-    :rtype:	string
+    :rtype:    string
 
     Takes a string as input and converts the following reserved XML
     characters to entities:

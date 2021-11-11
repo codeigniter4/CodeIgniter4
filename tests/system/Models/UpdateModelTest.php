@@ -158,7 +158,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function testUpdateBatchWithEntity(): void
     {
-        $entity1 = new class() extends Entity {
+        $entity1 = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -166,7 +166,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -178,7 +177,7 @@ final class UpdateModelTest extends LiveModelTestCase
             ];
         };
 
-        $entity2 = new class() extends Entity {
+        $entity2 = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -186,7 +185,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [
@@ -307,7 +305,7 @@ final class UpdateModelTest extends LiveModelTestCase
     {
         $this->createModel(UserModel::class);
 
-        $entity = new class() extends Entity {
+        $entity = new class () extends Entity {
             protected $id;
             protected $name;
             protected $email;
@@ -315,7 +313,6 @@ final class UpdateModelTest extends LiveModelTestCase
             protected $deleted;
             protected $created_at;
             protected $updated_at;
-
             protected $_options = [
                 'datamap' => [],
                 'dates'   => [

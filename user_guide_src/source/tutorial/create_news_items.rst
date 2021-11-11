@@ -1,13 +1,27 @@
 Create news items
-###############################################################################
+#################
 
 You now know how you can read data from a database using CodeIgniter, but
 you haven't written any information to the database yet. In this section,
 you'll expand your news controller and model created earlier to include
 this functionality.
 
+Enable CSRF Filter
+------------------
+
+Before creating a form, let's enable the CSRF protection.
+
+Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following::
+
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+
+It configures the CSRF filter to be enabled for all **POST** requests.
+You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
+
 Create a form
--------------------------------------------------------
+-------------
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
@@ -19,7 +33,7 @@ the slug from our title in the model. Create a new view at
 
     <h2><?= esc($title) ?></h2>
 
-    <?= \Config\Services::validation()->listErrors() ?>
+    <?= service('validation')->listErrors() ?>
 
     <form action="/news/create" method="post">
         <?= csrf_field() ?>
@@ -28,13 +42,13 @@ the slug from our title in the model. Create a new view at
         <input type="input" name="title" /><br />
 
         <label for="body">Text</label>
-        <textarea name="body"></textarea><br />
+        <textarea name="body" cols="45" rows="4"></textarea><br />
 
         <input type="submit" name="submit" value="Create news item" />
     </form>
 
 There are probably only two things here that look unfamiliar. The
-``\Config\Services::validation()->listErrors()`` function is used to report
+``service('validation')->listErrors()`` function is used to report
 errors related to form validation. The ``csrf_field()`` function creates
 a hidden input with a CSRF token that helps protect against some common attacks.
 
@@ -47,24 +61,20 @@ validation <../libraries/validation>` library to do this.
 
     public function create()
     {
-        $model = new NewsModel();
+        $model = model(NewsModel::class);
 
         if ($this->request->getMethod() === 'post' && $this->validate([
-                'title' => 'required|min_length[3]|max_length[255]',
-                'body'  => 'required',
-            ]))
-        {
+            'title' => 'required|min_length[3]|max_length[255]',
+            'body'  => 'required',
+        ])) {
             $model->save([
                 'title' => $this->request->getPost('title'),
-                'slug'  => url_title($this->request->getPost('title'), '-', TRUE),
+                'slug'  => url_title($this->request->getPost('title'), '-', true),
                 'body'  => $this->request->getPost('body'),
             ]);
 
             echo view('news/success');
-            
-        }
-        else
-        {
+        } else {
             echo view('templates/header', ['title' => 'Create a news item']);
             echo view('news/create');
             echo view('templates/footer');
@@ -72,9 +82,9 @@ validation <../libraries/validation>` library to do this.
     }
 
 The code above adds a lot of functionality. First we load the NewsModel.
-After that, we check if we deal with the ``POST`` request and then
+After that, we check if we deal with the **POST** request and then
 the Controller-provided helper function is used to validate
-the $_POST fields. In this case, the title and text fields are required.
+the user input data. In this case, the POST data, and the title and text fields are required.
 
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read :doc:`more about this library
@@ -86,7 +96,7 @@ was submitted **and** passed all the rules, the model is called. This
 takes care of passing the news item into the model.
 This contains a new function ``url_title()``. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
-the string you pass it, replacing all spaces by dashes (-) and makes
+the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
@@ -109,9 +119,9 @@ or if the row already exists and should be updated, based on the presence
 of a primary key. In this case, there is no ``id`` field passed to it,
 so it will insert a new row into it's table, **news**.
 
-However, by default the insert and update methods in the model will
+However, by default the insert and update methods in the Model will
 not actually save any data because it doesn't know what fields are
-safe to be updated. Edit the model to provide it a list of updatable
+safe to be updated. Edit the **NewsModel** to provide it a list of updatable
 fields in the ``$allowedFields`` property.
 
 ::
@@ -171,8 +181,8 @@ Congratulations
 You just completed your first CodeIgniter4 application!
 
 The image underneath shows your project's **app** folder,
-with all of the files that you created in green.
-The two modified configuration files (Database & Routes) are not shown.
+with all of the files that you created in red.
+The two modified configuration files (**Config/Routes.php** & **Config/Filters.php**) are not shown.
 
 .. image:: ../images/tutorial9.png
     :align: left

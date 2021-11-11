@@ -241,25 +241,28 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    public function testOrdinal()
+    public function provideOrdinal()
     {
-        $suffixes = [
-            'st' => 1,
-            'nd' => 2,
-            'rd' => 3,
-            'th' => 4,
-            'th' => 11,
-            'th' => 20,
-            'st' => 21,
-            'nd' => 22,
-            'rd' => 23,
-            'th' => 24,
+        return [
+            ['st', 1],
+            ['nd', 2],
+            ['rd', 3],
+            ['th', 4],
+            ['th', 11],
+            ['th', 20],
+            ['st', 21],
+            ['nd', 22],
+            ['rd', 23],
+            ['th', 24],
         ];
+    }
 
-        foreach ($suffixes as $suffix => $number) {
-            $ordinal = ordinal($number);
-            $this->assertSame($suffix, $ordinal);
-        }
+    /**
+     * @dataProvider provideOrdinal
+     */
+    public function testOrdinal(string $suffix, int $number)
+    {
+        $this->assertSame($suffix, ordinal($number));
     }
 
     public function testOrdinalize()

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Entity;
 
+use Closure;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -589,54 +590,60 @@ final class EntityTest extends CIUnitTestCase
 
     public function testCastAsJSONSyntaxError()
     {
-        $entity = new Entity();
-
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Syntax error, malformed JSON');
 
-        $method('{ this is bad string', true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))('{ this is bad string');
     }
 
     public function testCastAsJSONAnotherErrorDepth()
     {
-        $entity = new Entity();
-
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Maximum stack depth exceeded');
 
         $string = '{' . str_repeat('"test":{', 513) . '"test":"value"' . str_repeat('}', 513) . '}';
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastAsJSONControlCharCheck()
     {
-        $entity = new Entity();
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Unexpected control character found');
 
         $string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastAsJSONStateMismatch()
     {
-        $entity = new Entity();
-        $method = $this->getPrivateMethodInvoker($entity, 'castAsJson');
-
         $this->expectException(CastException::class);
         $this->expectExceptionMessage('Underflow or the modes mismatch');
 
         $string = '[{"name":"jack","product_id":"1234"]';
 
-        $method($string, true);
+        (Closure::bind(static function (string $value) {
+            $entity = new Entity();
+            $entity->casts['dummy'] = 'json[array]';
+
+            return $entity->castAs($value, 'dummy');
+        }, null, Entity::class))($string);
     }
 
     public function testCastSetter()
@@ -755,7 +762,7 @@ final class EntityTest extends CIUnitTestCase
 
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
     {
-        $entity                   = new class() extends Entity {
+        $entity                   = new class () extends Entity {
             protected $attributes = [
                 '_foo' => null,
                 'bar'  => null,
@@ -916,21 +923,19 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getEntity()
     {
-        return new class() extends Entity {
+        return new class () extends Entity {
             protected $attributes = [
                 'foo'        => null,
                 'bar'        => null,
                 'default'    => 'sumfin',
                 'created_at' => null,
             ];
-
             protected $original = [
                 'foo'        => null,
                 'bar'        => null,
                 'default'    => 'sumfin',
                 'created_at' => null,
             ];
-
             protected $datamap = [
                 'createdAt' => 'created_at',
             ];
@@ -956,12 +961,11 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getMappedEntity()
     {
-        return new class() extends Entity {
+        return new class () extends Entity {
             protected $attributes = [
                 'foo'    => null,
                 'simple' => null,
             ];
-
             protected $_original = [
                 'foo'    => null,
                 'simple' => null,
@@ -987,17 +991,15 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getSwappedEntity()
     {
-        return new class() extends Entity {
+        return new class () extends Entity {
             protected $attributes = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-
             protected $_original = [
                 'foo' => 'foo',
                 'bar' => 'bar',
             ];
-
             protected $datamap = [
                 'bar'          => 'foo',
                 'foo'          => 'bar',
@@ -1008,7 +1010,7 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getCastEntity($data = null): Entity
     {
-        return new class($data) extends Entity {
+        return new class ($data) extends Entity {
             protected $attributes = [
                 'first'      => null,
                 'second'     => null,
@@ -1024,7 +1026,6 @@ final class EntityTest extends CIUnitTestCase
                 'twelfth'    => null,
                 'thirteenth' => null,
             ];
-
             protected $_original = [
                 'first'      => null,
                 'second'     => null,
@@ -1067,7 +1068,7 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getCastNullableEntity()
     {
-        return new class() extends Entity {
+        return new class () extends Entity {
             protected $attributes = [
                 'string_null'           => null,
                 'string_empty'          => null,
@@ -1075,7 +1076,6 @@ final class EntityTest extends CIUnitTestCase
                 'integer_0'             => null,
                 'string_value_not_null' => 'value',
             ];
-
             protected $_original = [
                 'string_null'           => null,
                 'string_empty'          => null,
@@ -1097,14 +1097,13 @@ final class EntityTest extends CIUnitTestCase
 
     protected function getCustomCastEntity()
     {
-        return new class() extends Entity {
+        return new class () extends Entity {
             protected $attributes = [
                 'first'  => null,
                 'second' => null,
                 'third'  => null,
                 'fourth' => null,
             ];
-
             protected $_original = [
                 'first'  => null,
                 'second' => null,
@@ -1119,7 +1118,6 @@ final class EntityTest extends CIUnitTestCase
                 'third'  => 'type[param1, param2,param3]',
                 'fourth' => '?type',
             ];
-
             protected $castHandlers = [
                 'base64'   => CastBase64::class,
                 'someType' => NotExtendsBaseCast::class,

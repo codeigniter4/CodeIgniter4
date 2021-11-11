@@ -61,4 +61,17 @@ final class OrderTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testOrderRandomWithRandomColumn()
+    {
+        $this->db->setPrefix('fail_');
+        $builder = new BaseBuilder('user', $this->db);
+        $this->setPrivateProperty($builder, 'randomKeyword', ['"SYSTEM"."RANDOM"']);
+
+        $builder->orderBy('name', 'random');
+
+        $expectedSQL = 'SELECT * FROM "fail_user" ORDER BY "SYSTEM"."RANDOM"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

@@ -27,12 +27,12 @@ The following functions are available:
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
     :param  string|array  $src:  Image source URI, or array of attributes and values
-    :param  bool    $indexPage:  Whether to treat $src as a routed URI string
+    :param  bool    $indexPage:  Whether to treat ``$src`` as a routed URI string
     :param  mixed   $attributes: Additional HTML attributes
     :returns:   HTML image tag
     :rtype: string
 
-    Lets you create HTML <img /> tags. The first parameter contains the
+    Lets you create HTML ``<img />`` tags. The first parameter contains the
     image source. Example::
 
         echo img('images/picture.jpg');
@@ -59,7 +59,7 @@ The following functions are available:
             'width'  => '200',
             'height' => '200',
             'title'  => 'That was quite a night',
-            'rel'    => 'lightbox'
+            'rel'    => 'lightbox',
         ];
 
         img($imageProperties);
@@ -79,11 +79,11 @@ The following functions are available:
         echo img($src);
 
     There is an optional second parameter to specify the MIME type, otherwise the
-    function will use your Mimes config to guess.
+    function will use your Mimes config to guess::
 
         $src = img_data('path/img_without_extension', 'image/png'); // data:image/png;base64,HT5A822...
 
-    Note that $path must exist and be a readable image format supported by the ``data:`` protocol.
+    Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol.
     This function is not recommended for very large files, but it provides a convenient way
     of serving images from your app that are not web-accessible (e.g., in **public/**).
 
@@ -94,12 +94,12 @@ The following functions are available:
     :param  string  $type:      Type of the related document
     :param  string  $title:     Link title
     :param  string  $media:     Media type
-    :param  bool    $indexPage: Whether to treat $src as a routed URI string
+    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
     :param  string  $hreflang:  Hreflang type
     :returns:   HTML link tag
     :rtype: string
 
-    Lets you create HTML <link /> tags. This is useful for stylesheet links,
+    Lets you create HTML ``<link />`` tags. This is useful for stylesheet links,
     as well as other links. The parameters are *href*, with optional *rel*,
     *type*, *title*, *media* and *indexPage*.
 
@@ -126,7 +126,7 @@ The following functions are available:
             'href'  => 'css/printer.css',
             'rel'   => 'stylesheet',
             'type'  => 'text/css',
-            'media' => 'print'
+            'media' => 'print',
         ];
 
         echo link_tag($link);
@@ -135,11 +135,11 @@ The following functions are available:
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
     :param  mixed  $src: The source name of a JavaScript file
-    :param  bool    $indexPage: Whether to treat $src as a routed URI string
+    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
     :returns:   HTML script tag
     :rtype: string
 
-    Lets you create HTML <script></script> tags. The parameters is *src*, with optional *indexPage*.
+    Lets you create HTML ``<script></script>`` tags. The parameters is *src*, with optional *indexPage*.
 
     *indexPage* is a boolean value that specifies if the *src* should have
     the page specified by ``$config['indexPage']`` added to the address it creates.
@@ -171,12 +171,12 @@ The following functions are available:
             'red',
             'blue',
             'green',
-            'yellow'
+            'yellow',
         ];
 
         $attributes = [
             'class' => 'boldlist',
-            'id'    => 'mylist'
+            'id'    => 'mylist',
         ];
 
         echo ul($list, $attributes);
@@ -196,14 +196,14 @@ The following functions are available:
 
         $attributes = [
             'class' => 'boldlist',
-            'id'    => 'mylist'
+            'id'    => 'mylist',
         ];
 
         $list = [
             'colors' => [
                 'red',
                 'blue',
-                'green'
+                'green',
             ],
             'shapes' => [
                 'round',
@@ -211,8 +211,8 @@ The following functions are available:
                 'circles' => [
                     'ellipse',
                     'oval',
-                    'sphere'
-                ]
+                    'sphere',
+                ],
             ],
             'moods'  => [
                 'happy',
@@ -220,11 +220,11 @@ The following functions are available:
                     'defeated' => [
                         'dejected',
                         'disheartened',
-                        'depressed'
+                        'depressed',
                     ],
                     'annoyed',
                     'cross',
-                    'angry'
+                    'angry',
                 ]
             ]
         ];
@@ -284,8 +284,8 @@ The following functions are available:
     :returns:   HTML-formatted ordered list
     :rtype: string
 
-    Identical to :php:func:`ul()`, only it produces the <ol> tag for
-    ordered lists instead of <ul>.
+    Identical to :php:func:`ul()`, only it produces the ``<ol>`` tag for
+    ordered lists instead of ``<ul>``.
 
 .. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
 
@@ -300,30 +300,26 @@ The following functions are available:
     Permits you to generate HTML video element from simple or
     source arrays. Example::
 
-        $tracks =
-        [
+        $tracks = [
             track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
             track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
         ];
 
         echo video('test.mp4', 'Your browser does not support the video tag.', 'controls');
 
-        echo video
-        (
+        echo video(
             'http://www.codeigniter.com/test.mp4',
             'Your browser does not support the video tag.',
             'controls',
             $tracks
         );
 
-        echo video
-        (
-            [
-              source('movie.mp4', 'video/mp4', 'class="test"'),
-              source('movie.ogg', 'video/ogg'),
-              source('movie.mov', 'video/quicktime'),
-              source('movie.ogv', 'video/ogv; codecs=dirac, speex')
-            ],
+        echo video([
+            source('movie.mp4', 'video/mp4', 'class="test"'),
+            source('movie.ogg', 'video/ogg'),
+            source('movie.mov', 'video/quicktime'),
+            source('movie.ogv', 'video/ogv; codecs=dirac, speex')
+        ],
             'Your browser does not support the video tag.',
             'class="test" controls',
             $tracks
@@ -363,7 +359,7 @@ The following functions are available:
     :returns:                            HTML-formatted audio element
     :rtype: string
 
-    Identical to :php:func:`video()`, only it produces the <audio> tag instead of <video>.
+    Identical to :php:func:`video()`, only it produces the ``<audio>`` tag instead of ``<video>``.
 
 .. php:function:: source($src = ''[, $type = false[, $attributes = '']])
 
@@ -373,7 +369,7 @@ The following functions are available:
     :returns:   HTML source tag
     :rtype: string
 
-    Lets you create HTML <source /> tags. The first parameter contains the
+    Lets you create HTML ``<source />`` tags. The first parameter contains the
     source source. Example::
 
         echo source('movie.mp4', 'video/mp4', 'class="test"');
@@ -388,7 +384,7 @@ The following functions are available:
     :returns:   HTML embed tag
     :rtype: string
 
-    Lets you create HTML <embed /> tags. The first parameter contains the
+    Lets you create HTML ``<embed />`` tags. The first parameter contains the
     embed source. Example::
 
         echo embed('movie.mov', 'video/quicktime', 'class="test"');
@@ -403,13 +399,12 @@ The following functions are available:
     :returns:   HTML object tag
     :rtype: string
 
-    Lets you create HTML <object /> tags. The first parameter contains the
+    Lets you create HTML ``<object />`` tags. The first parameter contains the
     object data. Example::
 
         echo object('movie.swf', 'application/x-shockwave-flash', 'class="test"');
 
-        echo object
-        (
+        echo object(
             'movie.swf',
             'application/x-shockwave-flash',
             'class="test"',
@@ -438,7 +433,7 @@ The following functions are available:
     :returns:   HTML param tag
     :rtype: string
 
-    Lets you create HTML <param /> tags. The first parameter contains the
+    Lets you create HTML ``<param />`` tags. The first parameter contains the
     param source. Example::
 
         echo param('movie.mov', 'video/quicktime', 'class="test"');
@@ -476,7 +471,7 @@ The following functions are available:
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
     The following is a list of the pre-defined doctype choices. These are configurable,
-    pulled from `application/Config/DocTypes.php`, or they could be over-ridden in your `.env` configuration.
+    pulled from **app/Config/DocTypes.php**, or they could be over-ridden in your **.env** configuration.
 
     =============================== =================== ==================================================================================================================================================
     Document type                   Option              Result

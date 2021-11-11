@@ -23,7 +23,7 @@ class should be magically initialized.
 
 To access and initialize the session::
 
-	$session = \Config\Services::session($config);
+    $session = \Config\Services::session($config);
 
 The ``$config`` parameter is optional - your application configuration.
 If not provided, the services register will instantiate your default
@@ -31,14 +31,14 @@ one.
 
 Once loaded, the Sessions library object will be available using::
 
-	$session
+    $session
 
 Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
 but does not take any configuration options.
 ::
 
-	$session = session();
+    $session = session();
 
 How do Sessions work?
 =====================
@@ -58,7 +58,7 @@ data, but the process of reading, writing, and updating a session is
 automatic.
 
 .. note:: Under CLI, the Session library will automatically halt itself,
-	as this is a concept based entirely on the HTTP protocol.
+    as this is a concept based entirely on the HTTP protocol.
 
 A note about concurrency
 ------------------------
@@ -117,45 +117,45 @@ Retrieving Session Data
 Any piece of information from the session array is available through the
 ``$_SESSION`` superglobal::
 
-	$_SESSION['item']
+    $_SESSION['item']
 
 Or through the conventional accessor method::
 
-	$session->get('item');
+    $session->get('item');
 
 Or through the magic getter::
 
-	$session->item
+    $session->item
 
 Or even through the session helper method::
 
-	session('item');
+    session('item');
 
 Where ``item`` is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
 variable, you will do this::
 
-	$name = $_SESSION['name'];
+    $name = $_SESSION['name'];
 
-	// or:
+    // or:
 
-	$name = $session->name
+    $name = $session->name
 
-	// or:
+    // or:
 
-	$name = $session->get('name');
+    $name = $session->get('name');
 
-.. note:: The ``get()`` method returns NULL if the item you are trying
-	to access does not exist.
+.. note:: The ``get()`` method returns null if the item you are trying
+    to access does not exist.
 
 If you want to retrieve all of the existing userdata, you can simply
 omit the item key (magic getter only works for single property values)::
 
-	$_SESSION
+    $_SESSION
 
-	// or:
+    // or:
 
-	$session->get();
+    $session->get();
 
 Adding Session Data
 ===================
@@ -172,34 +172,34 @@ The former userdata method is deprecated,
 but you can pass an array containing your new session data to the
 ``set()`` method::
 
-	$session->set($array);
+    $session->set($array);
 
 Where ``$array`` is an associative array containing your new data. Here's
 an example::
 
-	$newdata = [
-		'username'  => 'johndoe',
-		'email'     => 'johndoe@some-site.com',
-		'logged_in' => TRUE
-	];
+    $newdata = [
+        'username'  => 'johndoe',
+        'email'     => 'johndoe@some-site.com',
+        'logged_in' => true,
+    ];
 
-	$session->set($newdata);
+    $session->set($newdata);
 
 If you want to add session data one value at a time, ``set()`` also
 supports this syntax::
 
-	$session->set('some_name', 'some_value');
+    $session->set('some_name', 'some_value');
 
 If you want to verify that a session value exists, simply check with
 ``isset()``::
 
-	// returns FALSE if the 'some_name' item doesn't exist or is NULL,
-	// TRUE otherwise:
-	isset($_SESSION['some_name'])
+    // returns false if the 'some_name' item doesn't exist or is null,
+    // true otherwise:
+    isset($_SESSION['some_name'])
 
 Or you can call ``has()``::
 
-	$session->has('some_name');
+    $session->has('some_name');
 
 Pushing new value to session data
 =================================
@@ -215,26 +215,26 @@ Removing Session Data
 Just as with any other variable, unsetting a value in ``$_SESSION`` can be
 done through ``unset()``::
 
-	unset($_SESSION['some_name']);
+    unset($_SESSION['some_name']);
 
-	// or multiple values:
+    // or multiple values:
 
-	unset(
-		$_SESSION['some_name'],
-		$_SESSION['another_name']
-	);
+    unset(
+        $_SESSION['some_name'],
+        $_SESSION['another_name']
+    );
 
 Also, just as ``set()`` can be used to add information to a
 session, ``remove()`` can be used to remove it, by passing the
 session key. For example, if you wanted to remove 'some_name' from your
 session data array::
 
-	$session->remove('some_name');
+    $session->remove('some_name');
 
 This method also accepts an array of item keys to unset::
 
-	$array_items = ['username', 'email'];
-	$session->remove($array_items);
+    $array_items = ['username', 'email'];
+    $session->remove($array_items);
 
 Flashdata
 =========
@@ -250,21 +250,21 @@ managed inside the CodeIgniter session handler.
 
 To mark an existing item as "flashdata"::
 
-	$session->markAsFlashdata('item');
+    $session->markAsFlashdata('item');
 
 If you want to mark multiple items as flashdata, simply pass the keys as an
 array::
 
-	$session->markAsFlashdata(['item', 'item2']);
+    $session->markAsFlashdata(['item', 'item2']);
 
 To add flashdata::
 
-	$_SESSION['item'] = 'value';
-	$session->markAsFlashdata('item');
+    $_SESSION['item'] = 'value';
+    $session->markAsFlashdata('item');
 
 Or alternatively, using the ``setFlashdata()`` method::
 
-	$session->setFlashdata('item', 'value');
+    $session->setFlashdata('item', 'value');
 
 You can also pass an array to ``setFlashdata()``, in the same manner as
 ``set()``.
@@ -272,23 +272,23 @@ You can also pass an array to ``setFlashdata()``, in the same manner as
 Reading flashdata variables is the same as reading regular session data
 through ``$_SESSION``::
 
-	$_SESSION['item']
+    $_SESSION['item']
 
 .. important:: The ``get()`` method WILL return flashdata items when
-	retrieving a single item by key. It will not return flashdata when
-	grabbing all userdata from the session, however.
+    retrieving a single item by key. It will not return flashdata when
+    grabbing all userdata from the session, however.
 
 However, if you want to be sure that you're reading "flashdata" (and not
 any other kind), you can also use the ``getFlashdata()`` method::
 
-	$session->getFlashdata('item');
+    $session->getFlashdata('item');
 
 Or to get an array with all flashdata, simply omit the key parameter::
 
-	$session->getFlashdata();
+    $session->getFlashdata();
 
-.. note:: The ``getFlashdata()`` method returns NULL if the item cannot be
-	found.
+.. note:: The ``getFlashdata()`` method returns null if the item cannot be
+    found.
 
 If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the ``keepFlashdata()`` method.
@@ -296,8 +296,8 @@ You can either pass a single item or an array of flashdata items to keep.
 
 ::
 
-	$session->keepFlashdata('item');
-	$session->keepFlashdata(['item1', 'item2', 'item3']);
+    $session->keepFlashdata('item');
+    $session->keepFlashdata(['item1', 'item2', 'item3']);
 
 Tempdata
 ========
@@ -312,71 +312,71 @@ CodeIgniter session handler.
 To mark an existing item as "tempdata", simply pass its key and expiry time
 (in seconds!) to the ``markAsTempdata()`` method::
 
-	// 'item' will be erased after 300 seconds
-	$session->markAsTempdata('item', 300);
+    // 'item' will be erased after 300 seconds
+    $session->markAsTempdata('item', 300);
 
 You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not::
 
-	// Both 'item' and 'item2' will expire after 300 seconds
-	$session->markAsTempdata(['item', 'item2'], 300);
+    // Both 'item' and 'item2' will expire after 300 seconds
+    $session->markAsTempdata(['item', 'item2'], 300);
 
-	// 'item' will be erased after 300 seconds, while 'item2'
-	// will do so after only 240 seconds
-	$session->markAsTempdata([
-		'item'	=> 300,
-		'item2'	=> 240
-	]);
+    // 'item' will be erased after 300 seconds, while 'item2'
+    // will do so after only 240 seconds
+    $session->markAsTempdata([
+        'item'    => 300,
+        'item2'    => 240,
+    ]);
 
 To add tempdata::
 
-	$_SESSION['item'] = 'value';
-	$session->markAsTempdata('item', 300); // Expire in 5 minutes
+    $_SESSION['item'] = 'value';
+    $session->markAsTempdata('item', 300); // Expire in 5 minutes
 
 Or alternatively, using the ``setTempdata()`` method::
 
-	$session->setTempdata('item', 'value', 300);
+    $session->setTempdata('item', 'value', 300);
 
 You can also pass an array to ``setTempdata()``::
 
-	$tempdata = ['newuser' => TRUE, 'message' => 'Thanks for joining!'];
-	$session->setTempdata($tempdata, NULL, $expire);
+    $tempdata = ['newuser' => true, 'message' => 'Thanks for joining!'];
+    $session->setTempdata($tempdata, null, $expire);
 
 .. note:: If the expiration is omitted or set to 0, the default
-	time-to-live value of 300 seconds (or 5 minutes) will be used.
+    time-to-live value of 300 seconds (or 5 minutes) will be used.
 
 To read a tempdata variable, again you can just access it through the
 ``$_SESSION`` superglobal array::
 
-	$_SESSION['item']
+    $_SESSION['item']
 
 .. important:: The ``get()`` method WILL return tempdata items when
-	retrieving a single item by key. It will not return tempdata when
-	grabbing all userdata from the session, however.
+    retrieving a single item by key. It will not return tempdata when
+    grabbing all userdata from the session, however.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
 other kind), you can also use the ``getTempdata()`` method::
 
-	$session->getTempdata('item');
+    $session->getTempdata('item');
 
 And of course, if you want to retrieve all existing tempdata::
 
-	$session->getTempdata();
+    $session->getTempdata();
 
-.. note:: The ``getTempdata()`` method returns NULL if the item cannot be
-	found.
+.. note:: The ``getTempdata()`` method returns null if the item cannot be
+    found.
 
 If you need to remove a tempdata value before it expires, you can directly
 unset it from the ``$_SESSION`` array::
 
-	unset($_SESSION['item']);
+    unset($_SESSION['item']);
 
 However, this won't remove the marker that makes this specific item to be
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
 ``removeTempdata()``::
 
-	$session->removeTempdata('item');
+    $session->removeTempdata('item');
 
 Destroying a Session
 ====================
@@ -386,16 +386,16 @@ simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>
 function, or the library's ``destroy()`` method. Both will work in exactly the
 same way::
 
-	session_destroy();
+    session_destroy();
 
-	// or
+    // or
 
-	$session->destroy();
+    $session->destroy();
 
 .. note:: This must be the last session-related operation that you do
-	during the same request. All session data (including flashdata and
-	tempdata) will be destroyed permanently and functions will be
-	unusable during the same request after you destroy the session.
+    during the same request. All session data (including flashdata and
+    tempdata) will be destroyed permanently and functions will be
+    unusable during the same request after you destroy the session.
 
 You may also use the ``stop()`` method to completely kill the session
 by removing the old session_id, destroying all data, and destroying
@@ -441,22 +441,28 @@ Preference                     Default                                      Opti
 **sessionCookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
                                                                                                                               If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sessionSavePath**            NULL                                         None                                              Specifies the storage location, depends on the driver being used.
-**sessionMatchIP**             FALSE                                        TRUE/FALSE (boolean)                              Whether to validate the user's IP address when reading the session cookie.
+**sessionSavePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
+**sessionMatchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
                                                                                                                               Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                                                              will likely set this to FALSE.
+                                                                                                                              will likely set this to false.
 **sessionTimeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
                                                                                                                               session ID. Setting it to 0 will disable session ID regeneration.
-**sessionRegenerateDestroy**   FALSE                                        TRUE/FALSE (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                                                              the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
+**sessionRegenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
+                                                                                                                              the session ID. When set to false, the data will be later deleted by the garbage collector.
 ============================== ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
-	session related INI settings, as well as legacy CI settings such as
-	'sess_expire_on_close' when any of the above is not configured.
-	However, you should never rely on this behavior as it can cause
-	unexpected results or be changed in the future. Please configure
-	everything properly.
+    session related INI settings, as well as legacy CI settings such as
+    'sess_expire_on_close' when any of the above is not configured.
+    However, you should never rely on this behavior as it can cause
+    unexpected results or be changed in the future. Please configure
+    everything properly.
+
+.. note:: If ``sessionExpiration`` is set to ``0``, the ``session.gc_maxlifetime``
+    setting set by PHP in session management will be used as-is
+    (often the default value of ``1440``). This needs to be changed in
+    ``php.ini`` or via ``ini_set()`` as needed.
+
 
 In addition to the values above, the cookie and native drivers apply the
 following configuration values shared by the :doc:`IncomingRequest </incoming/incomingrequest>` and
@@ -472,9 +478,9 @@ Preference           Default         Description
 ==================== =============== ===========================================================================
 
 .. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
-	Instead the HttpOnly parameter is always enabled, for security
-	reasons. Additionally, the 'cookiePrefix' setting is completely
-	ignored.
+    Instead the HttpOnly parameter is always enabled, for security
+    reasons. Additionally, the 'cookiePrefix' setting is completely
+    ignored.
 
 Session Drivers
 ***************
@@ -533,9 +539,9 @@ permissions will probably break your application.
 Instead, you should do something like this, depending on your environment
 ::
 
-	mkdir /<path to your application directory>/Writable/sessions/
-	chmod 0700 /<path to your application directory>/Writable/sessions/
-	chown www-data /<path to your application directory>/Writable/sessions/
+    mkdir /<path to your application directory>/Writable/sessions/
+    chmod 0700 /<path to your application directory>/Writable/sessions/
+    chown www-data /<path to your application directory>/Writable/sessions/
 
 Bonus Tip
 ---------
@@ -571,46 +577,46 @@ table that we already mentioned and then set it as your
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this::
 
-	public $sessionDriver   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
-	public $sessionSavePath = 'ci_sessions';
+    public $sessionDriver   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
+    public $sessionSavePath = 'ci_sessions';
 
 And then of course, create the database table ...
 
 For MySQL::
 
-	CREATE TABLE IF NOT EXISTS `ci_sessions` (
-		`id` varchar(128) NOT NULL,
-		`ip_address` varchar(45) NOT NULL,
-		`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-		`data` blob NOT NULL,
-		KEY `ci_sessions_timestamp` (`timestamp`)
-	);
+    CREATE TABLE IF NOT EXISTS `ci_sessions` (
+        `id` varchar(128) NOT null,
+        `ip_address` varchar(45) NOT null,
+        `timestamp` timestamp DEFAULT CURRENT_TIMESTAMP NOT null,
+        `data` blob NOT null,
+        KEY `ci_sessions_timestamp` (`timestamp`)
+    );
 
 For PostgreSQL::
 
-	CREATE TABLE "ci_sessions" (
-		"id" varchar(128) NOT NULL,
-		"ip_address" inet NOT NULL,
-		"timestamp" timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-		"data" bytea DEFAULT '' NOT NULL
-	);
+    CREATE TABLE "ci_sessions" (
+        "id" varchar(128) NOT NULL,
+        "ip_address" inet NOT NULL,
+        "timestamp" timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        "data" bytea DEFAULT '' NOT NULL
+    );
 
-	CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
+    CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
 
 You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-	// When sessionMatchIP = TRUE
-	ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
+    // When sessionMatchIP = true
+    ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-	// When sessionMatchIP = FALSE
-	ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
+    // When sessionMatchIP = false
+    ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
-	// To drop a previously created primary key (use when changing the setting)
-	ALTER TABLE ci_sessions DROP PRIMARY KEY;
+    // To drop a previously created primary key (use when changing the setting)
+    ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
 You can choose the Database group to use by adding a new line to the
-**application\Config\App.php** file with the name of the group to use::
+**app/Config/App.php** file with the name of the group to use::
 
   public $sessionDBGroup = 'groupName';
 
@@ -624,19 +630,19 @@ This command will take the **sessionSavePath** and **sessionMatchIP** settings i
 when it generates the code.
 
 .. important:: Only MySQL and PostgreSQL databases are officially
-	supported, due to lack of advisory locking mechanisms on other
-	platforms. Using sessions without locks can cause all sorts of
-	problems, especially with heavy usage of AJAX, and we will not
-	support such cases. Use ``session_write_close()`` after you've
-	done processing session data if you're having performance
-	issues.
+    supported, due to lack of advisory locking mechanisms on other
+    platforms. Using sessions without locks can cause all sorts of
+    problems, especially with heavy usage of AJAX, and we will not
+    support such cases. Use ``session_write_close()`` after you've
+    done processing session data if you're having performance
+    issues.
 
 RedisHandler Driver
 ===================
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
-	this driver are emulated by a separate value that is kept for up
-	to 300 seconds.
+    this driver are emulated by a separate value that is kept for up
+    to 300 seconds.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
@@ -656,24 +662,24 @@ The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
 
-	https://github.com/phpredis/phpredis
+    https://github.com/phpredis/phpredis
 
 .. warning:: CodeIgniter's Session library does NOT use the actual 'redis'
-	``session.save_handler``. Take note **only** of the path format in
-	the link above.
+    ``session.save_handler``. Take note **only** of the path format in
+    the link above.
 
 For the most common case however, a simple ``host:port`` pair should be
 sufficient::
 
-	public $sessionDiver    = 'CodeIgniter\Session\Handlers\RedisHandler';
-	public $sessionSavePath = 'tcp://localhost:6379';
+    public $sessionDiver    = 'CodeIgniter\Session\Handlers\RedisHandler';
+    public $sessionSavePath = 'tcp://localhost:6379';
 
 MemcachedHandler Driver
 =======================
 
 .. note:: Since Memcached doesn't have a locking mechanism exposed, locks
-	for this driver are emulated by a separate value that is kept for
-	up to 300 seconds.
+    for this driver are emulated by a separate value that is kept for
+    up to 300 seconds.
 
 The 'MemcachedHandler' driver is very similar to the 'RedisHandler' one in all of its
 properties, except perhaps for availability, because PHP's `Memcached
@@ -693,8 +699,8 @@ considered as it may result in loss of sessions.
 The ``$sessionSavePath`` format is fairly straightforward here,
 being just a ``host:port`` pair::
 
-	public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
-	public $sessionSavePath = 'localhost:11211';
+    public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
+    public $sessionSavePath = 'localhost:11211';
 
 Bonus Tip
 ---------
@@ -706,6 +712,6 @@ to note that we haven't tested if that is reliable.
 If you want to experiment with this feature (on your own risk), simply
 separate the multiple server paths with commas::
 
-	// localhost will be given higher priority (5) here,
-	// compared to 192.0.2.1 with a weight of 1.
-	public $sessionSavePath = 'localhost:11211:5,192.0.2.1:11211:1';
+    // localhost will be given higher priority (5) here,
+    // compared to 192.0.2.1 with a weight of 1.
+    public $sessionSavePath = 'localhost:11211:5,192.0.2.1:11211:1';

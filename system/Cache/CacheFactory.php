@@ -13,6 +13,7 @@ namespace CodeIgniter\Cache;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\Test\Mock\MockCache;
 use Config\Cache;
 
 /**
@@ -20,6 +21,20 @@ use Config\Cache;
  */
 class CacheFactory
 {
+    /**
+     * The class to use when mocking
+     *
+     * @var string
+     */
+    public static $mockClass = MockCache::class;
+
+    /**
+     * The service to inject the mock as
+     *
+     * @var string
+     */
+    public static $mockServiceName = 'cache';
+
     /**
      * Attempts to create the desired cache handler, based upon the
      *
@@ -42,14 +57,12 @@ class CacheFactory
             throw CacheException::forHandlerNotFound();
         }
 
-        // Get an instance of our handler.
         $adapter = new $config->validHandlers[$handler]($config);
 
         if (! $adapter->isSupported()) {
             $adapter = new $config->validHandlers[$backup]($config);
 
             if (! $adapter->isSupported()) {
-                // Log stuff here, don't throw exception. No need to raise a fuss.
                 // Fall back to the dummy adapter.
                 $adapter = new $config->validHandlers['dummy']();
             }
@@ -60,7 +73,6 @@ class CacheFactory
         try {
             $adapter->initialize();
         } catch (CriticalError $e) {
-            // log the fact that an exception occurred as well what handler we are resorting to
             log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
 
             // get the next best cache handler (or dummy if the $backup also fails)

@@ -64,8 +64,8 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         if ($this->request === null) {
-            $this->request  = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
-            $this->response = new MockResponse((object) $config);
+            $this->request  = new MockIncomingRequest($config, new URI($uri), null, new UserAgent());
+            $this->response = new MockResponse($config);
         }
 
         // Insert headers into request.
@@ -82,7 +82,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         // Create the controller class finally.
-        $controller = new class($this->request, $this->response, $this->formatter) {
+        $controller = new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
             protected $request;
@@ -429,9 +429,9 @@ final class ResponseTraitTest extends CIUnitTestCase
         $controller = $this->makeController();
         $controller->failServerError('Nope.', 'FAT-CHANCE', 'A custom reason.');
 
-        $this::assertEquals('A custom reason.', $this->response->getReason());
-        $this::assertEquals(500, $this->response->getStatusCode());
-        $this::assertEquals($this->formatter->format([
+        $this->assertSame('A custom reason.', $this->response->getReason());
+        $this->assertSame(500, $this->response->getStatusCode());
+        $this->assertSame($this->formatter->format([
             'status'   => 500,
             'error'    => 'FAT-CHANCE',
             'messages' => [
@@ -524,7 +524,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
         $response = new MockResponse($config);
 
-        $controller = new class($request, $response) {
+        $controller = new class ($request, $response) {
             use ResponseTrait;
 
             protected $request;

@@ -13,28 +13,28 @@ connection and the forge through ``$this->db`` and ``$this->forge``, respectivel
 stored within the **app/Database/Seeds** directory. The name of the file must match the name of the class.
 ::
 
-	<?php
+    <?php
 
-	namespace App\Database\Seeds;
+    namespace App\Database\Seeds;
 
-	use CodeIgniter\Database\Seeder;
+    use CodeIgniter\Database\Seeder;
 
-	class SimpleSeeder extends Seeder
-	{
-		public function run()
-		{
-			$data = [
-				'username' => 'darth',
-				'email'    => 'darth@theempire.com'
-			];
+    class SimpleSeeder extends Seeder
+    {
+        public function run()
+        {
+            $data = [
+                'username' => 'darth',
+                'email'    => 'darth@theempire.com'
+            ];
 
-			// Simple Queries
-			$this->db->query("INSERT INTO users (username, email) VALUES(:username:, :email:)", $data);
+            // Simple Queries
+            $this->db->query("INSERT INTO users (username, email) VALUES(:username:, :email:)", $data);
 
-			// Using Query Builder
-			$this->db->table('users')->insert($data);
-		}
-	}
+            // Using Query Builder
+            $this->db->table('users')->insert($data);
+        }
+    }
 
 Nesting Seeders
 ===============
@@ -42,30 +42,30 @@ Nesting Seeders
 Seeders can call other seeders, with the **call()** method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files::
 
-	<?php
+    <?php
 
-	namespace App\Database\Seeds;
+    namespace App\Database\Seeds;
 
-	use CodeIgniter\Database\Seeder;
+    use CodeIgniter\Database\Seeder;
 
-	class TestSeeder extends Seeder
-	{
-		public function run()
-		{
-			$this->call('UserSeeder');
-			$this->call('CountrySeeder');
-			$this->call('JobSeeder');
-		}
-	}
+    class TestSeeder extends Seeder
+    {
+        public function run()
+        {
+            $this->call('UserSeeder');
+            $this->call('CountrySeeder');
+            $this->call('JobSeeder');
+        }
+    }
 
 You can also use a fully-qualified class name in the **call()** method, allowing you to keep your seeders
 anywhere the autoloader can find them. This is great for more modular code bases::
 
-	public function run()
-	{
-		$this->call('UserSeeder');
-		$this->call('My\Database\Seeds\CountrySeeder');
-	}
+    public function run()
+    {
+        $this->call('UserSeeder');
+        $this->call('My\Database\Seeds\CountrySeeder');
+    }
 
 Using Faker
 ===========
@@ -75,7 +75,7 @@ the `Faker library <https://github.com/fakerphp/faker>`_.
 
 To install Faker into your project::
 
-	> composer require --dev fakerphp/faker
+    > composer require --dev fakerphp/faker
 
 After installation, an instance of ``Faker\Generator`` is available in the main ``Seeder``
 class and is accessible by all child seeders. You must use the static method ``faker()``
@@ -83,32 +83,32 @@ to access the instance.
 
 ::
 
-	<?php
+    <?php
 
-	namespace App\Database\Seeds;
+    namespace App\Database\Seeds;
 
-	use CodeIgniter\Database\Seeder;
+    use CodeIgniter\Database\Seeder;
 
-	class UserSeeder extends Seeder
-	{
-		public function run()
-		{
-			$model = model('UserModel');
+    class UserSeeder extends Seeder
+    {
+        public function run()
+        {
+            $model = model('UserModel');
 
-			$model->insert([
-				'email'      => static::faker()->email,
-				'ip_address' => static::faker()->ipv4,
-			]);
-		}
-	}
+            $model->insert([
+                'email'      => static::faker()->email,
+                'ip_address' => static::faker()->ipv4,
+            ]);
+        }
+    }
 
 Using Seeders
 =============
 
 You can grab a copy of the main seeder through the database config class::
 
-	$seeder = \Config\Database::seeder();
-	$seeder->call('TestSeeder');
+    $seeder = \Config\Database::seeder();
+    $seeder->call('TestSeeder');
 
 Command Line Seeding
 --------------------
@@ -116,7 +116,7 @@ Command Line Seeding
 You can also seed data from the command line, as part of the Migrations CLI tools, if you don't want to create
 a dedicated controller::
 
-	> php spark db:seed TestSeeder
+    > php spark db:seed TestSeeder
 
 Creating Seed Files
 -------------------
@@ -125,15 +125,13 @@ Using the command line, you can easily generate seed files.
 
 ::
 
-	// This command will create a UserSeeder seed file
-	// located at app/Database/Seeds/ directory.
-	> php spark make:seeder UserSeeder
+    > php spark make:seeder user --suffix
+    // Output: UserSeeder.php file located at app/Database/Seeds directory.
 
-You can supply the **root** namespace where the seed file will be stored by supplying the ``-n`` option::
+You can supply the **root** namespace where the seed file will be stored by supplying the ``--namespace`` option::
 
-	> php spark make:seeder MySeeder -n Acme\Blog
+    > php spark make:seeder MySeeder --namespace Acme\Blog
 
-If ``Acme\Blog`` is mapped to ``app/Blog`` directory, then this command will save the
-seed file to ``app/Blog/Database/Seeds/``.
+If ``Acme\Blog`` is mapped to ``app/Blog`` directory, then this command will generate ``MySeeder.php`` at ``app/Blog/Database/Seeds`` directory.
 
 Supplying the ``--force`` option will overwrite existing files in destination.

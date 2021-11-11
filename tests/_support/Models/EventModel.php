@@ -15,21 +15,16 @@ use CodeIgniter\Model;
 
 class EventModel extends Model
 {
-    protected $table = 'user';
-
-    protected $returnType = 'array';
-
+    protected $table          = 'user';
+    protected $returnType     = 'array';
     protected $useSoftDeletes = false;
-
-    protected $dateFormat = 'datetime';
-
-    protected $allowedFields = [
+    protected $dateFormat     = 'datetime';
+    protected $allowedFields  = [
         'name',
         'email',
         'country',
         'deleted_at',
     ];
-
     protected $beforeInsert = ['beforeInsertMethod'];
     protected $afterInsert  = ['afterInsertMethod'];
     protected $beforeUpdate = ['beforeUpdateMethod'];

@@ -123,7 +123,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testQuotedDotenvLoadsEnvironmentVars()
     {
-        $dotenv = new Dotenv($this->fixturesFolder, 'quoted.env');
+        $dotenv = new DotEnv($this->fixturesFolder, 'quoted.env');
         $dotenv->load();
         $this->assertSame('bar', getenv('QFOO'));
         $this->assertSame('baz', getenv('QBAR'));
@@ -138,13 +138,13 @@ final class DotEnvTest extends CIUnitTestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('.env values containing spaces must be surrounded by quotes.');
 
-        $dotenv = new Dotenv($this->fixturesFolder, 'spaced-wrong.env');
+        $dotenv = new DotEnv($this->fixturesFolder, 'spaced-wrong.env');
         $dotenv->load();
     }
 
     public function testLoadsServerGlobals()
     {
-        $dotenv = new Dotenv($this->fixturesFolder, '.env');
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
 
         $this->assertSame('bar', $_SERVER['FOO']);
@@ -155,16 +155,16 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testNamespacedVariables()
     {
-        $dotenv = new Dotenv($this->fixturesFolder, '.env');
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
 
-        $this->assertSame('complex', $_SERVER['SimpleConfig.simple.name']);
+        $this->assertSame('complex', $_SERVER['SimpleConfig_simple_name']);
     }
 
     public function testLoadsGetServerVar()
     {
         $_SERVER['SER_VAR'] = 'TT';
-        $dotenv             = new Dotenv($this->fixturesFolder, 'nested.env');
+        $dotenv             = new DotEnv($this->fixturesFolder, 'nested.env');
         $dotenv->load();
 
         $this->assertSame('TT', $_ENV['NVAR7']);
@@ -172,7 +172,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testLoadsEnvGlobals()
     {
-        $dotenv = new Dotenv($this->fixturesFolder);
+        $dotenv = new DotEnv($this->fixturesFolder);
         $dotenv->load();
         $this->assertSame('bar', $_ENV['FOO']);
         $this->assertSame('baz', $_ENV['BAR']);
@@ -182,7 +182,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testNestedEnvironmentVars()
     {
-        $dotenv = new Dotenv($this->fixturesFolder, 'nested.env');
+        $dotenv = new DotEnv($this->fixturesFolder, 'nested.env');
         $dotenv->load();
         $this->assertSame('{$NVAR1} {$NVAR2}', $_ENV['NVAR3']); // not resolved
         $this->assertSame('Hello World!', $_ENV['NVAR4']);
@@ -192,7 +192,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testDotenvAllowsSpecialCharacters()
     {
-        $dotenv = new Dotenv($this->fixturesFolder, 'specialchars.env');
+        $dotenv = new DotEnv($this->fixturesFolder, 'specialchars.env');
         $dotenv->load();
         $this->assertSame('$a6^C7k%zs+e^.jvjXk', getenv('SPVAR1'));
         $this->assertSame('?BUty3koaV3%GA*hMAwH}B', getenv('SPVAR2'));

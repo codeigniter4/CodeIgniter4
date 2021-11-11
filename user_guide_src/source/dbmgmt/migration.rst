@@ -43,41 +43,41 @@ migrations go in the **app/Database/Migrations/** directory and have names such
 as *20121031100537_add_blog.php*.
 ::
 
-	<?php
+    <?php
 
-	namespace App\Database\Migrations;
+    namespace App\Database\Migrations;
 
-	use CodeIgniter\Database\Migration;
+    use CodeIgniter\Database\Migration;
 
-	class AddBlog extends Migration
-	{
-		public function up()
-		{
-			$this->forge->addField([
-				'blog_id'          => [
-					'type'           => 'INT',
-					'constraint'     => 5,
-					'unsigned'       => true,
-					'auto_increment' => true,
-				],
-				'blog_title'       => [
-					'type'       => 'VARCHAR',
-					'constraint' => '100',
-				],
-				'blog_description' => [
-					'type' => 'TEXT',
-					'null' => true,
-				],
-			]);
-			$this->forge->addKey('blog_id', true);
-			$this->forge->createTable('blog');
-		}
+    class AddBlog extends Migration
+    {
+        public function up()
+        {
+            $this->forge->addField([
+                'blog_id'          => [
+                    'type'           => 'INT',
+                    'constraint'     => 5,
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'blog_title'       => [
+                    'type'       => 'VARCHAR',
+                    'constraint' => '100',
+                ],
+                'blog_description' => [
+                    'type' => 'TEXT',
+                    'null' => true,
+                ],
+            ]);
+            $this->forge->addKey('blog_id', true);
+            $this->forge->createTable('blog');
+        }
 
-		public function down()
-		{
-			$this->forge->dropTable('blog');
-		}
-	}
+        public function down()
+        {
+            $this->forge->dropTable('blog');
+        }
+    }
 
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
@@ -94,14 +94,14 @@ To temporarily bypass the foreign key checks while running migrations, use the `
 
 ::
 
-	public function up()
-	{
-		$this->db->disableForeignKeyChecks()
+    public function up()
+    {
+        $this->db->disableForeignKeyChecks()
 
-		// Migration rules would go here..
+        // Migration rules would go here..
 
-		$this->db->enableForeignKeyChecks();
-	}
+        $this->db->enableForeignKeyChecks();
+    }
 
 Database Groups
 ===============
@@ -114,26 +114,26 @@ another database is used for mission critical data. You can ensure that migratio
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly::
 
-	<?php
+    <?php
 
-	namespace App\Database\Migrations;
+    namespace App\Database\Migrations;
 
-	use CodeIgniter\Database\Migration;
+    use CodeIgniter\Database\Migration;
 
-	class AddBlog extends Migration
-	{
-		protected $DBGroup = 'alternate_db_group';
+    class AddBlog extends Migration
+    {
+        protected $DBGroup = 'alternate_db_group';
 
-		public function up()
-		{
-			// ...
-		}
+        public function up()
+        {
+            // ...
+        }
 
-		public function down()
-		{
-			// ...
-		}
-	}
+        public function down()
+        {
+            // ...
+        }
+    }
 
 Namespaces
 ==========
@@ -148,10 +148,10 @@ Each namespace has its own version sequence, this will help you upgrade and down
 For example, assume that we have the following namespaces defined in our Autoload
 configuration file::
 
-	$psr4 = [
-		'App'       => APPPATH,
-		'MyCompany' => ROOTPATH . 'MyCompany',
-	];
+    $psr4 = [
+        'App'       => APPPATH,
+        'MyCompany' => ROOTPATH . 'MyCompany',
+    ];
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
 **ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
@@ -164,26 +164,23 @@ Usage Example
 In this example some simple code is placed in **app/Controllers/Migrate.php**
 to update the schema::
 
-	<?php
+    <?php
 
-	namespace App\Controllers;
+    namespace App\Controllers;
 
-	class Migrate extends \CodeIgniter\Controller
-	{
-		public function index()
-		{
-			$migrate = \Config\Services::migrations();
+    class Migrate extends \CodeIgniter\Controller
+    {
+        public function index()
+        {
+            $migrate = \Config\Services::migrations();
 
-			try
-			{
-				$migrate->latest();
-			}
-			catch (\Throwable $e)
-			{
-				// Do something with the error here...
-			}
-		}
-	}
+            try {
+                $migrate->latest();
+            } catch (\Throwable $e) {
+                // Do something with the error here...
+            }
+        }
+    }
 
 *******************
 Command-Line Tools
@@ -261,8 +258,11 @@ creates is the Pascal case version of the filename.
 
 You can use (make:migration) with the following options:
 
-- ``-n`` - to choose namespace, otherwise the value of ``APP_NAMESPACE`` will be used.
-- ``-force`` - If a similarly named migration file is present in destination, this will be overwritten.
+- ``--session``   - Generates the migration file for database sessions.
+- ``--table``     - Table name to use for database sessions. Default: ``ci_sessions``.
+- ``--dbgroup``   - Database group to use for database sessions. Default: ``default``.
+- ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
+- ``--suffix``    - Append the component title to the class name.
 
 *********************
 Migration Preferences
@@ -284,64 +284,63 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Database\\MigrationRunner
 
-	.. php:method:: findMigrations()
+    .. php:method:: findMigrations()
 
-		:returns:	An array of migration files
-		:rtype:	array
+        :returns:    An array of migration files
+        :rtype:    array
 
-		An array of migration filenames are returned that are found in the **path** property.
+        An array of migration filenames are returned that are found in the **path** property.
 
-	.. php:method:: latest($group)
+    .. php:method:: latest($group)
 
-		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :param    mixed    $group: database group name, if null default database group will be used.
+        :returns:    ``true`` on success, ``false`` on failure
+        :rtype:    bool
 
-		This locates migrations for a namespace (or all namespaces), determines which migrations
-		have not yet been run, and runs them in order of their version (namespaces intermingled).
+        This locates migrations for a namespace (or all namespaces), determines which migrations
+        have not yet been run, and runs them in order of their version (namespaces intermingled).
 
-	.. php:method:: regress($batch, $group)
+    .. php:method:: regress($targetBatch, $group)
 
-		:param	mixed	$batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
-		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	``true`` on success, ``false`` on failure or no migrations are found
-		:rtype:	bool
+        :param    int    $targetBatch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
+        :param    ?string    $group: database group name, if null default database group will be used.
+        :returns:    ``true`` on success, ``false`` on failure or no migrations are found
+        :rtype:    bool
 
-		Regress can be used to roll back changes to a previous state, batch by batch.
-		::
+        Regress can be used to roll back changes to a previous state, batch by batch.
+        ::
 
-			$migration->regress(5);
-			$migration->regress(-1);
+            $migration->regress(5);
+            $migration->regress(-1);
 
-	.. php:method:: force($path, $namespace, $group)
+    .. php:method:: force($path, $namespace, $group)
 
-		:param	mixed	$path:  path to a valid migration file.
-		:param	mixed	$namespace: namespace of the provided migration.
-		:param	mixed	$group: database group name, if null default database group will be used.
-		:returns:	``true`` on success, ``false`` on failure
-		:rtype:	bool
+        :param    mixed    $path:  path to a valid migration file.
+        :param    mixed    $namespace: namespace of the provided migration.
+        :param    mixed    $group: database group name, if null default database group will be used.
+        :returns:    ``true`` on success, ``false`` on failure
+        :rtype:    bool
 
-		This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated. 
-		
-		.. note:: This method is recommended only for testing and could cause data consistency issues.
+        This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated.
 
-	.. php:method:: setNamespace($namespace)
+        .. note:: This method is recommended only for testing and could cause data consistency issues.
 
-	  :param  string  $namespace: application namespace.
-	  :returns:   The current MigrationRunner instance
-	  :rtype:     CodeIgniter\\Database\\MigrationRunner
+    .. php:method:: setNamespace($namespace)
 
-	  Sets the namespace the library should look for migration files::
+        :param  string  $namespace: application namespace.
+        :returns:   The current MigrationRunner instance
+        :rtype:     CodeIgniter\\Database\\MigrationRunner
 
-	    $migration->setNamespace($namespace)
-	              ->latest();
-	.. php:method:: setGroup($group)
+        Sets the namespace the library should look for migration files::
 
-	  :param  string  $group: database group name.
-	  :returns:   The current MigrationRunner instance
-	  :rtype:     CodeIgniter\\Database\\MigrationRunner
+            $migration->setNamespace($namespace)->latest();
 
-	  Sets the group the library should look for migration files::
+    .. php:method:: setGroup($group)
 
-	    $migration->setGroup($group)
-	              ->latest();
+        :param  string  $group: database group name.
+        :returns:   The current MigrationRunner instance
+        :rtype:     CodeIgniter\\Database\\MigrationRunner
+
+        Sets the group the library should look for migration files::
+
+            $migration->setGroup($group)->latest();

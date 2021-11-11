@@ -7,8 +7,8 @@ from your test cases. Usually a ``TestResponse`` will be provided for you as a r
 `Controller Tests <controllers.html>`_ or `HTTP Feature Tests <feature.html>`_, but you can always
 create your own directly using any ``ResponseInterface``::
 
-	$result = new \CodeIgniter\Test\TestResponse($response);
-	$result->assertOK();
+    $result = new \CodeIgniter\Test\TestResponse($response);
+    $result->assertOK();
 
 Testing the Response
 ====================
@@ -40,8 +40,7 @@ Returns a boolean true/false based on whether the response is perceived to be "o
 a response status code in the 200 or 300's.
 ::
 
-    if ($result->isOK())
-    {
+    if ($result->isOK()) {
         ...
     }
 
@@ -57,8 +56,7 @@ This assertion simply uses the **isOK()** method to test a response. **assertNot
 Returns a boolean true/false based on whether the response is a redirected response.
 ::
 
-    if ($result->isRedirect())
-    {
+    if ($result->isRedirect()) {
         ...
     }
 
@@ -301,8 +299,8 @@ This method will return the body of the response as a JSON string::
 
 You can use this method to determine if ``$response`` actually holds JSON content::
 
-	// Verify the response is JSON
-	$this->assertTrue($result->getJSON() !== false)
+    // Verify the response is JSON
+    $this->assertTrue($result->getJSON() !== false)
 
 .. note:: Be aware that the JSON string will be pretty-printed in the result.
 
@@ -314,7 +312,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
 
     // Response body is this:
     [
-        'config' => ['key-a', 'key-b']
+        'config' => ['key-a', 'key-b'],
     ]
 
     // Is true

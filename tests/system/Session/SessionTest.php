@@ -180,9 +180,9 @@ final class SessionTest extends CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $session->set('foo', (int) 0);
+        $session->set('foo', 0);
 
-        $this->assertSame((int) 0, $session->get('foo'));
+        $this->assertSame(0, $session->get('foo'));
     }
 
     public function testGetReturnsAllWithNoKeys()

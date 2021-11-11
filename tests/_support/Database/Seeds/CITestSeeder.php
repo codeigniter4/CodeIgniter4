@@ -106,11 +106,12 @@ class CITestSeeder extends Seeder
                     'type_datetime'   => '2020-06-18T05:12:24.000+02:00',
                     'type_timestamp'  => '2019-07-18T21:53:21.000+02:00',
                     'type_bigint'     => 2342342,
+                    'type_boolean'    => 1,
                 ],
             ],
         ];
 
-        //set SQL times to more correct format
+        // set SQL times to more correct format
         if ($this->db->DBDriver === 'SQLite3') {
             $data['type_test'][0]['type_date']      = '2020/01/11';
             $data['type_test'][0]['type_time']      = '15:22:00';
@@ -119,7 +120,8 @@ class CITestSeeder extends Seeder
         }
 
         if ($this->db->DBDriver === 'Postgre') {
-            $data['type_test'][0]['type_time'] = '15:22:00';
+            $data['type_test'][0]['type_time']    = '15:22:00';
+            $data['type_test'][0]['type_boolean'] = true;
             unset(
                 $data['type_test'][0]['type_enum'],
                 $data['type_test'][0]['type_set'],
@@ -144,6 +146,24 @@ class CITestSeeder extends Seeder
                 $data['type_test'][0]['type_double'],
                 $data['type_test'][0]['type_blob']
             );
+        }
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $data['ci_sessions'][] = [
+                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'ip_address' => '127.0.0.1',
+                'timestamp'  => '2021-06-25 21:54:14',
+                'data'       => '__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";',
+            ];
+        }
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $data['ci_sessions'][] = [
+                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'ip_address' => '127.0.0.1',
+                'timestamp'  => '2021-06-25 21:54:14.991403+02',
+                'data'       => '\x' . bin2hex('__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";'),
+            ];
         }
 
         foreach ($data as $table => $dummy_data) {

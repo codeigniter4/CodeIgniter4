@@ -64,7 +64,7 @@ final class ServicesTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         $_SERVER = $this->original;
-        Services::reset();
+        $this->resetServices();
     }
 
     public function testCanReplaceFrameworkServices()
@@ -147,17 +147,6 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertInstanceOf(ImageHandlerInterface::class, $actual);
     }
 
-    //  public function testNewMigrationRunner()
-    //  {
-    //      //FIXME - docs aren't clear about setting this up to just make sure that the service
-    //      // returns a MigrationRunner
-    //      $config = new \Config\Migrations();
-    //      $db = new \CodeIgniter\Database\MockConnection([]);
-    //      $this->expectException('InvalidArgumentException');
-    //      $actual = Services::migrations($config, $db);
-    //      $this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
-    //  }
-    //
     public function testNewNegotiatorWithNullConfig()
     {
         $actual = Services::negotiator(null);
@@ -408,6 +397,8 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testSecurity()
     {
+        Services::injectMock('security', new MockSecurity(new App()));
+
         $result = Services::security();
         $this->assertInstanceOf(Security::class, $result);
     }

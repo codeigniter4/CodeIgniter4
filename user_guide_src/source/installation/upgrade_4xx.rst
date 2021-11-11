@@ -30,7 +30,7 @@ General Adjustments
 
 **Downloads**
 
-- CI4 is still available as a ready-to-run zip or tarball, which includes the user guide (though in the `docs` subfolder).
+- CI4 is still available as a ready-to-run zip or tarball.
 - It can also be installed using Composer.
 
 **Namespaces**
@@ -127,6 +127,8 @@ Upgrading Libraries
   `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
   `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_,
   and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
+- CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_ corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
+- CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_ corresponds to CI4's :doc:`Responses </outgoing/response>`.
 - All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
   The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
   steps and examples to adjust your code.
@@ -134,8 +136,21 @@ Upgrading Libraries
 .. toctree::
     :titlesonly:
 
-    upgrade_migrations
     upgrade_configuration
+    upgrade_database
+    upgrade_emails
+    upgrade_encryption
+    upgrade_file_upload
+    upgrade_html_tables
+    upgrade_localization
+    upgrade_migrations
+    upgrade_pagination
+    upgrade_responses
+    upgrade_routing
+    upgrade_security
+    upgrade_sessions
+    upgrade_validations
+    upgrade_view_parser
 
 .. note::
     More upgrade guides coming soon

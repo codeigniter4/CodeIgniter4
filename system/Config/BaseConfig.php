@@ -115,24 +115,39 @@ class BaseConfig
      */
     protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
     {
-        $shortPrefix = ltrim($shortPrefix, '\\');
+        $shortPrefix        = ltrim($shortPrefix, '\\');
+        $underscoreProperty = str_replace('.', '_', $property);
 
         switch (true) {
             case array_key_exists("{$shortPrefix}.{$property}", $_ENV):
                 return $_ENV["{$shortPrefix}.{$property}"];
 
+            case array_key_exists("{$shortPrefix}_{$underscoreProperty}", $_ENV):
+                return $_ENV["{$shortPrefix}_{$underscoreProperty}"];
+
             case array_key_exists("{$shortPrefix}.{$property}", $_SERVER):
                 return $_SERVER["{$shortPrefix}.{$property}"];
+
+            case array_key_exists("{$shortPrefix}_{$underscoreProperty}", $_SERVER):
+                return $_SERVER["{$shortPrefix}_{$underscoreProperty}"];
 
             case array_key_exists("{$prefix}.{$property}", $_ENV):
                 return $_ENV["{$prefix}.{$property}"];
 
+            case array_key_exists("{$prefix}_{$underscoreProperty}", $_ENV):
+                return $_ENV["{$prefix}_{$underscoreProperty}"];
+
             case array_key_exists("{$prefix}.{$property}", $_SERVER):
                 return $_SERVER["{$prefix}.{$property}"];
 
+            case array_key_exists("{$prefix}_{$underscoreProperty}", $_SERVER):
+                return $_SERVER["{$prefix}_{$underscoreProperty}"];
+
             default:
                 $value = getenv("{$shortPrefix}.{$property}");
+                $value = $value === false ? getenv("{$shortPrefix}_{$underscoreProperty}") : $value;
                 $value = $value === false ? getenv("{$prefix}.{$property}") : $value;
+                $value = $value === false ? getenv("{$prefix}_{$underscoreProperty}") : $value;
 
                 return $value === false ? null : $value;
         }

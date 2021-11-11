@@ -15,7 +15,7 @@ database available globally in that class.
     $db = \Config\Database::connect();
 
 If the above function does **not** contain any information in the first
-parameter it will connect to the default group specified in your database config
+parameter, it will connect to the default group specified in your database config
 file. For most people, this is the preferred method of use.
 
 A convenience method exists that is purely a wrapper around the above line
@@ -26,8 +26,10 @@ and is provided for your convenience::
 Available Parameters
 --------------------
 
-#. The database group name, a string that must match the config class' property name. Default value is ``$config->defaultGroup``.
-#. TRUE/FALSE (boolean). Whether to return the shared connection (see
+**\\Config\\Database::connect($group = null, bool $getShared = true): BaseConnection**
+
+#. ``$group``: The database group name, a string that must match the config class' property name. Default value is ``$config->defaultGroup``.
+#. ``$getShared``: true/false (boolean). Whether to return the shared connection (see
    Connecting to Multiple Databases below).
 
 Manually Connecting to a Database
@@ -59,9 +61,9 @@ If you need to connect to more than one database simultaneously you can
 do so as follows::
 
     $db1 = \Config\Database::connect('group_one');
-    $db  = \Config\Database::connect('group_two');
+    $db2 = \Config\Database::connect('group_two');
 
-Note: Change the words "group_one" and "group_two" to the specific
+Note: Change the words ``group_one`` and ``group_two`` to the specific
 group names you are connecting to.
 
 .. note:: You don't need to create separate database configurations if you
