@@ -70,6 +70,11 @@ class Exceptions
         $this->config   = $config;
         $this->request  = $request;
         $this->response = $response;
+
+        // workaround for upgraded users
+        if (! isset($this->config->sensitiveDataInTrace)) {
+            $this->config->sensitiveDataInTrace = [];
+        }
     }
 
     /**
