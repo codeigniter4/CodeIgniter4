@@ -312,6 +312,39 @@ final class CommonFunctionsTest extends CIUnitTestCase
     }
 
     /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testOldInputSerializeData()
+    {
+        $this->injectSessionMock();
+        // setup from RedirectResponseTest...
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $this->config          = new App();
+        $this->config->baseURL = 'http://example.com/';
+
+        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        Services::injectMock('routes', $this->routes);
+
+        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        Services::injectMock('request', $this->request);
+
+        // setup & ask for a redirect...
+        $_SESSION = [];
+        $_GET     = [];
+        $_POST    = [
+            'zibble' => serialize('fritz'),
+        ];
+
+        $response = new RedirectResponse(new App());
+        $response->withInput();
+
+        // serialized parameters are only HTML-escaped.
+        $this->assertSame('s:5:&quot;fritz&quot;;', old('zibble'));
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
