@@ -107,7 +107,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getOldInput('pineapple.name'));
     }
 
-    // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+     */
     public function testCanGetOldInputArray()
     {
         $_SESSION['_ci_old_input'] = [
@@ -119,9 +121,9 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(['name' => 'foo'], $this->request->getOldInput('banana'));
     }
 
-    // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
-
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+     *
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */
