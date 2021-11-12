@@ -223,8 +223,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
    - `> git commit`
-   - Commit messages are expected to be descriptive of what you changed specifically. Commit messages like
-     "Fixes #1234" would be asked by the reviewer to be revised.
+   - Commit messages are expected to be descriptive of what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
 9. If there are intermediate commits that are not meaningful to the overall PR, such as "Fixed error on style guide", "Fixed phpstan error", "Fixing mistake in code", and other related commits, it is advised to squash your commits so that we can have a clean commit history.
 10. If you have touched PHP code, run static analysis.
    - `> composer analyze`
