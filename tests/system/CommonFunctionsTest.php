@@ -308,7 +308,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertSame('bar', old('foo')); // regular parameter
         $this->assertSame('doo', old('yabba dabba', 'doo')); // non-existing parameter
-        $this->assertSame('fritz', old('zibble')); // serialized parameter
+        $this->assertSame('fritz', old('zibble'));
     }
 
     /**
