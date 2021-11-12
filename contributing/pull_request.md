@@ -217,7 +217,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
    - `> git clone git@github.com:<your-name>/CodeIgniter4.git`
 5. Install Composer dependencies.
    - `> cd CodeIgniter4/`
-   - `> composer install`
+   - `> composer update`
 6. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
    - `> git checkout -b <new-branch-name>`
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
