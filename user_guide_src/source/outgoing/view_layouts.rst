@@ -19,7 +19,7 @@ Creating A Layout
 Layouts are views like any other. The only difference is their intended usage. Layouts are the only view
 files that would make use of the ``renderSection()`` method. This method acts as a placeholder for content.
 
-::
+E.g. **app/Views/default.php**::
 
     <!doctype html>
     <html>
@@ -50,7 +50,9 @@ other PSR-4 defined namespaces. You can include a namespace to locate the view i
 
 All content within a view that extends a layout must be included within ``section($name)`` and ``endSection()`` method calls.
 Any content between these calls will be inserted into the layout wherever the ``renderSection($name)`` call that
-matches the section name exists.::
+matches the section name exists.
+
+E.g. **app/Views/some_view.php**::
 
     <?= $this->extend('default') ?>
 
