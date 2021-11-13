@@ -9,8 +9,8 @@ Upgrade Localization
 Documentations
 ==============
 
-- `Language Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
-- :doc:`Localization Documentation Codeigniter 4.X </outgoing/localization>`
+- `Language Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
+- :doc:`Localization Documentation CodeIgniter 4.X </outgoing/localization>`
 
 
 What has been changed
@@ -31,7 +31,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -45,7 +45,7 @@ Codeigniter Version 3.11
     $this->lang->load('error', $lang);
     echo $this->lang->line('error_email_missing');
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

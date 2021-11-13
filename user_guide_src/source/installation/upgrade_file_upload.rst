@@ -8,8 +8,8 @@ Upgrade Working with Uploaded Files
 
 Documentations
 ==============
-- `Output Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/file_uploading.html>`_
-- :doc:`Working with Uploaded Files Documentation Codeigniter 4.X </libraries/uploaded_files>`
+- `Output Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/file_uploading.html>`_
+- :doc:`Working with Uploaded Files Documentation CodeIgniter 4.X </libraries/uploaded_files>`
 
 What has been changed
 =====================
@@ -25,7 +25,7 @@ You have to change your file uploading code to match the new methods.
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -69,7 +69,7 @@ Codeigniter Version 3.11
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

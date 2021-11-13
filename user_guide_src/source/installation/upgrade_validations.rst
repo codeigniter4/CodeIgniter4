@@ -9,8 +9,8 @@ Upgrade Validations
 Documentations of Library
 =========================
 
-- `Form Validation Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
-- :doc:`Validation Documentation Codeigniter 4.X </libraries/validation>`
+- `Form Validation Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
+- :doc:`Validation Documentation CodeIgniter 4.X </libraries/validation>`
 
 
 What has been changed
@@ -44,7 +44,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 Path: ``application/views``::
 
@@ -102,7 +102,7 @@ Path: ``application/controllers/``::
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 Path: ``app/Views``::
 

@@ -8,8 +8,8 @@ Upgrade Migrations
 Documentations
 ==============
 
-- `Database Migrations Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html>`_
-- :doc:`Database Migrations Documentation Codeigniter 4.X </dbmgmt/migration>`
+- `Database Migrations Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html>`_
+- :doc:`Database Migrations Documentation CodeIgniter 4.X </dbmgmt/migration>`
 
 What has been changed
 =====================
@@ -48,7 +48,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
 Path: ``application/migrations``::
@@ -87,7 +87,7 @@ Path: ``application/migrations``::
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
 Path: ``app/Database/Migrations``::

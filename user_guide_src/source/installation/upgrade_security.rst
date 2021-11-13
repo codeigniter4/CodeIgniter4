@@ -9,8 +9,8 @@ Upgrade Security
 Documentations
 ==============
 
-- `Security Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/security.html>`_
-- :doc:`Security Documentation Codeigniter 4.X </libraries/security>`
+- `Security Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/security.html>`_
+- :doc:`Security Documentation CodeIgniter 4.X </libraries/security>`
 
 .. note::
     If you use the :doc:`form helper </helpers/form_helper>` and enable the CSRF filter globally, then ``form_open()`` will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.
@@ -36,7 +36,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -56,7 +56,7 @@ Codeigniter Version 3.11
         <input type="submit" value="Save">
     </form>
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

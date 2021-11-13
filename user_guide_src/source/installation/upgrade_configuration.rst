@@ -8,8 +8,8 @@ Upgrade Configuration
 Documentations
 ==============
 
-- `Config Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/config.html>`_
-- :doc:`Configuration Documentation Codeigniter 4.X </general/configuration>`
+- `Config Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/config.html>`_
+- :doc:`Configuration Documentation CodeIgniter 4.X </general/configuration>`
 
 
 What has been changed
@@ -37,7 +37,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
 Path: ``application/models``::
@@ -49,7 +49,7 @@ Path: ``application/models``::
     $siteName  = 'My Great Site';
     $siteEmail = 'webmaster@example.com';
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
 Path: ``app/Config``::

@@ -9,8 +9,8 @@ Upgrade Encryption
 Documentations
 ==============
 
-- `Encryption Library Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
-- :doc:`Encryption Service Documentation Codeigniter 4.X </libraries/encryption>`
+- `Encryption Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
+- :doc:`Encryption Service Documentation CodeIgniter 4.X </libraries/encryption>`
 
 
 What has been changed
@@ -25,7 +25,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -38,7 +38,7 @@ Codeigniter Version 3.11
     echo $this->encryption->decrypt($ciphertext);
 
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

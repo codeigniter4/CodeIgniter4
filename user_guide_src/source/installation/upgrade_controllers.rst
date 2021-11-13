@@ -8,8 +8,8 @@ Upgrade Controllers
 Documentations
 ==============
 
-- `Controller Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/controllers.html>`_
-- :doc:`Controller Documentation Codeigniter 4.X </incoming/controllers>`
+- `Controller Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/controllers.html>`_
+- :doc:`Controller Documentation CodeIgniter 4.X </incoming/controllers>`
 
 What has been changed
 =====================
@@ -38,7 +38,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
 Path: ``application/controllers``::
@@ -53,7 +53,7 @@ Path: ``application/controllers``::
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
 Path: ``app/Controllers``::

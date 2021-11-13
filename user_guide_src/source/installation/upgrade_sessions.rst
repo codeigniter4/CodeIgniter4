@@ -9,8 +9,8 @@ Upgrade Sessions
 Documentations
 ==============
 
-- `Session Library Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/sessions.html>`_
-- :doc:`Session Library Documentation Codeigniter 4.X </libraries/sessions>`
+- `Session Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/sessions.html>`_
+- :doc:`Session Library Documentation CodeIgniter 4.X </libraries/sessions>`
 
 
 What has been changed
@@ -30,7 +30,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -40,7 +40,7 @@ Codeigniter Version 3.11
     $this->session->item;
     $this->session->userdata('item');
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

@@ -8,8 +8,8 @@ Upgrade HTTP Responses
 
 Documentations
 ==============
-- `Output Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/output.html>`_
-- :doc:`HTTP Responses Documentation Codeigniter 4.X </outgoing/response>`
+- `Output Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/output.html>`_
+- :doc:`HTTP Responses Documentation CodeIgniter 4.X </outgoing/response>`
 
 What has been changed
 =====================
@@ -23,7 +23,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -35,7 +35,7 @@ Codeigniter Version 3.11
         ->set_content_type('application/json')
         ->set_output(json_encode(array('foo' => 'bar')));
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

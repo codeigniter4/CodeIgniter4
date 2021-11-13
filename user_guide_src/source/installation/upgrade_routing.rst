@@ -9,8 +9,8 @@ Upgrade Routing
 Documentations
 ==============
 
-- `URI Routing Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
-- :doc:`URI Routing Documentation Codeigniter 4.X </incoming/routing>`
+- `URI Routing Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
+- :doc:`URI Routing Documentation CodeIgniter 4.X </incoming/routing>`
 
 
 What has been changed
@@ -28,7 +28,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 Path: ``application/config/routes.php``::
 
@@ -45,7 +45,7 @@ Path: ``application/config/routes.php``::
     $route['drivers/update'] = 'drivers/update';
     $route['posts/(:any)'] = 'posts/view/$1';
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 Path: ``app/Config/Routes.php``::
 
