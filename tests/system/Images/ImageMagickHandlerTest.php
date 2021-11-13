@@ -34,8 +34,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     {
         if (! extension_loaded('imagick')) {
             $this->markTestSkipped('The ImageMagick extension is not available.');
-
-            return;
         }
 
         $this->root = WRITEPATH . 'cache/';

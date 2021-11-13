@@ -36,6 +36,10 @@ final class RedisHandlerTest extends AbstractHandlerTest
     {
         parent::setUp();
 
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
+
         $this->config = new Cache();
 
         $this->handler = new RedisHandler($this->config);
