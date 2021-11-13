@@ -95,8 +95,8 @@ General Adjustments
 
 - Helpers are pretty much the same as before, though some have been simplified.
 - In CI4, ``redirect()`` returns ``RedirectResponse`` instead of redirecting and terminating script execution. You must return it.
-    - `redirect() Documentation Codeigniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
-    - `redirect() Documentation Codeigniter 4.X <../general/common_functions.html#redirect>`_
+    - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
+    - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
 
 **Events**
 
