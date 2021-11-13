@@ -9,8 +9,8 @@ Upgrade Emails
 Documentations
 ==============
 
-- `Email Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/email.html>`_
-- :doc:`Email Documentation Codeigniter 4.X </libraries/email>`
+- `Email Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/email.html>`_
+- :doc:`Email Documentation CodeIgniter 4.X </libraries/email>`
 
 
 What has been changed
@@ -27,7 +27,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -43,7 +43,7 @@ Codeigniter Version 3.11
 
     $this->email->send();
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

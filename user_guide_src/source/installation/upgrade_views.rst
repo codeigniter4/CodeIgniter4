@@ -8,8 +8,8 @@ Upgrade Views
 Documentations
 ==============
 
-- `View Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
-- :doc:`View Documentation Codeigniter 4.X </outgoing/views>`
+- `View Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
+- :doc:`View Documentation CodeIgniter 4.X </outgoing/views>`
 
 What has been changed
 =====================
@@ -30,7 +30,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
 Path: ``application/views``::
@@ -53,7 +53,7 @@ Path: ``application/views``::
     </body>
     </html>
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
 Path: ``app/Views``::

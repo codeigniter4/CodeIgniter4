@@ -9,8 +9,8 @@ Upgrade Database
 Documentations
 ==============
 
-- `Database Reference Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
-- :doc:`Working with Databases Documentation Codeigniter 4.X </database/index>`
+- `Database Reference Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
+- :doc:`Working with Databases Documentation CodeIgniter 4.X </database/index>`
 
 
 What has been changed
@@ -46,7 +46,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -55,7 +55,7 @@ Codeigniter Version 3.11
                 ->limit(10, 20)
                 ->get('mytable');
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

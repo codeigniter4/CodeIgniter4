@@ -9,8 +9,8 @@ Upgrade Pagination
 Documentations
 ==============
 
-- `Pagination Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
-- :doc:`Pagination Documentation Codeigniter 4.X </libraries/pagination>`
+- `Pagination Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
+- :doc:`Pagination Documentation CodeIgniter 4.X </libraries/pagination>`
 
 
 What has been changed
@@ -34,7 +34,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -50,7 +50,7 @@ Codeigniter Version 3.11
 
     $this->load->view('posts/index', $data);
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

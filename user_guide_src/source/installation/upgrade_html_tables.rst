@@ -9,8 +9,8 @@ Upgrade HTML Tables
 Documentations
 ==============
 
-- `HTML Table Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/table.html>`_
-- :doc:`HTML Table Documentation Codeigniter 4.X </outgoing/table>`
+- `HTML Table Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/table.html>`_
+- :doc:`HTML Table Documentation CodeIgniter 4.X </outgoing/table>`
 
 
 What has been changed
@@ -26,7 +26,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -40,7 +40,7 @@ Codeigniter Version 3.11
 
     echo $this->table->generate();
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 
