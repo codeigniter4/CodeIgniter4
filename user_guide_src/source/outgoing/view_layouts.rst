@@ -31,7 +31,7 @@ E.g. **app/Views/default.php**::
     </body>
     </html>
 
-The renderSection() method only has one argument - the name of the section. That way any child views know
+The ``renderSection()`` method only has one argument - the name of the section. That way any child views know
 what to name the content section.
 
 **********************
@@ -42,7 +42,7 @@ Whenever a view wants to be inserted into a layout, it must use the ``extend()``
 
     <?= $this->extend('default') ?>
 
-The extend method takes the name of any view file that you wish to use. Since they are standard views, they will
+The ``extend()`` method takes the name of any view file that you wish to use. Since they are standard views, they will
 be located just like a view. By default, it will look in the application's View directory, but will also scan
 other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory::
 
@@ -106,5 +106,5 @@ view to view. When using view layouts you must use ``$this->include()`` to inclu
         <?= $this->include('sidebar') ?>
     <?= $this->endSection() ?>
 
-When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
+When calling the ``include()`` method, you can pass it all of the same options that can when rendering a normal view, including
 cache directives, etc.
