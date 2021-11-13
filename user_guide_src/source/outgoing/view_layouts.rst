@@ -85,6 +85,8 @@ Rendering the view and it's layout is done exactly as any other view would be di
         echo view('some_view');
     }
 
+It renders the View **app/Views/some_view.php** and if it extends ``default``,
+the Layout **app/Views/default.php** is also used automatically.
 The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.
 
 ***********************
