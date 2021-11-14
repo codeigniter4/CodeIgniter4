@@ -19,10 +19,9 @@ and much, much more.
 Enabling Kint
 =============
 
-By default, Kint is enabled in **development** and **testing** :doc:`environments </general/environments>` only. This can be altered by modifying
-the ``$useKint`` value in the environment configuration section of the main **index.php** file::
-
-    $useKint = true;
+By default, Kint is enabled in **development** and **testing** :doc:`environments </general/environments>` only.
+It will be enabled whenever the constant ``CI_DEBUG`` is defined and its value is truthy.
+This is defined in the boot files (e.g. **app/Config/Boot/development.php**).
 
 Using Kint
 ==========
