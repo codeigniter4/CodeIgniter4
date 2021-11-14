@@ -74,7 +74,7 @@ Shorthand methods for each of the HTTP verbs exist to ease typing and make thing
     $this->delete($path, $params);
     $this->options($path, $params);
 
-.. note:: The $params array does not make sense for every HTTP verb, but is included for consistency.
+.. note:: The ``$params`` array does not make sense for every HTTP verb, but is included for consistency.
 
 Setting Different Routes
 ------------------------
@@ -96,7 +96,7 @@ Setting Session Values
 ----------------------
 
 You can set custom session values to use during a single test with the ``withSession()`` method. This takes an array
-of key/value pairs that should exist within the $_SESSION variable when this request is made, or ``null` to indicate
+of key/value pairs that should exist within the ``$_SESSION`` variable when this request is made, or ``null`` to indicate
 that the current values of ``$_SESSION`` should be used. This is handy for testing authentication and more.
 ::
 
@@ -136,7 +136,7 @@ Formatting The Request
 -----------------------
 
 You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
-`json` or `xml`. This will take the parameters passed into ``call(), post(), get()...`` and assign them to the
+`json` or `xml`. This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format. This will also set the `Content-Type` header for your request accordingly.
 This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
 ::
