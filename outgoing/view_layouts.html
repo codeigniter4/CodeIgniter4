@@ -278,6 +278,7 @@ specifies the layout that it wants to extend.</p>
 <h2><a class="toc-backref" href="#id1">Creating A Layout</a><a class="headerlink" href="#creating-a-layout" title="Permalink to this headline"></a></h2>
 <p>Layouts are views like any other. The only difference is their intended usage. Layouts are the only view
 files that would make use of the <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method. This method acts as a placeholder for content.</p>
+<p>E.g. <strong>app/Views/default.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
@@ -289,7 +290,7 @@ files that would make use of the <code class="docutils literal notranslate"><spa
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>The renderSection() method only has one argument - the name of the section. That way any child views know
+<p>The <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method only has one argument - the name of the section. That way any child views know
 what to name the content section.</p>
 </section>
 <section id="using-layouts-in-views">
@@ -298,7 +299,7 @@ what to name the content section.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>The extend method takes the name of any view file that you wish to use. Since they are standard views, they will
+<p>The <code class="docutils literal notranslate"><span class="pre">extend()</span></code> method takes the name of any view file that you wish to use. Since they are standard views, they will
 be located just like a view. By default, it will look in the application’s View directory, but will also scan
 other PSR-4 defined namespaces. You can include a namespace to locate the view in particular namespace View directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;Blog\Views\default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -306,7 +307,8 @@ other PSR-4 defined namespaces. You can include a namespace to locate the view i
 </div>
 <p>All content within a view that extends a layout must be included within <code class="docutils literal notranslate"><span class="pre">section($name)</span></code> and <code class="docutils literal notranslate"><span class="pre">endSection()</span></code> method calls.
 Any content between these calls will be inserted into the layout wherever the <code class="docutils literal notranslate"><span class="pre">renderSection($name)</span></code> call that
-matches the section name exists.:</p>
+matches the section name exists.</p>
+<p>E.g. <strong>app/Views/some_view.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">section</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -336,7 +338,9 @@ matches the section name exists.:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.</p>
+<p>It renders the View <strong>app/Views/some_view.php</strong> and if it extends <code class="docutils literal notranslate"><span class="pre">default</span></code>,
+the Layout <strong>app/Views/default.php</strong> is also used automatically.
+The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.</p>
 </section>
 <section id="including-view-partials">
 <h2><a class="toc-backref" href="#id4">Including View Partials</a><a class="headerlink" href="#including-view-partials" title="Permalink to this headline"></a></h2>
@@ -351,7 +355,7 @@ view to view. When using view layouts you must use <code class="docutils literal
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">endSection</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>When calling the include() method, you can pass it all of the same options that can when rendering a normal view, including
+<p>When calling the <code class="docutils literal notranslate"><span class="pre">include()</span></code> method, you can pass it all of the same options that can when rendering a normal view, including
 cache directives, etc.</p>
 </section>
 </section>
@@ -368,7 +372,7 @@ cache directives, etc.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 13, 2021.
+      <span class="lastupdated">Last updated on Nov 14, 2021.
       </span></p>
   </div>
 
