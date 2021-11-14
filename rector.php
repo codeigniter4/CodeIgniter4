@@ -42,6 +42,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -53,6 +54,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::DEAD_CODE);
     $containerConfigurator->import(LevelSetList::UP_TO_PHP_73);
+    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD);
 
     $parameters = $containerConfigurator->parameters();
 
