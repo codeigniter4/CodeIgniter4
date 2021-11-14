@@ -294,7 +294,7 @@ into an application for use::
             foreach ($publisher->getPublished() as $file) {
                 // Replace the namespace
                 $contents = file_get_contents($file);
-                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, );
+                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, $contents);
                 file_put_contents($file, $contents);
             }
         }
