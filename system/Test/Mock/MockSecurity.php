@@ -22,9 +22,9 @@ class MockSecurity extends Security
 
     protected function randomize(string $hash): string
     {
-        $key   = hex2bin('005513c290126d34d41bf41c5265e0f1');
-        $value = hex2bin($hash);
+        $keyBinary  = hex2bin('005513c290126d34d41bf41c5265e0f1');
+        $hashBinary = hex2bin($hash);
 
-        return bin2hex(($value ^ $key) . $key);
+        return bin2hex(($hashBinary ^ $keyBinary) . $keyBinary);
     }
 }
