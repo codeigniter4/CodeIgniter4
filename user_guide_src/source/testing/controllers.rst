@@ -96,7 +96,7 @@ If you do not provide one, the application's App config file will be used.
 
 Allows you to provide an **IncomingRequest** instance tailored to your testing needs::
 
-    $request = new CodeIgniter\HTTP\IncomingRequest(new Config\App(), new URI('http://example.com'));
+    $request = new \CodeIgniter\HTTP\IncomingRequest(new \Config\App(), new URI('http://example.com'));
     $request->setLocale($locale);
 
     $results = $this->withRequest($request)
@@ -110,7 +110,7 @@ into your controller.
 
 Allows you to provide a **Response** instance::
 
-    $response = new CodeIgniter\HTTP\Response(new Config\App());
+    $response = new \CodeIgniter\HTTP\Response(new \Config\App());
 
     $results = $this->withResponse($response)
                     ->controller(\App\Controllers\ForumController::class)
@@ -123,7 +123,7 @@ into your controller.
 
 Allows you to provide a **Logger** instance::
 
-    $logger = new CodeIgniter\Log\Handlers\FileHandler();
+    $logger = new \CodeIgniter\Log\Handlers\FileHandler();
 
     $results = $this->withResponse($response)
                     ->withLogger($logger)
