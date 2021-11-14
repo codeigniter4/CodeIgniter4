@@ -111,6 +111,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
     {
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005b';
@@ -147,6 +148,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security = new Security(new MockAppConfig());
 
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
+
         $security->verify($request);
     }
 
@@ -175,6 +178,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security = new Security(new MockAppConfig());
 
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
+
         $security->verify($request);
     }
 
@@ -194,6 +199,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
     {
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
