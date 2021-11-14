@@ -336,18 +336,18 @@ Returns success or failure.
 Returns the temporary workspace, creating it if necessary. Some operations use intermediate storage to stage
 files and changes, and this provides the path to a transient, writable directory that you may use as well.
 
-**getErrors(): array<string,Throwable>**
+**getErrors(): array<string, Throwable>**
 
 Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use ``getMessage()`` on the Throwable to get the error message.
 
-**addPath(string $path, bool $recursive = true)**
+**addPath(string $path, bool $recursive = true)** /
 **addPaths(array $path, bool $recursive = true)**
 
 Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
 
-**addUri(string $uri)**
+**addUri(string $uri)** /
 **addUris(array $uris)**
 
 Downloads the contents of a URI using ``CURLRequest`` into the scratch workspace then adds the resulting
