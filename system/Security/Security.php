@@ -31,7 +31,7 @@ class Security implements SecurityInterface
 {
     public const CSRF_PROTECTION_COOKIE  = 'cookie';
     public const CSRF_PROTECTION_SESSION = 'session';
-    public const CSRF_HASH_BYTES         = 16;
+    protected const CSRF_HASH_BYTES      = 16;
 
     /**
      * CSRF Protection Method
@@ -348,7 +348,7 @@ class Security implements SecurityInterface
      */
     protected function randomize(string $hash): string
     {
-        $keyBinary  = random_bytes(self::CSRF_HASH_BYTES);
+        $keyBinary  = random_bytes(static::CSRF_HASH_BYTES);
         $hashBinary = hex2bin($hash);
 
         if ($hashBinary === false) {
@@ -363,8 +363,8 @@ class Security implements SecurityInterface
      */
     protected function derandomize(string $token): string
     {
-        $key   = substr($token, -self::CSRF_HASH_BYTES * 2);
-        $value = substr($token, 0, self::CSRF_HASH_BYTES * 2);
+        $key   = substr($token, -static::CSRF_HASH_BYTES * 2);
+        $value = substr($token, 0, static::CSRF_HASH_BYTES * 2);
 
         return bin2hex(hex2bin($value) ^ hex2bin($key));
     }
@@ -498,7 +498,7 @@ class Security implements SecurityInterface
                 return $this->hash = $this->session->get($this->tokenName);
             }
 
-            $this->hash = bin2hex(random_bytes(self::CSRF_HASH_BYTES));
+            $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
 
             if ($this->isCSRFCookie()) {
                 $this->saveHashInCookie();
