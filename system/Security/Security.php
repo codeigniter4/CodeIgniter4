@@ -348,14 +348,14 @@ class Security implements SecurityInterface
      */
     protected function randomize(string $hash): string
     {
-        $key   = random_bytes(self::CSRF_HASH_BYTES);
-        $value = hex2bin($hash);
+        $keyBinary  = random_bytes(self::CSRF_HASH_BYTES);
+        $hashBinary = hex2bin($hash);
 
-        if ($value === false) {
+        if ($hashBinary === false) {
             throw new LogicException('$hash is invalid: ' . $hash);
         }
 
-        return bin2hex(($value ^ $key) . $key);
+        return bin2hex(($hashBinary ^ $keyBinary) . $keyBinary);
     }
 
     /**
