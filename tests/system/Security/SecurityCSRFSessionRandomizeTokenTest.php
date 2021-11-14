@@ -21,6 +21,7 @@ use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
+use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
@@ -33,12 +34,17 @@ use Config\Security as SecurityConfig;
  *
  * @internal
  */
-final class SecurityCSRFSessionTest extends CIUnitTestCase
+final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 {
     /**
      * @var string CSRF protection hash
      */
     private $hash = '8b9218a55906f9dcc1dc263dce7f005a';
+
+    /**
+     * @var string CSRF randomized token
+     */
+    private $randomizedToken = '8bc70b67c91494e815c7d2219c1ae0ab005513c290126d34d41bf41c5265e0f1';
 
     protected function setUp(): void
     {
@@ -49,6 +55,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
         $config                 = new SecurityConfig();
         $config->csrfProtection = Security::CSRF_PROTECTION_SESSION;
+        $config->tokenRandomize = true;
         Factories::injectMock('config', 'Security', $config);
 
         $this->injectSession($this->hash);
@@ -93,14 +100,18 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
     public function testHashIsReadFromSession()
     {
-        $security = new Security(new MockAppConfig());
+        $security = new MockSecurity(new MockAppConfig());
 
-        $this->assertSame($this->hash, $security->getHash());
+        $this->assertSame(
+            $this->randomizedToken,
+            $security->getHash()
+        );
     }
 
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
     {
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005b';
@@ -116,7 +127,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
-        $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
+        $_POST['csrf_test_name']   = $this->randomizedToken;
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
@@ -137,6 +148,8 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security = new Security(new MockAppConfig());
 
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
+
         $security->verify($request);
     }
 
@@ -146,7 +159,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_POST['foo']              = 'bar';
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+        $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
 
         $security = new Security(new MockAppConfig());
 
@@ -165,6 +178,8 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security = new Security(new MockAppConfig());
 
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
+
         $security->verify($request);
     }
 
@@ -173,7 +188,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-        $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
+        $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
 
         $security = new Security(new MockAppConfig());
 
@@ -184,6 +199,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
     {
         $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -200,7 +216,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-        $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
+        $request->setBody('{"csrf_test_name":"' . $this->randomizedToken . '","foo":"bar"}');
 
         $security = new Security(new MockAppConfig());
 
@@ -212,15 +228,16 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     public function testRegenerateWithFalseSecurityRegenerateProperty()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
+        $_POST['csrf_test_name']   = $this->randomizedToken;
 
-        $config             = Factories::config('Security');
-        $config->regenerate = false;
+        $config                 = Factories::config('Security');
+        $config->tokenRandomize = true;
+        $config->regenerate     = false;
         Factories::injectMock('config', 'Security', $config);
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
-        $security = new Security(new MockAppConfig());
+        $security = new MockSecurity(new MockAppConfig());
 
         $oldHash = $security->getHash();
         $security->verify($request);
@@ -232,10 +249,11 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     public function testRegenerateWithTrueSecurityRegenerateProperty()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
+        $_POST['csrf_test_name']   = $this->randomizedToken;
 
-        $config             = Factories::config('Security');
-        $config->regenerate = true;
+        $config                 = Factories::config('Security');
+        $config->tokenRandomize = true;
+        $config->regenerate     = true;
         Factories::injectMock('config', 'Security', $config);
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
