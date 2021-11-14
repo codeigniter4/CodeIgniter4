@@ -79,6 +79,20 @@ It is also possible to enable the CSRF filter only for specific methods::
         'post' => ['csrf'],
     ];
 
+Token Randomization
+===================
+
+To mitigate compression side-channel attacks like `BREACH`_, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (default off).
+
+If you enable it, a random mask is added to the token and used to scramble it.
+
+.. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
+
+You can enable it by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $tokenRandomize = true;
+
 HTML Forms
 ==========
 
