@@ -13,7 +13,7 @@ Loading the Library
 *******************
 
 Because Publisher instances are specific to their source and destination this library is not available
-through ``Services`` but should be instantiated or extended directly. E.g.
+through ``Services`` but should be instantiated or extended directly. E.g.::
 
     $publisher = new \CodeIgniter\Publisher\Publisher();
 
