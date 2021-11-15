@@ -58,8 +58,8 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
         // make sure that the call worked
         $this->assertNotFalse($version);
         // we should have a numeric version, greater than 6
-        $this->assertTrue(version_compare($version, '6.0.0') >= 0);
-        $this->assertTrue(version_compare($version, '99.0.0') < 0);
+        $this->assertGreaterThanOrEqual(0, version_compare($version, '6.0.0'));
+        $this->assertLessThan(0, version_compare($version, '99.0.0'));
     }
 
     public function testImageProperties()

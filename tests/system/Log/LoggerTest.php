@@ -203,7 +203,7 @@ final class LoggerTest extends CIUnitTestCase
 
         $logs = TestHandler::getLogs();
 
-        $this->assertTrue(strpos($logs[0], $expected) > 1);
+        $this->assertGreaterThan(1, strpos($logs[0], $expected));
     }
 
     public function testLogInterpolatesExceptions()
@@ -222,7 +222,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertTrue(strpos($logs[0], $expected) === 0);
+        $this->assertSame(0, strpos($logs[0], $expected));
     }
 
     public function testEmergencyLogsCorrectly()

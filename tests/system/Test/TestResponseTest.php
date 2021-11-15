@@ -152,7 +152,7 @@ final class TestResponseTest extends CIUnitTestCase
     {
         $this->getTestResponse('<h1>Hello World</h1>');
 
-        $this->assertFalse($this->testResponse->response() instanceof RedirectResponse);
+        $this->assertNotInstanceOf(RedirectResponse::class, $this->testResponse->response());
         $this->assertFalse($this->testResponse->isRedirect());
         $this->testResponse->assertNotRedirect();
     }
@@ -162,7 +162,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('<h1>Hello World</h1>');
         $this->testResponse->setResponse(new RedirectResponse(new App()));
 
-        $this->assertTrue($this->testResponse->response() instanceof RedirectResponse);
+        $this->assertInstanceOf(RedirectResponse::class, $this->testResponse->response());
         $this->assertTrue($this->testResponse->isRedirect());
         $this->testResponse->assertRedirect();
     }
@@ -172,7 +172,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->getTestResponse('<h1>Hello World</h1>');
         $this->response->redirect('foo/bar');
 
-        $this->assertFalse($this->testResponse->response() instanceof RedirectResponse);
+        $this->assertNotInstanceOf(RedirectResponse::class, $this->testResponse->response());
         $this->assertTrue($this->testResponse->isRedirect());
         $this->testResponse->assertRedirect();
         $this->assertSame('foo/bar', $this->testResponse->getRedirectUrl());
@@ -345,7 +345,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->response->setBody($tmp);
 
         // this should be FALSE - invalid JSON - will see if this is working that way ;-)
-        $this->assertFalse($this->response->getBody() === $this->testResponse->getJSON());
+        $this->assertNotSame($this->testResponse->getJSON(), $this->response->getBody());
     }
 
     public function testGetXML()
