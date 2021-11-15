@@ -252,7 +252,7 @@ The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
-A ``blog_template`` that might work for the above::
+A **blog_template.php** that might work for the above::
 
     <h1>{blog_title} - {blog_heading}</h1>
     {blog_entry}
