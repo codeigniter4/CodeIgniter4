@@ -42,6 +42,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Rector\MethodCall\AssertIssetToSpecificMethodRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -111,6 +112,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
+
+        // $this->assertTrue(isset($bar['foo']))
+        // and $this->assertArrayHasKey('foo', $bar)
+        // or $this->assertObjectHasAttribute('foo', $bar);
+        // are not the same
+        AssertIssetToSpecificMethodRector::class => [
+            __DIR__ . '/tests/system/Entity/EntityTest.php',
+            __DIR__ . '/tests/system/Session/SessionTest.php',
+        ],
     ]);
 
     // auto import fully qualified class names
