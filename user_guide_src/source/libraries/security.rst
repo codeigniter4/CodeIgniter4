@@ -47,7 +47,7 @@ You can set to use the Session based CSRF protection by editing the following co
 Token Randomization
 -------------------
 
-To mitigate compression side-channel attacks like `BREACH`_, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (default off).
+To mitigate compression side-channel attacks like `BREACH`_, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (off by default).
 
 If you enable it, a random mask is added to the token and used to scramble it.
 
