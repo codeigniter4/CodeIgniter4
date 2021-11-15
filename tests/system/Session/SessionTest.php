@@ -245,20 +245,22 @@ final class SessionTest extends CIUnitTestCase
     {
         $session = $this->getInstance();
         $session->start();
-
         $_SESSION['foo'] = 'bar';
 
-        $this->assertTrue(isset($session->foo));
+        $issetReturn = isset($session->foo);
+
+        $this->assertTrue($issetReturn);
     }
 
     public function testIssetReturnsFalseOnNotFound()
     {
         $session = $this->getInstance();
         $session->start();
-
         $_SESSION['foo'] = 'bar';
 
-        $this->assertFalse(isset($session->bar));
+        $issetReturn = isset($session->bar);
+
+        $this->assertFalse($issetReturn);
     }
 
     public function testPushNewValueIntoArraySessionValue()
@@ -400,7 +402,8 @@ final class SessionTest extends CIUnitTestCase
         // Should still be here
         $this->assertTrue($session->has('foo'));
         // but no longer marked as flash
-        $this->assertFalse(isset($_SESSION['__ci_vars']['foo']));
+        $issetReturn = isset($_SESSION['__ci_vars']['foo']);
+        $this->assertFalse($issetReturn);
     }
 
     public function testGetFlashKeysOnlyReturnsFlashKeys()
