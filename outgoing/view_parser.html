@@ -338,7 +338,7 @@ can instantiate it directly:</p>
 <p>Then you can use any of the three standard rendering methods that it provides:
 <strong>render(viewpath, options, save)</strong>, <strong>setVar(name, value, context)</strong> and
 <strong>setData(data, context)</strong>. You will also be able to specify delimiters directly,
-through the <strong>setDelimiters(left,right)</strong> method.</p>
+through the <strong>setDelimiters(left, right)</strong> method.</p>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">Parser</span></code>, your view templates are processed only by the Parser
 itself, and not like a conventional view PHP script. PHP code in such a script
 is ignored by the parser, and only substitutions are performed.</p>
@@ -372,7 +372,7 @@ like this:</p>
 </div>
 <p>View parameters are passed to <code class="docutils literal notranslate"><span class="pre">setData()</span></code> as an associative
 array of data to be replaced in the template. In the above example, the
-template would contain two variables: {blog_title} and {blog_heading}
+template would contain two variables: <code class="docutils literal notranslate"><span class="pre">{blog_title}</span></code> and <code class="docutils literal notranslate"><span class="pre">{blog_heading}</span></code>
 The first parameter to <code class="docutils literal notranslate"><span class="pre">render()</span></code> contains the name of the <a class="reference internal" href="views.html"><span class="doc">view
 file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
 <div class="admonition important">
@@ -448,8 +448,8 @@ at the top of the page:</p>
 <span class="o">&lt;/</span><span class="nx">html</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>In the above code you’ll notice a pair of variables: {blog_entries}
-data… {/blog_entries}. In a case like this, the entire chunk of data
+<p>In the above code you’ll notice a pair of variables: <code class="docutils literal notranslate"><span class="pre">{blog_entries}</span></code>
+data… <code class="docutils literal notranslate"><span class="pre">{/blog_entries}</span></code>. In a case like this, the entire chunk of data
 between these pairs would be repeated multiple times, corresponding to
 the number of rows in the “blog_entries” element of the parameters array.</p>
 <p>Parsing variable pairs is done using the identical code shown above to
@@ -518,7 +518,7 @@ an associative array of values, like a record from a database:</p>
 <p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code> is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">blog_template</span></code> that might work for the above:</p>
+<p>A <strong>blog_template.php</strong> that might work for the above:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">blog_title</span><span class="p">}</span> <span class="o">-</span> <span class="p">{</span><span class="nx">blog_heading</span><span class="p">}</span><span class="o">&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
 <span class="p">{</span><span class="nx">blog_entry</span><span class="p">}</span>
     <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
@@ -1111,7 +1111,7 @@ using a view fragment:</p>
 <code class="sig-name descname">CodeIgniter\View\Parser</code></dt>
 <dd><dl class="method">
 <dt id="render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1148,7 +1148,7 @@ substitutions are performed for each data pair.</p>
 
 <dl class="method">
 <dt id="renderString">
-<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData=false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1173,7 +1173,7 @@ substitutions are performed for each data pair.</p>
 
 <dl class="method">
 <dt id="setData">
-<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setData" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1189,7 +1189,7 @@ substitutions are performed for each data pair.</p>
 </dd>
 </dl>
 <p>Sets several pieces of view data at once:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Supported escape contexts: html, css, js, url, or attr or raw.
@@ -1198,7 +1198,7 @@ If ‘raw’, no escaping will happen.</p>
 
 <dl class="method">
 <dt id="setVar">
-<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value=null</em><span class="optional">[</span>, <em class="sig-param">$context=null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$context = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setVar" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
