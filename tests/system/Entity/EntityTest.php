@@ -703,13 +703,12 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray();
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'foo'       => null,
             'bar'       => ':bar',
             'default'   => 'sumfin',
             'createdAt' => null,
-        ]);
+        ], $result, );
     }
 
     public function testAsArrayRecursive()
@@ -739,11 +738,10 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray();
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'bar'  => null,
             'orig' => ':oo',
-        ]);
+        ], $result);
     }
 
     public function testAsArraySwapped()
@@ -752,12 +750,11 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray();
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'bar'          => 'foo',
             'foo'          => 'bar',
             'original_bar' => 'bar',
-        ]);
+        ], $result);
     }
 
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
@@ -771,10 +768,9 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray();
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'bar' => null,
-        ]);
+        ], $result);
     }
 
     public function testAsArrayOnlyChanged()
@@ -784,10 +780,9 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toArray(true);
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'bar' => 'bar:foo:bar',
-        ]);
+        ], $result);
     }
 
     public function testToRawArray()
@@ -796,13 +791,12 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray();
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'foo'        => null,
             'bar'        => null,
             'default'    => 'sumfin',
             'created_at' => null,
-        ]);
+        ], $result);
     }
 
     public function testToRawArrayRecursive()
@@ -812,8 +806,7 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray(false, true);
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'foo'        => null,
             'bar'        => null,
             'default'    => 'sumfin',
@@ -824,7 +817,7 @@ final class EntityTest extends CIUnitTestCase
                 'default'    => 'sumfin',
                 'created_at' => null,
             ],
-        ]);
+        ], $result);
     }
 
     public function testToRawArrayOnlyChanged()
@@ -834,10 +827,9 @@ final class EntityTest extends CIUnitTestCase
 
         $result = $entity->toRawArray(true);
 
-        // @TODO arguments are reversed
-        $this->assertSame($result, [
+        $this->assertSame([
             'bar' => 'bar:foo',
-        ]);
+        ], $result);
     }
 
     public function testFilledConstruction()
