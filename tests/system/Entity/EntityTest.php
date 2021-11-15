@@ -69,11 +69,19 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getEntity();
 
-        $this->assertFalse(isset($entity->foo));
+        $issetReturn = isset($entity->foo);
+
+        $this->assertFalse($issetReturn);
 
         $attributes = $this->getPrivateProperty($entity, 'attributes');
-        $this->assertFalse(isset($attributes['foo']));
-        $this->assertTrue(isset($attributes['default']));
+
+        $issetReturn = isset($attributes['foo']);
+
+        $this->assertFalse($issetReturn);
+
+        $issetReturn = isset($attributes['default']);
+
+        $this->assertTrue($issetReturn);
     }
 
     public function testFill()
@@ -905,13 +913,17 @@ final class EntityTest extends CIUnitTestCase
 
     public function testIssetKeyMap()
     {
-        $entity = $this->getEntity();
-
+        $entity             = $this->getEntity();
         $entity->created_at = '12345678';
-        $this->assertTrue(isset($entity->createdAt));
+        $entity->bar        = 'foo';
 
-        $entity->bar = 'foo';
-        $this->assertTrue(isset($entity->FakeBar));
+        $issetReturn = isset($entity->createdAt);
+
+        $this->assertTrue($issetReturn);
+
+        $issetReturn = isset($entity->FakeBar);
+
+        $this->assertTrue($issetReturn);
     }
 
     public function testJsonSerializableEntity()
