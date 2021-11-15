@@ -361,7 +361,7 @@ Since the services file is a very simple class, it is easy to make this work.</p
 to find the views at <code class="docutils literal notranslate"><span class="pre">APPPATH.views/</span></code>. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the <code class="docutils literal notranslate"><span class="pre">$viewPath</span></code>
 as a constructor parameter. The service method looks like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span><span class="o">=</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;views/&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
 <span class="p">}</span>
@@ -384,8 +384,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$getShared</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$getShared</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\RouteCollection</span><span class="p">();</span>
         <span class="p">}</span>
 
