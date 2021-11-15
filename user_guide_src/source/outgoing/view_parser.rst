@@ -97,7 +97,7 @@ like this::
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
-template would contain two variables: {blog_title} and {blog_heading}
+template would contain two variables: ``{blog_title}`` and ``{blog_heading}``
 The first parameter to ``render()`` contains the name of the :doc:`view
 file </outgoing/views>`, Where *blog_template* is the name of your view file.
 
@@ -177,8 +177,8 @@ at the top of the page::
     </body>
     </html>
 
-In the above code you'll notice a pair of variables: {blog_entries}
-data... {/blog_entries}. In a case like this, the entire chunk of data
+In the above code you'll notice a pair of variables: ``{blog_entries}``
+data... ``{/blog_entries}``. In a case like this, the entire chunk of data
 between these pairs would be repeated multiple times, corresponding to
 the number of rows in the "blog_entries" element of the parameters array.
 
