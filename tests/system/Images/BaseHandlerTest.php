@@ -58,7 +58,7 @@ final class BaseHandlerTest extends CIUnitTestCase
     public function testNew()
     {
         $handler = Services::image('gd', null, false);
-        $this->assertTrue($handler instanceof BaseHandler);
+        $this->assertInstanceOf(BaseHandler::class, $handler);
     }
 
     public function testWithFile()
@@ -68,7 +68,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         $handler->withFile($path);
 
         $image = $handler->getFile();
-        $this->assertTrue($image instanceof Image);
+        $this->assertInstanceOf(Image::class, $image);
         $this->assertSame(155, $image->origWidth);
         $this->assertSame($path, $image->getPathname());
     }
@@ -104,15 +104,15 @@ final class BaseHandlerTest extends CIUnitTestCase
         $handler = Services::image('gd', null, false);
         $handler->withFile($this->start . 'ci-logo.png');
         $image = $handler->getFile();
-        $this->assertTrue($image instanceof Image);
+        $this->assertInstanceOf(Image::class, $image);
 
         $handler->withFile($this->start . 'ci-logo.jpeg');
         $image = $handler->getFile();
-        $this->assertTrue($image instanceof Image);
+        $this->assertInstanceOf(Image::class, $image);
 
         $handler->withFile($this->start . 'ci-logo.gif');
         $image = $handler->getFile();
-        $this->assertTrue($image instanceof Image);
+        $this->assertInstanceOf(Image::class, $image);
     }
 
     // Something handled by our Image

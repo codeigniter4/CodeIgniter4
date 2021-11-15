@@ -74,7 +74,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->insertBatch($jobData));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['description']));
+        $this->assertArrayHasKey('description', $error);
     }
 
     public function testInsertBatchSetsIntTimestamps(): void

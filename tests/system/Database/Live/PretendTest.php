@@ -36,7 +36,7 @@ final class PretendTest extends CIUnitTestCase
             ->table('user')
             ->get();
 
-        $this->assertFalse($result instanceof Query);
+        $this->assertNotInstanceOf(Query::class, $result);
 
         $result = $this->db->pretend(true)
             ->table('user')

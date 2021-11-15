@@ -103,6 +103,6 @@ final class ConnectTest extends CIUnitTestCase
         $db1 = Database::connect($this->tests);
 
         $this->assertSame($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
-        $this->assertTrue(count($db1->listTables()) >= 0);
+        $this->assertGreaterThanOrEqual(0, count($db1->listTables()));
     }
 }

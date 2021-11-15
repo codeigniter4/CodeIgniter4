@@ -79,7 +79,7 @@ final class DbUtilsTest extends CIUnitTestCase
         if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
             $databases = $util->listDatabases();
 
-            $this->assertTrue(in_array($this->db->getDatabase(), $databases, true));
+            $this->assertContains($this->db->getDatabase(), $databases);
         } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');

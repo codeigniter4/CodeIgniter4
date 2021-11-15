@@ -63,7 +63,7 @@ final class ResponseTest extends CIUnitTestCase
         $config->CSPEnabled = true;
         $response           = new Response($config);
 
-        $this->assertTrue($response instanceof Response);
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testSetStatusCodeSetsReason()
@@ -327,7 +327,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setJSON($body);
 
         $this->assertSame($expected, $response->getJSON());
-        $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
+        $this->assertNotFalse(strpos($response->getHeaderLine('content-type'), 'application/json'));
     }
 
     public function testJSONGetFromNormalBody()
@@ -364,7 +364,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setXML($body);
 
         $this->assertSame($expected, $response->getXML());
-        $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
+        $this->assertNotFalse(strpos($response->getHeaderLine('content-type'), 'application/xml'));
     }
 
     public function testXMLGetFromNormalBody()

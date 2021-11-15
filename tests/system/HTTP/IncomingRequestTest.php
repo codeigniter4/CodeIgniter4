@@ -544,8 +544,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         // Use `false` here to simulate file_get_contents returning a false value
         $request = new IncomingRequest(new App(), new URI(), false, new UserAgent());
 
-        $this->assertTrue($request->getBody() !== false);
-        $this->assertTrue($request->getBody() === null);
+        $this->assertNotFalse($request->getBody());
+        $this->assertNull($request->getBody());
     }
 
     /**

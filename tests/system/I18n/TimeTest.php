@@ -1023,7 +1023,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $datetime = new DateTime();
         $time     = Time::createFromInstance($datetime);
-        $this->assertTrue($time instanceof Time);
+        $this->assertInstanceOf(Time::class, $time);
         $this->assertTrue($time->sameAs($datetime));
     }
 

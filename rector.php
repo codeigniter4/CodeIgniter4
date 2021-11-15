@@ -42,6 +42,9 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Rector\MethodCall\AssertFalseStrposToContainsRector;
+use Rector\PHPUnit\Rector\MethodCall\AssertIssetToSpecificMethodRector;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -53,6 +56,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::DEAD_CODE);
     $containerConfigurator->import(LevelSetList::UP_TO_PHP_73);
+    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD);
 
     $parameters = $containerConfigurator->parameters();
 
@@ -109,6 +113,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
+
+        // $this->assertTrue(isset($bar['foo']))
+        // and $this->assertArrayHasKey('foo', $bar)
+        // or $this->assertObjectHasAttribute('foo', $bar);
+        // are not the same
+        AssertIssetToSpecificMethodRector::class => [
+            __DIR__ . '/tests/system/Entity/EntityTest.php',
+            __DIR__ . '/tests/system/Session/SessionTest.php',
+        ],
+
+        // assertContains() to string can't be used in PHPUnit 9.1
+        AssertFalseStrposToContainsRector::class,
     ]);
 
     // auto import fully qualified class names

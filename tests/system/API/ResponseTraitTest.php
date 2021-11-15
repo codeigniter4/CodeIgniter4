@@ -488,7 +488,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
 
-        $this->assertSame('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
+        $this->assertInstanceOf('CodeIgniter\Format\XMLFormatter', $this->formatter);
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
         $expected = <<<'EOH'
