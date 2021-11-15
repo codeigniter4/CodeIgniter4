@@ -55,7 +55,7 @@ can instantiate it directly::
 Then you can use any of the three standard rendering methods that it provides:
 **render(viewpath, options, save)**, **setVar(name, value, context)** and
 **setData(data, context)**. You will also be able to specify delimiters directly,
-through the **setDelimiters(left,right)** method.
+through the **setDelimiters(left, right)** method.
 
 Using the ``Parser``, your view templates are processed only by the Parser
 itself, and not like a conventional view PHP script. PHP code in such a script
@@ -97,7 +97,7 @@ like this::
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
-template would contain two variables: {blog_title} and {blog_heading}
+template would contain two variables: ``{blog_title}`` and ``{blog_heading}``
 The first parameter to ``render()`` contains the name of the :doc:`view
 file </outgoing/views>`, Where *blog_template* is the name of your view file.
 
@@ -177,8 +177,8 @@ at the top of the page::
     </body>
     </html>
 
-In the above code you'll notice a pair of variables: {blog_entries}
-data... {/blog_entries}. In a case like this, the entire chunk of data
+In the above code you'll notice a pair of variables: ``{blog_entries}``
+data... ``{/blog_entries}``. In a case like this, the entire chunk of data
 between these pairs would be repeated multiple times, corresponding to
 the number of rows in the "blog_entries" element of the parameters array.
 
@@ -252,7 +252,7 @@ The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
-A ``blog_template`` that might work for the above::
+A **blog_template.php** that might work for the above::
 
     <h1>{blog_title} - {blog_heading}</h1>
     {blog_entry}
@@ -696,7 +696,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-    .. php:method:: render($view[, $options[, $saveData=false]])
+    .. php:method:: render($view[, $options[, $saveData = false]])
 
         :param  string  $view: File name of the view source
         :param  array   $options: Array of options, as key/value pairs
@@ -720,7 +720,7 @@ Class Reference
         Any conditional substitutions are performed first, then remaining
         substitutions are performed for each data pair.
 
-    .. php:method:: renderString($template[, $options[, $saveData=false]])
+    .. php:method:: renderString($template[, $options[, $saveData = false]])
 
         :param  string  $template: View source provided as a string
         :param  array   $options: Array of options, as key/value pairs
@@ -734,7 +734,7 @@ Class Reference
 
         Options supported, and behavior, as above.
 
-    .. php:method:: setData([$data[, $context=null]])
+    .. php:method:: setData([$data[, $context = null]])
 
         :param  array   $data: Array of view data strings, as key/value pairs
         :param  string  $context: The context to use for data escaping.
@@ -743,12 +743,12 @@ Class Reference
 
         Sets several pieces of view data at once::
 
-            $renderer->setData(['name'=>'George', 'position'=>'Boss']);
+            $renderer->setData(['name' => 'George', 'position' => 'Boss']);
 
         Supported escape contexts: html, css, js, url, or attr or raw.
         If 'raw', no escaping will happen.
 
-    .. php:method:: setVar($name[, $value=null[, $context=null]])
+    .. php:method:: setVar($name[, $value = null[, $context = null]])
 
         :param  string  $name: Name of the view data variable
         :param  mixed   $value: The value of this view data
