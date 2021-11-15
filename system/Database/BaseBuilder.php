@@ -2493,12 +2493,18 @@ class BaseBuilder
         if (! is_object($object)) {
             return $object;
         }
-
+       
+        try {
+			$identities=$object->get_identities();
+		} catch (\Throwable $th) {
+			$identities=array();
+		}
+        
         $array = [];
 
         foreach (get_object_vars($object) as $key => $val) {
             // There are some built in keys we need to ignore for this conversion
-            if (! is_object($val) && ! is_array($val) && $key !== '_parent_name') {
+            if ( ! is_object($val) && ! is_array($val) && $key !== '_parent_name'  && !in_array($key,$identities))
                 $array[$key] = $val;
             }
         }
