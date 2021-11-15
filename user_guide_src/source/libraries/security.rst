@@ -151,7 +151,11 @@ Redirection on Failure
 ======================
 
 When a request fails the CSRF validation check, it will redirect to the previous page by default,
-setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
+setting an ``error`` flash message that you can display to the end user with the following code in your view::
+
+    <?= session()->getFlashdata('error') ?>
+
+This provides a nicer experience
 than simply crashing. This can be turned off by editing the following config parameter value in
 **app/Config/Security.php**::
 
