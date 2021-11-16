@@ -286,4 +286,29 @@ final class InsertModelTest extends LiveModelTestCase
 
         $this->assertCloseEnough(time(), strtotime($result->created_at));
     }
+
+    public function testInsertWithUpdate(): void
+    {
+        $entity = new \Tests\Support\Entity\User();
+        $this->createModel(UserObjModel::class);
+
+        $entity->name       = 'Mark';
+        $entity->email      = 'mark@example.com';
+        $entity->country    = 'India';
+        $entity->deleted    = 0;
+        $entity->created_at = new Time('now');
+
+        $this->model->insert($entity);
+        $this->assertGreaterThan(0, $this->model->getInsertID());
+        $resultEntity = $this->model->where('name', 'Mark')->first();
+
+        $resultEntity->name = 'Katherine';
+
+        $this->model->insert($resultEntity);
+        $this->assertGreaterThan(0, $this->model->getInsertID());
+
+        $resultEntity2 = $this->model->where('name', 'Katherine')->first();
+        $this->assertGreaterThan(0, $this->model->getInsertID());
+        $this->assertSame('mark@example.com', $resultEntity2->email);
+    }
 }
