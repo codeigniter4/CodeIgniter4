@@ -716,18 +716,18 @@ You can specify the format that data should be returned as when using the find*(
 $returnType. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.
 
-.. note:: These methods only change the return type for the next find*() method call. After that,
+.. note:: These methods only change the return type for the next **find*()** method call. After that,
     it is reset to its default value.
 
 **asArray()**
 
-Returns data from the next find*() method as associative arrays::
+Returns data from the next **find*()** method as associative arrays::
 
     $users = $userModel->asArray()->where('status', 'active')->findAll();
 
 **asObject()**
 
-Returns data from the next find*() method as standard objects or custom class intances::
+Returns data from the next **find*()** method as standard objects or custom class intances::
 
     // Return as standard objects
     $users = $userModel->asObject()->where('status', 'active')->findAll();
