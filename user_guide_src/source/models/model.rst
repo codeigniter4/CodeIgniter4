@@ -201,8 +201,8 @@ configured to any name of your choice by using $deletedField property.
 
 **$allowedFields**
 
-This array should be updated with the field names that can be set during save, insert, or
-update methods. Any field names other than these will be discarded. This helps to protect
+This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
+``update()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
@@ -268,8 +268,8 @@ Working With Data
 Finding Data
 ------------
 
-Several functions are provided for doing basic CRUD work on your tables, including find(),
-insert(), update(), delete() and more.
+Several functions are provided for doing basic CRUD work on your tables, including ``find()``,
+``insert()``, ``update()``, ``delete()`` and more.
 
 **find()**
 
@@ -285,7 +285,7 @@ of just one::
     $users = $userModel->find([1,2,3]);
 
 If no parameters are passed in, will return all rows in that model's table, effectively acting
-like findAll(), though less explicit.
+like ``findAll()``, though less explicit.
 
 **findColumn()**
 
