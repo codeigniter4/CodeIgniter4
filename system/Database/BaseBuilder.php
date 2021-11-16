@@ -672,34 +672,35 @@ class BaseBuilder
 
                     $op = trim(current($op));
 
-                    if (substr($k, -1 * strlen($op)) === $op) {
-                        $k = rtrim(strrev(preg_replace(strrev('/' . $op . '/'), strrev(''), strrev($k), 1)));
+                    if (substr($k, -strlen($op)) === $op) {
+                        $k  = rtrim(substr($k, 0, -strlen($op)));
+                        $op = " {$op}";
+                    } else {
+                        $op = '';
                     }
-                }
-
-                $bind = $this->setBind($k, $v, $escape);
-
-                if (empty($op)) {
-                    $k .= ' =';
                 } else {
-                    $k .= " {$op}";
+                    $op = ' =';
                 }
 
                 if ($v instanceof Closure) {
                     $builder = $this->cleanClone();
-                    $v       = '(' . str_replace("\n", ' ', $v($builder)->getCompiledSelect()) . ')';
+                    $v       = ' (' . strtr($v($builder)->getCompiledSelect(), "\n", ' ') . ')';
                 } else {
-                    $v = " :{$bind}:";
+                    $bind = $this->setBind($k, $v, $escape);
+                    $v    = " :{$bind}:";
                 }
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
-                $k .= ' IS NULL';
+                $op = ' IS NULL';
             } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
-                $k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
+                $k  = substr($k, 0, $match[0][1]);
+                $op = $match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL';
+            } else {
+                $op = '';
             }
 
             $this->{$qbKey}[] = [
-                'condition' => $prefix . $k . $v,
+                'condition' => $prefix . $k . $op . $v,
                 'escape'    => $escape,
             ];
         }
@@ -855,7 +856,7 @@ class BaseBuilder
 
         if ($values instanceof Closure) {
             $builder = $this->cleanClone();
-            $ok      = str_replace("\n", ' ', $values($builder)->getCompiledSelect());
+            $ok      = strtr($values($builder)->getCompiledSelect(), "\n", ' ');
         } else {
             $whereIn = array_values($values);
             $ok      = $this->setBind($ok, $whereIn, $escape);
