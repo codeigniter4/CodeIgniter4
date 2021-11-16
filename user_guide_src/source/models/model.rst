@@ -183,8 +183,8 @@ feature may be handy when we want to implement 1:1 relation or use UUIDs for our
 
 The Model's CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
-the type of data that is returned. Valid values are 'array', 'object', or the fully
-qualified name of a class that can be used with the Result object's getCustomResultObject()
+the type of data that is returned. Valid values are '**array**' (the default), '**object**', or the **fully
+qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
 method.
 
 **$useSoftDeletes**
@@ -192,12 +192,12 @@ method.
 If true, then any ``delete()`` method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
-part of a security trail. If true, the find* methods will only return non-deleted rows, unless
-the withDeleted() method is called prior to calling the find* method.
+part of a security trail. If true, the **find*()** methods will only return non-deleted rows, unless
+the ``withDeleted()`` method is called prior to calling the **find*()** method.
 
 This requires either a DATETIME or INTEGER field in the database as per the model's
-$dateFormat setting. The default field name is ``deleted_at`` however this name can be
-configured to any name of your choice by using $deletedField property.
+``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
+configured to any name of your choice by using ``$deletedField`` property.
 
 **$allowedFields**
 
@@ -209,8 +209,8 @@ potential mass assignment vulnerabilities.
 **$useTimestamps**
 
 This boolean value determines whether the current date is automatically added to all inserts
-and updates. If true, will set the current time in the format specified by $dateFormat. This
-requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
+and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
+requires that the table have columns named **created_at** and **updated_at** in the appropriate
 data type.
 
 **$createdField**
@@ -227,8 +227,8 @@ Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
 This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: datetime, date, or int (a PHP timestamp). Using 'useSoftDeletes' or
-'useTimestamps' with an invalid or missing dateFormat will cause an exception.
+valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
+**useTimestamps** with an invalid or missing dateFormat will cause an exception.
 
 **$validationRules**
 
@@ -243,7 +243,7 @@ described in :ref:`validation-custom-errors`. Described in more detail below.
 
 **$skipValidation**
 
-Whether validation should be skipped during all ``inserts`` and ``updates``. The default
+Whether validation should be skipped during all **inserts** and **updates**. The default
 value is false, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
@@ -321,8 +321,8 @@ Returns the first row in the result set. This is best used in combination with t
 
 **withDeleted()**
 
-If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted_at IS NOT null'.
-To temporarily override this, you can use the withDeleted() method prior to calling the find* method.
+If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
+To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 ::
 
     // Only gets non-deleted rows (deleted = 0)
@@ -333,8 +333,8 @@ To temporarily override this, you can use the withDeleted() method prior to call
 
 **onlyDeleted()**
 
-Whereas withDeleted() will return both deleted and not-deleted rows, this method modifies
-the next find* methods to return only soft deleted rows::
+Whereas ``withDeleted()`` will return both deleted and not-deleted rows, this method modifies
+the next **find*()** methods to return only soft deleted rows::
 
     $deletedUsers = $userModel->onlyDeleted()->findAll();
 
@@ -356,9 +356,9 @@ the array's values are the values to save for that key::
 
 **update()**
 
-Updates an existing record in the database. The first parameter is the $primaryKey of the record to update.
+Updates an existing record in the database. The first parameter is the ``$primaryKey`` of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
-of the columns in a $table, while the array's values are the values to save for that key::
+of the columns in a ``$table``, while the array's values are the values to save for that key::
 
     $data = [
         'username' => 'darth',
@@ -385,8 +385,8 @@ update command, with the added benefit of validation, events, etc::
 
 **save()**
 
-This is a wrapper around the insert() and update() methods that handle inserting or updating the record
-automatically, based on whether it finds an array key matching the $primaryKey value::
+This is a wrapper around the ``insert()`` and ``update()`` methods that handle inserting or updating the record
+automatically, based on whether it finds an array key matching the **primary key** value::
 
     // Defined as a model property
     $primaryKey = 'id';
@@ -628,7 +628,7 @@ method directly, with options::
     $rules = $model->getValidationRules($options);
 
 The ``$options`` parameter is an associative array with one element,
-whose key is either "except" or "only", and which has as its
+whose key is either ``'except'`` or ``'only'``, and which has as its
 value an array of fieldnames of interest.::
 
     // get the rules for all but the "username" field
@@ -712,8 +712,8 @@ very elegant use::
 Runtime Return Type Changes
 ----------------------------
 
-You can specify the format that data should be returned as when using the find*() methods as the class property,
-$returnType. There may be times that you would like the data back in a different format, though. The Model
+You can specify the format that data should be returned as when using the **find*()** methods as the class property,
+``$returnType``. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.
 
 .. note:: These methods only change the return type for the next **find*()** method call. After that,
