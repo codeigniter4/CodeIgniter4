@@ -591,17 +591,16 @@ The other way to set the validation message to fields by functions,
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
 the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors::
 
-    if ($model->save($data) === false)
-    {
+    if ($model->save($data) === false) {
         return view('updateUser', ['errors' => $model->errors()]);
     }
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
 errors at the top of the form, or to display them individually::
 
-    <?php if (! empty($errors)) : ?>
+    <?php if (! empty($errors)): ?>
         <div class="alert alert-danger">
-        <?php foreach ($errors as $field => $error) : ?>
+        <?php foreach ($errors as $field => $error): ?>
             <p><?= $error ?></p>
         <?php endforeach ?>
         </div>
@@ -774,7 +773,9 @@ must return the original $data array so other callbacks have the full informatio
 
     protected function hashPassword(array $data)
     {
-        if (! isset($data['data']['password'])) return $data;
+        if (! isset($data['data']['password'])) {
+            return $data;
+        }
 
         $data['data']['password_hash'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         unset($data['data']['password']);
