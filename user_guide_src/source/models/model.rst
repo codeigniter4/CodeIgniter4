@@ -9,7 +9,7 @@ Using CodeIgniter's Model
 Models
 ======
 
-Models provide a way to interact with a specific table in your database. They come out of the box with helper
+Models provide a way to interact with a specific **table** in your database. They come out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
