@@ -100,7 +100,7 @@ Connecting to the Database
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
-modify which group is used on a per-model basis by adding the DBGroup property to your class.
+modify which group is used on a per-model basis by adding the ``$DBGroup`` property to your class.
 This ensures that within the model any references to ``$this->db`` are made through the appropriate
 connection.
 ::
@@ -221,11 +221,11 @@ Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled)
 **$updatedField**
 
 Specifies which database field should use for keep data record update timestamp.
-Leave it empty to avoid update it (even useTimestamps is enabled)
+Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
 **$dateFormat**
 
-This value works with $useTimestamps and $useSoftDeletes to ensure that the correct type of
+This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
 valid options are: datetime, date, or int (a PHP timestamp). Using 'useSoftDeletes' or
 'useTimestamps' with an invalid or missing dateFormat will cause an exception.
@@ -277,7 +277,7 @@ Returns a single row where the primary key matches the value passed in as the fi
 
     $user = $userModel->find($user_id);
 
-The value is returned in the format specified in $returnType.
+The value is returned in the format specified in ``$returnType``.
 
 You can specify more than one row to return by passing an array of primaryKey values instead
 of just one::
@@ -293,7 +293,7 @@ Returns null or an indexed array of column values::
 
     $user = $userModel->findColumn($column_name);
 
-$column_name should be a name of single column else you will get the DataException.
+``$column_name`` should be a name of single column else you will get the DataException.
 
 **findAll()**
 
@@ -344,7 +344,7 @@ Saving Data
 **insert()**
 
 An associative array of data is passed into this method as the only parameter to create a new
-row of data in the database. The array's keys must match the name of the columns in a $table, while
+row of data in the database. The array's keys must match the name of the columns in a ``$table``, while
 the array's values are the values to save for that key::
 
     $data = [
@@ -476,7 +476,7 @@ Takes a primary key value as the first parameter and deletes the matching record
 
     $userModel->delete(12);
 
-If the model's $useSoftDeletes value is true, this will update the row to set ``deleted_at`` to the current
+If the model's ``$useSoftDeletes`` value is true, this will update the row to set ``deleted_at`` to the current
 date and time. You can force a permanent delete by setting the second parameter as true.
 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once::
@@ -642,7 +642,7 @@ Validation Placeholders
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
-the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
+the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
 replaced by the **value** of the matched incoming field. An example should clarify this::
 
     protected $validationRules = [
@@ -694,7 +694,7 @@ need it::
 
     $builder = $userModel->builder();
 
-This builder is already set up with the model's $table. If you need access to another table
+This builder is already set up with the model's ``$table``. If you need access to another table
 you can pass it in as a parameter, but be aware that this will not return a shared instance::
 
     $groupBuilder = $userModel->builder('groups');
@@ -757,14 +757,14 @@ Model Events
 
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
-points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
-**$beforeUpdate**, **$afterUpdate**, **$afterFind**, and **$afterDelete**.
+points in the model's execution can be affected, each through a class property: ``$beforeInsert``, ``$afterInsert``,
+``$beforeUpdate``, ``$afterUpdate``, ``$afterFind``, and ``$afterDelete``.
 
 Defining Callbacks
 ------------------
 
 You specify the callbacks by first creating a new class method in your model to use. This class will always
-receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
+receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
 will always contain a key named **data** that contains the primary data passed to the original method. In the case
 of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
 main array will also contain the other values passed to the method, and be detailed later. The callback method
@@ -785,14 +785,14 @@ must return the original $data array so other callbacks have the full informatio
 Specifying Callbacks To Run
 ---------------------------
 
-You specify when to run the callbacks by adding the method name to the appropriate class property (beforeInsert, afterUpdate,
+You specify when to run the callbacks by adding the method name to the appropriate class property (``$beforeInsert``, ``$afterUpdate``,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events::
 
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
 
-Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its ``$allowCallbacks`` property::
 
     protected $allowCallbacks = false;
 
@@ -804,7 +804,7 @@ You may also change this setting temporarily for a single model call sing the ``
 Event Parameters
 ----------------
 
-Since the exact data passed to each callback varies a bit, here are the details on what is in the $data parameter
+Since the exact data passed to each callback varies a bit, here are the details on what is in the ``$data`` parameter
 passed to each event:
 
 ================ =========================================================================================================
