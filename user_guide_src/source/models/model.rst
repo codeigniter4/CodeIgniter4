@@ -189,7 +189,7 @@ method.
 
 **$useSoftDeletes**
 
-If true, then any delete* method calls will set ``deleted_at`` in the database, instead of
+If true, then any ``delete()`` method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
