@@ -15,8 +15,10 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use stdClass;
+use Tests\Support\Entity\User;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
@@ -289,7 +291,7 @@ final class InsertModelTest extends LiveModelTestCase
 
     public function testInsertWithUpdate(): void
     {
-        $entity = new \Tests\Support\Entity\User();
+        $entity = new User();
         $this->createModel(UserObjModel::class);
 
         $entity->name       = 'Mark';
