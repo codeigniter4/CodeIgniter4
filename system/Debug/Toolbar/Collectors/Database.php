@@ -89,6 +89,7 @@ class Database extends BaseCollector
                 'query'     => $query,
                 'string'    => $queryString,
                 'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
+                'trace'     => debug_backtrace(),
             ];
         }
     }
@@ -133,11 +134,26 @@ class Database extends BaseCollector
         $data['queries'] = array_map(static function (array $query) {
             $isDuplicate = $query['duplicate'] === true;
 
+            // Find the first line that doesn't include `system` in the backtrace
+            $line = [];
+
+            foreach ($query['trace'] as $traceLine) {
+                if (strpos($traceLine['file'], 'system/') !== false) {
+                    continue;
+                }
+                $line = $traceLine;
+                break;
+            }
+
             return [
-                'hover'    => $isDuplicate ? 'This query was called more than once.' : '',
-                'class'    => $isDuplicate ? 'duplicate' : '',
-                'duration' => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
-                'sql'      => $query['query']->debugToolbarDisplay(),
+                'hover'      => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'      => $isDuplicate ? 'duplicate' : '',
+                'duration'   => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
+                'sql'        => $query['query']->debugToolbarDisplay(),
+                'trace'      => $query['trace'],
+                'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
+                'trace-line' => $line['line'] ?? '',
+                'qid'        => md5((string) $query['query'] . microtime()),
             ];
         }, static::$queries);
 

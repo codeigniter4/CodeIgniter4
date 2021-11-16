@@ -344,6 +344,8 @@
 
 .debug-view.show-view {
   border-color: #DD8615; }
+#debug-bar tr[data-toggle] {
+  cursor: pointer; }
 
 .debug-view-path {
   background-color: #FDC894;
@@ -407,7 +409,7 @@
     #debug-bar .muted {
       color: #DFDFDF; }
       #debug-bar .muted td {
-        color: #434343; }
+        color: #797979; }
       #debug-bar .muted:hover td {
         color: #DFDFDF; }
     #debug-bar #toolbar-position,
