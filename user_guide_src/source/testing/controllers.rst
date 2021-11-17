@@ -69,12 +69,14 @@ Specifies the class name of the controller to test. The first parameter must be 
 
     $this->controller(\App\Controllers\ForumController::class);
 
-**execute($method)**
+**execute(string $method, ...$params)**
 
-Executes the specified method within the controller. The only parameter is the name of the method to run::
+Executes the specified method within the controller. The first parameter is the name of the method to run::
 
     $results = $this->controller(\App\Controllers\ForumController::class)
                     ->execute('showCategories');
+
+By specifying the second and subsequent parameters, you can pass them to the controller method.
 
 This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.
