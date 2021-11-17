@@ -144,7 +144,7 @@ class Database extends BaseCollector
                 $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
                 $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
 
-                if (strpos($traceLine['file'], 'APPPATH') === false) {
+                if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
                     continue;
                 }
                 $line = empty($line) ? $traceLine : $line;
