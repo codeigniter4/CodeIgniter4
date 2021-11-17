@@ -257,7 +257,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenames()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -279,7 +279,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenamesWithHidden()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
