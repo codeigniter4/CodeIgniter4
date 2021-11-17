@@ -37,11 +37,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
             'simpleFile'    => 'A tap-tap-tapping upon my door',
             '.hidden'       => 'There is no spoon',
         ];
+
+        helper('filesystem');
     }
 
     public function testDirectoryMapDefaults()
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
@@ -65,7 +66,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMapShowsHiddenFiles()
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
