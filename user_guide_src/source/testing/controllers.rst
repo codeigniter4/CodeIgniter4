@@ -135,7 +135,7 @@ Allows you to provide a **Logger** instance::
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
 
-**withURI($uri)**
+**withURI(string $uri)**
 
 Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
