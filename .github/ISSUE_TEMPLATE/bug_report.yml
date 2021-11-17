@@ -44,6 +44,19 @@ body:
       required: true
 
   - type: dropdown
+    id: codeigniter-installation
+    attributes:
+      label: CodeIgniter4 Installation
+      multiple: false
+      options:
+        - Composer; appstarter
+        - Composer; Adding CI4 to an Existing Project
+        - Manual (zip or tar.gz)
+        - Git
+    validations:
+      required: true
+
+  - type: dropdown
     id: operating-systems
     attributes:
       label: Which operating systems have you tested for this bug?
