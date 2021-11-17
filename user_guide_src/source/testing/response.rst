@@ -37,7 +37,7 @@ Checking Response Status
 **isOK()**
 
 Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by
-a response status code in the 200 or 300's.
+a response status code in the 200 or 300's. An empty body is not considered valid, unless in redirects.
 ::
 
     if ($result->isOK()) {
