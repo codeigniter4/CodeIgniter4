@@ -13,6 +13,9 @@ body:
         whether still open or closed, related to your report**.
         If there is, your report will be closed promptly.
 
+        For example, if you get the error "*Undefined property: Config\\Exceptions::$sensitiveDataInTrace*",
+        you can search the GitHub repository with the keyword "[$sensitiveDataInTrace](https://github.com/codeigniter4/CodeIgniter4/search?q=%24sensitiveDataInTrace&type=issues)".
+
         ---
 
   - type: dropdown
