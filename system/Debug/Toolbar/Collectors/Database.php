@@ -137,12 +137,17 @@ class Database extends BaseCollector
             // Find the first line that doesn't include `system` in the backtrace
             $line = [];
 
-            foreach ($query['trace'] as $traceLine) {
-                if (strpos($traceLine['file'], 'system/') !== false) {
+            foreach ($query['trace'] as &$traceLine) {
+                // Clean up the file paths
+                $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
+                $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
+                $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+                $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
+
+                if (strpos($traceLine['file'], 'APPPATH') === false) {
                     continue;
                 }
-                $line = $traceLine;
-                break;
+                $line = empty($line) ? $traceLine : $line;
             }
 
             return [
@@ -153,7 +158,7 @@ class Database extends BaseCollector
                 'trace'      => $query['trace'],
                 'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
                 'trace-line' => $line['line'] ?? '',
-                'qid'        => md5((string) $query['query'] . microtime()),
+                'qid'        => md5($query['query'] . microtime()),
             ];
         }, static::$queries);
 
