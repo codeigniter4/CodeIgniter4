@@ -25,7 +25,4 @@ class UserObjModel extends Model
     protected $returnType     = \Tests\Support\Entity\User::class;
     protected $useSoftDeletes = true;
     protected $dateFormat     = 'datetime';
-    public $name              = '';
-    public $email             = '';
-    public $country           = '';
 }
