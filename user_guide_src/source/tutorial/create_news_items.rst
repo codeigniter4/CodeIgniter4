@@ -33,6 +33,7 @@ the slug from our title in the model. Create a new view at
 
     <h2><?= esc($title) ?></h2>
 
+    <?= session()->getFlashdata('error') ?>
     <?= service('validation')->listErrors() ?>
 
     <form action="/news/create" method="post">
@@ -47,10 +48,15 @@ the slug from our title in the model. Create a new view at
         <input type="submit" name="submit" value="Create news item" />
     </form>
 
-There are probably only two things here that look unfamiliar. The
-``service('validation')->listErrors()`` function is used to report
-errors related to form validation. The ``csrf_field()`` function creates
-a hidden input with a CSRF token that helps protect against some common attacks.
+There are probably only three things here that look unfamiliar.
+
+The ``<?= session()->getFlashdata('error') ?>`` function is used to report
+errors related to CSRF protection.
+
+The ``service('validation')->listErrors()`` function is used to report
+errors related to form validation.
+
+The ``csrf_field()`` function creates a hidden input with a CSRF token that helps protect against some common attacks.
 
 Go back to your ``News`` controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data

@@ -39,9 +39,7 @@ code.
 
     namespace App\Controllers;
 
-    use CodeIgniter\Controller;
-
-    class Pages extends Controller
+    class Pages extends BaseController
     {
         public function index()
         {
@@ -66,7 +64,7 @@ displays the CodeIgniter welcome page.
     Both are *technically* a function. But when you create a function in a class,
     it's called a method.
 
-The ``Pages`` class is extending the
+The ``Pages`` class is extending the ``BaseController`` class that extends the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
 (**system/Controller.php**).
