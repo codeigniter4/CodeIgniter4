@@ -14,6 +14,7 @@ namespace CodeIgniter;
 use Closure;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\CustomExceptionHandlerInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
@@ -394,23 +395,27 @@ class CodeIgniter
             }
         }
 
-        $returned = $this->startController();
+        try {
+            $returned = $this->startController();
 
-        // Closure controller has run in startController().
-        if (! is_callable($this->controller)) {
-            $controller = $this->createController();
+            // Closure controller has run in startController().
+            if (! is_callable($this->controller)) {
+                $controller = $this->createController();
 
-            if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
-                throw PageNotFoundException::forMethodNotFound($this->method);
+                if (! method_exists($controller, '_remap') && ! is_callable([$controller, $this->method], false)) {
+                    throw PageNotFoundException::forMethodNotFound($this->method);
+                }
+
+                // Is there a "post_controller_constructor" event?
+                Events::trigger('post_controller_constructor');
+
+                $returned = $this->runController($controller);
+            } else {
+                $this->benchmark->stop('controller_constructor');
+                $this->benchmark->stop('controller');
             }
-
-            // Is there a "post_controller_constructor" event?
-            Events::trigger('post_controller_constructor');
-
-            $returned = $this->runController($controller);
-        } else {
-            $this->benchmark->stop('controller_constructor');
-            $this->benchmark->stop('controller');
+        } catch (CustomExceptionHandlerInterface $e) {
+            $returned = $e->renderResponse($this->request);
         }
 
         // If $returned is a string, then the controller output something,

@@ -11,8 +11,13 @@
 
 namespace Tests\Support\Controllers;
 
+use Exception;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
+use CodeIgniter\Exceptions\CustomExceptionHandlerInterface;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use RuntimeException;
 
 /**
@@ -88,5 +93,17 @@ class Popcorn extends Controller
     public function echoJson()
     {
         return $this->response->setJSON($this->request->getJSON());
+    }
+
+    public function customException()
+    {
+        throw new class () extends Exception implements CustomExceptionHandlerInterface {
+            public function renderResponse(RequestInterface $request): ResponseInterface
+            {
+                return Services::response()
+                    ->setStatusCode(400)
+                    ->setBody('an exception thrown');
+            }
+        };
     }
 }

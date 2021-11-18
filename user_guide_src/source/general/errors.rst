@@ -131,3 +131,32 @@ forcing a redirect to a specific route or URL::
 redirect code to use instead of the default (``302``, "temporary redirect")::
 
     throw new \CodeIgniter\Router\Exceptions\RedirectException($route, 301);
+
+
+Custom Exception Handler
+------------------------
+
+You can use your own exception handler which will be called globally.
+
+Your exception must implement ``\CodeIgniter\Exception\CustomExceptionHandlerInterface``::
+
+    namespace App\Exceptions;
+    use App\Config\Services;
+    use CodeIgniter\Exception\CustomExceptionHandlerInterface
+    use Exception;
+
+    class MyException extends Exception implements CustomExceptionHandlerInterface
+    {
+        public function renderResponse(RequestInterface $request): ResponseInterface
+        {
+            return Services::response()->setBody($this->getMessage());
+        }
+    }
+
+Now, if an exception is thrown in any part of the application, it will be handled.::
+
+    if (someCondition) {
+        throw new MyException('Something wrong')
+    }
+
+.. note:: Of course, if not caught by the try..catch block defined earlier.

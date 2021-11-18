@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -424,5 +425,27 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+    }
+
+    public function testCustomExceptionHandler()
+    {
+        $_SERVER['REQUEST_URI'] = '/exception';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('exception', '\Tests\Support\Controllers\Popcorn::customException');
+
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        /** @var ResponseInterface $response */
+        $response = $this->getPrivateProperty($this->codeigniter, 'response');
+
+        $this->assertSame('an exception thrown', $response->getBody());
+        $this->assertSame(400, $response->getStatusCode());
     }
 }
