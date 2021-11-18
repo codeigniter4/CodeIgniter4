@@ -75,7 +75,7 @@ is an object-oriented representation of the HTTP request. It provides everything
     $request = service('request');
 
     // the URI being requested (i.e., /about)
-    $request->uri->getPath();
+    $request->getUri()->getPath();
 
     // Retrieve $_GET and $_POST variables
     $request->getGet('foo');

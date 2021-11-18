@@ -249,13 +249,13 @@ The Request URL
 ---------------
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
-``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
+``$request->getUri()`` method. You can cast this object as a string to get a full URL for the current request::
 
-    $uri = (string)$request->uri;
+    $uri = (string) $request->getUri();
 
 The object gives you full abilities to grab any part of the request on it's own::
 
-    $uri = $request->uri;
+    $uri = $request->getUri();
 
     echo $uri->getScheme();         // http
     echo $uri->getAuthority();      // snoopy:password@example.com:88
