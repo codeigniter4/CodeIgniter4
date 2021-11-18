@@ -11,13 +11,13 @@
 
 namespace Tests\Support\Controllers;
 
-use Exception;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\CustomExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 use RuntimeException;
 
 /**
