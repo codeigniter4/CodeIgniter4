@@ -69,12 +69,14 @@ Specifies the class name of the controller to test. The first parameter must be 
 
     $this->controller(\App\Controllers\ForumController::class);
 
-**execute($method)**
+**execute(string $method, ...$params)**
 
-Executes the specified method within the controller. The only parameter is the name of the method to run::
+Executes the specified method within the controller. The first parameter is the name of the method to run::
 
     $results = $this->controller(\App\Controllers\ForumController::class)
                     ->execute('showCategories');
+
+By specifying the second and subsequent parameters, you can pass them to the controller method.
 
 This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.
@@ -133,7 +135,7 @@ Allows you to provide a **Logger** instance::
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
 
-**withURI($uri)**
+**withURI(string $uri)**
 
 Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
