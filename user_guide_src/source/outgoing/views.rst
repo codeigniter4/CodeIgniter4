@@ -109,7 +109,7 @@ to package your views together in a module-like fashion for easy re-use or distr
 
 If you have ``Blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
-example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
+example, you could load the **blogview.php** file from **Blog/Views** by prepending the namespace to the view name::
 
     echo view('Example\Blog\Views\blogview');
 
