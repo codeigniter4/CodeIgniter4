@@ -876,14 +876,14 @@ final class URITest extends CIUnitTestCase
 
         // going through request
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $request->uri);
-        $this->assertSame('/ci/v4/controller/method', $request->uri->getPath());
+        $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), $request->uri->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testBasedWithIndex()
@@ -902,15 +902,15 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // going through request
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $request->uri);
-        $this->assertSame('/ci/v4/index.php/controller/method', $request->uri->getPath());
+        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $request->getUri());
+        $this->assertSame('/ci/v4/index.php/controller/method', $request->getUri()->getPath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/index.php/controller/method');
         $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), $request->uri->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testForceGlobalSecureRequests()
@@ -933,13 +933,13 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // Detected by request
-        $this->assertSame('https://example.com/ci/v4/controller/method', (string) $request->uri);
+        $this->assertSame('https://example.com/ci/v4/controller/method', (string) $request->getUri());
 
         // Standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('https://example.com/ci/v4/controller/method', (string) $uri);
 
-        $this->assertSame(trim($uri->getPath(), '/'), trim($request->uri->getPath(), '/'));
+        $this->assertSame(trim($uri->getPath(), '/'), trim($request->getUri()->getPath(), '/'));
     }
 
     public function testZeroAsURIPath()
