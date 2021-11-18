@@ -286,6 +286,7 @@ the slug from our title in the model. Create a new view at
 <strong>app/Views/news/create.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;validation&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/news/create&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
@@ -301,10 +302,12 @@ the slug from our title in the model. Create a new view at
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>There are probably only two things here that look unfamiliar. The
-<code class="docutils literal notranslate"><span class="pre">service('validation')-&gt;listErrors()</span></code> function is used to report
-errors related to form validation. The <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> function creates
-a hidden input with a CSRF token that helps protect against some common attacks.</p>
+<p>There are probably only three things here that look unfamiliar.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">session()-&gt;getFlashdata('error')</span> <span class="pre">?&gt;</span></code> function is used to report
+errors related to CSRF protection.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">service('validation')-&gt;listErrors()</span></code> function is used to report
+errors related to form validation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> function creates a hidden input with a CSRF token that helps protect against some common attacks.</p>
 <p>Go back to your <code class="docutils literal notranslate"><span class="pre">News</span></code> controller. You’re going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules. You’ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
@@ -428,7 +431,7 @@ The two modified configuration files (<strong>Config/Routes.php</strong> &amp; <
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 16, 2021.
+      <span class="lastupdated">Last updated on Nov 18, 2021.
       </span></p>
   </div>
 
