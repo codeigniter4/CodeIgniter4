@@ -28,6 +28,8 @@ done
 
 # Copy repo-specific files
 cp -Rf ${SOURCE}/admin/framework/. ./
+# Copy tests files
+cp -Rf ${SOURCE}/admin/starter/tests/. ./tests/
 
 # Commit the changes
 git add .
