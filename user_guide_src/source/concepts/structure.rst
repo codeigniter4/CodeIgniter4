@@ -44,6 +44,9 @@ All files in this directory live under the ``App`` namespace, though you are fre
 
 system
 ------
+
+.. note:: If you install CodeIgniter with Composer, the ``system`` is located in ``vendor/codeigniter4/framework/system``.
+
 This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
 use the application directory, the files in the system directory should never be modified. Instead, you should
 extend the classes, or create new classes, to provide the desired functionality.
