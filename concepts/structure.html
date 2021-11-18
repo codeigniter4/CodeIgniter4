@@ -265,8 +265,8 @@
 can change to meet the needs of your application.</p>
 <section id="default-directories">
 <h2>Default Directories<a class="headerlink" href="#default-directories" title="Permalink to this headline"></a></h2>
-<p>A fresh install has six directories: <code class="docutils literal notranslate"><span class="pre">/app</span></code>, <code class="docutils literal notranslate"><span class="pre">/system</span></code>, <code class="docutils literal notranslate"><span class="pre">/public</span></code>,
-<code class="docutils literal notranslate"><span class="pre">/writable</span></code>, <code class="docutils literal notranslate"><span class="pre">/tests</span></code> and possibly <code class="docutils literal notranslate"><span class="pre">/docs</span></code>.
+<p>A fresh install has five directories: <code class="docutils literal notranslate"><span class="pre">/app</span></code>, <code class="docutils literal notranslate"><span class="pre">/public</span></code>,
+<code class="docutils literal notranslate"><span class="pre">/writable</span></code>, <code class="docutils literal notranslate"><span class="pre">/tests</span></code> and <code class="docutils literal notranslate"><span class="pre">/system</span></code> or <code class="docutils literal notranslate"><span class="pre">/vendor</span></code>.
 Each of these directories has a very specific part to play.</p>
 <section id="app">
 <h3>app<a class="headerlink" href="#app" title="Permalink to this headline"></a></h3>
@@ -299,6 +299,10 @@ routing to controllers, and will need to define all of your routes in the routes
 </section>
 <section id="system">
 <h3>system<a class="headerlink" href="#system" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you install CodeIgniter with Composer, the <code class="docutils literal notranslate"><span class="pre">system</span></code> is located in <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework/system</span></code>.</p>
+</div>
 <p>This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
 use the application directory, the files in the system directory should never be modified. Instead, you should
 extend the classes, or create new classes, to provide the desired functionality.</p>
@@ -326,11 +330,6 @@ non-writable as an added security measure.</p>
 <p>This directory is set up to hold your test files. The <code class="docutils literal notranslate"><span class="pre">_support</span></code> directory holds various mock classes and other
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.</p>
-</section>
-<section id="docs">
-<h3>docs<a class="headerlink" href="#docs" title="Permalink to this headline"></a></h3>
-<p>If this directory is part of your project, it holds a local copy of the CodeIgniter4
-User Guide.</p>
 </section>
 <section id="modifying-directory-locations">
 <h3>Modifying Directory Locations<a class="headerlink" href="#modifying-directory-locations" title="Permalink to this headline"></a></h3>
