@@ -19,7 +19,7 @@ Using the example controller you created in the controller page, let’s add a v
 Creating a View
 ===============
 
-Using your text editor, create a file called ``BlogView.php`` and put this in it::
+Using your text editor, create a file called ``blogview.php`` and put this in it::
 
     <html>
         <head>
@@ -53,7 +53,7 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
     {
         public function index()
         {
-            echo view('BlogView');
+            echo view('blogview');
         }
     }
 
@@ -111,7 +111,7 @@ If you have ``Blog`` directory that has a PSR-4 mapping set up in the :doc:`Auto
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
 example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
 
-    echo view('Example\Blog\Views\BlogView');
+    echo view('Example\Blog\Views\blogview');
 
 Caching Views
 =============
