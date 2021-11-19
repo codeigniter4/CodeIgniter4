@@ -330,7 +330,7 @@ Command-Line only Routes
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. This is great for building cronjobs or CLI-only tools. Any route created by any of the HTTP-verb-based
-route methods will also be inaccessible from the CLI, but routes created by the ``any()`` method will still be
+route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line::
 
     $routes->cli('migrate', 'App\Database::migrate');
