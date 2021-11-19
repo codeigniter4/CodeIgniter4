@@ -289,28 +289,23 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertCloseEnough(time(), strtotime($result->created_at));
     }
 
-    public function testInsertWithUpdate(): void
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4247
+     */
+    public function testInsertWithDefaultValue(): void
     {
-        $entity = new User();
         $this->createModel(UserObjModel::class);
 
+        $entity             = new User();
         $entity->name       = 'Mark';
         $entity->email      = 'mark@example.com';
-        $entity->country    = 'India';
+        $entity->country    = 'India';  // same as the default
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');
 
         $this->model->insert($entity);
-        $this->assertGreaterThan(0, $this->model->getInsertID());
-        $resultEntity = $this->model->where('name', 'Mark')->first();
 
-        $resultEntity->name = 'Katherine';
-
-        $this->model->insert($resultEntity);
-        $this->assertGreaterThan(0, $this->model->getInsertID());
-
-        $resultEntity2 = $this->model->where('name', 'Katherine')->first();
-        $this->assertGreaterThan(0, $this->model->getInsertID());
-        $this->assertSame('mark@example.com', $resultEntity2->email);
+        $id = $this->model->getInsertID();
+        $this->assertSame($entity->country, $this->model->find($id)->country);
     }
 }
