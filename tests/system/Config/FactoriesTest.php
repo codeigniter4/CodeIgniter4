@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Config\ForeignCharacters;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
 
@@ -154,11 +155,18 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
-    public function testCreatesByAbsoluteClassname()
+    public function testCreatesModelByAbsoluteClassname()
     {
         $result = Factories::models('\Tests\Support\Models\UserModel', ['getShared' => false]);
 
         $this->assertInstanceOf('Tests\Support\Models\UserModel', $result);
+    }
+
+    public function testCreatesConfigByAbsoluteClassname()
+    {
+        $result = Factories::config('\Tests\Support\Config\ForeignCharacters', ['getShared' => false]);
+
+        $this->assertInstanceOf(ForeignCharacters::class, $result);
     }
 
     public function testCreatesInvalid()

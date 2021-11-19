@@ -126,6 +126,11 @@ class Factories
             return $name;
         }
 
+        // Check full classname Config
+        if ($options['component'] === 'config' && class_exists($name)) {
+            return $name;
+        }
+
         // Determine the relative class names we need
         $basename = self::getBasename($name);
         $appname  = $options['component'] === 'config'
