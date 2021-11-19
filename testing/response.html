@@ -290,7 +290,7 @@ there are a number of new assertions that you can use in your tests.</p>
 <h3>Checking Response Status<a class="headerlink" href="#checking-response-status" title="Permalink to this headline"></a></h3>
 <p><strong>isOK()</strong></p>
 <p>Returns a boolean true/false based on whether the response is perceived to be “ok”. This is primarily determined by
-a response status code in the 200 or 300’s.</p>
+a response status code in the 200 or 300’s. An empty body is not considered valid, unless in redirects.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">())</span> <span class="p">{</span>
     <span class="o">...</span>
 <span class="p">}</span>
@@ -551,7 +551,7 @@ can help to test the responses.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 18, 2021.
+      <span class="lastupdated">Last updated on Nov 19, 2021.
       </span></p>
   </div>
 

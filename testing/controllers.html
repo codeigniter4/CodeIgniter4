@@ -339,12 +339,13 @@ to run as the parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>execute($method)</strong></p>
-<p>Executes the specified method within the controller. The only parameter is the name of the method to run:</p>
+<p><strong>execute(string $method, …$params)</strong></p>
+<p>Executes the specified method within the controller. The first parameter is the name of the method to run:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>By specifying the second and subsequent parameters, you can pass them to the controller method.</p>
 <p>This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.</p>
 <p><strong>withConfig($config)</strong></p>
@@ -393,7 +394,7 @@ into your controller.</p>
 </div>
 <p>If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.</p>
-<p><strong>withURI($uri)</strong></p>
+<p><strong>withURI(string $uri)</strong></p>
 <p>Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
 representing a valid URI:</p>
@@ -578,7 +579,7 @@ to streamline your test methods.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 18, 2021.
+      <span class="lastupdated">Last updated on Nov 19, 2021.
       </span></p>
   </div>
 
