@@ -11,11 +11,11 @@
 
 namespace Tests\Support\Entity;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entity\Entity;
 
 class User extends Entity
 {
-    protected $datamap = [];
-    protected $dates   = ['created_at', 'expiry'];
-    protected $casts   = [];
+    protected $attributes = [
+        'country' => 'India',
+    ];
 }
