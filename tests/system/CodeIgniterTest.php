@@ -432,10 +432,10 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/exception';
 
         // Inject mock router.
-        $routes = Services::routes();
+        $routes = Services::routes(false);
         $routes->add('exception', '\Tests\Support\Controllers\Popcorn::customException');
 
-        $router = Services::router($routes, Services::request());
+        $router = Services::router($routes, Services::request(), false);
         Services::injectMock('router', $router);
 
         ob_start();
