@@ -49,8 +49,8 @@ body:
       label: CodeIgniter4 Installation Method
       multiple: false
       options:
-        - Composer; appstarter
-        - Composer; Adding CI4 to an Existing Project
+        - Composer (using `codeigniter4/appstarter`)
+        - Composer (as dependency to an existing project)
         - Manual (zip or tar.gz)
         - Git
     validations:
