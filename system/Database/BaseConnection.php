@@ -1012,7 +1012,8 @@ abstract class BaseConnection implements ConnectionInterface
             //
             // NOTE: The ! empty() condition prevents this method
             // from breaking when QB isn't enabled.
-            if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
+            $firstSegment = trim($parts[0], $this->escapeChar);
+            if (! empty($this->aliasedTables) && in_array($firstSegment, $this->aliasedTables, true)) {
                 if ($protectIdentifiers === true) {
                     foreach ($parts as $key => $val) {
                         if (! in_array($val, $this->reservedIdentifiers, true)) {
