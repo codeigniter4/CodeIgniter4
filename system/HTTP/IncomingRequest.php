@@ -64,6 +64,8 @@ class IncomingRequest extends Request
      * AFTER the script name. So, if hosted in a sub-folder this will
      * appear different than actual URL. If you need that use getPath().
      *
+     * @TODO should be protected. Use getUri() instead.
+     *
      * @var URI
      */
     public $uri;
