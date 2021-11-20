@@ -134,13 +134,14 @@ redirect code to use instead of the default (``302``, "temporary redirect")::
 
 
 Custom Exception Handler
-------------------------
+========================
 
 You can use your own exception handler which will be called globally.
 
 Your exception must implement ``\CodeIgniter\Exception\CustomExceptionHandlerInterface``::
 
     namespace App\Exceptions;
+
     use App\Config\Services;
     use CodeIgniter\Exception\CustomExceptionHandlerInterface
     use Exception;
