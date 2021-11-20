@@ -650,6 +650,6 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $request->setPath('apples');
 
-        $this->assertSame('apples', $request->uri->getPath());
+        $this->assertSame('apples', $request->getUri()->getPath());
     }
 }
