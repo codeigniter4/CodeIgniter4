@@ -61,6 +61,30 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($segments, $this->request->getSegments());
     }
 
+    public function testParsingSegmentsWithHTMLMetaChars()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'users',
+            '21',
+            'abc < def',
+            "McDonald's",
+            '<s>aaa</s>',
+        ];
+
+        // reinstantiate it to force parsing
+        $this->request = new CLIRequest(new App());
+
+        $segments = [
+            'users',
+            '21',
+            'abc < def',
+            "McDonald's",
+            '<s>aaa</s>',
+        ];
+        $this->assertSame($segments, $this->request->getSegments());
+    }
+
     public function testParsingOptions()
     {
         $_SERVER['argv'] = [
