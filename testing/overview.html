@@ -364,7 +364,7 @@ have the correct namespace relative to <code class="docutils literal notranslate
 <p class="admonition-title">Note</p>
 <p>Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.</p>
 </div>
-<p>When testing database results, you must use the <a class="reference external" href="database.html">DatabaseTestTrait</a> in your class.</p>
+<p>When testing database results, you must use the <a class="reference internal" href="database.html"><span class="doc">DatabaseTestTrait</span></a> in your class.</p>
 <section id="staging">
 <h4>Staging<a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
 <p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods
@@ -469,7 +469,7 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: foo=bar&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
+<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
 <p><strong>assertHeaderNotEmitted($header, $ignoreCase = false)</strong></p>
 <p>Ensure that a header or cookie was not emitted:</p>
@@ -482,7 +482,7 @@ in PHPunit</a>.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: banana&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess">run as a separate process
+<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
 <p><strong>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
 <p>For extended execution time testing, tests that the absolute difference
