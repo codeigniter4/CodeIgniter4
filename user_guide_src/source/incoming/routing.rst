@@ -228,7 +228,7 @@ extensive set of routes that all share the opening string, like when building an
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
 
-If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback::
 
     $routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
         $routes->resource('users');
@@ -236,7 +236,7 @@ If you need to assign options to a group, like a `namespace <#assigning-namespac
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
-You can also use a specific `filter <filters.html>`_ for a group of routes. This will always
+You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
     $routes->group('api', ['filter' => 'api-auth'], function ($routes) {
@@ -338,7 +338,7 @@ available from the command line::
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
+All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
     $routes->add('from', 'to', $options);
@@ -363,7 +363,7 @@ The value for the filter can be a string or an array of strings:
 * matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
-See `Controller filters <filters.html>`_ for more information on setting up filters.
+See :doc:`Controller filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
@@ -395,6 +395,8 @@ You specify a filter classname for the filter value::
 You specify an array for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+
+.. _assigning-namespace:
 
 Assigning Namespace
 -------------------

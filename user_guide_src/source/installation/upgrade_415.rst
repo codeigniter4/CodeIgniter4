@@ -59,7 +59,7 @@ CURLRequest header change
 In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the browser.
 The bug was fixed. If your requests depend on the headers, your requests might fail after upgrading.
 In this case, add the necessary headers manually.
-See `CURLRequest Class <../libraries/curlrequest.html#headers>`_ for how to add.
+See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to add.
 
 Query Builder changes
 ---------------------
