@@ -191,6 +191,11 @@ with the ``new`` command::
 
 Config files are automatically discovered whenever using the **config()** function that is always available.
 
+.. note:: **config()** finds the file in **app/Config/** when there is a class with the same shortname,
+    even if you specify a full qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+
+.. note:: Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.
+
 Migrations
 ==========
 
