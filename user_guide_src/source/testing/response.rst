@@ -10,6 +10,10 @@ create your own directly using any ``ResponseInterface``::
     $result = new \CodeIgniter\Test\TestResponse($response);
     $result->assertOK();
 
+.. contents::
+    :local:
+    :depth: 2
+
 Testing the Response
 ====================
 

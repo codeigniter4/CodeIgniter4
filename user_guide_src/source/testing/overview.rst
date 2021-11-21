@@ -216,7 +216,7 @@ Ensure that a header or cookie was actually emitted::
     $this->assertHeaderEmitted("Set-Cookie: foo=bar");
 
 Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
+in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
 **assertHeaderNotEmitted($header, $ignoreCase = false)**
 
@@ -231,7 +231,7 @@ Ensure that a header or cookie was not emitted::
     $this->assertHeaderNotEmitted("Set-Cookie: banana");
 
 Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/7.4/annotations.html#runinseparateprocess>`_.
+in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
 **assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)**
 
