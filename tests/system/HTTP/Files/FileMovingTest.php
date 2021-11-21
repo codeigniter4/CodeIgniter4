@@ -293,11 +293,9 @@ final class FileMovingTest extends CIUnitTestCase
 
     public function testFailedMoveBecauseOfFalseReturned()
     {
-        $finalFilename = 'fileA';
-
         $_FILES = [
             'userfile1' => [
-                'name'     => $finalFilename . '.txt',
+                'name'     => 'fileA.txt',
                 'type'     => 'text/plain',
                 'size'     => 124,
                 'tmp_name' => '/tmp/fileA.txt',
