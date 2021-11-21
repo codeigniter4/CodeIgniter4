@@ -322,6 +322,7 @@ final class FileMovingTest extends CIUnitTestCase
         move_uploaded_file('', '', false);
 
         $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('move_uploaded_file() returned false');
 
         $file->move($destination, $file->getName(), false);
     }
