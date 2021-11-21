@@ -4,7 +4,7 @@ Testing Responses
 
 The ``TestResponse`` class provides a number of helpful functions for parsing and testing responses
 from your test cases. Usually a ``TestResponse`` will be provided for you as a result of your
-`Controller Tests <controllers.html>`_ or `HTTP Feature Tests <feature.html>`_, but you can always
+:doc:`Controller Tests <controllers>` or :doc:`HTTP Feature Tests <feature>`, but you can always
 create your own directly using any ``ResponseInterface``::
 
     $result = new \CodeIgniter\Test\TestResponse($response);

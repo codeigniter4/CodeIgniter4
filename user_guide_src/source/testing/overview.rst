@@ -103,7 +103,7 @@ have the correct namespace relative to ``App``.
 
 .. note:: Namespaces are not strictly required for test classes, but they are helpful to ensure no class names collide.
 
-When testing database results, you must use the `DatabaseTestTrait <database.html>`_ in your class.
+When testing database results, you must use the :doc:`DatabaseTestTrait <database>` in your class.
 
 Staging
 -------

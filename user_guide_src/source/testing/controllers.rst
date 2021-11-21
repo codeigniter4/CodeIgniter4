@@ -4,7 +4,7 @@ Testing Controllers
 
 Testing your controllers is made convenient with a couple of new helper classes and traits. When testing controllers,
 you can execute the code within a controller, without first running through the entire application bootstrap process.
-Often times, using the `Feature Testing tools <feature.html>`_ will be simpler, but this functionality is here in
+Often times, using the :doc:`Feature Testing tools <feature>` will be simpler, but this functionality is here in
 case you need it.
 
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller
@@ -161,7 +161,7 @@ you need to set a JSON value as the body. The only parameter is a string that re
 Checking the Response
 =====================
 
-``ControllerTestTrait::execute()`` returns an instance of a ``TestResponse``. See `Testing Responses <response.html>`_ on
+``ControllerTestTrait::execute()`` returns an instance of a ``TestResponse``. See :doc:`Testing Responses <response>` on
 how to use this class to perform additional assertions and verification in your test cases.
 
 Filter Testing

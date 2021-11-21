@@ -157,5 +157,5 @@ the Content-Type header for you so if you need that, you can set it with the ``w
 Checking the Response
 =====================
 
-``FeatureTestTrait::call()`` returns an instance of a ``TestResponse``. See `Testing Responses <response.html>`_ on
+``FeatureTestTrait::call()`` returns an instance of a ``TestResponse``. See :doc:`Testing Responses <response>` on
 how to use this class to perform additional assertions and verification in your test cases.
