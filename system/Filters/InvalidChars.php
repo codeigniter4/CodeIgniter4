@@ -33,6 +33,13 @@ class InvalidChars implements FilterInterface
     protected $source;
 
     /**
+     * Regular expressions for valid control codes
+     *
+     * @var string
+     */
+    protected $controlCodeRegex = '/\A[\r\n\t[:^cntrl:]]*\z/u';
+
+    /**
      * Check invalid characters.
      *
      * @param array|null $arguments
@@ -107,7 +114,7 @@ class InvalidChars implements FilterInterface
             return $value;
         }
 
-        if (preg_match('/\A[\r\n\t[:^cntrl:]]*\z/u', $value) === 1) {
+        if (preg_match($this->controlCodeRegex, $value) === 1) {
             return $value;
         }
 
