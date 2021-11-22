@@ -119,6 +119,13 @@ class Rules
      */
     public function in_list($value, string $list): bool
     {
+        if (is_int($value)) {
+            $value = (string) $value;
+        }
+        if (is_float($value)) {
+            $value = (string) $value;
+        }
+
         if (! is_string($value)) {
             return false;
         }
@@ -237,6 +244,13 @@ class Rules
     {
         if (null === $value) {
             return true;
+        }
+
+        if (is_int($value)) {
+            $value = (string) $value;
+        }
+        if (is_float($value)) {
+            $value = (string) $value;
         }
 
         if (! is_string($value)) {
