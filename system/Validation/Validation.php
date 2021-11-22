@@ -295,7 +295,8 @@ class Validation implements ValidationInterface
                     $value = json_encode($value);
                 }
 
-                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
+                $param                = ($param === false) ? null : $param;
+                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, (string) $value);
 
                 return false;
             }
