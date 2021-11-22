@@ -141,16 +141,20 @@ class Validation implements ValidationInterface
             }
 
             $values = dot_array_search($field, $data);
-            $values = is_array($values) ? $values : [$values];
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
                 $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
             }
 
-            foreach ($values as $value) {
-                // Otherwise, we'll let the loop do the job
-                $this->processRules($field, $setup['label'] ?? $field, $value, $rules, $data);
+            if (strpos($field, '*') !== false && is_array($values)) {
+                // Process multiple fields
+                foreach ($values as $value) {
+                    $this->processRules($field, $setup['label'] ?? $field, $value, $rules, $data);
+                }
+            } else {
+                // Process single field
+                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
             }
         }
 
@@ -310,8 +314,6 @@ class Validation implements ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
-     *
-     * @param IncomingRequest|RequestInterface $request
      */
     public function withRequest(RequestInterface $request): ValidationInterface
     {
