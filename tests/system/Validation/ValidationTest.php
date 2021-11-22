@@ -100,6 +100,49 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
+     *
+     * @dataProvider isIntInvalidTypeDataProvider
+     *
+     * @param mixed $value
+     */
+    public function testIsIntWithInvalidTypeData($value, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => 'is_int']);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function isIntInvalidTypeDataProvider(): Generator
+    {
+        yield 'array with int' => [
+            [555],
+            false,  // true in v4.1.5 and earlier
+        ];
+
+        yield 'empty array' => [
+            [],
+            false,
+        ];
+
+        yield 'bool true' => [
+            true,
+            false,
+        ];
+
+        yield 'bool false' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
+
     public function testRunReturnsLocalizedErrors(): void
     {
         $data = ['foo' => 'notanumber'];
