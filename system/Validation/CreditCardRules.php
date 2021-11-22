@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -169,9 +171,15 @@ class CreditCardRules
      *  $rules = [
      *      'cc_num' => 'valid_cc_number[visa]'
      *  ];
+     *
+     * @param mixed $ccNumber
      */
-    public function valid_cc_number(?string $ccNumber, string $type): bool
+    public function valid_cc_number($ccNumber, string $type): bool
     {
+        if (! is_string($ccNumber)) {
+            return false;
+        }
+
         $type = strtolower($type);
         $info = null;
 
