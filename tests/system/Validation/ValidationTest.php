@@ -101,6 +101,58 @@ final class ValidationTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
+     *
+     * @dataProvider arrayDataProvider
+     *
+     * @param mixed $value
+     */
+    public function testCanValidatetArrayData($value, bool $expected): void
+    {
+        $this->validation->setRules(['arr' => 'is_array']);
+
+        $data['arr'] = $value;
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function arrayDataProvider(): Generator
+    {
+        yield 'list array' => [
+            [1, 2, 3, 4, 5],
+            true,   // false in v4.1.5 and earlier
+        ];
+
+        yield 'associative array' => [
+            [
+                'username' => 'admin001',
+                'role'     => 'administrator',
+                'usepass'  => 0,
+            ],
+            true,   // false in v4.1.5 and earlier
+        ];
+
+        yield 'int' => [
+            0,
+            false,
+        ];
+
+        yield 'string int' => [
+            '0',
+            false,
+        ];
+
+        yield 'bool' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
      * @dataProvider isIntInvalidTypeDataProvider
