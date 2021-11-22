@@ -58,6 +58,8 @@ to access user records always go through that connection::
 Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
 class instance that uses the alternate database connection.
 
+.. _factories-options:
+
 Factories Options
 ==================
 
