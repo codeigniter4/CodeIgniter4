@@ -19,7 +19,7 @@ Using the example controller you created in the controller page, let’s add a v
 Creating a View
 ===============
 
-Using your text editor, create a file called ``blogview.php`` and put this in it::
+Using your text editor, create a file called ``blog_view.php`` and put this in it::
 
     <html>
         <head>
@@ -53,7 +53,7 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
     {
         public function index()
         {
-            echo view('blogview');
+            echo view('blog_view');
         }
     }
 
@@ -109,9 +109,9 @@ to package your views together in a module-like fashion for easy re-use or distr
 
 If you have ``Blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
-example, you could load the **blogview.php** file from **Blog/Views** by prepending the namespace to the view name::
+example, you could load the **blog_view.php** file from **Blog/Views** by prepending the namespace to the view name::
 
-    echo view('Example\Blog\Views\blogview');
+    echo view('Example\Blog\Views\blog_view');
 
 Caching Views
 =============
@@ -140,7 +140,7 @@ Here's an example::
         'message' => 'My Message',
     ];
 
-    echo view('blogview', $data);
+    echo view('blog_view', $data);
 
 Let's try it with your controller file. Open it and add this code::
 
@@ -155,7 +155,7 @@ Let's try it with your controller file. Open it and add this code::
             $data['title']   = "My Real Title";
             $data['heading'] = "My Real Heading";
 
-            echo view('blogview', $data);
+            echo view('blog_view', $data);
         }
     }
 
@@ -184,7 +184,7 @@ into the `$option` array in the third parameter.
         'message' => 'My Message',
     ];
 
-    echo view('blogview', $data, ['saveData' => true]);
+    echo view('blog_view', $data, ['saveData' => true]);
 
 Additionally, if you would like the default functionality of the view function to be that it does save the data
 between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
@@ -212,7 +212,7 @@ Here’s a simple example. Add this to your controller::
                 'heading'   => 'My Real Heading',
             ];
 
-            echo view('blogview', $data);
+            echo view('blog_view', $data);
         }
     }
 
