@@ -46,6 +46,18 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5369
+     */
+    public function testArrayDotValueIsListArray()
+    {
+        $data = [
+            'arr' => [1, 2, 3],
+        ];
+
+        $this->assertNull(dot_array_search('arr.*.index', $data));
+    }
+
     public function testArrayDotEscape()
     {
         $data = [

@@ -53,6 +53,10 @@ if (! function_exists('_array_search_dot')) {
             $answer = [];
 
             foreach ($array as $value) {
+                if (! is_array($value)) {
+                    return null;
+                }
+
                 $answer[] = _array_search_dot($indexes, $value);
             }
 
