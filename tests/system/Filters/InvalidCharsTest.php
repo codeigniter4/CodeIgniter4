@@ -155,7 +155,7 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function stringWithControlCharsProvider()
     {
-        return [
+        yield from [
             ["String contains null char.\0"],
             ["String contains null char and line break.\0\n"],
         ];
