@@ -195,4 +195,4 @@ Provided Filters
 
 The filters bundled with CodeIgniter4 are: ``Honeypot``, ``CSRF``, ``DebugToolbar``, and ``InvalidChars``.
 
-.. note:: The filters are executed in the declared order  that is defined in the config file, but there is one exception to this and it concerns the ``DebugToolbar``, which is always executed last. This is because ``DebugToolbar`` should be able to register everything that happens in other filters.
+.. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
