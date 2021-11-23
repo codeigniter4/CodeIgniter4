@@ -1863,7 +1863,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->removeAlias($this->QBFrom[0]), true, null, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                null,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1895,7 +1900,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->removeAlias($this->QBFrom[0]), true, $escape, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                $escape,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
