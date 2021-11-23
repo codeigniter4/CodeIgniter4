@@ -193,6 +193,6 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Provided Filters
 ****************
 
-These filters are bundled with CodeIgniter4: ``Honeypot``, ``CSRF``, ``DebugToolbar`` and ``InvalidChars``.
+The filters bundled with CodeIgniter4 are: ``Honeypot``, ``CSRF``, ``DebugToolbar``, and ``InvalidChars``.
 
 .. note:: The filters are executed in the declared order  that is defined in the config file, but there is one exception to this and it concerns the ``DebugToolbar``, which is always executed last. This is because ``DebugToolbar`` should be able to register everything that happens in other filters.
