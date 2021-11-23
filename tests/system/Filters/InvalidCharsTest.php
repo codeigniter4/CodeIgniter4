@@ -144,10 +144,8 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     /**
      * @dataProvider stringWithControlCharsProvider
-     *
-     * @param string $input
      */
-    public function testCheckControlStringWithControlCharsCausesException($input)
+    public function testCheckControlStringWithControlCharsCausesException(string $input)
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in get:');
