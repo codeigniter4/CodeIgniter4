@@ -281,7 +281,7 @@ class Query implements QueryInterface
 
         $binds = (array) $this->binds;
 
-        if (is_int(key(array_slice($binds, 0, 1)))) {
+        if (is_int(array_key_first($binds))) {
             $bindCount = count($binds);
             $ml        = strlen($this->bindMarker);
 
