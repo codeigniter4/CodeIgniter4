@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Generator;
 use Throwable;
 
 /**
@@ -162,5 +163,109 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db = new MockConnection($this->options);
 
         $this->assertNull($db->foobar);
+    }
+
+    /**
+     * @dataProvider identifiersProvider
+     */
+    public function testProtectIdentifiers(
+        bool $prefixSingle,
+        bool $protectIdentifiers,
+        bool $fieldExists,
+        string $item,
+        string $expected
+    ) {
+        $db = new MockConnection($this->options);
+
+        $return = $db->protectIdentifiers($item, $prefixSingle, $protectIdentifiers, $fieldExists);
+
+        $this->assertSame($expected, $return);
+    }
+
+    public function identifiersProvider(): Generator
+    {
+        yield from [
+            // $prefixSingle, $protectIdentifiers, $fieldExists, $item, $expected
+            'empty string'        => [false, true, true, '', ''],
+            'empty string prefix' => [true,  true, true, '', '"test_"'], // Incorrect usage? or should be ''?
+
+            'single table'        => [false, true, false, 'jobs', '"jobs"'],
+            'single table prefix' => [true,  true, false, 'jobs', '"test_jobs"'],
+
+            'string'        => [false, true, true, "'Accountant'", "'Accountant'"],
+            'single prefix' => [true,  true, true, "'Accountant'", "'Accountant'"],
+
+            'numbers only'        => [false, true, false, '12345', '12345'], // Should be quoted?
+            'numbers only prefix' => [true,  true, false, '12345', '"test_12345"'],
+
+            'table AS alias'        => [false, true, false, 'role AS myRole', '"role" AS "myRole"'],
+            'table AS alias prefix' => [true,  true, false, 'role AS myRole', '"test_role" AS "myRole"'],
+
+            'quoted table'        => [false, true, false, '"jobs"', '"jobs"'],
+            'quoted table prefix' => [true,  true, false, '"jobs"', '"test_jobs"'],
+
+            'quoted table alias'        => [false, true, false, '"jobs" "j"', '"jobs" "j"'],
+            'quoted table alias prefix' => [true,  true, false, '"jobs" "j"', '"test_jobs" "j"'],
+
+            'table.*'             => [false, true, true, 'jobs.*', '"test_jobs".*'], // Why prefixed?
+            'table.* prefix'      => [true,  true, true, 'jobs.*', '"test_jobs".*'],
+            'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Why prefixed?
+            'table.column prefix' => [true,  true, true, 'users.id', '"test_users"."id"'],
+            'table.column AS'     => [
+                false, true, true,
+                'users.id AS user_id',
+                '"test_users"."id" AS "user_id"', // Why prefixed?
+            ],
+            'table.column AS prefix' => [
+                true,  true, true,
+                'users.id AS user_id',
+                '"test_users"."id" AS "user_id"',
+            ],
+
+            'function table.column'        => [false, true, true, 'LOWER(jobs.name)', 'LOWER(jobs.name)'],
+            'function table.column prefix' => [true,  true, true, 'LOWER(jobs.name)', 'LOWER(jobs.name)'],
+
+            'function only'   => [false, true, true, 'RAND()', 'RAND()'],
+            'function column' => [false, true, true, 'SUM(id)', 'SUM(id)'],
+
+            'function column AS' => [
+                false, true, true,
+                'COUNT(payments) AS myAlias',
+                'COUNT(payments) AS myAlias',
+            ],
+            'function column AS prefix' => [
+                true, true, true,
+                'COUNT(payments) AS myAlias',
+                'COUNT(payments) AS myAlias',
+            ],
+
+            'function quoted table column AS' => [
+                false, true, true,
+                'MAX("db"."payments") AS "payments"',
+                'MAX("db"."payments") AS "payments"',
+            ],
+
+            'quoted column operator AS' => [
+                false, true, true,
+                '"numericValue1" + "numericValue2" AS "numericResult"',
+                '"numericValue1"" + ""numericValue2" AS "numericResult"', // Cannot process correctly
+            ],
+            'quoted column operator AS no-protect' => [
+                false, false, true,
+                '"numericValue1" + "numericValue2" AS "numericResult"',
+                '"numericValue1" + "numericValue2" AS "numericResult"',
+            ],
+
+            'sub query' => [
+                false, true, true,
+                '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid)',
+                '(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid)',
+            ],
+            'sub query with missing `)` at the end' => [
+                false, true, true,
+                '(SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2',
+                '(SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2',
+            ],
+        ];
     }
 }
