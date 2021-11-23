@@ -269,12 +269,36 @@ final class BaseQueryTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3566
      */
-    public function testNamedBindsWithColonElseWhere()
+    public function testNamedBindsWithColonElsewhere()
     {
         $query = new Query($this->db);
         $query->setQuery('SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = :id:', ['id' => 10]);
 
         $sql = 'SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = 10';
+        $this->assertSame($sql, $query->getQuery());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5138
+     */
+    public function testNamedBindsWithBindMarkerElsewhere()
+    {
+        $query = new Query($this->db);
+        $query->setQuery('SELECT * FROM posts WHERE id = :id: AND title = \'The default bind marker is "?"\'', ['id' => 10]);
+
+        $sql = 'SELECT * FROM posts WHERE id = 10 AND title = \'The default bind marker is "?"\'';
+        $this->assertSame($sql, $query->getQuery());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5138
+     */
+    public function testSimpleBindsWithNamedBindPlaceholderElsewhere()
+    {
+        $query = new Query($this->db);
+        $query->setQuery('SELECT * FROM posts WHERE id = ? AND title = \'A named bind placeholder looks like ":foobar:"\'', 10);
+
+        $sql = 'SELECT * FROM posts WHERE id = 10 AND title = \'A named bind placeholder looks like ":foobar:"\'';
         $this->assertSame($sql, $query->getQuery());
     }
 
