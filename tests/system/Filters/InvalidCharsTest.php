@@ -121,10 +121,8 @@ final class InvalidCharsTest extends CIUnitTestCase
      * @doesNotPerformAssertions
      *
      * @dataProvider stringWithLineBreakAndTabProvider
-     *
-     * @param string $input
      */
-    public function testCheckControlStringWithLineBreakAndTabReturnsTheString($input)
+    public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input)
     {
         $_GET['val'] = $input;
 
