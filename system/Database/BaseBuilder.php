@@ -2363,7 +2363,7 @@ class BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        $sql = $this->_delete($table);
+        $sql = $this->_delete($this->removeAlias($table));
 
         if (! empty($limit)) {
             $this->QBLimit = $limit;
