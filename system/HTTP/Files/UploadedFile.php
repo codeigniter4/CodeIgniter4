@@ -141,10 +141,16 @@ class UploadedFile extends File implements UploadedFileInterface
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         try {
-            move_uploaded_file($this->path, $destination);
+            $this->hasMoved = move_uploaded_file($this->path, $destination);
         } catch (Exception $e) {
             $error   = error_get_last();
-            $message = isset($error['message']) ? strip_tags($error['message']) : '';
+            $message = strip_tags($error['message'] ?? '');
+
+            throw HTTPException::forMoveFailed(basename($this->path), $targetPath, $message);
+        }
+
+        if ($this->hasMoved === false) {
+            $message = 'move_uploaded_file() returned false';
 
             throw HTTPException::forMoveFailed(basename($this->path), $targetPath, $message);
         }
@@ -152,9 +158,8 @@ class UploadedFile extends File implements UploadedFileInterface
         @chmod($targetPath, 0777 & ~umask());
 
         // Success, so store our new information
-        $this->path     = $targetPath;
-        $this->name     = basename($destination);
-        $this->hasMoved = true;
+        $this->path = $targetPath;
+        $this->name = basename($destination);
 
         return true;
     }

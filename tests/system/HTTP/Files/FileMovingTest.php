@@ -35,6 +35,9 @@ final class FileMovingTest extends CIUnitTestCase
         }
 
         $_FILES = [];
+
+        // Set the mock's return value to true
+        move_uploaded_file('', '', true);
     }
 
     protected function tearDown(): void
@@ -52,8 +55,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMove()
     {
         $finalFilename = 'fileA';
-
-        $_FILES = [
+        $_FILES        = [
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -76,7 +78,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile2'));
 
         $destination = $this->destination;
-
         // Create the destination if not exists
         if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
@@ -94,8 +95,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMoveOverwriting()
     {
         $finalFilename = 'file_with_delimiters_underscore';
-
-        $_FILES = [
+        $_FILES        = [
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -126,7 +126,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile3'));
 
         $destination = $this->destination;
-
         // Create the destination if not exists
         if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
@@ -146,8 +145,7 @@ final class FileMovingTest extends CIUnitTestCase
     public function testMoved()
     {
         $finalFilename = 'fileA';
-
-        $_FILES = [
+        $_FILES        = [
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -162,7 +160,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile1'));
 
         $destination = $this->destination;
-
         // Create the destination if not exists
         if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
@@ -172,15 +169,16 @@ final class FileMovingTest extends CIUnitTestCase
 
         $this->assertInstanceOf(UploadedFile::class, $file);
         $this->assertFalse($file->hasMoved());
+
         $file->move($destination, $file->getName(), false);
+
         $this->assertTrue($file->hasMoved());
     }
 
     public function testStore()
     {
         $finalFilename = 'fileA';
-
-        $_FILES = [
+        $_FILES        = [
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -195,7 +193,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile1'));
 
         $destination = $this->destination;
-
         // Create the destination if not exists
         if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
@@ -204,15 +201,16 @@ final class FileMovingTest extends CIUnitTestCase
         $file = $collection->getFile('userfile1');
 
         $this->assertInstanceOf(UploadedFile::class, $file);
+
         $path = $file->store($destination, $file->getName());
+
         $this->assertSame($destination . '/fileA.txt', $path);
     }
 
     public function testAlreadyMoved()
     {
         $finalFilename = 'fileA';
-
-        $_FILES = [
+        $_FILES        = [
             'userfile1' => [
                 'name'     => $finalFilename . '.txt',
                 'type'     => 'text/plain',
@@ -227,7 +225,6 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile1'));
 
         $destination = $this->destination;
-
         // Create the destination if not exists
         if (! is_dir($destination)) {
             mkdir($destination, 0777, true);
@@ -254,15 +251,15 @@ final class FileMovingTest extends CIUnitTestCase
         ];
 
         $destination = $this->destination;
-
-        $collection = new FileCollection();
-        $file       = $collection->getFile('userfile');
+        $collection  = new FileCollection();
 
         $this->expectException(HTTPException::class);
+
+        $file = $collection->getFile('userfile');
         $file->move($destination, $file->getName(), false);
     }
 
-    public function testFailedMove()
+    public function testFailedMoveBecauseOfWarning()
     {
         $_FILES = [
             'userfile' => [
@@ -275,16 +272,47 @@ final class FileMovingTest extends CIUnitTestCase
         ];
 
         $destination = $this->destination;
-
         // Create the destination and make it read only
         if (! is_dir($destination)) {
             mkdir($destination, 0400, true);
         }
 
         $collection = new FileCollection();
-        $file       = $collection->getFile('userfile');
 
         $this->expectException(HTTPException::class);
+
+        $file = $collection->getFile('userfile');
+        $file->move($destination, $file->getName(), false);
+    }
+
+    public function testFailedMoveBecauseOfFalseReturned()
+    {
+        $_FILES = [
+            'userfile1' => [
+                'name'     => 'fileA.txt',
+                'type'     => 'text/plain',
+                'size'     => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error'    => 0,
+            ],
+        ];
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile1'));
+
+        $destination = $this->destination;
+        // Create the destination if not exists
+        if (! is_dir($destination)) {
+            mkdir($destination, 0777, true);
+        }
+        // Set the mock's return value to false
+        move_uploaded_file('', '', false);
+
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('move_uploaded_file() returned false');
+
+        $file = $collection->getFile('userfile1');
         $file->move($destination, $file->getName(), false);
     }
 }
@@ -311,10 +339,20 @@ function is_uploaded_file($filename)
  * This overwrite is for testing the move operation.
  */
 
-function move_uploaded_file($filename, $destination)
+function move_uploaded_file($filename, $destination, ?bool $setReturnValue = null)
 {
+    static $return = true;
+
+    if ($setReturnValue !== null) {
+        $return = $setReturnValue;
+
+        return true;
+    }
+
     copy($filename, $destination);
     unlink($filename);
+
+    return $return;
 }
 
 function rrmdir($src)
