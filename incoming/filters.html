@@ -455,10 +455,10 @@ a list of URI patterns that filter should apply to:</p>
 </section>
 <section id="provided-filters">
 <h2><a class="toc-backref" href="#id10">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
-<p>Three filters are bundled with CodeIgniter4: <code class="docutils literal notranslate"><span class="pre">Honeypot</span></code>, <code class="docutils literal notranslate"><span class="pre">CSRF</span></code>, and <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code>.</p>
+<p>The filters bundled with CodeIgniter4 are: <code class="docutils literal notranslate"><span class="pre">Honeypot</span></code>, <code class="docutils literal notranslate"><span class="pre">CSRF</span></code>, <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code>, and <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The filters are executed in the declared order  that is defined in the config file, but there is one exception to this and it concerns the <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code>, which is always executed last. This is because <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code> should be able to register everything that happens in other filters.</p>
+<p>The filters are executed in the order defined in the config file. However, if enabled, <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code> is always executed last because it should be able to capture everything that happens in the other filters.</p>
 </div>
 </section>
 </section>
@@ -475,7 +475,7 @@ a list of URI patterns that filter should apply to:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 22, 2021.
+      <span class="lastupdated">Last updated on Nov 23, 2021.
       </span></p>
   </div>
 
