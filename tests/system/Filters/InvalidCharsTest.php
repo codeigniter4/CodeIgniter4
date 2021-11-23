@@ -131,7 +131,7 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function stringWithLineBreakAndTabProvider()
     {
-        return [
+        yield from [
             ["String contains \n line break."],
             ["String contains \r line break."],
             ["String contains \r\n line break."],
