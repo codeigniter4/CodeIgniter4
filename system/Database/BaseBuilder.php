@@ -264,7 +264,9 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName
+     * @param array|string $tableName tablename or tablenames with or without aliases
+     *
+     * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
      * @throws DatabaseException
      */
