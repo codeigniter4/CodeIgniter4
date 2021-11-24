@@ -31,7 +31,8 @@ You can access configuration files for your classes in several different ways.
     $config = config('Pager');
 
     // Access config class with namespace
-    $config = config( 'Config\\Pager' );
+    $config = config('Config\\Pager');
+    $config = config(\Config\Pager::class);
 
     // Creating a new object with config function
     $config = config('Pager', false);
@@ -115,14 +116,13 @@ overwritten. The loaded Environment variables are accessed using any of the foll
     $s3_bucket = $_ENV['S3_BUCKET'];
     $s3_bucket = $_SERVER['S3_BUCKET'];
 
-.. important:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
+.. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
 Nesting Variables
 =================
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
-variable name within ``${...}``
-::
+variable name within ``${...}``::
 
     BASE_DIR="/var/webroot/project-root"
     CACHE_DIR="${BASE_DIR}/cache"
