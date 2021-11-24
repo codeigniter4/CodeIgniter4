@@ -58,6 +58,8 @@ to access user records always go through that connection::
 Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
 class instance that uses the alternate database connection.
 
+.. _factories-options:
+
 Factories Options
 ==================
 
@@ -65,15 +67,19 @@ The default behavior might not work for every component. For example, say your c
 name and its path do not align, or you need to limit instances to a certain type of class.
 Each component takes a set of options to direct discovery and instantiation.
 
-========== ============== ==================================================================================================================== ===================================================
-Key        Type           Description                                                                                                          Default
-========== ============== ==================================================================================================================== ===================================================
-component  string or null The name of the component (if different than the static method). This can be used to alias one component to another. ``null`` (defaults to the component name)
-path       string or null The relative path within the namespace/folder to look for classes.                                                   ``null`` (defaults to the component name)
-instanceOf string or null A required class name to match on the returned instance.                                                             ``null`` (no filtering)
-getShared  boolean        Whether to return a shared instance of the class or load a fresh one.                                                ``true``
-preferApp  boolean        Whether a class with the same basename in the App namespace overrides other explicit class requests.                 ``true``
-========== ============== ==================================================================================================================== ===================================================
+========== ============== ============================================================ ===================================================
+Key        Type           Description                                                  Default
+========== ============== ============================================================ ===================================================
+component  string or null The name of the component (if different than the static      ``null`` (defaults to the component name)
+                          method). This can be used to alias one component to another.
+path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name)
+                          classes.
+instanceOf string or null A required class name to match on the returned instance.     ``null`` (no filtering)
+getShared  boolean        Whether to return a shared instance of the class or load a   ``true``
+                          fresh one.
+preferApp  boolean        Whether a class with the same basename in the App namespace  ``true``
+                          overrides other explicit class requests.
+========== ============== ============================================================ ===================================================
 
 Factories Behavior
 ==================
