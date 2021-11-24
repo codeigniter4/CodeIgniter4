@@ -20,9 +20,9 @@ supported language::
     /app
         /Language
             /en
-                app.php
+                App.php
             /fr
-                app.php
+                App.php
 
 .. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
     Command-line requests will not have these features.
