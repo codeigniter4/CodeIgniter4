@@ -453,6 +453,17 @@ with the <code class="docutils literal notranslate"><span class="pre">new</span>
 </pre></div>
 </div>
 <p>Config files are automatically discovered whenever using the <strong>config()</strong> function that is always available.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We don’t recommend you use the same short classname in modules.
+Modules that need to override or add to known configurations in <strong>app/Config/</strong> should use <a class="reference internal" href="configuration.html#registrars"><span class="std std-ref">Registrars</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>config()</strong> finds the file in <strong>app/Config/</strong> when there is a class with the same shortname,
+even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">config(\Acme\Blog\Config\Blog::class)</span></code>.
+This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-options"><span class="std std-ref">Factories Options</span></a> for more information.</p>
+</div>
 </section>
 <section id="migrations">
 <h3><a class="toc-backref" href="#id12">Migrations</a><a class="headerlink" href="#migrations" title="Permalink to this headline"></a></h3>

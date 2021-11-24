@@ -263,20 +263,20 @@
 <h1>Factories<a class="headerlink" href="#factories" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#factory-parameters" id="id2">Factory Parameters</a></p></li>
-<li><p><a class="reference internal" href="#factories-options" id="id3">Factories Options</a></p></li>
-<li><p><a class="reference internal" href="#factories-behavior" id="id4">Factories Behavior</a></p>
+<li><p><a class="reference internal" href="#introduction" id="id2">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#factory-parameters" id="id3">Factory Parameters</a></p></li>
+<li><p><a class="reference internal" href="#factories-options" id="id4">Factories Options</a></p></li>
+<li><p><a class="reference internal" href="#factories-behavior" id="id5">Factories Behavior</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configurations" id="id5">Configurations</a></p></li>
-<li><p><a class="reference internal" href="#setoptions-method" id="id6">setOptions Method</a></p></li>
-<li><p><a class="reference internal" href="#parameter-options" id="id7">Parameter Options</a></p></li>
+<li><p><a class="reference internal" href="#configurations" id="id6">Configurations</a></p></li>
+<li><p><a class="reference internal" href="#setoptions-method" id="id7">setOptions Method</a></p></li>
+<li><p><a class="reference internal" href="#parameter-options" id="id8">Parameter Options</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="introduction">
-<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
 <p>Like <code class="docutils literal notranslate"><span class="pre">Services</span></code>, <code class="docutils literal notranslate"><span class="pre">Factories</span></code> are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes. At its
 simplest, Factories provide a common way to create a class instance and access it from
@@ -309,7 +309,7 @@ you get back the instance as before:</p>
 </div>
 </section>
 <section id="factory-parameters">
-<h2><a class="toc-backref" href="#id2">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code> takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.</p>
 <p>Any more parameters passed at the same time will be forwarded on to the class
@@ -324,16 +324,16 @@ to access user records always go through that connection:</p>
 class instance that uses the alternate database connection.</p>
 </section>
 <section id="factories-options">
-<h2><a class="toc-backref" href="#id3">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id4">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
 <p>The default behavior might not work for every component. For example, say your component
 name and its path do not align, or you need to limit instances to a certain type of class.
 Each component takes a set of options to direct discovery and instantiation.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 5%" />
 <col style="width: 7%" />
-<col style="width: 61%" />
-<col style="width: 27%" />
+<col style="width: 10%" />
+<col style="width: 44%" />
+<col style="width: 38%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Key</p></th>
@@ -345,12 +345,14 @@ Each component takes a set of options to direct discovery and instantiation.</p>
 <tbody>
 <tr class="row-even"><td><p>component</p></td>
 <td><p>string or null</p></td>
-<td><p>The name of the component (if different than the static method). This can be used to alias one component to another.</p></td>
+<td><p>The name of the component (if different than the static
+method). This can be used to alias one component to another.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (defaults to the component name)</p></td>
 </tr>
 <tr class="row-odd"><td><p>path</p></td>
 <td><p>string or null</p></td>
-<td><p>The relative path within the namespace/folder to look for classes.</p></td>
+<td><p>The relative path within the namespace/folder to look for
+classes.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (defaults to the component name)</p></td>
 </tr>
 <tr class="row-even"><td><p>instanceOf</p></td>
@@ -360,19 +362,21 @@ Each component takes a set of options to direct discovery and instantiation.</p>
 </tr>
 <tr class="row-odd"><td><p>getShared</p></td>
 <td><p>boolean</p></td>
-<td><p>Whether to return a shared instance of the class or load a fresh one.</p></td>
+<td><p>Whether to return a shared instance of the class or load a
+fresh one.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>preferApp</p></td>
 <td><p>boolean</p></td>
-<td><p>Whether a class with the same basename in the App namespace overrides other explicit class requests.</p></td>
+<td><p>Whether a class with the same basename in the App namespace
+overrides other explicit class requests.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="factories-behavior">
-<h2><a class="toc-backref" href="#id4">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
 <p>Options can be applied in one of three ways (listed in ascending priority):</p>
 <ul class="simple">
 <li><p>A configuration file <code class="docutils literal notranslate"><span class="pre">Factory</span></code> with a component property.</p></li>
@@ -380,7 +384,7 @@ Each component takes a set of options to direct discovery and instantiation.</p>
 <li><p>Passing options directly at call time with a parameter.</p></li>
 </ul>
 <section id="configurations">
-<h3><a class="toc-backref" href="#id5">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
 that supplies options as an array property that matches the name of the component. For example,
 if you wanted to ensure that all Filters used by your app were valid framework instances,
@@ -404,7 +408,7 @@ your <strong>Factories.php</strong> file might look like this:</p>
 unrelated “Filters” path in its namespace.</p>
 </section>
 <section id="setoptions-method">
-<h3><a class="toc-backref" href="#id6">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the <code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> method and they will be
 merged with the default values and stored for the next call:</p>
@@ -416,7 +420,7 @@ merged with the default values and stored for the next call:</p>
 </div>
 </section>
 <section id="parameter-options">
-<h3><a class="toc-backref" href="#id7">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code>’s magic static call takes as a second parameter an array of option values.
 These directives will override the stored options configured for each component and can be
 used at call time to get exactly what you need. The input should be an array with option
