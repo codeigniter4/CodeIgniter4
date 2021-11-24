@@ -15,8 +15,8 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 Namespaces
 ==========
 
-The core element of the modules functionality comes from the :doc:`PSR4-compatible autoloading </concepts/autoloader>`
-that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the primary way to take full advantage of
+The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading </concepts/autoloader>`
+that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
@@ -129,7 +129,7 @@ Discovery and Composer
 ======================
 
 Packages that were installed via Composer will also be discovered by default. This only requires that the namespace
-that Composer knows about is a PSR4 namespace. PSR0 namespaces will not be detected.
+that Composer knows about is a PSR-4 namespace. PSR-0 namespaces will not be detected.
 
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
 by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``::
