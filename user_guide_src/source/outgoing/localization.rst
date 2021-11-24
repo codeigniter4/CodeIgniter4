@@ -129,10 +129,6 @@ It also support nested definition::
         ],
     ],
 
-.. note:: It's good practice to use a common prefix for all messages in a given file to avoid collisions with
-    similarly named items in other files. For example, if you are creating error messages you might prefix them
-    with error\_
-
 ::
 
     return [
