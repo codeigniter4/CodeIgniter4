@@ -290,9 +290,9 @@ supported language:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">app</span>
     <span class="o">/</span><span class="nx">Language</span>
         <span class="o">/</span><span class="nx">en</span>
-            <span class="nx">app</span><span class="o">.</span><span class="nx">php</span>
+            <span class="nx">App</span><span class="o">.</span><span class="nx">php</span>
         <span class="o">/</span><span class="nx">fr</span>
-            <span class="nx">app</span><span class="o">.</span><span class="nx">php</span>
+            <span class="nx">App</span><span class="o">.</span><span class="nx">php</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -385,22 +385,16 @@ If your controller is extending <code class="docutils literal notranslate"><span
 describe the type of content it holds. For example, let’s say you want to create a file containing error messages.
 You might name it simply: <strong>Errors.php</strong>.</p>
 <p>Within the file, you would return an array, where each element in the array has a language key and can have string to return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;language_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
 </pre></div>
 </div>
 <p>It also support nested definition:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;language_key&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">&#39;nested&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">],</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It’s good practice to use a common prefix for all messages in a given file to avoid collisions with
-similarly named items in other files. For example, if you are creating error messages you might prefix them
-with error_</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
@@ -441,9 +435,9 @@ A great overview can be found over at <a class="reference external" href="https:
 <code class="docutils literal notranslate"><span class="pre">lang()</span></code> function. This allows for very simple number translations and formatting:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php:</span>
 <span class="k">return</span> <span class="p">[</span>
-    <span class="s2">&quot;apples&quot;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;I have {0, number} apples.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;men&quot;</span>         <span class="o">=&gt;</span> <span class="s2">&quot;The top {1, number} men out-performed the remaining {0, number}&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;namedApples&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;I have {number_apples, number, integer} apples.&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;apples&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;I have {0, number} apples.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;men&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;The top {1, number} men out-performed the remaining {0, number}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;namedApples&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;I have {number_apples, number, integer} apples.&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
@@ -457,7 +451,7 @@ A great overview can be found over at <a class="reference external" href="https:
 </div>
 <p>You can also use named keys to make it easier to keep things straight, if you’d like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
-<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s2">&quot;Tests.namedApples&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number_apples&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.namedApples&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number_apples&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Obviously, you can do more than just number replacement. According to the
