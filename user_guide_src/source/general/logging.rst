@@ -136,8 +136,8 @@ Using Third-Party Loggers
 =========================
 
 You can use any other logger that you might like as long as it extends from either
-``Psr\Log\LoggerInterface`` and is `PSR3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
-that you can easily drop in use for any PSR3-compatible logger, or create your own.
+``Psr\Log\LoggerInterface`` and is `PSR-3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
+that you can easily drop in use for any PSR-3 compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
 the **app/Config/Autoload.php** configuration file, or through another autoloader,

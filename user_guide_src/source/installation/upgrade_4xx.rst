@@ -77,7 +77,7 @@ General Adjustments
   references magically injected as properties of your controller.
 - Classes are instantiated where needed, and components are managed
   by ``Services``.
-- The class loader automatically handles PSR4 style class locating,
+- The class loader automatically handles PSR-4 style class locating,
   within the ``App`` (application) and ``CodeIgniter`` (i.e., system) top level
   namespaces; with composer autoloading support, and even using educated
   guessing to find your models and libraries if they are in the right
