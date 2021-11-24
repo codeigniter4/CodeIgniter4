@@ -31,7 +31,8 @@ You can access configuration files for your classes in several different ways.
     $config = config('Pager');
 
     // Access config class with namespace
-    $config = config( 'Config\\Pager' );
+    $config = config('Config\\Pager');
+    $config = config(\Config\Pager::class);
 
     // Creating a new object with config function
     $config = config('Pager', false);
