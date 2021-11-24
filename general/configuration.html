@@ -303,7 +303,8 @@ the application configuration files in the <strong>/app/Config</strong> folder.<
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
 
 <span class="c1">// Access config class with namespace</span>
-<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span> <span class="s1">&#39;Config\\Pager&#39;</span> <span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Config\\Pager&#39;</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="nx">\Config\Pager</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
 <span class="c1">// Creating a new object with config function</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
@@ -382,15 +383,15 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Note that your settings from the <strong>.env</strong> file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a <code class="docutils literal notranslate"><span class="pre">var_dump($_ENV)</span></code> or <code class="docutils literal notranslate"><span class="pre">phpinfo()</span></code> (for debugging or other valid reasons) <strong>your secure credentials are publicly exposed</strong>.</p>
 </div>
 </section>
 <section id="nesting-variables">
 <h2><a class="toc-backref" href="#id6">Nesting Variables</a><a class="headerlink" href="#nesting-variables" title="Permalink to this headline"></a></h2>
 <p>To save on typing, you can reuse variables that you’ve already specified in the file by wrapping the
-variable name within <code class="docutils literal notranslate"><span class="pre">${...}</span></code></p>
+variable name within <code class="docutils literal notranslate"><span class="pre">${...}</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">BASE_DIR</span><span class="o">=</span><span class="s2">&quot;/var/webroot/project-root&quot;</span>
 <span class="nx">CACHE_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/cache&quot;</span>
 <span class="nx">TMP_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE_DIR</span><span class="si">}</span><span class="s2">/tmp&quot;</span>
@@ -607,7 +608,7 @@ by treating <code class="docutils literal notranslate"><span class="pre">Regiona
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 23, 2021.
+      <span class="lastupdated">Last updated on Nov 24, 2021.
       </span></p>
   </div>
 
