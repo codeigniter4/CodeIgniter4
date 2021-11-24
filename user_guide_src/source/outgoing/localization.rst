@@ -170,9 +170,9 @@ You can pass an array of values to replace placeholders in the language string a
 
     // The language file, Tests.php:
     return [
-        "apples"      => "I have {0, number} apples.",
-        "men"         => "The top {1, number} men out-performed the remaining {0, number}",
-        "namedApples" => "I have {number_apples, number, integer} apples.",
+        'apples'      => 'I have {0, number} apples.',
+        'men'         => 'The top {1, number} men out-performed the remaining {0, number}',
+        'namedApples' => 'I have {number_apples, number, integer} apples.',
     ];
 
     // Displays "I have 3 apples."
@@ -186,7 +186,7 @@ The first item in the placeholder corresponds to the index of the item in the ar
 You can also use named keys to make it easier to keep things straight, if you'd like::
 
     // Displays "I have 3 apples."
-    echo lang("Tests.namedApples", ['number_apples' => 3]);
+    echo lang('Tests.namedApples', ['number_apples' => 3]);
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
