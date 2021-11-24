@@ -119,11 +119,11 @@ You might name it simply: **Errors.php**.
 
 Within the file, you would return an array, where each element in the array has a language key and can have string to return::
 
-    'language_key' => 'The actual message to be shown.'
+    'languageKey' => 'The actual message to be shown.'
 
 It also support nested definition::
 
-    'language_key' => [
+    'languageKey' => [
         'nested' => [
             'key' => 'The actual message to be shown.',
         ],
