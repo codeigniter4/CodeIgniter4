@@ -273,13 +273,12 @@ class Query implements QueryInterface
      */
     protected function compileBinds()
     {
-        $sql = $this->finalQueryString;
+        $sql   = $this->finalQueryString;
+        $binds = $this->binds;
 
-        if (empty($this->binds)) {
+        if (empty($binds)) {
             return;
         }
-
-        $binds = (array) $this->binds;
 
         if (is_int(array_key_first($binds))) {
             $bindCount = count($binds);
