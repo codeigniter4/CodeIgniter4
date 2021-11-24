@@ -456,7 +456,7 @@ be used when the first parameter is a language string::
     // Creates:
     $routes['users/(:num)'] = 'users/show/$2';
 
-.. _priority:
+.. _routing-priority:
 
 Route processing queue
 ----------------------
@@ -590,7 +590,7 @@ Route processing by priority
 
 Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
-For an example of use lowering the priority see :ref:`priority`::
+For an example of use lowering the priority see :ref:`routing-priority`::
 
     // to enable
     $routes->setPrioritize();
