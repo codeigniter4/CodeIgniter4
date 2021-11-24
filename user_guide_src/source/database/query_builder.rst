@@ -886,15 +886,15 @@ Example::
         'date'  => 'My date',
     ];
 
-    $sql = $builder->set($data)->getCompiledInsert('mytable');
+    $sql = $builder->set($data)->getCompiledInsert();
     echo $sql;
 
     // Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')
 
-The second parameter enables you to set whether or not the query builder query
+The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be--just like ``$builder->insert()``)::
 
-    echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', false);
+    echo $builder->set('title', 'My Title')->getCompiledInsert(false);
 
     // Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
 
@@ -902,9 +902,7 @@ will be reset (by default it will be--just like ``$builder->insert()``)::
 
     // Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
-The key thing to notice in the above example is that the second query did not
-utilize ``$builder->from()`` nor did it pass a table name into the first
-parameter. The reason this worked is that the query has not been executed
+The reason the second query worked is that the query has not been executed
 using ``$builder->insert()`` which resets values or reset directly using
 ``$builder->resetQuery()``.
 
