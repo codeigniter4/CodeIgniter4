@@ -435,8 +435,8 @@ file name and line number. You must still provide the exception placeholder in t
 <section id="using-third-party-loggers">
 <h2><a class="toc-backref" href="#id4">Using Third-Party Loggers</a><a class="headerlink" href="#using-third-party-loggers" title="Permalink to this headline"></a></h2>
 <p>You can use any other logger that you might like as long as it extends from either
-<code class="docutils literal notranslate"><span class="pre">Psr\Log\LoggerInterface</span></code> and is <a class="reference external" href="https://www.php-fig.org/psr/psr-3/">PSR3</a> compatible. This means
-that you can easily drop in use for any PSR3-compatible logger, or create your own.</p>
+<code class="docutils literal notranslate"><span class="pre">Psr\Log\LoggerInterface</span></code> and is <a class="reference external" href="https://www.php-fig.org/psr/psr-3/">PSR-3</a> compatible. This means
+that you can easily drop in use for any PSR-3 compatible logger, or create your own.</p>
 <p>You must ensure that the third-party logger can be found by the system, by adding it to either
 the <strong>app/Config/Autoload.php</strong> configuration file, or through another autoloader,
 like Composer. Next, you should modify <strong>app/Config/Services.php</strong> to point the <code class="docutils literal notranslate"><span class="pre">logger</span></code>
