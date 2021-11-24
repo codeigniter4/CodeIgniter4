@@ -154,15 +154,6 @@ class BaseBuilder
     protected $db;
 
     /**
-     * Name of the primary table for this instance.
-     * Tracked separately because $QBFrom gets escaped
-     * and prefixed.
-     *
-     * @var string
-     */
-    protected $tableName;
-
-    /**
      * ORDER BY random keyword
      *
      * @var array
@@ -261,23 +252,22 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName
+     * @param array|string|null $from tablename or tablenames with or without aliases
+     *
+     * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
      * @throws DatabaseException
      */
-    public function __construct($tableName, ConnectionInterface &$db, ?array $options = null)
+    public function __construct($from, ConnectionInterface &$db, ?array $options = null)
     {
-        if (empty($tableName)) {
-            throw new DatabaseException('A table must be specified when creating a new Query Builder.');
-        }
-
         /**
          * @var BaseConnection $db
          */
         $this->db = $db;
 
-        $this->tableName = $tableName;
-        $this->from($tableName);
+        if ($from !== null) {
+            $this->from($from);
+        }
 
         if (! empty($options)) {
             foreach ($options as $key => $value) {
@@ -311,11 +301,17 @@ class BaseBuilder
     }
 
     /**
-     * Gets the name of the primary table.
+     * Gets QBFrom.
+     *
+     * @internal
      */
-    public function getTable(): string
+    public function getFrom(int $index = 0): ?string
     {
-        return $this->tableName;
+        if ($this->QBFrom === []) {
+            return null;
+        }
+
+        return $this->QBFrom[$index];
     }
 
     /**

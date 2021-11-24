@@ -835,20 +835,14 @@ abstract class BaseConnection implements ConnectionInterface
     abstract protected function _transRollback(): bool;
 
     /**
-     * Returns an instance of the query builder for this connection.
+     * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|string $tableName
-     *
-     * @throws DatabaseException
+     * @param array|string|null $tableName
      *
      * @return BaseBuilder
      */
-    public function table($tableName)
+    public function table($tableName = null)
     {
-        if (empty($tableName)) {
-            throw new DatabaseException('You must set the database table to be used with your query.');
-        }
-
         $className = str_replace('Connection', 'Builder', static::class);
 
         return new $className($tableName, $this);

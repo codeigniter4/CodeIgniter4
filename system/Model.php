@@ -521,7 +521,7 @@ class Model extends BaseModel
         // Check for an existing Builder
         if ($this->builder instanceof BaseBuilder) {
             // Make sure the requested table matches the builder
-            if ($table && $this->builder->getTable() !== $table) {
+            if ($table && $this->table !== $table) {
                 return $this->db->table($table);
             }
 

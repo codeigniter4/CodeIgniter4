@@ -120,7 +120,7 @@ final class GeneralModelTest extends CIUnitTestCase
     public function testBuilderUsesModelTable(): void
     {
         $builder = $this->createModel(UserModel::class)->builder();
-        $this->assertSame('user', $builder->getTable());
+        $this->assertStringContainsString('db_user', $builder->getFrom());
     }
 
     public function testBuilderRespectsTableParameter(): void
@@ -129,8 +129,8 @@ final class GeneralModelTest extends CIUnitTestCase
         $builder1 = $this->model->builder('jobs');
         $builder2 = $this->model->builder();
 
-        $this->assertSame('jobs', $builder1->getTable());
-        $this->assertSame('user', $builder2->getTable());
+        $this->assertStringContainsString('db_jobs', $builder1->getFrom());
+        $this->assertStringContainsString('db_user', $builder2->getFrom());
     }
 
     public function testBuilderWithParameterIgnoresShared(): void
@@ -140,9 +140,9 @@ final class GeneralModelTest extends CIUnitTestCase
         $builder2 = $this->model->builder('jobs');
         $builder3 = $this->model->builder();
 
-        $this->assertSame('user', $builder1->getTable());
-        $this->assertSame('jobs', $builder2->getTable());
-        $this->assertSame('user', $builder3->getTable());
+        $this->assertStringContainsString('db_user', $builder1->getFrom());
+        $this->assertStringContainsString('db_jobs', $builder2->getFrom());
+        $this->assertSame($builder1, $builder3);
     }
 
     public function testInitialize(): void

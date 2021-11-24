@@ -37,20 +37,23 @@ final class BaseTest extends CIUnitTestCase
         $this->assertInstanceOf(MockConnection::class, $result);
     }
 
-    public function testGetTableReturnsTable()
+    public function testGetFromReturnsFirstFrom()
     {
         $builder = $this->db->table('jobs');
 
-        $result = $builder->getTable();
-        $this->assertSame('jobs', $result);
+        $result = $builder->getFrom();
+        $this->assertSame('"jobs"', $result);
     }
 
-    public function testGetTableIgnoresFrom()
+    public function testGetFromCanReturnsSecondFrom()
     {
         $builder = $this->db->table('jobs');
-
         $builder->from('foo');
-        $result = $builder->getTable();
-        $this->assertSame('jobs', $result);
+
+        $result = $builder->getFrom(0);
+        $this->assertSame('"jobs"', $result);
+
+        $result = $builder->getFrom(1);
+        $this->assertSame('"foo"', $result);
     }
 }
