@@ -122,8 +122,7 @@ Nesting Variables
 =================
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
-variable name within ``${...}``
-::
+variable name within ``${...}``::
 
     BASE_DIR="/var/webroot/project-root"
     CACHE_DIR="${BASE_DIR}/cache"
