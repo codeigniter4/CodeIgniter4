@@ -158,6 +158,9 @@ class BaseBuilder
      * Tracked separately because $QBFrom gets escaped
      * and prefixed.
      *
+     * When $tableName to the constructor has multiple tables,
+     * the value is empty string.
+     *
      * @var string
      */
     protected $tableName;
@@ -276,7 +279,13 @@ class BaseBuilder
          */
         $this->db = $db;
 
-        $this->tableName = $tableName;
+        // If it contains `,`, it has multiple tables
+        if (is_string($tableName) && strpos($tableName, ',') === false) {
+            $this->tableName = $tableName;  // @TODO remove alias if exists
+        } else {
+            $this->tableName = '';
+        }
+
         $this->from($tableName);
 
         if (! empty($options)) {
