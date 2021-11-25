@@ -327,7 +327,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setJSON($body);
 
         $this->assertSame($expected, $response->getJSON());
-        $this->assertNotFalse(strpos($response->getHeaderLine('content-type'), 'application/json'));
+        $this->assertStringContainsString('application/json', $response->getHeaderLine('content-type'));
     }
 
     public function testJSONGetFromNormalBody()
@@ -364,7 +364,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setXML($body);
 
         $this->assertSame($expected, $response->getXML());
-        $this->assertNotFalse(strpos($response->getHeaderLine('content-type'), 'application/xml'));
+        $this->assertStringContainsString('application/xml', $response->getHeaderLine('content-type'));
     }
 
     public function testXMLGetFromNormalBody()
