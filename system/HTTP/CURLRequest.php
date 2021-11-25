@@ -424,7 +424,7 @@ class CURLRequest extends Request
         $this->method                       = $method;
         $curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
 
-        $size = strlen($this->body);
+        $size = strlen($this->body ?? '');
 
         // Have content?
         if ($size > 0) {

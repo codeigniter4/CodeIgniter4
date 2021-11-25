@@ -288,7 +288,7 @@ class Security implements SecurityInterface
             throw SecurityException::forDisallowedAction();
         }
 
-        $json = json_decode($request->getBody());
+        $json = json_decode($request->getBody() ?? '');
 
         if (isset($_POST[$this->tokenName])) {
             // We kill this since we're done and we don't want to pollute the POST array.
@@ -323,9 +323,10 @@ class Security implements SecurityInterface
         if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
             $tokenName = $request->header($this->headerName)->getValue();
         } else {
-            $json = json_decode($request->getBody());
+            $body = (string) $request->getBody();
+            $json = json_decode($body);
 
-            if (! empty($request->getBody()) && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
+            if ($body !== '' && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
                 $tokenName = $json->{$this->tokenName} ?? null;
             } else {
                 $tokenName = null;

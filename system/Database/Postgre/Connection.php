@@ -433,8 +433,11 @@ class Connection extends BaseConnection
             $this->DSN = "host={$this->hostname} ";
         }
 
-        if (! empty($this->port) && ctype_digit($this->port)) {
-            $this->DSN .= "port={$this->port} ";
+        // ctype_digit only accepts strings
+        $port = (string) $this->port;
+
+        if ($port !== '' && ctype_digit($port)) {
+            $this->DSN .= "port={$port} ";
         }
 
         if ($this->username !== '') {

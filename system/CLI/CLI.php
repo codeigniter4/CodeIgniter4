@@ -865,10 +865,12 @@ class CLI
                 $out .= "-{$name} ";
             }
 
-            // If there's a space, we need to group
-            // so it will pass correctly.
+            if ($value === null) {
+                continue;
+            }
+
             if (mb_strpos($value, ' ') !== false) {
-                $out .= '"' . $value . '" ';
+                $out .= "\"{$value}\" ";
             } elseif ($value !== null) {
                 $out .= "{$value} ";
             }

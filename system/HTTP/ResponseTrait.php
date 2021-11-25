@@ -435,7 +435,7 @@ trait ResponseTrait
         if ($this->CSPEnabled === true) {
             $this->CSP->finalize($this);
         } else {
-            $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body);
+            $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body ?? '');
         }
 
         $this->sendHeaders();
