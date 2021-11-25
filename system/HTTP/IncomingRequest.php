@@ -565,7 +565,7 @@ class IncomingRequest extends Request
      */
     public function getRawInput()
     {
-        parse_str($this->body, $output);
+        parse_str($this->body ?? '', $output);
 
         return $output;
     }

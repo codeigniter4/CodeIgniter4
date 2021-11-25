@@ -45,11 +45,16 @@ class FormatRules
 
     /**
      * Alphanumeric with underscores and dashes
+     *
+     * @see https://regex101.com/r/XfVY3d/1
      */
     public function alpha_dash(?string $str = null): bool
     {
-        // @see https://regex101.com/r/XfVY3d/1
-        return (bool) preg_match('/\A[a-z0-9_-]+\z/i', $str);
+        if ($str === null) {
+            return false;
+        }
+
+        return preg_match('/\A[a-z0-9_-]+\z/i', $str) === 1;
     }
 
     /**
@@ -59,14 +64,19 @@ class FormatRules
      * _ underscore, + plus, = equals, | vertical bar, : colon, . period
      * ~ ! # $ % & * - _ + = | : .
      *
-     * @param string $str
+     * @param string|null $str
      *
      * @return bool
+     *
+     * @see https://regex101.com/r/6N8dDY/1
      */
     public function alpha_numeric_punct($str)
     {
-        // @see https://regex101.com/r/6N8dDY/1
-        return (bool) preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str);
+        if ($str === null) {
+            return false;
+        }
+
+        return preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str) === 1;
     }
 
     /**
@@ -307,7 +317,7 @@ class FormatRules
             return false;
         }
 
-        $scheme       = strtolower(parse_url($str, PHP_URL_SCHEME));
+        $scheme       = strtolower(parse_url($str, PHP_URL_SCHEME) ?? ''); // absent scheme gives null
         $validSchemes = explode(
             ',',
             strtolower($validSchemes ?? 'http,https')
