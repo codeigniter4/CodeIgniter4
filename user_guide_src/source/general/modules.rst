@@ -153,6 +153,9 @@ the **Modules** config file, described above.
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
 
+When working with modules, it can be a problem if the routes in the application contain wildcards.
+In that case, see :ref:`routing-priority`.
+
 Filters
 =======
 
