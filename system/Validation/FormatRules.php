@@ -384,6 +384,7 @@ class FormatRules
      * Validate an IP address (human readable format or binary string - inet_pton)
      *
      * @param string|null $which IP protocol: 'ipv4' or 'ipv6'
+     * @param mixed|null  $ip
      */
     public function valid_ip($ip = null, ?string $which = null): bool
     {
@@ -417,6 +418,8 @@ class FormatRules
      *
      * Warning: this rule will pass basic strings like
      * "banana"; use valid_url_strict for a stricter rule.
+     *
+     * @param mixed|null $str
      */
     public function valid_url($str = null): bool
     {
@@ -469,6 +472,8 @@ class FormatRules
 
     /**
      * Checks for a valid date and matches a given date format
+     *
+     * @param mixed|null $str
      */
     public function valid_date($str = null, ?string $format = null): bool
     {

@@ -25,6 +25,7 @@ class Rules
      * The value does not match another field in $data.
      *
      * @param array $data Other field/value pairs
+     * @param mixed $str
      */
     public function differs($str, string $field, array $data): bool
     {
@@ -41,6 +42,8 @@ class Rules
 
     /**
      * Equals the static value provided.
+     *
+     * @param mixed $str
      */
     public function equals($str, string $val): bool
     {
@@ -50,6 +53,8 @@ class Rules
     /**
      * Returns true if $str is $val characters long.
      * $val = "5" (one) | "5,8,12" (multiple values)
+     *
+     * @param mixed $str
      */
     public function exact_length($str, string $val): bool
     {
@@ -70,6 +75,8 @@ class Rules
 
     /**
      * Greater than
+     *
+     * @param mixed $str
      */
     public function greater_than($str, string $min): bool
     {
@@ -78,6 +85,8 @@ class Rules
 
     /**
      * Equal to or Greater than
+     *
+     * @param mixed $str
      */
     public function greater_than_equal_to($str, string $min): bool
     {
@@ -92,6 +101,8 @@ class Rules
      * Example:
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
+     *
+     * @param mixed $str
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
@@ -116,6 +127,8 @@ class Rules
 
     /**
      * Value should be within an array of values
+     *
+     * @param mixed $value
      */
     public function in_list($value, string $list): bool
     {
@@ -140,6 +153,8 @@ class Rules
      * Example:
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
+     *
+     * @param mixed $str
      */
     public function is_unique($str, string $field, array $data): bool
     {
@@ -162,6 +177,8 @@ class Rules
 
     /**
      * Less than
+     *
+     * @param mixed $str
      */
     public function less_than($str, string $max): bool
     {
@@ -170,6 +187,8 @@ class Rules
 
     /**
      * Equal to or Less than
+     *
+     * @param mixed $str
      */
     public function less_than_equal_to($str, string $max): bool
     {
@@ -180,6 +199,7 @@ class Rules
      * Matches the value of another field in $data.
      *
      * @param array $data Other field/value pairs
+     * @param mixed $str
      */
     public function matches($str, string $field, array $data): bool
     {
@@ -192,6 +212,8 @@ class Rules
 
     /**
      * Returns true if $str is $val or fewer characters in length.
+     *
+     * @param mixed $str
      */
     public function max_length($str, string $val): bool
     {
@@ -208,6 +230,8 @@ class Rules
 
     /**
      * Returns true if $str is at least $val length.
+     *
+     * @param mixed $str
      */
     public function min_length($str, string $val): bool
     {
