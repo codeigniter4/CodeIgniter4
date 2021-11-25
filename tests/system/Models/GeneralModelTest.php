@@ -105,6 +105,7 @@ final class GeneralModelTest extends CIUnitTestCase
         ];
 
         $model                       = new class () extends Model {
+            protected $table         = 'dummy';
             protected $allowedFields = [
                 'id',
                 'created_at',
@@ -147,7 +148,9 @@ final class GeneralModelTest extends CIUnitTestCase
 
     public function testInitialize(): void
     {
-        $model = new class () extends Model {
+        $model               = new class () extends Model {
+            protected $table = 'dummy';
+
             /**
              * @var bool
              */

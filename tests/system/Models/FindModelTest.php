@@ -13,6 +13,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
+use CodeIgniter\Model;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
@@ -274,11 +275,12 @@ final class FindModelTest extends LiveModelTestCase
     public function testThrowsWithNoPrimaryKey(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not specify a Primary Key.');
+        $this->expectExceptionMessage(' model class does not specify a Primary Key.');
 
-        $this->createModel(UserModel::class);
-        $this->setPrivateProperty($this->model, 'primaryKey', '');
-        $this->model->find(1);
+        new class () extends Model {
+            protected $table      = 'dummy';
+            protected $primaryKey = '';
+        };
     }
 
     /**
