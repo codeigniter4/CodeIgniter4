@@ -271,14 +271,14 @@ rename or relocate your application directory.</p>
 <p>If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
-<code class="docutils literal notranslate"><span class="pre">$appDirectory</span></code> variable (at about line 45):</p>
+<code class="docutils literal notranslate"><span class="pre">$appDirectory</span></code> variable (at about line 44):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>You will need to modify two additional files in your project root, so that
 they can find the <code class="docutils literal notranslate"><span class="pre">Paths</span></code> configuration file:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 36:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 35:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
