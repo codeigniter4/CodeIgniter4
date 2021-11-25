@@ -128,8 +128,8 @@ present, then no auto-discovery will happen for that item, but the others in the
 Discovery and Composer
 ======================
 
-Packages that were installed via Composer will also be discovered by default. This only requires that the namespace
-that Composer knows about is a PSR-4 namespace. PSR-0 namespaces will not be detected.
+Packages installed via Composer using PSR-4 namespaces will also be discovered by default.
+PSR-0 namespaced packages will not be detected.
 
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
 by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``::
