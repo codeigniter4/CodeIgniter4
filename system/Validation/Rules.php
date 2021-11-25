@@ -213,11 +213,19 @@ class Rules
      */
     public function required($str = null): bool
     {
+        if ($str === null) {
+            return false;
+        }
+
         if (is_object($str)) {
             return true;
         }
 
-        return is_array($str) ? ! empty($str) : (trim($str) !== '');
+        if (is_array($str)) {
+            return $str !== [];
+        }
+
+        return trim((string) $str) !== '';
     }
 
     /**
