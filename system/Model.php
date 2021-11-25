@@ -91,6 +91,14 @@ class Model extends BaseModel
 
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
+        if ($this->table === null) {
+            throw new DatabaseException('A table must be specified when creating a new CodeIgniter Model.');
+        }
+
+        if (empty($this->primaryKey)) {
+            throw ModelException::forNoPrimaryKey(static::class);
+        }
+
         /**
          * @var BaseConnection $db
          */
@@ -99,6 +107,8 @@ class Model extends BaseModel
         $this->db = &$db;
 
         parent::__construct($validation);
+
+        $this->builder = $this->db->table($this->table);
     }
 
     /**
@@ -107,10 +117,13 @@ class Model extends BaseModel
      * @param string $table Table
      *
      * @return $this
+     *
+     * @deprecated Why do we need this?
      */
     public function setTable(string $table)
     {
-        $this->table = $table;
+        $this->table   = $table;
+        $this->builder = $this->db->table($this->table);
 
         return $this;
     }
@@ -127,22 +140,20 @@ class Model extends BaseModel
      */
     protected function doFind(bool $singleton, $id = null)
     {
-        $builder = $this->builder();
-
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
+            $this->builder->where($this->table . '.' . $this->deletedField, null);
         }
 
         if (is_array($id)) {
-            $row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)
+            $row = $this->builder->whereIn($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getResult($this->tempReturnType);
         } elseif ($singleton) {
-            $row = $builder->where($this->table . '.' . $this->primaryKey, $id)
+            $row = $this->builder->where($this->table . '.' . $this->primaryKey, $id)
                 ->get()
                 ->getFirstRow($this->tempReturnType);
         } else {
-            $row = $builder->get()->getResult($this->tempReturnType);
+            $row = $this->builder->get()->getResult($this->tempReturnType);
         }
 
         return $row;
@@ -173,13 +184,11 @@ class Model extends BaseModel
      */
     protected function doFindAll(int $limit = 0, int $offset = 0)
     {
-        $builder = $this->builder();
-
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
+            $this->builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        return $builder->limit($limit, $offset)
+        return $this->builder->limit($limit, $offset)
             ->get()
             ->getResult($this->tempReturnType);
     }
@@ -193,21 +202,19 @@ class Model extends BaseModel
      */
     protected function doFirst()
     {
-        $builder = $this->builder();
-
         if ($this->tempUseSoftDeletes) {
-            $builder->where($this->table . '.' . $this->deletedField, null);
-        } elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey) {
-            $builder->groupBy($this->table . '.' . $this->primaryKey);
+            $this->builder->where($this->table . '.' . $this->deletedField, null);
+        } elseif ($this->useSoftDeletes && empty($this->builder->QBGroupBy) && $this->primaryKey) {
+            $this->builder->groupBy($this->table . '.' . $this->primaryKey);
         }
 
         // Some databases, like PostgreSQL, need order
         // information to consistently return correct results.
-        if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey) {
-            $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
+        if ($this->builder->QBGroupBy && empty($this->builder->QBOrderBy) && $this->primaryKey) {
+            $this->builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
-        return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+        return $this->builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
     }
 
     /**
@@ -229,14 +236,12 @@ class Model extends BaseModel
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
-        $builder = $this->builder();
-
         // Must use the set() method to ensure to set the correct escape flag
         foreach ($data as $key => $val) {
-            $builder->set($key, $val, $escape[$key] ?? null);
+            $this->builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        $result = $builder->insert();
+        $result = $this->builder->insert();
 
         // If insertion succeeded then save the insert ID
         if ($result) {
@@ -269,7 +274,7 @@ class Model extends BaseModel
             }
         }
 
-        return $this->builder()->testMode($testing)->insertBatch($set, $escape, $batchSize);
+        return $this->builder->testMode($testing)->insertBatch($set, $escape, $batchSize);
     }
 
     /**
@@ -284,18 +289,16 @@ class Model extends BaseModel
         $escape       = $this->escape;
         $this->escape = [];
 
-        $builder = $this->builder();
-
         if ($id) {
-            $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+            $this->builder->whereIn($this->table . '.' . $this->primaryKey, $id);
         }
 
         // Must use the set() method to ensure to set the correct escape flag
         foreach ($data as $key => $val) {
-            $builder->set($key, $val, $escape[$key] ?? null);
+            $this->builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        return $builder->update();
+        return $this->builder->update();
     }
 
     /**
@@ -313,7 +316,7 @@ class Model extends BaseModel
      */
     protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
+        return $this->builder->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
     }
 
     /**
@@ -330,14 +333,12 @@ class Model extends BaseModel
      */
     protected function doDelete($id = null, bool $purge = false)
     {
-        $builder = $this->builder();
-
         if ($id) {
-            $builder = $builder->whereIn($this->primaryKey, $id);
+            $this->builder->whereIn($this->primaryKey, $id);
         }
 
         if ($this->useSoftDeletes && ! $purge) {
-            if (empty($builder->getCompiledQBWhere())) {
+            if (empty($this->builder->getCompiledQBWhere())) {
                 if (CI_DEBUG) {
                     throw new DatabaseException(
                         'Deletes are not allowed unless they contain a "where" or "like" clause.'
@@ -353,10 +354,10 @@ class Model extends BaseModel
                 $set[$this->updatedField] = $this->setDate();
             }
 
-            return $builder->update($set);
+            return $this->builder->update($set);
         }
 
-        return $builder->delete();
+        return $this->builder->delete();
     }
 
     /**
@@ -368,7 +369,7 @@ class Model extends BaseModel
      */
     protected function doPurgeDeleted()
     {
-        return $this->builder()
+        return $this->builder
             ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
             ->delete();
     }
@@ -380,7 +381,7 @@ class Model extends BaseModel
      */
     protected function doOnlyDeleted()
     {
-        $this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+        $this->builder->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
     }
 
     /**
@@ -394,7 +395,7 @@ class Model extends BaseModel
      */
     protected function doReplace(?array $data = null, bool $returnSQL = false)
     {
-        return $this->builder()->testMode($returnSQL)->replace($data);
+        return $this->builder->testMode($returnSQL)->replace($data);
     }
 
     /**
@@ -461,11 +462,11 @@ class Model extends BaseModel
      */
     public function chunk(int $size, Closure $userFunc)
     {
-        $total  = $this->builder()->countAllResults(false);
+        $total  = $this->builder->countAllResults(false);
         $offset = 0;
 
         while ($offset <= $total) {
-            $builder = clone $this->builder();
+            $builder = clone $this->builder;
             $rows    = $builder->get($size, $offset);
 
             if (! $rows) {
@@ -496,7 +497,7 @@ class Model extends BaseModel
     public function countAllResults(bool $reset = true, bool $test = false)
     {
         if ($this->tempUseSoftDeletes) {
-            $this->builder()->where($this->table . '.' . $this->deletedField, null);
+            $this->builder->where($this->table . '.' . $this->deletedField, null);
         }
 
         // When $reset === false, the $tempUseSoftDeletes will be
@@ -506,7 +507,7 @@ class Model extends BaseModel
             ? $this->useSoftDeletes
             : ($this->useSoftDeletes ? false : $this->useSoftDeletes);
 
-        return $this->builder()->testMode($test)->countAllResults($reset);
+        return $this->builder->testMode($test)->countAllResults($reset);
     }
 
     /**
@@ -518,38 +519,12 @@ class Model extends BaseModel
      */
     public function builder(?string $table = null)
     {
-        // Check for an existing Builder
-        if ($this->builder instanceof BaseBuilder) {
-            // Make sure the requested table matches the builder
-            if ($table && $this->table !== $table) {
-                return $this->db->table($table);
-            }
-
-            return $this->builder;
+        if ($table !== null && $this->table !== $table) {
+            // Return new Query Builder
+            return $this->db->table($table);
         }
 
-        // We're going to force a primary key to exist
-        // so we don't have overly convoluted code,
-        // and future features are likely to require them.
-        if (empty($this->primaryKey)) {
-            throw ModelException::forNoPrimaryKey(static::class);
-        }
-
-        $table = empty($table) ? $this->table : $table;
-
-        // Ensure we have a good db connection
-        if (! $this->db instanceof BaseConnection) {
-            $this->db = Database::connect($this->DBGroup);
-        }
-
-        $builder = $this->db->table($table);
-
-        // Only consider it "shared" if the table is correct
-        if ($table === $this->table) {
-            $this->builder = $builder;
-        }
-
-        return $builder;
+        return $this->builder;
     }
 
     /**
@@ -685,8 +660,8 @@ class Model extends BaseModel
             return parent::__get($name);
         }
 
-        if (isset($this->builder()->{$name})) {
-            return $this->builder()->{$name};
+        if (isset($this->builder->{$name})) {
+            return $this->builder->{$name};
         }
 
         return null;
@@ -703,7 +678,7 @@ class Model extends BaseModel
             return true;
         }
 
-        return isset($this->builder()->{$name});
+        return isset($this->builder->{$name});
     }
 
     /**
@@ -714,13 +689,12 @@ class Model extends BaseModel
      */
     public function __call(string $name, array $params)
     {
-        $builder = $this->builder();
-        $result  = null;
+        $result = null;
 
         if (method_exists($this->db, $name)) {
             $result = $this->db->{$name}(...$params);
-        } elseif (method_exists($builder, $name)) {
-            $result = $builder->{$name}(...$params);
+        } elseif (method_exists($this->builder, $name)) {
+            $result = $this->builder->{$name}(...$params);
         } else {
             throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
         }
