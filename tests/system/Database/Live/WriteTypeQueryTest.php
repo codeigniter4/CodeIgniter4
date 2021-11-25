@@ -56,7 +56,8 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testUpdate()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
         $sql = $builder->getCompiledInsert();
 
@@ -115,8 +116,9 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testTruncate()
     {
-        $builder = new BaseBuilder('user', $this->db);
-        $sql     = $builder->testMode()->truncate();
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
+        $sql = $builder->testMode()->truncate();
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
@@ -194,7 +196,8 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testSelect()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
         $builder->select('*');
         $sql = $builder->getCompiledSelect();
 
@@ -203,7 +206,8 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
     public function testTrick()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
         $builder->select('UPDATE');
         $sql = $builder->getCompiledSelect();
 

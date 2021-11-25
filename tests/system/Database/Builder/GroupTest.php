@@ -31,7 +31,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testGroupBy()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')->groupBy('name');
 
@@ -42,7 +43,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingBy()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -55,7 +57,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingBy()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -69,7 +72,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingIn()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -82,7 +86,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingInClosure()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')->groupBy('name');
 
@@ -97,7 +102,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingIn()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -111,7 +117,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingInClosure()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')->groupBy('name');
 
@@ -129,7 +136,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingNotIn()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -142,7 +150,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingNotInClosure()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')->groupBy('name');
 
@@ -157,7 +166,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingNotIn()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -171,7 +181,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingNotInClosure()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')->groupBy('name');
 
@@ -189,7 +200,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingLike()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -202,7 +214,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingLikeBefore()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -215,7 +228,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingLikeAfter()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -228,7 +242,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingLike()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -241,7 +256,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingLikeBefore()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -254,7 +270,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingLikeAfter()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -267,7 +284,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingLike()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -281,7 +299,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingLikeBefore()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -295,7 +314,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingLikeAfter()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -309,7 +329,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotHavingLike()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -323,7 +344,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotHavingLikeBefore()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -337,7 +359,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotHavingLikeAfter()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -351,7 +374,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingAndGroup()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -368,7 +392,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingOrGroup()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -385,7 +410,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingAndGroup()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -402,7 +428,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingOrGroup()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('name')
             ->groupBy('name')
@@ -419,7 +446,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testAndGroups()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->groupStart()
             ->where('id >', 3)
@@ -434,7 +462,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrGroups()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->where('name', 'Darth')
             ->orGroupStart()
@@ -449,7 +478,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotGroups()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->where('name', 'Darth')
             ->notGroupStart()
@@ -464,7 +494,8 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotGroups()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->where('name', 'Darth')
             ->orNotGroupStart()

@@ -31,7 +31,8 @@ final class EmptyTest extends CIUnitTestCase
 
     public function testEmptyWithNoTable()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $answer = $builder->testMode()->emptyTable();
 

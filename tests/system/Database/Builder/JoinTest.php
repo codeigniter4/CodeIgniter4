@@ -33,7 +33,8 @@ final class JoinTest extends CIUnitTestCase
 
     public function testJoinSimple()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->join('job', 'user.id = job.id');
 
@@ -44,7 +45,8 @@ final class JoinTest extends CIUnitTestCase
 
     public function testJoinIsNull()
     {
-        $builder = new BaseBuilder('table1', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('table1');
 
         $builder->join('table2', 'field IS NULL');
 
@@ -55,7 +57,8 @@ final class JoinTest extends CIUnitTestCase
 
     public function testJoinIsNotNull()
     {
-        $builder = new BaseBuilder('table1', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('table1');
 
         $builder->join('table2', 'field IS NOT NULL');
 
@@ -66,7 +69,8 @@ final class JoinTest extends CIUnitTestCase
 
     public function testJoinMultipleConditions()
     {
-        $builder = new BaseBuilder('table1', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('table1');
 
         $builder->join('table2', "table1.field1 = table2.field2 AND table1.field1 = 'foo' AND table2.field2 = 0", 'LEFT');
 
@@ -77,7 +81,8 @@ final class JoinTest extends CIUnitTestCase
 
     public function testFullOuterJoin()
     {
-        $builder = new PostgreBuilder('jobs', $this->db);
+        $builder = new PostgreBuilder($this->db);
+        $builder->from('jobs');
         $builder->testMode();
         $builder->join('users as u', 'users.id = jobs.id', 'full outer');
 
@@ -90,7 +95,8 @@ final class JoinTest extends CIUnitTestCase
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-        $builder = new SQLSRVBuilder('jobs', $this->db);
+        $builder = new SQLSRVBuilder($this->db);
+        $builder->from('jobs');
         $builder->testMode();
         $builder->join('users u', 'u.id = jobs.id', 'LEFT');
 

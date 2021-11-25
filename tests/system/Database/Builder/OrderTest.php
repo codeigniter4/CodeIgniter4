@@ -31,7 +31,8 @@ final class OrderTest extends CIUnitTestCase
 
     public function testOrderAscending()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->orderBy('name', 'asc');
 
@@ -42,7 +43,8 @@ final class OrderTest extends CIUnitTestCase
 
     public function testOrderDescending()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->orderBy('name', 'desc');
 
@@ -53,7 +55,8 @@ final class OrderTest extends CIUnitTestCase
 
     public function testOrderRandom()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->orderBy('name', 'random');
 
@@ -65,7 +68,8 @@ final class OrderTest extends CIUnitTestCase
     public function testOrderRandomWithRandomColumn()
     {
         $this->db->setPrefix('fail_');
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
         $this->setPrivateProperty($builder, 'randomKeyword', ['"SYSTEM"."RANDOM"']);
 
         $builder->orderBy('name', 'random');

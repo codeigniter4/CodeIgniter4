@@ -31,7 +31,8 @@ final class LimitTest extends CIUnitTestCase
 
     public function testLimitAlone()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->limit(5);
 
@@ -42,7 +43,8 @@ final class LimitTest extends CIUnitTestCase
 
     public function testLimitAndOffset()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->limit(5, 1);
 
@@ -53,7 +55,8 @@ final class LimitTest extends CIUnitTestCase
 
     public function testLimitAndOffsetMethod()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->limit(5)->offset(1);
 

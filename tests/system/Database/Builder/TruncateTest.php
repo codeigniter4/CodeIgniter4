@@ -31,7 +31,8 @@ final class TruncateTest extends CIUnitTestCase
 
     public function testTruncate()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $expectedSQL = 'TRUNCATE "user"';
 

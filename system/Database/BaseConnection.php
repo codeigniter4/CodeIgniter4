@@ -837,15 +837,22 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|string|null $tableName
+     * @param array|string|null $tableName tablename or tablenames with or without aliases
+     *
+     * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
      * @return BaseBuilder
      */
     public function table($tableName = null)
     {
         $className = str_replace('Connection', 'Builder', static::class);
+        $builder   = new $className($this);
 
-        return new $className($tableName, $this);
+        if ($tableName !== null) {
+            $builder->from($tableName);
+        }
+
+        return $builder;
     }
 
     /**

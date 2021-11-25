@@ -33,7 +33,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSimpleSelect()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $expected = 'SELECT * FROM "users"';
 
@@ -42,7 +43,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectOnlyOneColumn()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $builder->select('name');
 
@@ -53,7 +55,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectAcceptsArray()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $builder->select(['name', 'role']);
 
@@ -64,7 +67,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectAcceptsMultipleColumns()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $builder->select('name, role');
 
@@ -75,7 +79,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectKeepsAliases()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $builder->select('name, role as myRole');
 
@@ -86,7 +91,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectWorksWithComplexSelects()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid');
 
@@ -97,7 +103,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMinWithNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectMin('payments');
 
@@ -108,7 +115,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMinWithAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectMin('payments', 'myAlias');
 
@@ -119,7 +127,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMaxWithNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectMax('payments');
 
@@ -130,7 +139,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMaxWithAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectMax('payments', 'myAlias');
 
@@ -141,7 +151,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectAvgWithNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectAvg('payments');
 
@@ -152,7 +163,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectAvgWithAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectAvg('payments', 'myAlias');
 
@@ -163,7 +175,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectSumWithNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectSum('payments');
 
@@ -174,7 +187,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectSumWithAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectSum('payments', 'myAlias');
 
@@ -185,7 +199,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectCountWithNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectCount('payments');
 
@@ -196,7 +211,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectCountWithAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectCount('payments', 'myAlias');
 
@@ -207,7 +223,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMinThrowsExceptionOnEmptyValue()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Empty statement is given for the field `Select`');
@@ -217,7 +234,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMaxWithDotNameAndNoAlias()
     {
-        $builder = new BaseBuilder('invoices', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('invoices');
 
         $builder->selectMax('db.payments');
 
@@ -228,7 +246,8 @@ final class SelectTest extends CIUnitTestCase
 
     public function testSelectMinThrowsExceptionOnMultipleColumn()
     {
-        $builder = new BaseBuilder('users', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('users');
 
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
@@ -240,7 +259,8 @@ final class SelectTest extends CIUnitTestCase
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-        $builder = new SQLSRVBuilder('users', $this->db);
+        $builder = new SQLSRVBuilder($this->db);
+        $builder->from('users');
 
         $expected = 'SELECT * FROM "test"."dbo"."users"';
 

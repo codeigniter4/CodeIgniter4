@@ -35,7 +35,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdate()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
 
@@ -57,7 +58,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateInternalWhereAndLimit()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->update(['name' => 'Programmer'], ['id' => 1], 5);
 
@@ -79,7 +81,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithSet()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->set('name', 'Programmer')->where('id', 1)->update(null, null, null);
 
@@ -101,7 +104,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithSetAsInt()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->set('age', 22)->where('id', 1)->update(null, null, null);
 
@@ -123,7 +127,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithSetAsBoolean()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->set('manager', true)->where('id', 1)->update(null, null, null);
 
@@ -145,7 +150,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithSetAsArray()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->set(['name' => 'Programmer', 'age' => 22, 'manager' => true])->where('id', 1)->update(null, null, null);
 
@@ -175,7 +181,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateThrowsExceptionWithNoData()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
@@ -185,7 +192,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatch()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $updateData = [
             [
@@ -224,8 +232,9 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testSetUpdateBatchWithoutEscape()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
-        $escape  = false;
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
+        $escape = false;
 
         $builder->setUpdateBatch([
             [
@@ -264,7 +273,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchThrowsExceptionWithNoData()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
@@ -274,7 +284,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchThrowsExceptionWithNoID()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
         $this->expectExceptionMessage('You must specify an index to match on for batch updates.');
@@ -284,7 +295,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchThrowsExceptionWithEmptySetArray()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
         $this->expectExceptionMessage('updateBatch() called with no data');
@@ -294,7 +306,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateWithWhereSameColumn()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()->update(['name' => 'foobar'], ['name' => 'Programmer'], null);
 
@@ -317,7 +330,8 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateWithWhereSameColumn2()
     {
         // calling order: set() -> where()
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()
             ->set('name', 'foobar')
@@ -343,7 +357,8 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateWithWhereSameColumn3()
     {
         // calling order: where() -> set() in update()
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
 
         $builder->testMode()
             ->where('name', 'Programmer')
@@ -370,7 +385,8 @@ final class UpdateTest extends CIUnitTestCase
      */
     public function testSetWithoutEscape()
     {
-        $builder = new BaseBuilder('mytable', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('mytable');
 
         $builder->testMode()
             ->set('field', 'field+1', false)
@@ -391,7 +407,8 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testSetWithAndWithoutEscape()
     {
-        $builder = new BaseBuilder('mytable', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('mytable');
 
         $builder->testMode()
             ->set('foo', 'bar')

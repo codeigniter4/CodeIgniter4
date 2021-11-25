@@ -252,22 +252,14 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string|null $from tablename or tablenames with or without aliases
-     *
-     * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
-     *
      * @throws DatabaseException
      */
-    public function __construct($from, ConnectionInterface &$db, ?array $options = null)
+    public function __construct(ConnectionInterface &$db, ?array $options = null)
     {
         /**
          * @var BaseConnection $db
          */
         $this->db = $db;
-
-        if ($from !== null) {
-            $this->from($from);
-        }
 
         if (! empty($options)) {
             foreach ($options as $key => $value) {

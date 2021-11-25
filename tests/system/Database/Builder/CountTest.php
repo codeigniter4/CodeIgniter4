@@ -31,7 +31,8 @@ final class CountTest extends CIUnitTestCase
 
     public function testCountAll()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->testMode();
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM "jobs"';
@@ -41,7 +42,8 @@ final class CountTest extends CIUnitTestCase
 
     public function testCountAllResults()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->testMode();
 
         $answer = $builder->where('id >', 3)->countAllResults(false);
@@ -53,7 +55,8 @@ final class CountTest extends CIUnitTestCase
 
     public function testCountAllResultsWithGroupBy()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->groupBy('id');
         $builder->testMode();
 
@@ -71,7 +74,8 @@ final class CountTest extends CIUnitTestCase
     {
         $this->db = new MockConnection(['DBPrefix' => 'ci_']);
 
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->select('jobs.*')->where('id >', 3)->groupBy('id')->testMode();
 
         $expectedSQL = 'SELECT COUNT(*) AS "numrows" FROM ( SELECT "ci_jobs".* FROM "ci_jobs" WHERE "id" > :id: GROUP BY "id" ) CI_count_all_results';
@@ -86,7 +90,8 @@ final class CountTest extends CIUnitTestCase
 
     public function testCountAllResultsWithGroupByAndHaving()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->groupBy('id');
         $builder->having('1=1');
         $builder->testMode();
@@ -100,7 +105,8 @@ final class CountTest extends CIUnitTestCase
 
     public function testCountAllResultsWithHavingOnly()
     {
-        $builder = new BaseBuilder('jobs', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('jobs');
         $builder->having('1=1');
         $builder->testMode();
 

@@ -31,7 +31,8 @@ final class DistinctTest extends CIUnitTestCase
 
     public function testDelete()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->select('country')->distinct();
 

@@ -240,8 +240,11 @@ trait DatabaseTestTrait
     public function loadBuilder(string $tableName)
     {
         $builderClass = str_replace('Connection', 'Builder', get_class($this->db));
+        $builder      = new $builderClass($this->db);
 
-        return new $builderClass($tableName, $this->db);
+        $builder->from($tableName);
+
+        return $builder;
     }
 
     /**

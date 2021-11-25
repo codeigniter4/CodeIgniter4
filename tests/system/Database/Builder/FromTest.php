@@ -32,7 +32,8 @@ final class FromTest extends CIUnitTestCase
 
     public function testSimpleFrom()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->from('jobs');
 
@@ -43,7 +44,8 @@ final class FromTest extends CIUnitTestCase
 
     public function testFromThatOverwrites()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->from('jobs', true);
 
@@ -54,7 +56,8 @@ final class FromTest extends CIUnitTestCase
 
     public function testFromWithMultipleTables()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->from(['jobs', 'roles']);
 
@@ -65,7 +68,8 @@ final class FromTest extends CIUnitTestCase
 
     public function testFromWithMultipleTablesAsString()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->from(['jobs, roles']);
 
@@ -76,7 +80,8 @@ final class FromTest extends CIUnitTestCase
 
     public function testFromReset()
     {
-        $builder = new BaseBuilder('user', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('user');
 
         $builder->from(['jobs', 'roles']);
 
@@ -105,7 +110,8 @@ final class FromTest extends CIUnitTestCase
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
-        $builder = new SQLSRVBuilder('user', $this->db);
+        $builder = new SQLSRVBuilder($this->db);
+        $builder->from('user');
 
         $builder->from(['jobs, roles']);
 

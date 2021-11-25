@@ -31,7 +31,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testSimpleLike()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper');
 
@@ -49,7 +50,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testLikeNoSide()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper', 'none');
 
@@ -67,7 +69,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testLikeBeforeOnly()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper', 'before');
 
@@ -85,7 +88,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testLikeAfterOnly()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper', 'after');
 
@@ -103,7 +107,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testOrLike()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper')->orLike('name', 'ian');
 
@@ -125,7 +130,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testNotLike()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->notLike('name', 'veloper');
 
@@ -143,7 +149,8 @@ final class LikeTest extends CIUnitTestCase
 
     public function testOrNotLike()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'veloper')->orNotLike('name', 'ian');
 
@@ -168,7 +175,8 @@ final class LikeTest extends CIUnitTestCase
      */
     public function testCaseInsensitiveLike()
     {
-        $builder = new BaseBuilder('job', $this->db);
+        $builder = new BaseBuilder($this->db);
+        $builder->from('job');
 
         $builder->like('name', 'VELOPER', 'both', null, true);
 
