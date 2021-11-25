@@ -537,7 +537,11 @@ class IncomingRequest extends Request
     {
         helper('array');
 
-        $data = dot_array_search($index, $this->getJSON(true));
+        $json = $this->getJSON(true);
+        if (! is_array($json)) {
+            return null;
+        }
+        $data = dot_array_search($index, $json);
 
         if ($data === null) {
             return null;

@@ -394,6 +394,29 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('buzz', $all['fizz']);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5391
+     */
+    public function testGetJsonVarReturnsNullFromNullBody()
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = null;
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $this->assertNull($request->getJsonVar('myKey'));
+    }
+
+    public function testgetJSONReturnsNullFromNullBody()
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = null;
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $this->assertNull($request->getJSON());
+    }
+
     public function testCanGrabGetRawInput()
     {
         $rawstring = 'username=admin001&role=administrator&usepass=0';
