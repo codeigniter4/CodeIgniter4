@@ -412,7 +412,7 @@ the JSON stream. Using <code class="docutils literal notranslate"><span class="p
 <p><strong>Get Specific Data from JSON</strong></p>
 <p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> for the
 data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With a request body of:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With a request body of:</span>
 <span class="p">{</span>
     <span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
     <span class="s2">&quot;fizz&quot;</span><span class="o">:</span> <span class="p">{</span>
@@ -420,21 +420,21 @@ data that you want or you can use “dot” notation to dig into the JSON to get
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
-<span class="c1">//$data = &quot;bar&quot;</span>
+<span class="c1">// $data = &quot;bar&quot;</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;fizz.buzz&#39;</span><span class="p">);</span>
-<span class="c1">//$data = &quot;baz&quot;</span>
+<span class="c1">// $data = &quot;baz&quot;</span>
 </pre></div>
 </div>
 <p>If you want the result to be an associative array instead of an object, you can use <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> instead and pass
 true in the second parameter. This function can also be used if you can’t guarantee that the incoming request will have the
 correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With the same request as above</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With the same request as above</span>
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">);</span>
-<span class="c1">//$data-&gt;buzz = &quot;baz&quot;</span>
+<span class="c1">// $data-&gt;buzz = &quot;baz&quot;</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getJsonVar</span><span class="p">(</span><span class="s1">&#39;fizz&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">//$data = [&quot;buzz&quot; =&gt; &quot;baz&quot;]</span>
+<span class="c1">// $data = [&quot;buzz&quot; =&gt; &quot;baz&quot;]</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -959,7 +959,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 25, 2021.
+      <span class="lastupdated">Last updated on Nov 26, 2021.
       </span></p>
   </div>
 
