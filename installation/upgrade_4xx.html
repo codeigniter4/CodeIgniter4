@@ -293,26 +293,26 @@ them one by one.</p>
 </ul>
 <p><strong>Application Structure</strong></p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">application</span></code> folder is renamed as <code class="docutils literal notranslate"><span class="pre">app</span></code> and the framework still has <code class="docutils literal notranslate"><span class="pre">system</span></code> folders,
+<li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
 with the same interpretation as before.</p></li>
-<li><p>The framework now provides for a <code class="docutils literal notranslate"><span class="pre">public</span></code> folder, intended as the document root for your app.</p></li>
-<li><p>There is also a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder, to hold cache data, logs, and session data.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">app</span></code> folder looks very similar to <code class="docutils literal notranslate"><span class="pre">application</span></code> for CI3, with some
-name changes, and some subfolders moved to the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder.</p></li>
-<li><p>There is no longer a nested <code class="docutils literal notranslate"><span class="pre">application/core</span></code> folder, as we have
+<li><p>The framework now provides for a <strong>public</strong> folder, intended as the document root for your app.</p></li>
+<li><p>There is also a <strong>writable</strong> folder, to hold cache data, logs, and session data.</p></li>
+<li><p>The <strong>app</strong> folder looks very similar to <strong>application</strong> for CI3, with some
+name changes, and some subfolders moved to the <strong>writable</strong> folder.</p></li>
+<li><p>There is no longer a nested <strong>application/core</strong> folder, as we have
 a different mechanism for extending framework components (see below).</p></li>
 </ul>
 <p><strong>Model, View and Controller</strong></p>
 <ul class="simple">
 <li><p>CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
 are one of the most important things you have to handle.</p></li>
-<li><p>In CodeIgniter 4, models are now located in <code class="docutils literal notranslate"><span class="pre">app/Models</span></code> and you have to add the lines
+<li><p>In CodeIgniter 4, models are now located in <strong>app/Models</strong> and you have to add the lines
 <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> along with <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code> right after the opening php tag.
 The last step is to replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
-<li><p>The views of CodeIgniter 4 have been moved <code class="docutils literal notranslate"><span class="pre">to</span> <span class="pre">app/Views</span></code>. Furthermore, you have to change
+<li><p>The views of CodeIgniter 4 have been moved to <strong>app/Views</strong>. Furthermore, you have to change
 the syntax of loading views from <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view('directory_name/file_name')</span></code> to
 <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view('directory_name/file_name');</span></code>.</p></li>
-<li><p>Controllers of CodeIgniter 4 have to be moved to <code class="docutils literal notranslate"><span class="pre">app/Controllers;</span></code>. After that,
+<li><p>Controllers of CodeIgniter 4 have to be moved to <strong>app/Controllers</strong>. After that,
 add <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers;</span></code> after the opening php tag.
 Lastly, replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Controller</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">BaseController</span></code>.</p></li>
 <li><p>For more information we recommend you the following upgrade guides, which will give
@@ -332,16 +332,14 @@ references magically injected as properties of your controller.</p></li>
 <li><p>Classes are instantiated where needed, and components are managed
 by <code class="docutils literal notranslate"><span class="pre">Services</span></code>.</p></li>
 <li><p>The class loader automatically handles PSR-4 style class locating,
-within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (application) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., system) top level
-namespaces; with composer autoloading support, and even using educated
-guessing to find your models and libraries if they are in the right
-folder even though not namespaced.</p></li>
+within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (<strong>app</strong>) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., <strong>system</strong>) top level
+namespaces; with Composer autoloading support.</p></li>
 <li><p>You can configure the class loading to support whatever application structure
 you are most comfortable with, including the “HMVC” style.</p></li>
 </ul>
 <p><strong>Libraries</strong></p>
 <ul class="simple">
-<li><p>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they don’t have to.</p></li>
+<li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component.</p></li>
 </ul>
@@ -366,19 +364,19 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 </ul>
 <p><strong>Extending the framework</strong></p>
 <ul class="simple">
-<li><p>You don’t need a <code class="docutils literal notranslate"><span class="pre">core</span></code> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
+<li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements.</p></li>
 <li><p>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_x</span></code> classes inside your libraries folder
 to extend or replace CI4 pieces.</p></li>
 <li><p>Make any such classes where you like, and add appropriate
-service methods in <code class="docutils literal notranslate"><span class="pre">app/Config/Services.php</span></code> to load
+service methods in <strong>app/Config/Services.php</strong> to load
 your components instead of the default ones.</p></li>
 </ul>
 </section>
 <section id="upgrading-libraries">
 <h2>Upgrading Libraries<a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>Your app classes can still go inside <code class="docutils literal notranslate"><span class="pre">app/Libraries</span></code>, but they don’t have to.</p></li>
+<li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
 following namespaced conventions for your component.</p></li>
 <li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
