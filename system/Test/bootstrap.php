@@ -12,6 +12,7 @@
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Services;
+use Config\App;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -106,6 +107,14 @@ $env->load();
 
 // Always load the URL helper, it should be used in most of apps.
 helper('url');
+
+// Set locale and timezone
+$appConfig = new App();
+// Set default locale on the server
+locale_set_default($appConfig->defaultLocale ?? 'en');
+// Set default timezone on the server
+date_default_timezone_set($appConfig->appTimezone ?? 'UTC');
+unset($appConfig);
 
 require_once APPPATH . 'Config/Routes.php';
 
