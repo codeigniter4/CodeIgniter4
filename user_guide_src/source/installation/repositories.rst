@@ -6,15 +6,21 @@ The CodeIgniter 4 open source project has its own
 
 There are several development repositories, of interest to potential contributors:
 
-+---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
-| Repository                                                          | Audience     | Description                                                     |
-+=====================================================================+==============+=================================================================+
-| CodeIgniter4                                                        | contributors | Project codebase, including tests & user guide sources          |
-+---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
-| translations                                                        | developers   | System message translations                                     |
-+---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
-| `coding-standard <https://github.com/CodeIgniter/coding-standard>`_ | contributors | Coding style conventions & rules                                |
-+---------------------------------------------------------------------+--------------+-----------------------------------------------------------------+
++------------------+--------------+-----------------------------------------------------------------+
+| Repository       | Audience     | Description                                                     |
++==================+==============+=================================================================+
+| CodeIgniter4     | contributors | Project codebase, including tests & user guide sources          |
++------------------+--------------+-----------------------------------------------------------------+
+| translations     | developers   | System message translations                                     |
++------------------+--------------+-----------------------------------------------------------------+
+| coding-standard_ | contributors | Coding style conventions & rules                                |
++------------------+--------------+-----------------------------------------------------------------+
+| settings         | developers   | Settings Library for CodeIgniter 4                              |
++------------------+--------------+-----------------------------------------------------------------+
+| devkit           | developers   | Development toolkit for CodeIgniter libraries and projects      |
++------------------+--------------+-----------------------------------------------------------------+
+
+.. _coding-standard: https://github.com/CodeIgniter/coding-standard
 
 There are also several deployment repositories, referenced in the installation directions.
 The deployment repositories are built automatically when a new version is released, and they
