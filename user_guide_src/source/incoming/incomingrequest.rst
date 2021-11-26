@@ -149,7 +149,7 @@ data that you want or you can use "dot" notation to dig into the JSON to get dat
 
 ::
 
-    //With a request body of:
+    // With a request body of:
     {
         "foo": "bar",
         "fizz": {
@@ -157,10 +157,10 @@ data that you want or you can use "dot" notation to dig into the JSON to get dat
         }
     }
     $data = $request->getVar('foo');
-    //$data = "bar"
+    // $data = "bar"
 
     $data = $request->getVar('fizz.buzz');
-    //$data = "baz"
+    // $data = "baz"
 
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
@@ -169,12 +169,12 @@ correct ``CONTENT_TYPE`` header.
 
 ::
 
-    //With the same request as above
+    // With the same request as above
     $data = $request->getJsonVar('fizz');
-    //$data->buzz = "baz"
+    // $data->buzz = "baz"
 
     $data = $request->getJsonVar('fizz', true);
-    //$data = ["buzz" => "baz"]
+    // $data = ["buzz" => "baz"]
 
 .. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
 
