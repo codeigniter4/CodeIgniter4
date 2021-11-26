@@ -520,7 +520,7 @@ class IncomingRequest extends Request
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
-        return json_decode($this->body, $assoc, $depth, $options);
+        return json_decode($this->body ?? '', $assoc, $depth, $options);
     }
 
     /**
