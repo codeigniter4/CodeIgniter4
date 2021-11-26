@@ -78,10 +78,8 @@ General Adjustments
 - Classes are instantiated where needed, and components are managed
   by ``Services``.
 - The class loader automatically handles PSR-4 style class locating,
-  within the ``App`` (application) and ``CodeIgniter`` (i.e., system) top level
-  namespaces; with composer autoloading support, and even using educated
-  guessing to find your models and libraries if they are in the right
-  folder even though not namespaced.
+  within the ``App`` (**app**) and ``CodeIgniter`` (i.e., **system**) top level
+  namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
 
