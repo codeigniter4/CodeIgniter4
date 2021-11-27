@@ -11,6 +11,7 @@ Release Date: Not released
 
 BREAKING
 ========
+- Multiple table names will no longer be stored in ``BaseBuilder::$tableName`` - an empty string will be used instead.
 
 Enhancements
 ============
