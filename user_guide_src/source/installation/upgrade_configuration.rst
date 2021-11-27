@@ -25,7 +25,7 @@ Upgrade Guide
 1. You have to change the values in the default CI4 config files according to the
    changes in the CI3 files. The config names are pretty much the same as in CI3.
 2. If you are using custom config files in your CI3 project you have to create those
-   files as new PHP classes in your CI4 project in ``app/Config/``. These classes
+   files as new PHP classes in your CI4 project in **app/Config**. These classes
    should be in the ``Config`` namespace and should extend ``CodeIgniter\Config\BaseConfig``.
 3. Once you have created all custom config classes, you have to copy the variables
    from the CI3 config into the new CI4 config class as public class properties.
@@ -39,7 +39,7 @@ Code Example
 CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/models``::
+Path: **application/config**::
 
     <?php
 
@@ -51,7 +51,7 @@ Path: ``application/models``::
 CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Config``::
+Path: **app/Config**::
 
    <?php
 
