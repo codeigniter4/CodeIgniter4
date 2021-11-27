@@ -1041,71 +1041,7 @@ abstract class BaseConnection implements ConnectionInterface
         // in the correct location, assuming the period doesn't indicate that we're dealing
         // with an alias. While we're at it, we will escape the components
         if (strpos($item, '.') !== false) {
-            $parts = explode('.', $item);
-
-            // Does the first segment of the exploded item match
-            // one of the aliases previously identified? If so,
-            // we have nothing more to do other than escape the item
-            //
-            // NOTE: The ! empty() condition prevents this method
-            // from breaking when QB isn't enabled.
-            if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
-                if ($protectIdentifiers === true) {
-                    foreach ($parts as $key => $val) {
-                        if (! in_array($val, $this->reservedIdentifiers, true)) {
-                            $parts[$key] = $this->escapeIdentifiers($val);
-                        }
-                    }
-
-                    $item = implode('.', $parts);
-                }
-
-                return $item . $alias;
-            }
-
-            // Is there a table prefix defined in the config file? If not, no need to do anything
-            if ($this->DBPrefix !== '') {
-                // We now add the table prefix based on some logic.
-                // Do we have 4 segments (hostname.database.table.column)?
-                // If so, we add the table prefix to the column name in the 3rd segment.
-                if (isset($parts[3])) {
-                    $i = 2;
-                }
-                // Do we have 3 segments (database.table.column)?
-                // If so, we add the table prefix to the column name in 2nd position
-                elseif (isset($parts[2])) {
-                    $i = 1;
-                }
-                // Do we have 2 segments (table.column)?
-                // If so, we add the table prefix to the column name in 1st segment
-                else {
-                    $i = 0;
-                }
-
-                // This flag is set when the supplied $item does not contain a field name.
-                // This can happen when this function is being called from a JOIN.
-                if ($fieldExists === false) {
-                    $i++;
-                }
-
-                // Verify table prefix and replace if necessary
-                if ($this->swapPre !== '' && strpos($parts[$i], $this->swapPre) === 0) {
-                    $parts[$i] = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
-                }
-                // We only add the table prefix if it does not already exist
-                elseif (strpos($parts[$i], $this->DBPrefix) !== 0) {
-                    $parts[$i] = $this->DBPrefix . $parts[$i];
-                }
-
-                // Put the parts back together
-                $item = implode('.', $parts);
-            }
-
-            if ($protectIdentifiers === true) {
-                $item = $this->escapeIdentifiers($item);
-            }
-
-            return $item . $alias;
+            return $this->protectDotItem($item, $alias, $protectIdentifiers, $fieldExists);
         }
 
         // In some cases, especially 'from', we end up running through
@@ -1126,6 +1062,75 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers, true)) {
+            $item = $this->escapeIdentifiers($item);
+        }
+
+        return $item . $alias;
+    }
+
+    private function protectDotItem(string $item, string $alias, bool $protectIdentifiers, bool $fieldExists): string
+    {
+        $parts = explode('.', $item);
+
+        // Does the first segment of the exploded item match
+        // one of the aliases previously identified? If so,
+        // we have nothing more to do other than escape the item
+        //
+        // NOTE: The ! empty() condition prevents this method
+        // from breaking when QB isn't enabled.
+        if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
+            if ($protectIdentifiers === true) {
+                foreach ($parts as $key => $val) {
+                    if (! in_array($val, $this->reservedIdentifiers, true)) {
+                        $parts[$key] = $this->escapeIdentifiers($val);
+                    }
+                }
+
+                $item = implode('.', $parts);
+            }
+
+            return $item . $alias;
+        }
+
+        // Is there a table prefix defined in the config file? If not, no need to do anything
+        if ($this->DBPrefix !== '') {
+            // We now add the table prefix based on some logic.
+            // Do we have 4 segments (hostname.database.table.column)?
+            // If so, we add the table prefix to the column name in the 3rd segment.
+            if (isset($parts[3])) {
+                $i = 2;
+            }
+            // Do we have 3 segments (database.table.column)?
+            // If so, we add the table prefix to the column name in 2nd position
+            elseif (isset($parts[2])) {
+                $i = 1;
+            }
+            // Do we have 2 segments (table.column)?
+            // If so, we add the table prefix to the column name in 1st segment
+            else {
+                $i = 0;
+            }
+
+            // This flag is set when the supplied $item does not contain a field name.
+            // This can happen when this function is being called from a JOIN.
+            if ($fieldExists === false) {
+                $i++;
+            }
+
+            // Verify table prefix and replace if necessary
+            if ($this->swapPre !== '' && strpos($parts[$i], $this->swapPre) === 0) {
+                $parts[$i] = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
+            }
+            // We only add the table prefix if it does not already exist
+            elseif (strpos($parts[$i], $this->DBPrefix) !== 0) {
+                $parts[$i] = $this->DBPrefix . $parts[$i];
+            }
+
+            // Put the parts back together
+            $item = implode('.', $parts);
+        }
+
+        if ($protectIdentifiers === true) {
             $item = $this->escapeIdentifiers($item);
         }
 
