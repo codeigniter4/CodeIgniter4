@@ -60,8 +60,11 @@ final class LastInsertIDTest extends CIUnitTestCase
     {
         $sql = <<<SQL
 -- INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
+--INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
 /* INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value') */
-INSERT /* INTO "db_misc" */ INTO "db_job"  ("name", "description") VALUES (' INTO "abc"', ?)
+/*INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')*/
+INSERT /* INTO "db_misc" */ INTO -- comment "db_misc"
+"db_job"  ("name", "description") VALUES (' INTO "abc"', ?)
 SQL;
         $this->db->query($sql, ['Discount!']);
         $actual = $this->db->insertID();

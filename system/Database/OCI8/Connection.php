@@ -225,7 +225,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      * @return string
      */
     public function parseInsertTableName(string $sql): string {
-        $commentStrippedSql = preg_replace(['/\/\*(.|\n)*?\*\//m', '/^-- .*/'], '', $sql);
+        $commentStrippedSql = preg_replace(['/\/\*(.|\n)*?\*\//m', '/--.+/'], '', $sql);
         $isInsertQuery = strpos(strtoupper(ltrim($commentStrippedSql)), 'INSERT') === 0;
 
         if (!$isInsertQuery) {
