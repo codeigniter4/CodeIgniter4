@@ -69,7 +69,6 @@ final class PreparedQueryTest extends CIUnitTestCase
             $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
         }
 
-
         $this->assertSame($expected, $this->query->getQueryString());
     }
 

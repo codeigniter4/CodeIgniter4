@@ -27,7 +27,8 @@ final class LastInsertIDTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-    public function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
 
         if ($this->db->DBDriver !== 'OCI8') {
@@ -58,14 +59,14 @@ final class LastInsertIDTest extends CIUnitTestCase
 
     public function testGetInsertIDWithHasCommentQuery()
     {
-        $sql = <<<SQL
--- INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
---INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
-/* INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value') */
-/*INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')*/
-INSERT /* INTO "db_misc" */ INTO -- comment "db_misc"
-"db_job"  ("name", "description") VALUES (' INTO "abc"', ?)
-SQL;
+        $sql = <<<'SQL'
+            -- INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
+            --INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')
+            /* INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value') */
+            /*INSERT INTO "db_misc" ("key", "value") VALUES ('key', 'value')*/
+            INSERT /* INTO "db_misc" */ INTO -- comment "db_misc"
+            "db_job"  ("name", "description") VALUES (' INTO "abc"', ?)
+            SQL;
         $this->db->query($sql, ['Discount!']);
         $actual = $this->db->insertID();
 

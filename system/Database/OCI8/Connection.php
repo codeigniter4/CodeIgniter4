@@ -198,7 +198,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
             oci_set_prefetch($this->stmtId, 1000);
 
-            $result = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
+            $result          = oci_execute($this->stmtId, $this->commitMode) ? $this->stmtId : false;
             $insertTableName = $this->parseInsertTableName($sql);
 
             if ($result && $insertTableName !== '') {
@@ -219,26 +219,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 
     /**
      * Get the table name for the insert statement from sql.
-     *
-     * @param string $sql
-     *
-     * @return string
      */
-    public function parseInsertTableName(string $sql): string {
+    public function parseInsertTableName(string $sql): string
+    {
         $commentStrippedSql = preg_replace(['/\/\*(.|\n)*?\*\//m', '/--.+/'], '', $sql);
-        $isInsertQuery = strpos(strtoupper(ltrim($commentStrippedSql)), 'INSERT') === 0;
+        $isInsertQuery      = strpos(strtoupper(ltrim($commentStrippedSql)), 'INSERT') === 0;
 
-        if (!$isInsertQuery) {
+        if (! $isInsertQuery) {
             return '';
         }
 
         preg_match('/(?is)\b(?:into)\s+("?\w+"?)/', $commentStrippedSql, $match);
         $tableName = $match[1] ?? '';
-        $tableName = strpos($tableName, '"') === 0 ? trim($tableName, '"') : strtoupper($tableName);
 
-        return $tableName;
+        return strpos($tableName, '"') === 0 ? trim($tableName, '"') : strtoupper($tableName);
     }
-
 
     /**
      * Returns the total number of rows affected by this query.
@@ -616,9 +611,9 @@ class Connection extends BaseConnection implements ConnectionInterface
             return 0;
         }
 
-        $query = $this->query('SELECT DATA_DEFAULT FROM USER_TAB_COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ?', [$this->lastInsertedTableName, $primaryColumnName])->getRow();
+        $query           = $this->query('SELECT DATA_DEFAULT FROM USER_TAB_COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ?', [$this->lastInsertedTableName, $primaryColumnName])->getRow();
         $lastInsertValue = str_replace('nextval', 'currval', $query->DATA_DEFAULT ?? '0');
-        $query = $this->query(sprintf('SELECT %s SEQ FROM DUAL', $lastInsertValue))->getRow();
+        $query           = $this->query(sprintf('SELECT %s SEQ FROM DUAL', $lastInsertValue))->getRow();
 
         return (int) ($query->SEQ ?? 0);
     }
