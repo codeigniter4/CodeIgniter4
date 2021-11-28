@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
