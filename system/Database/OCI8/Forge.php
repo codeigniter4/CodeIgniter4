@@ -17,6 +17,13 @@ namespace CodeIgniter\Database\OCI8;
 class Forge extends \CodeIgniter\Database\Forge
 {
     /**
+     * DROP INDEX statement
+     *
+     * @var string
+     */
+    protected $dropIndexStr = 'DROP INDEX %s';
+
+    /**
      * CREATE DATABASE statement
      *
      * @var false
