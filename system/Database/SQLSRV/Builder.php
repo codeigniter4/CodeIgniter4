@@ -311,29 +311,24 @@ class Builder extends BaseBuilder
         if (empty($this->QBOrderBy)) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
-        
-        if (version_compare($this->db->getVersion(), '11', '<='))
-        {
-			/**
-			 * Add the capability to using LIMIT for SQL Server 2011 or earlier
-			 */
+
+        if (version_compare($this->db->getVersion(), '11', '<=')) {
+            /**
+             * Add the capability to using LIMIT for SQL Server 2011 or earlier
+             */
             $limit = $this->QBOffset + $this->QBLimit;
 
             // An ORDER BY clause is required for ROW_NUMBER() to work
-            if ($this->QBOffset && ! empty($this->QBOrderBy))
-            {
+            if ($this->QBOffset && ! empty($this->QBOrderBy)) {
                 $orderBy = $this->compileOrderBy();
 
                 // We have to strip the ORDER BY clause
                 $sql = trim(substr($sql, 0, strrpos($sql, $orderBy)));
 
                 // Get the fields to select from our subquery, so that we can avoid CI_rownum appearing in the actual results
-                if (count($this->QBSelect) === 0 OR strpos(implode(',', $this->QBSelect), '*') !== FALSE)
-                {
+                if (count($this->QBSelect) === 0 OR strpos(implode(',', $this->QBSelect), '*') !== FALSE) {
                     $select = '*'; // Inevitable
-                }
-                else
-                {
+                } else {
                     // Use only field names and their aliases, everything else is out of our scope.
                     $select = array();
                     $field_regexp = ($this->_quoted_identifier ? '("[^\"]+")' : '(\[[^\]]+\])');
@@ -341,6 +336,7 @@ class Builder extends BaseBuilder
                     {
                         $select[] = preg_match('/(?:\s|\.)' . $field_regexp . '$/i', $this->QBSelect[$i], $m) ? $m[1] : $this->QBSelect[$i];
                     }
+
                     $select = implode(', ', $select);
                 }
 
