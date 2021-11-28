@@ -201,6 +201,16 @@ Then add validation rules in the controller (**Form.php**)::
 
 If you submit the form you should see the success page or the form with error messages.
 
+Traditional and Strict Validation
+*********************************
+
+CI4 has two Validation classes. The default is the ``CodeIgniter\Validation\Validation`` class,
+and the new is the ``CodeIgniter\ValidationStrict\Validation`` class (**Strict Validation**), which provides strict validation.
+
+When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Validation**.
+
+.. important:: If you want to use **Strict Validation**, you need to configure. See :ref:`strict-validation` for the details.
+
 Loading the Library
 ************************************************
 
