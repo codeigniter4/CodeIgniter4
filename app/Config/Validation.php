@@ -17,6 +17,8 @@ class Validation
      * Stores the classes that contain the
      * rules that are available.
      *
+     * If you use strict validation, please set the classes in ValidationStrict.
+     *
      * @var string[]
      */
     public $ruleSets = [
@@ -24,6 +26,10 @@ class Validation
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
+        // \CodeIgniter\ValidationStrict\CreditCardRules::class,
+        // \CodeIgniter\ValidationStrict\FileRules::class,
+        // \CodeIgniter\ValidationStrict\FormatRules::class,
+        // \CodeIgniter\ValidationStrict\Rules::class,
     ];
 
     /**

@@ -24,4 +24,15 @@ class Feature extends BaseConfig
      * @var bool
      */
     public $multipleFilters = false;
+
+    /**
+     * Enable strict validation or not
+     *
+     * If you enable this:
+     *   - Don't forget to update `$ruleSets` in `app/Config/Validation.php`.
+     *   - CodeIgniter\ValidationStrict\Validation is used.
+     *
+     * @var bool
+     */
+    public $strictValidation = false;
 }

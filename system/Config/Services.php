@@ -50,6 +50,8 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
+use CodeIgniter\ValidationStrict\Validation as ValidationStrict;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
@@ -645,7 +647,7 @@ class Services extends BaseService
     /**
      * The Validation class provides tools for validating input data.
      *
-     * @return Validation
+     * @return ValidationInterface
      */
     public static function validation(?ValidationConfig $config = null, bool $getShared = true)
     {
@@ -654,6 +656,11 @@ class Services extends BaseService
         }
 
         $config = $config ?? config('Validation');
+
+        $strictValidationEnabled = config('Feature')->strictValidation ?? false;
+        if ($strictValidationEnabled) {
+            return new ValidationStrict($config, AppServices::renderer());
+        }
 
         return new Validation($config, AppServices::renderer());
     }
