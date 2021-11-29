@@ -72,10 +72,153 @@
 
 ## [v4.1.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.4) (2021-09-06)
 
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.3...v4.1.4)
+
 This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 [CodeIgniter Coding Standard](https://github.com/CodeIgniter/coding-standard) (based on PSR-12).
 
-*Note: Full changelog forthcoming.*
+**What's Changed**
+
+* Use php-cs-fixer as coding style tool by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4770
+* Convert tabs to spaces by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4771
+* Initial rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4774
+* Fixes incorrect release versions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4777
+* [CS Migration]Enable `binary_operator_spaces` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4779
+* Update rector/rector requirement from 0.11.8 to 0.11.14 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4785
+* Remove unused local variables by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4783
+* Use static lambda if a binding to `$this` is not required. by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4784
+* [CS Migration]PSR12 rules starting with "b" by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4780
+* Use/Fix `preg_quote()` delimiters by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4789
+* [CS Migration]Update indentation to spaces by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4778
+* Define yoda_style rule and initially apply no_yoda style by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4786
+* Don't override `$path` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4787
+* Don't override `$value` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4788
+* Add brackets to clarify intent and avoid unwanted side-effects by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4791
+* Use constants instead of functions by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4793
+* Replace alias functions with origins by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4794
+* Use null coalescing operator by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4796
+* Remove removed `safe_mode` ini Option by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4795
+* Enable `blank_line_before_statement` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4790
+* Enable `braces` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4792
+* Ensure single space between cast and variable by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4797
+* Update rector/rector requirement from 0.11.14 to 0.11.15 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4803
+* It will fix undefined index cid error when sending emails with embedded images by @mmfarhan in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* Update rector/rector requirement from 0.11.15 to 0.11.16 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4805
+* Phpdoc param return types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4802
+* [Rector] Apply Rector: SimplifyRegexPatternRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4806
+* Shift binary alignment to `align_single_space_minimal` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4801
+* Enable rules fixing array notations by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4808
+* PSR12: Add visibility identifiers by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4809
+* Class, trait and interface elements must be separated with one line by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4810
+* Enable `ordered_imports` by @totoprayogo1916 in https://github.com/codeigniter4/CodeIgniter4/pull/4815
+* Enable `class_definition` fixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4811
+* Revert Model coalesce by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/4819
+* Define remaining "c" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4817
+* Heredocs-related rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4818
+* Update rector/rector requirement from 0.11.16 to 0.11.20 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4832
+* Initial Phpdoc-related rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4820
+* Phpdoc types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4823
+* Modernize and standardize typecasting by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4824
+* Enforce ordering and trimming of phpdoc elements by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4822
+* Define switch-related rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4835
+* Define rules starting with "L" by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4838
+* Define rules on unary operators by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4837
+* Define initial "m" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4839
+* Define rules for ternary operators by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4836
+* Define last "m" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4842
+* PSR12: Enable `method_argument_space` fixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4840
+* Enable `method_chaining_indentation` fixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4841
+* Native functions and type hints should be written in correct case by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4845
+* PSR12: All instances created with `new` keyword must be followed by braces. by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4846
+* Master language constructs shall be used instead of aliases. by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4847
+* [Commands] Remove unused $minPHPVersion property at Serve command by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4852
+* Update to latest PHPStan and Rector and Rector config compat by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4861
+* [Rector] Apply Rector: RemoveExtraParametersRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4862
+* [Rector] Apply Rector: RemoveUnusedVariableAssignRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4864
+* Update rector/rector requirement from 0.11.21 to 0.11.23 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4869
+* Test classes should be marked as final and internal by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4870
+* Normalize tests to use dedicated PHPUnit assertions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4868
+* Other PHPUnit-related fixers by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4871
+* Configure rules in "d" by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4872
+* Defining the trailing "p" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4873
+* Update to latest laminas-escaper ^2.8 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4878
+* Enable `echo_tag_syntax` until `error_suppression` fixers by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4879
+* Strive for stricter assertions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4874
+* Convert to explicit those implicit string variables by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4882
+* Enable `explicit_indirect_variable` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4881
+* Update rector/rector requirement from 0.11.23 to 0.11.28 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4889
+* Update to rector 0.11.29 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4893
+* Update rector/rector requirement from 0.11.29 to 0.11.32 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4895
+* Enable remaining rules in "f" by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4888
+* Enable `escape_implicit_backslashes` fixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4880
+* Enable prohibitory rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4900
+* Enable `no_null_property_initialization` fixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4901
+* Update rector/rector requirement from 0.11.32 to 0.11.35 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4916
+* General phpdocs by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4917
+* Define "i" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4919
+* Define "o" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4921
+* Define "r" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4926
+* [Rector] Re-run InlineIfToExplicitIfRector on Latest Rector 0.11.36 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4930
+* Add `?` to nullable typehints by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4928
+* Define `single_**` rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4924
+* Define last "s" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4925
+* Define initial "s" rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4923
+* Define remaining rules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4934
+* Remove 'memory_usage' from 'displayPerformanceMetrics()' comment by @Mauricevb in https://github.com/codeigniter4/CodeIgniter4/pull/4939
+* Normalize var and return annotations by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4942
+* Fix tag casing and tag types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4943
+* Change some phpdocs to simple comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4945
+* Remove useless code separator comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4946
+* Normalize and add file-level headers to `system/`, `tests/`, `utils/` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4949
+* [Rector] Update rector to 0.11.37, clean up config by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4954
+* Update to phpdocumentor v3.0 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4773
+* [PHPStan] Using PHPStan ^0.12.91 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4962
+* Add workflow for linting framework by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4958
+* Update pre-commit to lint code by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4960
+* Remove superfluous phpdoc tags by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4941
+* Update to phpdoc v3.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4961
+* [Rector] Apply FuncGetArgsToVariadicParamRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4963
+* Optimize Filters by @mostafakhudair in https://github.com/codeigniter4/CodeIgniter4/pull/4965
+* Update rector/rector requirement from 0.11.37 to 0.11.40 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4967
+* Fix properly the phpstan error in 0.12.93 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4970
+* [Rector] Apply MakeInheritedMethodVisibilitySameAsParentRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4966
+* Fix API repo preparation step by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4969
+* Manual cleanup of docblocks and comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4964
+* Delete `docs` directly, not `api/docs` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4976
+* [Rector] Apply Rector: RemoveDuplicatedArrayKeyRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4978
+* Update rector/rector requirement from 0.11.40 to 0.11.42 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4984
+* Update rector/rector requirement from 0.11.42 to 0.11.43 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4985
+* Remove override by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4991
+* Update rector/rector requirement from 0.11.43 to 0.11.46 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4995
+* Update rector/rector requirement from 0.11.46 to 0.11.47 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/4997
+* Add SpaceAfterCommentStartFixer by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4999
+* [Rector] Apply Rector: RemoveDoubleAssignRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5000
+* [Rector] Apply Rector dead code set list by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5007
+* Make Cookie compatible with ArrayAccess by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5004
+* Replace deprecated FILTER_SANITIZE_STRING by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5005
+* Make CookieStore compatible with IteratorAggregate::getIterator by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5010
+* Make the session handlers all compatible with SessionHandlerInterface by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5012
+* Make CITestStreamFilter compatible with php_user_filter by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5014
+* Update rector/rector requirement from 0.11.48 to 0.11.49 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5018
+* Make Time compatible with DateTime by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5022
+* Update dependabot config by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5027
+* Add `ReturnTypeWillChange` attribute to Entity by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5028
+* Replace unused Entity private method by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5029
+* Update rector/rector requirement from 0.11.49 to 0.11.52 by @dependabot in https://github.com/codeigniter4/CodeIgniter4/pull/5033
+* Fix broken apt installation by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5037
+* Make File compatible with SplFileInfo by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5040
+* Update documentation code samples by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5039
+* PHP Copy-Paste Detector by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5031
+* Fix key casting in form_dropdown helper. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5035
+* [Rector] Apply Rector: FixClassCaseSensitivityNameRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5044
+* Bump to php-cs-fixer v3.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5045
+* Switch to official coding standard by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5038
+* 4.1.4 Ready code by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5058
+
+**New Contributors**
+
+* @mmfarhan made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* @Mauricevb made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4939
 
 ## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
 
