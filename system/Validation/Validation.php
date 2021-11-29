@@ -215,7 +215,7 @@ class Validation implements ValidationInterface
         }
 
         if (in_array('permit_empty', $rules, true)) {
-            if (! in_array('required', $rules, true) && (is_array($value) ? $value === [] : trim($value ?? '') === '')) {
+            if (! in_array('required', $rules, true) && (is_array($value) ? $value === [] : trim((string) $value) === '')) {
                 $passed = true;
 
                 foreach ($rules as $rule) {
