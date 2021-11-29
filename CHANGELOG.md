@@ -86,41 +86,17 @@ This release focuses on code style. All changes (except those noted below) are c
 * Don't override `$path` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4787
 * Don't override `$value` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4788
 * Add brackets to clarify intent and avoid unwanted side-effects by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4791
-* Use constants instead of functions by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4793
-* Replace alias functions with origins by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4794
-* Use null coalescing operator by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4796
 * Remove removed `safe_mode` ini Option by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4795
-* Ensure single space between cast and variable by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4797
 * It will fix undefined index cid error when sending emails with embedded images by @mmfarhan in https://github.com/codeigniter4/CodeIgniter4/pull/4798
-* Class, trait and interface elements must be separated with one line by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4810
 * Revert Model coalesce by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/4819
-* Modernize and standardize typecasting by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4824
-* Enforce ordering and trimming of phpdoc elements by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4822
-* Native functions and type hints should be written in correct case by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4845
 * Master language constructs shall be used instead of aliases. by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4847
 * [Commands] Remove unused $minPHPVersion property at Serve command by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4852
-* Test classes should be marked as final and internal by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4870
-* Normalize tests to use dedicated PHPUnit assertions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4868
 * Update to latest laminas-escaper ^2.8 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4878
-* Strive for stricter assertions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4874
-* Convert to explicit those implicit string variables by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4882
-* General phpdocs by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4917
-* Add `?` to nullable typehints by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4928
 * Remove 'memory_usage' from 'displayPerformanceMetrics()' comment by @Mauricevb in https://github.com/codeigniter4/CodeIgniter4/pull/4939
-* Normalize var and return annotations by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4942
-* Fix tag casing and tag types by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4943
-* Change some phpdocs to simple comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4945
 * Remove useless code separator comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4946
-* Normalize and add file-level headers to `system/`, `tests/`, `utils/` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4949
-* Update to phpdocumentor v3.0 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4773
-* Add workflow for linting framework by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4958
-* Update pre-commit to lint code by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4960
-* Remove superfluous phpdoc tags by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4941
 * Optimize Filters by @mostafakhudair in https://github.com/codeigniter4/CodeIgniter4/pull/4965
 * Fix properly the phpstan error in 0.12.93 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4970
-* Fix API repo preparation step by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4969
 * Manual cleanup of docblocks and comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4964
-* Delete `docs` directly, not `api/docs` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4976
 * Make Cookie compatible with ArrayAccess by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5004
 * Replace deprecated FILTER_SANITIZE_STRING by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5005
 * Make CookieStore compatible with IteratorAggregate::getIterator by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5010
@@ -129,7 +105,6 @@ This release focuses on code style. All changes (except those noted below) are c
 * Make Time compatible with DateTime by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5022
 * Add `ReturnTypeWillChange` attribute to Entity by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5028
 * Replace unused Entity private method by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5029
-* Fix broken apt installation by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5037
 * Make File compatible with SplFileInfo by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5040
 * Update documentation code samples by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5039
 * PHP Copy-Paste Detector by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5031
