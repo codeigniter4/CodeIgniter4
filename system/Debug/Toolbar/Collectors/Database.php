@@ -141,7 +141,10 @@ class Database extends BaseCollector
                 // Clean up the file paths
                 $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
                 $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
-                $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+                if (defined('VENDORPATH')) {
+                    // VENDORPATH is not defined unless `vendor/autoload.php` exists
+                    $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+                }
                 $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
 
                 if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
