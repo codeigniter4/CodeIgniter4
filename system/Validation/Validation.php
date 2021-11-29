@@ -295,7 +295,8 @@ class Validation implements ValidationInterface
                     $value = json_encode($value);
                 }
 
-                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, $value);
+                $param                = ($param === false) ? '' : $param;
+                $this->errors[$field] = $error ?? $this->getErrorMessage($rule, $field, $label, $param, (string) $value);
 
                 return false;
             }
@@ -646,6 +647,9 @@ class Validation implements ValidationInterface
      */
     protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
     {
+        $param = $param ?? '';
+
+        // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
             $message = lang($this->customErrors[$field][$rule]);
         } else {
