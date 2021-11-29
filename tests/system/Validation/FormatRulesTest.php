@@ -837,10 +837,11 @@ final class FormatRulesTest extends CIUnitTestCase
 
     public function integerInvalidTypeDataProvider(): Generator
     {
-        yield 'array with int' => [
-            [555],
-            true,  // incorrect
-        ];
+        // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
+        // yield 'array with int' => [
+        // [555],
+        // false,
+        // ];
 
         // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
         // yield 'empty array' => [

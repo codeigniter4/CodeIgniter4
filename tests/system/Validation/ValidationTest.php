@@ -119,7 +119,7 @@ final class ValidationTest extends CIUnitTestCase
     {
         yield 'list array' => [
             [1, 2, 3, 4, 5],
-            false,   // incorrect
+            true,
         ];
 
         yield 'associative array' => [
@@ -128,7 +128,7 @@ final class ValidationTest extends CIUnitTestCase
                 'role'     => 'administrator',
                 'usepass'  => 0,
             ],
-            false,   // incorrect
+            true,
         ];
 
         yield 'int' => [
@@ -171,7 +171,7 @@ final class ValidationTest extends CIUnitTestCase
     {
         yield 'array with int' => [
             [555],
-            true,  // incorrect
+            false,
         ];
 
         yield 'empty array' => [
