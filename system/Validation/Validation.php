@@ -261,7 +261,7 @@ class Validation implements ValidationInterface
             // Placeholder for custom errors from the rules.
             $error = null;
 
-            // If it's a callable, call and and get out of here.
+            // If it's a callable, call and get out of here.
             if ($isCallable) {
                 $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
             } else {
