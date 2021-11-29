@@ -100,6 +100,101 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
+     *
+     * @dataProvider arrayDataProvider
+     *
+     * @param mixed $value
+     */
+    public function testCanValidatetArrayData($value, bool $expected): void
+    {
+        $this->validation->setRules(['arr' => 'is_array']);
+
+        $data['arr'] = $value;
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function arrayDataProvider(): Generator
+    {
+        yield 'list array' => [
+            [1, 2, 3, 4, 5],
+            false,   // incorrect
+        ];
+
+        yield 'associative array' => [
+            [
+                'username' => 'admin001',
+                'role'     => 'administrator',
+                'usepass'  => 0,
+            ],
+            false,   // incorrect
+        ];
+
+        yield 'int' => [
+            0,
+            false,
+        ];
+
+        yield 'string int' => [
+            '0',
+            false,
+        ];
+
+        yield 'bool' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
+     *
+     * @dataProvider isIntInvalidTypeDataProvider
+     *
+     * @param mixed $value
+     */
+    public function testIsIntWithInvalidTypeData($value, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => 'is_int']);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function isIntInvalidTypeDataProvider(): Generator
+    {
+        yield 'array with int' => [
+            [555],
+            true,  // incorrect
+        ];
+
+        yield 'empty array' => [
+            [],
+            false,
+        ];
+
+        yield 'bool true' => [
+            true,
+            false,
+        ];
+
+        yield 'bool false' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
+
     public function testRunReturnsLocalizedErrors(): void
     {
         $data = ['foo' => 'notanumber'];
