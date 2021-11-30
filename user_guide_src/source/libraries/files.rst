@@ -96,17 +96,17 @@ Moving Files
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter::
 
-    $file->move(WRITEPATH.'uploads');
+    $file->move(WRITEPATH . 'uploads');
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter::
 
     $newName = $file->getRandomName();
-    $file->move(WRITEPATH.'uploads', $newName);
+    $file->move(WRITEPATH . 'uploads', $newName);
 
 The move() method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed::
 
-    $file = $file->move(WRITEPATH.'uploads');
+    $file = $file->move(WRITEPATH . 'uploads');
 
 ****************
 File Collections
@@ -136,8 +136,7 @@ When your collection is complete, you can use ``get()`` to retrieve the final li
     echo 'My files: ' . implode(PHP_EOL, $files->get());
     echo 'I have ' . count($files) . ' files!';
 
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
         echo 'Moving ' . $file->getBasename() . ', ' . $file->getSizeByUnit('mb');
         $file->move(WRITABLE . $file->getRandomName());
     }
