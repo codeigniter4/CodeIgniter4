@@ -110,7 +110,7 @@ In controller::
         foreach($imagefile['images'] as $img) {
             if ($img->isValid() && ! $img->hasMoved()) {
                 $newName = $img->getRandomName();
-                $img->move(WRITEPATH.'uploads', $newName);
+                $img->move(WRITEPATH . 'uploads', $newName);
             }
         }
     }
@@ -153,7 +153,7 @@ Verify A File
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method::
 
     if (! $file->isValid()) {
-        throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
+        throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
     }
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
@@ -216,12 +216,12 @@ Moving Files
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter::
 
-    $file->move(WRITEPATH.'uploads');
+    $file->move(WRITEPATH . 'uploads');
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter::
 
     $newName = $file->getRandomName();
-    $file->move(WRITEPATH.'uploads', $newName);
+    $file->move(WRITEPATH . 'uploads', $newName);
 
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean::
