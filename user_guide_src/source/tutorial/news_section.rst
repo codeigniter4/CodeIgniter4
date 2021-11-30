@@ -217,7 +217,7 @@ and add the next piece of code.
             </div>
             <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
 
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
     <?php else: ?>
 

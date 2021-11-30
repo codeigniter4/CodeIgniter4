@@ -607,7 +607,7 @@ a new view at **/app/Views/_errors_list.php**::
 
     <div class="alert alert-danger" role="alert">
         <ul>
-        <?php foreach ($errors as $error) : ?>
+        <?php foreach ($errors as $error): ?>
             <li><?= esc($error) ?></li>
         <?php endforeach ?>
         </ul>
