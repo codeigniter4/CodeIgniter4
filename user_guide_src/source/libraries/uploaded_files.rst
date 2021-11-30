@@ -160,7 +160,7 @@ As seen in this example, if a file had an upload error, you can retrieve the err
 message with the ``getError()`` and ``getErrorString()`` methods. The following errors can be discovered through
 this method:
 
-* The file exceeds your upload_max_filesize ini directive.
+* The file exceeds your ``upload_max_filesize`` ini directive.
 * The file exceeds the upload limit defined in your form.
 * The file was only partially uploaded.
 * No file was uploaded.
@@ -255,7 +255,7 @@ passing it as the second parameter::
 
     $path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');
 
-Moving an uploaded file can fail, with an HTTPException, under several circumstances:
+Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:
 
 - the file has already been moved
 - the file did not upload successfully
