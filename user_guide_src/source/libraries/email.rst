@@ -44,6 +44,8 @@ Here is a basic example demonstrating how you might send email::
 
     $email->send();
 
+.. _setting-email-preferences:
+
 Setting Email Preferences
 =========================
 
