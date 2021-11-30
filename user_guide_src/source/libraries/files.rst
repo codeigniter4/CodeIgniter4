@@ -149,7 +149,7 @@ Starting a Collection
 **__construct(string[] $files = [])**
 
 The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
-**add()** so any files supplied by child classes in the **$files** will remain.
+``add()`` so any files supplied by child classes in the ``$files`` will remain.
 
 **define()**
 
