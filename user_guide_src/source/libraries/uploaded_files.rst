@@ -43,7 +43,7 @@ this code and save it to your **app/Views/** directory::
     <body>
 
     <?php foreach ($errors as $error): ?>
-        <li><?= $error ?></li>
+        <li><?= esc($error) ?></li>
     <?php endforeach ?>
 
     <?= form_open_multipart('upload/upload') ?>
@@ -81,9 +81,9 @@ place this code and save it to your **app/Views/** directory::
     <h3>Your file was successfully uploaded!</h3>
 
     <ul>
-        <li>name: <?= $uploaded_flleinfo->getBasename() ?></li>
-        <li>size: <?= $uploaded_flleinfo->getSizeByUnit('kb') ?> KB</li>
-        <li>extension: <?= $uploaded_flleinfo->guessExtension() ?></li>
+        <li>name: <?= esc($uploaded_flleinfo->getBasename()) ?></li>
+        <li>size: <?= esc($uploaded_flleinfo->getSizeByUnit('kb')) ?> KB</li>
+        <li>extension: <?= esc($uploaded_flleinfo->guessExtension()) ?></li>
     </ul>
 
     <p><?= anchor('upload', 'Upload Another File!') ?></p>
