@@ -146,6 +146,10 @@ this code and save it to your **app/Controllers/** directory::
         }
     }
 
+.. note:: Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global,
+    only :ref:`rules-for-file-uploads` can be used to validate upload file with :doc:`validation`.
+    The rule ``required`` also can't be used, so use ``uploaded`` instead.
+
 The Upload Directory
 ====================
 

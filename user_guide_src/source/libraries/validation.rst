@@ -892,6 +892,8 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    HSBC Canada Card (hsbc)
 ======================= ========== ============================================= ===================================================
 
+.. _rules-for-file-uploads:
+
 Rules for File Uploads
 ======================
 
