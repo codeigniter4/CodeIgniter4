@@ -196,10 +196,11 @@ Other File Info
 
 **getClientExtension()**
 
-Returns the original file extension, based on the file name that was uploaded. This is NOT a trusted source. For a
-trusted version, use ``guessExtension()`` instead::
+Returns the original file extension, based on the file name that was uploaded::
 
     $ext = $file->getClientExtension();
+
+.. warning:: This is NOT a trusted source. For a trusted version, use ``guessExtension()`` instead.
 
 **getClientMimeType()**
 
