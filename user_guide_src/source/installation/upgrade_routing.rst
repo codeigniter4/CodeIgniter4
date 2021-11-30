@@ -19,7 +19,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. You have to change the syntax of each routing line and append it in ``app/Config/Routes.php``. For example:
+1. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
 
 - ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'App\Blogs');`` this would map to the ``index()`` method in the "Blogs" class.
 - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
@@ -30,7 +30,7 @@ Code Example
 
 CodeIgniter Version 3.11
 ------------------------
-Path: ``application/config/routes.php``::
+Path: **application/config/routes.php**::
 
     <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
@@ -47,7 +47,7 @@ Path: ``application/config/routes.php``::
 
 CodeIgniter Version 4.x
 -----------------------
-Path: ``app/Config/Routes.php``::
+Path: **app/Config/Routes.php**::
 
     <?php
 
