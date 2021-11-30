@@ -138,7 +138,7 @@ In controller::
     $file1 = $this->request->getFile('my-form.details.avatars.0');
     $file2 = $this->request->getFile('my-form.details.avatars.1');
 
-.. note:: using ``getFiles()`` is more appropriate
+.. note:: Using ``getFiles()`` is more appropriate.
 
 =====================
 Working With the File
