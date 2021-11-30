@@ -21,9 +21,9 @@ Upgrade Guide
 =============
 1. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
 
-- ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'App\Blogs');`` this would map to the ``index()`` method in the "Blogs" class.
-- ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
-- ``$route['login/(.+)'] = 'auth/login/$1';`` to ``$routes->add('login/(.+)', 'Auth::login/$1');``
+    - ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'Blogs::index');``. This would map to the ``index()`` method in the ``Blogs`` controller.
+    - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
+    - ``$route['login/(.+)'] = 'auth/login/$1';`` to ``$routes->add('login/(.+)', 'Auth::login/$1');``
 
 Code Example
 ============
