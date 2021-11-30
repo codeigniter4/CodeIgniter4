@@ -245,7 +245,7 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile" />
 
-By default, upload files are saved in writable/uploads directory. The YYYYMMDD folder
+By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
 and random file name will be created. Returns a file path::
 
     $path = $this->request->getFile('userfile')->store();
