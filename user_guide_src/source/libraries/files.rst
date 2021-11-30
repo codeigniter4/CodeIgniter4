@@ -180,17 +180,17 @@ Inputting Files
 Adds all files indicated by the path or array of paths. If the path resolves to a directory then ``$recursive``
 will include sub-directories.
 
-**addFile(string $file)**
+**addFile(string $file)** /
 **addFiles(array $files)**
 
 Adds the file or files to the current list of input files. Files are absolute paths to actual files.
 
-**removeFile(string $file)**
+**removeFile(string $file)** /
 **removeFiles(array $files)**
 
 Removes the file or files from the current list of input files.
 
-**addDirectory(string $directory, bool $recursive = false)**
+**addDirectory(string $directory, bool $recursive = false)** /
 **addDirectories(array $directories, bool $recursive = false)**
 
 Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
@@ -199,7 +199,7 @@ absolute paths to actual directories.
 Filtering Files
 ===============
 
-**removePattern(string $pattern, string $scope = null)**
+**removePattern(string $pattern, string $scope = null)** /
 **retainPattern(string $pattern, string $scope = null)**
 
 Filters the current file list through the pattern (and optional scope), removing or retaining matched
