@@ -163,10 +163,10 @@ Now open your view file and change the text to variables that correspond to the 
 
     <html>
         <head>
-            <title><?= $title ?></title>
+            <title><?= esc($title) ?></title>
         </head>
         <body>
-            <h1><?= $heading ?></h1>
+            <h1><?= esc($heading) ?></h1>
         </body>
     </html>
 
@@ -220,17 +220,17 @@ Now open your view file and create a loop::
 
     <html>
     <head>
-        <title><?= $title ?></title>
+        <title><?= esc($title) ?></title>
     </head>
     <body>
-        <h1><?= $heading ?></h1>
+        <h1><?= esc($heading) ?></h1>
 
         <h3>My Todo List</h3>
 
         <ul>
         <?php foreach ($todo_list as $item):?>
 
-            <li><?= $item ?></li>
+            <li><?= esc($item) ?></li>
 
         <?php endforeach;?>
         </ul>
