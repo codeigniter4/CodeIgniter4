@@ -50,9 +50,9 @@ Path: ``application/models``::
         public function insert($name, $address, $email)
         {
             $this->db->insert('user_contacts', array(
-                "name" => $name,
-                "address" => $address,
-                "email" => $email,
+                'name'    => $name,
+                'address' => $address,
+                'email'   => $email,
             ));
         }
     }

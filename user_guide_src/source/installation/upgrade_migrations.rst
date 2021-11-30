@@ -63,13 +63,13 @@ Path: ``application/migrations``::
         {
             $this->dbforge->add_field(array(
                 'blog_id' => array(
-                    'type' => 'INT',
-                    'constraint' => 5,
-                    'unsigned' => true,
+                    'type'           => 'INT',
+                    'constraint'     => 5,
+                    'unsigned'       => true,
                     'auto_increment' => true,
                 ),
                 'blog_title' => array(
-                    'type' => 'VARCHAR',
+                    'type'       => 'VARCHAR',
                     'constraint' => '100',
                 ),
                 'blog_description' => array(

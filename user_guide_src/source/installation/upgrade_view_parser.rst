@@ -33,7 +33,7 @@ CodeIgniter Version 3.11
     $this->load->library('parser');
 
     $data = array(
-        'blog_title' => 'My Blog Title',
+        'blog_title'   => 'My Blog Title',
         'blog_heading' => 'My Blog Heading'
     );
 
