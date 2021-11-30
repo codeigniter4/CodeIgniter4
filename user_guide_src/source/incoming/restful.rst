@@ -81,12 +81,12 @@ in the ``placeholder`` option with the new string to use::
 Limit the Routes Made
 ---------------------
 
-You can restrict the routes generated with the ``only`` option. This should be an array or comma separated list of method names that should
+You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
     $routes->resource('photos', ['only' => ['index', 'show']]);
 
-Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
+Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``::
 
     $routes->resource('photos', ['except' => 'new,edit']);
 
@@ -186,12 +186,12 @@ in the ``placeholder`` option with the new string to use::
 Limit the Routes Made
 ---------------------
 
-You can restrict the routes generated with the ``only`` option. This should be an array or comma separated list of method names that should
+You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
     $routes->presenter('photos', ['only' => ['index', 'show']]);
 
-Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
+Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``::
 
     $routes->presenter('photos', ['except' => 'new,edit']);
 
