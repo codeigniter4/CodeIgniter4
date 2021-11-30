@@ -47,7 +47,7 @@ name::
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
-routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
+routes are geared toward API-usage, where more methods are allowed, you can pass in the ``websafe`` option to have it
 generate update and delete methods that work with HTML forms::
 
     $routes->resource('photos', ['websafe' => 1]);
@@ -90,15 +90,15 @@ Otherwise you can remove unused routes with the ``except`` option. This option r
 
     $routes->resource('photos', ['except' => 'new,edit']);
 
-Valid methods are: index, show, create, update, new, edit and delete.
+Valid methods are: ``index``, ``show``, ``create``, ``update``, ``new``, ``edit`` and ``delete``.
 
 ResourceController
 ============================================================
 
-The `ResourceController` provides a convenient starting point for your RESTful API,
+The ``ResourceController`` provides a convenient starting point for your RESTful API,
 with methods that correspond to the resource routes above.
 
-Extend it, over-riding the `modelName` and `format` properties, and then
+Extend it, over-riding the ``modelName`` and ``format`` properties, and then
 implement those methods that you want handled.::
 
     <?php
@@ -195,16 +195,16 @@ Otherwise you can remove unused routes with the ``except`` option. This option r
 
     $routes->presenter('photos', ['except' => 'new,edit']);
 
-Valid methods are: index, show, new, create, edit, update, remove and delete.
+Valid methods are: ``index``, ``show``, ``new``, ``create``, ``edit``, ``update``, ``remove`` and ``delete``.
 
 ResourcePresenter
 ============================================================
 
-The `ResourcePresenter` provides a convenient starting point for presenting views
+The ``ResourcePresenter`` provides a convenient starting point for presenting views
 of your resource, and processing data from forms in those views,
 with methods that align to the resource routes above.
 
-Extend it, over-riding the `modelName` property, and then
+Extend it, over-riding the ``modelName`` property, and then
 implement those methods that you want handled.::
 
     <?php
