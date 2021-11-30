@@ -70,7 +70,7 @@ the controller that should be used::
 Change the Placeholder Used
 ---------------------------
 
-By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
+By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
     $routes->resource('photos', ['placeholder' => '(:num)']);
@@ -175,7 +175,7 @@ the controller that should be used::
 Change the Placeholder Used
 ---------------------------
 
-By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
+By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
     $routes->presenter('photos', ['placeholder' => '(:num)']);
