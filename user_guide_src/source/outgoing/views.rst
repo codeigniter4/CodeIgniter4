@@ -228,11 +228,11 @@ Now open your view file and create a loop::
         <h3>My Todo List</h3>
 
         <ul>
-        <?php foreach ($todo_list as $item):?>
+        <?php foreach ($todo_list as $item): ?>
 
             <li><?= esc($item) ?></li>
 
-        <?php endforeach;?>
+        <?php endforeach ?>
         </ul>
 
     </body>
