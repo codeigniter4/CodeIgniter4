@@ -835,7 +835,7 @@ abstract class BaseConnection implements ConnectionInterface
     abstract protected function _transRollback(): bool;
 
     /**
-     * Returns an instance of the query builder for this connection.
+     * Returns a non-shared new instance of the query builder for this connection.
      *
      * @param array|string $tableName
      *
