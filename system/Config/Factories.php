@@ -23,7 +23,6 @@ use Config\Services;
  * instantiation checks.
  *
  * @method static BaseConfig config(...$arguments)
- * @method static Model models(...$arguments)
  */
 class Factories
 {
