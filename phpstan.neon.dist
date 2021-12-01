@@ -61,3 +61,7 @@ parameters:
 		- CI_DEBUG
 		- ENVIRONMENT
 		- SODIUM_LIBRARY_VERSION
+	stubFiles:
+		- utils/PHPStan/stubs/Factories.stub
+		- utils/PHPStan/stubs/Model.stub
+		- utils/PHPStan/stubs/ConnectionInterface.stub

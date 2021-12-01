@@ -1,0 +1,19 @@
+<?php
+
+namespace CodeIgniter\Config;
+
+use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Model;
+
+class Factories
+{
+    /**
+     * @template T of Model
+     *
+     * @param class-string<T>      $name
+     * @param array<string, mixed> $options
+     *
+     * @return T
+     */
+    public static function models(string $name, array $options = [], ?ConnectionInterface &$conn = null);
+}
