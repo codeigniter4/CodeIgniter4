@@ -9,6 +9,10 @@ while developing an application, but it may also pose a security issue
 when "live". In development environments, you might want additional
 tools loaded that you don't in production environments, etc.
 
+.. contents::
+    :local:
+    :depth: 2
+
 The ENVIRONMENT Constant
 ========================
 

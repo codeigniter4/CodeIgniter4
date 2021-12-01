@@ -8,6 +8,10 @@ directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Renaming or Relocating the Application Directory
 ================================================
 

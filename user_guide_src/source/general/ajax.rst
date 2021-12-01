@@ -8,6 +8,10 @@ To get around this problem, the most efficient solution (so far) is to manually 
 
 Here's how to force the ``X-Requested-With`` header to be sent in the Fetch API and other JavaScript libraries.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Fetch API
 =========
 

@@ -12,6 +12,10 @@ page load speeds. By caching your pages, since they are saved in their
 fully rendered state, you can achieve performance much closer to that of
 static web pages.
 
+.. contents::
+    :local:
+    :depth: 2
+
 How Does Caching Work?
 ======================
 
