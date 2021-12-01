@@ -834,7 +834,7 @@ if (! function_exists('redirect')) {
      */
     function redirect(?string $route = null): RedirectResponse
     {
-        $response = Services::redirectresponse(null, true);
+        $response = Services::redirectresponse(null, true)->withCookies();
 
         if (! empty($route)) {
             return $response->route($route);
