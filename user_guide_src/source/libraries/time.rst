@@ -214,7 +214,7 @@ $time > now && < 1 hour          in 35 minutes / 35 minutes ago
 $time == now                     Now
 =============================== =================================
 
-The exact language used is controlled through the language file, Time.php.
+The exact language used is controlled through the language file, **Time.php**.
 
 ==============================
 Working with Individual Values
@@ -522,4 +522,4 @@ $time > 1 minute && < 1 hour     in 35 minutes / 35 minutes ago
 $time < 1 minute                 Now
 =============================== =================================
 
-The exact language used is controlled through the language file, Time.php.
+The exact language used is controlled through the language file, **Time.php**.
