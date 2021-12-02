@@ -58,7 +58,6 @@ and **bar**. You could structure your application project directories like this:
         /writable
     /codeigniter
         /system
-        /docs
 
 This would have two apps, **foo** and **bar**, both having standard application directories
 and a **public** folder, and sharing a common **codeigniter** framework.
