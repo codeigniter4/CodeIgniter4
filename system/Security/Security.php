@@ -528,32 +528,12 @@ class Security implements SecurityInterface
                 'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
             ]
         );
-        $this->sendCookie($this->request);
-    }
 
-    /**
-     * CSRF Send Cookie
-     *
-     * @return false|Security
-     */
-    protected function sendCookie(RequestInterface $request)
-    {
+        $response    = Services::response();
+        $cookieStore = $response->getCookieStore();
+        $cookieStore = $cookieStore->put($this->cookie);
 
-        $this->doSendCookie();
-        log_message('info', 'CSRF cookie sent.');
-
-        return $this;
-    }
-
-    /**
-     * Actual dispatching of cookies.
-     * Extracted for this to be unit tested.
-     *
-     * @codeCoverageIgnore
-     */
-    protected function doSendCookie(): void
-    {
-        cookies([$this->cookie], false)->dispatch();
+        $response->setCookieStore($cookieStore);
     }
 
     private function saveHashInSession(): void

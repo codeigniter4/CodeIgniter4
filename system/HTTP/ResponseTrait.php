@@ -597,6 +597,14 @@ trait ResponseTrait
     }
 
     /**
+     * Sets the CookieStore.
+     */
+    public function setCookieStore(CookieStore $cookieStore)
+    {
+        $this->cookieStore = $cookieStore;
+    }
+
+    /**
      * Checks to see if the Response has a specified cookie or not.
      */
     public function hasCookie(string $name, ?string $value = null, string $prefix = ''): bool
