@@ -55,7 +55,10 @@ final class SecurityTest extends CIUnitTestCase
 
         $security = new MockSecurity(new MockAppConfig());
 
-        $this->assertSame('8b9218a55906f9dcc1dc263dce7f005a', $security->getHash());
+        $this->assertSame(
+            '8b9218a55906f9dcc1dc263dce7f005a',
+            $security->getHash()
+        );
     }
 
     public function testGetHashSetsCookieWhenGETWithoutCSRFCookie()
@@ -89,7 +92,12 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $this->expectException(SecurityException::class);
         $security->verify($request);
@@ -103,7 +111,12 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
@@ -117,7 +130,12 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -132,7 +150,12 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -148,9 +171,16 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
-        $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}');
+        $request->setBody(
+            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}'
+        );
 
         $this->expectException(SecurityException::class);
         $security->verify($request);
@@ -162,9 +192,16 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
-        $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}');
+        $request->setBody(
+            '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}'
+        );
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
@@ -192,7 +229,12 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $config);
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $oldHash = $security->getHash();
         $security->verify($request);
@@ -212,7 +254,12 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $config);
 
         $security = new MockSecurity(new MockAppConfig());
-        $request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
 
         $oldHash = $security->getHash();
         $security->verify($request);
