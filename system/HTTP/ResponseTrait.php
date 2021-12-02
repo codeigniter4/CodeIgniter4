@@ -22,7 +22,7 @@ use DateTimeZone;
 use InvalidArgumentException;
 
 /**
- * Request Trait
+ * Response Trait
  *
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
@@ -446,7 +446,7 @@ trait ResponseTrait
     }
 
     /**
-     * Sends the headers of this HTTP request to the browser.
+     * Sends the headers of this HTTP response to the browser.
      *
      * @return Response
      */
