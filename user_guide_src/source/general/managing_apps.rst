@@ -19,15 +19,15 @@ your main **app/Config/Paths.php** and set a *full server path* in the
     public $appDirectory = '/path/to/your/app';
 
 You will need to modify two additional files in your project root, so that
-they can find the ``Paths`` configuration file:
+they can find the **Paths** configuration file:
 
-- ``/spark`` runs command line apps; the path is specified on or about line 35::
+- **/spark** runs command line apps; the path is specified on or about line 35::
 
     $pathsConfig = 'app/Config/Paths.php';
     // ^^^ Change this line if you move your application folder
 
 
-- ``/public/index.php`` is the front controller for your webapp; the config
+- **/public/index.php** is the front controller for your webapp; the config
   path is specified on or about line 20::
 
     $pathsConfig = FCPATH . '../app/Config/Paths.php';
@@ -41,8 +41,8 @@ If you would like to share a common CodeIgniter framework installation, to manag
 several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.
 
-For example, let's say you want to create two applications, named "foo"
-and "bar". You could structure your application project directories like this:
+For example, let's say you want to create two applications, named **foo**
+and **bar**. You could structure your application project directories like this:
 
 .. code-block:: text
 
@@ -60,12 +60,12 @@ and "bar". You could structure your application project directories like this:
         /system
         /docs
 
-This would have two apps, "foo" and "bar", both having standard application directories
-and a ``public`` folder, and sharing a common codeigniter framework.
+This would have two apps, **foo** and **bar**, both having standard application directories
+and a **public** folder, and sharing a common **codeigniter** framework.
 
-The ``index.php`` inside each application would refer to its own configuration,
+The **index.php** inside each application would refer to its own configuration,
 ``../app/Config/Paths.php``, and the ``$systemDirectory`` variable inside each
-of those would be set to refer to the shared common "system" folder.
+of those would be set to refer to the shared common **system** folder.
 
 If either of the applications had a command-line component, then you would also
-modify ``spark`` inside each application's project folder, as directed above.
+modify **spark** inside each application's project folder, as directed above.
