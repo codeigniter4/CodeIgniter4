@@ -82,7 +82,7 @@ comes with a simple command that takes advantage of PHP's built-in server to get
 you up and running fast on your development machines. Type the following on the
 command line from the root of your project::
 
-    php spark serve
+    > php spark serve
 
 
 The Welcome Page

@@ -178,7 +178,7 @@ From the command line, at the root of your project:
 
 ::
 
-    php spark serve
+    > php spark serve
 
 will start a web server, accessible on port 8080. If you set the location field
 in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
