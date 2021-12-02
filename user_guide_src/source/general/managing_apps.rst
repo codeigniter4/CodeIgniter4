@@ -51,11 +51,13 @@ and **bar**. You could structure your application project directories like this:
         /public
         /tests
         /writable
+        spark
     /bar
         /app
         /public
         /tests
         /writable
+        spark
     /codeigniter
         /system
 
