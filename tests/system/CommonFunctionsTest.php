@@ -41,10 +41,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        parent::setUp();
-        $renderer = Services::renderer();
-        $renderer->resetData();
         unset($_ENV['foo'], $_SERVER['foo']);
+        Services::reset();
+
+        parent::setUp();
     }
 
     public function testStringifyAttributes()
