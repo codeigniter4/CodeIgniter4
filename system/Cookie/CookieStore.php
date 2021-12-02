@@ -13,6 +13,8 @@ namespace CodeIgniter\Cookie;
 
 use ArrayIterator;
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\Services;
 use Countable;
 use IteratorAggregate;
 use Traversable;
@@ -161,7 +163,13 @@ class CookieStore implements Countable, IteratorAggregate
      */
     public function dispatch(): void
     {
+        $request = Services::request();
+
         foreach ($this->cookies as $cookie) {
+            if ($cookie->isSecure() && ! $request->isSecure()) {
+                throw SecurityException::forDisallowedAction();
+            }
+
             $name    = $cookie->getPrefixedName();
             $value   = $cookie->getValue();
             $options = $cookie->getOptions();

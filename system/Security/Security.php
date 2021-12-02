@@ -538,9 +538,6 @@ class Security implements SecurityInterface
      */
     protected function sendCookie(RequestInterface $request)
     {
-        if ($this->cookie->isSecure() && ! $request->isSecure()) {
-            return false;
-        }
 
         $this->doSendCookie();
         log_message('info', 'CSRF cookie sent.');
