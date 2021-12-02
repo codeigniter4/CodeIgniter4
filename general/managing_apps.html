@@ -262,7 +262,7 @@
   <section id="managing-your-applications">
 <h1>Managing your Applications<a class="headerlink" href="#managing-your-applications" title="Permalink to this headline"></a></h1>
 <p>By default, it is assumed that you only intend to use CodeIgniter to
-manage one application, which you will build in your <strong>application</strong>
+manage one application, which you will build in your <strong>app</strong>
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.</p>
@@ -272,19 +272,19 @@ rename or relocate your application directory.</p>
 it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
 <code class="docutils literal notranslate"><span class="pre">$appDirectory</span></code> variable (at about line 44):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/application&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/app&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>You will need to modify two additional files in your project root, so that
-they can find the <code class="docutils literal notranslate"><span class="pre">Paths</span></code> configuration file:</p>
+they can find the <strong>Paths</strong> configuration file:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">/spark</span></code> runs command line apps; the path is specified on or about line 35:</p>
+<li><p><strong>/spark</strong> runs command line apps; the path is specified on or about line 35:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/public/index.php</span></code> is the front controller for your webapp; the config
+<li><p><strong>/public/index.php</strong> is the front controller for your webapp; the config
 path is specified on or about line 20:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this if you move your application folder</span>
@@ -298,30 +298,31 @@ path is specified on or about line 20:</p>
 <p>If you would like to share a common CodeIgniter framework installation, to manage
 several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.</p>
-<p>For example, let’s say you want to create two applications, named “foo”
-and “bar”. You could structure your application project directories like this:</p>
+<p>For example, let’s say you want to create two applications, named <strong>foo</strong>
+and <strong>bar</strong>. You could structure your application project directories like this:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/foo
     /app
     /public
     /tests
     /writable
+    spark
 /bar
     /app
     /public
     /tests
     /writable
+    spark
 /codeigniter
     /system
-    /docs
 </pre></div>
 </div>
-<p>This would have two apps, “foo” and “bar”, both having standard application directories
-and a <code class="docutils literal notranslate"><span class="pre">public</span></code> folder, and sharing a common codeigniter framework.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">index.php</span></code> inside each application would refer to its own configuration,
+<p>This would have two apps, <strong>foo</strong> and <strong>bar</strong>, both having standard application directories
+and a <strong>public</strong> folder, and sharing a common <strong>codeigniter</strong> framework.</p>
+<p>The <strong>index.php</strong> inside each application would refer to its own configuration,
 <code class="docutils literal notranslate"><span class="pre">../app/Config/Paths.php</span></code>, and the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable inside each
-of those would be set to refer to the shared common “system” folder.</p>
+of those would be set to refer to the shared common <strong>system</strong> folder.</p>
 <p>If either of the applications had a command-line component, then you would also
-modify <code class="docutils literal notranslate"><span class="pre">spark</span></code> inside each application’s project folder, as directed above.</p>
+modify <strong>spark</strong> inside each application’s project folder, as directed above.</p>
 </section>
 </section>
 
@@ -337,7 +338,7 @@ modify <code class="docutils literal notranslate"><span class="pre">spark</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 01, 2021.
+      <span class="lastupdated">Last updated on Dec 02, 2021.
       </span></p>
   </div>
 
