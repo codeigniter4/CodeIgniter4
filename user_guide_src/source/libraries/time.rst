@@ -4,7 +4,7 @@ Times and Dates
 
 CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTime object, but uses the Intl
 extension's features to convert times across timezones and display the output correctly for different locales. This class
-is the **Time** class and lives in the **CodeIgniter\\I18n** namespace.
+is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
 .. note:: Since the Time class extends DateTime, if there are features that you need that this class doesn't provide,
     you can likely find them within the DateTime class itself.
@@ -38,7 +38,7 @@ provided, the application defaults will be used.
 now()
 -----
 
-The Time class has several helper methods to instantiate the class. The first of these is the **now()** method
+The Time class has several helper methods to instantiate the class. The first of these is the ``now()`` method
 that returns a new instance set to the current time. You can pass in strings representing the timezone and the locale
 in the second and parameters, respectively. If no locale or timezone is provided, the application defaults will be used.
 
@@ -92,7 +92,7 @@ fourth and fifth parameters::
 createFromTime()
 ----------------
 
-Like **createFromDate** except it is only concerned with the **hours**, **minutes**, and **seconds**. Uses the
+Like ``createFromDate()`` except it is only concerned with the **hours**, **minutes**, and **seconds**. Uses the
 current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
 fourth and fifth parameters::
 
@@ -113,7 +113,7 @@ createFromFormat()
 ------------------
 
 This is a replacement for DateTime's method of the same name. This allows the timezone to be set at the same time,
-and returns a **Time** instance, instead of DateTime::
+and returns a ``Time`` instance, instead of DateTime::
 
     $time = Time::createFromFormat('j-M-Y', '15-Feb-2009', 'America/Chicago');
 
@@ -154,7 +154,7 @@ to display localized versions of the value, though.
 toLocalizedString()
 -------------------
 
-This is the localized version of DateTime's format() method. Instead of using the values you might be familiar with, though,
+This is the localized version of DateTime's ``format()`` method. Instead of using the values you might be familiar with, though,
 you must use values acceptable to the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`__ class.
 A full listing of values can be found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
 ::
@@ -224,8 +224,8 @@ The Time object provides a number of methods to allow to get and set individual 
 of an existing instance. All of the values retrieved through the following methods will be fully localized and respect
 the locale that the Time instance was created with.
 
-All of the following `getX` and `setX` methods can also be used as if they were a class property. So, any calls to methods
-like `getYear` can also be accessed through `$time->year`, and so on.
+All of the following ``getX()`` and ``setX()`` methods can also be used as if they were a class property. So, any calls to methods
+like ``getYear()`` can also be accessed through ``$time->year``, and so on.
 
 Getters
 -------
@@ -416,7 +416,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 sameAs()
 --------
 
-This is identical to the **equals** method, except that it only returns true when the date, time, AND timezone are
+This is identical to the ``equals()`` method, except that it only returns true when the date, time, AND timezone are
 all identical::
 
     $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
@@ -446,7 +446,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 isAfter()
 ---------
 
-Works exactly the same as **isBefore()** except checks if the time is after the time passed in::
+Works exactly the same as ``isBefore()`` except checks if the time is after the time passed in::
 
     $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
     $time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
@@ -457,7 +457,7 @@ Works exactly the same as **isBefore()** except checks if the time is after the 
 Viewing Differences
 ===================
 
-To compare two Times directly, you would use the **difference()** method, which returns a **CodeIgniter\\I18n\\TimeDifference**
+To compare two Times directly, you would use the ``difference()`` method, which returns a ``CodeIgniter\\I18n\\TimeDifference``
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string::
 
@@ -484,7 +484,7 @@ the original time::
     echo $diff->getMinutes(); // -3682080
     echo $diff->getSeconds(); // -220924800
 
-You can use either **getX()** methods, or access the calculate values as if they were properties::
+You can use either ``getX()`` methods, or access the calculate values as if they were properties::
 
     echo $diff->years;   // -7
     echo $diff->months; // -84
@@ -497,7 +497,7 @@ You can use either **getX()** methods, or access the calculate values as if they
 humanize()
 ----------
 
-Much like Time's humanize() method, this returns a string that displays the difference between the times in a
+Much like Time's ``humanize()`` method, this returns a string that displays the difference between the times in a
 human readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
 'in 1 month', etc. The biggest differences are in how very recent dates are handled::
 
