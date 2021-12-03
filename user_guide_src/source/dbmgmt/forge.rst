@@ -67,7 +67,7 @@ will complain that the database creation has failed.
 
 To start, just type the command and the name of the database (e.g., ``foo``)::
 
-    php spark db:create foo
+    > php spark db:create foo
 
 If everything went fine, you should expect the ``Database "foo" successfully created.`` message displayed.
 
@@ -76,7 +76,7 @@ for the file where the database will be created using the ``--ext`` option. Vali
 ``sqlite`` and defaults to ``db``. Remember that these should not be preceded by a period.
 ::
 
-    php spark db:create foo --ext sqlite
+    > php spark db:create foo --ext sqlite
     // will create the db file in WRITEPATH/foo.sqlite
 
 .. note:: When using the special SQLite3 database name ``:memory:``, expect that the command will still
