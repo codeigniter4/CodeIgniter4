@@ -23,16 +23,16 @@ What has been changed
 Upgrade Guide
 =============
 
-1. First, move all controller files to the folder ``app/Controllers``.
+1. First, move all controller files to the folder **app/Controllers**.
 2. Add this line just after the opening php tag: ``namespace App\Controllers;``
 3. Replace ``extends CI_Controller`` with ``extends BaseController``.
 
 | If you use sub-directories in your controller structure, you have to change the namespace according to that.
-| For example, you have a version 3 controller located in ``application/controllers/users/auth/Register.php``, 
+| For example, you have a version 3 controller located in **application/controllers/users/auth/Register.php**,
     the namespace has to be ``namespace App\Controllers\Users\Auth;`` and the controller path in the version 4 
-    should look like this: ``app/Controllers/Users/Auth/Register.php``. Make sure to have the first letters of 
+    should look like this: **app/Controllers/Users/Auth/Register.php**. Make sure to have the first letters of
     the sub-directories as capitalized.
-| After that you have to insert a "use" statement below the namespace definition in order to extend the "BaseController": 
+| After that you have to insert a ``use`` statement below the namespace definition in order to extend the ``BaseController``:
     ``use App\Controllers\BaseController;``
 
 Code Example
@@ -41,7 +41,7 @@ Code Example
 CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/controllers``::
+Path: **application/controllers**::
 
     <?php
 
@@ -56,7 +56,7 @@ Path: ``application/controllers``::
 CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Controllers``::
+Path: **app/Controllers**::
 
     <?php
 

@@ -19,11 +19,11 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Specify the default language in *Config/App.php*:::
+1. Specify the default language in **Config/App.php**::
 
     public $defaultLocale = 'en';
 
-2. Now move your language files to ``app/Language/<locale>/``.
+2. Now move your language files to **app/Language/<locale>**.
 3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look like.
 4. Remove from every file the language loader ``$this->lang->load($file, $lang);``.
 5. Replace the method to load the language line ``$this->lang->line('error_email_missing')`` with ``echo lang('Errors.errorEmailMissing');``.

@@ -20,7 +20,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Add your database credentials to ``app/Config/Database.php``. The options are pretty much the same as in CI3 only some names have changed slightly.
+1. Add your database credentials to **app/Config/Database.php**. The options are pretty much the same as in CI3 only some names have changed slightly.
 2. Everywhere you have used the database you have to replace ``$this->load->database();`` with ``$db = db_connect();``.
 3. If you use multiple databases use the following code to load additional databases ``$db = db_connect('group_name');``.
 4. Now you have to change all database queries. The most important change here is to replace ``$this->db`` with just ``$db`` and adjust the method name and ``$db``. Here are some examples:
