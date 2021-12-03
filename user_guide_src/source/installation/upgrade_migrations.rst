@@ -25,7 +25,7 @@ Upgrade Guide
 =============
 
 1. If your v3 project uses sequential migration names you have to change those to timestamp names.
-2. You have to move all migration files to the new folder ``app/Database/Migrations``.
+2. You have to move all migration files to the new folder **app/Database/Migrations**.
 3. Remove the following line ``defined('BASEPATH') OR exit('No direct script access allowed');``.
 4. Add this line just after the opening php tag: ``namespace App\Database\Migrations;``.
 5. Below the ``namespace App\Database\Migrations;`` line add this line: ``use CodeIgniter\Database\Migration;``
@@ -51,7 +51,7 @@ Code Example
 CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/migrations``::
+Path: **application/migrations**::
 
     <?php
 
@@ -90,7 +90,7 @@ Path: ``application/migrations``::
 CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Database/Migrations``::
+Path: **app/Database/Migrations**::
 
     <?php
 

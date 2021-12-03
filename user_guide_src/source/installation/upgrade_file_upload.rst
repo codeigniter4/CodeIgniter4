@@ -18,7 +18,7 @@ What has been changed
 Upgrade Guide
 =============
 In CI4 you access uploaded files with ``$file = $this->request->getFile('userfile')``. From there you can validate if the file got uploaded successfully with ``$file->isValid()``.
-To store the file you could use ``$path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');`` This will store the file in ``writable/uploads/head_img/user_name.jpg``.
+To store the file you could use ``$path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');``. This will store the file in **writable/uploads/head_img/user_name.jpg**.
 
 You have to change your file uploading code to match the new methods.
 

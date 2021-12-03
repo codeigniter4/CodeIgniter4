@@ -19,7 +19,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Within your configs the ``$config['encryption_key'] = 'abc123';`` moved from ``application/config/config.php`` to ``public $key = 'abc123';`` in ``app/Config/Encryption.php``.
+1. Within your configs the ``$config['encryption_key'] = 'abc123';`` moved from **application/config/config.php** to ``public $key = 'abc123';`` in **app/Config/Encryption.php**.
 2. Wherever you have used the encryption library you have to replace ``$this->load->library('encryption');`` with ``$encrypter = service('encrypter');`` and change the methods for encryption and decrypting like in the following code example.
 
 Code Example

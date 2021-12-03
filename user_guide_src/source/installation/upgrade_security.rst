@@ -21,7 +21,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. To enable CSRF protection in CI4 you have to enable it in ``app/Config/Filters.php``::
+1. To enable CSRF protection in CI4 you have to enable it in **app/Config/Filters.php**::
 
     public $globals = [
         'before' => [

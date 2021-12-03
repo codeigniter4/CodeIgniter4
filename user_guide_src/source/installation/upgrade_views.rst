@@ -22,7 +22,7 @@ What has been changed
 Upgrade Guide
 =============
 
-1. First, move all views  to the folder ``app/Views``
+1. First, move all views  to the folder **app/Views**
 2. Change the loading syntax of views in every script where you load views from
    ``$this->load->view('directory_name/file_name')`` to ``echo view('directory_name/file_name');``
 3. (optional) You can change the echo syntax in views from ``<?php echo $title; ?>`` to ``<?= $title ?>``
@@ -33,7 +33,7 @@ Code Example
 CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/views``::
+Path: **application/views**::
 
     <html>
     <head>
@@ -56,7 +56,7 @@ Path: ``application/views``::
 CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Views``::
+Path: **app/Views**::
 
     <html>
     <head>

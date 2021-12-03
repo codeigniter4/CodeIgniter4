@@ -46,7 +46,7 @@ Code Example
 
 CodeIgniter Version 3.11
 ------------------------
-Path: ``application/views``::
+Path: **application/views**::
 
     <html>
     <head>
@@ -77,7 +77,7 @@ Path: ``application/views``::
     </body>
     </html>
 
-Path: ``application/controllers/``::
+Path: **application/controllers**::
 
     <?php
 
@@ -104,7 +104,7 @@ Path: ``application/controllers/``::
 
 CodeIgniter Version 4.x
 -----------------------
-Path: ``app/Views``::
+Path: **app/Views**::
 
     <html>
     <head>
@@ -135,7 +135,7 @@ Path: ``app/Views``::
     </body>
     </html>
 
-Path: ``app/Controllers/``::
+Path: **app/Controllers**::
 
     <?php
 
