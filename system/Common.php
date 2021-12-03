@@ -643,7 +643,13 @@ if (! function_exists('is_cli')) {
      */
     function is_cli(): bool
     {
-        return in_array(PHP_SAPI, ['cli', 'phpdbg'], true);
+        if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
+            return true;
+        }
+
+        // PHP_SAPI could be 'cgi-fcgi', 'fpm-fcgi'.
+        // See https://github.com/codeigniter4/CodeIgniter4/pull/5393
+        return ! isset($_SERVER['REMOTE_ADDR']) && ! isset($_SERVER['REQUEST_METHOD']);
     }
 }
 
