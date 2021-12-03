@@ -287,12 +287,12 @@
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
-<li><p>Specify the default language in <em>Config/App.php</em>::</p>
+<li><p>Specify the default language in <strong>Config/App.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
-<li><p>Now move your language files to <code class="docutils literal notranslate"><span class="pre">app/Language/&lt;locale&gt;/</span></code>.</p></li>
+<li><p>Now move your language files to <strong>app/Language/&lt;locale&gt;</strong>.</p></li>
 <li><p>After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look like.</p></li>
 <li><p>Remove from every file the language loader <code class="docutils literal notranslate"><span class="pre">$this-&gt;lang-&gt;load($file,</span> <span class="pre">$lang);</span></code>.</p></li>
 <li><p>Replace the method to load the language line <code class="docutils literal notranslate"><span class="pre">$this-&gt;lang-&gt;line('error_email_missing')</span></code> with <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">lang('Errors.errorEmailMissing');</span></code>.</p></li>
@@ -349,7 +349,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

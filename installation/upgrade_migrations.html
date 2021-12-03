@@ -296,7 +296,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>If your v3 project uses sequential migration names you have to change those to timestamp names.</p></li>
-<li><p>You have to move all migration files to the new folder <code class="docutils literal notranslate"><span class="pre">app/Database/Migrations</span></code>.</p></li>
+<li><p>You have to move all migration files to the new folder <strong>app/Database/Migrations</strong>.</p></li>
 <li><p>Remove the following line <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code>.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Database\Migration;</span></code></p></li>
@@ -328,7 +328,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-11">
 <h3>CodeIgniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">application/migrations</span></code>:</p>
+<p>Path: <strong>application/migrations</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
@@ -367,7 +367,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 </section>
 <section id="codeigniter-version-4-x">
 <h3>CodeIgniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Database/Migrations</span></code>:</p>
+<p>Path: <strong>app/Database/Migrations</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Database\Migrations</span><span class="p">;</span>
@@ -453,7 +453,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

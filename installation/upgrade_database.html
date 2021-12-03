@@ -288,7 +288,7 @@
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
-<li><p>Add your database credentials to <code class="docutils literal notranslate"><span class="pre">app/Config/Database.php</span></code>. The options are pretty much the same as in CI3 only some names have changed slightly.</p></li>
+<li><p>Add your database credentials to <strong>app/Config/Database.php</strong>. The options are pretty much the same as in CI3 only some names have changed slightly.</p></li>
 <li><p>Everywhere you have used the database you have to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;database();</span></code> with <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect();</span></code>.</p></li>
 <li><p>If you use multiple databases use the following code to load additional databases <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect('group_name');</span></code>.</p></li>
 <li><p>Now you have to change all database queries. The most important change here is to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> with just <code class="docutils literal notranslate"><span class="pre">$db</span></code> and adjust the method name and <code class="docutils literal notranslate"><span class="pre">$db</span></code>. Here are some examples:</p>
@@ -355,7 +355,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

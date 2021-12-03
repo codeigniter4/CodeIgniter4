@@ -290,7 +290,7 @@ a new CodeIgniter4 based project.</p>
 <section id="installation-set-up">
 <h3>Installation &amp; Set Up<a class="headerlink" href="#installation-set-up" title="Permalink to this headline"></a></h3>
 <p>In the folder above your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span>
 </pre></div>
 </div>
 <p>The command above will create a “project-root” folder.</p>
@@ -301,7 +301,7 @@ dependencies, then add the <code class="docutils literal notranslate"><span clas
 command line. That will result in only the framework, and the three
 trusted dependencies that we bundle, being composer-installed.</p>
 <p>A sample such installation command, using the default project-root “appstarter”:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
 </div>
 <p>After installation you should follow the steps in the “Upgrading” section.</p>
@@ -309,11 +309,11 @@ trusted dependencies that we bundle, being composer-installed.</p>
 <section id="upgrading">
 <h3>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
 <p>If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code> doesn’t automatically update to pull latest framework source structure, you can remove first:</p>
@@ -371,7 +371,7 @@ existing project using Composer.</p>
 <p>Develop your app inside the <code class="docutils literal notranslate"><span class="pre">app</span></code> folder, and the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder
 will be your document root.</p>
 <p>In your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>As with the earlier two composer install methods, you can omit installing
@@ -388,7 +388,7 @@ to your project root</p>
 <section id="id1">
 <h3>Upgrading<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="nx">update</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>Read the upgrade instructions, and check designated
@@ -416,7 +416,7 @@ to your project root</p>
 <p>If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.</p>
 <p>From the command line inside your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span>
 </pre></div>
 </div>
 <p>These will be updated along with the framework whenever you do a <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
@@ -435,7 +435,7 @@ they can be added to your project in a similar fashion.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

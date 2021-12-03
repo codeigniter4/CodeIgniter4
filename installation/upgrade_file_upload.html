@@ -287,7 +287,7 @@
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <p>In CI4 you access uploaded files with <code class="docutils literal notranslate"><span class="pre">$file</span> <span class="pre">=</span> <span class="pre">$this-&gt;request-&gt;getFile('userfile')</span></code>. From there you can validate if the file got uploaded successfully with <code class="docutils literal notranslate"><span class="pre">$file-&gt;isValid()</span></code>.
-To store the file you could use <code class="docutils literal notranslate"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">$this-&gt;request-&gt;getFile('userfile')-&gt;store('head_img/',</span> <span class="pre">'user_name.jpg');</span></code> This will store the file in <code class="docutils literal notranslate"><span class="pre">writable/uploads/head_img/user_name.jpg</span></code>.</p>
+To store the file you could use <code class="docutils literal notranslate"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">$this-&gt;request-&gt;getFile('userfile')-&gt;store('head_img/',</span> <span class="pre">'user_name.jpg');</span></code>. This will store the file in <strong>writable/uploads/head_img/user_name.jpg</strong>.</p>
 <p>You have to change your file uploading code to match the new methods.</p>
 </section>
 <section id="code-example">
@@ -386,7 +386,7 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

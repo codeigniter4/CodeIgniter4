@@ -291,17 +291,17 @@ e.g., BaseController extends Controller, and then have your controllers extend i
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
-<li><p>First, move all controller files to the folder <code class="docutils literal notranslate"><span class="pre">app/Controllers</span></code>.</p></li>
+<li><p>First, move all controller files to the folder <strong>app/Controllers</strong>.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers;</span></code></p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Controller</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">BaseController</span></code>.</p></li>
 </ol>
 <div class="line-block">
 <div class="line">If you use sub-directories in your controller structure, you have to change the namespace according to that.</div>
-<div class="line">For example, you have a version 3 controller located in <code class="docutils literal notranslate"><span class="pre">application/controllers/users/auth/Register.php</span></code>,
+<div class="line">For example, you have a version 3 controller located in <strong>application/controllers/users/auth/Register.php</strong>,
 the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers\Users\Auth;</span></code> and the controller path in the version 4
-should look like this: <code class="docutils literal notranslate"><span class="pre">app/Controllers/Users/Auth/Register.php</span></code>. Make sure to have the first letters of
+should look like this: <strong>app/Controllers/Users/Auth/Register.php</strong>. Make sure to have the first letters of
 the sub-directories as capitalized.</div>
-<div class="line">After that you have to insert a “use” statement below the namespace definition in order to extend the “BaseController”:
+<div class="line">After that you have to insert a <code class="docutils literal notranslate"><span class="pre">use</span></code> statement below the namespace definition in order to extend the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>:
 <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">App\Controllers\BaseController;</span></code></div>
 </div>
 </section>
@@ -309,7 +309,7 @@ the sub-directories as capitalized.</div>
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-11">
 <h3>CodeIgniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">application/controllers</span></code>:</p>
+<p>Path: <strong>application/controllers</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">class</span> <span class="nc">Helloworld</span> <span class="k">extends</span> <span class="nx">CI_Controller</span>
@@ -324,7 +324,7 @@ the sub-directories as capitalized.</div>
 </section>
 <section id="codeigniter-version-4-x">
 <h3>CodeIgniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Controllers</span></code>:</p>
+<p>Path: <strong>app/Controllers</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -354,7 +354,7 @@ the sub-directories as capitalized.</div>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 

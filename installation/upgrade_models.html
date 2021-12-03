@@ -288,14 +288,14 @@
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
-<li><p>First, move all model files to the folder <code class="docutils literal notranslate"><span class="pre">app/Models</span></code>.</p></li>
+<li><p>First, move all model files to the folder <strong>app/Models</strong>.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code>.</p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">model</span></code> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">model()</span></code> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
 </ol>
 <p>If you use sub-directories in your model structure you have to change the namespace according to that.
-Example: You have a version 3 model located in <code class="docutils literal notranslate"><span class="pre">application/models/users/user_contact.php</span></code> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the model path in the version 4 should look like this: <code class="docutils literal notranslate"><span class="pre">app/Models/Users/UserContact.php</span></code></p>
+Example: You have a version 3 model located in <strong>application/models/users/user_contact.php</strong> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the model path in the version 4 should look like this: <strong>app/Models/Users/UserContact.php</strong></p>
 <p>The new Model in CI4 has a lot of built-in methods. For example, the <code class="docutils literal notranslate"><span class="pre">find($id)</span></code> method. With this you can find data where the primary key is equal to <code class="docutils literal notranslate"><span class="pre">$id</span></code>.
 Inserting data is also easier than before. In CI4 there is an <code class="docutils literal notranslate"><span class="pre">insert($data)</span></code> method. You can optionally make use of all those built-in methods and migrate your code to the new methods.</p>
 <p>You can find more information to those methods <a class="reference internal" href="../models/model.html"><span class="doc">here</span></a>.</p>
@@ -304,7 +304,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-11">
 <h3>CodeIgniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">application/models</span></code>:</p>
+<p>Path: <strong>application/models</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">class</span> <span class="nc">User_contact</span> <span class="k">extends</span> <span class="nx">CI_Model</span>
@@ -323,7 +323,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 </section>
 <section id="codeigniter-version-4-x">
 <h3>CodeIgniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Models</span></code>:</p>
+<p>Path: <strong>app/Models</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
@@ -336,7 +336,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To insert data you can just directly call the <code class="docutils literal notranslate"><span class="pre">$model-&gt;insert()</span></code> method because this method is built-in since CI 4.</p>
+<p>To insert data you can just directly call the <code class="docutils literal notranslate"><span class="pre">$model-&gt;insert()</span></code> method because this method is built-in since CI4.</p>
 </section>
 </section>
 </section>
@@ -353,7 +353,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2021.
+      <span class="lastupdated">Last updated on Dec 03, 2021.
       </span></p>
   </div>
 
