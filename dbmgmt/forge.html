@@ -343,14 +343,14 @@ Returns true/false based on success or failure:</p>
 command. By using this command it is assumed that the database is not yet existing. Otherwise, CodeIgniter
 will complain that the database creation has failed.</p>
 <p>To start, just type the command and the name of the database (e.g., <code class="docutils literal notranslate"><span class="pre">foo</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span>
 </pre></div>
 </div>
 <p>If everything went fine, you should expect the <code class="docutils literal notranslate"><span class="pre">Database</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">successfully</span> <span class="pre">created.</span></code> message displayed.</p>
 <p>If you are on a testing environment or you are using the SQLite3 driver, you may pass in the file extension
 for the file where the database will be created using the <code class="docutils literal notranslate"><span class="pre">--ext</span></code> option. Valid values are <code class="docutils literal notranslate"><span class="pre">db</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> and defaults to <code class="docutils literal notranslate"><span class="pre">db</span></code>. Remember that these should not be preceded by a period.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span> <span class="o">--</span><span class="nx">ext</span> <span class="nx">sqlite</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span> <span class="o">--</span><span class="nx">ext</span> <span class="nx">sqlite</span>
 <span class="c1">// will create the db file in WRITEPATH/foo.sqlite</span>
 </pre></div>
 </div>
