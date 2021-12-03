@@ -267,8 +267,26 @@ For example, verbose error output is something that would be useful
 while developing an application, but it may also pose a security issue
 when “live”. In development environments, you might want additional
 tools loaded that you don’t in production environments, etc.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-environment-constant" id="id1">The ENVIRONMENT Constant</a></p>
+<ul>
+<li><p><a class="reference internal" href="#env" id="id2">.env</a></p></li>
+<li><p><a class="reference internal" href="#apache" id="id3">Apache</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id4">nginx</a></p></li>
+<li><p><a class="reference internal" href="#boot-files" id="id5">Boot Files</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#effects-on-default-framework-behavior" id="id6">Effects On Default Framework Behavior</a></p>
+<ul>
+<li><p><a class="reference internal" href="#error-reporting" id="id7">Error Reporting</a></p></li>
+<li><p><a class="reference internal" href="#configuration-files" id="id8">Configuration Files</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
 <section id="the-environment-constant">
-<h2>The ENVIRONMENT Constant<a class="headerlink" href="#the-environment-constant" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">The ENVIRONMENT Constant</a><a class="headerlink" href="#the-environment-constant" title="Permalink to this headline"></a></h2>
 <p>By default, CodeIgniter comes with the environment constant set to use
 the value provided in <code class="docutils literal notranslate"><span class="pre">$_SERVER['CI_ENVIRONMENT']</span></code>, otherwise defaulting to
 ‘production’. This can be set in several ways depending on your server setup.</p>
@@ -279,14 +297,14 @@ It has special conditions built into the framework at various places to assist w
 You can’t use it for your development.</p>
 </div>
 <section id="env">
-<h3>.env<a class="headerlink" href="#env" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2">.env</a><a class="headerlink" href="#env" title="Permalink to this headline"></a></h3>
 <p>The simplest method to set the variable is in your <a class="reference internal" href="configuration.html"><span class="doc">.env file</span></a>.</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="s">development</span>
 </pre></div>
 </div>
 </section>
 <section id="apache">
-<h3>Apache<a class="headerlink" href="#apache" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Apache</a><a class="headerlink" href="#apache" title="Permalink to this headline"></a></h3>
 <p>This server variable can be set in your <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file or Apache
 config using <a class="reference external" href="https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv">SetEnv</a>.</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">SetEnv</span> CI_ENVIRONMENT development
@@ -294,7 +312,7 @@ config using <a class="reference external" href="https://httpd.apache.org/docs/2
 </div>
 </section>
 <section id="nginx">
-<h3>nginx<a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">nginx</a><a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
 <p>Under nginx, you must pass the environment variable through the <code class="docutils literal notranslate"><span class="pre">fastcgi_params</span></code>
 in order for it to show up under the <cite>$_SERVER</cite> variable. This allows it to work on the
 virtual-host level, instead of using <cite>env</cite> to set it for the entire server, though that
@@ -320,7 +338,7 @@ section), you may use this constant in your own development to
 differentiate between which environment you are running in.</p>
 </section>
 <section id="boot-files">
-<h3>Boot Files<a class="headerlink" href="#boot-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Boot Files</a><a class="headerlink" href="#boot-files" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter requires that a PHP script matching the environment’s name is located
 under <strong>APPPATH/Config/Boot</strong>. These files can contain any customizations that
 you would like to make for your environment, whether it’s updating the error display
@@ -335,12 +353,12 @@ a fresh install:</p>
 </section>
 </section>
 <section id="effects-on-default-framework-behavior">
-<h2>Effects On Default Framework Behavior<a class="headerlink" href="#effects-on-default-framework-behavior" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Effects On Default Framework Behavior</a><a class="headerlink" href="#effects-on-default-framework-behavior" title="Permalink to this headline"></a></h2>
 <p>There are some places in the CodeIgniter system where the ENVIRONMENT
 constant is used. This section describes how default framework behavior
 is affected.</p>
 <section id="error-reporting">
-<h3>Error Reporting<a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
 <p>Setting the ENVIRONMENT constant to a value of ‘development’ will cause
 all PHP errors to be rendered to the browser when they occur.
 Conversely, setting the constant to ‘production’ will disable all error
@@ -348,7 +366,7 @@ output. Disabling error reporting in production is a
 <a class="reference internal" href="../concepts/security.html"><span class="doc">good security practice</span></a>.</p>
 </section>
 <section id="configuration-files">
-<h3>Configuration Files<a class="headerlink" href="#configuration-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Configuration Files</a><a class="headerlink" href="#configuration-files" title="Permalink to this headline"></a></h3>
 <p>Optionally, you can have CodeIgniter load environment-specific
 configuration files. This may be useful for managing things like
 differing API keys across multiple environments. This is described in

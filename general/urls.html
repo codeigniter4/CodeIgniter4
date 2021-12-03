@@ -261,13 +261,24 @@
              
   <section id="codeigniter-urls">
 <h1>CodeIgniter URLs<a class="headerlink" href="#codeigniter-urls" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#uri-segments" id="id1">URI Segments</a></p></li>
+<li><p><a class="reference internal" href="#removing-the-index-php-file" id="id2">Removing the index.php file</a></p>
+<ul>
+<li><p><a class="reference internal" href="#apache-web-server" id="id3">Apache Web Server</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id4">NGINX</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
 <p>By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
 “query-string” approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a <strong>segment-based</strong> approach:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
 </pre></div>
 </div>
 <section id="uri-segments">
-<h2>URI Segments<a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h2>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
@@ -282,7 +293,7 @@ to work with your URI data. In addition, your URLs can be remapped using the <a 
 feature for more flexibility.</p>
 </section>
 <section id="removing-the-index-php-file">
-<h2>Removing the index.php file<a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Removing the index.php file</a><a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this headline"></a></h2>
 <p>By default, the <strong>index.php</strong> file will be included in your URLs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
 </pre></div>
@@ -290,7 +301,7 @@ feature for more flexibility.</p>
 <p>If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.</p>
 <section id="apache-web-server">
-<h3>Apache Web Server<a class="headerlink" href="#apache-web-server" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Apache Web Server</a><a class="headerlink" href="#apache-web-server" title="Permalink to this headline"></a></h3>
 <p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file with some simple rules.
 Here is an example of such a file, using the “negative” method in which everything is redirected except the specified
 items:</p>
@@ -312,7 +323,7 @@ request for your index.php file.</p>
 </div>
 </section>
 <section id="nginx">
-<h3>NGINX<a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">NGINX</a><a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
 <p>Under NGINX, you can define a location block and use the <code class="docutils literal notranslate"><span class="pre">try_files</span></code> directive to get the same effect as we did with
 the above Apache configuration:</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
