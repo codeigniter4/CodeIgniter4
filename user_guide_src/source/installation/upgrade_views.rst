@@ -70,7 +70,7 @@ Path: **app/Views**::
         <ul>
         <?php foreach ($todo_list as $item): ?>
             <li><?= esc($item) ?></li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
     </body>
