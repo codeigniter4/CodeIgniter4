@@ -285,7 +285,7 @@ braces from your code, and eliminate “echo” statements.</p>
 a simplified format as well. Here is an example using <code class="docutils literal notranslate"><span class="pre">foreach</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
 
-<span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$todo</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$todo</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$item</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 
@@ -300,15 +300,15 @@ closing syntax: <code class="docutils literal notranslate"><span class="pre">end
 <p>Also notice that instead of using a semicolon after each structure
 (except the last one), there is a colon. This is important!</p>
 <p>Here is another example, using <code class="docutils literal notranslate"><span class="pre">if</span></code>/<code class="docutils literal notranslate"><span class="pre">elseif</span></code>/<code class="docutils literal notranslate"><span class="pre">else</span></code>. Notice the colons:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$username</span> <span class="o">===</span> <span class="s1">&#39;sally&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$username</span> <span class="o">===</span> <span class="s1">&#39;sally&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Hi Sally<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$username</span> <span class="o">===</span> <span class="s1">&#39;joe&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$username</span> <span class="o">===</span> <span class="s1">&#39;joe&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Hi Joe<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">else</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">else</span><span class="o">:</span> <span class="cp">?&gt;</span>
 
     <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Hi unknown user<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 
