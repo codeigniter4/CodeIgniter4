@@ -315,7 +315,7 @@ Predis Caching
 Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
 To use it, from the command line inside your project root::
 
-    composer require predis/predis
+    > composer require predis/predis
 
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
