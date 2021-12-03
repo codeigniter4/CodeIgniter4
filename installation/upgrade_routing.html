@@ -286,20 +286,23 @@
 </section>
 <section id="upgrade-guide">
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
-<ol class="arabic simple">
-<li><p>You have to change the syntax of each routing line and append it in <code class="docutils literal notranslate"><span class="pre">app/Config/Routes.php</span></code>. For example:</p></li>
-</ol>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$route['journals']</span> <span class="pre">=</span> <span class="pre">'blogs';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('journals',</span> <span class="pre">'App\Blogs');</span></code> this would map to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method in the “Blogs” class.</p></li>
+<ol class="arabic">
+<li><p>You have to change the syntax of each routing line and append it in <strong>app/Config/Routes.php</strong>. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$route['journals']</span> <span class="pre">=</span> <span class="pre">'blogs';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('journals',</span> <span class="pre">'Blogs::index');</span></code>. This would map to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">Blogs</span></code> controller.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$route['product/(:any)']</span> <span class="pre">=</span> <span class="pre">'catalog/product_lookup';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('product/(:any)',</span> <span class="pre">'Catalog::productLookup');</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$route['login/(.+)']</span> <span class="pre">=</span> <span class="pre">'auth/login/$1';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('login/(.+)',</span> <span class="pre">'Auth::login/$1');</span></code></p></li>
 </ul>
+</div></blockquote>
+</li>
+</ol>
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-11">
 <h3>CodeIgniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">application/config/routes.php</span></code>:</p>
+<p>Path: <strong>application/config/routes.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
 
@@ -317,7 +320,7 @@
 </section>
 <section id="codeigniter-version-4-x">
 <h3>CodeIgniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Config/Routes.php</span></code>:</p>
+<p>Path: <strong>app/Config/Routes.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -333,14 +336,14 @@
 
 <span class="o">...</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/index&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;teams/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Teams::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;teams/edit/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Teams::edit/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;teams/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Teams::update&#39;</span><span class="p">);</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/edit/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::edit/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::update&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/edit/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::edit/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::update&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
