@@ -263,7 +263,7 @@
 <h1>Times and Dates<a class="headerlink" href="#times-and-dates" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP’s DateTime object, but uses the Intl
 extension’s features to convert times across timezones and display the output correctly for different locales. This class
-is the <strong>Time</strong> class and lives in the <strong>CodeIgniter\I18n</strong> namespace.</p>
+is the <code class="docutils literal notranslate"><span class="pre">Time</span></code> class and lives in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n</span></code> namespace.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since the Time class extends DateTime, if there are features that you need that this class doesn’t provide,
@@ -296,7 +296,7 @@ provided, the application defaults will be used.</p>
 </div>
 <section id="now">
 <h3>now()<a class="headerlink" href="#now" title="Permalink to this headline"></a></h3>
-<p>The Time class has several helper methods to instantiate the class. The first of these is the <strong>now()</strong> method
+<p>The Time class has several helper methods to instantiate the class. The first of these is the <code class="docutils literal notranslate"><span class="pre">now()</span></code> method
 that returns a new instance set to the current time. You can pass in strings representing the timezone and the locale
 in the second and parameters, respectively. If no locale or timezone is provided, the application defaults will be used.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$myTime</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
@@ -340,7 +340,7 @@ for the timezone and locale in the first and second parameters:</p>
 <p>Given separate inputs for <strong>year</strong>, <strong>month</strong>, and <strong>day</strong>, will return a new instance. If any of these parameters
 are not provided, it will use the current value to fill it in. Accepts strings for the timezone and locale in the
 fourth and fifth parameters:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$today</span>       <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">();</span> <span class="c1">// Uses current year, month, and day</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$today</span>       <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">();</span>     <span class="c1">// Uses current year, month, and day</span>
 <span class="nv">$anniversary</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2018</span><span class="p">);</span> <span class="c1">// Uses current month and day</span>
 <span class="nv">$date</span>        <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
 </pre></div>
@@ -348,10 +348,10 @@ fourth and fifth parameters:</p>
 </section>
 <section id="createfromtime">
 <h3>createFromTime()<a class="headerlink" href="#createfromtime" title="Permalink to this headline"></a></h3>
-<p>Like <strong>createFromDate</strong> except it is only concerned with the <strong>hours</strong>, <strong>minutes</strong>, and <strong>seconds</strong>. Uses the
+<p>Like <code class="docutils literal notranslate"><span class="pre">createFromDate()</span></code> except it is only concerned with the <strong>hours</strong>, <strong>minutes</strong>, and <strong>seconds</strong>. Uses the
 current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
 fourth and fifth parameters:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$lunch</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTime</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span> <span class="c1">// 11:30 am today</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$lunch</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTime</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span>     <span class="c1">// 11:30 am today</span>
 <span class="nv">$dinner</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTime</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mo">00</span><span class="p">,</span> <span class="mo">00</span><span class="p">);</span> <span class="c1">// 6:00 pm today</span>
 <span class="nv">$time</span>   <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromTime</span><span class="p">(</span><span class="nv">$hour</span><span class="p">,</span> <span class="nv">$minutes</span><span class="p">,</span> <span class="nv">$seconds</span><span class="p">,</span> <span class="nv">$timezone</span><span class="p">,</span> <span class="nv">$locale</span><span class="p">);</span>
 </pre></div>
@@ -369,7 +369,7 @@ timezone and locale in the fourth and fifth parameters:</p>
 <section id="createfromformat">
 <h3>createFromFormat()<a class="headerlink" href="#createfromformat" title="Permalink to this headline"></a></h3>
 <p>This is a replacement for DateTime’s method of the same name. This allows the timezone to be set at the same time,
-and returns a <strong>Time</strong> instance, instead of DateTime:</p>
+and returns a <code class="docutils literal notranslate"><span class="pre">Time</span></code> instance, instead of DateTime:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;j-M-Y&#39;</span><span class="p">,</span> <span class="s1">&#39;15-Feb-2009&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -408,7 +408,7 @@ However, the DateTime methods do not provide a localized result. The Time class 
 to display localized versions of the value, though.</p>
 <section id="tolocalizedstring">
 <h3>toLocalizedString()<a class="headerlink" href="#tolocalizedstring" title="Permalink to this headline"></a></h3>
-<p>This is the localized version of DateTime’s format() method. Instead of using the values you might be familiar with, though,
+<p>This is the localized version of DateTime’s <code class="docutils literal notranslate"><span class="pre">format()</span></code> method. Instead of using the values you might be familiar with, though,
 you must use values acceptable to the <a class="reference external" href="https://www.php.net/manual/en/class.intldateformatter.php">IntlDateFormatter</a> class.
 A full listing of values can be found <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details">here</a>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
@@ -490,7 +490,7 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </tbody>
 </table>
-<p>The exact language used is controlled through the language file, Time.php.</p>
+<p>The exact language used is controlled through the language file, <strong>Time.php</strong>.</p>
 </section>
 </section>
 <section id="working-with-individual-values">
@@ -498,24 +498,24 @@ human readable format that is geared towards being easily understood. It can cre
 <p>The Time object provides a number of methods to allow to get and set individual items, like the year, month, hour, etc,
 of an existing instance. All of the values retrieved through the following methods will be fully localized and respect
 the locale that the Time instance was created with.</p>
-<p>All of the following <cite>getX</cite> and <cite>setX</cite> methods can also be used as if they were a class property. So, any calls to methods
-like <cite>getYear</cite> can also be accessed through <cite>$time-&gt;year</cite>, and so on.</p>
+<p>All of the following <code class="docutils literal notranslate"><span class="pre">getX()</span></code> and <code class="docutils literal notranslate"><span class="pre">setX()</span></code> methods can also be used as if they were a class property. So, any calls to methods
+like <code class="docutils literal notranslate"><span class="pre">getYear()</span></code> can also be accessed through <code class="docutils literal notranslate"><span class="pre">$time-&gt;year</span></code>, and so on.</p>
 <section id="getters">
 <h3>Getters<a class="headerlink" href="#getters" title="Permalink to this headline"></a></h3>
 <p>The following basic getters exist:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;August 12, 2016 4:15:23pm&#39;</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getYear</span><span class="p">();</span> <span class="c1">// 2016</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMonth</span><span class="p">();</span> <span class="c1">// 8</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDay</span><span class="p">();</span> <span class="c1">// 12</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getHour</span><span class="p">();</span> <span class="c1">// 16</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getYear</span><span class="p">();</span>   <span class="c1">// 2016</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMonth</span><span class="p">();</span>  <span class="c1">// 8</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDay</span><span class="p">();</span>    <span class="c1">// 12</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getHour</span><span class="p">();</span>   <span class="c1">// 16</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getMinute</span><span class="p">();</span> <span class="c1">// 15</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getSecond</span><span class="p">();</span> <span class="c1">// 23</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">year</span><span class="p">;</span> <span class="c1">// 2016</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">month</span><span class="p">;</span> <span class="c1">// 8</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">day</span><span class="p">;</span> <span class="c1">// 12</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">hour</span><span class="p">;</span> <span class="c1">// 16</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">year</span><span class="p">;</span>   <span class="c1">// 2016</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">month</span><span class="p">;</span>  <span class="c1">// 8</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">day</span><span class="p">;</span>    <span class="c1">// 12</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">hour</span><span class="p">;</span>   <span class="c1">// 16</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">minute</span><span class="p">;</span> <span class="c1">// 15</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">second</span><span class="p">;</span> <span class="c1">// 23</span>
 </pre></div>
@@ -523,19 +523,19 @@ like <cite>getYear</cite> can also be accessed through <cite>$time-&gt;year</cit
 <p>In addition to these, a number of methods exist to provide additional information about the date:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;August 12, 2016 4:15:23pm&#39;</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfWeek</span><span class="p">();</span> <span class="c1">// 6 - but may vary based on locale&#39;s starting day of the week</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfYear</span><span class="p">();</span> <span class="c1">// 225</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfWeek</span><span class="p">();</span>   <span class="c1">// 6 - but may vary based on locale&#39;s starting day of the week</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getDayOfYear</span><span class="p">();</span>   <span class="c1">// 225</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfMonth</span><span class="p">();</span> <span class="c1">// 2</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfYear</span><span class="p">();</span> <span class="c1">// 33</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">();</span> <span class="c1">// 1471018523 - UNIX timestamp</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getQuarter</span><span class="p">();</span> <span class="c1">// 3</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getWeekOfYear</span><span class="p">();</span>  <span class="c1">// 33</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimestamp</span><span class="p">();</span>   <span class="c1">// 1471018523 - UNIX timestamp</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getQuarter</span><span class="p">();</span>     <span class="c1">// 3</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfWeek</span><span class="p">;</span> <span class="c1">// 6</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfYear</span><span class="p">;</span> <span class="c1">// 225</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfWeek</span><span class="p">;</span>   <span class="c1">// 6</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">dayOfYear</span><span class="p">;</span>   <span class="c1">// 225</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfMonth</span><span class="p">;</span> <span class="c1">// 2</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfYear</span><span class="p">;</span> <span class="c1">// 33</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">timestamp</span><span class="p">;</span> <span class="c1">// 1471018523</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">quarter</span><span class="p">;</span> <span class="c1">// 3</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">weekOfYear</span><span class="p">;</span>  <span class="c1">// 33</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">timestamp</span><span class="p">;</span>   <span class="c1">// 1471018523</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">quarter</span><span class="p">;</span>     <span class="c1">// 3</span>
 </pre></div>
 </div>
 </section>
@@ -546,7 +546,7 @@ the age of someone based on their birthday:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;5 years ago&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getAge</span><span class="p">();</span> <span class="c1">// 5</span>
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">age</span><span class="p">;</span> <span class="c1">// 5</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">age</span><span class="p">;</span>      <span class="c1">// 5</span>
 </pre></div>
 </div>
 </section>
@@ -554,14 +554,14 @@ the age of someone based on their birthday:</p>
 <h3>getDST()<a class="headerlink" href="#getdst" title="Permalink to this headline"></a></h3>
 <p>Returns boolean true/false based on whether the Time instance is currently observing Daylight Savings Time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getDst</span><span class="p">();</span> <span class="c1">// false</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">dst</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromDate</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">dst</span><span class="p">;</span>      <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
 <section id="getlocal">
 <h3>getLocal()<a class="headerlink" href="#getlocal" title="Permalink to this headline"></a></h3>
 <p>Returns boolean true if the Time instance is in the same timezone as the application is currently running in:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocal</span><span class="p">();</span> <span class="c1">// true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocal</span><span class="p">();</span>    <span class="c1">// true</span>
 <span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span> <span class="c1">// false</span>
 </pre></div>
 </div>
@@ -570,7 +570,7 @@ the age of someone based on their birthday:</p>
 <h3>getUtc()<a class="headerlink" href="#getutc" title="Permalink to this headline"></a></h3>
 <p>Returns boolean true if the Time instance is in UTC time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getUtc</span><span class="p">();</span> <span class="c1">// false</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">utc</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">utc</span><span class="p">;</span>                  <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>
@@ -590,7 +590,7 @@ instance:</p>
 <h3>getTimezoneName()<a class="headerlink" href="#gettimezonename" title="Permalink to this headline"></a></h3>
 <p>Returns the full <a class="reference external" href="https://www.php.net/manual/en/timezones.php">timezone string</a> of the Time instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// America/Chicago</span>
-<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">timezoneName</span><span class="p">;</span> <span class="c1">// Europe/London</span>
+<span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">timezoneName</span><span class="p">;</span>        <span class="c1">// Europe/London</span>
 </pre></div>
 </div>
 <section id="setters">
@@ -606,11 +606,11 @@ thrown.</p>
 <p>All setters will throw an InvalidArgumentException if the value is out of range.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setYear</span><span class="p">(</span><span class="mi">2017</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonthNumber</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// April</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonthLongName</span><span class="p">(</span><span class="s1">&#39;April&#39;</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonthShortName</span><span class="p">(</span><span class="s1">&#39;Feb&#39;</span><span class="p">);</span> <span class="c1">// February</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>       <span class="c1">// April</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">&#39;April&#39;</span><span class="p">);</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMonth</span><span class="p">(</span><span class="s1">&#39;Feb&#39;</span><span class="p">);</span>   <span class="c1">// February</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setDay</span><span class="p">(</span><span class="mi">25</span><span class="p">);</span>
-<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setHour</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span> <span class="c1">// 2:00 pm</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setHour</span><span class="p">(</span><span class="mi">14</span><span class="p">);</span>       <span class="c1">// 2:00 pm</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setMinute</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setSecond</span><span class="p">(</span><span class="mi">54</span><span class="p">);</span>
 </pre></div>
@@ -623,10 +623,10 @@ thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span>  <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;13 May 2020 10:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimezone</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span> <span class="c1">// Returns new instance converted to new timezone</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// American/Chicago</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span>  <span class="c1">// American/Chicago</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">getTimezoneName</span><span class="p">();</span> <span class="c1">// Europe/London</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2020-05-13 10:00:00</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span>  <span class="c1">// 2020-05-13 10:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2020-05-13 18:00:00</span>
 </pre></div>
 </div>
@@ -637,7 +637,7 @@ thrown.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;May 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setTimestamp</span><span class="p">(</span><span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;April 1, 2017&#39;</span><span class="p">));</span>
 
-<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2017-05-10 00:00:00</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span>  <span class="c1">// 2017-05-10 00:00:00</span>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2017-04-01 00:00:00</span>
 </pre></div>
 </div>
@@ -687,12 +687,12 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </section>
 <section id="sameas">
 <h3>sameAs()<a class="headerlink" href="#sameas" title="Permalink to this headline"></a></h3>
-<p>This is identical to the <strong>equals</strong> method, except that it only returns true when the date, time, AND timezone are
+<p>This is identical to the <code class="docutils literal notranslate"><span class="pre">equals()</span></code> method, except that it only returns true when the date, time, AND timezone are
 all identical:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe/London&#39;</span><span class="p">);</span>
 
-<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span>    <span class="c1">// false</span>
+<span class="nv">$time1</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="nv">$time2</span><span class="p">);</span> <span class="c1">// false</span>
 <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">sameAs</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
 </div>
@@ -717,7 +717,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </section>
 <section id="isafter">
 <h3>isAfter()<a class="headerlink" href="#isafter" title="Permalink to this headline"></a></h3>
-<p>Works exactly the same as <strong>isBefore()</strong> except checks if the time is after the time passed in:</p>
+<p>Works exactly the same as <code class="docutils literal notranslate"><span class="pre">isBefore()</span></code> except checks if the time is after the time passed in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time1</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 10, 2017 21:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="nv">$time2</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;January 11, 2017 03:50:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 
@@ -727,7 +727,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </div>
 <section id="viewing-differences">
 <h4>Viewing Differences<a class="headerlink" href="#viewing-differences" title="Permalink to this headline"></a></h4>
-<p>To compare two Times directly, you would use the <strong>difference()</strong> method, which returns a <strong>CodeIgniter\I18n\TimeDifference</strong>
+<p>To compare two Times directly, you would use the <code class="docutils literal notranslate"><span class="pre">difference()</span></code> method, which returns a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n\TimeDifference</span></code>
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
@@ -745,21 +745,21 @@ the original time:</p>
 
 <span class="nv">$diff</span> <span class="o">=</span> <span class="nv">$current</span><span class="o">-&gt;</span><span class="na">difference</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getYears</span><span class="p">();</span> <span class="c1">// -7</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getMonths</span><span class="p">();</span> <span class="c1">// -84</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getWeeks</span><span class="p">();</span> <span class="c1">// -365</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getDays</span><span class="p">();</span> <span class="c1">// -2557</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getHours</span><span class="p">();</span> <span class="c1">// -61368</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getYears</span><span class="p">();</span>   <span class="c1">// -7</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getMonths</span><span class="p">();</span>  <span class="c1">// -84</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getWeeks</span><span class="p">();</span>   <span class="c1">// -365</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getDays</span><span class="p">();</span>    <span class="c1">// -2557</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getHours</span><span class="p">();</span>   <span class="c1">// -61368</span>
 <span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getMinutes</span><span class="p">();</span> <span class="c1">// -3682080</span>
 <span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">getSeconds</span><span class="p">();</span> <span class="c1">// -220924800</span>
 </pre></div>
 </div>
-<p>You can use either <strong>getX()</strong> methods, or access the calculate values as if they were properties:</p>
+<p>You can use either <code class="docutils literal notranslate"><span class="pre">getX()</span></code> methods, or access the calculate values as if they were properties:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">years</span><span class="p">;</span>   <span class="c1">// -7</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">months</span><span class="p">;</span> <span class="c1">// -84</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">weeks</span><span class="p">;</span> <span class="c1">// -365</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">days</span><span class="p">;</span> <span class="c1">// -2557</span>
-<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">hours</span><span class="p">;</span> <span class="c1">// -61368</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">months</span><span class="p">;</span>  <span class="c1">// -84</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">weeks</span><span class="p">;</span>   <span class="c1">// -365</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">days</span><span class="p">;</span>    <span class="c1">// -2557</span>
+<span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">hours</span><span class="p">;</span>   <span class="c1">// -61368</span>
 <span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">minutes</span><span class="p">;</span> <span class="c1">// -3682080</span>
 <span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">seconds</span><span class="p">;</span> <span class="c1">// -220924800</span>
 </pre></div>
@@ -768,7 +768,7 @@ the original time:</p>
 </section>
 <section id="id1">
 <h3>humanize()<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
-<p>Much like Time’s humanize() method, this returns a string that displays the difference between the times in a
+<p>Much like Time’s <code class="docutils literal notranslate"><span class="pre">humanize()</span></code> method, this returns a string that displays the difference between the times in a
 human readable format that is geared towards being easily understood. It can create strings like ‘3 hours ago’,
 ‘in 1 month’, etc. The biggest differences are in how very recent dates are handled:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$current</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 10, 2017&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span>
@@ -814,7 +814,7 @@ human readable format that is geared towards being easily understood. It can cre
 </tr>
 </tbody>
 </table>
-<p>The exact language used is controlled through the language file, Time.php.</p>
+<p>The exact language used is controlled through the language file, <strong>Time.php</strong>.</p>
 </section>
 </section>
 </section>
