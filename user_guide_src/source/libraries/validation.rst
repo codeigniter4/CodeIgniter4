@@ -892,11 +892,13 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    HSBC Canada Card (hsbc)
 ======================= ========== ============================================= ===================================================
 
+.. _rules-for-file-uploads:
+
 Rules for File Uploads
 ======================
 
 These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
-Since the value of a file upload HTML field doesn't exist, and is stored in the $_FILES global, the name of the input field will
+Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
 file upload related rules::
 
