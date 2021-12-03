@@ -157,6 +157,8 @@ ruleset:
   Controller:
     - HTTP
     - Validation
+  Cookie:
+    - Security
   Database:
     - Entity
     - Events
