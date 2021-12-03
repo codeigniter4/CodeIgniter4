@@ -72,10 +72,49 @@
 
 ## [v4.1.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.4) (2021-09-06)
 
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.3...v4.1.4)
+
 This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 [CodeIgniter Coding Standard](https://github.com/CodeIgniter/coding-standard) (based on PSR-12).
 
-*Note: Full changelog forthcoming.*
+**What's Changed**
+
+* Use php-cs-fixer as coding style tool by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4770
+* Remove unused local variables by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4783
+* Use static lambda if a binding to `$this` is not required. by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4784
+* Use/Fix `preg_quote()` delimiters by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4789
+* Don't override `$path` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4787
+* Don't override `$value` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4788
+* Add brackets to clarify intent and avoid unwanted side-effects by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4791
+* Remove removed `safe_mode` ini Option by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4795
+* It will fix undefined index cid error when sending emails with embedded images by @mmfarhan in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* Revert Model coalesce by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/4819
+* Master language constructs shall be used instead of aliases. by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4847
+* [Commands] Remove unused $minPHPVersion property at Serve command by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4852
+* Update to latest laminas-escaper ^2.8 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4878
+* Remove 'memory_usage' from 'displayPerformanceMetrics()' comment by @Mauricevb in https://github.com/codeigniter4/CodeIgniter4/pull/4939
+* Remove useless code separator comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4946
+* Optimize Filters by @mostafakhudair in https://github.com/codeigniter4/CodeIgniter4/pull/4965
+* Fix properly the phpstan error in 0.12.93 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4970
+* Manual cleanup of docblocks and comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4964
+* Make Cookie compatible with ArrayAccess by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5004
+* Replace deprecated FILTER_SANITIZE_STRING by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5005
+* Make CookieStore compatible with IteratorAggregate::getIterator by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5010
+* Make the session handlers all compatible with SessionHandlerInterface by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5012
+* Make CITestStreamFilter compatible with php_user_filter by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5014
+* Make Time compatible with DateTime by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5022
+* Add `ReturnTypeWillChange` attribute to Entity by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5028
+* Replace unused Entity private method by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5029
+* Make File compatible with SplFileInfo by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5040
+* Update documentation code samples by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5039
+* PHP Copy-Paste Detector by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5031
+* Fix key casting in form_dropdown helper. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5035
+* Switch to official coding standard by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5038
+
+**New Contributors**
+
+* @mmfarhan made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* @Mauricevb made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4939
 
 ## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
 
