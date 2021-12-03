@@ -16,6 +16,7 @@ use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
@@ -697,7 +698,51 @@ trait ResponseTrait
             return;
         }
 
-        $this->cookieStore->dispatch();
+        $this->dispatchCookies();
+    }
+
+    private function dispatchCookies(): void
+    {
+        /** @var IncomingRequest $request */
+        $request = Services::request();
+
+        foreach ($this->cookieStore->display() as $cookie) {
+            if ($cookie->isSecure() && ! $request->isSecure()) {
+                throw SecurityException::forDisallowedAction();
+            }
+
+            $name    = $cookie->getPrefixedName();
+            $value   = $cookie->getValue();
+            $options = $cookie->getOptions();
+
+            if ($cookie->isRaw()) {
+                $this->doSetRawCookie($name, $value, $options);
+            } else {
+                $this->doSetCookie($name, $value, $options);
+            }
+        }
+
+        $this->cookieStore->clear();
+    }
+
+    /**
+     * Extracted call to `setrawcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    private function doSetRawCookie(string $name, string $value, array $options): void
+    {
+        setrawcookie($name, $value, $options);
+    }
+
+    /**
+     * Extracted call to `setcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    private function doSetCookie(string $name, string $value, array $options): void
+    {
+        setcookie($name, $value, $options);
     }
 
     /**
