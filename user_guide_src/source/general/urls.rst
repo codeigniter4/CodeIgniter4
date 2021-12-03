@@ -2,6 +2,10 @@
 CodeIgniter URLs
 ################
 
+.. contents::
+    :local:
+    :depth: 2
+
 By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
 "query-string" approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a **segment-based** approach::
 
