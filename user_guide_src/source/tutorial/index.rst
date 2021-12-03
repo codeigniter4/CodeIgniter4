@@ -59,7 +59,7 @@ From your command line type the following:
 
 ::
 
-    composer create-project codeigniter4/appstarter ci-news
+    > composer create-project codeigniter4/appstarter ci-news
 
 This creates a new folder, **ci-news**, which contains your application code, with
 CodeIgniter installed in the vendor folder.
