@@ -96,17 +96,17 @@ Moving Files
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter::
 
-    $file->move(WRITEPATH.'uploads');
+    $file->move(WRITEPATH . 'uploads');
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter::
 
     $newName = $file->getRandomName();
-    $file->move(WRITEPATH.'uploads', $newName);
+    $file->move(WRITEPATH . 'uploads', $newName);
 
 The move() method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed::
 
-    $file = $file->move(WRITEPATH.'uploads');
+    $file = $file->move(WRITEPATH . 'uploads');
 
 ****************
 File Collections
@@ -136,8 +136,7 @@ When your collection is complete, you can use ``get()`` to retrieve the final li
     echo 'My files: ' . implode(PHP_EOL, $files->get());
     echo 'I have ' . count($files) . ' files!';
 
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
         echo 'Moving ' . $file->getBasename() . ', ' . $file->getSizeByUnit('mb');
         $file->move(WRITABLE . $file->getRandomName());
     }
@@ -150,7 +149,7 @@ Starting a Collection
 **__construct(string[] $files = [])**
 
 The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
-**add()** so any files supplied by child classes in the **$files** will remain.
+``add()`` so any files supplied by child classes in the ``$files`` will remain.
 
 **define()**
 
@@ -181,17 +180,17 @@ Inputting Files
 Adds all files indicated by the path or array of paths. If the path resolves to a directory then ``$recursive``
 will include sub-directories.
 
-**addFile(string $file)**
+**addFile(string $file)** /
 **addFiles(array $files)**
 
 Adds the file or files to the current list of input files. Files are absolute paths to actual files.
 
-**removeFile(string $file)**
+**removeFile(string $file)** /
 **removeFiles(array $files)**
 
 Removes the file or files from the current list of input files.
 
-**addDirectory(string $directory, bool $recursive = false)**
+**addDirectory(string $directory, bool $recursive = false)** /
 **addDirectories(array $directories, bool $recursive = false)**
 
 Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
@@ -200,7 +199,7 @@ absolute paths to actual directories.
 Filtering Files
 ===============
 
-**removePattern(string $pattern, string $scope = null)**
+**removePattern(string $pattern, string $scope = null)** /
 **retainPattern(string $pattern, string $scope = null)**
 
 Filters the current file list through the pattern (and optional scope), removing or retaining matched
