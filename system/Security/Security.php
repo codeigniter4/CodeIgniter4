@@ -531,11 +531,8 @@ class Security implements SecurityInterface
         );
 
         /** @var Response $response */
-        $response    = Services::response();
-        $cookieStore = $response->getCookieStore();
-        $cookieStore = $cookieStore->put($this->cookie);
-
-        $response->setCookieStore($cookieStore);
+        $response = Services::response();
+        $response->setCookie($this->cookie);
     }
 
     /**
