@@ -12,16 +12,7 @@ Breaking Changes
 Validation result changes
 =========================
 
-The previous version of the Validation can't handle an array item.
-Because of the bug fix, the validation results may be different,
-or raise an TypeError.
-But the previous version's results are probably incorrect.
-
-And the Validation separated the validation process of multiple field
-like ``contacts.*.name`` and single field.
-When a single field has an array data, the previous version validates each element of the array.
-The validation rule gets an element of the array as the parameter.
-On the other hand, the current version passes the array to the validation rule as a whole.
+Due to a bug fix, the Validation now might change the validation results when you validate an array item (see :ref:`Changelog <changelog-v416-validation-changes>`). So check the validation results for all the code that validates the array. Validating multiple fields like ``contacts.*.name`` is not affected.
 
 Breaking Enhancements
 *********************
