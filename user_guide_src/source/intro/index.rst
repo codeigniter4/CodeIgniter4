@@ -44,3 +44,4 @@ CodeIgniter is right for you if:
     requirements
     credits
     psr
+    License Agreement <../license>
