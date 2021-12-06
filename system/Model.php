@@ -584,12 +584,15 @@ class Model extends BaseModel
      */
     protected function shouldUpdate($data): bool
     {
+        if (parent::shouldUpdate($data) === false) {
+            return false;
+        }
+
         // When useAutoIncrement feature is disabled, check
         // in the database if given record already exists
-        return parent::shouldUpdate($data)
-            && ($this->useAutoIncrement
+        return $this->useAutoIncrement
                 ? true
-                : $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1);
+                : $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1;
     }
 
     /**
