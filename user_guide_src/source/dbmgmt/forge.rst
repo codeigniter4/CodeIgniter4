@@ -230,18 +230,18 @@ Adding Foreign Keys
 Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge::
 
-    $forge->addForeignKey('users_id','users','id');
+    $forge->addForeignKey('users_id', 'users', 'id');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
 
-    $forge->addForeignKey(['users_id', 'users_name'],'users',['id', 'name']);
+    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name']);
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`)
 
 You can specify the desired action for the "on delete" and "on update" properties of the constraint::
 
-    $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+    $forge->addForeignKey('users_id', 'users', 'id', 'CASCADE', 'CASCADE');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 
-    $forge->addForeignKey(['users_id', 'users_name'],'users',['id', 'name'],'CASCADE','CASCADE');
+    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name'], 'CASCADE', 'CASCADE');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`) ON DELETE CASCADE ON UPDATE CASCADE
 
 Creating a table
@@ -302,7 +302,7 @@ Execute a DROP FOREIGN KEY.
 ::
 
     // Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`
-    $forge->dropForeignKey('tablename','users_foreign');
+    $forge->dropForeignKey('tablename', 'users_foreign');
 
 
 Dropping a Key
@@ -313,7 +313,7 @@ Execute a DROP KEY.
 ::
 
     // Produces: DROP INDEX `users_index` ON `tablename`
-    $forge->dropKey('tablename','users_index');
+    $forge->dropKey('tablename', 'users_index');
 
 Renaming a table
 ================
