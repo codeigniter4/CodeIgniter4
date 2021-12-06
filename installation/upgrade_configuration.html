@@ -44,6 +44,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
 </ul>
 </li>
 </ul>
@@ -53,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
@@ -292,21 +294,20 @@
 <li><p>You have to change the values in the default CI4 config files according to the
 changes in the CI3 files. The config names are pretty much the same as in CI3.</p></li>
 <li><p>If you are using custom config files in your CI3 project you have to create those
-files as new PHP classes in your CI4 project in <code class="docutils literal notranslate"><span class="pre">app/Config/</span></code>. These classes
+files as new PHP classes in your CI4 project in <strong>app/Config</strong>. These classes
 should be in the <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace and should extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>.</p></li>
 <li><p>Once you have created all custom config classes, you have to copy the variables
 from the CI3 config into the new CI4 config class as public class properties.</p></li>
 <li><p>Now, you have to change the config fetching syntax everywhere you fetch config
 values. The CI3 syntax is something like <code class="docutils literal notranslate"><span class="pre">$this-&gt;config-&gt;item('item_name');</span></code>.
-You have to change this into <code class="docutils literal notranslate"><span class="pre">config('MyConfigFile')-&gt;item_name;</span></code>. Alternatively,
-you can use the object-oriented approach: <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Config::get('MyConfigFile')-&gt;item_name;</span></code></p></li>
+You have to change this into <code class="docutils literal notranslate"><span class="pre">config('MyConfigFile')-&gt;item_name;</span></code>.</p></li>
 </ol>
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-11">
 <h3>CodeIgniter Version 3.11<a class="headerlink" href="#codeigniter-version-3-11" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">application/models</span></code>:</p>
+<p>Path: <strong>application/config</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
@@ -318,7 +319,7 @@ you can use the object-oriented approach: <code class="docutils literal notransl
 </section>
 <section id="codeigniter-version-4-x">
 <h3>CodeIgniter Version 4.x<a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <code class="docutils literal notranslate"><span class="pre">app/Config</span></code>:</p>
+<p>Path: <strong>app/Config</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -348,7 +349,7 @@ you can use the object-oriented approach: <code class="docutils literal notransl
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 03, 2021.
+      <span class="lastupdated">Last updated on Dec 06, 2021.
       </span></p>
   </div>
 

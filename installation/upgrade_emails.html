@@ -44,6 +44,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
 </ul>
 </li>
 </ul>
@@ -53,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
@@ -290,7 +292,7 @@
 <li><p>Within your class change the <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('email');</span></code> to <code class="docutils literal notranslate"><span class="pre">$email</span> <span class="pre">=</span> <span class="pre">service('email');</span></code>.</p></li>
 <li><p>From that on you have to replace every line starting with <code class="docutils literal notranslate"><span class="pre">$this-&gt;email</span></code> to <code class="docutils literal notranslate"><span class="pre">$email</span></code>.</p></li>
 <li><p>The methods in the Email class are named slightly different. All methods, except for <code class="docutils literal notranslate"><span class="pre">send()</span></code>, <code class="docutils literal notranslate"><span class="pre">attach()</span></code>, <code class="docutils literal notranslate"><span class="pre">printDebugger()</span></code> and <code class="docutils literal notranslate"><span class="pre">clear()</span></code> have a <code class="docutils literal notranslate"><span class="pre">set</span></code> as prefix followed by the previous method name. <code class="docutils literal notranslate"><span class="pre">bcc()</span></code> is now <code class="docutils literal notranslate"><span class="pre">setBcc()</span></code> and so on.</p></li>
-<li><p>The config attributes in <code class="docutils literal notranslate"><span class="pre">app/Config/Email.php</span></code> have changed. You should have a look at the <a class="reference external" href="/libraries/email.html#setting-email-preferences">Email Class Documentation</a> to have a list of the new attributes.</p></li>
+<li><p>The config attributes in <strong>app/Config/Email.php</strong> have changed. You should have a look at the <a class="reference internal" href="../libraries/email.html#setting-email-preferences"><span class="std std-ref">Setting Email Preferences</span></a> to have a list of the new attributes.</p></li>
 </ol>
 </section>
 <section id="code-example">
@@ -342,7 +344,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 03, 2021.
+      <span class="lastupdated">Last updated on Dec 06, 2021.
       </span></p>
   </div>
 
