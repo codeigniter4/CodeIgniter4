@@ -19,7 +19,7 @@ Validation changes
 ------------------
 - The previous version of the Validation can't handle an array item.
   Because of the bug fix, the validation results may be different,
-  or raise an TypeError.
+  or raise a ``TypeError``.
   But the previous version's results are probably incorrect.
 - The Validation separated the validation process of multiple field
   like ``contacts.*.name`` and single field.
