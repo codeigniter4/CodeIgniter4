@@ -143,6 +143,8 @@ class Validation implements ValidationInterface
             if ($values === []) {
                 // We'll process the values right away if an empty array
                 $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+
+                continue;
             }
 
             if (strpos($field, '*') !== false && is_array($values)) {
