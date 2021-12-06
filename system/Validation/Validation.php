@@ -285,7 +285,8 @@ class Validation implements ValidationInterface
                     }
 
                     $found  = true;
-                    $passed = $param === false ? $set->{$rule}($value, $error)
+                    $passed = $param === false
+                        ? $set->{$rule}($value, $error)
                         : $set->{$rule}($value, $param, $data, $error);
 
                     break;
