@@ -21,12 +21,12 @@ Enhancements
 ============
 
 - Added Cache config for reserved characters
-- The ``addForeignKey`` function of the ``Forge`` class can now define composite foreign keys in an array
+- The :ref:`addForeignKey()<adding-foreign-keys>` function of the ``Forge`` class can now define composite foreign keys in an array
 - The ``dropKey`` function of the ``Forge`` class can remove key
 - Now ``_`` can be used as separators in environment variable
 - Added Multiple filters for a route and Classname filter
 - Reduced memory usage of ``insertBatch()`` and ``updateBatch()``
-- Added Session based CSRF Protection
+- Added :ref:`Session based CSRF Protection <csrf-protection-methods>`
 - Added ``valid_url_strict`` rule for ``Validation``
 - Debug Toolbar
     - Added formatted query string to timeline

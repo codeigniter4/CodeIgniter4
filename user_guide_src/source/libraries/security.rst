@@ -29,6 +29,8 @@ Cross-site request forgery (CSRF)
 Config for CSRF
 ===============
 
+.. _csrf-protection-methods:
+
 CSRF Protection Methods
 -----------------------
 
