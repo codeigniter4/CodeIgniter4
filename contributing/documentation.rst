@@ -81,3 +81,32 @@ create these with the following tab triggers::
 
         SubSubSubSubSection (!)
         """""""""""""""""""""""
+
+**********
+References
+**********
+
+References to a Section
+=======================
+
+If you need to link to a specific section, the first you add the label before a header::
+
+    .. _curlrequest-request-options-headers:
+
+    headers
+    =======
+
+And then you can reference it like this::
+
+    See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to add.
+
+    See :ref:`curlrequest-request-options-headers` for how to add.
+
+References to a Page
+====================
+
+You can reference a page like the following::
+
+    :doc:`Session <../libraries/sessions>` library
+
+    :doc:`../libraries/sessions` library
