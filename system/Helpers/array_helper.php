@@ -21,7 +21,12 @@ if (! function_exists('dot_array_search')) {
     function dot_array_search(string $index, array $array)
     {
         // See https://regex101.com/r/44Ipql/1
-        $segments = preg_split('/(?<!\\\\)\./', rtrim($index, '* '), 0, PREG_SPLIT_NO_EMPTY);
+        $segments = preg_split(
+            '/(?<!\\\\)\./',
+            rtrim($index, '* '),
+            0,
+            PREG_SPLIT_NO_EMPTY
+        );
 
         $segments = array_map(static function ($key) {
             return str_replace('\.', '.', $key);
