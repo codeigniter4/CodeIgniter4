@@ -15,6 +15,7 @@ It is created automatically by inserting the following:
 
     .. contents::
         :local:
+        :depth: 2
 
 .. contents::
   :local:
