@@ -267,36 +267,36 @@
 database.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#initializing-the-forge-class" id="id1">Initializing the Forge Class</a></p></li>
-<li><p><a class="reference internal" href="#creating-and-dropping-databases" id="id2">Creating and Dropping Databases</a></p>
+<li><p><a class="reference internal" href="#initializing-the-forge-class" id="id2">Initializing the Forge Class</a></p></li>
+<li><p><a class="reference internal" href="#creating-and-dropping-databases" id="id3">Creating and Dropping Databases</a></p>
 <ul>
-<li><p><a class="reference internal" href="#creating-databases-in-the-command-line" id="id3">Creating Databases in the Command Line</a></p></li>
+<li><p><a class="reference internal" href="#creating-databases-in-the-command-line" id="id4">Creating Databases in the Command Line</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#creating-and-dropping-tables" id="id4">Creating and Dropping Tables</a></p>
+<li><p><a class="reference internal" href="#creating-and-dropping-tables" id="id5">Creating and Dropping Tables</a></p>
 <ul>
-<li><p><a class="reference internal" href="#adding-fields" id="id5">Adding fields</a></p></li>
-<li><p><a class="reference internal" href="#adding-keys" id="id6">Adding Keys</a></p></li>
-<li><p><a class="reference internal" href="#adding-foreign-keys" id="id7">Adding Foreign Keys</a></p></li>
-<li><p><a class="reference internal" href="#creating-a-table" id="id8">Creating a table</a></p></li>
-<li><p><a class="reference internal" href="#dropping-a-table" id="id9">Dropping a table</a></p></li>
-<li><p><a class="reference internal" href="#dropping-a-foreign-key" id="id10">Dropping a Foreign Key</a></p></li>
-<li><p><a class="reference internal" href="#dropping-a-key" id="id11">Dropping a Key</a></p></li>
-<li><p><a class="reference internal" href="#renaming-a-table" id="id12">Renaming a table</a></p></li>
+<li><p><a class="reference internal" href="#adding-fields" id="id6">Adding fields</a></p></li>
+<li><p><a class="reference internal" href="#adding-keys" id="id7">Adding Keys</a></p></li>
+<li><p><a class="reference internal" href="#adding-foreign-keys" id="id8">Adding Foreign Keys</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-table" id="id9">Creating a table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-table" id="id10">Dropping a table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-foreign-key" id="id11">Dropping a Foreign Key</a></p></li>
+<li><p><a class="reference internal" href="#dropping-a-key" id="id12">Dropping a Key</a></p></li>
+<li><p><a class="reference internal" href="#renaming-a-table" id="id13">Renaming a table</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#modifying-tables" id="id13">Modifying Tables</a></p>
+<li><p><a class="reference internal" href="#modifying-tables" id="id14">Modifying Tables</a></p>
 <ul>
-<li><p><a class="reference internal" href="#adding-a-column-to-a-table" id="id14">Adding a Column to a Table</a></p></li>
-<li><p><a class="reference internal" href="#dropping-columns-from-a-table" id="id15">Dropping Columns From a Table</a></p></li>
-<li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id16">Modifying a Column in a Table</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-column-to-a-table" id="id15">Adding a Column to a Table</a></p></li>
+<li><p><a class="reference internal" href="#dropping-columns-from-a-table" id="id16">Dropping Columns From a Table</a></p></li>
+<li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id17">Modifying a Column in a Table</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id17">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id18">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="initializing-the-forge-class">
-<h2><a class="toc-backref" href="#id1">Initializing the Forge Class</a><a class="headerlink" href="#initializing-the-forge-class" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Initializing the Forge Class</a><a class="headerlink" href="#initializing-the-forge-class" title="Permalink to this headline"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>In order to initialize the Forge class, your database
@@ -315,7 +315,7 @@ the database you want to manage isn’t the default one:</p>
 to connect to as the first parameter.</p>
 </section>
 <section id="creating-and-dropping-databases">
-<h2><a class="toc-backref" href="#id2">Creating and Dropping Databases</a><a class="headerlink" href="#creating-and-dropping-databases" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Creating and Dropping Databases</a><a class="headerlink" href="#creating-and-dropping-databases" title="Permalink to this headline"></a></h2>
 <p><strong>$forge-&gt;createDatabase(‘db_name’)</strong></p>
 <p>Permits you to create the database specified in the first parameter.
 Returns true/false based on success or failure:</p>
@@ -340,7 +340,7 @@ Returns true/false based on success or failure:</p>
 </pre></div>
 </div>
 <section id="creating-databases-in-the-command-line">
-<h3><a class="toc-backref" href="#id3">Creating Databases in the Command Line</a><a class="headerlink" href="#creating-databases-in-the-command-line" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Creating Databases in the Command Line</a><a class="headerlink" href="#creating-databases-in-the-command-line" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter supports creating databases straight from your favorite terminal using the dedicated <code class="docutils literal notranslate"><span class="pre">db:create</span></code>
 command. By using this command it is assumed that the database is not yet existing. Otherwise, CodeIgniter
 will complain that the database creation has failed.</p>
@@ -365,12 +365,12 @@ an in-memory database.</p>
 </section>
 </section>
 <section id="creating-and-dropping-tables">
-<h2><a class="toc-backref" href="#id4">Creating and Dropping Tables</a><a class="headerlink" href="#creating-and-dropping-tables" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Creating and Dropping Tables</a><a class="headerlink" href="#creating-and-dropping-tables" title="Permalink to this headline"></a></h2>
 <p>There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
 mechanism for this.</p>
 <section id="adding-fields">
-<h3><a class="toc-backref" href="#id5">Adding fields</a><a class="headerlink" href="#adding-fields" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Adding fields</a><a class="headerlink" href="#adding-fields" title="Permalink to this headline"></a></h3>
 <p>Fields are normally created via an associative array. Within the array, you must
 include a ‘type’ key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
@@ -457,7 +457,7 @@ Primary Key.</p>
 </section>
 </section>
 <section id="adding-keys">
-<h3><a class="toc-backref" href="#id6">Adding Keys</a><a class="headerlink" href="#adding-keys" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Adding Keys</a><a class="headerlink" href="#adding-keys" title="Permalink to this headline"></a></h3>
 <p>Generally speaking, you’ll want your table to have Keys. This is
 accomplished with $forge-&gt;addKey(‘field’). The optional second
 parameter set to true will make it a primary key and the third
@@ -493,7 +493,7 @@ and unique keys with specific methods:</p>
 </div>
 </section>
 <section id="adding-foreign-keys">
-<h3><a class="toc-backref" href="#id7">Adding Foreign Keys</a><a class="headerlink" href="#adding-foreign-keys" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id8">Adding Foreign Keys</a><a class="headerlink" href="#adding-foreign-keys" title="Permalink to this headline"></a></h3>
 <p>Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">);</span>
@@ -513,7 +513,7 @@ you may add them directly in forge:</p>
 </div>
 </section>
 <section id="creating-a-table">
-<h3><a class="toc-backref" href="#id8">Creating a table</a><a class="headerlink" href="#creating-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Creating a table</a><a class="headerlink" href="#creating-a-table" title="Permalink to this headline"></a></h3>
 <p>After fields and keys have been declared, you can create a new table
 with</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
@@ -540,7 +540,7 @@ and <em>DBCollat</em> values, as long as they are not empty (MySQL only).</p>
 </div>
 </section>
 <section id="dropping-a-table">
-<h3><a class="toc-backref" href="#id9">Dropping a table</a><a class="headerlink" href="#dropping-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Dropping a table</a><a class="headerlink" href="#dropping-a-table" title="Permalink to this headline"></a></h3>
 <p>Execute a DROP TABLE statement and optionally add an IF EXISTS clause.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: DROP TABLE `table_name`</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
@@ -557,7 +557,7 @@ drivers to handle removal of tables with foreign keys.</p>
 </div>
 </section>
 <section id="dropping-a-foreign-key">
-<h3><a class="toc-backref" href="#id10">Dropping a Foreign Key</a><a class="headerlink" href="#dropping-a-foreign-key" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Dropping a Foreign Key</a><a class="headerlink" href="#dropping-a-foreign-key" title="Permalink to this headline"></a></h3>
 <p>Execute a DROP FOREIGN KEY.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropForeignKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span> <span class="s1">&#39;users_foreign&#39;</span><span class="p">);</span>
@@ -565,7 +565,7 @@ drivers to handle removal of tables with foreign keys.</p>
 </div>
 </section>
 <section id="dropping-a-key">
-<h3><a class="toc-backref" href="#id11">Dropping a Key</a><a class="headerlink" href="#dropping-a-key" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Dropping a Key</a><a class="headerlink" href="#dropping-a-key" title="Permalink to this headline"></a></h3>
 <p>Execute a DROP KEY.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Produces: DROP INDEX `users_index` ON `tablename`</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropKey</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">,</span> <span class="s1">&#39;users_index&#39;</span><span class="p">);</span>
@@ -573,7 +573,7 @@ drivers to handle removal of tables with foreign keys.</p>
 </div>
 </section>
 <section id="renaming-a-table">
-<h3><a class="toc-backref" href="#id12">Renaming a table</a><a class="headerlink" href="#renaming-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Renaming a table</a><a class="headerlink" href="#renaming-a-table" title="Permalink to this headline"></a></h3>
 <p>Executes a TABLE rename</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">renameTable</span><span class="p">(</span><span class="s1">&#39;old_table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;new_table_name&#39;</span><span class="p">);</span>
 <span class="c1">// gives ALTER TABLE `old_table_name` RENAME TO `new_table_name`</span>
@@ -582,9 +582,9 @@ drivers to handle removal of tables with foreign keys.</p>
 </section>
 </section>
 <section id="modifying-tables">
-<h2><a class="toc-backref" href="#id13">Modifying Tables</a><a class="headerlink" href="#modifying-tables" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Modifying Tables</a><a class="headerlink" href="#modifying-tables" title="Permalink to this headline"></a></h2>
 <section id="adding-a-column-to-a-table">
-<h3><a class="toc-backref" href="#id14">Adding a Column to a Table</a><a class="headerlink" href="#adding-a-column-to-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Adding a Column to a Table</a><a class="headerlink" href="#adding-a-column-to-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;addColumn()</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
@@ -612,7 +612,7 @@ AFTER and FIRST clauses to position the new column.</p>
 </div>
 </section>
 <section id="dropping-columns-from-a-table">
-<h3><a class="toc-backref" href="#id15">Dropping Columns From a Table</a><a class="headerlink" href="#dropping-columns-from-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Dropping Columns From a Table</a><a class="headerlink" href="#dropping-columns-from-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;dropColumn()</strong></p>
 <p>Used to remove a column from a table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">dropColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="s1">&#39;column_to_drop&#39;</span><span class="p">);</span> <span class="c1">// to drop one single column</span>
@@ -625,7 +625,7 @@ AFTER and FIRST clauses to position the new column.</p>
 </div>
 </section>
 <section id="modifying-a-column-in-a-table">
-<h3><a class="toc-backref" href="#id16">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Modifying a Column in a Table</a><a class="headerlink" href="#modifying-a-column-in-a-table" title="Permalink to this headline"></a></h3>
 <p><strong>$forge-&gt;modifyColumn()</strong></p>
 <p>The usage of this method is identical to <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
@@ -643,7 +643,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id18">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\Forge</code></dt>
@@ -707,7 +707,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 <dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
 </dd>
 </dl>
-<p>Adds a foreign key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-foreign-keys">Adding Foreign Keys</a>.</p>
+<p>Adds a foreign key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#id1">Adding Foreign Keys</a>.</p>
 </dd></dl>
 
 <dl class="method">
