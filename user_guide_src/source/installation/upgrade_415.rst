@@ -72,6 +72,8 @@ For optimization and a bug fix, the following behaviors, mostly used in testing,
 Breaking Enhancements
 =====================
 
+.. _upgrade-415-multiple-filters-for-a-route:
+
 Multiple filters for a route
 ----------------------------
 
@@ -99,7 +101,7 @@ The following methods and a property have been deprecated:
 - ``CodeIgniter\Router\RouteCollection::getFilterForRoute()``
 - ``CodeIgniter\Router\RouteCollection``'s property ``$filterInfo``
 
-See *Applying Filters* in :doc:`Routing </incoming/routing>` for the functionality.
+See :ref:`applying-filters` for the functionality.
 
 Project Files
 =============

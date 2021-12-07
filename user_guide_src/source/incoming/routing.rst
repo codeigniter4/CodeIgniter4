@@ -354,6 +354,8 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
     $routes->map($array, $options);
     $routes->group('name', $options, function ());
 
+.. _applying-filters:
+
 Applying Filters
 ----------------
 
@@ -390,7 +392,7 @@ You specify a filter classname for the filter value::
 
 **Multiple filters**
 
-.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See *Multiple filters for a route* in :doc:`/installation/upgrade_415` for the details.
+.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
 
 You specify an array for the filter value::
 

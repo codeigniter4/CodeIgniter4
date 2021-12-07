@@ -223,6 +223,7 @@ and unique keys with specific methods::
     $forge->addUniqueKey(['blog_id', 'uri']);
     // gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
+.. _adding-foreign-keys:
 
 Adding Foreign Keys
 ===================
