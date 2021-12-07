@@ -16,20 +16,8 @@ It is created automatically by inserting the following:
     .. contents::
         :local:
 
-    .. raw:: html
-
-    <div class="custom-index container"></div>
-
 .. contents::
   :local:
-
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
-The <div> that is inserted as raw HTML is a event for the documentation's
-JavaScript to dynamically add links to any function and method definitions
-contained in the current page.
 
 **************
 Tools Required
