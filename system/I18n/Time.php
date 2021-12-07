@@ -479,7 +479,7 @@ class Time extends DateTime
      */
     public function getDst(): bool
     {
-        return (bool) $this->format('I');
+        return $this->format('I') === '1'; // 1 if Daylight Saving Time, 0 otherwise.
     }
 
     /**
