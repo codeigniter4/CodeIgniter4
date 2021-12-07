@@ -588,11 +588,13 @@ class Model extends BaseModel
             return false;
         }
 
+        if ($this->useAutoIncrement === true) {
+            return true;
+        }
+
         // When useAutoIncrement feature is disabled, check
         // in the database if given record already exists
-        return $this->useAutoIncrement
-                ? true
-                : $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1;
+        return $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1;
     }
 
     /**
