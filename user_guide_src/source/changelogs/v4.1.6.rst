@@ -37,8 +37,22 @@ Enhancements
 Changes
 *******
 
+- The process of sending cookies has been moved to the ``Response`` class. Now the ``Security`` and ``CookieStore`` class don't send cookies, set them to the Response.
+
 Deprecations
 ************
+
+Sending Cookies
+===============
+
+The process of sending cookies has been moved to the ``Response`` class.
+And the following methods are deprecated:
+
+- ``CookieStore::dispatch()``
+- ``CookieStore::setRawCookie()``
+- ``CookieStore::setCookie()``
+- ``Security::sendCookie()``
+- ``Security::doSendCookie()``
 
 Bugs Fixed
 **********
