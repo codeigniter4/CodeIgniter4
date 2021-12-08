@@ -479,21 +479,7 @@ class Time extends DateTime
      */
     public function getDst(): bool
     {
-        // grab the transactions that would affect today
-        $start       = strtotime('-1 year', $this->getTimestamp());
-        $end         = strtotime('+2 year', $start);
-        $transitions = $this->timezone->getTransitions($start, $end);
-
-        $daylightSaving = false;
-
-        foreach ($transitions as $transition) {
-            if ($transition['time'] > $this->format('U')) {
-                $daylightSaving = (bool) ($transition['isdst'] ?? $daylightSaving);
-                break;
-            }
-        }
-
-        return $daylightSaving;
+        return $this->format('I') === '1'; // 1 if Daylight Saving Time, 0 otherwise.
     }
 
     /**
