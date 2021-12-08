@@ -201,6 +201,42 @@ Then add validation rules in the controller (**Form.php**)::
 
 If you submit the form you should see the success page or the form with error messages.
 
+Config for Validation
+*********************
+
+.. _validation-traditional-and-strict-rules:
+
+Traditional and Strict Rules
+============================
+
+CI4 has two kind of Validation rule classes.
+The default rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
+and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
+
+The **Traditional Rules** implicitly assume that string values are validated.
+And the input value may be converted implicitly to a string value.
+It works for most basic cases like validating POST data.
+
+But, for example, if you use JSON input data, it may be type of bool/null/array.
+When you validate the bool ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
+And if you validate it with the ``integer`` rule, ``'1'`` passes the validation.
+
+The **Strict Rules** don't use implicit type conversion.
+
+.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
+
+Using Strict Rules
+------------------
+
+If you want to use this, you need to change the rule classes in **app/Config/Validation.php**::
+
+        public $ruleSets = [
+            \CodeIgniter\Validation\StrictRules\CreditCardRules::class,
+            \CodeIgniter\Validation\StrictRules\FileRules::class,
+            \CodeIgniter\Validation\StrictRules\FormatRules::class,
+            \CodeIgniter\Validation\StrictRules\Rules::class,
+        ];
+
 Loading the Library
 ************************************************
 
