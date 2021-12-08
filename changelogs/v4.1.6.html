@@ -268,11 +268,15 @@
 <p><strong>4.1.6 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validation-changes" id="id2">Validation changes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#enhancements" id="id3">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id4">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id5">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id6">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="breaking">
@@ -280,21 +284,35 @@
 <ul class="simple">
 <li><p>Multiple table names will no longer be stored in <code class="docutils literal notranslate"><span class="pre">BaseBuilder::$tableName</span></code> - an empty string will be used instead.</p></li>
 </ul>
+<section id="validation-changes">
+<span id="changelog-v416-validation-changes"></span><h3><a class="toc-backref" href="#id2">Validation changes</a><a class="headerlink" href="#validation-changes" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>The previous version of the Validation can’t handle an array item.
+Because of the bug fix, the validation results may be different,
+or raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>.
+But the previous version’s results are probably incorrect.</p></li>
+<li><p>The Validation separated the validation process of multiple field
+like <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code> and single field.
+When a single field has an array data, the previous version validates each element of the array.
+The validation rule gets an element of the array as the parameter.
+On the other hand, the current version passes the array to the validation rule as a whole.</p></li>
+</ul>
+</section>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id2">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Database pane on debug toolbar now displays location where Query was called from. Also displays full backtrace.</p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 
@@ -310,7 +328,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 07, 2021.
+      <span class="lastupdated">Last updated on Dec 08, 2021.
       </span></p>
   </div>
 

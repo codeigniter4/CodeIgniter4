@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.0.0-rc.1 &mdash; CodeIgniter 4.1.5 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>Upgrading from 4.1.5 to 4.1.6 &mdash; CodeIgniter 4.1.5 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Version 4.0.0-beta.4" href="v4.0.0-beta.4.html" />
-    <link rel="prev" title="Version 4.0.0-rc.2" href="v4.0.0-rc.2.html" /> 
+    <link rel="next" title="Upgrading from 4.1.4 to 4.1.5" href="upgrade_415.html" />
+    <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,14 +49,14 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -251,9 +251,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../installation/index.html">Installation</a> &raquo;</li>
-          <li><a href="index.html">Change Logs</a> &raquo;</li>
-      <li>Version 4.0.0-rc.1</li>
+          <li><a href="index.html">Installation</a> &raquo;</li>
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+      <li>Upgrading from 4.1.5 to 4.1.6</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -262,488 +262,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="version-4-0-0-rc-1">
-<h1>Version 4.0.0-rc.1<a class="headerlink" href="#version-4-0-0-rc-1" title="Permalink to this headline"></a></h1>
-<p>Release Date: Sep 3, 2019</p>
-<p><strong>RC.1 release of CodeIgniter4</strong></p>
-<p>Enhancements:</p>
+  <section id="upgrading-from-4-1-5-to-4-1-6">
+<h1>Upgrading from 4.1.5 to 4.1.6<a class="headerlink" href="#upgrading-from-4-1-5-to-4-1-6" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p>CI3 Email ported to CI4</p></li>
-<li><p>Encryption (basic) added</p></li>
-<li><p>Migrations refactored and streamlined for more wholistic functionality (BC)</p></li>
-<li><p>added convert() to ImageHandlerInterface</p></li>
-<li><p>disabled debug toolbar for downloads</p></li>
-<li><p>CLI commands returns an error code now (“spark” changed)</p></li>
-<li><p>RESTful controllers added to shorten dev time for RESTful APIs</p></li>
-<li><p>added RouteCollection::presenter() as part of the RESTful support</p></li>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validation-result-changes" id="id2">Validation result changes</a></p></li>
 </ul>
-<p>App changes:</p>
+</li>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id3">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id5">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id6">All Changes</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<section id="validation-result-changes">
+<h3><a class="toc-backref" href="#id2">Validation result changes</a><a class="headerlink" href="#validation-result-changes" title="Permalink to this headline"></a></h3>
+<p>Due to a bug fix, the Validation now might change the validation results when you validate an array item (see <a class="reference internal" href="../changelogs/v4.1.6.html#changelog-v416-validation-changes"><span class="std std-ref">Changelog</span></a>). So check the validation results for all the code that validates the array. Validating multiple fields like <code class="docutils literal notranslate"><span class="pre">contacts.*.name</span></code> is not affected.</p>
+</section>
+</section>
+<section id="breaking-enhancements">
+<h2><a class="toc-backref" href="#id3">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+</section>
+<section id="project-files">
+<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<p>Numerous files in the project space (root, app, public, writable) received updates. Due to
+these files being outside of the system scope they will not be changed without your intervention.
+There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except in very rare cases for bug fixes, no changes made to files for the project space
+will break your application. All changes noted here are optional until the next major version,
+and any mandatory changes will be covered in the sections above.</p>
+</div>
+<section id="content-changes">
+<h3><a class="toc-backref" href="#id5">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
-<li><p>added app/Common to make it easier to override common functions</p></li>
-<li><p>Config/Email and Encryption added</p></li>
-<li><p>Config/Migration modified, and has different settings</p></li>
-<li><p>Controllers/Home fixed, removing unnecessary model reference</p></li>
+<li></li>
 </ul>
-<p>Message changes:</p>
+</section>
+<section id="all-changes">
+<h3><a class="toc-backref" href="#id6">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<p>This is a list of all files in the project space that received changes;
+many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>Migration has new &amp; modified messages</p></li>
-<li><p>Messages now has RESTful set</p></li>
+<li></li>
 </ul>
-<p>The list of changed files follows, with PR numbers shown.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>admin/</dt><dd><ul>
-<li><p>release-appstarter #2155</p></li>
-<li><p>release-framework #2155</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>app/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Migrations #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Controllers/</dt><dd><ul>
-<li><p>BaseController #2046</p></li>
-<li><p>Home #2145</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Common #2110</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>public/</p></li>
-<li><dl class="simple">
-<dt>system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>API/</dt><dd><ul>
-<li><p>ResponseTrait #2131</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Autoloader/</dt><dd><ul>
-<li><p>Autoloader #2149</p></li>
-<li><p>FileLocator #2149</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Cache/Handlders/</dt><dd><ul>
-<li><p>RedisHandler #2144</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>CLI/</dt><dd><ul>
-<li><p>CommandRunner #2164</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Commands/Database/</dt><dd><ul>
-<li><p>CreateMigration #2065</p></li>
-<li><p>Migrate #2065, 2137</p></li>
-<li><p>MigrateRefresh #2065, 2137</p></li>
-<li><p>MigrateRollback #2065, 2137</p></li>
-<li><p>MigrateStatus #2137</p></li>
-<li><p>MigrateVersion #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config/</dt><dd><ul>
-<li><p>BaseConfig #2082</p></li>
-<li><p>Services #2135, 2092</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><p>BaseBuilder #2127, 2090, 2142, 2153, 2160, 2023, 2001</p></li>
-<li><p>MigrationRunner #2065, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug/</dt><dd><ul>
-<li><p>Toolbar #2118</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Email/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>EncrypterInterface #2135</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Exceptions/EncryptionException #2135</p></li>
-<li><dl class="simple">
-<dt>Handlers/</dt><dd><ul>
-<li><p>BaseHandler #2135</p></li>
-<li><p>OpenSSLHandler #2135</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Exceptions/</dt><dd><ul>
-<li><p>ConfigException #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files/</dt><dd><ul>
-<li><p>File #2178</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters/</dt><dd><ul>
-<li><p>DebugToolbar #2118</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>inflector_helper #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Honeypot/</dt><dd><ul>
-<li><p>Honeypot #2177</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>DownloadResponse #2129</p></li>
-<li><p>Files/UploadedFile #2128</p></li>
-<li><p>Message &#64;2171</p></li>
-<li><p>Response #2166</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Handlers/</dt><dd><p>-BaseHandler #2113, 2150
-- ImageMagickHandler #2151</p>
-</dd>
-</dl>
-</li>
-<li><p>BImageHandlerInterface #2113</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language/en/</dt><dd><ul>
-<li><p>Email #2092</p></li>
-<li><p>Encryption #2135</p></li>
-<li><p>Migrations #2065, 2137</p></li>
-<li><p>RESTful #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourceController #2165</p></li>
-<li><p>ResourcePresenter #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollection #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security/</dt><dd><ul>
-<li><p>Security #2027</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session/Handlers/</dt><dd><ul>
-<li><p>RedisHandler #2125</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test/</dt><dd><ul>
-<li><p>CIDatabaseTestCase #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>bootstrap #2110</p></li>
-<li><p>CodeIgniter #2126, 2164</p></li>
-<li><p>Common #2109</p></li>
-<li><p>Entity #2112</p></li>
-<li><p>Model #2090</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/_support/</dt><dd><ul>
-<li><p>RESTful/… #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>tests/system/</dt><dd><ul>
-<li><dl class="simple">
-<dt>API/</dt><dd><ul>
-<li><p>ResponseTraitTest #2131</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database/</dt><dd><ul>
-<li><dl class="simple">
-<dt>Builder/</dt><dd><ul>
-<li><p>GetTest #2142</p></li>
-<li><p>SelectTest #2160</p></li>
-<li><p>WhereTest #2001</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Live/</dt><dd><ul>
-<li><p>GroupTest #2160</p></li>
-<li><p>ModelTest #2090</p></li>
-<li><p>SelectTest #2160</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Migrations/MigrationRunnerTest #2065, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Encryption/</dt><dd><ul>
-<li><p>EncryptionTest #2135</p></li>
-<li><p>OpenSSLHandlerTest #2135</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers/</dt><dd><ul>
-<li><p>InflectorHelperTest #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP/</dt><dd><ul>
-<li><p>DownloadResponseTest #2129</p></li>
-<li><p>MessageTest #2171</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images/</dt><dd><ul>
-<li><p>GDHandlerTest #2113</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>RESTful/</dt><dd><ul>
-<li><p>ResourceControllerTest #2165</p></li>
-<li><p>ResourcePresenterTest #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router/</dt><dd><ul>
-<li><p>RouteCollectionTest #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>ControllerTest #2165</p></li>
-<li><p>EntityTest #2112</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>user_guide_src/</dt><dd><ul>
-<li><dl class="simple">
-<dt>changelogs/</dt><dd><ul>
-<li><p>next #2154</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>database/</dt><dd><ul>
-<li><p>query_builder #2160, 2001</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>dbmgmt/</dt><dd><ul>
-<li><p>migrations #2065, 2132, 2136, 2154, 2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>extending/</dt><dd><ul>
-<li><p>common #2162</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>helpers/</dt><dd><ul>
-<li><p>inflector_helper #2065</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>incoming/</dt><dd><ul>
-<li><p>restful #2165</p></li>
-<li><p>routing #2165</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>libraries/</dt><dd><ul>
-<li><p>email #2092, 2154</p></li>
-<li><p>encryption #2135</p></li>
-<li><p>images #2113, 2169</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>outgoing/</dt><dd><ul>
-<li><p>api_responses #2131</p></li>
-<li><p>localization #2134</p></li>
-<li><p>response #2129</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>testing/</dt><dd><ul>
-<li><p>database #2137</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>CONTRIBUTING.md #2010</p></li>
-<li><p>README.md #2010</p></li>
-<li><p>spark</p></li>
-</ul>
-<section id="prs-merged">
-<h2>PRs merged:<a class="headerlink" href="#prs-merged" title="Permalink to this headline"></a></h2>
-<ul class="simple">
-<li><p>#2178 Add fallback for missing finfo_open</p></li>
-<li><p>#2177 Fix missing form close tag</p></li>
-<li><p>#2171 Setheader dupes</p></li>
-<li><p>#2169 Add $quality usage for Image Library</p></li>
-<li><p>#2166 Cookie error</p></li>
-<li><p>#2165 RESTful help</p></li>
-<li><p>#2164 Exit error code on CLI Command failure</p></li>
-<li><p>#2162 User Guide updates for Common.php</p></li>
-<li><p>#2160 Add BaseBuilder SelectCount</p></li>
-<li><p>#2155 Include .gitignore in starters</p></li>
-<li><p>#2153 Bug fix countAllResults with LIMIT</p></li>
-<li><p>#2154 Fix email &amp; migrations docs; update changelog</p></li>
-<li><p>#2151 ImageMagick-&gt;save() return value</p></li>
-<li><p>#2150 New logic for Image-&gt;fit()</p></li>
-<li><p>#2149 listNamespaceFiles: Ensure trailing slash</p></li>
-<li><p>#2145 Remove UserModel reference from Home controller</p></li>
-<li><p>#2144 Update Redis legacy function</p></li>
-<li><p>#2142 Fixing BuilderBase resetting when getting the SQL</p></li>
-<li><p>#2137 New Migration Logic</p></li>
-<li><p>#2136 Migrations user guide fixes</p></li>
-<li><p>#2135 Encryption</p></li>
-<li><p>#2134 Fix localization writeup</p></li>
-<li><p>#2132 Update migration User Guide</p></li>
-<li><p>#2131 Added No Content response to APIResponseTrait</p></li>
-<li><p>#2129 Add setFileName() to DownloadResponse</p></li>
-<li><p>#2128 guessExtension fallback to clientExtension</p></li>
-<li><p>#2127 Update limit function since $offset is nullable</p></li>
-<li><p>#2126 Limit storePreviousURL to certain requests</p></li>
-<li><p>#2125 Updated redis session handler to support redis 5.0.x</p></li>
-<li><p>#2118 Disabled Toolbar on downloads</p></li>
-<li><p>#2113 Add Image-&gt;convert()</p></li>
-<li><p>#2112 Update <cite>Entity.php</cite> <cite>__isset</cite> method</p></li>
-<li><p>#2110 Added app/Common.php</p></li>
-<li><p>#2109 Fix typo in checking if exists db_connect()</p></li>
-<li><p>#2092 Original email port</p></li>
-<li><p>#2090 Fix prevent soft delete all without conditions set</p></li>
-<li><p>#2082 Update BaseConfig.php</p></li>
-<li><p>#2065 Migration updates for more wholistic functionality</p></li>
-<li><p>#2046 clean base controller code</p></li>
-<li><p>#2027 Fix CSRF hash regeneration</p></li>
-<li><p>#2023 whereIn $value do not have to be an array</p></li>
-<li><p>#2010 Fix CSRF hash regenerationerbiage revisions</p></li>
-<li><p>#2001 Subqueries in BaseBuilder</p></li>
-</ul>
+</section>
 </section>
 </section>
 
@@ -751,8 +325,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="v4.0.0-rc.2.html" class="btn btn-neutral float-left" title="Version 4.0.0-rc.2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="v4.0.0-beta.4.html" class="btn btn-neutral float-right" title="Version 4.0.0-beta.4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrading.html" class="btn btn-neutral float-left" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_415.html" class="btn btn-neutral float-right" title="Upgrading from 4.1.4 to 4.1.5" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
