@@ -100,19 +100,19 @@ class Connection extends BaseConnection
             if ($this->strictOn) {
                 $this->mysqli->options(
                     MYSQLI_INIT_COMMAND,
-                    'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")'
+                    "SET SESSION sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')"
                 );
             } else {
                 $this->mysqli->options(
                     MYSQLI_INIT_COMMAND,
-                    'SET SESSION sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                    "SET SESSION sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
                                         @@sql_mode,
-                                        "STRICT_ALL_TABLES,", ""),
-                                    ",STRICT_ALL_TABLES", ""),
-                                "STRICT_ALL_TABLES", ""),
-                            "STRICT_TRANS_TABLES,", ""),
-                        ",STRICT_TRANS_TABLES", ""),
-                    "STRICT_TRANS_TABLES", "")'
+                                        'STRICT_ALL_TABLES,', ''),
+                                    ',STRICT_ALL_TABLES', ''),
+                                'STRICT_ALL_TABLES', ''),
+                            'STRICT_TRANS_TABLES,', ''),
+                        ',STRICT_TRANS_TABLES', ''),
+                    'STRICT_TRANS_TABLES', '')"
                 );
             }
         }
