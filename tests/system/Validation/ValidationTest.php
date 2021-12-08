@@ -858,17 +858,21 @@ final class ValidationTest extends CIUnitTestCase
         yield 'dot-on-middle-fail' => [
             false,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz' => [
-                'bar' => ['baz' => 'yes'],
-            ]],
+            [
+                'fizz' => [
+                    'bar' => ['baz' => 'yes'],
+                ],
+            ],
         ];
 
         yield 'dot-on-middle-pass' => [
             true,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz' => [
-                'bar' => ['baz' => 30],
-            ]],
+            [
+                'fizz' => [
+                    'bar' => ['baz' => 30],
+                ],
+            ],
         ];
 
         yield 'dot-multiple-fail' => [
