@@ -172,6 +172,7 @@ ruleset:
   HTTP:
     - Cookie
     - Files
+    - Security
     - URI
   Images:
     - Files

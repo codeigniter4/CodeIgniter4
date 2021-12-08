@@ -396,7 +396,7 @@ The methods provided by the parent class that are available are:
 
     .. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
 
-        :param mixed $name: Cookie name or an array of parameters
+        :param array|Cookie|string $name: Cookie name or an array of parameters or an instance of ``CodeIgniter\Cookie\Cookie``
         :param string $value: Cookie value
         :param int $expire: Cookie expiration time in seconds
         :param string $domain: Cookie domain

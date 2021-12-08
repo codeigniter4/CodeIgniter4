@@ -10,13 +10,15 @@ Release Date: Not released
     :depth: 2
 
 BREAKING
-========
+********
+
 - Multiple table names will no longer be stored in ``BaseBuilder::$tableName`` - an empty string will be used instead.
 
 .. _changelog-v416-validation-changes:
 
 Validation changes
-------------------
+==================
+
 - The previous version of the Validation can't handle an array item.
   Because of the bug fix, the validation results may be different,
   or raise a ``TypeError``.
@@ -28,14 +30,29 @@ Validation changes
   On the other hand, the current version passes the array to the validation rule as a whole.
 
 Enhancements
-============
+************
+
 - Database pane on debug toolbar now displays location where Query was called from. Also displays full backtrace.
 
 Changes
-=======
+*******
+
+- The process of sending cookies has been moved to the ``Response`` class. Now the ``Security`` and ``CookieStore`` class don't send cookies, set them to the Response.
 
 Deprecations
-============
+************
+
+Sending Cookies
+===============
+
+The process of sending cookies has been moved to the ``Response`` class.
+And the following methods are deprecated:
+
+- ``CookieStore::dispatch()``
+- ``CookieStore::setRawCookie()``
+- ``CookieStore::setCookie()``
+- ``Security::sendCookie()``
+- ``Security::doSendCookie()``
 
 Bugs Fixed
-==========
+**********

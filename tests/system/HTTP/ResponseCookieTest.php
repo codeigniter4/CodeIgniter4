@@ -65,6 +65,17 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertTrue($response->hasCookie('bee'));
     }
 
+    public function testSetCookieObject()
+    {
+        $cookie   = new Cookie('foo', 'bar');
+        $response = new Response(new App());
+
+        $response->setCookie($cookie);
+
+        $this->assertCount(1, $response->getCookies());
+        $this->assertTrue($response->hasCookie('foo'));
+    }
+
     public function testCookieGet()
     {
         $response = new Response(new App());

@@ -13,6 +13,7 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Session;
 use Config\App;
@@ -528,13 +529,18 @@ class Security implements SecurityInterface
                 'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
             ]
         );
-        $this->sendCookie($this->request);
+
+        /** @var Response $response */
+        $response = Services::response();
+        $response->setCookie($this->cookie);
     }
 
     /**
      * CSRF Send Cookie
      *
      * @return false|Security
+     *
+     * @deprecated Set cookies to Response object instead.
      */
     protected function sendCookie(RequestInterface $request)
     {
@@ -553,6 +559,8 @@ class Security implements SecurityInterface
      * Extracted for this to be unit tested.
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated Set cookies to Response object instead.
      */
     protected function doSendCookie(): void
     {
