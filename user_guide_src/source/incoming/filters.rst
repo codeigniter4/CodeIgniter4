@@ -196,3 +196,17 @@ Provided Filters
 The filters bundled with CodeIgniter4 are: ``Honeypot``, ``CSRF``, ``InvalidChars``, ``SecureHeaders``, and ``DebugToolbar``.
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+SecureHeaders
+=============
+
+This filter adds HTTP response headers that your application can use to increase the security of your application.
+
+If you want to customize the headers, extend ``CodeIgniter\Filters\SecureHeaders`` and override the ``$headers`` property. And change the ``$aliases`` property in **app/Config/Filters.php**::
+
+    public $aliases = [
+        ...
+        'secureheaders' => \App\Filters\SecureHeaders::class,
+    ];
+
+If you want to know about secure headers, see `OWASP Secure Headers Project <https://owasp.org/www-project-secure-headers/>`_.
