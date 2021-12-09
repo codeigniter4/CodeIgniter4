@@ -290,18 +290,18 @@ using a Helper is to load it. Once loaded, it becomes globally available
 in your <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> and
 <a class="reference internal" href="../outgoing/views.html"><span class="doc">views</span></a>.</p>
 <p>Helpers are typically stored in your <strong>system/Helpers</strong>, or
-<strong>app/Helpers directory</strong>. CodeIgniter will look first in your
-<strong>app/Helpers directory</strong>. If the directory does not exist or the
+<strong>app/Helpers</strong> directory. CodeIgniter will look first in your
+<strong>app/Helpers</strong> directory. If the directory does not exist or the
 specified helper is not located there CI will instead look in your
-global <em>system/Helpers/</em> directory.</p>
+global <strong>system/Helpers</strong> directory.</p>
 <section id="loading-a-helper">
 <h2><a class="toc-backref" href="#id1">Loading a Helper</a><a class="headerlink" href="#loading-a-helper" title="Permalink to this headline"></a></h2>
 <p>Loading a helper file is quite simple using the following method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Where <strong>name</strong> is the file name of the helper, without the .php file
-extension or the “_helper” part.</p>
+<p>Where <code class="docutils literal notranslate"><span class="pre">name</span></code> is the file name of the helper, without the “<strong>.php</strong>” file
+extension or the “<strong>_helper</strong>” part.</p>
 <p>For example, to load the <strong>Cookie Helper</strong> file, which is named
 <strong>cookie_helper.php</strong>, you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
@@ -334,7 +334,7 @@ don’t try to assign it to a variable. Just use it as shown.</p>
 has been set up within the PSR-4 section of the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader config file</span></a>.
 You would prefix the name of the Helper with the namespace that it can be located
 in. Within that namespaced directory, the loader expects it to live within a
-sub-directory named <code class="docutils literal notranslate"><span class="pre">Helpers</span></code>. An example will help understand this.</p>
+sub-directory named <strong>Helpers</strong>. An example will help understand this.</p>
 <p>For this example, assume that we have grouped together all of our Blog-related
 code into its own namespace, <code class="docutils literal notranslate"><span class="pre">Example\Blog</span></code>. The files exist on our server at
 <strong>/Modules/Blog/</strong>. So, we would put our Helper files for the blog module in
@@ -360,7 +360,7 @@ your view files you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;blog/comments&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>Where “Click Here” is the name of the link, and “blog/comments” is the
+<p>Where <code class="docutils literal notranslate"><span class="pre">Click</span> <span class="pre">Here</span></code> is the name of the link, and <code class="docutils literal notranslate"><span class="pre">blog/comments</span></code> is the
 URI to the controller/method you wish to link to.</p>
 </section>
 <section id="extending-helpers">
@@ -404,7 +404,7 @@ functions:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <strong>helper()</strong> method will scan through all PSR-4 namespaces defined in <strong>app/Config/Autoload.php</strong>
+<p>The <code class="docutils literal notranslate"><span class="pre">helper()</span></code> method will scan through all PSR-4 namespaces defined in <strong>app/Config/Autoload.php</strong>
 and load in ALL matching helpers of the same name. This allows any module’s helpers
 to be loaded, as well as any helpers you’ve created specifically for this application. The load order
 is as follows:</p>
