@@ -360,7 +360,7 @@ more problems!</p>
 have the session open, while you’ve already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">destroy</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">session_write_close</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -1060,7 +1060,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 08, 2021.
+      <span class="lastupdated">Last updated on Dec 09, 2021.
       </span></p>
   </div>
 
