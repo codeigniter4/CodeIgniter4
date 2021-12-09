@@ -91,7 +91,7 @@ longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
 ::
 
-    $session->destroy();
+    session_write_close();
 
 What is Session Data?
 =====================
