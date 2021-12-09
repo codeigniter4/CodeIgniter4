@@ -199,13 +199,13 @@ You can use (migrate) with the following options:
 
 - ``-g`` - to chose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``-all`` - to migrate all namespaces to the latest migration
+- ``--all`` - to migrate all namespaces to the latest migration
 
 This example will migrate Blog namespace with any new migrations on the test database group::
 
     > php spark migrate -g test -n Blog
 
-When using the ``-all`` option, it will scan through all namespaces attempting to find any migrations that have
+When using the ``--all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
@@ -231,7 +231,7 @@ You can use (refresh) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``-all`` - to refresh all namespaces
+- ``--all`` - to refresh all namespaces
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
 **status**
