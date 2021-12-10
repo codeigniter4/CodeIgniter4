@@ -91,6 +91,13 @@ Configuring Filters
 Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php**.
 This file contains four properties that allow you to configure exactly when the filters run.
 
+.. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
+
+.. Warning:: It is recommended that you should always add ``*`` at the end of a URI in the filter settings.
+    Because a controller method might be accessible by different URLs than you think.
+    For example, when auto-routing is enabled, if you have ``Blog::index``,
+    it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
+
 $aliases
 ========
 
