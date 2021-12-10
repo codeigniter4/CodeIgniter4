@@ -140,7 +140,7 @@ run on every request. Filters can be specified by adding their alias to either t
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
-an array with the 'except' key and a uri to match as the value alongside the alias::
+an array with the 'except' key and a URI to match as the value alongside the alias::
 
     public $globals = [
         'before' => [
