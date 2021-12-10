@@ -24,7 +24,7 @@
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.12.5"
+        "rector/rector": "0.12.7"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"
