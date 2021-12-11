@@ -117,7 +117,7 @@ if (is_file(COMPOSER_PATH)) {
      * We do not want to enforce this, so set the constant if Composer was used.
      */
     if (! defined('VENDORPATH')) {
-        define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
+        define('VENDORPATH', dirname(COMPOSER_PATH) . DIRECTORY_SEPARATOR);
     }
 
     require_once COMPOSER_PATH;
