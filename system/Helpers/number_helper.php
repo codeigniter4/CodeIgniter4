@@ -112,7 +112,6 @@ if (! function_exists('number_to_amount')) {
 }
 
 if (! function_exists('number_to_currency')) {
-
     function number_to_currency(float $num, string $currency, ?string $locale = null, int $fraction = 0): string
     {
         return format_number($num, 1, $locale, [
