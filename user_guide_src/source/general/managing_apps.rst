@@ -69,8 +69,13 @@ This would have two apps, **foo** and **bar**, both having standard application 
 and a **public** folder, and sharing a common **codeigniter** framework.
 
 The **index.php** inside each application would refer to its own configuration,
-``../app/Config/Paths.php``, and the ``$systemDirectory`` variable inside each
+``../app/Config/Paths.php``, and the ``$systemDirectory`` variable in **app/Config/Paths.php** inside each
 of those would be set to refer to the shared common **system** folder.
 
 If either of the applications had a command-line component, then you would also
 modify **spark** inside each application's project folder, as directed above.
+
+When you use Composer autoloader, fix the ``COMPOSER_PATH`` constant in **app/Config/Constants.php** inside each
+of those::
+
+    defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . '../vendor/autoload.php');
