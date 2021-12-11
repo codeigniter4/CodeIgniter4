@@ -290,7 +290,7 @@ a value provided, for the given locale and options, then a
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="number_to_size">
-<code class="sig-name descname">number_to_size</code><span class="sig-paren">(</span><em class="sig-param">$num[, $precision = 1[, $locale = null]</em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">number_to_size</code><span class="sig-paren">(</span><em class="sig-param">$num</em><span class="optional">[</span>, <em class="sig-param">$precision = 1</em><span class="optional">[</span>, <em class="sig-param">$locale = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -375,13 +375,13 @@ for numbers up to the quadrillions. Examples:</p>
 
 <dl class="function">
 <dt id="number_to_currency">
-<code class="sig-name descname">number_to_currency</code><span class="sig-paren">(</span><em class="sig-param">$num</em>, <em class="sig-param">$currency</em><span class="optional">[</span>, <em class="sig-param">$locale = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">number_to_currency</code><span class="sig-paren">(</span><em class="sig-param">$num</em>, <em class="sig-param">$currency</em><span class="optional">[</span>, <em class="sig-param">$locale = null</em><span class="optional">[</span>, <em class="sig-param">$fraction = 0</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$num</strong> (<em>mixed</em>) – Number to format</p></li>
+<li><p><strong>$num</strong> (<em>float</em>) – Number to format</p></li>
 <li><p><strong>$currency</strong> (<em>string</em>) – The currency type, i.e., USD, EUR, etc</p></li>
-<li><p><strong>$locale</strong> (<em>string</em>) – The locale to use for formatting</p></li>
+<li><p><strong>$locale</strong> (<em>string|null</em>) – The locale to use for formatting</p></li>
 <li><p><strong>$fraction</strong> (<em>integer</em>) – Number of fraction digits after decimal point</p></li>
 </ul>
 </dd>
@@ -393,12 +393,13 @@ for numbers up to the quadrillions. Examples:</p>
 </dd>
 </dl>
 <p>Converts a number in common currency formats, like USD, EUR, GBP, etc:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">);</span>  <span class="c1">// Returns €1,234.56</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
-<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;YEN&#39;</span><span class="p">);</span>  <span class="c1">// Returns YEN1,234.56</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns 1.234,56 €</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">,</span> <span class="s1">&#39;en_GB&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;YEN&#39;</span><span class="p">,</span> <span class="s1">&#39;ja_JP&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns YEN 1,234.56</span>
 </pre></div>
 </div>
+<p>If you don’t specify a locale, the Request locale is used.</p>
 </dd></dl>
 
 <dl class="function">
