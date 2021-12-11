@@ -199,11 +199,7 @@ class View implements RendererInterface
         }
 
         // Make our view data available to the view.
-        $this->tempData = $this->tempData ?? $this->data;
-
-        if ($saveData) {
-            $this->data = $this->tempData;
-        }
+        $this->prepareTemplateData($saveData);
 
         // Save current vars
         $renderVars = $this->renderVars;
@@ -275,13 +271,9 @@ class View implements RendererInterface
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
-        $start          = microtime(true);
-        $saveData       = $saveData ?? $this->saveData;
-        $this->tempData = $this->tempData ?? $this->data;
-
-        if ($saveData) {
-            $this->data = $this->tempData;
-        }
+        $start    = microtime(true);
+        $saveData = $saveData ?? $this->saveData;
+        $this->prepareTemplateData($saveData);
 
         $output = (function (string $view): string {
             extract($this->tempData);
@@ -452,6 +444,15 @@ class View implements RendererInterface
                 'end'   => $end,
                 'view'  => $view,
             ];
+        }
+    }
+
+    protected function prepareTemplateData(bool $saveData): void
+    {
+        $this->tempData = $this->tempData ?? $this->data;
+
+        if ($saveData) {
+            $this->data = $this->tempData;
         }
     }
 }
