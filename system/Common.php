@@ -380,7 +380,7 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * Valid context values: html, js, css, url, attr, raw, null
+     * Valid context values: html, js, css, url, attr, raw
      *
      * @param array|string $data
      * @param string       $encoding
