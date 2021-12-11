@@ -84,20 +84,6 @@ if (! class_exists('CodeIgniter\Services', false)) {
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 
-// Now load Composer's if it's available
-if (is_file(COMPOSER_PATH)) {
-    /*
-     * The path to the vendor directory.
-     *
-     * We do not want to enforce this, so set the constant if Composer was used.
-     */
-    if (! defined('VENDORPATH')) {
-        define('VENDORPATH', realpath(ROOTPATH . 'vendor') . DIRECTORY_SEPARATOR);
-    }
-
-    require_once COMPOSER_PATH;
-}
-
 // Load environment settings from .env files into $_SERVER and $_ENV
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 
