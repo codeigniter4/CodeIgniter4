@@ -456,13 +456,13 @@ that wish to use them. The tools primarily provide access to the same methods th
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to chose database group, otherwise default database group will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to migrate all namespaces to the latest migration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to migrate all namespaces to the latest migration</p></li>
 </ul>
-<p>This example will migrate Blog namespace with any new migrations on the test database group:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Blog</span>
+<p>This example will migrate <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace with any new migrations on the test database group:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="s1">&#39;Acme\Blog&#39;</span>
 </pre></div>
 </div>
-<p>When using the <code class="docutils literal notranslate"><span class="pre">-all</span></code> option, it will scan through all namespaces attempting to find any migrations that have
+<p>When using the <code class="docutils literal notranslate"><span class="pre">--all</span></code> option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.</p>
 <p><strong>rollback</strong></p>
@@ -485,7 +485,7 @@ to minimize any potential conflicts between the main application and any modules
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-all</span></code> - to refresh all namespaces</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to refresh all namespaces</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment</p></li>
 </ul>
 <p><strong>status</strong></p>
@@ -700,7 +700,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 09, 2021.
+      <span class="lastupdated">Last updated on Dec 11, 2021.
       </span></p>
   </div>
 
