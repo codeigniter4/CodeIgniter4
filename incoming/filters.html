@@ -364,6 +364,17 @@ the final output, or even to filter the final output with a bad words filter.</p
 <h2><a class="toc-backref" href="#id4">Configuring Filters</a><a class="headerlink" href="#configuring-filters" title="Permalink to this headline"></a></h2>
 <p>Once you’ve created your filters, you need to configure when they get run. This is done in <strong>app/Config/Filters.php</strong>.
 This file contains four properties that allow you to configure exactly when the filters run.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The safest way to apply filters is to <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>, and <a class="reference internal" href="routing.html#applying-filters"><span class="std std-ref">set filters to routes</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is recommended that you should always add <code class="docutils literal notranslate"><span class="pre">*</span></code> at the end of a URI in the filter settings.
+Because a controller method might be accessible by different URLs than you think.
+For example, when auto-routing is enabled, if you have <code class="docutils literal notranslate"><span class="pre">Blog::index</span></code>,
+it can be accessible with <code class="docutils literal notranslate"><span class="pre">blog</span></code>, <code class="docutils literal notranslate"><span class="pre">blog/index</span></code>, and <code class="docutils literal notranslate"><span class="pre">blog/index/1</span></code>, etc.</p>
+</div>
 <section id="aliases">
 <h3><a class="toc-backref" href="#id5">$aliases</a><a class="headerlink" href="#aliases" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> array is used to associate a simple name with one or more fully-qualified class names that are the
@@ -403,7 +414,7 @@ run on every request. Filters can be specified by adding their alias to either t
 <p>There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI’s from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI’s, while keeping the rest of them protected. To do this, add
-an array with the ‘except’ key and a uri to match as the value alongside the alias:</p>
+an array with the ‘except’ key and a URI to match as the value alongside the alias:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api/*&#39;</span><span class="p">],</span>
