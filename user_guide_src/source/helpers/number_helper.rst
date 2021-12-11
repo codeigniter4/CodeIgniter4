@@ -27,7 +27,7 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: number_to_size($num[, $precision = 1[, $locale = null])
+.. php:function:: number_to_size($num[, $precision = 1[, $locale = null]])
 
     :param      mixed     $num: Number of bytes
     :param      int       $precision: Floating point precision
@@ -86,21 +86,23 @@ The following functions are available:
 
         echo number_to_amount('123,456,789,012', 2, 'de_DE'); // Returns 123,46 billion
 
-.. php:function:: number_to_currency($num, $currency[, $locale = null])
+.. php:function:: number_to_currency($num, $currency[, $locale = null[, $fraction = 0]])
 
-    :param mixed $num: Number to format
+    :param float $num: Number to format
     :param string $currency: The currency type, i.e., USD, EUR, etc
-    :param string $locale: The locale to use for formatting
+    :param string|null $locale: The locale to use for formatting
     :param integer $fraction: Number of fraction digits after decimal point
     :returns: The number as the appropriate currency for the locale
     :rtype: string
 
     Converts a number in common currency formats, like USD, EUR, GBP, etc::
 
-        echo number_to_currency(1234.56, 'USD');  // Returns $1,234.56
-        echo number_to_currency(1234.56, 'EUR');  // Returns €1,234.56
-        echo number_to_currency(1234.56, 'GBP');  // Returns £1,234.56
-        echo number_to_currency(1234.56, 'YEN');  // Returns YEN1,234.56
+        echo number_to_currency(1234.56, 'USD', 'en_US', 2);  // Returns $1,234.56
+        echo number_to_currency(1234.56, 'EUR', 'de_DE', 2);  // Returns 1.234,56 €
+        echo number_to_currency(1234.56, 'GBP', 'en_GB', 2);  // Returns £1,234.56
+        echo number_to_currency(1234.56, 'YEN', 'ja_JP', 2);  // Returns YEN 1,234.56
+
+    If you don't specify a locale, the Request locale is used.
 
 .. php:function:: number_to_roman($num)
 
