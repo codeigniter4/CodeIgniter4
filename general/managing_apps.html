@@ -327,10 +327,15 @@ and <strong>bar</strong>. You could structure your application project directori
 <p>This would have two apps, <strong>foo</strong> and <strong>bar</strong>, both having standard application directories
 and a <strong>public</strong> folder, and sharing a common <strong>codeigniter</strong> framework.</p>
 <p>The <strong>index.php</strong> inside each application would refer to its own configuration,
-<code class="docutils literal notranslate"><span class="pre">../app/Config/Paths.php</span></code>, and the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable inside each
+<code class="docutils literal notranslate"><span class="pre">../app/Config/Paths.php</span></code>, and the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable in <strong>app/Config/Paths.php</strong> inside each
 of those would be set to refer to the shared common <strong>system</strong> folder.</p>
 <p>If either of the applications had a command-line component, then you would also
 modify <strong>spark</strong> inside each application’s project folder, as directed above.</p>
+<p>When you use Composer autoloader, fix the <code class="docutils literal notranslate"><span class="pre">COMPOSER_PATH</span></code> constant in <strong>app/Config/Constants.php</strong> inside each
+of those:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;../vendor/autoload.php&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 </section>
 </section>
 
