@@ -433,7 +433,7 @@ Let's say the class will be located in the 'app/Entity/Cast' directory::
 
     use CodeIgniter\Entity\Cast\BaseCast;
 
-    //The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
+    // The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
     class CastBase64 extends BaseCast
     {
         public static function get($value, array $params = [])
@@ -462,13 +462,13 @@ Now you need to register it::
             'key' => 'base64',
         ];
 
-        //Bind the type to the handler
+        // Bind the type to the handler
         protected $castHandlers = [
             'base64' => \App\Entity\Cast\CastBase64::class,
         ];
     }
 
-    //...
+    // ...
 
     $entity->key = 'test'; // dGVzdA==
     echo $entity->key;     // test
