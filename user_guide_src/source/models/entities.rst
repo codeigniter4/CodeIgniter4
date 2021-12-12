@@ -239,10 +239,10 @@ As an example, imagine you have the simplified User Entity that is used througho
     class User extends Entity
     {
         protected $attributes = [
-            'id' => null,
-            'name' => null, // Represents a username
-            'email' => null,
-            'password' => null,
+            'id'         => null,
+            'name'       => null, // Represents a username
+            'email'      => null,
+            'password'   => null,
             'created_at' => null,
             'updated_at' => null,
         ];
@@ -266,10 +266,10 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
     class User extends Entity
     {
         protected $attributes = [
-            'id' => null,
-            'name' => null, // Represents a username
-            'email' => null,
-            'password' => null,
+            'id'         => null,
+            'name'       => null, // Represents a username
+            'email'      => null,
+            'password'   => null,
             'created_at' => null,
             'updated_at' => null,
         ];
