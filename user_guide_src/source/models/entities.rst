@@ -299,7 +299,7 @@ By default, the Entity class will convert fields named `created_at`, `updated_at
 :doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.
 
-You can define which properties are automatically converted by adding the name to the **options['dates']** array::
+You can define which properties are automatically converted by adding the name to the ``$dates`` property::
 
     <?php
 
