@@ -379,12 +379,12 @@ instances of our User Entity class instead of an object or array like normal.</p
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You may have noticed that the User class has not set any properties for the columns, but you can still
-access them as if they were public properties. The base class, <strong>CodeIgniter\Entity</strong>, takes care of this for you, as
-well as providing the ability to check the properties with <strong>isset()</strong>, or <strong>unset()</strong> the property, and keep track
+<p>You may have noticed that the <code class="docutils literal notranslate"><span class="pre">User</span></code> class has not set any properties for the columns, but you can still
+access them as if they were public properties. The base class, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity</span></code>, takes care of this for you, as
+well as providing the ability to check the properties with <code class="docutils literal notranslate"><span class="pre">isset()</span></code>, or <code class="docutils literal notranslate"><span class="pre">unset()</span></code> the property, and keep track
 of what columns have changed since the object was created or pulled from the database.</p>
-<p>When the User is passed to the model’s <strong>save()</strong> method, it automatically takes care of reading the  properties
-and saving any changes to columns listed in the model’s <strong>$allowedFields</strong> property. It also knows whether to create
+<p>When the User is passed to the model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method, it automatically takes care of reading the  properties
+and saving any changes to columns listed in the model’s <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property. It also knows whether to create
 a new row, or update an existing one.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -396,7 +396,7 @@ call the <code class="docutils literal notranslate"><span class="pre">update()</
 <h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline"></a></h3>
 <p>The Entity class also provides a method, <code class="docutils literal notranslate"><span class="pre">fill()</span></code> that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
-the model, only the fields in $allowedFields will actually be saved to the database, so you can store additional data
+the model, only the fields in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> will actually be saved to the database, so you can store additional data
 on your entities without worrying much about stray fields getting saved incorrectly.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
@@ -466,7 +466,7 @@ the attributes directly, allowing you to enforce any business logic or data conv
 </div>
 <p>The first thing to notice is the name of the methods we’ve added. For each one, the class expects the snake_case
 column name to be converted into PascalCase, and prefixed with either <code class="docutils literal notranslate"><span class="pre">set</span></code> or <code class="docutils literal notranslate"><span class="pre">get</span></code>. These methods will then
-be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., $user-&gt;email).
+be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., <code class="docutils literal notranslate"><span class="pre">$user-&gt;email</span></code>).
 The methods do not need to be public unless you want them accessed from other classes. For example, the <code class="docutils literal notranslate"><span class="pre">created_at</span></code>
 class property will be accessed through the <code class="docutils literal notranslate"><span class="pre">setCreatedAt()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCreatedAt()</span></code> methods.</p>
 <div class="admonition note">
@@ -502,10 +502,10 @@ with the Entity class’ data mapping features.</p>
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
-        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
+        <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
     <span class="p">];</span>
@@ -528,10 +528,10 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
-        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
+        <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
     <span class="p">];</span>
@@ -558,7 +558,7 @@ to the database. However, <code class="docutils literal notranslate"><span class
 <p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
 <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.</p>
-<p>You can define which properties are automatically converted by adding the name to the <strong>options[‘dates’]</strong> array:</p>
+<p>You can define which properties are automatically converted by adding the name to the <code class="docutils literal notranslate"><span class="pre">$dates</span></code> property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -586,13 +586,13 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 </section>
 <section id="property-casting">
 <h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
-<p>You can specify that properties in your Entity should be converted to common data types with the <strong>casts</strong> property.
+<p>You can specify that properties in your Entity should be converted to common data types with the <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
 either the entity or the database. Properties can be cast to any of the following data types:
 <strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, and <strong>uri</strong>.
 Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
-<p>For example, if you had a User entity with an <strong>is_banned</strong> property, you can cast it as a boolean:</p>
+<p>For example, if you had a User entity with an <code class="docutils literal notranslate"><span class="pre">is_banned</span></code> property, you can cast it as a boolean:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -614,8 +614,8 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
 <li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
-<li><p>a <strong>json</strong>, they will automatically be set as an value of json_decode($value, false),</p></li>
-<li><p>a <strong>json-array</strong>, they will automatically be set as an value of json_decode($value, true),</p></li>
+<li><p>a <strong>json</strong>, they will automatically be set as an value of <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">false)</span></code>,</p></li>
+<li><p>a <strong>json-array</strong>, they will automatically be set as an value of <code class="docutils literal notranslate"><span class="pre">json_decode($value,</span> <span class="pre">true)</span></code>,</p></li>
 </ul>
 <p>when you set the property’s value.
 Unlike the rest of the data types that you can cast properties into, the:</p>
@@ -683,14 +683,14 @@ by humans:</p>
 <h3><a class="toc-backref" href="#id14">Custom casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this headline"></a></h3>
 <p>You can define your own conversion types for getting and setting data.</p>
 <p>At first you need to create a handler class for your type.
-Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p>
+Let’s say the class will be located in the <strong>app/Entity/Cast</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entity\Cast</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
 
-<span class="c1">//The class must inherit the CodeIgniter\Entity\Cast\BaseCast class</span>
+<span class="c1">// The class must inherit the CodeIgniter\Entity\Cast\BaseCast class</span>
 <span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
@@ -719,13 +719,13 @@ Let’s say the class will be located in the ‘app/Entity/Cast’ directory:</p
         <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;base64&#39;</span><span class="p">,</span>
     <span class="p">];</span>
 
-    <span class="c1">//Bind the type to the handler</span>
+    <span class="c1">// Bind the type to the handler</span>
     <span class="k">protected</span> <span class="nv">$castHandlers</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;base64&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Entity\Cast\CastBase64</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
 
-<span class="c1">//...</span>
+<span class="c1">// ...</span>
 
 <span class="nv">$entity</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span> <span class="c1">// dGVzdA==</span>
 <span class="k">echo</span> <span class="nv">$entity</span><span class="o">-&gt;</span><span class="na">key</span><span class="p">;</span>     <span class="c1">// test</span>
