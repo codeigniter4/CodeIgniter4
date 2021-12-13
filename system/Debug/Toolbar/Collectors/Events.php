@@ -74,7 +74,7 @@ class Events extends BaseCollector
     {
         $data = [];
 
-        $rows = $this->viewer->getPerformanceData(); // @phpstan-ignore-line
+        $rows = $this->viewer->getPerformanceData();
 
         foreach ($rows as $info) {
             $data[] = [

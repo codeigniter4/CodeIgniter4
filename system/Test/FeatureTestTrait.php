@@ -344,7 +344,7 @@ trait FeatureTestTrait
         // otherwise set it from the URL.
         $get = ! empty($params) && $method === 'get'
             ? $params
-            : $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
+            : $this->getPrivateProperty($request->uri, 'query');
 
         $request->setGlobal('get', $get);
         if ($method !== 'get') {

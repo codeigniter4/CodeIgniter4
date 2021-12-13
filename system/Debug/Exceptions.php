@@ -394,7 +394,7 @@ class Exceptions
         $start = max($lineNumber - (int) round($lines / 2), 0);
 
         // Get just the lines we need to display, while keeping line numbers...
-        $source = array_splice($source, $start, $lines, true); // @phpstan-ignore-line
+        $source = array_splice($source, $start, $lines, true);
 
         // Used to format the line number in the source
         $format = '% ' . strlen((string) ($start + $lines)) . 'd';
