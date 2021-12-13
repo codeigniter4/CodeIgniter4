@@ -107,7 +107,7 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        $data = $data ?? $this->data;
+        $data ??= $this->data;
 
         // i.e. is_unique
         $data['DBGroup'] = $dbGroup;
@@ -330,8 +330,6 @@ class Validation implements ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
-     *
-     * @param IncomingRequest|RequestInterface $request
      */
     public function withRequest(RequestInterface $request): ValidationInterface
     {
@@ -669,7 +667,7 @@ class Validation implements ValidationInterface
      */
     protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
     {
-        $param = $param ?? '';
+        $param ??= '';
 
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {

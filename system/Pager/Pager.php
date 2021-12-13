@@ -143,7 +143,7 @@ class Pager implements PagerInterface
             $page = $this->groups[$group]['currentPage'];
         }
 
-        $perPage   = $perPage ?? $this->config->perPage;
+        $perPage ??= $this->config->perPage;
         $pageCount = (int) ceil($total / $perPage);
 
         $this->groups[$group]['currentPage'] = $page > $pageCount ? $pageCount : $page;

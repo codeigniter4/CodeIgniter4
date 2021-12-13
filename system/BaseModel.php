@@ -295,7 +295,7 @@ abstract class BaseModel
         /**
          * @var Validation $validation
          */
-        $validation       = $validation ?? Services::validation(null, false);
+        $validation ??= Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();

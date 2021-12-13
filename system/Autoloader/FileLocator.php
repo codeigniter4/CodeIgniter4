@@ -186,7 +186,7 @@ class FileLocator
         }
 
         if (! $prioritizeApp && ! empty($appPaths)) {
-            $foundPaths = array_merge($foundPaths, $appPaths);
+            $foundPaths = [...$foundPaths, ...$appPaths];
         }
 
         // Remove any duplicates

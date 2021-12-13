@@ -575,7 +575,7 @@ class CodeIgniter
      * @param int $duration How long the Strict Transport Security
      *                      should be enforced for this URL.
      */
-    protected function forceSecureAccess($duration = 31536000)
+    protected function forceSecureAccess($duration = 31_536_000)
     {
         if ($this->config->forceGlobalSecureRequests !== true) {
             return;

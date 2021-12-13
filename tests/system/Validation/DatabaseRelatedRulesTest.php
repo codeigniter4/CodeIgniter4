@@ -26,12 +26,9 @@ final class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    /**
-     * @var Validation
-     */
-    private $validation;
+    private Validation $validation;
 
-    private $config = [
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,

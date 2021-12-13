@@ -28,10 +28,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     protected $seed = CITestSeeder::class;
 
-    /**
-     * @var BasePreparedQuery|null
-     */
-    private $query;
+    private ?BasePreparedQuery $query = null;
 
     protected function setUp(): void
     {
@@ -50,12 +47,10 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareReturnsPreparedQuery()
     {
-        $this->query = $this->db->prepare(static function ($db) {
-            return $db->table('user')->insert([
-                'name'  => 'a',
-                'email' => 'b@example.com',
-            ]);
-        });
+        $this->query = $this->db->prepare(static fn($db) => $db->table('user')->insert([
+            'name'  => 'a',
+            'email' => 'b@example.com',
+        ]));
 
         $this->assertInstanceOf(BasePreparedQuery::class, $this->query);
 
@@ -102,13 +97,11 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryAndReturnsResultObject()
     {
-        $this->query = $this->db->prepare(static function ($db) {
-            return $db->table('user')->insert([
-                'name'    => 'a',
-                'email'   => 'b@example.com',
-                'country' => 'x',
-            ]);
-        });
+        $this->query = $this->db->prepare(static fn($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'x',
+        ]));
 
         $this->query->execute('foo', 'foo@example.com', 'US');
         $this->query->execute('bar', 'bar@example.com', 'GB');

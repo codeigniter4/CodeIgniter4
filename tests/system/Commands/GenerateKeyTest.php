@@ -20,8 +20,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class GenerateKeyTest extends CIUnitTestCase
 {
     private $streamFilter;
-    private $envPath;
-    private $backupEnvPath;
+    private string $envPath;
+    private string $backupEnvPath;
 
     protected function setUp(): void
     {

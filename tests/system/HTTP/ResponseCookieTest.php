@@ -23,10 +23,7 @@ use Config\Cookie as CookieConfig;
  */
 final class ResponseCookieTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {

@@ -63,10 +63,8 @@ abstract class CIUnitTestCase extends TestCase
 
     /**
      * Store of identified traits.
-     *
-     * @var string[]|null
      */
-    private $traits;
+    private ?array $traits = null;
 
     //--------------------------------------------------------------------
     // Database Properties

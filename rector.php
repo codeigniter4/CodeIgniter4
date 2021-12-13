@@ -27,7 +27,6 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Core\Configuration\Option;
-use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
@@ -42,6 +41,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\PHPUnit\Rector\MethodCall\AssertIssetToSpecificMethodRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
@@ -54,7 +54,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::DEAD_CODE);
-    $containerConfigurator->import(LevelSetList::UP_TO_PHP_73);
+    $containerConfigurator->import(LevelSetList::UP_TO_PHP_74);
     $containerConfigurator->import(PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD);
     $containerConfigurator->import(PHPUnitSetList::PHPUNIT_80);
 
@@ -126,7 +126,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // auto import fully qualified class names
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
-    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
 
     $services = $containerConfigurator->services();
     $services->set(UnderscoreToCamelCaseVariableNameRector::class);
@@ -154,4 +153,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(FuncGetArgsToVariadicParamRector::class);
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $services->set(SimplifyEmptyArrayCheckRector::class);
+    $services->set(TypedPropertyRector::class)
+        ->configure([
+            TypedPropertyRector::PRIVATE_PROPERTY_ONLY => true
+        ]);
 };
