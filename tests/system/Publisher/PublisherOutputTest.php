@@ -21,31 +21,23 @@ final class PublisherOutputTest extends CIUnitTestCase
 {
     /**
      * Files to seed to VFS
-     *
-     * @var array
      */
-    private $structure;
+    private array $structure;
 
     /**
      * Virtual destination
-     *
-     * @var vfsStreamDirectory
      */
-    private $root;
+    private vfsStreamDirectory $root;
 
     /**
      * A known, valid file
-     *
-     * @var string
      */
-    private $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
 
     /**
      * A known, valid directory
-     *
-     * @var string
      */
-    private $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files/able/';
 
     /**
      * Initialize the helper, since some

@@ -25,9 +25,9 @@ namespace CodeIgniter\Test;
  */
 final class BootstrapFCPATHTest extends CIUnitTestCase
 {
-    private $currentDir = __DIR__;
-    private $dir1       = '/tmp/dir1';
-    private $file1      = '/tmp/dir1/testFile.php';
+    private string $currentDir = __DIR__;
+    private string $dir1       = '/tmp/dir1';
+    private string $file1      = '/tmp/dir1/testFile.php';
 
     protected function setUp(): void
     {

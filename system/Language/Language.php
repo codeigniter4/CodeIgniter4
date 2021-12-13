@@ -115,7 +115,7 @@ class Language
             $output = $this->getTranslationOutput('en', $file, $parsedLine);
         }
 
-        $output = $output ?? $line;
+        $output ??= $line;
 
         return $this->formatMessage($output, $args);
     }

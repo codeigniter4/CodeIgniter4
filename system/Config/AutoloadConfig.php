@@ -130,6 +130,6 @@ class AutoloadConfig
 
         $this->psr4     = array_merge($this->corePsr4, $this->psr4);
         $this->classmap = array_merge($this->coreClassmap, $this->classmap);
-        $this->files    = array_merge($this->coreFiles, $this->files);
+        $this->files    = [...$this->coreFiles, ...$this->files];
     }
 }

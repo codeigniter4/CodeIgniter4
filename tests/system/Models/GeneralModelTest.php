@@ -28,10 +28,8 @@ final class GeneralModelTest extends CIUnitTestCase
 {
     /**
      * Current instance of the Model.
-     *
-     * @var Model
      */
-    private $model;
+    private ?object $model = null;
 
     protected function setUp(): void
     {
@@ -68,21 +66,21 @@ final class GeneralModelTest extends CIUnitTestCase
     {
         $this->createModel(UserModel::class);
 
-        $this->assertTrue(isset($this->model->table));
+        $this->assertObjectHasAttribute('table', $this->model);
         $this->assertSame('user', $this->model->table);
-        $this->assertFalse(isset($this->model->foobar));
+        $this->assertObjectNotHasAttribute('foobar', $this->model);
         $this->assertNull($this->model->foobar);
 
         $this->model->flavor = 'chocolate';
-        $this->assertTrue(isset($this->model->flavor));
+        $this->assertObjectHasAttribute('flavor', $this->model);
         $this->assertSame('chocolate', $this->model->flavor);
 
         // from DB
-        $this->assertTrue(isset($this->model->DBPrefix));
+        $this->assertObjectHasAttribute('DBPrefix', $this->model);
         $this->assertSame('utf8', $this->model->charset);
 
         // from Builder
-        $this->assertTrue(isset($this->model->QBNoEscape));
+        $this->assertObjectHasAttribute('QBNoEscape', $this->model);
         $this->assertIsArray($this->model->QBNoEscape);
     }
 

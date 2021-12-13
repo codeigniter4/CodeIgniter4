@@ -94,7 +94,7 @@ class Model extends BaseModel
         /**
          * @var BaseConnection $db
          */
-        $db = $db ?? Database::connect($this->DBGroup);
+        $db ??= Database::connect($this->DBGroup);
 
         $this->db = &$db;
 

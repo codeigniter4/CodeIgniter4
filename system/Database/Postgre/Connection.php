@@ -284,9 +284,7 @@ class Connection extends BaseConnection
             $obj         = new stdClass();
             $obj->name   = $row->indexname;
             $_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
-            $obj->fields = array_map(static function ($v) {
-                return trim($v);
-            }, $_fields);
+            $obj->fields = array_map(static fn($v) => trim($v), $_fields);
 
             if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0) {
                 $obj->type = 'PRIMARY';

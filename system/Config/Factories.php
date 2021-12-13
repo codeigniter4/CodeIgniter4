@@ -41,7 +41,7 @@ class Factories
      *
      * @var array<string, mixed>
      */
-    private static $configOptions = [
+    private static array $configOptions = [
         'component'  => 'config',
         'path'       => 'Config',
         'instanceOf' => null,

@@ -445,7 +445,7 @@ if (! function_exists('force_https')) {
      *
      * @throws HTTPException
      */
-    function force_https(int $duration = 31536000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
+    function force_https(int $duration = 31_536_000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         if ($request === null) {
             $request = Services::request(null, true);
@@ -618,7 +618,7 @@ if (! function_exists('helper')) {
                 }
 
                 // All namespaced files get added in next
-                $includes = array_merge($includes, $localIncludes);
+                $includes = [...$includes, ...$localIncludes];
 
                 // And the system default one should be added in last.
                 if (! empty($systemHelper)) {
@@ -955,7 +955,7 @@ if (! function_exists('single_service')) {
         $method = new ReflectionMethod($service, $name);
         $count  = $method->getNumberOfParameters();
         $mParam = $method->getParameters();
-        $params = $params ?? [];
+        $params ??= [];
 
         if ($count === 1) {
             // This service needs only one argument, which is the shared

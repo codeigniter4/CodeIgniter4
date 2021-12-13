@@ -91,8 +91,8 @@ final class ReflectionHelperTest extends CIUnitTestCase
 
 class __TestForReflectionHelper
 {
-    private $private               = 'secret';
-    private static $static_private = 'xyz';
+    private string $private               = 'secret';
+    private static string $static_private = 'xyz';
 
     public function getPrivate()
     {

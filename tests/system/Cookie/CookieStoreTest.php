@@ -21,10 +21,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class CookieStoreTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {

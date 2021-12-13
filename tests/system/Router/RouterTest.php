@@ -57,9 +57,7 @@ final class RouterTest extends CIUnitTestCase
             'posts/(:num)'                 => 'Blog::show/$1',
             'posts/(:num)/edit'            => 'Blog::edit/$1',
             'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
-            'closure/(:num)/(:alpha)'      => static function ($num, $str) {
-                return $num . '-' . $str;
-            },
+            'closure/(:num)/(:alpha)'      => static fn($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
             'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
             '/some/slash'                                     => 'App\Slash::index',

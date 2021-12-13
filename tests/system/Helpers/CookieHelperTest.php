@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
@@ -26,9 +27,9 @@ use Config\Services;
 final class CookieHelperTest extends CIUnitTestCase
 {
     private $name;
-    private $value;
-    private $expire;
-    private $response;
+    private string $value;
+    private int $expire;
+    private Response $response;
 
     protected function setUp(): void
     {
