@@ -77,9 +77,9 @@ class MigrateCreate extends BaseCommand
     public function run(array $params)
     {
         // Resolve arguments before passing to make:migration
-        $params[0] = $params[0] ?? CLI::getSegment(2);
+        $params[0] ??= CLI::getSegment(2);
 
-        $params['namespace'] = $params['namespace'] ?? CLI::getOption('namespace') ?? APP_NAMESPACE;
+        $params['namespace'] ??= CLI::getOption('namespace') ?? APP_NAMESPACE;
 
         if (array_key_exists('force', $params) || CLI::getOption('force')) {
             $params['force'] = null;

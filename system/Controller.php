@@ -97,7 +97,7 @@ class Controller
      *
      * @throws HTTPException
      */
-    protected function forceHTTPS(int $duration = 31536000)
+    protected function forceHTTPS(int $duration = 31_536_000)
     {
         force_https($duration, $this->request, $this->response);
     }

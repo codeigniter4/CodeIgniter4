@@ -241,7 +241,7 @@ class Builder extends BaseBuilder
 
             foreach (array_keys($val) as $field) {
                 if ($field !== $index) {
-                    $final[$field] = $final[$field] ?? [];
+                    $final[$field] ??= [];
 
                     $final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
                 }

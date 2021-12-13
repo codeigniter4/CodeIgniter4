@@ -238,9 +238,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->whereIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
+        $builder->whereIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -327,9 +325,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->whereNotIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
+        $builder->whereNotIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -377,9 +373,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
+        $builder->where('deleted_at', null)->orWhereIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -427,9 +421,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereNotIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
+        $builder->where('deleted_at', null)->orWhereNotIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 

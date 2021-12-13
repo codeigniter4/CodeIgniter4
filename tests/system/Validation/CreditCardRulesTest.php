@@ -21,12 +21,9 @@ use Tests\Support\Validation\TestRules;
  */
 final class CreditCardRulesTest extends CIUnitTestCase
 {
-    /**
-     * @var Validation
-     */
-    private $validation;
+    private Validation $validation;
 
-    private $config = [
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,

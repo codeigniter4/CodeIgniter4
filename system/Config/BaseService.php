@@ -162,7 +162,7 @@ class BaseService
      *
      * @var array<string>
      */
-    private static $serviceNames = [];
+    private static array $serviceNames = [];
 
     /**
      * Returns a shared instance of any of the class' services.
