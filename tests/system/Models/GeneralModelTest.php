@@ -66,21 +66,21 @@ final class GeneralModelTest extends CIUnitTestCase
     {
         $this->createModel(UserModel::class);
 
-        $this->assertObjectHasAttribute('table', $this->model);
+        $this->assertTrue(isset($this->model->table));
         $this->assertSame('user', $this->model->table);
-        $this->assertObjectNotHasAttribute('foobar', $this->model);
+        $this->assertFalse(isset($this->model->foobar));
         $this->assertNull($this->model->foobar);
 
         $this->model->flavor = 'chocolate';
-        $this->assertObjectHasAttribute('flavor', $this->model);
+        $this->assertTrue(isset($this->model->flavor));
         $this->assertSame('chocolate', $this->model->flavor);
 
         // from DB
-        $this->assertObjectHasAttribute('DBPrefix', $this->model);
+        $this->assertTrue(isset($this->model->DBPrefix));
         $this->assertSame('utf8', $this->model->charset);
 
         // from Builder
-        $this->assertObjectHasAttribute('QBNoEscape', $this->model);
+        $this->assertTrue(isset($this->model->QBNoEscape));
         $this->assertIsArray($this->model->QBNoEscape);
     }
 
