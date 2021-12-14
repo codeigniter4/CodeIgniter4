@@ -39,7 +39,7 @@ trait ReflectionHelper
         $refMethod->setAccessible(true);
         $obj = (gettype($obj) === 'object') ? $obj : null;
 
-        return static fn(...$args) => $refMethod->invokeArgs($obj, $args);
+        return static fn (...$args) => $refMethod->invokeArgs($obj, $args);
     }
 
     /**

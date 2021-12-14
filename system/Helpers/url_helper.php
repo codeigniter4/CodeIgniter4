@@ -120,7 +120,7 @@ if (! function_exists('current_url')) {
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
         $request ??= Services::request();
-        $path    = $request->getPath();
+        $path = $request->getPath();
 
         // Append queries and fragments
         if ($query = $request->getUri()->getQuery()) {

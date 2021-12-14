@@ -21,7 +21,6 @@ use Tests\Support\Validation\TestRules;
 final class FileRulesTest extends CIUnitTestCase
 {
     private Validation $validation;
-
     private array $config = [
         'ruleSets' => [
             Rules::class,

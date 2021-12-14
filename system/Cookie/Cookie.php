@@ -110,7 +110,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * A cookie name can be any US-ASCII characters, except control characters,
      * spaces, tabs, or separator characters.
      *
-     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */

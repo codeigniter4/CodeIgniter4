@@ -25,7 +25,6 @@ final class FormatRulesTest extends CIUnitTestCase
     public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
     private Validation $validation;
-
     private array $config = [
         'ruleSets' => [
             Rules::class,

@@ -71,7 +71,7 @@ class Help extends BaseCommand
      */
     public function run(array $params)
     {
-        $command  = array_shift($params);
+        $command = array_shift($params);
         $command ??= 'help';
         $commands = $this->commands->getCommands();
 

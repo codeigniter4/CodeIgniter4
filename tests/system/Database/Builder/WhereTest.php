@@ -145,7 +145,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('neworder');
 
-        $builder->where('advance_amount <', static fn(BaseBuilder $builder) => $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2));
+        $builder->where('advance_amount <', static fn (BaseBuilder $builder) => $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2));
         $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
@@ -220,7 +220,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->whereIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->whereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -295,7 +295,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->whereNotIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->whereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -331,7 +331,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->where('deleted_at', null)->orWhereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -367,7 +367,7 @@ final class WhereTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder->where('deleted_at', null)->orWhereNotIn('id', static fn(BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
+        $builder->where('deleted_at', null)->orWhereNotIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
