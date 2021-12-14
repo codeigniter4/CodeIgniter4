@@ -121,6 +121,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         AssertIssetToSpecificMethodRector::class => [
             __DIR__ . '/tests/system/Entity/EntityTest.php',
             __DIR__ . '/tests/system/Session/SessionTest.php',
+            __DIR__ . '/tests/system/Models/GeneralModelTest.php',
         ],
     ]);
 
