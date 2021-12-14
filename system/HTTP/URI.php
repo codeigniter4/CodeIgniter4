@@ -1023,7 +1023,11 @@ class URI
         $return = [];
         $query  = explode('&', $query);
 
-        $params = array_map(static fn (string $chunk) => preg_replace_callback('/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/', static fn (array $match) => str_replace($match['key'], bin2hex($match['key']), $match[0]), urldecode($chunk)), $query);
+        $params = array_map(static fn (string $chunk) => preg_replace_callback(
+            '/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/',
+            static fn (array $match) => str_replace($match['key'], bin2hex($match['key']), $match[0]),
+            urldecode($chunk)
+        ), $query);
 
         $params = implode('&', $params);
         parse_str($params, $params);
