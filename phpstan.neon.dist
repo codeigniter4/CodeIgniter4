@@ -52,6 +52,8 @@ parameters:
 		- '#.* in isset\(\) does not exist#'
 		- '#Variable \$mockService in empty\(\) always exists and is always falsy#'
 		- '#PHPDoc type string\|null of property CodeIgniter\\Images\\Handlers\\ImageMagickHandler::\$resource is not covariant with PHPDoc type resource\|null of overridden property CodeIgniter\\Images\\Handlers\\BaseHandler::\$resource#'
+		- '#Variable \$.* on left side of \?\?= always exists and is not nullable#'
+		- '#Property .* (.*) on left side of \?\?= is not nullable#'
 	parallel:
 		processTimeout: 300.0
 	scanDirectories:
