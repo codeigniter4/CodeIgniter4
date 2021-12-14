@@ -27,7 +27,6 @@ use Tests\Support\Validation\TestRules;
 final class ValidationTest extends CIUnitTestCase
 {
     private Validation $validation;
-
     private array $config = [
         'ruleSets' => [
             Rules::class,

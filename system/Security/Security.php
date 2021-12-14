@@ -11,8 +11,8 @@
 
 namespace CodeIgniter\Security;
 
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Security\Exceptions\SecurityException;

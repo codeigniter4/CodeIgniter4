@@ -88,7 +88,7 @@ final class PredisHandlerTest extends AbstractHandlerTest
      */
     public function testRemember()
     {
-        $this->handler->remember(self::$key1, 2, static fn() => 'value');
+        $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
         $this->assertSame('value', $this->handler->get(self::$key1));
         $this->assertNull($this->handler->get(self::$dummy));

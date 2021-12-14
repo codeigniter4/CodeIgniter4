@@ -153,7 +153,7 @@ class Entity implements JsonSerializable
     {
         $this->_cast = $cast;
 
-        $keys = array_filter(array_keys($this->attributes), static fn($key) => strpos($key, '_') !== 0);
+        $keys = array_filter(array_keys($this->attributes), static fn ($key) => strpos($key, '_') !== 0);
 
         if (is_array($this->datamap)) {
             $keys = array_unique(

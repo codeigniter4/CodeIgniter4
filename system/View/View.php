@@ -271,7 +271,7 @@ class View implements RendererInterface
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
-        $start    = microtime(true);
+        $start = microtime(true);
         $saveData ??= $this->saveData;
         $this->prepareTemplateData($saveData);
 

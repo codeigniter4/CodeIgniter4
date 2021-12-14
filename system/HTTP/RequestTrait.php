@@ -224,7 +224,7 @@ trait RequestTrait
 
         // Null filters cause null values to return.
         $filter ??= FILTER_DEFAULT;
-        $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
         if ($index === null) {

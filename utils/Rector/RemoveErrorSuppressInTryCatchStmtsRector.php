@@ -60,7 +60,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
             return null;
         }
 
-        $inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static fn(Node $n): bool => $n === $node);
+        $inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static fn (Node $n): bool => $n === $node);
 
         // not in stmts, means it in catch or finally
         if (! $inStmts) {
