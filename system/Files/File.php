@@ -131,7 +131,7 @@ class File extends SplFileInfo
      */
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
-        $targetPath  = rtrim($targetPath, '/') . '/';
+        $targetPath = rtrim($targetPath, '/') . '/';
         $name ??= $this->getBaseName();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 

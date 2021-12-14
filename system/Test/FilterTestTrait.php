@@ -151,12 +151,12 @@ trait FilterTestTrait
         $request = clone $this->request;
 
         if ($position === 'before') {
-            return static fn(?array $params = null) => $filter->before($request, $params);
+            return static fn (?array $params = null) => $filter->before($request, $params);
         }
 
         $response = clone $this->response;
 
-        return static fn(?array $params = null) => $filter->after($request, $response, $params);
+        return static fn (?array $params = null) => $filter->after($request, $response, $params);
     }
 
     /**

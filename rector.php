@@ -155,6 +155,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SimplifyEmptyArrayCheckRector::class);
     $services->set(TypedPropertyRector::class)
         ->configure([
-            TypedPropertyRector::PRIVATE_PROPERTY_ONLY => true
+            TypedPropertyRector::PRIVATE_PROPERTY_ONLY => true,
         ]);
 };

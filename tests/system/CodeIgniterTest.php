@@ -135,7 +135,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', static fn($segment) => 'You want to see "' . esc($segment) . '" page.');
+        $routes->add('pages/(:segment)', static fn ($segment) => 'You want to see "' . esc($segment) . '" page.');
         $router = Services::router($routes, Services::request());
         Services::injectMock('router', $router);
 
@@ -180,7 +180,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/about', static fn() => Services::request()->url, ['filter' => Customfilter::class]);
+        $routes->add('pages/about', static fn () => Services::request()->url, ['filter' => Customfilter::class]);
 
         $router = Services::router($routes, Services::request());
         Services::injectMock('router', $router);

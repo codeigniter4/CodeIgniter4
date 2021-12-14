@@ -26,8 +26,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $seed = CITestSeeder::class;
-
+    protected $seed                   = CITestSeeder::class;
     private ?BasePreparedQuery $query = null;
 
     protected function setUp(): void
@@ -47,7 +46,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testPrepareReturnsPreparedQuery()
     {
-        $this->query = $this->db->prepare(static fn($db) => $db->table('user')->insert([
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'  => 'a',
             'email' => 'b@example.com',
         ]));
@@ -97,7 +96,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteRunsQueryAndReturnsResultObject()
     {
-        $this->query = $this->db->prepare(static fn($db) => $db->table('user')->insert([
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'    => 'a',
             'email'   => 'b@example.com',
             'country' => 'x',
