@@ -60,7 +60,7 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
     $format = $negotiate->media($supported);
 
 In this case, both the client and the server can agree on formatting the data as JSON so 'json' is returned from
-the negotiate method. By default, if no match is found, the first element in the $supported array would be returned.
+the negotiate method. By default, if no match is found, the first element in the ``$supported`` array would be returned.
 In some cases, though, you might need to enforce the format to be a strict match. If you pass ``true`` as the
 final value, it will return an empty string if no match is found::
 
@@ -92,7 +92,7 @@ and German you would do something like::
     $lang = $negotiate->language($supported);
 
 In this example, 'en' would be returned as the current language. If no match is found, it will return the first element
-in the $supported array, so that should always be the preferred language.
+in the ``$supported`` array, so that should always be the preferred language.
 
 Encoding
 ========
