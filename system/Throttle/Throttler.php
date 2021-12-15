@@ -107,7 +107,7 @@ class Throttler implements ThrottlerInterface
             $this->cache->save($tokenName, $tokens, $seconds);
             $this->cache->save($tokenName . 'Time', $this->time(), $seconds);
 
-            $this->tokenTime = max(1, (int) $refresh);
+            $this->tokenTime = 0;
 
             return true;
         }
@@ -130,7 +130,7 @@ class Throttler implements ThrottlerInterface
             $this->cache->save($tokenName, $tokens, $seconds);
             $this->cache->save($tokenName . 'Time', $this->time(), $seconds);
 
-            $this->tokenTime = max(1, (int) ($refresh - $elapsed));
+            $this->tokenTime = 0;
 
             return true;
         }
