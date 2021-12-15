@@ -56,7 +56,7 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler->setTestTime($time);
 
         $capacity = 2;
-        $seconds = 200;
+        $seconds  = 200;
 
         // refresh = 200 / 2 = 100 seconds
         // refresh rate = 2 / 200 = 0.01 token per second

@@ -79,10 +79,9 @@ class Throttler implements ThrottlerInterface
      *
      * Example:
      *
-     *  if (! $throttler->check($request->ipAddress(), 60, MINUTE))
-     * {
+     *  if (! $throttler->check($request->ipAddress(), 60, MINUTE)) {
      *      die('You submitted over 60 requests within a minute.');
-     * }
+     *  }
      *
      * @param string $key      The name to use as the "bucket" name.
      * @param int    $capacity The number of requests the "bucket" can hold
