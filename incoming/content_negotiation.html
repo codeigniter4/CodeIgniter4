@@ -313,7 +313,7 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
 </pre></div>
 </div>
 <p>In this case, both the client and the server can agree on formatting the data as JSON so ‘json’ is returned from
-the negotiate method. By default, if no match is found, the first element in the $supported array would be returned.
+the negotiate method. By default, if no match is found, the first element in the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array would be returned.
 In some cases, though, you might need to enforce the format to be a strict match. If you pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the
 final value, it will return an empty string if no match is found:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
@@ -345,7 +345,7 @@ and German you would do something like:</p>
 </pre></div>
 </div>
 <p>In this example, ‘en’ would be returned as the current language. If no match is found, it will return the first element
-in the $supported array, so that should always be the preferred language.</p>
+in the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array, so that should always be the preferred language.</p>
 </section>
 <section id="encoding">
 <h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline"></a></h3>
