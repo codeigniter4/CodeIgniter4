@@ -259,7 +259,13 @@ This would handle the URL at ``admin/users/list``. Note that options passed to t
 At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options.
+given route config options::
+
+    $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
+        $routes->get('login', 'AuthController::login', ['as' => 'login']);
+        $routes->post('login', 'AuthController::attemptLogin');
+        $routes->get('logout', 'AuthController::logout');
+    });
 
 Environment Restrictions
 ========================
