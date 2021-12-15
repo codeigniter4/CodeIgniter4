@@ -179,11 +179,12 @@ Service Accessors
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
 
-    Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-    that data will persistent between multiple calls to `view()` within the same request. By default, the
-    data for that view is forgotten after displaying that single view file.
+    Currently, only two options are available for use within the ``$options`` array:
 
-    The $option array is provided primarily to facilitate third-party integrations with
+    - ``saveData`` specifies that data will persistent between multiple calls to ``view()`` within the same request. If you do not want the data to be persisted, specify false.
+    - ``debug`` can be set to false to disable the addition of debug code for :ref:`Debug Toolbar <the-debug-toolbar>`.
+
+    The ``$option`` array is provided primarily to facilitate third-party integrations with
     libraries like Twig.
 
     Example::

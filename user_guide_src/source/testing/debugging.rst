@@ -45,6 +45,8 @@ This provides a backtrace to the current execution point, with Kint's own unique
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
+.. _the-debug-toolbar:
+
 =================
 The Debug Toolbar
 =================
