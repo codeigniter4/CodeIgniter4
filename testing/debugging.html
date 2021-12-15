@@ -265,36 +265,36 @@
 <h1>Debugging Your Application<a class="headerlink" href="#debugging-your-application" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#replace-var-dump" id="id1">Replace var_dump</a></p>
+<li><p><a class="reference internal" href="#replace-var-dump" id="id2">Replace var_dump</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enabling-kint" id="id2">Enabling Kint</a></p></li>
-<li><p><a class="reference internal" href="#using-kint" id="id3">Using Kint</a></p></li>
+<li><p><a class="reference internal" href="#enabling-kint" id="id3">Enabling Kint</a></p></li>
+<li><p><a class="reference internal" href="#using-kint" id="id4">Using Kint</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#the-debug-toolbar" id="id4">The Debug Toolbar</a></p>
+<li><p><a class="reference internal" href="#the-debug-toolbar" id="id5">The Debug Toolbar</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enabling-the-toolbar" id="id5">Enabling the Toolbar</a></p></li>
-<li><p><a class="reference internal" href="#setting-benchmark-points" id="id6">Setting Benchmark Points</a></p></li>
-<li><p><a class="reference internal" href="#creating-custom-collectors" id="id7">Creating Custom Collectors</a></p></li>
+<li><p><a class="reference internal" href="#enabling-the-toolbar" id="id6">Enabling the Toolbar</a></p></li>
+<li><p><a class="reference internal" href="#setting-benchmark-points" id="id7">Setting Benchmark Points</a></p></li>
+<li><p><a class="reference internal" href="#creating-custom-collectors" id="id8">Creating Custom Collectors</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="replace-var-dump">
-<h2><a class="toc-backref" href="#id1">Replace var_dump</a><a class="headerlink" href="#replace-var-dump" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Replace var_dump</a><a class="headerlink" href="#replace-var-dump" title="Permalink to this headline"></a></h2>
 <p>While using XDebug and a good IDE can be indispensable to debug your application, sometimes a quick <code class="docutils literal notranslate"><span class="pre">var_dump()</span></code> is
 all you need. CodeIgniter makes that even better by bundling in the excellent <a class="reference external" href="https://kint-php.github.io/kint/">Kint</a>
 debugging tool for PHP. This goes way beyond your usual tool, providing many alternate pieces of data, like formatting
 timestamps into recognizable dates, showing you hexcodes as colors, display array data like a table for easy reading,
 and much, much more.</p>
 <section id="enabling-kint">
-<h3><a class="toc-backref" href="#id2">Enabling Kint</a><a class="headerlink" href="#enabling-kint" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Enabling Kint</a><a class="headerlink" href="#enabling-kint" title="Permalink to this headline"></a></h3>
 <p>By default, Kint is enabled in <strong>development</strong> and <strong>testing</strong> <a class="reference internal" href="../general/environments.html"><span class="doc">environments</span></a> only.
 It will be enabled whenever the constant <code class="docutils literal notranslate"><span class="pre">CI_DEBUG</span></code> is defined and its value is truthy.
 This is defined in the boot files (e.g. <strong>app/Config/Boot/development.php</strong>).</p>
 </section>
 <section id="using-kint">
-<h3><a class="toc-backref" href="#id3">Using Kint</a><a class="headerlink" href="#using-kint" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Using Kint</a><a class="headerlink" href="#using-kint" title="Permalink to this headline"></a></h3>
 <p><strong>d()</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">d()</span></code> method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
 allows the script to continue executing:</p>
@@ -312,7 +312,7 @@ allows the script to continue executing:</p>
 </section>
 </section>
 <section id="the-debug-toolbar">
-<h2><a class="toc-backref" href="#id4">The Debug Toolbar</a><a class="headerlink" href="#the-debug-toolbar" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id5">The Debug Toolbar</a><a class="headerlink" href="#the-debug-toolbar" title="Permalink to this headline"></a></h2>
 <p>The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
 queries you have run, request and response data, and more. This can all prove very useful during development
 to help you debug and optimize.</p>
@@ -321,7 +321,7 @@ to help you debug and optimize.</p>
 <p>The Debug Toolbar is still under construction with several planned features not yet implemented.</p>
 </div>
 <section id="enabling-the-toolbar">
-<h3><a class="toc-backref" href="#id5">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this headline"></a></h3>
 <p>The toolbar is enabled by default in any <a class="reference internal" href="../general/environments.html"><span class="doc">environment</span></a> <em>except</em> <strong>production</strong>. It will be shown whenever the
 constant <code class="docutils literal notranslate"><span class="pre">CI_DEBUG</span></code> is defined and its value is truthy. This is defined in the boot files (e.g.
 <strong>app/Config/Boot/development.php</strong>) and can be modified there to determine what environment to show.</p>
@@ -370,12 +370,12 @@ are removed to help out on smaller displays.</p>
 </section>
 </section>
 <section id="setting-benchmark-points">
-<h3><a class="toc-backref" href="#id6">Setting Benchmark Points</a><a class="headerlink" href="#setting-benchmark-points" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Setting Benchmark Points</a><a class="headerlink" href="#setting-benchmark-points" title="Permalink to this headline"></a></h3>
 <p>In order for the Profiler to compile and display your benchmark data you must name your mark points using specific syntax.</p>
 <p>Please read the information on setting Benchmark points in the <a class="reference internal" href="benchmark.html"><span class="doc">Benchmark Library</span></a> page.</p>
 </section>
 <section id="creating-custom-collectors">
-<h3><a class="toc-backref" href="#id7">Creating Custom Collectors</a><a class="headerlink" href="#creating-custom-collectors" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Creating Custom Collectors</a><a class="headerlink" href="#creating-custom-collectors" title="Permalink to this headline"></a></h3>
 <p>Creating custom collectors is a straightforward task. You create a new class, fully-namespaced so that the autoloader
 can locate it, that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Toolbar\Collectors\BaseCollector</span></code>. This provides a number of methods
 that you can override, and has four required class properties that you must correctly set depending on how you want

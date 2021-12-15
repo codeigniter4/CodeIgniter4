@@ -569,10 +569,12 @@ timing if a timer with this name is already running.</p>
 and tells it to render the specified view. Simply provides
 a convenience method that can be used in Controllers,
 libraries, and routed closures.</p>
-<p>Currently, only one option is available for use within the <cite>$options</cite> array, <cite>saveData</cite> which specifies
-that data will persistent between multiple calls to <cite>view()</cite> within the same request. By default, the
-data for that view is forgotten after displaying that single view file.</p>
-<p>The $option array is provided primarily to facilitate third-party integrations with
+<p>Currently, only two options are available for use within the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> specifies that data will persistent between multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> within the same request. If you do not want the data to be persisted, specify false.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code> can be set to false to disable the addition of debug code for <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a>.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">$option</span></code> array is provided primarily to facilitate third-party integrations with
 libraries like Twig.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span> <span class="o">=&gt;</span> <span class="nv">$user</span><span class="p">];</span>
