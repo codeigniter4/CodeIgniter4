@@ -142,9 +142,8 @@ a new ``News`` controller is defined. Create the new controller at
     namespace App\Controllers;
 
     use App\Models\NewsModel;
-    use CodeIgniter\Controller;
 
-    class News extends Controller
+    class News extends BaseController
     {
         public function index()
         {
