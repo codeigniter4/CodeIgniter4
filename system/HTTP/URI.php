@@ -625,7 +625,7 @@ class URI
 
         if (empty($parts['host']) && $parts['path'] !== '') {
             $parts['host'] = $parts['path'];
-            unset($parts['path']); // @phpstan-ignore-line
+            unset($parts['path']);
         }
 
         $this->applyParts($parts);

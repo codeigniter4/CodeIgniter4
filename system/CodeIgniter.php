@@ -537,7 +537,6 @@ class CodeIgniter
             return;
         }
 
-        // @phpstan-ignore-next-line
         if (is_cli() && ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
             $this->request = Services::clirequest($this->config);
@@ -721,7 +720,7 @@ class CodeIgniter
         // If a {locale} segment was matched in the final route,
         // then we need to set the correct locale on our Request.
         if ($this->router->hasLocale()) {
-            $this->request->setLocale($this->router->getLocale()); // @phpstan-ignore-line
+            $this->request->setLocale($this->router->getLocale());
         }
 
         $this->benchmark->stop('routing');
@@ -816,7 +815,7 @@ class CodeIgniter
     protected function runController($class)
     {
         // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
+        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
 
         if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
@@ -969,7 +968,7 @@ class CodeIgniter
             return;
         }
 
-        $method = $this->request->getPost('_method'); // @phpstan-ignore-line
+        $method = $this->request->getPost('_method');
 
         if (empty($method)) {
             return;

@@ -883,7 +883,6 @@ abstract class BaseConnection implements ConnectionInterface
         $this->pretend(false);
 
         if ($sql instanceof QueryInterface) {
-            // @phpstan-ignore-next-line
             $sql = $sql->getOriginalQuery();
         }
 

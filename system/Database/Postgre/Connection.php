@@ -117,7 +117,6 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        // @phpstan-ignore-next-line
         if (! $this->connID || ($pgVersion = pg_version($this->connID)) === false) {
             $this->initialize();
         }

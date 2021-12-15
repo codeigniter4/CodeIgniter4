@@ -27,7 +27,7 @@ class Result extends BaseResult
      */
     public function getFieldCount(): int
     {
-        return $this->resultID->numColumns(); // @phpstan-ignore-line
+        return $this->resultID->numColumns();
     }
 
     /**
@@ -38,7 +38,7 @@ class Result extends BaseResult
         $fieldNames = [];
 
         for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
-            $fieldNames[] = $this->resultID->columnName($i); // @phpstan-ignore-line
+            $fieldNames[] = $this->resultID->columnName($i);
         }
 
         return $fieldNames;
@@ -58,18 +58,18 @@ class Result extends BaseResult
         ];
 
         $retVal = [];
-        $this->resultID->fetchArray(SQLITE3_NUM); // @phpstan-ignore-line
+        $this->resultID->fetchArray(SQLITE3_NUM);
 
         for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i++) {
             $retVal[$i]             = new stdClass();
-            $retVal[$i]->name       = $this->resultID->columnName($i); // @phpstan-ignore-line
-            $type                   = $this->resultID->columnType($i); // @phpstan-ignore-line
+            $retVal[$i]->name       = $this->resultID->columnName($i);
+            $type                   = $this->resultID->columnType($i);
             $retVal[$i]->type       = $type;
             $retVal[$i]->type_name  = $dataTypes[$type] ?? null;
             $retVal[$i]->max_length = null;
             $retVal[$i]->length     = null;
         }
-        $this->resultID->reset(); // @phpstan-ignore-line
+        $this->resultID->reset();
 
         return $retVal;
     }
@@ -100,7 +100,7 @@ class Result extends BaseResult
             throw new DatabaseException('SQLite3 doesn\'t support seeking to other offset.');
         }
 
-        return $this->resultID->reset(); // @phpstan-ignore-line
+        return $this->resultID->reset();
     }
 
     /**
@@ -112,7 +112,7 @@ class Result extends BaseResult
      */
     protected function fetchAssoc()
     {
-        return $this->resultID->fetchArray(SQLITE3_ASSOC); // @phpstan-ignore-line
+        return $this->resultID->fetchArray(SQLITE3_ASSOC);
     }
 
     /**

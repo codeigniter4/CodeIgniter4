@@ -206,7 +206,6 @@ class RedisHandler extends BaseHandler
             try {
                 $pingReply = $this->redis->ping();
 
-                // @phpstan-ignore-next-line
                 if (($pingReply === true) || ($pingReply === '+PONG')) {
                     if (isset($this->lockKey)) {
                         $this->redis->del($this->lockKey);
