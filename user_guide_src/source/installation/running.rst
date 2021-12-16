@@ -3,7 +3,7 @@ Running Your App
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
 using virtualization, or using CodeIgniter’s command line tool for testing.

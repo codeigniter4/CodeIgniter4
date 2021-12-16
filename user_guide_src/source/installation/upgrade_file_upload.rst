@@ -3,7 +3,7 @@ Upgrade Working with Uploaded Files
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations

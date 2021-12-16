@@ -3,7 +3,7 @@ Upgrade View Parser
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
