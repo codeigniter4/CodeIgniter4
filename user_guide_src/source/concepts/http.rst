@@ -95,7 +95,7 @@ is an object-oriented representation of the HTTP request. It provides everything
     $request->getHeader('host');
     $request->getHeader('Content-Type');
 
-    $request->getMethod();  // GET, POST, PUT, etc
+    $request->getMethod();  // get, post, put, etc
 
 The request class does a lot of work in the background for you, that you never need to worry about.
 The `isAJAX()` and `isSecure()` methods check several different methods to determine the correct answer.
