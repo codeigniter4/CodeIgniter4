@@ -104,7 +104,7 @@ type of response to return. If no matches are found between what the client requ
 format in this array is what will be returned.
 
 Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
-name, and the class must implement **CodeIgniter\\Format\\FormatterInterface**. Formatters come out of the box that
+name, and the class must implement ``CodeIgniter\Format\FormatterInterface``. Formatters come out of the box that
 support both JSON and XML::
 
     public $formatters = [
@@ -240,7 +240,7 @@ Class Reference
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
 
-    Unlike ``failUnauthorized``, this method should be used when the requested API endpoint is never allowed.
+    Unlike ``failUnauthorized()``, this method should be used when the requested API endpoint is never allowed.
     Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
     the client should not try again because it won't help. Status code is 403.
 
