@@ -113,7 +113,7 @@ support both JSON and XML::
     ];
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
-``respond*`` or ``fail*`` methods will be formatted by the **CodeIgniter\\API\\JSONFormatter** class. The resulting
+``respond*`` or ``fail*`` methods will be formatted by the ``CodeIgniter\Format\JSONFormatter`` class. The resulting
 JSON data will be sent back to the client.
 
 Class Reference
