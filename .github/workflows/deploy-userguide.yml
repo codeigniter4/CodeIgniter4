@@ -1,0 +1,53 @@
+# When changes are pushed to the master branch,
+# build the current version of the User Guide
+# with Sphinx and deploy it to the production server.
+#
+# @todo Consolidate checkouts
+name: Deploy User Guide
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'user_guide_src/**'
+
+jobs:
+  build:
+    name: Deploy to production
+    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build the latest User Guide
+      - name: Build with Sphinx
+        uses: ammaraskar/sphinx-action@0.4
+        with:
+          docs-folder: user_guide_src/
+
+      # Create an artifact of the html output
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: HTML Documentation
+          path: user_guide_src/build/html/
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Deploy to Webserver
+        uses: yeshan333/rsync-deploy-action@main
+        id: rsync-deploy-action
+        with:
+          ssh_login_username: ${{ secrets.DEPLOY_USER }}
+          remote_server_ip: ${{ secrets.DEPLOY_SSH_BOX }}
+          ssh_port: ${{ secrets.DEPLOY_PORT }}
+          ssh_private_key: ${{ secrets.DEPLOY_KEY }}
+          source_path: "./user_guide_src/build/html/*"
+          destination_path: "/home/public_html/userguides/v4/"
