@@ -356,7 +356,7 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
         <h1>Welcome, User</h1>
     {endif}
 
-.. note:: In the background, conditionals are parsed using an **eval()**, so you must ensure that you take
+.. warning:: In the background, conditionals are parsed using an ``eval()``, so you must ensure that you take
     care with the user data that is used within conditionals, or you could open your application up to security risks.
 
 Escaping Data
