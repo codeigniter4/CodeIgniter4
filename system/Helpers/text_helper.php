@@ -852,7 +852,7 @@ if (! function_exists('excerpt'))
 	//--------------------------------------------------------------------
 }
 
-if (!function_exists('str_contain')) {
+if (!function_exists('str_contains')) {
     /**
      * Determine if a given string contains in a given substring.
      *
@@ -860,7 +860,7 @@ if (!function_exists('str_contain')) {
      * @param  string|string[]  $needles
      * @return bool
      */
-    function str_contain(string $haystack, string $needles): bool
+    function str_contains(string $haystack, string $needles): bool
     {
         if (phpversion() >= 8) {
             return str_contains($haystack, $needles);
