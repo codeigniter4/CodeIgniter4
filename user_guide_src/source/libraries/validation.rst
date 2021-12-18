@@ -527,7 +527,7 @@ or the value that was validated you can add the ``{field}``, ``{param}`` and ``{
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
+On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”
 
 .. note:: If you pass the last parameter the labeled style error messages will be ignored.
@@ -643,11 +643,11 @@ short alias they can be referenced by. If we were to add our example file from a
 Specifying the Template
 =======================
 
-You can specify the template to use by passing it's alias as the first parameter in ``listErrors``::
+You can specify the template to use by passing it's alias as the first parameter in ``listErrors()``::
 
     <?= $validation->listErrors('my_list') ?>
 
-When showing field-specific errors, you can pass the alias as the second parameter to the ``showError`` method,
+When showing field-specific errors, you can pass the alias as the second parameter to the ``showError()`` method,
 right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
