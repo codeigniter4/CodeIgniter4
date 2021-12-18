@@ -1,72 +1,74 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DeleteTest extends CIDatabaseTestCase
+final class DeleteTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function testDeleteThrowExceptionWithNoCriteria()
-	{
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+    public function testDeleteThrowExceptionWithNoCriteria()
+    {
+        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 
-		$this->db->table('job')->delete();
-	}
+        $this->db->table('job')->delete();
+    }
 
-	//--------------------------------------------------------------------
+    public function testDeleteWithExternalWhere()
+    {
+        $this->seeInDatabase('job', ['name' => 'Developer']);
 
-	public function testDeleteWithExternalWhere()
-	{
-		$this->seeInDatabase('job', ['name' => 'Developer']);
+        $this->db->table('job')->where('name', 'Developer')->delete();
 
-		$this->db->table('job')->where('name', 'Developer')->delete();
+        $this->dontSeeInDatabase('job', ['name' => 'Developer']);
+    }
 
-		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
-	}
+    public function testDeleteWithInternalWhere()
+    {
+        $this->seeInDatabase('job', ['name' => 'Developer']);
 
-	//--------------------------------------------------------------------
+        $this->db->table('job')->delete(['name' => 'Developer']);
 
-	public function testDeleteWithInternalWhere()
-	{
-		$this->seeInDatabase('job', ['name' => 'Developer']);
+        $this->dontSeeInDatabase('job', ['name' => 'Developer']);
+    }
 
-		$this->db->table('job')->delete(['name' => 'Developer']);
+    /**
+     * @group  single
+     *
+     * @throws DatabaseException
+     */
+    public function testDeleteWithLimit()
+    {
+        $this->seeNumRecords(2, 'user', ['country' => 'US']);
 
-		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
-	}
+        try {
+            $this->db->table('user')->delete(['country' => 'US'], 1);
+        } catch (DatabaseException $e) {
+            if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false) {
+                return;
+            }
+        }
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * @group  single
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function testDeleteWithLimit()
-	{
-		$this->seeNumRecords(2, 'user', ['country' => 'US']);
-
-		try
-		{
-			$this->db->table('user')
-					 ->delete(['country' => 'US'], 1);
-		}
-		catch (DatabaseException $e)
-		{
-			if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
-			{
-				return;
-			}
-		}
-
-		$this->seeNumRecords(1, 'user', ['country' => 'US']);
-	}
-
-	//--------------------------------------------------------------------
-
+        $this->seeNumRecords(1, 'user', ['country' => 'US']);
+    }
 }

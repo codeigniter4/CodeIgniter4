@@ -43,29 +43,40 @@ In this example, an HTTP status code of 201 is returned, with the generic status
 exist for the most common use cases::
 
     // Generic response method
-    respond($data, 200);
+    $this->respond($data, 200);
+
     // Generic failure response
-    fail($errors, 400);
+    $this->fail($errors, 400);
+
     // Item created response
-    respondCreated($data);
+    $this->respondCreated($data);
+
     // Item successfully deleted
-    respondDeleted($data);
+    $this->respondDeleted($data);
+
     // Command executed by no response required
-    respondNoContent($message);
+    $this->respondNoContent($message);
+
     // Client isn't authorized
-    failUnauthorized($description);
+    $this->failUnauthorized($description);
+
     // Forbidden action
-    failForbidden($description);
+    $this->failForbidden($description);
+
     // Resource Not Found
-    failNotFound($description);
+    $this->failNotFound($description);
+
     // Data did not validate
-    failValidationError($description);
+    $this->failValidationError($description);
+
     // Resource already exists
-    failResourceExists($description);
+    $this->failResourceExists($description);
+
     // Resource previously deleted
-    failResourceGone($description);
+    $this->failResourceGone($description);
+
     // Client made too many requests
-    failTooManyRequests($description);
+    $this->failTooManyRequests($description);
 
 ***********************
 Handling Response Types
@@ -74,10 +85,10 @@ Handling Response Types
 When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:
 
-* If $data is a string, it will be treated as HTML to send back to the client.
-* If $data is an array, it will be formatted according to the controller's ``$this->format`` value. If that is empty
-    it will try to negotiate the content type with what the client asked for, defaulting to JSON
-    if nothing else has been specified within Config\API.php, the ``$supportedResponseFormats`` property.
+* If data is a string, it will be treated as HTML to send back to the client.
+* If data is an array, it will be formatted according to the controller's ``$this->format`` value. If that is empty,
+  it will try to negotiate the content type with what the client asked for, defaulting to JSON
+  if nothing else has been specified within **Config/Format.php**, the ``$supportedResponseFormats`` property.
 
 To define the formatter that is used, edit **Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
@@ -85,7 +96,7 @@ format both XML and JSON responses::
 
         public $supportedResponseFormats = [
             'application/json',
-            'application/xml'
+            'application/xml',
         ];
 
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
@@ -98,7 +109,7 @@ support both JSON and XML::
 
     public $formatters = [
         'application/json' => \CodeIgniter\Format\JSONFormatter::class,
-        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class
+        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
     ];
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
@@ -119,7 +130,7 @@ Class Reference
     return $this->setResponseFormat('json')->respond(['error' => false]);
 
 
-.. php:method:: respond($data[, $statusCode=200[, $message='']])
+.. php:method:: respond($data[, $statusCode = 200[, $message = '']])
 
     :param mixed  $data: The data to return to the client. Either string or array.
     :param int    $statusCode: The HTTP status code to return. Defaults to 200
@@ -138,7 +149,7 @@ Class Reference
     .. note:: Since it sets the status code and body on the active Response instance, this should always
         be the final method in the script execution.
 
-.. php:method:: fail($messages[, int $status=400[, string $code=null[, string $message='']]])
+.. php:method:: fail($messages[, int $status = 400[, string $code = null[, string $message = '']]])
 
     :param mixed $messages: A string or array of strings that contain error messages encountered.
     :param int   $status: The HTTP status code to return. Defaults to 400.
@@ -162,14 +173,14 @@ Class Reference
     The response is an array with two elements: ``error`` and ``messages``. The ``error`` element contains the status
     code of the error. The ``messages`` element contains an array of error messages. It would look something like::
 
-	    $response = [
-	        'status'   => 400,
-	        'code'     => '321a',
-	        'messages' => [
-	            'Error message 1',
-	            'Error message 2'
-	        ]
-	    ];
+        $response = [
+            'status'   => 400,
+            'code'     => '321a',
+            'messages' => [
+                'Error message 1',
+                'Error message 2',
+            ],
+        ];
 
 .. php:method:: respondCreated($data = null[, string $message = ''])
 
@@ -179,8 +190,8 @@ Class Reference
 
     Sets the appropriate status code to use when a new resource was created, typically 201.::
 
-	    $user = $userModel->insert($data);
-	    return $this->respondCreated($user);
+        $user = $userModel->insert($data);
+        return $this->respondCreated($user);
 
 .. php:method:: respondDeleted($data = null[, string $message = ''])
 
@@ -192,8 +203,8 @@ Class Reference
 
     ::
 
-	    $user = $userModel->delete($id);
-	    return $this->respondDeleted(['id' => $id]);
+        $user = $userModel->delete($id);
+        return $this->respondDeleted(['id' => $id]);
 
 .. php:method:: respondNoContent(string $message = 'No Content')
 
@@ -205,10 +216,10 @@ Class Reference
 
     ::
 
-	    sleep(1);
-	    return $this->respondNoContent();
+        sleep(1);
+        return $this->respondNoContent();
 
-.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
+.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code = null[, string $message = '']])
 
     :param string  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -220,7 +231,7 @@ Class Reference
 
     ::
 
-	    return $this->failUnauthorized('Invalid Auth token');
+        return $this->failUnauthorized('Invalid Auth token');
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
@@ -235,7 +246,7 @@ Class Reference
 
     ::
 
-    	return $this->failForbidden('Invalid API endpoint.');
+        return $this->failForbidden('Invalid API endpoint.');
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
@@ -248,21 +259,20 @@ Class Reference
 
     ::
 
-    	return $this->failNotFound('User 13 cannot be found.');
+        return $this->failNotFound('User 13 cannot be found.');
 
-.. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
+.. php:method:: failValidationErrors($errors[, string $code=null[, string $message = '']])
 
-    :param string  $description: The error message to show the user.
+    :param mixed  $errors: The error message or array of messages to show the user.
     :param string $code: A custom, API-specific, error code.
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
 
-    Sets the appropriate status code to use when data the client sent did not pass validation rules.
-    Status code is typically 400.
+    Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.
 
     ::
 
-    	return $this->failValidationError($validation->getErrors());
+        return $this->failValidationErrors($validation->getErrors());
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -276,7 +286,7 @@ Class Reference
 
     ::
 
-    	return $this->failResourceExists('A user already exists with that email.');
+        return $this->failResourceExists('A user already exists with that email.');
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
@@ -290,7 +300,7 @@ Class Reference
 
     ::
 
-    	return $this->failResourceGone('That user has been previously deleted.');
+        return $this->failResourceGone('That user has been previously deleted.');
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
@@ -304,7 +314,7 @@ Class Reference
 
     ::
 
-    	return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
+        return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
 .. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
@@ -317,4 +327,4 @@ Class Reference
 
     ::
 
-    	return $this->failServerError('Server error.');
+        return $this->failServerError('Server error.');

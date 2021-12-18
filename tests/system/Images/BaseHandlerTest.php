@@ -1,6 +1,21 @@
-<?php namespace CodeIgniter\Images;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Images\Handlers\BaseHandler;
+use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -10,106 +25,101 @@ use org\bovigo\vfs\vfsStream;
  * with vfsStream, so the support files are used directly for
  * most work, and the virtual file system will be used for
  * testing saving only.
+ *
+ * @internal
  */
-class BaseHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+final class BaseHandlerTest extends CIUnitTestCase
 {
+    protected function setUp(): void
+    {
+        if (! extension_loaded('gd')) {
+            $this->markTestSkipped('The GD extension is not available.');
+        }
 
-	protected function setUp(): void
-	{
-		if (! extension_loaded('gd'))
-		{
-			$this->markTestSkipped('The GD extension is not available.');
-			return;
-		}
+        // create virtual file system
+        $this->root = vfsStream::setup();
+        // copy our support files
+        $this->origin = SUPPORTPATH . 'Images/';
+        vfsStream::copyFromFileSystem($this->origin, $this->root);
+        // make subfolders
+        $structure = [
+            'work'     => [],
+            'wontwork' => [],
+        ];
+        vfsStream::create($structure);
+        // with one of them read only
+        $this->root->getChild('wontwork')->chmod(0400);
 
-		// create virtual file system
-		$this->root = vfsStream::setup();
-		// copy our support files
-		$this->origin = SUPPORTPATH . 'Images/';
-		vfsStream::copyFromFileSystem($this->origin, $this->root);
-		// make subfolders
-		$structure = [
-			'work'     => [],
-			'wontwork' => [],
-		];
-		vfsStream::create($structure);
-		// with one of them read only
-		$wont = $this->root->getChild('wontwork')->chmod(0400);
+        // for VFS tests
+        $this->start = $this->root->url() . '/';
+        $this->path  = $this->start . 'ci-logo.png';
+    }
 
-		// for VFS tests
-		$this->start = $this->root->url() . '/';
-		$this->path  = $this->start . 'ci-logo.png';
-	}
+    public function testNew()
+    {
+        $handler = Services::image('gd', null, false);
+        $this->assertInstanceOf(BaseHandler::class, $handler);
+    }
 
-	//--------------------------------------------------------------------
+    public function testWithFile()
+    {
+        $path    = $this->origin . 'ci-logo.png';
+        $handler = Services::image('gd', null, false);
+        $handler->withFile($path);
 
-	public function testNew()
-	{
-		$handler = Services::image('gd', null, false);
-		$this->assertTrue($handler instanceof Handlers\BaseHandler);
-	}
+        $image = $handler->getFile();
+        $this->assertInstanceOf(Image::class, $image);
+        $this->assertSame(155, $image->origWidth);
+        $this->assertSame($path, $image->getPathname());
+    }
 
-	public function testWithFile()
-	{
-		$path    = $this->origin . 'ci-logo.png';
-		$handler = Services::image('gd', null, false);
-		$handler->withFile($path);
+    public function testMissingFile()
+    {
+        $this->expectException(FileNotFoundException::class);
+        $handler = Services::image('gd', null, false);
+        $handler->withFile($this->start . 'No_such_file.jpg');
+    }
 
-		$image = $handler->getFile();
-		$this->assertTrue($image instanceof Image);
-		$this->assertEquals(155, $image->origWidth);
-		$this->assertEquals($path, $image->getPathname());
-	}
+    public function testNonImageFile()
+    {
+        $this->expectException(ImageException::class);
+        $handler = Services::image('gd', null, false);
+        $handler->withFile(SUPPORTPATH . 'Files/baker/banana.php');
 
-	public function testMissingFile()
-	{
-		$this->expectException(\CodeIgniter\Files\Exceptions\FileNotFoundException::class);
-		$handler = Services::image('gd', null, false);
-		$handler->withFile($this->start . 'No_such_file.jpg');
-	}
+        // Make any call that accesses the image
+        $handler->resize(100, 100);
+    }
 
-	public function testNonImageFile()
-	{
-		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
-		$handler = Services::image('gd', null, false);
-		$handler->withFile(SUPPORTPATH . 'Files/baker/banana.php');
+    public function testForgotWithFile()
+    {
+        $this->expectException(ImageException::class);
+        $handler = Services::image('gd', null, false);
 
-		// Make any call that accesses the image
-		$handler->resize(100, 100);
-	}
+        // Make any call that accesses the image
+        $handler->resize(100, 100);
+    }
 
-	public function testForgotWithFile()
-	{
-		$this->expectException(\CodeIgniter\Images\Exceptions\ImageException::class);
-		$handler = Services::image('gd', null, false);
+    public function testFileTypes()
+    {
+        $handler = Services::image('gd', null, false);
+        $handler->withFile($this->start . 'ci-logo.png');
+        $image = $handler->getFile();
+        $this->assertInstanceOf(Image::class, $image);
 
-		// Make any call that accesses the image
-		$handler->resize(100, 100);
-	}
+        $handler->withFile($this->start . 'ci-logo.jpeg');
+        $image = $handler->getFile();
+        $this->assertInstanceOf(Image::class, $image);
 
-	public function testFileTypes()
-	{
-		$handler = Services::image('gd', null, false);
-		$handler->withFile($this->start . 'ci-logo.png');
-		$image = $handler->getFile();
-		$this->assertTrue($image instanceof Image);
+        $handler->withFile($this->start . 'ci-logo.gif');
+        $image = $handler->getFile();
+        $this->assertInstanceOf(Image::class, $image);
+    }
 
-		$handler->withFile($this->start . 'ci-logo.jpeg');
-		$image = $handler->getFile();
-		$this->assertTrue($image instanceof Image);
-
-		$handler->withFile($this->start . 'ci-logo.gif');
-		$image = $handler->getFile();
-		$this->assertTrue($image instanceof Image);
-	}
-
-	//--------------------------------------------------------------------
-	// Something handled by our Image
-	public function testImageHandled()
-	{
-		$handler = Services::image('gd', null, false);
-		$handler->withFile($this->path);
-		$this->assertEquals($this->path, $handler->getPathname());
-	}
-
+    // Something handled by our Image
+    public function testImageHandled()
+    {
+        $handler = Services::image('gd', null, false);
+        $handler->withFile($this->path);
+        $this->assertSame($this->path, $handler->getPathname());
+    }
 }

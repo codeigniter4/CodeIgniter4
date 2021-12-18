@@ -1,171 +1,198 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
 /**
- * CodeIgniter
+ * This file is part of CodeIgniter 4 framework.
  *
- * An open source application development framework for PHP
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2019 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package    CodeIgniter
- * @author     CodeIgniter Dev Team
- * @copyright  2014-2019 British Columbia Institute of Technology (https://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link       https://codeigniter.com
- * @since      Version 4.0.0
- * @filesource
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
-class RedisHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\CLI\CLI;
+use Config\Cache;
+
+/**
+ * @group CacheLive
+ *
+ * @internal
+ */
+final class RedisHandlerTest extends AbstractHandlerTest
 {
-	private $redisHandler;
-	private static $key1 = 'key1';
-	private static $key2 = 'key2';
-	private static $key3 = 'key3';
-	private static function getKeyArray()
-	{
-		return [
-			self::$key1,
-			self::$key2,
-			self::$key3,
-		];
-	}
+    private $config;
 
-	private static $dummy = 'dymmy';
-	private $config;
+    private static function getKeyArray()
+    {
+        return [
+            self::$key1,
+            self::$key2,
+            self::$key3,
+        ];
+    }
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->config = new \Config\Cache();
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
 
-		$this->redisHandler = new RedisHandler($this->config);
-		if (! $this->redisHandler->isSupported())
-		{
-			$this->markTestSkipped('Not support redis');
-		}
+        $this->config = new Cache();
 
-		$this->redisHandler->initialize();
-	}
+        $this->handler = new RedisHandler($this->config);
 
-	public function tearDown(): void
-	{
-		foreach (self::getKeyArray() as $key)
-		{
-			$this->redisHandler->delete($key);
-		}
-	}
+        $this->handler->initialize();
+    }
 
-	public function testNew()
-	{
-		$this->assertInstanceOf(RedisHandler::class, $this->redisHandler);
-	}
+    protected function tearDown(): void
+    {
+        foreach (self::getKeyArray() as $key) {
+            $this->handler->delete($key);
+        }
+    }
 
-	public function testDestruct()
-	{
-		$this->redisHandler = new RedisHandler($this->config);
-		$this->redisHandler->initialize();
+    public function testNew()
+    {
+        $this->assertInstanceOf(RedisHandler::class, $this->handler);
+    }
 
-		$this->assertInstanceOf(RedisHandler::class, $this->redisHandler);
-	}
+    public function testDestruct()
+    {
+        $this->handler = new RedisHandler($this->config);
+        $this->handler->initialize();
 
-	public function testGet()
-	{
-		$this->redisHandler->save(self::$key1, 'value', 2);
+        $this->assertInstanceOf(RedisHandler::class, $this->handler);
+    }
 
-		$this->assertSame('value', $this->redisHandler->get(self::$key1));
-		$this->assertNull($this->redisHandler->get(self::$dummy));
+    /**
+     * This test waits for 3 seconds before last assertion so this
+     * is naturally a "slow" test on the perspective of the default limit.
+     *
+     * @timeLimit 3.5
+     */
+    public function testGet()
+    {
+        $this->handler->save(self::$key1, 'value', 2);
 
-		\CodeIgniter\CLI\CLI::wait(3);
-		$this->assertNull($this->redisHandler->get(self::$key1));
-	}
+        $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
 
-	public function testRemember()
-	{
-		$this->redisHandler->remember(self::$key1, 2, function () {
-			return 'value';
-		});
+        CLI::wait(3);
+        $this->assertNull($this->handler->get(self::$key1));
+    }
 
-		$this->assertSame('value', $this->redisHandler->get(self::$key1));
-		$this->assertNull($this->redisHandler->get(self::$dummy));
+    /**
+     * This test waits for 3 seconds before last assertion so this
+     * is naturally a "slow" test on the perspective of the default limit.
+     *
+     * @timeLimit 3.5
+     */
+    public function testRemember()
+    {
+        $this->handler->remember(self::$key1, 2, static function () {
+            return 'value';
+        });
 
-		\CodeIgniter\CLI\CLI::wait(3);
-		$this->assertNull($this->redisHandler->get(self::$key1));
-	}
+        $this->assertSame('value', $this->handler->get(self::$key1));
+        $this->assertNull($this->handler->get(self::$dummy));
 
-	public function testSave()
-	{
-		$this->assertTrue($this->redisHandler->save(self::$key1, 'value'));
-	}
+        CLI::wait(3);
+        $this->assertNull($this->handler->get(self::$key1));
+    }
 
-	public function testDelete()
-	{
-		$this->redisHandler->save(self::$key1, 'value');
+    public function testSave()
+    {
+        $this->assertTrue($this->handler->save(self::$key1, 'value'));
+    }
 
-		$this->assertTrue($this->redisHandler->delete(self::$key1));
-		$this->assertFalse($this->redisHandler->delete(self::$dummy));
-	}
+    public function testSavePermanent()
+    {
+        $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
+        $metaData = $this->handler->getMetaData(self::$key1);
 
-	//FIXME: I don't like all Hash logic very much. It's wasting memory.
-	//public function testIncrement()
-	//{
-	//}
+        $this->assertNull($metaData['expire']);
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertSame('value', $metaData['data']);
 
-	//public function testDecrement()
-	//{
-	//}
+        $this->assertTrue($this->handler->delete(self::$key1));
+    }
 
-	public function testClean()
-	{
-		$this->redisHandler->save(self::$key1, 1);
-		$this->redisHandler->save(self::$key2, 'value');
+    public function testDelete()
+    {
+        $this->handler->save(self::$key1, 'value');
 
-		$this->assertTrue($this->redisHandler->clean());
-	}
+        $this->assertTrue($this->handler->delete(self::$key1));
+        $this->assertFalse($this->handler->delete(self::$dummy));
+    }
 
-	public function testGetCacheInfo()
-	{
-		$this->redisHandler->save(self::$key1, 'value');
+    public function testDeleteMatchingPrefix()
+    {
+        // Save 101 items to match on
+        for ($i = 1; $i <= 101; $i++) {
+            $this->handler->save('key_' . $i, 'value' . $i);
+        }
 
-		$this->assertIsArray($this->redisHandler->getCacheInfo());
-	}
+        // check that there are 101 items is cache store
+        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
+        $this->assertSame('keys=101', $dbInfo[0]);
 
-	public function testGetMetaData()
-	{
-		$time = time();
-		$this->redisHandler->save(self::$key1, 'value');
+        // Checking that given the prefix "key_1", deleteMatching deletes 13 keys:
+        // (key_1, key_10, key_11, key_12, key_13, key_14, key_15, key_16, key_17, key_18, key_19, key_100, key_101)
+        $this->assertSame(13, $this->handler->deleteMatching('key_1*'));
 
-		$this->assertNull($this->redisHandler->getMetaData(self::$dummy));
+        // check that there remains (101 - 13) = 88 items is cache store
+        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
+        $this->assertSame('keys=88', $dbInfo[0]);
+    }
 
-		$actual = $this->redisHandler->getMetaData(self::$key1);
-		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
-		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
-		$this->assertSame('value', $actual['data']);
-	}
+    public function testDeleteMatchingSuffix()
+    {
+        // Save 101 items to match on
+        for ($i = 1; $i <= 101; $i++) {
+            $this->handler->save('key_' . $i, 'value' . $i);
+        }
 
-	public function testIsSupported()
-	{
-		$this->assertTrue($this->redisHandler->isSupported());
-	}
+        // check that there are 101 items is cache store
+        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
+        $this->assertSame('keys=101', $dbInfo[0]);
+
+        // Checking that given the suffix "1", deleteMatching deletes 11 keys:
+        // (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
+        $this->assertSame(11, $this->handler->deleteMatching('*1'));
+
+        // check that there remains (101 - 13) = 88 items is cache store
+        $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
+        $this->assertSame('keys=90', $dbInfo[0]);
+    }
+
+    // FIXME: I don't like all Hash logic very much. It's wasting memory.
+    // public function testIncrement()
+    // {
+    // }
+
+    // public function testDecrement()
+    // {
+    // }
+
+    public function testClean()
+    {
+        $this->handler->save(self::$key1, 1);
+
+        $this->assertTrue($this->handler->clean());
+    }
+
+    public function testGetCacheInfo()
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        $this->assertIsArray($this->handler->getCacheInfo());
+    }
+
+    public function testIsSupported()
+    {
+        $this->assertTrue($this->handler->isSupported());
+    }
 }

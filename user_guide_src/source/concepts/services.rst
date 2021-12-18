@@ -98,7 +98,7 @@ to find the views at ``APPPATH.views/``. We want the developer to have the optio
 changing that path, though, if their needs require it. So the class accepts the ``$viewPath``
 as a constructor parameter. The service method looks like this::
 
-    public static function renderer($viewPath=APPPATH.'views/')
+    public static function renderer($viewPath = APPPATH . 'views/')
     {
         return new \CodeIgniter\View\View($viewPath);
     }
@@ -121,8 +121,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
     {
         public static function routes($getShared = false)
         {
-            if (! $getShared)
-            {
+            if (! $getShared) {
                 return new \CodeIgniter\Router\RouteCollection();
             }
 

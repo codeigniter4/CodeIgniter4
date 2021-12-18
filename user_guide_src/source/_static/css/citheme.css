@@ -95,20 +95,6 @@ body, p, legend {
 	background-size: 200px;
 }
 
-/* -- Breakpoint for large screens (> 900px) --------- */
-@media (min-width: 900px) and (max-width: 1100px) {
-	.wy-nav-content {
-		max-width: 1620px;
-	}
-}
-
-@media (min-width: 1100px) {
-	.wy-nav-content {
-		margin: 0 auto;
-		max-width: 1620px;
-	}
-}
-
 /* Titles ------------------------------------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {

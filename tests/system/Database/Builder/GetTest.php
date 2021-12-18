@@ -1,107 +1,107 @@
-<?php namespace Builder;
+<?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
+
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class GetTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class GetTest extends CIUnitTestCase
 {
-	protected $db;
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testGet()
+    {
+        $builder = $this->db->table('users');
 
-	//--------------------------------------------------------------------
+        $expectedSQL = 'SELECT * FROM "users"';
 
-	public function testGet()
-	{
-		$builder = $this->db->table('users');
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 
-		$expectedSQL = 'SELECT * FROM "users"';
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2141
+     */
+    public function testGetWithReset()
+    {
+        $builder = $this->db->table('users');
+        $builder->testMode()->where('username', 'bogus');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-	}
+        $expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
+        $expectedSQLafterreset = 'SELECT * FROM "users"';
 
-	//--------------------------------------------------------------------
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, false)));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true)));
+        $this->assertSame($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2141
-	 */
-	public function testGetWithReset()
-	{
-		$builder = $this->db->table('users');
-		$builder->testMode()->where('username', 'bogus');
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
+     */
+    public function testGetWhereWithLimit()
+    {
+        $builder = $this->db->table('users');
+        $builder->testMode();
 
-		$expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
-		$expectedSQLafterreset = 'SELECT * FROM "users"';
+        $expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 5';
+        $expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 5';
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, false)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true)));
-		$this->assertEquals($expectedSQLafterreset, str_replace("\n", ' ', $builder->get(0, 50, true)));
-	}
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, false)));
+        $this->assertSame($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 0, true)));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetWhereWithLimitAndOffset()
+    {
+        $builder = $this->db->table('users');
+        $builder->testMode();
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
-	 */
-	public function testGetWhereWithLimit()
-	{
-		$builder = $this->db->table('users');
-		$builder->testMode();
+        $expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 10, 5';
+        $expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 10, 5';
 
-		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 5';
-		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 5';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, false)));
+        $this->assertSame($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
+    }
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 0, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
-	}
+    public function testGetWhereWithWhereConditionOnly()
+    {
+        $builder = $this->db->table('users');
+        $builder->testMode();
 
-	//--------------------------------------------------------------------
+        $expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
+        $expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'';
 
-	public function testGetWhereWithLimitAndOffset()
-	{
-		$builder = $this->db->table('users');
-		$builder->testMode();
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, false)));
+        $this->assertSame($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
+    }
 
-		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 10, 5';
-		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'  LIMIT 10, 5';
+    public function testGetWhereWithoutArgs()
+    {
+        $builder = $this->db->table('users');
+        $builder->testMode();
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
-	}
+        $expectedSQL = 'SELECT * FROM "users"';
 
-	//--------------------------------------------------------------------
-
-	public function testGetWhereWithWhereConditionOnly()
-	{
-		$builder = $this->db->table('users');
-		$builder->testMode();
-
-		$expectedSQL             = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
-		$expectedSQLWithoutReset = 'SELECT * FROM "users" WHERE "username" = \'bogus\' AND "username" = \'bogus\'';
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, false)));
-		$this->assertEquals($expectedSQLWithoutReset, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetWhereWithoutArgs()
-	{
-		$builder = $this->db->table('users');
-		$builder->testMode();
-
-		$expectedSQL = 'SELECT * FROM "users"';
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
-	}
-
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(null, null, null, true)));
+    }
 }

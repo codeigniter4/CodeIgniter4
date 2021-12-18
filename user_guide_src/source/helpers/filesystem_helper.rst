@@ -22,13 +22,13 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: directory_map($source_dir[, $directory_depth = 0[, $hidden = FALSE]])
+.. php:function:: directory_map($source_dir[, $directory_depth = 0[, $hidden = false]])
 
-    :param	string  $source_dir: Path to the source directory
-    :param	int	    $directory_depth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
-    :param	bool	$hidden: Whether to include hidden directories
-    :returns:	An array of files
-    :rtype:	array
+    :param    string  $source_dir: Path to the source directory
+    :param    int   $directory_depth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
+    :param    bool    $hidden: Whether to include hidden paths
+    :returns:    An array of files
+    :rtype:    array
 
     Examples::
 
@@ -42,10 +42,11 @@ The following functions are available:
 
         $map = directory_map('./mydirectory/', 1);
 
-    By default, hidden files will not be included in the returned array. To
-    override this behavior, you may set a third parameter to true (boolean)::
+    By default, hidden files will not be included in the returned array and
+    hidden directories will be skipped. To override this behavior, you may
+    set a third parameter to true (boolean)::
 
-        $map = directory_map('./mydirectory/', FALSE, TRUE);
+        $map = directory_map('./mydirectory/', false, true);
 
     Each folder name will be an array index, while its contained files will
     be numerically indexed. Here is an example of a typical array::
@@ -79,13 +80,32 @@ The following functions are available:
 
     If no results are found, this will return an empty array.
 
+.. php:function:: directory_mirror($original, $target[, $overwrite = true])
+
+    :param    string    $original: Original source directory
+    :param    string    $target: Target destination directory
+    :param    bool    $overwrite: Whether individual files overwrite on collision
+
+    Recursively copies the files and directories of the origin directory
+    into the target directory, i.e. "mirror" its contents.
+
+    Example::
+
+        try {     
+            directory_mirror($uploadedImages, FCPATH . 'images/');
+        } catch (Throwable $e) {     
+            echo 'Failed to export uploads!';
+        }
+
+    You can optionally change the overwrite behavior via the third parameter.
+
 .. php:function:: write_file($path, $data[, $mode = 'wb'])
 
-    :param	string	$path: File path
-    :param	string	$data: Data to write to file
-    :param	string	$mode: ``fopen()`` mode
-    :returns:	TRUE if the write was successful, FALSE in case of an error
-    :rtype:	bool
+    :param    string    $path: File path
+    :param    string    $data: Data to write to file
+    :param    string    $mode: ``fopen()`` mode
+    :returns:    true if the write was successful, false in case of an error
+    :rtype:    bool
 
     Writes data to the file specified in the path. If the file does not exist then the
     function will create it.
@@ -93,12 +113,10 @@ The following functions are available:
     Example::
 
         $data = 'Some file data';
-        if ( ! write_file('./path/to/file.php', $data))
-        {     
+
+        if ( ! write_file('./path/to/file.php', $data)) {     
             echo 'Unable to write the file';
-        }
-        else
-        {     
+        } else {     
             echo 'File written!';
         }
 
@@ -119,14 +137,14 @@ The following functions are available:
 
     .. note:: This function acquires an exclusive lock on the file while writing to it.
 
-.. php:function:: delete_files($path[, $delDir = FALSE[, $htdocs = FALSE[, $hidden = FALSE]]])
+.. php:function:: delete_files($path[, $delDir = false[, $htdocs = false[, $hidden = false]]])
 
-    :param	string	$path: Directory path
-    :param	bool	$delDir: Whether to also delete directories
-    :param	bool	$htdocs: Whether to skip deleting .htaccess and index page files
+    :param    string    $path: Directory path
+    :param    bool    $delDir: Whether to also delete directories
+    :param    bool    $htdocs: Whether to skip deleting .htaccess and index page files
     :param  bool    $hidden: Whether to also delete hidden files (files beginning with a period)
-    :returns:	TRUE on success, FALSE in case of an error
-    :rtype:	bool
+    :returns:    true on success, false in case of an error
+    :rtype:    bool
 
     Deletes ALL files contained in the supplied path.
 
@@ -134,22 +152,22 @@ The following functions are available:
 
         delete_files('./path/to/directory/');
 
-    If the second parameter is set to TRUE, any directories contained within the supplied
+    If the second parameter is set to true, any directories contained within the supplied
     root path will be deleted as well.
 
     Example::
 
-        delete_files('./path/to/directory/', TRUE);
+        delete_files('./path/to/directory/', true);
 
     .. note:: The files must be writable or owned by the system in order to be deleted.
 
-.. php:function:: get_filenames($source_dir[, $include_path = FALSE])
+.. php:function:: get_filenames($source_dir[, $include_path = false])
 
-    :param	string	$source_dir: Directory path
-    :param	bool|null	$include_path: Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path
-    :param	bool	$hidden: Whether to include hidden files (files beginning with a period)
-    :returns:	An array of file names
-    :rtype:	array
+    :param    string    $source_dir: Directory path
+    :param    bool|null    $include_path: Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path
+    :param    bool    $hidden: Whether to include hidden files (files beginning with a period)
+    :returns:    An array of file names
+    :rtype:    array
 
     Takes a server path as input and returns an array containing the names of all files
     contained within it. The file path can optionally be added to the file names by setting
@@ -162,14 +180,14 @@ The following functions are available:
 
 .. php:function:: get_dir_file_info($source_dir, $top_level_only)
 
-    :param	string	$source_dir: Directory path
-    :param	bool	$top_level_only: Whether to look only at the specified directory (excluding sub-directories)
-    :returns:	An array containing info on the supplied directory's contents
-    :rtype:	array
+    :param    string    $source_dir: Directory path
+    :param    bool    $top_level_only: Whether to look only at the specified directory (excluding sub-directories)
+    :returns:    An array containing info on the supplied directory's contents
+    :rtype:    array
 
     Reads the specified directory and builds an array containing the filenames, filesize,
     dates, and permissions. Sub-folders contained within the specified path are only read
-    if forced by sending the second parameter to FALSE, as this can be an intensive
+    if forced by sending the second parameter to false, as this can be an intensive
     operation.
 
     Example::
@@ -178,10 +196,10 @@ The following functions are available:
 
 .. php:function:: get_file_info($file[, $returned_values = ['name', 'server_path', 'size', 'date']])
 
-    :param	string	        $file: File path
-    :param	array|string    $returned_values: What type of info to return to be passed as array or comma separated string
-    :returns:	An array containing info on the specified file or FALSE on failure
-    :rtype:	array
+    :param    string        $file: File path
+    :param    array|string  $returned_values: What type of info to return to be passed as array or comma separated string
+    :returns:    An array containing info on the specified file or false on failure
+    :rtype:    array
 
     Given a file and path, returns (optionally) the *name*, *path*, *size* and *date modified*
     information attributes for a file. Second parameter allows you to explicitly declare what
@@ -192,9 +210,9 @@ The following functions are available:
 
 .. php:function:: symbolic_permissions($perms)
 
-    :param	int	$perms: Permissions
-    :returns:	Symbolic permissions string
-    :rtype:	string
+    :param    int    $perms: Permissions
+    :returns:    Symbolic permissions string
+    :rtype:    string
 
     Takes numeric permissions (such as is returned by ``fileperms()``) and returns
     standard symbolic notation of file permissions.
@@ -205,9 +223,9 @@ The following functions are available:
 
 .. php:function:: octal_permissions($perms)
 
-    :param	int	$perms: Permissions
-    :returns:	Octal permissions string
-    :rtype:	string
+    :param    int    $perms: Permissions
+    :returns:    Octal permissions string
+    :rtype:    string
 
     Takes numeric permissions (such as is returned by ``fileperms()``) and returns
     a three character octal notation of file permissions.
@@ -216,12 +234,25 @@ The following functions are available:
 
         echo octal_permissions(fileperms('./index.php')); // 644
 
-.. php:function:: set_realpath($path[, $check_existence = FALSE])
+.. php:function:: same_file($file1, $file2)
 
-    :param	string	$path: Path
-    :param	bool	$check_existence: Whether to check if the path actually exists
-    :returns:	An absolute path
-    :rtype:	string
+    :param    string    $file1: Path to the first file
+    :param    string    $file2: Path to the second file
+    :returns:    Whether both files exist with identical hashes
+    :rtype:    boolean
+
+    Compares two files to see if they are the same (based on their MD5 hash).
+
+    ::
+
+        echo same_file($newFile, $oldFile) ? 'Same!' : 'Different!';
+
+.. php:function:: set_realpath($path[, $check_existence = false])
+
+    :param    string    $path: Path
+    :param    bool    $check_existence: Whether to check if the path actually exists
+    :returns:    An absolute path
+    :rtype:    string
 
     This function will return a server path without symbolic links or
     relative directory structures. An optional second argument will
@@ -233,12 +264,12 @@ The following functions are available:
         echo set_realpath($file); // Prints '/etc/php5/apache2/php.ini'
 
         $non_existent_file = '/path/to/non-exist-file.txt';
-        echo set_realpath($non_existent_file, TRUE);	// Shows an error, as the path cannot be resolved
-        echo set_realpath($non_existent_file, FALSE);	// Prints '/path/to/non-exist-file.txt'
+        echo set_realpath($non_existent_file, true);    // Shows an error, as the path cannot be resolved
+        echo set_realpath($non_existent_file, false);   // Prints '/path/to/non-exist-file.txt'
 
         $directory = '/etc/php5';
-        echo set_realpath($directory);	// Prints '/etc/php5/'
+        echo set_realpath($directory);  // Prints '/etc/php5/'
 
         $non_existent_directory = '/path/to/nowhere';
-        echo set_realpath($non_existent_directory, TRUE);	// Shows an error, as the path cannot be resolved
-        echo set_realpath($non_existent_directory, FALSE);	// Prints '/path/to/nowhere'
+        echo set_realpath($non_existent_directory, true);   // Shows an error, as the path cannot be resolved
+        echo set_realpath($non_existent_directory, false);  // Prints '/path/to/nowhere'

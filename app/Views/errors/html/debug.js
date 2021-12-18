@@ -1,6 +1,4 @@
-//--------------------------------------------------------------------
 // Tabs
-//--------------------------------------------------------------------
 
 var tabLinks    = new Array();
 var contentDivs = new Array();
@@ -52,8 +50,6 @@ function init()
 	}
 }
 
-//--------------------------------------------------------------------
-
 function showTab()
 {
 	var selectedId = getHash(this.getAttribute('href'));
@@ -78,8 +74,6 @@ function showTab()
 	return false;
 }
 
-//--------------------------------------------------------------------
-
 function getFirstChildWithTagName(element, tagName)
 {
 	for (var i = 0; i < element.childNodes.length; i ++)
@@ -91,15 +85,11 @@ function getFirstChildWithTagName(element, tagName)
 	}
 }
 
-//--------------------------------------------------------------------
-
 function getHash(url)
 {
 	var hashPos = url.lastIndexOf('#');
 	return url.substring(hashPos + 1);
 }
-
-//--------------------------------------------------------------------
 
 function toggle(elem)
 {

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Cache\Handlers;
@@ -18,156 +18,98 @@ use Closure;
  */
 class DummyHandler extends BaseHandler
 {
-	/**
-	 * Takes care of any handler-specific setup that must be done.
-	 */
-	public function initialize()
-	{
-		// Nothing to see here...
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function initialize()
+    {
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function get(string $key)
+    {
+        return null;
+    }
 
-	/**
-	 * Attempts to fetch an item from the cache store.
-	 *
-	 * @param string $key Cache item name
-	 *
-	 * @return mixed
-	 */
-	public function get(string $key)
-	{
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function remember(string $key, int $ttl, Closure $callback)
+    {
+        return null;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function save(string $key, $value, int $ttl = 60)
+    {
+        return true;
+    }
 
-	/**
-	 * Get an item from the cache, or execute the given Closure and store the result.
-	 *
-	 * @param string  $key      Cache item name
-	 * @param integer $ttl      Time to live
-	 * @param Closure $callback Callback return value
-	 *
-	 * @return mixed
-	 */
-	public function remember(string $key, int $ttl, Closure $callback)
-	{
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function delete(string $key)
+    {
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteMatching(string $pattern)
+    {
+        return 0;
+    }
 
-	/**
-	 * Saves an item to the cache store.
-	 *
-	 * @param string  $key   Cache item name
-	 * @param mixed   $value The data to save
-	 * @param integer $ttl   Time To Live, in seconds (default 60)
-	 *
-	 * @return mixed
-	 */
-	public function save(string $key, $value, int $ttl = 60)
-	{
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function increment(string $key, int $offset = 1)
+    {
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function decrement(string $key, int $offset = 1)
+    {
+        return true;
+    }
 
-	/**
-	 * Deletes a specific item from the cache store.
-	 *
-	 * @param string $key Cache item name
-	 *
-	 * @return boolean
-	 */
-	public function delete(string $key)
-	{
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function clean()
+    {
+        return true;
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function getCacheInfo()
+    {
+        return null;
+    }
 
-	/**
-	 * Performs atomic incrementation of a raw stored value.
-	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
-	 *
-	 * @return mixed
-	 */
-	public function increment(string $key, int $offset = 1)
-	{
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getMetaData(string $key)
+    {
+        return null;
+    }
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Performs atomic decrementation of a raw stored value.
-	 *
-	 * @param string  $key    Cache ID
-	 * @param integer $offset Step/value to increase by
-	 *
-	 * @return mixed
-	 */
-	public function decrement(string $key, int $offset = 1)
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Will delete all items in the entire cache.
-	 *
-	 * @return boolean
-	 */
-	public function clean()
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns information on the entire cache.
-	 *
-	 * The information returned and the structure of the data
-	 * varies depending on the handler.
-	 *
-	 * @return mixed
-	 */
-	public function getCacheInfo()
-	{
-		return null;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns detailed information about the specific item in the cache.
-	 *
-	 * @param string $key Cache item name.
-	 *
-	 * @return mixed
-	 */
-	public function getMetaData(string $key)
-	{
-		return null;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines if the driver is supported on this system.
-	 *
-	 * @return boolean
-	 */
-	public function isSupported(): bool
-	{
-		return true;
-	}
-
-	//--------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public function isSupported(): bool
+    {
+        return true;
+    }
 }

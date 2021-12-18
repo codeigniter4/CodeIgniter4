@@ -1,5 +1,5 @@
 Version 4.0.0-alpha.1
-=================================
+=====================
 
 Release Date: September 28, 2018
 
@@ -63,8 +63,8 @@ New packages list:
     - Language
         - \\ Language
     - Log
-        -   Logger, LoggerAwareTrait
-        -   \\ Handlers ...  Base, ChromeLogger, File, HandlerInterface
+        - Logger, LoggerAwareTrait
+        - \\ Handlers ...  Base, ChromeLogger, File, HandlerInterface
     - Pager
         - \\ Pager, PagerInterface, PagerRenderer
     - Router 
@@ -72,8 +72,8 @@ New packages list:
     - Security 
         - \\ Security
     - Session
-        -   \\ Session, SessionInterface
-        -   \\ Handlers ... Base, File, Memcached, Redis
+        - \\ Session, SessionInterface
+        - \\ Handlers ... Base, File, Memcached, Redis
     - Test 
         - \\ CIDatabaseTestCase, CIUnitTestCase, FeatureResponse, FeatureTestCase, ReflectionHelper
         - \\ Filters \\ CITestStreamFilter
@@ -88,4 +88,4 @@ New packages list:
     - Validation
         - \\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface
     - View
-        -   \\ Cell, Filters, Parser, Plugins, RendererInterface, View
+        - \\ Cell, Filters, Parser, Plugins, RendererInterface, View

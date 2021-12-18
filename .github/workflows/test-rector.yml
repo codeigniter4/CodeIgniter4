@@ -12,6 +12,7 @@ on:
       - 'system/**'
       - '.github/workflows/test-rector.yml'
       - composer.json
+      - 'utils/Rector/**'
       - 'rector.php'
   push:
     branches:
@@ -22,12 +23,13 @@ on:
       - 'system/**'
       - '.github/workflows/test-rector.yml'
       - composer.json
+      - 'utils/Rector/**'
       - 'rector.php'
 
 jobs:
   build:
     name: PHP ${{ matrix.php-versions }} Analyze code (Rector)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -56,7 +58,7 @@ jobs:
         run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -66,4 +68,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/rector process --dry-run
+        run: vendor/bin/rector process --dry-run --no-progress-bar

@@ -19,8 +19,7 @@ The following example shows a common usage pattern within your controllers.
 
 ::
 
-    if (! $foo = cache('foo'))
-    {
+    if (! $foo = cache('foo')) {
         echo 'Saving to the cache!<br />';
         $foo = 'foobarbaz!';
 
@@ -59,6 +58,12 @@ more complex, multi-server setups.
 If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.
 
+**$ttl**
+
+The default number of seconds to save items when none is specified.
+WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
+to projects and modules. This will replace the hard-coded value in a future release.
+
 **$file**
 
 This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
@@ -87,7 +92,7 @@ Class Reference
     :rtype: mixed
 
     This method will attempt to fetch an item from the cache store. If the
-    item does not exist, the method will return NULL.
+    item does not exist, the method will return null.
 
     Example::
 
@@ -100,7 +105,7 @@ Class Reference
     :param Closure $callback: Callback to invoke when the cache item returns null
     :returns: The value of the cache item
     :rtype: mixed
-    
+
     Gets an item from the cache. If ``null`` was returned, this will invoke the callback
     and save the result. Either way, this will return the value.
 
@@ -130,11 +135,31 @@ Class Reference
     :rtype: bool
 
     This method will delete a specific item from the cache store. If item
-    deletion fails, the method will return FALSE.
+    deletion fails, the method will return false.
 
     Example::
 
         $cache->delete('cache_item_id');
+
+.. php:method:: deleteMatching($pattern): integer
+
+    :param string $pattern: glob-style pattern to match cached items keys
+    :returns: number of deleted items
+    :rtype: integer
+
+    This method will delete multiple items from the cache store at once by
+    matching their keys against a glob-style pattern. It will return the total number of deleted items.
+
+    .. important:: This method is only implemented for File, Redis and Predis handlers.
+        Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
+
+    Example::
+
+        $cache->deleteMatching('prefix_*'); // deletes all items of which keys start with "prefix_"
+        $cache->deleteMatching('*_suffix'); // deletes all items of which keys end with "_suffix"
+
+    For more information on glob-style syntax, please see
+    `Glob (programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
 
 .. php:method:: increment($key[, $offset = 1]): mixed
 
@@ -148,7 +173,7 @@ Class Reference
     Example::
 
         // 'iterator' has a value of 2
-        $cache->increment('iterator');    // 'iterator' is now 3
+        $cache->increment('iterator'); // 'iterator' is now 3
         $cache->increment('iterator', 3); // 'iterator' is now 6
 
 .. php:method:: decrement($key[, $offset = 1]): mixed
@@ -163,7 +188,7 @@ Class Reference
     Example::
 
         // 'iterator' has a value of 6
-        $cache->decrement('iterator');    // 'iterator' is now 5
+        $cache->decrement('iterator'); // 'iterator' is now 5
         $cache->decrement('iterator', 2); // 'iterator' is now 3
 
 .. php:method:: clean()
@@ -172,7 +197,7 @@ Class Reference
     :rtype: bool
 
     This method will 'clean' the entire cache. If the deletion of the
-    cache files fails, the method will return FALSE.
+    cache files fails, the method will return false.
 
     Example::
 
@@ -195,8 +220,8 @@ Class Reference
 .. php:method:: getMetadata(string $key)
 
     :param string $key: Cache item name
-    :returns: Metadata for the cached item
-    :rtype: mixed
+    :returns: Metadata for the cached item. ``null`` for missing items, or an array with at least the "expire" key for absolute epoch expiry (``null`` for never expires).
+    :rtype: array|null
 
     This method will return detailed information on a specific item in the
     cache.
@@ -206,7 +231,23 @@ Class Reference
         var_dump($cache->getMetadata('my_cached_item'));
 
 .. note:: The information returned and the structure of the data is dependent
-          on which adapter is being used.
+          on which adapter is being used. Some adapters (File, Memcached, Wincache)
+          still return ``false`` for missing items.
+
+.. php:staticmethod:: validateKey(string $key, string $prefix)
+
+    :param string $key: Potential cache key
+    :param string $prefix: Optional prefix
+    :returns: The verified and prefixed key. If the key exceeds the driver's max key length it will be hashed.
+    :rtype: string
+
+    This method is used by handler methods to check that keys are valid. It will throw
+    an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
+
+    Example::
+
+        $prefixedKey = BaseHandler::validateKey($key, $prefix);
+
 
 *******
 Drivers
@@ -274,7 +315,7 @@ Predis Caching
 Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
 To use it, from the command line inside your project root::
 
-    composer require predis/predis
+    > composer require predis/predis
 
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.

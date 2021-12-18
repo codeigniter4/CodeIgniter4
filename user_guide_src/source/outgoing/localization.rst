@@ -20,9 +20,9 @@ supported language::
     /app
         /Language
             /en
-                app.php
+                App.php
             /fr
-                app.php
+                App.php
 
 .. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
     Command-line requests will not have these features.
@@ -51,6 +51,8 @@ There are two methods supported to detect the correct locale during the request.
 method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
+
+Should you ever need to set the locale directly you may use ``IncomingRequest::setLocale(string $locale)``.
 
 Content Negotiation
 -------------------
@@ -117,19 +119,15 @@ You might name it simply: **Errors.php**.
 
 Within the file, you would return an array, where each element in the array has a language key and can have string to return::
 
-    'language_key' => 'The actual message to be shown.'
+    'languageKey' => 'The actual message to be shown.'
 
 It also support nested definition::
 
-    'language_key' => [
+    'languageKey' => [
         'nested' => [
-            'key' => 'The actual message to be shown.'
+            'key' => 'The actual message to be shown.',
         ],
     ],
-
-.. note:: It's good practice to use a common prefix for all messages in a given file to avoid collisions with
-    similarly named items in other files. For example, if you are creating error messages you might prefix them
-    with error\_
 
 ::
 
@@ -172,9 +170,9 @@ You can pass an array of values to replace placeholders in the language string a
 
     // The language file, Tests.php:
     return [
-        "apples"      => "I have {0, number} apples.",
-        "men"         => "The top {1, number} men out-performed the remaining {0, number}",
-        "namedApples" => "I have {number_apples, number, integer} apples.",
+        'apples'      => 'I have {0, number} apples.',
+        'men'         => 'The top {1, number} men out-performed the remaining {0, number}',
+        'namedApples' => 'I have {number_apples, number, integer} apples.',
     ];
 
     // Displays "I have 3 apples."
@@ -188,7 +186,7 @@ The first item in the placeholder corresponds to the index of the item in the ar
 You can also use named keys to make it easier to keep things straight, if you'd like::
 
     // Displays "I have 3 apples."
-    echo lang("Tests.namedApples", ['number_apples' => 3]);
+    echo lang('Tests.namedApples', ['number_apples' => 3]);
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
@@ -276,8 +274,8 @@ Language files also allow nested arrays to make working with lists, etc... easie
             'Grapes',
             'Lemons',
             'Oranges',
-            'Strawberries'
-        ]
+            'Strawberries',
+        ],
     ];
 
     // Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"

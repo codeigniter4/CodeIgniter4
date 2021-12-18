@@ -14,19 +14,19 @@ assumed the request is coming from a Bot, and you can throw a ``HoneypotExceptio
 Enabling Honeypot
 =====================
 
-To enable a Honeypot, changes have to be made to the ``app/Config/Filters.php``. Just uncomment honeypot
+To enable a Honeypot, changes have to be made to the **app/Config/Filters.php**. Just uncomment honeypot
 from the ``$globals`` array, like...::
 
     public $globals = [
-            'before' => [
-                'honeypot'
-                // 'csrf',
-            ],
-            'after'  => [
-                'toolbar',
-                'honeypot'
-            ]
-        ];
+        'before' => [
+            'honeypot'
+            // 'csrf',
+        ],
+        'after' => [
+            'toolbar',
+            'honeypot',
+        ],
+    ];
 
 A sample Honeypot filter is bundled, as ``system/Filters/Honeypot.php``.
 If it is not suitable, make your own at ``app/Filters/Honeypot.php``,
@@ -36,7 +36,7 @@ Customizing Honeypot
 =====================
 
 Honeypot can be customized. The fields below can be set either in
-``app/Config/Honeypot.php`` or in ``.env``.
+**app/Config/Honeypot.php** or in **.env**.
 
 * ``hidden`` - true|false to control visibility of the honeypot field; default is ``true``
 * ``label`` - HTML label for the honeypot field, default is 'Fill This Field'

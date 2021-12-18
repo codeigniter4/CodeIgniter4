@@ -1,209 +1,209 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
 
-class HeaderTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use stdClass;
+
+/**
+ * @internal
+ */
+final class HeaderTest extends CIUnitTestCase
 {
-	public function testHeaderStoresBasics()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+    public function testHeaderStoresBasics()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+    }
 
-	public function testHeaderStoresBasicsWithNull()
-	{
-		$name  = 'foo';
-		$value = null;
+    public function testHeaderStoresBasicsWithNull()
+    {
+        $name  = 'foo';
+        $value = null;
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals('', $header->getValue());
-	}
+        $this->assertSame($name, $header->getName());
+        $this->assertSame('', $header->getValue());
+    }
 
-	//--------------------------------------------------------------------
+    public function testHeaderStoresArrayValues()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-	public function testHeaderStoresArrayValues()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $header = new Header($name, $value);
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+    }
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-	}
+    public function testHeaderSetters()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-	//--------------------------------------------------------------------
+        $header = new Header($name);
+        $this->assertSame($name, $header->getName());
+        $this->assertEmpty($header->getValue());
+        $this->assertSame($name . ': ', (string) $header);
 
-	public function testHeaderSetters()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $name = 'foo2';
+        $header->setName($name)->setValue($value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+        $this->assertSame($name . ': bar, baz', (string) $header);
+    }
 
-				$header = new \CodeIgniter\HTTP\Header($name);
-				$this->assertEquals($name, $header->getName());
-				$this->assertEquals(null, $header->getValue());
-				$this->assertEquals($name . ': ', (string) $header);
+    public function testHeaderAppendsValueSkippedForNull()
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-				$name = 'foo2';
-		$header->setName($name)->setValue($value);
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($value, $header->getValue());
-				$this->assertEquals($name . ': bar, baz', (string) $header);
-	}
+        $header = new Header($name, $value);
 
-	//--------------------------------------------------------------------
+        $header->appendValue(null);
 
-	public function testHeaderAppendsValueSkippedForNull()
-	{
-		$name     = 'foo';
-		$value    = 'bar';
-		$expected = 'bar';
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+    public function testHeaderConvertsSingleToArray()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header->appendValue(null);
+        $expected = [
+            'bar',
+            'baz',
+        ];
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $header = new Header($name, $value);
 
-	public function testHeaderConvertsSingleToArray()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+        $header->appendValue('baz');
 
-		$expected = [
-			'bar',
-			'baz',
-		];
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+    public function testHeaderPrependsValueSkippedForNull()
+    {
+        $name     = 'foo';
+        $value    = 'bar';
+        $expected = 'bar';
 
-		$header->appendValue('baz');
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $header->prependValue(null);
 
-	//--------------------------------------------------------------------
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-	public function testHeaderPrependsValueSkippedForNull()
-	{
-		$name     = 'foo';
-		$value    = 'bar';
-		$expected = 'bar';
+    public function testHeaderPrependsValue()
+    {
+        $name  = 'foo';
+        $value = 'bar';
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $expected = [
+            'baz',
+            'bar',
+        ];
 
-		$header->prependValue(null);
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $header->prependValue('baz');
 
-	public function testHeaderPrependsValue()
-	{
-		$name  = 'foo';
-		$value = 'bar';
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValue());
+    }
 
-		$expected = [
-			'baz',
-			'bar',
-		];
+    public function testHeaderLineSimple()
+    {
+        $name  = 'foo';
+        $value = [
+            'bar',
+            'baz',
+        ];
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $expected = 'bar, baz';
 
-		$header->prependValue('baz');
+        $header = new Header($name, $value);
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValue());
-	}
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
 
-	//--------------------------------------------------------------------
+    public function testHeaderLineValueNotStringOrArray()
+    {
+        $name  = 'foo';
+        $value = new stdClass();
 
-	public function testHeaderLineSimple()
-	{
-		$name  = 'foo';
-		$value = [
-			'bar',
-			'baz',
-		];
+        $expected = '';
 
-		$expected = 'bar, baz';
+        $header = new Header($name, $value);
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+    public function testHeaderSetValueWithNullWillMarkAsEmptyString()
+    {
+        $name     = 'foo';
+        $expected = '';
 
-	public function testHeaderLineValueNotStringOrArray()
-	{
-		$name  = 'foo';
-		$value = new \stdClass;
+        $header = new Header($name);
+        $header->setValue('bar')->setValue(null);
 
-		$expected = '';
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
 
-		$header = new \CodeIgniter\HTTP\Header($name, $value);
+    public function testHeaderLineWithArrayValues()
+    {
+        $name = 'foo';
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+        $expected = 'bar, baz=fuzz';
 
-	//--------------------------------------------------------------------
+        $header = new Header($name);
 
-	public function testHeaderSetValueWithNullWillMarkAsEmptyString()
-	{
-		$name     = 'foo';
-		$expected = '';
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
-		$header = new \CodeIgniter\HTTP\Header($name);
-		$header->setValue('bar')
-			   ->setValue(null);
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($expected, $header->getValueLine());
+    }
 
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
+    public function testHeaderToStringShowsEntireHeader()
+    {
+        $name = 'foo';
 
-	public function testHeaderLineWithArrayValues()
-	{
-		$name = 'foo';
+        $expected = 'foo: bar, baz=fuzz';
 
-		$expected = 'bar, baz=fuzz';
+        $header = new Header($name);
 
-		$header = new \CodeIgniter\HTTP\Header($name);
+        $header->setValue('bar')->appendValue(['baz' => 'fuzz']);
 
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
-
-		$this->assertEquals($name, $header->getName());
-		$this->assertEquals($expected, $header->getValueLine());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHeaderToStringShowsEntireHeader()
-	{
-		$name = 'foo';
-
-		$expected = 'foo: bar, baz=fuzz';
-
-		$header = new \CodeIgniter\HTTP\Header($name);
-
-		$header->setValue('bar')
-			   ->appendValue(['baz' => 'fuzz']);
-
-		$this->assertEquals($expected, (string)$header);
-	}
+        $this->assertSame($expected, (string) $header);
+    }
 }

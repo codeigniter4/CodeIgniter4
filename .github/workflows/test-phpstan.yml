@@ -25,11 +25,11 @@ on:
 jobs:
   build:
     name: PHP ${{ matrix.php-versions }} Static Analysis
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.0', '8.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
         run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -64,7 +64,7 @@ jobs:
         run: mkdir -p build/phpstan
 
       - name: Cache PHPStan result cache directory
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2
         with:
           path: build/phpstan
           key: ${{ runner.os }}-phpstan-${{ github.sha }}

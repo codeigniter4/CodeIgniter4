@@ -1,299 +1,314 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Events;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEvents;
 use Config\Modules;
 
-class EventsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class EventsTest extends CIUnitTestCase
 {
-	/**
-	 * Accessible event manager instance
-	 *
-	 * @var MockEvents
-	 */
-	protected $manager;
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-
-		$this->manager = new MockEvents();
-
-		Events::removeAllListeners();
-	}
-
-	protected function tearDown(): void
-	{
-		Events::simulate(false);
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testInitialize()
-	{
-		/**
-		 * @var Modules
-		 */
-		$config          = config('Modules');
-		$config->aliases = [];
-
-		// it should start out empty
-		MockEvents::setFiles([]);
-		$this->assertEmpty($this->manager->getFiles());
-
-		// make sure we have a default events file
-		$default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
-		$this->manager->unInitialize();
-		MockEvents::initialize();
-		$this->assertEquals($default, $this->manager->getFiles());
-
-		// but we should be able to change it through the backdoor
-		MockEvents::setFiles(['/peanuts']);
-		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
-
-		// re-initializing should have no effect
-		MockEvents::initialize();
-		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
-	}
-
-	public function testPerformance()
-	{
-		$result = null;
-		Events::on('foo', function ($arg) use (&$result) {
-			$result = $arg;
-		});
-		Events::trigger('foo', 'bar');
-
-		$logged = Events::getPerformanceLogs();
-		// there should be some event activity logged
-		$this->assertGreaterThan(0, count($logged));
-	}
-
-	public function testListeners()
-	{
-		$callback1 = function () {
-		};
-		$callback2 = function () {
-		};
-
-		Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
-		Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
-
-		$this->assertEquals([$callback2, $callback1], Events::listeners('foo'));
-	}
-
-	public function testHandleEvent()
-	{
-		$result = null;
-
-		Events::on('foo', function ($arg) use (&$result) {
-			$result = $arg;
-		});
-
-		$this->assertTrue(Events::trigger('foo', 'bar'));
-
-		$this->assertEquals('bar', $result);
-	}
-
-	public function testCancelEvent()
-	{
-		$result = 0;
-
-		// This should cancel the flow of events, and leave
-		// $result = 1.
-		Events::on('foo', function ($arg) use (&$result) {
-			$result = 1;
-			return false;
-		});
-		Events::on('foo', function ($arg) use (&$result) {
-			$result = 2;
-		});
+    /**
+     * Accessible event manager instance
+     *
+     * @var MockEvents
+     */
+    protected $manager;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->manager = new MockEvents();
+
+        Events::removeAllListeners();
+    }
+
+    protected function tearDown(): void
+    {
+        Events::simulate(false);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testInitialize()
+    {
+        /**
+         * @var Modules $config
+         */
+        $config          = config('Modules');
+        $config->aliases = [];
+
+        // it should start out empty
+        MockEvents::setFiles([]);
+        $this->assertEmpty($this->manager->getFiles());
+
+        // make sure we have a default events file
+        $default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
+        $this->manager->unInitialize();
+        MockEvents::initialize();
+        $this->assertSame($default, $this->manager->getFiles());
+
+        // but we should be able to change it through the backdoor
+        MockEvents::setFiles(['/peanuts']);
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
+
+        // re-initializing should have no effect
+        MockEvents::initialize();
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
+    }
+
+    public function testPerformance()
+    {
+        $result = null;
+        Events::on('foo', static function ($arg) use (&$result) {
+            $result = $arg;
+        });
+        Events::trigger('foo', 'bar');
+
+        $logged = Events::getPerformanceLogs();
+        // there should be some event activity logged
+        $this->assertGreaterThan(0, count($logged));
+    }
+
+    public function testListeners()
+    {
+        $callback1 = static function () {
+        };
+        $callback2 = static function () {
+        };
+
+        Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
+        Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
+
+        $this->assertSame([$callback1, $callback2], Events::listeners('foo'));
+    }
+
+    public function testHandleEvent()
+    {
+        $result = null;
+
+        Events::on('foo', static function ($arg) use (&$result) {
+            $result = $arg;
+        });
+
+        $this->assertTrue(Events::trigger('foo', 'bar'));
+
+        $this->assertSame('bar', $result);
+    }
+
+    public function testCancelEvent()
+    {
+        $result = 0;
+
+        // This should cancel the flow of events, and leave
+        // $result = 1.
+        Events::on('foo', static function ($arg) use (&$result) {
+            $result = 1;
+
+            return false;
+        });
+        Events::on('foo', static function ($arg) use (&$result) {
+            $result = 2;
+        });
 
-		$this->assertFalse(Events::trigger('foo', 'bar'));
-		$this->assertEquals(1, $result);
-	}
+        $this->assertFalse(Events::trigger('foo', 'bar'));
+        $this->assertSame(1, $result);
+    }
 
-	public function testPriority()
-	{
-		$result = 0;
+    public function testPriority()
+    {
+        $result = 0;
 
-		Events::on('foo', function () use (&$result) {
-			$result = 1;
-			return false;
-		}, EVENT_PRIORITY_NORMAL);
-		// Since this has a higher priority, it will
-		// run first.
-		Events::on('foo', function () use (&$result) {
-			$result = 2;
-			return false;
-		}, EVENT_PRIORITY_HIGH);
+        Events::on('foo', static function () use (&$result) {
+            $result = 1;
 
-		$this->assertFalse(Events::trigger('foo', 'bar'));
-		$this->assertEquals(2, $result);
-	}
+            return false;
+        }, EVENT_PRIORITY_NORMAL);
+        // Since this has a higher priority, it will
+        // run first.
+        Events::on('foo', static function () use (&$result) {
+            $result = 2;
 
-	public function testPriorityWithMultiple()
-	{
-		$result = [];
+            return false;
+        }, EVENT_PRIORITY_HIGH);
 
-		Events::on('foo', function () use (&$result) {
-			$result[] = 'a';
-		}, EVENT_PRIORITY_NORMAL);
+        $this->assertFalse(Events::trigger('foo', 'bar'));
+        $this->assertSame(2, $result);
+    }
 
-		Events::on('foo', function () use (&$result) {
-			$result[] = 'b';
-		}, EVENT_PRIORITY_LOW);
+    public function testPriorityWithMultiple()
+    {
+        $result = [];
 
-		Events::on('foo', function () use (&$result) {
-			$result[] = 'c';
-		}, EVENT_PRIORITY_HIGH);
+        Events::on('foo', static function () use (&$result) {
+            $result[] = 'a';
+        }, EVENT_PRIORITY_NORMAL);
 
-		Events::on('foo', function () use (&$result) {
-			$result[] = 'd';
-		}, 75);
+        Events::on('foo', static function () use (&$result) {
+            $result[] = 'b';
+        }, EVENT_PRIORITY_LOW);
 
-		Events::trigger('foo');
-		$this->assertEquals(['c', 'd', 'a', 'b'], $result);
-	}
+        Events::on('foo', static function () use (&$result) {
+            $result[] = 'c';
+        }, EVENT_PRIORITY_HIGH);
 
-	public function testRemoveListener()
-	{
-		$result = false;
+        Events::on('foo', static function () use (&$result) {
+            $result[] = 'd';
+        }, 75);
 
-		$callback = function () use (&$result) {
-			$result = true;
-		};
+        Events::trigger('foo');
+        $this->assertSame(['c', 'd', 'a', 'b'], $result);
+    }
 
-		Events::on('foo', $callback);
+    public function testRemoveListener()
+    {
+        $result = false;
 
-		Events::trigger('foo');
-		$this->assertTrue($result);
+        $callback = static function () use (&$result) {
+            $result = true;
+        };
 
-		$result = false;
-		$this->assertTrue(Events::removeListener('foo', $callback));
+        Events::on('foo', $callback);
 
-		Events::trigger('foo');
-		$this->assertFalse($result);
-	}
+        Events::trigger('foo');
+        $this->assertTrue($result);
 
-	public function testRemoveListenerTwice()
-	{
-		$result = false;
+        $result = false;
+        $this->assertTrue(Events::removeListener('foo', $callback));
 
-		$callback = function () use (&$result) {
-			$result = true;
-		};
+        Events::trigger('foo');
+        $this->assertFalse($result);
+    }
 
-		Events::on('foo', $callback);
+    public function testRemoveListenerTwice()
+    {
+        $result = false;
 
-		Events::trigger('foo');
-		$this->assertTrue($result);
+        $callback = static function () use (&$result) {
+            $result = true;
+        };
 
-		$result = false;
-		$this->assertTrue(Events::removeListener('foo', $callback));
-		$this->assertFalse(Events::removeListener('foo', $callback));
+        Events::on('foo', $callback);
 
-		Events::trigger('foo');
-		$this->assertFalse($result);
-	}
+        Events::trigger('foo');
+        $this->assertTrue($result);
 
-	public function testRemoveUnknownListener()
-	{
-		$result = false;
+        $result = false;
+        $this->assertTrue(Events::removeListener('foo', $callback));
+        $this->assertFalse(Events::removeListener('foo', $callback));
 
-		$callback = function () use (&$result) {
-			$result = true;
-		};
+        Events::trigger('foo');
+        $this->assertFalse($result);
+    }
 
-		Events::on('foo', $callback);
+    public function testRemoveUnknownListener()
+    {
+        $result = false;
 
-		Events::trigger('foo');
-		$this->assertTrue($result);
+        $callback = static function () use (&$result) {
+            $result = true;
+        };
 
-		$result = false;
-		$this->assertFalse(Events::removeListener('bar', $callback));
+        Events::on('foo', $callback);
 
-		Events::trigger('foo');
-		$this->assertTrue($result);
-	}
+        Events::trigger('foo');
+        $this->assertTrue($result);
 
-	public function testRemoveAllListenersWithSingleEvent()
-	{
-		$result = false;
+        $result = false;
+        $this->assertFalse(Events::removeListener('bar', $callback));
 
-		$callback = function () use (&$result) {
-			$result = true;
-		};
+        Events::trigger('foo');
+        $this->assertTrue($result);
+    }
 
-		Events::on('foo', $callback);
+    public function testRemoveAllListenersWithSingleEvent()
+    {
+        $result = false;
 
-		Events::removeAllListeners('foo');
+        $callback = static function () use (&$result) {
+            $result = true;
+        };
 
-		$listeners = Events::listeners('foo');
+        Events::on('foo', $callback);
 
-		$this->assertEquals([], $listeners);
-	}
+        Events::removeAllListeners('foo');
 
-	public function testRemoveAllListenersWithMultipleEvents()
-	{
-		$result = false;
+        $listeners = Events::listeners('foo');
 
-		$callback = function () use (&$result) {
-			$result = true;
-		};
+        $this->assertSame([], $listeners);
+    }
 
-		Events::on('foo', $callback);
-		Events::on('bar', $callback);
+    public function testRemoveAllListenersWithMultipleEvents()
+    {
+        $result = false;
 
-		Events::removeAllListeners();
+        $callback = static function () use (&$result) {
+            $result = true;
+        };
 
-		$this->assertEquals([], Events::listeners('foo'));
-		$this->assertEquals([], Events::listeners('bar'));
-	}
+        Events::on('foo', $callback);
+        Events::on('bar', $callback);
 
-	// Basically if it doesn't crash this should be good...
-	public function testHandleEventCallableInternalFunc()
-	{
-		Events::on('foo', 'strlen');
+        Events::removeAllListeners();
 
-		$this->assertTrue(Events::trigger('foo', 'bar'));
-	}
+        $this->assertSame([], Events::listeners('foo'));
+        $this->assertSame([], Events::listeners('bar'));
+    }
 
-	public function testHandleEventCallableClass()
-	{
-		$box = new class() {
-			public $logged;
+    // Basically if it doesn't crash this should be good...
+    public function testHandleEventCallableInternalFunc()
+    {
+        Events::on('foo', 'strlen');
 
-			public function hold(string $value)
-			{
-				$this->logged = $value;
-			}
-		};
+        $this->assertTrue(Events::trigger('foo', 'bar'));
+    }
 
-		Events::on('foo', [$box, 'hold']);
+    public function testHandleEventCallableClass()
+    {
+        $box = new class () {
+            public $logged;
 
-		$this->assertTrue(Events::trigger('foo', 'bar'));
+            public function hold(string $value)
+            {
+                $this->logged = $value;
+            }
+        };
 
-		$this->assertEquals('bar', $box->logged);
-	}
+        Events::on('foo', [$box, 'hold']);
 
-	public function testSimulate()
-	{
-		$result = 0;
+        $this->assertTrue(Events::trigger('foo', 'bar'));
 
-		$callback = function () use (&$result) {
-			$result += 2;
-		};
+        $this->assertSame('bar', $box->logged);
+    }
 
-		Events::on('foo', $callback);
+    public function testSimulate()
+    {
+        $result = 0;
 
-		Events::simulate(true);
-		Events::trigger('foo');
+        $callback = static function () use (&$result) {
+            $result += 2;
+        };
 
-		$this->assertEquals(0, $result);
-	}
+        Events::on('foo', $callback);
+
+        Events::simulate(true);
+        Events::trigger('foo');
+
+        $this->assertSame(0, $result);
+    }
 }

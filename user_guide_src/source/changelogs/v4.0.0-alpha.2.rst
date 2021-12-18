@@ -1,5 +1,5 @@
 Version 4.0.0-alpha.2
-=================================
+=====================
 
 Release Date: Oct 26, 2018
 
@@ -24,7 +24,7 @@ system /
     - CLI/
         - CommandRunner #1350, #1356
     - Commands/
-        - Server/Serve #1313 
+        - Server/Serve #1313
     - Config/
         - AutoloadConfig #1271
         - Services #1341

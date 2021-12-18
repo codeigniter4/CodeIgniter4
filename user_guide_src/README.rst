@@ -22,15 +22,15 @@ or ``python3``.
 
 .. code-block:: bash
 
-	python --version
-	Python 2.7.17
+    python --version
+    Python 2.7.17
 
-	python3 --version
-	Python 3.6.9
+    python3 --version
+    Python 3.6.9
 
-	# For Windows using the Python Launcher
-	py -3 --version
-	Python 3.8.1
+    # For Windows using the Python Launcher
+    py -3 --version
+    Python 3.8.1
 
 If you're not on 3.5+, go ahead and install the latest 3.x version from
 `Python.org <https://www.python.org/downloads/>`_. Linux users should use their
@@ -48,15 +48,15 @@ Please take note that it should say ``python 3.x`` at the very end.
 
 .. code-block:: bash
 
-	pip --version
-	pip 9.0.1 from /usr/lib/python2.7/dist-packages (python 2.7)
+    pip --version
+    pip 9.0.1 from /usr/lib/python2.7/dist-packages (python 2.7)
 
-	pip3 --version
-	pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.6)
+    pip3 --version
+    pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.6)
 
-	# For Windows using the Python Launcher
-	py -3 -m pip --version
-	pip 20.0.2 from C:\Users\<username>\AppData\Local\Programs\Python\Python38\lib\site-packages\pip (python 3.8)
+    # For Windows using the Python Launcher
+    py -3 -m pip --version
+    pip 20.0.2 from C:\Users\<username>\AppData\Local\Programs\Python\Python38\lib\site-packages\pip (python 3.8)
 
 Linux
 ^^^^^
@@ -79,19 +79,19 @@ window as Python won't find all applications we just installed othervise.
 
 .. code-block:: bash
 
-	pip install -r user_guide_src/requirements.txt
+    pip install -r user_guide_src/requirements.txt
 
-	pip3 install -r user_guide_src/requirements.txt
+    pip3 install -r user_guide_src/requirements.txt
 
-	# For Windows using the Python Launcher
-	py -3 -m pip install -r user_guide_src/requirements.txt
+    # For Windows using the Python Launcher
+    py -3 -m pip install -r user_guide_src/requirements.txt
 
 It's time to wrap things up and generate the documentation.
 
 .. code-block:: bash
 
-	cd user_guide_src
-	make html
+    cd user_guide_src
+    make html
 
 Editing and Creating Documentation
 ==================================
@@ -111,7 +111,7 @@ you to regenerate as necessary if you want to "preview" your work. Generating
 the HTML is very simple. From the root directory of your user guide repo
 fork issue the command you used at the end of the installation instructions::
 
-	make html
+    make html
 
 You will see it do a whiz-bang compilation, at which point the fully rendered
 user guide and images will be in *build/html/*. After the HTML has been built,

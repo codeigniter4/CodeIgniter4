@@ -1,58 +1,75 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
-class ModelFactoryTest extends CIDatabaseTestCase
+/**
+ * @internal
+ */
+final class ModelFactoryTest extends CIUnitTestCase
 {
-	protected function setUp(): void
-	{
-		parent::setUp();
+    use DatabaseTestTrait;
 
-		ModelFactory::reset();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	public function testCreateSeparateInstances()
-	{
-		$basenameModel  = ModelFactory::get('JobModel', false);
-		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
+        ModelFactory::reset();
+    }
 
-		$this->assertInstanceOf(JobModel::class, $basenameModel);
-		$this->assertInstanceOf(JobModel::class, $namespaceModel);
-		$this->assertNotSame($basenameModel, $namespaceModel);
-	}
+    public function testCreateSeparateInstances()
+    {
+        $basenameModel  = ModelFactory::get('JobModel', false);
+        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
 
-	public function testCreateSharedInstance()
-	{
-		$basenameModel  = ModelFactory::get('JobModel', true);
-		$namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
+        $this->assertInstanceOf(JobModel::class, $basenameModel);
+        $this->assertInstanceOf(JobModel::class, $namespaceModel);
+        $this->assertNotSame($basenameModel, $namespaceModel);
+    }
 
-		$this->assertSame($basenameModel, $namespaceModel);
-	}
+    public function testCreateSharedInstance()
+    {
+        $basenameModel  = ModelFactory::get('JobModel', true);
+        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
 
-	public function testInjection()
-	{
-		ModelFactory::injectMock('Banana', new JobModel());
+        $this->assertSame($basenameModel, $namespaceModel);
+    }
 
-		$this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
-	}
+    public function testInjection()
+    {
+        ModelFactory::injectMock('Banana', new JobModel());
 
-	public function testReset()
-	{
-		ModelFactory::injectMock('Banana', new JobModel());
+        $this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
+    }
 
-		ModelFactory::reset();
+    public function testReset()
+    {
+        ModelFactory::injectMock('Banana', new JobModel());
 
-		$this->assertNull(ModelFactory::get('Banana'));
-	}
+        ModelFactory::reset();
 
-	public function testBasenameReturnsExistingNamespaceInstance()
-	{
-		ModelFactory::injectMock(UserModel::class, new JobModel());
+        $this->assertNull(ModelFactory::get('Banana'));
+    }
 
-		$basenameModel = ModelFactory::get('UserModel');
+    public function testBasenameReturnsExistingNamespaceInstance()
+    {
+        ModelFactory::injectMock(UserModel::class, new JobModel());
 
-		$this->assertInstanceOf(JobModel::class, $basenameModel);
-	}
+        $basenameModel = ModelFactory::get('UserModel');
+
+        $this->assertInstanceOf(JobModel::class, $basenameModel);
+    }
 }

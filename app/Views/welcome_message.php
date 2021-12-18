@@ -163,7 +163,7 @@
 			color: rgba(200, 200, 200, 1);
 			padding: .25rem 1.75rem;
 		}
-		@media (max-width: 559px) {
+		@media (max-width: 629px) {
 			header ul {
 				padding: 0;
 			}

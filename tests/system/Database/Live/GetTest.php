@@ -1,318 +1,267 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class GetTest extends CIDatabaseTestCase
+final class GetTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	public function testGet()
-	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getResult();
+    public function testGet()
+    {
+        $jobs = $this->db->table('job')->get()->getResult();
 
-		$this->assertCount(4, $jobs);
-		$this->assertEquals('Developer', $jobs[0]->name);
-		$this->assertEquals('Politician', $jobs[1]->name);
-		$this->assertEquals('Accountant', $jobs[2]->name);
-		$this->assertEquals('Musician', $jobs[3]->name);
-	}
+        $this->assertCount(4, $jobs);
+        $this->assertSame('Developer', $jobs[0]->name);
+        $this->assertSame('Politician', $jobs[1]->name);
+        $this->assertSame('Accountant', $jobs[2]->name);
+        $this->assertSame('Musician', $jobs[3]->name);
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetWitLimit()
+    {
+        $jobs = $this->db->table('job')->get(2, 2)->getResult();
 
-	public function testGetWitLimit()
-	{
-		$jobs = $this->db->table('job')
-						 ->get(2, 2)
-						 ->getResult();
+        $this->assertCount(2, $jobs);
+        $this->assertSame('Accountant', $jobs[0]->name);
+        $this->assertSame('Musician', $jobs[1]->name);
+    }
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician', $jobs[1]->name);
-	}
+    public function testGetWhereArray()
+    {
+        $jobs = $this->db->table('job')
+            ->getWhere(['id' => 1])
+            ->getResult();
 
-	//--------------------------------------------------------------------
+        $this->assertCount(1, $jobs);
+        $this->assertSame('Developer', $jobs[0]->name);
+    }
 
-	public function testGetWhereArray()
-	{
-		$jobs = $this->db->table('job')
-						 ->getWhere(['id' => 1])
-						 ->getResult();
+    public function testGetWhereWithLimits()
+    {
+        $jobs = $this->db->table('job')
+            ->getWhere('id > 1', 1, 1)
+            ->getResult();
 
-		$this->assertCount(1, $jobs);
-		$this->assertEquals('Developer', $jobs[0]->name);
-	}
+        $this->assertCount(1, $jobs);
+        $this->assertSame('Accountant', $jobs[0]->name);
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetFieldCount()
+    {
+        $jobs = $this->db->table('job')->get()->getFieldCount();
 
-	public function testGetWhereWithLimits()
-	{
-		$jobs = $this->db->table('job')
-						 ->getWhere('id > 1', 1, 1)
-						 ->getResult();
+        $this->assertSame(6, $jobs);
+    }
 
-		$this->assertCount(1, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-	}
+    public function testGetFieldNames()
+    {
+        $jobs = $this->db->table('job')->get()->getFieldNames();
 
-	//--------------------------------------------------------------------
+        $this->assertContains('name', $jobs);
+        $this->assertContains('description', $jobs);
+    }
 
-	public function testGetFieldCount()
-	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldCount();
+    public function testGetFieldData()
+    {
+        $jobs = $this->db->table('job')->get()->getFieldData();
 
-		$this->assertEquals(6, $jobs);
-	}
+        $this->assertSame('id', $jobs[0]->name);
+        $this->assertSame('name', $jobs[1]->name);
 
-	//--------------------------------------------------------------------
+        $typeTest = $this->db->table('type_test')->get()->getFieldData();
 
-	public function testGetFieldNames()
-	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldNames();
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->assertSame('integer', $typeTest[0]->type_name); // INTEGER AUTO INC
+            $this->assertSame('text', $typeTest[1]->type_name);  // VARCHAR
+            $this->assertSame('text', $typeTest[2]->type_name);  // CHAR
+            $this->assertSame('text', $typeTest[3]->type_name);  // TEXT
+            $this->assertSame('integer', $typeTest[4]->type_name);  // SMALLINT
+            $this->assertSame('integer', $typeTest[5]->type_name);  // INTEGER
+            $this->assertSame('float', $typeTest[6]->type_name);  // FLOAT
+            $this->assertSame('float', $typeTest[7]->type_name);  // NUMERIC
+            $this->assertSame('text', $typeTest[8]->type_name);  // DATE
+            $this->assertSame('text', $typeTest[9]->type_name);  // TIME
+            $this->assertSame('text', $typeTest[10]->type_name);  // DATETIME
+            $this->assertSame('text', $typeTest[11]->type_name);  // TIMESTAMP
+            $this->assertSame('integer', $typeTest[12]->type_name);  // BIGINT
+            $this->assertSame('float', $typeTest[13]->type_name);  // REAL
+            $this->assertSame('text', $typeTest[14]->type_name);  // ENUM
+            $this->assertSame('text', $typeTest[15]->type_name);  // SET
+            $this->assertSame('text', $typeTest[16]->type_name);  // MEDIUMTEXT
+            $this->assertSame('float', $typeTest[17]->type_name);  // DOUBLE
+            $this->assertSame('float', $typeTest[18]->type_name);  // DECIMAL
+            $this->assertSame('text', $typeTest[19]->type_name);  // BLOB
+        }
+        if ($this->db->DBDriver === 'MySQLi') {
+            $this->assertSame('long', $typeTest[0]->type_name); // INTEGER AUTOINC
+            $this->assertSame('var_string', $typeTest[1]->type_name);  // VARCHAR
+            $this->assertSame('string', $typeTest[2]->type_name);  // CHAR
+            $this->assertSame('blob', $typeTest[3]->type_name);  // TEXT
+            $this->assertSame('short', $typeTest[4]->type_name);  // SMALLINT
+            $this->assertSame('long', $typeTest[5]->type_name);  // INTEGER
+            $this->assertSame('float', $typeTest[6]->type_name);  // FLOAT
+            $this->assertSame('newdecimal', $typeTest[7]->type_name);  // NUMERIC
+            $this->assertSame('date', $typeTest[8]->type_name);  // DATE
+            $this->assertSame('time', $typeTest[9]->type_name);  // TIME
+            $this->assertSame('datetime', $typeTest[10]->type_name);  // DATETIME
+            $this->assertSame('timestamp', $typeTest[11]->type_name);  // TIMESTAMP
+            $this->assertSame('longlong', $typeTest[12]->type_name); // BIGINT
+            $this->assertSame('double', $typeTest[13]->type_name);  // REAL
+            $this->assertSame('string', $typeTest[14]->type_name);  // ENUM
+            $this->assertSame('string', $typeTest[15]->type_name);  // SET
+            $this->assertSame('blob', $typeTest[16]->type_name);  // MEDIUMTEXT
+            $this->assertSame('double', $typeTest[17]->type_name);  // DOUBLE
+            $this->assertSame('newdecimal', $typeTest[18]->type_name);  // DECIMAL
+            $this->assertSame('blob', $typeTest[19]->type_name);  // BLOB
+        }
+        if ($this->db->DBDriver === 'Postgre') {
+            $this->assertSame('int4', $typeTest[0]->type_name); // INTEGER AUTOINC
+            $this->assertSame('varchar', $typeTest[1]->type_name);  // VARCHAR
+            $this->assertSame('bpchar', $typeTest[2]->type_name);  // CHAR
+            $this->assertSame('text', $typeTest[3]->type_name);  // TEXT
+            $this->assertSame('int2', $typeTest[4]->type_name);  // SMALLINT
+            $this->assertSame('int4', $typeTest[5]->type_name);  // INTEGER
+            $this->assertSame('float8', $typeTest[6]->type_name);  // FLOAT
+            $this->assertSame('numeric', $typeTest[7]->type_name);  // NUMERIC
+            $this->assertSame('date', $typeTest[8]->type_name);  // DATE
+            $this->assertSame('time', $typeTest[9]->type_name);  // TIME
+            $this->assertSame('timestamp', $typeTest[10]->type_name);  // DATETIME
+            $this->assertSame('timestamp', $typeTest[11]->type_name);  // TIMESTAMP
+            $this->assertSame('int8', $typeTest[12]->type_name); // BIGINT
+        }
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->assertSame('int', $typeTest[0]->type_name); // INTEGER AUTOINC
+            $this->assertSame('varchar', $typeTest[1]->type_name);  // VARCHAR
+            $this->assertSame('char', $typeTest[2]->type_name);  // CHAR
+            $this->assertSame('text', $typeTest[3]->type_name);  // TEXT
+            $this->assertSame('smallint', $typeTest[4]->type_name);  // SMALLINT
+            $this->assertSame('int', $typeTest[5]->type_name);  // INTEGER
+            $this->assertSame('float', $typeTest[6]->type_name);  // FLOAT
+            $this->assertSame('numeric', $typeTest[7]->type_name);  // NUMERIC
+            $this->assertNull($typeTest[8]->type_name);  // DATE
+            $this->assertNull($typeTest[9]->type_name);  // TIME
+            $this->assertNull($typeTest[10]->type_name);  // DATETIME
+            $this->assertSame('bigint', $typeTest[11]->type_name); // BIGINT
+            $this->assertSame('real', $typeTest[12]->type_name);  // REAL
+            $this->assertSame('decimal', $typeTest[13]->type_name);  // DECIMAL
+        }
+    }
 
-		$this->assertTrue(in_array('name', $jobs));
-		$this->assertTrue(in_array('description', $jobs));
-	}
+    public function testGetDataSeek()
+    {
+        $data = $this->db->table('job')->get();
 
-	//--------------------------------------------------------------------
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->expectException(DatabaseException::class);
+            $this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
+        }
 
-	public function testGetFieldData()
-	{
-		$jobs = $this->db->table('job')
-						 ->get()
-						 ->getFieldData();
+        $data->dataSeek(3);
 
-		$this->assertEquals('id', $jobs[0]->name);
-		$this->assertEquals('name', $jobs[1]->name);
+        $details = $data->getResult();
+        $this->assertSame('Musician', $details[0]->name);
+    }
 
-		$type_test = $this->db->table('type_test')
-							  ->get()
-							  ->getFieldData();
+    public function testGetAnotherDataSeek()
+    {
+        $data = $this->db->table('job')->get();
 
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->assertEquals('integer', $type_test[0]->type_name); //INTEGER AUTO INC
-			$this->assertEquals('text', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('text', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('integer', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('integer', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('float', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('text', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('text', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('text', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('text', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('integer', $type_test[12]->type_name);  //BIGINT
-			$this->assertEquals('float', $type_test[13]->type_name);  //REAL
-			$this->assertEquals('text', $type_test[14]->type_name);  //ENUM
-			$this->assertEquals('text', $type_test[15]->type_name);  //SET
-			$this->assertEquals('text', $type_test[16]->type_name);  //MEDIUMTEXT
-			$this->assertEquals('float', $type_test[17]->type_name);  //DOUBLE
-			$this->assertEquals('float', $type_test[18]->type_name);  //DECIMAL
-			$this->assertEquals('text', $type_test[19]->type_name);  //BLOB
-		}
-		if ($this->db->DBDriver === 'MySQLi')
-		{
-			$this->assertEquals('long', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('var_string', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('string', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('blob', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('short', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('long', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('newdecimal', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('datetime', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('longlong', $type_test[12]->type_name); //BIGINT
-			$this->assertEquals('double', $type_test[13]->type_name);  //REAL
-			$this->assertEquals('string', $type_test[14]->type_name);  //ENUM
-			$this->assertEquals('string', $type_test[15]->type_name);  //SET
-			$this->assertEquals('blob', $type_test[16]->type_name);  //MEDIUMTEXT
-			$this->assertEquals('double', $type_test[17]->type_name);  //DOUBLE
-			$this->assertEquals('newdecimal', $type_test[18]->type_name);  //DECIMAL
-			$this->assertEquals('blob', $type_test[19]->type_name);  //BLOB
-		}
-		if ($this->db->DBDriver === 'Postgre')
-		{
-			$this->assertEquals('int4', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('bpchar', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('int2', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('int4', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float8', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals('date', $type_test[8]->type_name);  //DATE
-			$this->assertEquals('time', $type_test[9]->type_name);  //TIME
-			$this->assertEquals('timestamp', $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('timestamp', $type_test[11]->type_name);  //TIMESTAMP
-			$this->assertEquals('int8', $type_test[12]->type_name); //BIGINT
-		}
-		if ($this->db->DBDriver === 'SQLSRV')
-		{
-			$this->assertEquals('int', $type_test[0]->type_name); //INTEGER AUTOINC
-			$this->assertEquals('varchar', $type_test[1]->type_name);  //VARCHAR
-			$this->assertEquals('char', $type_test[2]->type_name);  //CHAR
-			$this->assertEquals('text', $type_test[3]->type_name);  //TEXT
-			$this->assertEquals('smallint', $type_test[4]->type_name);  //SMALLINT
-			$this->assertEquals('int', $type_test[5]->type_name);  //INTEGER
-			$this->assertEquals('float', $type_test[6]->type_name);  //FLOAT
-			$this->assertEquals('numeric', $type_test[7]->type_name);  //NUMERIC
-			$this->assertEquals(null, $type_test[8]->type_name);  //DATE
-			$this->assertEquals(null, $type_test[9]->type_name);  //TIME
-			$this->assertEquals(null, $type_test[10]->type_name);  //DATETIME
-			$this->assertEquals('bigint', $type_test[11]->type_name); //BIGINT
-			$this->assertEquals('real', $type_test[12]->type_name);  //REAL
-			$this->assertEquals('decimal', $type_test[13]->type_name);  //DECIMAL
-		}
-	}
+        $data->dataSeek(0);
 
-	//--------------------------------------------------------------------
+        $details = $data->getResult();
 
-	public function testGetDataSeek()
-	{
-		$data = $this->db->table('job')
-						 ->get();
+        $this->assertSame('Developer', $details[0]->name);
+        $this->assertSame('Politician', $details[1]->name);
+        $this->assertSame('Accountant', $details[2]->name);
+        $this->assertSame('Musician', $details[3]->name);
+    }
 
-		if ($this->db->DBDriver === 'SQLite3')
-		{
-			$this->expectException(DatabaseException::class);
-			$this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
-		}
+    public function testFreeResult()
+    {
+        $data = $this->db->table('job')->where('id', 4)->get();
 
-		$data->dataSeek(3);
+        $details = $data->getResult();
 
-		$details = $data->getResult();
-		$this->assertEquals('Musician', $details[0]->name);
-	}
+        $this->assertSame('Musician', $details[0]->name);
 
-	//--------------------------------------------------------------------
-	public function testGetAnotherDataSeek()
-	{
-		$data = $this->db->table('job')
-						 ->get();
+        $data->freeResult();
 
-		$data->dataSeek(0);
+        $this->assertFalse($data->resultID);
+    }
 
-		$details = $data->getResult();
+    public function testGetRowWithColumnName()
+    {
+        $name = $this->db->table('user')->get()->getRow('name', 'array');
 
-		$this->assertEquals('Developer', $details[0]->name);
-		$this->assertEquals('Politician', $details[1]->name);
-		$this->assertEquals('Accountant', $details[2]->name);
-		$this->assertEquals('Musician', $details[3]->name);
-	}
+        $this->assertSame('Derek Jones', $name);
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetRowWithReturnType()
+    {
+        $user = $this->db->table('user')->get()->getRow(0, 'array');
 
-	public function testFreeResult()
-	{
-		$data = $this->db->table('job')
-						 ->where('id', 4)
-						 ->get();
+        $this->assertSame('Derek Jones', $user['name']);
+    }
 
-		$details = $data->getResult();
+    public function testGetRowWithCustomReturnType()
+    {
+        $testClass = new class () {};
 
-		$this->assertEquals('Musician', $details[0]->name);
+        $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
 
-		$data->freeResult();
+        $this->assertSame('Derek Jones', $user->name);
+    }
 
-		$this->assertFalse($data->resultID);
-	}
+    public function testGetFirstRow()
+    {
+        $user = $this->db->table('user')->get()->getFirstRow();
 
-	//--------------------------------------------------------------------
+        $this->assertSame('Derek Jones', $user->name);
+    }
 
-	public function testGetRowWithColumnName()
-	{
-		$name = $this->db->table('user')
-						 ->get()
-						 ->getRow('name', 'array');
+    public function testGetLastRow()
+    {
+        $user = $this->db->table('user')->get()->getLastRow();
 
-		$this->assertEquals('Derek Jones', $name);
-	}
+        $this->assertSame('Chris Martin', $user->name);
+    }
 
-	//--------------------------------------------------------------------
+    public function testGetNextRow()
+    {
+        $user = $this->db->table('user')->get()->getNextRow();
 
-	public function testGetRowWithReturnType()
-	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, 'array');
+        $this->assertSame('Ahmadinejad', $user->name);
+    }
 
-		$this->assertEquals('Derek Jones', $user['name']);
-	}
+    public function testGetPreviousRow()
+    {
+        $user = $this->db->table('user')->get();
 
-	//--------------------------------------------------------------------
+        $user->currentRow = 3;
 
-	public function testGetRowWithCustomReturnType()
-	{
-		$testClass = new class { };
+        $user = $user->getPreviousRow();
 
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getRow(0, get_class($testClass));
-
-		$this->assertEquals('Derek Jones', $user->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetFirstRow()
-	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getFirstRow();
-
-		$this->assertEquals('Derek Jones', $user->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetLastRow()
-	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getLastRow();
-
-		$this->assertEquals('Chris Martin', $user->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetNextRow()
-	{
-		$user = $this->db->table('user')
-						 ->get()
-						 ->getNextRow();
-
-		$this->assertEquals('Ahmadinejad', $user->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testGetPreviousRow()
-	{
-		$user = $this->db->table('user')
-						 ->get();
-
-		$user->currentRow = 3;
-		$user             = $user->getPreviousRow();
-
-		$this->assertEquals('Richard A Causey', $user->name);
-	}
+        $this->assertSame('Richard A Causey', $user->name);
+    }
 }

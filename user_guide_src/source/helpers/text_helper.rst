@@ -21,10 +21,10 @@ The following functions are available:
 
 .. php:function:: random_string([$type = 'alnum'[, $len = 8]])
 
-    :param	string	$type: Randomization type
-    :param	int	$len: Output string length
-    :returns:	A random string
-    :rtype:	string
+    :param    string    $type: Randomization type
+    :param    int    $len: Output string length
+    :returns:    A random string
+    :rtype:    string
 
     Generates a random string based on the type and length you specify.
     Useful for creating passwords or generating random hashes.
@@ -47,11 +47,11 @@ The following functions are available:
 
 .. php:function:: increment_string($str[, $separator = '_'[, $first = 1]])
 
-    :param	string	$str: Input string
-    :param	string	$separator: Separator to append a duplicate number with
-    :param	int	$first: Starting number
-    :returns:	An incremented string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    string    $separator: Separator to append a duplicate number with
+    :param    int    $first: Starting number
+    :returns:    An incremented string
+    :rtype:    string
 
     Increments a string by appending a number to it or increasing the
     number. Useful for creating "copies" or a file or duplicating database
@@ -65,15 +65,14 @@ The following functions are available:
 
 .. php:function:: alternator($args)
 
-    :param	mixed	$args: A variable number of arguments
-    :returns:	Alternated string(s)
-    :rtype:	mixed
+    :param    mixed    $args: A variable number of arguments
+    :returns:    Alternated string(s)
+    :rtype:    mixed
 
     Allows two or more items to be alternated between, when cycling through
     a loop. Example::
 
-        for ($i = 0; $i < 10; $i++)
-        {     
+        for ($i = 0; $i < 10; $i++) {     
             echo alternator('string one', 'string two');
         }
 
@@ -82,8 +81,7 @@ The following functions are available:
 
     ::
 
-        for ($i = 0; $i < 10; $i++)
-        {     
+        for ($i = 0; $i < 10; $i++) {     
             echo alternator('one', 'two', 'three', 'four', 'five');
         }
 
@@ -92,9 +90,9 @@ The following functions are available:
 
 .. php:function:: reduce_double_slashes($str)
 
-    :param	string	$str: Input string
-    :returns:	A string with normalized slashes
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    A string with normalized slashes
+    :rtype:    string
 
     Converts double slashes in a string to a single slash, except those
     found in URL protocol prefixes (e.g., http&#58;//).
@@ -106,9 +104,9 @@ The following functions are available:
 
 .. php:function:: strip_slashes($data)
 
-    :param	mixed	$data: Input string or an array of strings
-    :returns:	String(s) with stripped slashes
-    :rtype:	mixed
+    :param    mixed    $data: Input string or an array of strings
+    :returns:    String(s) with stripped slashes
+    :rtype:    mixed
 
     Removes any slashes from an array of strings.
 
@@ -132,13 +130,13 @@ The following functions are available:
         and handle string inputs. This however makes it just an
         alias for ``stripslashes()``.
 
-.. php:function:: reduce_multiples($str[, $character = ''[, $trim = FALSE]])
+.. php:function:: reduce_multiples($str[, $character = ''[, $trim = false]])
 
-    :param	string	$str: Text to search in
-    :param	string	$character: Character to reduce
-    :param	bool	$trim: Whether to also trim the specified character
-    :returns:	Reduced string
-    :rtype:	string
+    :param    string    $str: Text to search in
+    :param    string    $character: Character to reduce
+    :param    bool    $trim: Whether to also trim the specified character
+    :returns:    Reduced string
+    :rtype:    string
 
     Reduces multiple instances of a particular character occurring directly
     after each other. Example::
@@ -146,17 +144,17 @@ The following functions are available:
         $string = "Fred, Bill,, Joe, Jimmy";
         $string = reduce_multiples($string, ","); // results in "Fred, Bill, Joe, Jimmy"
 
-    If the third parameter is set to TRUE it will remove occurrences of the
+    If the third parameter is set to true it will remove occurrences of the
     character at the beginning and the end of the string. Example::
 
         $string = ",Fred, Bill,, Joe, Jimmy,";
-        $string = reduce_multiples($string, ", ", TRUE); // results in "Fred, Bill, Joe, Jimmy"
+        $string = reduce_multiples($string, ", ", true); // results in "Fred, Bill, Joe, Jimmy"
 
 .. php:function:: quotes_to_entities($str)
 
-    :param	string	$str: Input string
-    :returns:	String with quotes converted to HTML entities
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    String with quotes converted to HTML entities
+    :rtype:    string
 
     Converts single and double quotes in a string to the corresponding HTML
     entities. Example::
@@ -166,9 +164,9 @@ The following functions are available:
 
 .. php:function:: strip_quotes($str)
 
-    :param	string	$str: Input string
-    :returns:	String with quotes stripped
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    String with quotes stripped
+    :rtype:    string
 
     Removes single and double quotes from a string. Example::
 
@@ -177,11 +175,11 @@ The following functions are available:
 
 .. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
 
-    :param	string	$str: Input string
-    :param	int	$limit: Limit
-    :param	string	$end_char: End character (usually an ellipsis)
-    :returns:	Word-limited string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    int    $limit: Limit
+    :param    string    $end_char: End character (usually an ellipsis)
+    :returns:    Word-limited string
+    :rtype:    string
 
     Truncates a string to the number of *words* specified. Example::
 
@@ -194,11 +192,11 @@ The following functions are available:
 
 .. php:function:: character_limiter($str[, $n = 500[, $end_char = '&#8230;']])
 
-    :param	string	$str: Input string
-    :param	int	$n: Number of characters
-    :param	string	$end_char: End character (usually an ellipsis)
-    :returns:	Character-limited string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    int    $n: Number of characters
+    :param    string    $end_char: End character (usually an ellipsis)
+    :returns:    Character-limited string
+    :rtype:    string
 
     Truncates a string to the number of *characters* specified. It
     maintains the integrity of words so the character count may be slightly
@@ -218,9 +216,9 @@ The following functions are available:
 
 .. php:function:: ascii_to_entities($str)
 
-    :param	string	$str: Input string
-    :returns:	A string with ASCII values converted to entities
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    A string with ASCII values converted to entities
+    :rtype:    string
 
     Converts ASCII values to character entities, including high ASCII and MS
     Word characters that can cause problems when used in a web page, so that
@@ -234,21 +232,21 @@ The following functions are available:
 
         $string = ascii_to_entities($string);
 
-.. php:function:: entities_to_ascii($str[, $all = TRUE])
+.. php:function:: entities_to_ascii($str[, $all = true])
 
-    :param	string	$str: Input string
-    :param	bool	$all: Whether to convert unsafe entities as well
-    :returns:	A string with HTML entities converted to ASCII characters
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    bool    $all: Whether to convert unsafe entities as well
+    :returns:    A string with HTML entities converted to ASCII characters
+    :rtype:    string
 
     This function does the opposite of :php:func:`ascii_to_entities()`.
     It turns character entities back into ASCII.
 
 .. php:function:: convert_accented_characters($str)
 
-    :param	string	$str: Input string
-    :returns:	A string with accented characters converted
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    A string with accented characters converted
+    :rtype:    string
 
     Transliterates high ASCII characters to low ASCII equivalents. Useful
     when non-English characters need to be used where only standard ASCII
@@ -259,16 +257,16 @@ The following functions are available:
         $string = convert_accented_characters($string);
 
     .. note:: This function uses a companion config file
-        `app/Config/ForeignCharacters.php` to define the to and
+        **app/Config/ForeignCharacters.php** to define the to and
         from array for transliteration.
 
 .. php:function:: word_censor($str, $censored[, $replacement = ''])
 
-    :param	string	$str: Input string
-    :param	array	$censored: List of bad words to censor
-    :param	string	$replacement: What to replace bad words with
-    :returns:	Censored string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    array    $censored: List of bad words to censor
+    :param    string    $replacement: What to replace bad words with
+    :returns:    Censored string
+    :rtype:    string
 
     Enables you to censor words within a text string. The first parameter
     will contain the original string. The second will contain an array of
@@ -283,9 +281,9 @@ The following functions are available:
 
 .. php:function:: highlight_code($str)
 
-    :param	string	$str: Input string
-    :returns:	String with code highlighted via HTML
-    :rtype:	string
+    :param    string    $str: Input string
+    :returns:    String with code highlighted via HTML
+    :rtype:    string
 
     Colorizes a string of code (PHP, HTML, etc.). Example::
 
@@ -296,12 +294,12 @@ The following functions are available:
 
 .. php:function:: highlight_phrase($str, $phrase[, $tag_open = '<mark>'[, $tag_close = '</mark>']])
 
-    :param	string	$str: Input string
-    :param	string	$phrase: Phrase to highlight
-    :param	string	$tag_open: Opening tag used for the highlight
-    :param	string	$tag_close: Closing tag for the highlight
-    :returns:	String with a phrase highlighted via HTML
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    string    $phrase: Phrase to highlight
+    :param    string    $tag_open: Opening tag used for the highlight
+    :param    string    $tag_close: Closing tag for the highlight
+    :returns:    String with a phrase highlighted via HTML
+    :rtype:    string
 
     Will highlight a phrase within a text string. The first parameter will
     contain the original string, the second will contain the phrase you wish
@@ -329,10 +327,10 @@ The following functions are available:
 
 .. php:function:: word_wrap($str[, $charlim = 76])
 
-    :param	string	$str: Input string
-    :param	int	$charlim: Character limit
-    :returns:	Word-wrapped string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    int    $charlim: Character limit
+    :returns:    Word-wrapped string
+    :rtype:    string
 
     Wraps text at the specified *character* count while maintaining
     complete words.
@@ -352,12 +350,12 @@ The following functions are available:
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 
-    :param	string	$str: Input string
-    :param	int	$max_length: String length limit
-    :param	mixed	$position: Position to split at (int or float)
-    :param	string	$ellipsis: What to use as the ellipsis character
-    :returns:	Ellipsized string
-    :rtype:	string
+    :param    string    $str: Input string
+    :param    int    $max_length: String length limit
+    :param    mixed    $position: Position to split at (int or float)
+    :param    string    $ellipsis: What to use as the ellipsis character
+    :returns:    Ellipsized string
+    :rtype:    string
 
     This function will strip tags from a string, split it at a defined
     maximum length, and insert an ellipsis.
@@ -382,12 +380,12 @@ The following functions are available:
 
 .. php:function:: excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
 
-    :param	string	$text: Text to extract an excerpt
-    :param	string	$phrase: Phrase or word to extract the text around
-    :param	int		$radius: Number of characters before and after $phrase
-    :param	string	$ellipsis: What to use as the ellipsis character
-    :returns:	Excerpt.
-    :rtype:		string
+    :param    string    $text: Text to extract an excerpt
+    :param    string    $phrase: Phrase or word to extract the text around
+    :param    int        $radius: Number of characters before and after $phrase
+    :param    string    $ellipsis: What to use as the ellipsis character
+    :returns:    Excerpt.
+    :rtype:        string
 
     This function will extract $radius number of characters before and after the
     central $phrase with an ellipsis before and after.

@@ -1,119 +1,171 @@
-<?php namespace Builder;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\Query;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
-class InsertTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class InsertTest extends CIUnitTestCase
 {
-	protected $db;
+    /**
+     * @var MockConnection
+     */
+    protected $db;
 
-	//--------------------------------------------------------------------
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        $this->db = new MockConnection([]);
+    }
 
-		$this->db = new MockConnection([]);
-	}
+    public function testSimpleInsert()
+    {
+        $builder = $this->db->table('jobs');
 
-	//--------------------------------------------------------------------
+        $insertData = [
+            'id'   => 1,
+            'name' => 'Grocery Sales',
+        ];
+        $builder->testMode()->insert($insertData, true);
 
-	public function testSimpleInsert()
-	{
-		$builder = $this->db->table('jobs');
+        $expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Grocery Sales',
+                true,
+            ],
+        ];
 
-		$insertData = [
-			'id'   => 1,
-			'name' => 'Grocery Sales',
-		];
-		$builder->testMode()->insert($insertData, true);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 
-		$expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
-		$expectedBinds = [
-			'id'   => [
-				1,
-				true,
-			],
-			'name' => [
-				'Grocery Sales',
-				true,
-			],
-		];
+    public function testThrowsExceptionOnNoValuesSet()
+    {
+        $builder = $this->db->table('jobs');
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
-		$this->assertEquals($expectedBinds, $builder->getBinds());
-	}
+        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
-	//--------------------------------------------------------------------
+        $builder->testMode()->insert(null, true);
+    }
 
-	public function testThrowsExceptionOnNoValuesSet()
-	{
-		$builder = $this->db->table('jobs');
+    public function testInsertBatch()
+    {
+        $builder = $this->db->table('jobs');
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $insertData = [
+            [
+                'id'          => 2,
+                'name'        => 'Commedian',
+                'description' => 'There\'s something in your teeth',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Cab Driver',
+                'description' => 'I am yellow',
+            ],
+        ];
 
-		$builder->testMode()->insert(null, true);
-	}
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->insertBatch($insertData, true);
 
-	//--------------------------------------------------------------------
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(Query::class, $query);
 
-	public function testInsertBatch()
-	{
-		$builder = $this->db->table('jobs');
+        $raw = <<<'SQL'
+            INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')
+            SQL;
+        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
 
-		$insertData = [
-			[
-				'id'          => 2,
-				'name'        => 'Commedian',
-				'description' => 'Theres something in your teeth',
-			],
-			[
-				'id'          => 3,
-				'name'        => 'Cab Driver',
-				'description' => 'Iam yellow',
-			],
-		];
+        $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+    }
 
-		$this->db->shouldReturn('execute', 1)
-				 ->shouldReturn('affectedRows', 1);
+    public function testInsertBatchWithoutEscape()
+    {
+        $builder = $this->db->table('jobs');
 
-		$builder->insertBatch($insertData, true, true);
+        $insertData = [
+            [
+                'id'          => 2,
+                'name'        => '1 + 1',
+                'description' => '1 + 2',
+            ],
+            [
+                'id'          => 3,
+                'name'        => '2 + 1',
+                'description' => '2 + 2',
+            ],
+        ];
 
-		$query = $this->db->getLastQuery();
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->insertBatch($insertData, false);
 
-		$this->assertInstanceOf(Query::class, $query);
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(Query::class, $query);
 
-		$raw = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (:description0:,:id0:,:name0:)';
+        $expected = 'INSERT INTO "jobs" ("description", "id", "name") VALUES (1 + 2,2,1 + 1), (2 + 2,3,2 + 1)';
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+    }
 
-		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4345
+     */
+    public function testInsertBatchWithFieldsEndingInNumbers()
+    {
+        $builder = $this->db->table('ip_table');
 
-		$expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
+        $data = [
+            ['ip' => '1.1.1.0', 'ip2' => '1.1.1.2'],
+            ['ip' => '2.2.2.0', 'ip2' => '2.2.2.2'],
+            ['ip' => '3.3.3.0', 'ip2' => '3.3.3.2'],
+            ['ip' => '4.4.4.0', 'ip2' => '4.4.4.2'],
+        ];
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
-	}
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->insertBatch($data, true);
 
-	//--------------------------------------------------------------------
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(Query::class, $query);
 
-	public function testInsertBatchThrowsExceptionOnNoData()
-	{
-		$builder = $this->db->table('jobs');
+        $expected = "INSERT INTO \"ip_table\" (\"ip\", \"ip2\") VALUES ('1.1.1.0','1.1.1.2'), ('2.2.2.0','2.2.2.2'), ('3.3.3.0','3.3.3.2'), ('4.4.4.0','4.4.4.2')";
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+    }
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException', 'You must use the "set" method to update an entry.');
-		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
-		$builder->insertBatch();
-	}
+    public function testInsertBatchThrowsExceptionOnNoData()
+    {
+        $builder = $this->db->table('jobs');
 
-	//--------------------------------------------------------------------
+        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $builder->insertBatch();
+    }
 
-	public function testInsertBatchThrowsExceptionOnEmptyData()
-	{
-		$builder = $this->db->table('jobs');
+    public function testInsertBatchThrowsExceptionOnEmptyData()
+    {
+        $builder = $this->db->table('jobs');
 
-		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-		$this->expectExceptionMessage('insertBatch() called with no data');
-		$builder->insertBatch([]);
-	}
-
-	//--------------------------------------------------------------------
+        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectExceptionMessage('insertBatch() called with no data');
+        $builder->insertBatch([]);
+    }
 }

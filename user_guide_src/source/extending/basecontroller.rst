@@ -6,16 +6,16 @@ CodeIgniter's core Controller should not be changed, but a default class extensi
 **app/Controllers/BaseController.php**. Any new controllers you make should extend ``BaseController`` to take
 advantage of preloaded components and any additional functionality you provide::
 
-	<?php
+    <?php
 
-	namespace App\Controllers;
+    namespace App\Controllers;
 
-	use CodeIgniter\Controller;
+    use CodeIgniter\Controller;
 
-	class Home extends BaseController
-	{
-		// ...
-	}
+    class Home extends BaseController
+    {
+        // ...
+    }
 
 Preloading Components
 =====================
@@ -24,18 +24,18 @@ The base controller is a great place to load any helpers, models, libraries, ser
 use every time your project runs. Helpers should be added to the pre-defined ``$helpers`` array. For example, if
 you want the HTML and Text helpers universally available::
 
-	protected $helpers = ['html', 'text'];
+    protected $helpers = ['html', 'text'];
 
 Any other components to load or data to process should be added to the constructor ``initController()``. For
 example, if your project uses the Session Library heavily you may want to initiate it here::
 
-	public function initController(...)
-	{
-		// Do Not Edit This Line
-		parent::initController($request, $response, $logger);
-		
-		$this->session = \Config\Services::session();
-	}
+    public function initController(...)
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
+        
+        $this->session = \Config\Services::session();
+    }
 
 Additional Methods
 ==================
@@ -54,7 +54,7 @@ the public controllers and make ``AdminController`` for any administrative contr
 If you do not want to use the base controller you may bypass it by having your controllers extend the system
 Controller instead::
 
-	class Home extends \CodeIgniter\Controller
-	{
-	
-	}
+    class Home extends \CodeIgniter\Controller
+    {
+    
+    }

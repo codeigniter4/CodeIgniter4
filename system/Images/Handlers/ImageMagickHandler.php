@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Images\Handlers;
@@ -29,507 +29,448 @@ use Imagick;
  */
 class ImageMagickHandler extends BaseHandler
 {
-	/**
-	 * Stores image resource in memory.
-	 *
-	 * @var string|null
-	 */
-	protected $resource;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Constructor.
-	 *
-	 * @param  Images $config
-	 * @throws ImageException
-	 */
-	public function __construct($config = null)
-	{
-		parent::__construct($config);
-
-		// We should never see this, so can't test it
-		// @codeCoverageIgnoreStart
-		if (! (extension_loaded('imagick') || class_exists('Imagick')))
-		{
-			throw ImageException::forMissingExtension('IMAGICK');
-		}
-		// @codeCoverageIgnoreEnd
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Handles the actual resizing of the image.
-	 *
-	 * @param boolean $maintainRatio
-	 *
-	 * @return ImageMagickHandler
-	 * @throws Exception
-	 */
-	public function _resize(bool $maintainRatio = false)
-	{
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$escape = '\\';
-		if (stripos(PHP_OS, 'WIN') === 0)
-		{
-			$escape = '';
-		}
-
-		$action = $maintainRatio === true
-			? ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' "' . $source . '" "' . $destination . '"'
-			: ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . "{$escape}! \"" . $source . '" "' . $destination . '"';
-
-		$this->process($action);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Crops the image.
-	 *
-	 * @return boolean|\CodeIgniter\Images\Handlers\ImageMagickHandler
-	 * @throws Exception
-	 */
-	public function _crop()
-	{
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$extent = ' ';
-		if ($this->xAxis >= $this->width || $this->yAxis > $this->height)
-		{
-			$extent = ' -background transparent -extent ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ';
-		}
-
-		$action = ' -crop ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . '+' . ($this->xAxis ?? 0) . '+' . ($this->yAxis ?? 0) . $extent . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-		$this->process($action);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Handles the rotation of an image resource.
-	 * Doesn't save the image, but replaces the current resource.
-	 *
-	 * @param integer $angle
-	 *
-	 * @return $this
-	 * @throws Exception
-	 */
-	protected function _rotate(int $angle)
-	{
-		$angle = '-rotate ' . $angle;
-
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-		$this->process($action);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Flattens transparencies, default white background
-	 *
-	 * @param integer $red
-	 * @param integer $green
-	 * @param integer $blue
-	 *
-	 * @return $this
-	 * @throws Exception
-	 */
-	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
-	{
-		$flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
-
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$action = ' ' . $flatten . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-		$this->process($action);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Flips an image along it's vertical or horizontal axis.
-	 *
-	 * @param string $direction
-	 *
-	 * @return $this
-	 * @throws Exception
-	 */
-	public function _flip(string $direction)
-	{
-		$angle = $direction === 'horizontal' ? '-flop' : '-flip';
-
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
-
-		$this->process($action);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get driver version
-	 *
-	 * @return string
-	 */
-	public function getVersion(): string
-	{
-		$result = $this->process('-version');
-
-		// The first line has the version in it...
-		preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
-
-		return str_replace('ImageMagick ', '', $matches[0]);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Handles all of the grunt work of resizing, etc.
-	 *
-	 * @param string  $action
-	 * @param integer $quality
-	 *
-	 * @return array  Lines of output from shell command
-	 * @throws Exception
-	 */
-	protected function process(string $action, int $quality = 100): array
-	{
-		// Do we have a vaild library path?
-		if (empty($this->config->libraryPath))
-		{
-			throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
-		}
-
-		if ($action !== '-version')
-		{
-			$this->supportedFormatCheck();
-		}
-
-		if (! preg_match('/convert$/i', $this->config->libraryPath))
-		{
-			$this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
-		}
-
-		$cmd = $this->config->libraryPath;
-		$cmd .= $action === '-version' ? ' ' . $action : ' -quality ' . $quality . ' ' . $action;
-
-		$retval = 1;
-		// exec() might be disabled
-		if (function_usable('exec'))
-		{
-			@exec($cmd, $output, $retval);
-		}
-
-		// Did it work?
-		if ($retval > 0)
-		{
-			throw ImageException::forImageProcessFailed();
-		}
-
-		return $output; // @phpstan-ignore-line
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Saves any changes that have been made to file. If no new filename is
-	 * provided, the existing image is overwritten, otherwise a copy of the
-	 * file is made at $target.
-	 *
-	 * Example:
-	 *    $image->resize(100, 200, true)
-	 *          ->save();
-	 *
-	 * @param string|null $target
-	 * @param integer     $quality
-	 *
-	 * @return boolean
-	 */
-	public function save(string $target = null, int $quality = 90): bool
-	{
-		$original = $target;
-		$target   = empty($target) ? $this->image()->getPathname() : $target;
-
-		// If no new resource has been created, then we're
-		// simply copy the existing one.
-		if (empty($this->resource) && $quality === 100)
-		{
-			if ($original === null)
-			{
-				return true;
-			}
-
-			$name = basename($target);
-			$path = pathinfo($target, PATHINFO_DIRNAME);
-
-			return $this->image()->copy($path, $name);
-		}
-
-		$this->ensureResource();
-
-		// Copy the file through ImageMagick so that it has
-		// a chance to convert file format.
-		$action = escapeshellarg($this->resource) . ' ' . escapeshellarg($target);
-
-		$result = $this->process($action, $quality);
-
-		unlink($this->resource);
-
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Get Image Resource
-	 *
-	 * This simply creates an image resource handle
-	 * based on the type of image being processed.
-	 * Since ImageMagick is used on the cli, we need to
-	 * ensure we have a temporary file on the server
-	 * that we can use.
-	 *
-	 * To ensure we can use all features, like transparency,
-	 * during the process, we'll use a PNG as the temp file type.
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	protected function getResourcePath()
-	{
-		if (! is_null($this->resource))
-		{
-			return $this->resource;
-		}
-
-		$this->resource = WRITEPATH . 'cache/' . time() . '_' . bin2hex(random_bytes(10)) . '.png';
-
-		$name = basename($this->resource);
-		$path = pathinfo($this->resource, PATHINFO_DIRNAME);
-
-		$this->image()->copy($path, $name);
-
-		return $this->resource;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Make the image resource object if needed
-	 *
-	 * @throws Exception
-	 */
-	protected function ensureResource()
-	{
-		$this->getResourcePath();
-
-		$this->supportedFormatCheck();
-	}
-
-	/**
-	 * Check if given image format is supported
-	 *
-	 * @throws ImageException
-	 */
-	protected function supportedFormatCheck()
-	{
-		switch ($this->image()->imageType)
-		{
-			case IMAGETYPE_WEBP:
-				if (! in_array('WEBP', Imagick::queryFormats(), true))
-				{
-					throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
-				}
-				break;
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Handler-specific method for overlaying text on an image.
-	 *
-	 * @param string $text
-	 * @param array  $options
-	 *
-	 * @throws Exception
-	 */
-	protected function _text(string $text, array $options = [])
-	{
-		$cmd = '';
-
-		// Reverse the vertical offset
-		// When the image is positioned at the bottom
-		// we don't want the vertical offset to push it
-		// further down. We want the reverse, so we'll
-		// invert the offset. Note: The horizontal
-		// offset flips itself automatically
-		if ($options['vAlign'] === 'bottom')
-		{
-			$options['vOffset'] = $options['vOffset'] * -1;
-		}
-
-		if ($options['hAlign'] === 'right')
-		{
-			$options['hOffset'] = $options['hOffset'] * -1;
-		}
-
-		// Font
-		if (! empty($options['fontPath']))
-		{
-			$cmd .= " -font '{$options['fontPath']}'";
-		}
-
-		if (isset($options['hAlign']) && isset($options['vAlign']))
-		{
-			switch ($options['hAlign'])
-			{
-				case 'left':
-					$xAxis   = $options['hOffset'] + $options['padding'];
-					$yAxis   = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] === 'top' ? 'NorthWest' : 'West';
-					if ($options['vAlign'] === 'bottom')
-					{
-						$gravity = 'SouthWest';
-						$yAxis   = $options['vOffset'] - $options['padding'];
-					}
-					break;
-				case 'center':
-					$xAxis   = $options['hOffset'] + $options['padding'];
-					$yAxis   = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] === 'top' ? 'North' : 'Center';
-					if ($options['vAlign'] === 'bottom')
-					{
-						$yAxis   = $options['vOffset'] - $options['padding'];
-						$gravity = 'South';
-					}
-					break;
-				case 'right':
-					$xAxis   = $options['hOffset'] - $options['padding'];
-					$yAxis   = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] === 'top' ? 'NorthEast' : 'East';
-					if ($options['vAlign'] === 'bottom')
-					{
-						$gravity = 'SouthEast';
-						$yAxis   = $options['vOffset'] - $options['padding'];
-					}
-					break;
-			}
-
-			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis; // @phpstan-ignore-line
-			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis; // @phpstan-ignore-line
-
-			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}"; // @phpstan-ignore-line
-		}
-
-		// Color
-		if (isset($options['color']))
-		{
-			list($r, $g, $b) = sscanf("#{$options['color']}", '#%02x%02x%02x');
-
-			$cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
-		}
-
-		// Font Size - use points....
-		if (isset($options['fontSize']))
-		{
-			$cmd .= " -pointsize {$options['fontSize']}";
-		}
-
-		// Text
-		$cmd .= " -annotate 0 '{$text}'";
-
-		$source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
-		$destination = $this->getResourcePath();
-
-		$cmd = " '{$source}' {$cmd} '{$destination}'";
-
-		$this->process($cmd);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Return the width of an image.
-	 *
-	 * @return integer
-	 */
-	public function _getWidth()
-	{
-		return imagesx(imagecreatefromstring(file_get_contents($this->resource)));
-	}
-
-	/**
-	 * Return the height of an image.
-	 *
-	 * @return integer
-	 */
-	public function _getHeight()
-	{
-		return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reads the EXIF information from the image and modifies the orientation
-	 * so that displays correctly in the browser. This is especially an issue
-	 * with images taken by smartphones who always store the image up-right,
-	 * but set the orientation flag to display it correctly.
-	 *
-	 * @param boolean $silent If true, will ignore exceptions when PHP doesn't support EXIF.
-	 *
-	 * @return $this
-	 */
-	public function reorient(bool $silent = false)
-	{
-		$orientation = $this->getEXIF('Orientation', $silent);
-
-		switch ($orientation)
-		{
-			case 2:
-				return $this->flip('horizontal');
-			case 3:
-				return $this->rotate(180);
-			case 4:
-				return $this->rotate(180)
-								->flip('horizontal');
-			case 5:
-				return $this->rotate(90)
-								->flip('horizontal');
-			case 6:
-				return $this->rotate(90);
-			case 7:
-				return $this->rotate(270)
-								->flip('horizontal');
-			case 8:
-				return $this->rotate(270);
-			default:
-				return $this;
-		}
-	}
+    /**
+     * Stores image resource in memory.
+     *
+     * @var string|null
+     */
+    protected $resource;
+
+    /**
+     * Constructor.
+     *
+     * @param Images $config
+     *
+     * @throws ImageException
+     */
+    public function __construct($config = null)
+    {
+        parent::__construct($config);
+
+        // We should never see this, so can't test it
+        // @codeCoverageIgnoreStart
+        if (! (extension_loaded('imagick') || class_exists('Imagick'))) {
+            throw ImageException::forMissingExtension('IMAGICK');
+        }
+        // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * Handles the actual resizing of the image.
+     *
+     * @throws Exception
+     *
+     * @return ImageMagickHandler
+     */
+    public function _resize(bool $maintainRatio = false)
+    {
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $escape = '\\';
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $escape = '';
+        }
+
+        $action = $maintainRatio === true
+            ? ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' "' . $source . '" "' . $destination . '"'
+            : ' -resize ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . "{$escape}! \"" . $source . '" "' . $destination . '"';
+
+        $this->process($action);
+
+        return $this;
+    }
+
+    /**
+     * Crops the image.
+     *
+     * @throws Exception
+     *
+     * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
+     */
+    public function _crop()
+    {
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $extent = ' ';
+        if ($this->xAxis >= $this->width || $this->yAxis > $this->height) {
+            $extent = ' -background transparent -extent ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . ' ';
+        }
+
+        $action = ' -crop ' . ($this->width ?? 0) . 'x' . ($this->height ?? 0) . '+' . ($this->xAxis ?? 0) . '+' . ($this->yAxis ?? 0) . $extent . escapeshellarg($source) . ' ' . escapeshellarg($destination);
+
+        $this->process($action);
+
+        return $this;
+    }
+
+    /**
+     * Handles the rotation of an image resource.
+     * Doesn't save the image, but replaces the current resource.
+     *
+     * @throws Exception
+     *
+     * @return $this
+     */
+    protected function _rotate(int $angle)
+    {
+        $angle = '-rotate ' . $angle;
+
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
+
+        $this->process($action);
+
+        return $this;
+    }
+
+    /**
+     * Flattens transparencies, default white background
+     *
+     * @throws Exception
+     *
+     * @return $this
+     */
+    protected function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+    {
+        $flatten = "-background 'rgb({$red},{$green},{$blue})' -flatten";
+
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $action = ' ' . $flatten . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
+
+        $this->process($action);
+
+        return $this;
+    }
+
+    /**
+     * Flips an image along it's vertical or horizontal axis.
+     *
+     * @throws Exception
+     *
+     * @return $this
+     */
+    protected function _flip(string $direction)
+    {
+        $angle = $direction === 'horizontal' ? '-flop' : '-flip';
+
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $action = ' ' . $angle . ' ' . escapeshellarg($source) . ' ' . escapeshellarg($destination);
+
+        $this->process($action);
+
+        return $this;
+    }
+
+    /**
+     * Get driver version
+     */
+    public function getVersion(): string
+    {
+        $result = $this->process('-version');
+
+        // The first line has the version in it...
+        preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
+
+        return str_replace('ImageMagick ', '', $matches[0]);
+    }
+
+    /**
+     * Handles all of the grunt work of resizing, etc.
+     *
+     * @throws Exception
+     *
+     * @return array Lines of output from shell command
+     */
+    protected function process(string $action, int $quality = 100): array
+    {
+        // Do we have a vaild library path?
+        if (empty($this->config->libraryPath)) {
+            throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
+        }
+
+        if ($action !== '-version') {
+            $this->supportedFormatCheck();
+        }
+
+        if (! preg_match('/convert$/i', $this->config->libraryPath)) {
+            $this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
+        }
+
+        $cmd = $this->config->libraryPath;
+        $cmd .= $action === '-version' ? ' ' . $action : ' -quality ' . $quality . ' ' . $action;
+
+        $retval = 1;
+        $output = [];
+        // exec() might be disabled
+        if (function_usable('exec')) {
+            @exec($cmd, $output, $retval);
+        }
+
+        // Did it work?
+        if ($retval > 0) {
+            throw ImageException::forImageProcessFailed();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Saves any changes that have been made to file. If no new filename is
+     * provided, the existing image is overwritten, otherwise a copy of the
+     * file is made at $target.
+     *
+     * Example:
+     *    $image->resize(100, 200, true)
+     *          ->save();
+     */
+    public function save(?string $target = null, int $quality = 90): bool
+    {
+        $original = $target;
+        $target   = empty($target) ? $this->image()->getPathname() : $target;
+
+        // If no new resource has been created, then we're
+        // simply copy the existing one.
+        if (empty($this->resource) && $quality === 100) {
+            if ($original === null) {
+                return true;
+            }
+
+            $name = basename($target);
+            $path = pathinfo($target, PATHINFO_DIRNAME);
+
+            return $this->image()->copy($path, $name);
+        }
+
+        $this->ensureResource();
+
+        // Copy the file through ImageMagick so that it has
+        // a chance to convert file format.
+        $action = escapeshellarg($this->resource) . ' ' . escapeshellarg($target);
+
+        $this->process($action, $quality);
+
+        unlink($this->resource);
+
+        return true;
+    }
+
+    /**
+     * Get Image Resource
+     *
+     * This simply creates an image resource handle
+     * based on the type of image being processed.
+     * Since ImageMagick is used on the cli, we need to
+     * ensure we have a temporary file on the server
+     * that we can use.
+     *
+     * To ensure we can use all features, like transparency,
+     * during the process, we'll use a PNG as the temp file type.
+     *
+     * @throws Exception
+     *
+     * @return string
+     */
+    protected function getResourcePath()
+    {
+        if ($this->resource !== null) {
+            return $this->resource;
+        }
+
+        $this->resource = WRITEPATH . 'cache/' . time() . '_' . bin2hex(random_bytes(10)) . '.png';
+
+        $name = basename($this->resource);
+        $path = pathinfo($this->resource, PATHINFO_DIRNAME);
+
+        $this->image()->copy($path, $name);
+
+        return $this->resource;
+    }
+
+    /**
+     * Make the image resource object if needed
+     *
+     * @throws Exception
+     */
+    protected function ensureResource()
+    {
+        $this->getResourcePath();
+
+        $this->supportedFormatCheck();
+    }
+
+    /**
+     * Check if given image format is supported
+     *
+     * @throws ImageException
+     */
+    protected function supportedFormatCheck()
+    {
+        switch ($this->image()->imageType) {
+            case IMAGETYPE_WEBP:
+                if (! in_array('WEBP', Imagick::queryFormats(), true)) {
+                    throw ImageException::forInvalidImageCreate(lang('images.webpNotSupported'));
+                }
+                break;
+        }
+    }
+
+    /**
+     * Handler-specific method for overlaying text on an image.
+     *
+     * @throws Exception
+     */
+    protected function _text(string $text, array $options = [])
+    {
+        $cmd = '';
+
+        // Reverse the vertical offset
+        // When the image is positioned at the bottom
+        // we don't want the vertical offset to push it
+        // further down. We want the reverse, so we'll
+        // invert the offset. Note: The horizontal
+        // offset flips itself automatically
+        if ($options['vAlign'] === 'bottom') {
+            $options['vOffset'] = $options['vOffset'] * -1;
+        }
+
+        if ($options['hAlign'] === 'right') {
+            $options['hOffset'] = $options['hOffset'] * -1;
+        }
+
+        // Font
+        if (! empty($options['fontPath'])) {
+            $cmd .= " -font '{$options['fontPath']}'";
+        }
+
+        if (isset($options['hAlign'], $options['vAlign'])) {
+            switch ($options['hAlign']) {
+                case 'left':
+                    $xAxis   = $options['hOffset'] + $options['padding'];
+                    $yAxis   = $options['vOffset'] + $options['padding'];
+                    $gravity = $options['vAlign'] === 'top' ? 'NorthWest' : 'West';
+                    if ($options['vAlign'] === 'bottom') {
+                        $gravity = 'SouthWest';
+                        $yAxis   = $options['vOffset'] - $options['padding'];
+                    }
+                    break;
+
+                case 'center':
+                    $xAxis   = $options['hOffset'] + $options['padding'];
+                    $yAxis   = $options['vOffset'] + $options['padding'];
+                    $gravity = $options['vAlign'] === 'top' ? 'North' : 'Center';
+                    if ($options['vAlign'] === 'bottom') {
+                        $yAxis   = $options['vOffset'] - $options['padding'];
+                        $gravity = 'South';
+                    }
+                    break;
+
+                case 'right':
+                    $xAxis   = $options['hOffset'] - $options['padding'];
+                    $yAxis   = $options['vOffset'] + $options['padding'];
+                    $gravity = $options['vAlign'] === 'top' ? 'NorthEast' : 'East';
+                    if ($options['vAlign'] === 'bottom') {
+                        $gravity = 'SouthEast';
+                        $yAxis   = $options['vOffset'] - $options['padding'];
+                    }
+                    break;
+            }
+
+            $xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis;
+            $yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis;
+
+            $cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}";
+        }
+
+        // Color
+        if (isset($options['color'])) {
+            [$r, $g, $b] = sscanf("#{$options['color']}", '#%02x%02x%02x');
+
+            $cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
+        }
+
+        // Font Size - use points....
+        if (isset($options['fontSize'])) {
+            $cmd .= " -pointsize {$options['fontSize']}";
+        }
+
+        // Text
+        $cmd .= " -annotate 0 '{$text}'";
+
+        $source      = ! empty($this->resource) ? $this->resource : $this->image()->getPathname();
+        $destination = $this->getResourcePath();
+
+        $cmd = " '{$source}' {$cmd} '{$destination}'";
+
+        $this->process($cmd);
+    }
+
+    /**
+     * Return the width of an image.
+     *
+     * @return int
+     */
+    public function _getWidth()
+    {
+        return imagesx(imagecreatefromstring(file_get_contents($this->resource)));
+    }
+
+    /**
+     * Return the height of an image.
+     *
+     * @return int
+     */
+    public function _getHeight()
+    {
+        return imagesy(imagecreatefromstring(file_get_contents($this->resource)));
+    }
+
+    /**
+     * Reads the EXIF information from the image and modifies the orientation
+     * so that displays correctly in the browser. This is especially an issue
+     * with images taken by smartphones who always store the image up-right,
+     * but set the orientation flag to display it correctly.
+     *
+     * @param bool $silent If true, will ignore exceptions when PHP doesn't support EXIF.
+     *
+     * @return $this
+     */
+    public function reorient(bool $silent = false)
+    {
+        $orientation = $this->getEXIF('Orientation', $silent);
+
+        switch ($orientation) {
+            case 2:
+                return $this->flip('horizontal');
+
+            case 3:
+                return $this->rotate(180);
+
+            case 4:
+                return $this->rotate(180)->flip('horizontal');
+
+            case 5:
+                return $this->rotate(90)->flip('horizontal');
+
+            case 6:
+                return $this->rotate(90);
+
+            case 7:
+                return $this->rotate(270)->flip('horizontal');
+
+            case 8:
+                return $this->rotate(270);
+
+            default:
+                return $this;
+        }
+    }
 }

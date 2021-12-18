@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Log\Handlers;
@@ -16,41 +16,27 @@ namespace CodeIgniter\Log\Handlers;
  */
 interface HandlerInterface
 {
-	/**
-	 * Handles logging the message.
-	 * If the handler returns false, then execution of handlers
-	 * will stop. Any handlers that have not run, yet, will not
-	 * be run.
-	 *
-	 * @param string $level
-	 * @param string $message
-	 *
-	 * @return boolean
-	 */
-	public function handle($level, $message): bool;
+    /**
+     * Handles logging the message.
+     * If the handler returns false, then execution of handlers
+     * will stop. Any handlers that have not run, yet, will not
+     * be run.
+     *
+     * @param string $level
+     * @param string $message
+     */
+    public function handle($level, $message): bool;
 
-	//--------------------------------------------------------------------
+    /**
+     * Checks whether the Handler will handle logging items of this
+     * log Level.
+     */
+    public function canHandle(string $level): bool;
 
-	/**
-	 * Checks whether the Handler will handle logging items of this
-	 * log Level.
-	 *
-	 * @param string $level
-	 *
-	 * @return boolean
-	 */
-	public function canHandle(string $level): bool;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the preferred date format to use when logging.
-	 *
-	 * @param string $format
-	 *
-	 * @return HandlerInterface
-	 */
-	public function setDateFormat(string $format);
-
-	//--------------------------------------------------------------------
+    /**
+     * Sets the preferred date format to use when logging.
+     *
+     * @return HandlerInterface
+     */
+    public function setDateFormat(string $format);
 }

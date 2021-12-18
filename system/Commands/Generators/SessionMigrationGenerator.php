@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Commands\Generators;
@@ -24,98 +24,87 @@ use CodeIgniter\CLI\GeneratorTrait;
  */
 class SessionMigrationGenerator extends BaseCommand
 {
-	use GeneratorTrait;
+    use GeneratorTrait;
 
-	/**
-	 * The Command's Group
-	 *
-	 * @var string
-	 */
-	protected $group = 'Generators';
+    /**
+     * The Command's Group
+     *
+     * @var string
+     */
+    protected $group = 'Generators';
 
-	/**
-	 * The Command's Name
-	 *
-	 * @var string
-	 */
-	protected $name = 'session:migration';
+    /**
+     * The Command's Name
+     *
+     * @var string
+     */
+    protected $name = 'session:migration';
 
-	/**
-	 * The Command's Description
-	 *
-	 * @var string
-	 */
-	protected $description = '[DEPRECATED] Generates the migration file for database sessions, Please use  "make:migration --session" instead.';
+    /**
+     * The Command's Description
+     *
+     * @var string
+     */
+    protected $description = '[DEPRECATED] Generates the migration file for database sessions, Please use  "make:migration --session" instead.';
 
-	/**
-	 * The Command's Usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'session:migration [options]';
+    /**
+     * The Command's Usage
+     *
+     * @var string
+     */
+    protected $usage = 'session:migration [options]';
 
-	/**
-	 * The Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-t' => 'Supply a table name.',
-		'-g' => 'Database group to use. Default: "default".',
-	];
+    /**
+     * The Command's Options
+     *
+     * @var array
+     */
+    protected $options = [
+        '-t' => 'Supply a table name.',
+        '-g' => 'Database group to use. Default: "default".',
+    ];
 
-	/**
-	 * Actually execute a command.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params)
-	{
-		$this->component = 'Migration';
-		$this->directory = 'Database\Migrations';
-		$this->template  = 'migration.tpl.php';
+    /**
+     * Actually execute a command.
+     */
+    public function run(array $params)
+    {
+        $this->component = 'Migration';
+        $this->directory = 'Database\Migrations';
+        $this->template  = 'migration.tpl.php';
 
-		$table = 'ci_sessions';
+        $table = 'ci_sessions';
 
-		if (array_key_exists('t', $params) || CLI::getOption('t'))
-		{
-			$table = $params['t'] ?? CLI::getOption('t');
-		}
+        if (array_key_exists('t', $params) || CLI::getOption('t')) {
+            $table = $params['t'] ?? CLI::getOption('t');
+        }
 
-		$params[0] = "_create_{$table}_table";
+        $params[0] = "_create_{$table}_table";
 
-		$this->execute($params);
-	}
+        $this->execute($params);
+    }
 
-	/**
-	 * Performs the necessary replacements.
-	 *
-	 * @param string $class
-	 *
-	 * @return string
-	 */
-	protected function prepare(string $class): string
-	{
-		$data['session'] = true;
-		$data['table']   = $this->getOption('t');
-		$data['DBGroup'] = $this->getOption('g');
-		$data['matchIP'] = config('App')->sessionMatchIP ?? false;
+    /**
+     * Performs the necessary replacements.
+     */
+    protected function prepare(string $class): string
+    {
+        $data['session'] = true;
+        $data['table']   = $this->getOption('t');
+        $data['DBGroup'] = $this->getOption('g');
+        $data['matchIP'] = config('App')->sessionMatchIP ?? false;
 
-		$data['table']   = is_string($data['table']) ? $data['table'] : 'ci_sessions';
-		$data['DBGroup'] = is_string($data['DBGroup']) ? $data['DBGroup'] : 'default';
+        $data['table']   = is_string($data['table']) ? $data['table'] : 'ci_sessions';
+        $data['DBGroup'] = is_string($data['DBGroup']) ? $data['DBGroup'] : 'default';
 
-		return $this->parseTemplate($class, [], [], $data);
-	}
+        return $this->parseTemplate($class, [], [], $data);
+    }
 
-	/**
-	 * Change file basename before saving.
-	 *
-	 * @param string $filename
-	 *
-	 * @return string
-	 */
-	protected function basename(string $filename): string
-	{
-		return gmdate(config('Migrations')->timestampFormat) . basename($filename);
-	}
+    /**
+     * Change file basename before saving.
+     */
+    protected function basename(string $filename): string
+    {
+        return gmdate(config('Migrations')->timestampFormat) . basename($filename);
+    }
 }

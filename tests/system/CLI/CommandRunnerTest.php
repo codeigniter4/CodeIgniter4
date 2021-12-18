@@ -1,137 +1,136 @@
 <?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Log\Logger;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
-use CodeIgniter\Test\Mock\MockCLIConfig;
 use Config\Services;
 
-class CommandRunnerTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * @internal
+ */
+final class CommandRunnerTest extends CIUnitTestCase
 {
+    /**
+     * @var resource
+     */
+    private $streamFilter;
 
-	private $stream_filter;
-	protected $env;
-	protected $config;
-	protected $request;
-	protected $response;
-	protected $logger;
-	protected $runner;
+    /**
+     * @var Logger
+     */
+    private static $logger;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * @var CommandRunner
+     */
+    private static $runner;
 
-		CITestStreamFilter::$buffer = '';
-		$this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    public static function setUpBeforeClass(): void
+    {
+        self::$logger = service('logger');
+        self::$runner = new CommandRunner();
 
-		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
-		$this->env->load();
+        self::$runner->initController(service('request'), service('response'), self::$logger);
+    }
 
-		// Set environment values that would otherwise stop the framework from functioning during tests.
-		if (! isset($_SERVER['app.baseURL']))
-		{
-			$_SERVER['app.baseURL'] = 'http://example.com/';
-		}
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$_SERVER['argv'] = [
-			'spark',
-			'list',
-		];
-		$_SERVER['argc'] = 2;
-		CLI::init();
+        CITestStreamFilter::$buffer = '';
 
-		$this->config   = new MockCLIConfig();
-		$this->request  = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
-		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->logger   = Services::logger();
-		$this->runner   = new CommandRunner();
-		$this->runner->initController($this->request, $this->response, $this->logger);
-	}
+        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+    }
 
-	public function tearDown(): void
-	{
-		stream_filter_remove($this->stream_filter);
-	}
+    protected function tearDown(): void
+    {
+        stream_filter_remove($this->streamFilter);
+    }
 
-	public function testGoodCommand()
-	{
-		$this->runner->index(['list']);
-		$result = CITestStreamFilter::$buffer;
+    public function testGoodCommand()
+    {
+        self::$runner->index(['list']);
+        $result = CITestStreamFilter::$buffer;
 
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Lists the available commands.', $result);
-		$this->assertStringContainsString('Displays basic usage information.', $result);
-	}
+        // make sure the result looks like a command list
+        $this->assertStringContainsString('Lists the available commands.', $result);
+        $this->assertStringContainsString('Displays basic usage information.', $result);
+    }
 
-	public function testDefaultCommand()
-	{
-		$this->runner->index([]);
-		$result = CITestStreamFilter::$buffer;
+    public function testDefaultCommand()
+    {
+        self::$runner->index([]);
+        $result = CITestStreamFilter::$buffer;
 
-		// make sure the result looks like basic help
-		$this->assertStringContainsString('Lists the available commands.', $result);
-		$this->assertStringContainsString('Displays basic usage information.', $result);
-	}
+        // make sure the result looks like basic help
+        $this->assertStringContainsString('Lists the available commands.', $result);
+        $this->assertStringContainsString('Displays basic usage information.', $result);
+    }
 
-	public function testHelpCommand()
-	{
-		$this->runner->index(['help']);
-		$result = CITestStreamFilter::$buffer;
+    public function testHelpCommand()
+    {
+        self::$runner->index(['help']);
+        $result = CITestStreamFilter::$buffer;
 
-		// make sure the result looks like basic help
-		$this->assertStringContainsString('Displays basic usage information.', $result);
-		$this->assertStringContainsString('help command_name', $result);
-	}
+        // make sure the result looks like basic help
+        $this->assertStringContainsString('Displays basic usage information.', $result);
+        $this->assertStringContainsString('help command_name', $result);
+    }
 
-	public function testHelpCommandDetails()
-	{
-		$this->runner->index(['help', 'session:migration']);
-		$result = CITestStreamFilter::$buffer;
+    public function testHelpCommandDetails()
+    {
+        self::$runner->index(['help', 'session:migration']);
+        $result = CITestStreamFilter::$buffer;
 
-		// make sure the result looks like more detailed help
-		$this->assertStringContainsString('Description:', $result);
-		$this->assertStringContainsString('Usage:', $result);
-		$this->assertStringContainsString('Options:', $result);
-	}
+        // make sure the result looks like more detailed help
+        $this->assertStringContainsString('Description:', $result);
+        $this->assertStringContainsString('Usage:', $result);
+        $this->assertStringContainsString('Options:', $result);
+    }
 
-	public function testCommandProperties()
-	{
-		$this->runner->index(['help']);
-		$result   = CITestStreamFilter::$buffer;
-		$commands = $this->runner->getCommands();
-		$command  = new $commands['help']['class']($this->logger, service('commands'));
+    public function testCommandProperties()
+    {
+        $commands = self::$runner->getCommands();
+        $command  = new $commands['help']['class'](self::$logger, Services::commands());
 
-		$this->assertEquals('Displays basic usage information.', $command->description);
-		$this->assertNull($command->notdescription);
-	}
+        $this->assertSame('Displays basic usage information.', $command->description);
+        $this->assertNull($command->notdescription);
+    }
 
-	public function testEmptyCommand()
-	{
-		$this->runner->index([null, 'list']);
-		$result = CITestStreamFilter::$buffer;
+    public function testEmptyCommand()
+    {
+        self::$runner->index([null, 'list']);
 
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Lists the available commands.', $result);
-	}
+        // make sure the result looks like a command list
+        $this->assertStringContainsString('Lists the available commands.', CITestStreamFilter::$buffer);
+    }
 
-	public function testBadCommand()
-	{
-		$this->error_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-		$this->runner->index(['bogus']);
-		$result = CITestStreamFilter::$buffer;
-		stream_filter_remove($this->error_filter);
+    public function testBadCommand()
+    {
+        self::$runner->index(['bogus']);
 
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Command "bogus" not found', $result);
-	}
+        // make sure the result looks like a command list
+        $this->assertStringContainsString('Command "bogus" not found', CITestStreamFilter::$buffer);
+    }
 
-	public function testRemapEmptyFirstParams()
-	{
-		$this->runner->_remap('anyvalue', null, 'list');
-		$result = CITestStreamFilter::$buffer;
+    public function testRemapEmptyFirstParams()
+    {
+        self::$runner->_remap('anyvalue', null, 'list');
+        $result = CITestStreamFilter::$buffer;
 
-		// make sure the result looks like a command list
-		$this->assertStringContainsString('Lists the available commands.', $result);
-	}
-
+        // make sure the result looks like a command list
+        $this->assertStringContainsString('Lists the available commands.', $result);
+    }
 }

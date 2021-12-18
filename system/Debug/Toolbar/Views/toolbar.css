@@ -1,9 +1,10 @@
-/*! CodeIgniter 4 - Debug bar
- * ============================================================================
- * Forum: 	https://forum.codeigniter.com
- * Github:	https://github.com/codeigniter4/codeigniter4
- * Slack: 	https://codeigniterchat.slack.com
- * Website: https://codeigniter.com
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 #debug-icon {
   bottom: 0;
@@ -117,7 +118,6 @@
     overflow: hidden;
     overflow-y: auto;
     padding: 0 12px 0 12px;
-    /* give room for OS X scrollbar */
     white-space: nowrap;
     z-index: 10000; }
   #debug-bar.fixed-top {
@@ -200,7 +200,14 @@
       padding: 5px;
       position: relative; }
       #debug-bar .timeline td:first-child {
-        border-left: 0; }
+        border-left: 0;
+        max-width: none; }
+      #debug-bar .timeline td.child-container {
+        padding: 0px; }
+        #debug-bar .timeline td.child-container .timeline {
+          margin: 0px; }
+          #debug-bar .timeline td.child-container .timeline td:first-child:not(.child-container) {
+            padding-left: calc(5px + 10px * var(--level)); }
     #debug-bar .timeline .timer {
       border-radius: 4px;
       -moz-border-radius: 4px;
@@ -209,6 +216,22 @@
       padding: 5px;
       position: absolute;
       top: 30%; }
+    #debug-bar .timeline .timeline-parent {
+      cursor: pointer; }
+      #debug-bar .timeline .timeline-parent td:first-child nav {
+        background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
+        background-position: 0 25%;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin-right: 3px;
+        vertical-align: middle; }
+    #debug-bar .timeline .timeline-parent-open {
+      background-color: #DFDFDF; }
+      #debug-bar .timeline .timeline-parent-open td:first-child nav {
+        background-position: 0 75%; }
+    #debug-bar .timeline .child-row:hover {
+      background: transparent; }
   #debug-bar .route-params,
   #debug-bar .route-params-item {
     vertical-align: top; }
@@ -244,7 +267,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #debug-icon a:active, #debug-icon a:link, #debug-icon a:visited {
+  #debug-icon a:active,
+  #debug-icon a:link,
+  #debug-icon a:visited {
     color: #DD8615; }
 
 #debug-bar {
@@ -267,7 +292,7 @@
   #debug-bar button {
     background-color: #FFFFFF; }
   #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #debug-bar table tbody tr:hover {
     background-color: #DFDFDF; }
   #debug-bar table tbody tr.current {
@@ -319,6 +344,8 @@
 
 .debug-view.show-view {
   border-color: #DD8615; }
+#debug-bar tr[data-toggle] {
+  cursor: pointer; }
 
 .debug-view-path {
   background-color: #FDC894;
@@ -330,7 +357,9 @@
     box-shadow: 0 0 4px #DFDFDF;
     -moz-box-shadow: 0 0 4px #DFDFDF;
     -webkit-box-shadow: 0 0 4px #DFDFDF; }
-    #debug-icon a:active, #debug-icon a:link, #debug-icon a:visited {
+    #debug-icon a:active,
+    #debug-icon a:link,
+    #debug-icon a:visited {
       color: #DD8615; }
   #debug-bar {
     background-color: #252525;
@@ -352,7 +381,7 @@
     #debug-bar button {
       background-color: #252525; }
     #debug-bar table strong {
-      color: #FDC894; }
+      color: #DD8615; }
     #debug-bar table tbody tr:hover {
       background-color: #434343; }
     #debug-bar table tbody tr.current {
@@ -380,7 +409,7 @@
     #debug-bar .muted {
       color: #DFDFDF; }
       #debug-bar .muted td {
-        color: #434343; }
+        color: #797979; }
       #debug-bar .muted:hover td {
         color: #DFDFDF; }
     #debug-bar #toolbar-position,
@@ -414,7 +443,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #toolbarContainer.dark #debug-icon a:active, #toolbarContainer.dark #debug-icon a:link, #toolbarContainer.dark #debug-icon a:visited {
+  #toolbarContainer.dark #debug-icon a:active,
+  #toolbarContainer.dark #debug-icon a:link,
+  #toolbarContainer.dark #debug-icon a:visited {
     color: #DD8615; }
 
 #toolbarContainer.dark #debug-bar {
@@ -437,11 +468,13 @@
   #toolbarContainer.dark #debug-bar button {
     background-color: #252525; }
   #toolbarContainer.dark #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #toolbarContainer.dark #debug-bar table tbody tr:hover {
     background-color: #434343; }
   #toolbarContainer.dark #debug-bar table tbody tr.current {
     background-color: #FDC894; }
+  #toolbarContainer.dark #ci-database table tbody tr.duplicate {
+    background-color: #434343;}
     #toolbarContainer.dark #debug-bar table tbody tr.current td {
       color: #252525; }
     #toolbarContainer.dark #debug-bar table tbody tr.current:hover td {
@@ -465,7 +498,7 @@
   #toolbarContainer.dark #debug-bar .muted {
     color: #DFDFDF; }
     #toolbarContainer.dark #debug-bar .muted td {
-      color: #434343; }
+      color: #797979; }
     #toolbarContainer.dark #debug-bar .muted:hover td {
       color: #DFDFDF; }
   #toolbarContainer.dark #debug-bar #toolbar-position,
@@ -505,7 +538,9 @@
   box-shadow: 0 0 4px #DFDFDF;
   -moz-box-shadow: 0 0 4px #DFDFDF;
   -webkit-box-shadow: 0 0 4px #DFDFDF; }
-  #toolbarContainer.light #debug-icon a:active, #toolbarContainer.light #debug-icon a:link, #toolbarContainer.light #debug-icon a:visited {
+  #toolbarContainer.light #debug-icon a:active,
+  #toolbarContainer.light #debug-icon a:link,
+  #toolbarContainer.light #debug-icon a:visited {
     color: #DD8615; }
 
 #toolbarContainer.light #debug-bar {
@@ -528,11 +563,13 @@
   #toolbarContainer.light #debug-bar button {
     background-color: #FFFFFF; }
   #toolbarContainer.light #debug-bar table strong {
-    color: #FDC894; }
+    color: #DD8615; }
   #toolbarContainer.light #debug-bar table tbody tr:hover {
     background-color: #DFDFDF; }
   #toolbarContainer.light #debug-bar table tbody tr.current {
     background-color: #FDC894; }
+  #toolbarContainer.light #ci-database table tbody tr.duplicate {
+    background-color: #DFDFDF;}
     #toolbarContainer.light #debug-bar table tbody tr.current:hover td {
       background-color: #DD4814;
       color: #FFFFFF; }
@@ -552,9 +589,9 @@
     -moz-box-shadow: 0 1px 4px #DFDFDF;
     -webkit-box-shadow: 0 1px 4px #DFDFDF; }
   #toolbarContainer.light #debug-bar .muted {
-    color: #434343; }
+    color: #797979; }
     #toolbarContainer.light #debug-bar .muted td {
-      color: #DFDFDF; }
+      color: #797979; }
     #toolbarContainer.light #debug-bar .muted:hover td {
       color: #434343; }
   #toolbarContainer.light #debug-bar #toolbar-position,

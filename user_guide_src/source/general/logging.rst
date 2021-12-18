@@ -10,8 +10,7 @@ You can log information to the local log files by using the ``log_message()`` me
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself::
 
-    if ($some_var == '')
-    {
+    if ($some_var === '') {
         log_message('error', 'Some variable did not contain a value.');
     }
 
@@ -39,7 +38,7 @@ Configuration
 =============
 
 You can modify which levels are actually logged, as well as assign different Loggers to handle different levels, within
-the ``/app/Config/Logger.php`` configuration file.
+the **app/Config/Logger.php** configuration file.
 
 The ``threshold`` value of the config file determines which levels are logged across your application. If any levels
 are requested to be logged by the application, but the threshold doesn't allow them to log currently, they will be
@@ -62,13 +61,15 @@ Using Multiple Log Handlers
 ---------------------------
 
 The logging system can support multiple methods of handling logging running at the same time. Each handler can
-be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
+be set to handle specific levels and ignore the rest. Currently, three handlers come with a default install:
 
 - **File Handler** is the default handler and will create a single file for every day locally. This is the
   recommended method of logging.
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
   installed in the Chrome web browser, you can use this handler to display the log information in
   Chrome's console window.
+- **Errorlog Handler** This handler will take advantage of PHP's native ``error_log()`` function and write
+  the logs there. Currently, only the ``0`` and ``4`` message types of ``error_log()`` are supported.
 
 The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
 an array of handlers and their configuration. Each handler is specified with the key being the fully
@@ -78,13 +79,8 @@ Each handler's section will have one property in common: ``handles``, which is a
 ::
 
     public $handlers = [
-
-        //--------------------------------------------------------------------
         // File Handler
-        //--------------------------------------------------------------------
-
         'CodeIgniter\Log\Handlers\FileHandler' => [
-
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
         ]
     ];
@@ -110,12 +106,9 @@ If you want to log an Exception or an Error, you can use the key of 'exception',
 Exception or Error itself. A string will be generated from that object containing the error message, the
 file name and line number. You must still provide the exception placeholder in the message::
 
-    try
-    {
+    try {
         // Something throws error here
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
         log_message('error', '[ERROR] {exception}', ['exception' => $e]);
     }
 
@@ -143,12 +136,12 @@ Using Third-Party Loggers
 =========================
 
 You can use any other logger that you might like as long as it extends from either
-``Psr\Log\LoggerInterface`` and is `PSR3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
-that you can easily drop in use for any PSR3-compatible logger, or create your own.
+``Psr\Log\LoggerInterface`` and is `PSR-3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
+that you can easily drop in use for any PSR-3 compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
-the ``/app/Config/Autoload.php`` configuration file, or through another autoloader,
-like Composer. Next, you should modify ``/app/Config/Services.php`` to point the ``logger``
+the **app/Config/Autoload.php** configuration file, or through another autoloader,
+like Composer. Next, you should modify **app/Config/Services.php** to point the ``logger``
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.

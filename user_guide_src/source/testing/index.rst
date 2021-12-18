@@ -2,7 +2,7 @@
 Testing
 #######
 
-CodeIgniter ships with a number of tools to help you test and debug your application thoroughly. 
+CodeIgniter ships with a number of tools to help you test and debug your application thoroughly.
 The following sections should get you quickly testing your applications.
 
 .. toctree::
@@ -13,5 +13,7 @@ The following sections should get you quickly testing your applications.
     Generating Data <fabricator>
     Controller Testing <controllers>
     HTTP Testing <feature>
+    response
     benchmark
     debugging
+    Mocking <mocking>

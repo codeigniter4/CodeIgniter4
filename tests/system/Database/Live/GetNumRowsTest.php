@@ -1,42 +1,57 @@
-<?php namespace Builder;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
 
-class GetNumRowsTest extends CIDatabaseTestCase
+namespace CodeIgniter\Database\Live;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+
+/**
+ * @internal
+ */
+final class GetNumRowsTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $refresh = true;
+    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
 
-	/**
-	 * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
-	 * {@inheritDoc}
-	 *
-	 * @see \CodeIgniter\Test\CIDatabaseTestCase::setUp()
-	 */
-	public function setUp(): void
-	{
-		parent::setUp();
-	}
+    /**
+     * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
+     * {@inheritDoc}
+     *
+     * @see \CodeIgniter\Test\CIDatabaseTestCase::setUp()
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
 
-	/**
-	 * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
-	 * {@inheritDoc}
-	 *
-	 * @see \CodeIgniter\Test\CIDatabaseTestCase::tearDown()
-	 */
-	public function tearDown(): void
-	{
-		parent::tearDown();
-	}
+    /**
+     * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
+     * {@inheritDoc}
+     *
+     * @see \CodeIgniter\Test\CIDatabaseTestCase::tearDown()
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+    }
 
-	/**
-	 * tests newly added ResultInterface::getNumRows with a live db
-	 */
-	public function testGetRowNum()
-	{
-		$query = $this->db->table('job')->get();
-		$this->assertEquals(4, $query->getNumRows());
-	}
-
+    /**
+     * tests newly added ResultInterface::getNumRows with a live db
+     */
+    public function testGetRowNum()
+    {
+        $query = $this->db->table('job')->get();
+        $this->assertSame(4, $query->getNumRows());
+    }
 }

@@ -1,71 +1,92 @@
-<?php namespace CodeIgniter\Cache\Handlers;
+<?php
 
-class DummyHandlerTest extends \CodeIgniter\Test\CIUnitTestCase
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Cache\Handlers;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+/**
+ * @internal
+ */
+final class DummyHandlerTest extends CIUnitTestCase
 {
-	private $dummyHandler;
+    private $handler;
 
-	protected function setUp(): void
-	{
-		$this->dummyHandler = new DummyHandler();
-		$this->dummyHandler->initialize();
-	}
+    protected function setUp(): void
+    {
+        $this->handler = new DummyHandler();
+        $this->handler->initialize();
+    }
 
-	public function testNew()
-	{
-		$this->assertInstanceOf(DummyHandler::class, $this->dummyHandler);
-	}
+    public function testNew()
+    {
+        $this->assertInstanceOf(DummyHandler::class, $this->handler);
+    }
 
-	public function testGet()
-	{
-		$this->assertNull($this->dummyHandler->get('key'));
-	}
+    public function testGet()
+    {
+        $this->assertNull($this->handler->get('key'));
+    }
 
-	public function testRemember()
-	{
-		$dummyHandler = $this->dummyHandler->remember('key', 2, function () {
-			return 'value';
-		});
+    public function testRemember()
+    {
+        $dummyHandler = $this->handler->remember('key', 2, static function () {
+            return 'value';
+        });
 
-		$this->assertNull($dummyHandler);
-	}
+        $this->assertNull($dummyHandler);
+    }
 
-	public function testSave()
-	{
-		$this->assertTrue($this->dummyHandler->save('key', 'value'));
-	}
+    public function testSave()
+    {
+        $this->assertTrue($this->handler->save('key', 'value'));
+    }
 
-	public function testDelete()
-	{
-		$this->assertTrue($this->dummyHandler->delete('key'));
-	}
+    public function testDelete()
+    {
+        $this->assertTrue($this->handler->delete('key'));
+    }
 
-	public function testIncrement()
-	{
-		$this->assertTrue($this->dummyHandler->increment('key'));
-	}
+    public function testDeleteMatching()
+    {
+        $this->assertSame(0, $this->handler->deleteMatching('key*'));
+    }
 
-	public function testDecrement()
-	{
-		$this->assertTrue($this->dummyHandler->decrement('key'));
-	}
+    public function testIncrement()
+    {
+        $this->assertTrue($this->handler->increment('key'));
+    }
 
-	public function testClean()
-	{
-		$this->assertTrue($this->dummyHandler->clean());
-	}
+    public function testDecrement()
+    {
+        $this->assertTrue($this->handler->decrement('key'));
+    }
 
-	public function testGetCacheInfo()
-	{
-		$this->assertNull($this->dummyHandler->getCacheInfo());
-	}
+    public function testClean()
+    {
+        $this->assertTrue($this->handler->clean());
+    }
 
-	public function testGetMetaData()
-	{
-		$this->assertNull($this->dummyHandler->getMetaData('key'));
-	}
+    public function testGetCacheInfo()
+    {
+        $this->assertNull($this->handler->getCacheInfo());
+    }
 
-	public function testIsSupported()
-	{
-		$this->assertTrue($this->dummyHandler->isSupported());
-	}
+    public function testGetMetaData()
+    {
+        $this->assertNull($this->handler->getMetaData('key'));
+    }
+
+    public function testIsSupported()
+    {
+        $this->assertTrue($this->handler->isSupported());
+    }
 }

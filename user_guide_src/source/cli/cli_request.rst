@@ -37,7 +37,7 @@ Returns the value of a specific command line argument deemed to be an option::
 
     // command line: php index.php users 21 profile --foo bar
     echo $request->getOption('foo');  // bar
-    echo $request->getOption('notthere'); // NULL
+    echo $request->getOption('notthere'); // null
 
 **getOptionString()**
 

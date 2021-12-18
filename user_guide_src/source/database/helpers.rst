@@ -2,6 +2,10 @@
 Query Helper Methods
 ####################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Information From Executing a Query
 ==================================
 
@@ -40,13 +44,13 @@ Example::
 
     // Produces an integer, like 25
 
-    **$db->countAllResults()**
+**$db->countAllResults()**
 
 Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example::
 
-    echo $db->table('my_table')->countAllResults();
+    echo $db->table('my_table')->like('title', 'match')->countAllResults();
 
     // Produces an integer, like 5
 

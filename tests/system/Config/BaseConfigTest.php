@@ -1,289 +1,275 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Config;
 
-class BaseConfigTest extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+use Encryption;
+use RegistrarConfig;
+use RuntimeException;
+use SimpleConfig;
+
+/**
+ * @internal
+ */
+final class BaseConfigTest extends CIUnitTestCase
 {
+    protected $fixturesFolder;
 
-	protected $fixturesFolder;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-	//--------------------------------------------------------------------
+        $this->fixturesFolder = __DIR__ . '/fixtures';
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+        if (! class_exists('SimpleConfig', false)) {
+            require $this->fixturesFolder . '/SimpleConfig.php';
+        }
 
-		$this->fixturesFolder = __DIR__ . '/fixtures';
+        if (! class_exists('RegistrarConfig', false)) {
+            require $this->fixturesFolder . '/RegistrarConfig.php';
+        }
 
-		if (! class_exists('SimpleConfig', false))
-		{
-			require $this->fixturesFolder . '/SimpleConfig.php';
-		}
+        if (! class_exists('Encryption', false)) {
+            require $this->fixturesFolder . '/Encryption.php';
+        }
+    }
 
-		if (! class_exists('RegistrarConfig', false))
-		{
-			require $this->fixturesFolder . '/RegistrarConfig.php';
-		}
+    public function testBasicValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
 
-		if (! class_exists('Encryption', false))
-		{
-			require $this->fixturesFolder . '/Encryption.php';
-		}
-	}
+        $this->assertNull($config->FOO);
+        $this->assertSame('', $config->echo);
+        $this->assertTrue($config->foxtrot);
+        $this->assertSame(18, $config->golf);
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testServerValues()
+    {
+        $_SERVER = [
+            'simpleconfig.shortie' => 123,
+            'SimpleConfig.longie'  => 456,
+        ];
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
 
-	public function testBasicValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
-		$config = new \SimpleConfig();
+        $this->assertSame('123', $config->shortie);
+        $this->assertSame('456', $config->longie);
+    }
 
-		$this->assertEquals('bar', $config->FOO);
-		// empty treated as boolean false
-		$this->assertEquals(false, $config->echo);
-		// 'true' should be treated as boolean true
-		$this->assertTrue($config->foxtrot);
-		// numbers should be treated properly
-		$this->assertEquals(18, $config->golf);
-	}
+    public function testEnvironmentOverrides()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testServerValues()
-	{
-		$_SERVER = [
-			'simpleconfig.shortie' => 123,
-			'SimpleConfig.longie'  => 456,
-		];
-		$dotenv  = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
-		$config = new \SimpleConfig();
+        $config = new SimpleConfig();
 
-		$this->assertEquals(123, $config->shortie);
-		$this->assertEquals(456, $config->longie);
-	}
+        // override config with ENV var
+        $this->assertSame('pow', $config->alpha);
+        // config should not be over-written by wrongly named ENV var
+        $this->assertSame('three', $config->charlie);
+        // override config with shortPrefix ENV var
+        $this->assertSame('hubbahubba', $config->delta);
+        // incorrect env name should not inject property
+        $this->assertObjectNotHasAttribute('notthere', $config);
+        // empty ENV var should not affect config setting
+        $this->assertSame('pineapple', $config->fruit);
+        // non-empty ENV var should overrideconfig setting
+        $this->assertSame('banana', $config->dessert);
+        // null property should not be affected
+        $this->assertNull($config->QEMPTYSTR);
+        // property name with underscore
+        $this->assertSame('bar', $config->onedeep_value);
+        // array property name with underscore and key with underscore
+        $this->assertSame('foo', $config->one_deep['under_deep']);
+    }
 
-	//--------------------------------------------------------------------
+    public function testPrefixedValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
 
-	public function testEnvironmentOverrides()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
+        $config = new SimpleConfig();
 
-		$config = new \SimpleConfig();
+        $this->assertSame('baz', $config->onedeep);
+    }
 
-		// override config with ENV var
-		$this->assertEquals('pow', $config->alpha);
-		// config should not be over-written by wrongly named ENV var
-		$this->assertEquals('three', $config->charlie);
-		// override config with shortPrefix ENV var
-		$this->assertEquals('hubbahubba', $config->delta);
-		// incorrect env name should not inject property
-		$this->assertObjectNotHasAttribute('notthere', $config);
-		// same ENV var as property, but not namespaced, still over-rides
-		$this->assertEquals('kazaam', $config->bravo);
-		// empty ENV var should not affect config setting
-		$this->assertEquals('pineapple', $config->fruit);
-		// non-empty ENV var should overrideconfig setting
-		$this->assertEquals('banana', $config->dessert);
-		// null property should not be affected
-		$this->assertNull($config->QEMPTYSTR);
-	}
+    public function testPrefixedArrayValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
 
-	//--------------------------------------------------------------------
+        $config = new SimpleConfig();
 
-	public function testPrefixedValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
+        $this->assertSame('ci4', $config->default['name']);
+        $this->assertSame('Malcolm', $config->crew['captain']);
+        $this->assertSame('Spock', $config->crew['science']);
+        $this->assertArrayNotHasKey('pilot', $config->crew);
+        $this->assertTrue($config->crew['comms']);
+        $this->assertFalse($config->crew['doctor']);
+    }
 
-		$config = new \SimpleConfig();
+    public function testArrayValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
 
-		$this->assertEquals('baz', $config->onedeep);
-	}
+        $config = new SimpleConfig();
 
-	//--------------------------------------------------------------------
+        $this->assertSame('complex', $config->simple['name']);
+        $this->assertSame('foo', $config->first);
+        $this->assertSame('bar', $config->second);
+    }
 
-	public function testPrefixedArrayValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
+    public function testSetsDefaultValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
+        $dotenv->load();
 
-		$config = new \SimpleConfig();
+        $config = new SimpleConfig();
 
-		$this->assertEquals('ci4', $config->default['name']);
-		$this->assertEquals('Malcolm', $config->crew['captain']);
-		$this->assertEquals('Spock', $config->crew['science']);
-		$this->assertFalse(array_key_exists('pilot', $config->crew));
-		$this->assertTrue($config->crew['comms']);
-		$this->assertFalse($config->crew['doctor']);
-	}
+        $this->assertSame('foo', $config->first);
+        $this->assertSame('bar', $config->second);
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testSetsDefaultValuesEncryptionUsingHex2Bin()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
+        $dotenv->load();
+        $config = new Encryption();
 
-	public function testArrayValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, '.env');
-		$dotenv->load();
+        // override config with ENV var
+        $this->assertSame('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($config->key));
+        $this->assertSame('OpenSSL', $config->driver);
+    }
 
-		$config = new \SimpleConfig();
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testSetDefaultValuesEncryptionUsingBase64()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
+        $dotenv->load();
+        $config = new Encryption('base64');
 
-		$this->assertEquals('complex', $config->simple['name']);
-		$this->assertEquals('foo', $config->first);
-		$this->assertEquals('bar', $config->second);
-	}
+        $this->assertSame('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($config->key));
+        $this->assertSame('OpenSSL', $config->driver);
+    }
 
-	//--------------------------------------------------------------------
+    public function testSetsDefaultValuesHex2Bin()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
+        $dotenv->load();
+        $config = new Encryption();
 
-	public function testSetsDefaultValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
-		$dotenv->load();
+        // override config with ENV var
+        $this->assertSame('84cf2c0811d5daf9e1c897825a3debce91f9a33391e639f72f7a4740b30675a2', bin2hex($config->key));
+        $this->assertSame('MCrypt', $config->driver);
+    }
 
-		$config = new \SimpleConfig();
+    public function testSetDefaultValuesBase64()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
+        $dotenv->load();
+        $config = new Encryption('base64');
 
-		$this->assertEquals('foo', $config->first);
-		$this->assertEquals('bar', $config->second);
-	}
+        $this->assertSame('Psf8bUHRh1UJYG2M7e+5ec3MdjpKpzAr0twamcAvOcI=', base64_encode($config->key));
+        $this->assertSame('MCrypt', $config->driver);
+    }
 
-	//--------------------------------------------------------------------
+    public function testRecognizesLooseValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
+        $dotenv->load();
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testSetsDefaultValuesEncryptionUsingHex2Bin()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
-		$dotenv->load();
-		$config = new \Encryption();
+        $config = new SimpleConfig();
 
-		// override config with ENV var
-		$this->assertEquals('f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6', bin2hex($config->key));
-		$this->assertEquals('OpenSSL', $config->driver);
-	}
+        $this->assertSame(0, (int) $config->QZERO);
+        $this->assertSame('0', $config->QZEROSTR);
+        $this->assertSame(' ', $config->QEMPTYSTR);
+        $this->assertFalse($config->QFALSE);
+    }
 
-	//--------------------------------------------------------------------
+    public function testRegistrars()
+    {
+        $config              = new RegistrarConfig();
+        $config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
+        $this->setPrivateProperty($config, 'didDiscovery', true);
+        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState  disabled
-	 */
-	public function testSetDefaultValuesEncryptionUsingBase64()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
-		$dotenv->load();
-		$config = new \Encryption('base64');
+        // no change to unmodified property
+        $this->assertSame('bar', $config->foo);
+        // add to an existing array property
+        $this->assertSame(['baz', 'first', 'second'], $config->bar);
+        // add a new property
+        $this->assertSame('nice', $config->format);
+        // add a new array property
+        $this->assertSame(['apple', 'banana'], $config->fruit);
+    }
 
-		$this->assertEquals('L40bKo6b8Nu541LeVeZ1i5RXfGgnkar42CPTfukhGhw=', base64_encode($config->key));
-		$this->assertEquals('OpenSSL', $config->driver);
-	}
+    public function testBadRegistrar()
+    {
+        // Shouldn't change any values.
+        $config              = new RegistrarConfig();
+        $config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
+        $this->setPrivateProperty($config, 'didDiscovery', true);
 
-	//--------------------------------------------------------------------
+        $this->expectException(RuntimeException::class);
+        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
 
-	public function testSetsDefaultValuesHex2Bin()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
-		$dotenv->load();
-		$config = new \Encryption();
+        $this->assertSame('bar', $config->foo);
+    }
 
-		// override config with ENV var
-		$this->assertEquals('84cf2c0811d5daf9e1c897825a3debce91f9a33391e639f72f7a4740b30675a2', bin2hex($config->key));
-		$this->assertEquals('MCrypt', $config->driver);
-	}
+    public function testNotEnabled()
+    {
+        $modulesConfig          = config('Modules');
+        $modulesConfig->enabled = false;
 
-	//--------------------------------------------------------------------
+        $config              = new RegistrarConfig();
+        $config::$registrars = [];
+        $expected            = $config::$registrars;
 
-	public function testSetDefaultValuesBase64()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
-		$dotenv->load();
-		$config = new \Encryption('base64');
+        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
 
-		$this->assertEquals('Psf8bUHRh1UJYG2M7e+5ec3MdjpKpzAr0twamcAvOcI=', base64_encode($config->key));
-		$this->assertEquals('MCrypt', $config->driver);
-	}
+        $this->assertSame($expected, $config::$registrars);
+    }
 
-	//--------------------------------------------------------------------
+    public function testDidDiscovery()
+    {
+        $modulesConfig          = config('Modules');
+        $modulesConfig->enabled = true;
 
-	public function testRecognizesLooseValues()
-	{
-		$dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
-		$dotenv->load();
+        $config              = new RegistrarConfig();
+        $config::$registrars = [];
+        $this->setPrivateProperty($config, 'didDiscovery', false);
 
-		$config = new \SimpleConfig();
+        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method();
 
-		$this->assertEquals(0, $config->QZERO);
-		$this->assertSame('0', $config->QZEROSTR);
-		$this->assertEquals(' ', $config->QEMPTYSTR);
-		$this->assertFalse($config->QFALSE);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testRegistrars()
-	{
-		$config              = new \RegistrarConfig();
-		$config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
-		$this->setPrivateProperty($config, 'didDiscovery', true);
-		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-		$method();
-
-		// no change to unmodified property
-		$this->assertEquals('bar', $config->foo);
-		// add to an existing array property
-		$this->assertEquals(['baz', 'first', 'second'], $config->bar);
-		// add a new property
-		$this->assertEquals('nice', $config->format);
-		// add a new array property
-		$this->assertEquals(['apple', 'banana'], $config->fruit);
-	}
-
-	public function testBadRegistrar()
-	{
-		// Shouldn't change any values.
-		$config              = new \RegistrarConfig();
-		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
-		$this->setPrivateProperty($config, 'didDiscovery', true);
-
-		$this->expectException(\RuntimeException::class);
-		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-		$method();
-
-		$this->assertEquals('bar', $config->foo);
-	}
-
-	public function testNotEnabled()
-	{
-		$modulesConfig          = config('Modules');
-		$modulesConfig->enabled = false;
-
-		$config              = new \RegistrarConfig();
-		$config::$registrars = [];
-		$expected            = $config::$registrars;
-
-		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-		$method();
-
-		$this->assertEquals($expected, $config::$registrars);
-	}
-
-	public function testDidDiscovery()
-	{
-		$modulesConfig          = config('Modules');
-		$modulesConfig->enabled = true;
-
-		$config              = new \RegistrarConfig();
-		$config::$registrars = [];
-		$this->setPrivateProperty($config, 'didDiscovery', false);
-
-		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-		$method();
-
-		$this->assertEquals(true, $this->getPrivateProperty($config, 'didDiscovery'));
-	}
-
+        $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
+    }
 }

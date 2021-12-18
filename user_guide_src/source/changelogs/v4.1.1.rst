@@ -1,5 +1,5 @@
 Version 4.1.1
-====================================================
+=============
 
 Release Date: February 1, 2021
 
@@ -7,6 +7,6 @@ Release Date: February 1, 2021
 
 Bugs Fixed:
 
-- Fixed an issue where **.gitattributes** was preventing framework downloads.
+- Fixed an issue where ``.gitattributes`` was preventing framework downloads.
 
 Note that this fix was also applied retroactively to ``4.0.5`` on the **framework** repo.

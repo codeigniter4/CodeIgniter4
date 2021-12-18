@@ -63,7 +63,7 @@ Service Accessors
     or return a default value if it is not found. Will format boolean values
     to actual booleans instead of string representations.
 
-    Especially useful when used in conjunction with .env files for setting
+    Especially useful when used in conjunction with **.env** files for setting
     values that are specific to the environment itself, like database
     settings, API keys, etc.
 
@@ -81,7 +81,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw, null
+    Valid context values: html, js, css, url, attr, raw
 
 .. php:function:: helper($filename)
 
@@ -179,11 +179,12 @@ Service Accessors
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
 
-    Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-    that data will persistent between multiple calls to `view()` within the same request. By default, the
-    data for that view is forgotten after displaying that single view file.
+    Currently, only two options are available for use within the ``$options`` array:
 
-    The $option array is provided primarily to facilitate third-party integrations with
+    - ``saveData`` specifies that data will persistent between multiple calls to ``view()`` within the same request. If you do not want the data to be persisted, specify false.
+    - ``debug`` can be set to false to disable the addition of debug code for :ref:`Debug Toolbar <the-debug-toolbar>`.
+
+    The ``$option`` array is provided primarily to facilitate third-party integrations with
     libraries like Twig.
 
     Example::
@@ -268,18 +269,18 @@ Miscellaneous Functions
 .. php:function:: function_usable ( $function_name )
 
     :param string $function_name: Function to check for
-    :returns: TRUE if the function exists and is safe to call, FALSE otherwise.
+    :returns: true if the function exists and is safe to call, false otherwise.
     :rtype: bool
 
 .. php:function:: is_cli ()
 
-    :returns: TRUE if the script is being executed from the command line or FALSE otherwise.
+    :returns: true if the script is being executed from the command line or false otherwise.
     :rtype: bool
 
 .. php:function:: is_really_writable ( $file )
 
     :param string $file: The filename being checked.
-    :returns: TRUE if you can write to the file, FALSE otherwise.
+    :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
 .. php:function:: log_message ($level, $message [, $context])
@@ -287,7 +288,7 @@ Miscellaneous Functions
     :param   string   $level: The level of severity
     :param   string   $message: The message that is to be logged.
     :param   array    $context: An associative array of tags and their values that should be replaced in $message
-    :returns: TRUE if was logged successfully or FALSE if there was a problem logging it
+    :returns: true if was logged successfully or false if there was a problem logging it
     :rtype: bool
 
     Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
@@ -331,14 +332,14 @@ Miscellaneous Functions
         // Go to a named/reverse-routed URI
         return redirect('named_route');
 
-.. php:function:: remove_invisible_characters($str[, $urlEncoded = TRUE])
+.. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
     :param    string    $str: Input string
     :param    bool    $urlEncoded: Whether to remove URL-encoded characters as well
     :returns:    Sanitized string
     :rtype:    string
 
-    This function prevents inserting NULL characters between ASCII
+    This function prevents inserting null characters between ASCII
     characters, like Java\\0script.
 
     Example::
@@ -386,7 +387,7 @@ Miscellaneous Functions
 .. php:function:: slash_item ( $item )
 
     :param string $item: Config item name
-    :returns: The configuration item or NULL if the item doesn't exist
+    :returns: The configuration item or null if the item doesn't exist
     :rtype:  string|null
 
     Fetch a config file item with slash appended (if not empty)
@@ -394,7 +395,7 @@ Miscellaneous Functions
 .. php:function:: stringify_attributes ( $attributes [, $js] )
 
     :param   mixed    $attributes: string, array of key value pairs, or object
-    :param   boolean  $js: TRUE if values do not need quotes (Javascript-style)
+    :param   boolean  $js: true if values do not need quotes (Javascript-style)
     :returns: String containing the attribute key/value pairs, comma-separated
     :rtype: string
 

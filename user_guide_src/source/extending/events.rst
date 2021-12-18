@@ -23,29 +23,29 @@ Most events are defined within the **app/Config/Events.php** file. You can subsc
 the Events class' ``on()`` method. The first parameter is the name of the event to subscribe to. The second parameter is
 a callable that will be run when that event is triggered::
 
-	use CodeIgniter\Events\Events;
+    use CodeIgniter\Events\Events;
 
-	Events::on('pre_system', ['MyClass', 'MyFunction']);
+    Events::on('pre_system', ['MyClass', 'MyFunction']);
 
 In this example, whenever the **pre_controller** event is executed, an instance of ``MyClass`` is created and the
 ``MyFunction`` method is run. Note that the second parameter can be *any* form of
 `callable <https://www.php.net/manual/en/function.is-callable.php>`_ that PHP recognizes::
 
-	// Call a standalone function
-	Events::on('pre_system', 'some_function');
+    // Call a standalone function
+    Events::on('pre_system', 'some_function');
 
-	// Call on an instance method
-	$user = new User();
-	Events::on('pre_system', [$user, 'some_method']);
+    // Call on an instance method
+    $user = new User();
+    Events::on('pre_system', [$user, 'some_method']);
 
-	// Call on a static method
-	Events::on('pre_system', 'SomeClass::someMethod');
+    // Call on a static method
+    Events::on('pre_system', 'SomeClass::someMethod');
 
-	// Use a Closure
-	Events::on('pre_system', function(...$params)
-	{
-		. . .
-	});
+    // Use a Closure
+    Events::on('pre_system', function (...$params)
+    {
+        . . .
+    });
 
 Setting Priorities
 ------------------
@@ -61,9 +61,9 @@ Any subscribers with the same priority will be executed in the order they were d
 Three constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
 but you might find they aid readability::
 
-	define('EVENT_PRIORITY_LOW', 200);
-	define('EVENT_PRIORITY_NORMAL', 100);
-	define('EVENT_PRIORITY_HIGH', 10);
+    define('EVENT_PRIORITY_LOW', 200);
+    define('EVENT_PRIORITY_NORMAL', 100);
+    define('EVENT_PRIORITY_HIGH', 10);
 
 Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
 the subscribers will stop.
@@ -74,16 +74,16 @@ Publishing your own Events
 The Events library makes it simple for you to create events in your own code, also. To use this feature, you would simply
 need to call the ``trigger()`` method on the **Events** class with the name of the event::
 
-	\CodeIgniter\Events\Events::trigger('some_event');
+    \CodeIgniter\Events\Events::trigger('some_event');
 
 You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be
 given the arguments in the same order as defined::
 
-	\CodeIgniter\Events\Events::trigger('some_events', $foo, $bar, $baz);
+    \CodeIgniter\Events\Events::trigger('some_events', $foo, $bar, $baz);
 
-	Events::on('some_event', function($foo, $bar, $baz) {
-		...
-	});
+    Events::on('some_event', function ($foo, $bar, $baz) {
+        ...
+    });
 
 Simulating Events
 =================

@@ -1,22 +1,21 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
-use Config\Autoload;
-use Config\Modules;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CLI\Commands;
+use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Debug\Exceptions;
@@ -33,6 +32,7 @@ use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -53,6 +53,22 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
+use Config\App;
+use Config\Autoload;
+use Config\Cache;
+use Config\Encryption;
+use Config\Exceptions as ConfigExceptions;
+use Config\Filters as ConfigFilters;
+use Config\Format as ConfigFormat;
+use Config\Honeypot as ConfigHoneyPot;
+use Config\Images;
+use Config\Migrations;
+use Config\Modules;
+use Config\Pager as ConfigPager;
+use Config\Services as AppServices;
+use Config\Toolbar as ConfigToolbar;
+use Config\Validation as ConfigValidation;
+use Config\View as ConfigView;
 
 /**
  * Services Configuration file.
@@ -68,323 +84,295 @@ use CodeIgniter\View\View;
  * is that IDEs are able to determine what class you are calling
  * whereas with DI Containers there usually isn't a way for them to do this.
  *
+ * Warning: To allow overrides by service providers do not use static calls,
+ * instead call out to \Config\Services (imported as AppServices).
+ *
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
  *
- * @method static CacheInterface cache(\Config\Cache $config = null, $getShared = true)
- * @method static CLIRequest clirequest(\Config\App $config = null, $getShared = true)
+ * @method static CacheInterface cache(Cache $config = null, $getShared = true)
+ * @method static CLIRequest clirequest(App $config = null, $getShared = true)
+ * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
- * @method static CURLRequest curlrequest($options = [], \CodeIgniter\HTTP\ResponseInterface $response = null, \Config\App $config = null, $getShared = true)
+ * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
- * @method static EncrypterInterface encrypter(\Config\Encryption $config = null, $getShared = false)
- * @method static Exceptions exceptions(\Config\Exceptions $config = null, \CodeIgniter\HTTP\IncomingRequest $request = null, \CodeIgniter\HTTP\Response $response = null, $getShared = true)
- * @method static Filters filters(\Config\Filters $config = null, $getShared = true)
- * @method static Format format(\Config\Format $config = null, $getShared = true)
- * @method static Honeypot honeypot(\Config\Honeypot $config = null, $getShared = true)
- * @method static BaseHandler image($handler = null, \Config\Images $config = null, $getShared = true)
+ * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)
+ * @method static Exceptions exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
+ * @method static Filters filters(ConfigFilters $config = null, $getShared = true)
+ * @method static Format format(ConfigFormat $config = null, $getShared = true)
+ * @method static Honeypot honeypot(ConfigHoneyPot $config = null, $getShared = true)
+ * @method static BaseHandler image($handler = null, Images $config = null, $getShared = true)
  * @method static Iterator iterator($getShared = true)
  * @method static Language language($locale = null, $getShared = true)
  * @method static Logger logger($getShared = true)
- * @method static MigrationRunner migrations(\Config\Migrations $config = null, \CodeIgniter\Database\ConnectionInterface $db = null, $getShared = true)
- * @method static Negotiate negotiator(\CodeIgniter\HTTP\RequestInterface $request = null, $getShared = true)
- * @method static Pager pager(\Config\Pager $config = null, \CodeIgniter\View\RendererInterface $view = null, $getShared = true)
- * @method static Parser parser($viewPath = null, \Config\View $config = null, $getShared = true)
- * @method static View renderer($viewPath = null, \Config\View $config = null, $getShared = true)
- * @method static IncomingRequest request(\Config\App $config = null, $getShared = true)
- * @method static Response response(\Config\App $config = null, $getShared = true)
- * @method static RedirectResponse redirectresponse(\Config\App $config = null, $getShared = true)
+ * @method static MigrationRunner migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
+ * @method static Negotiate negotiator(RequestInterface $request = null, $getShared = true)
+ * @method static Pager pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
+ * @method static Parser parser($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static RedirectResponse redirectresponse(App $config = null, $getShared = true)
+ * @method static View renderer($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static IncomingRequest request(App $config = null, $getShared = true)
+ * @method static Response response(App $config = null, $getShared = true)
+ * @method static Router router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
  * @method static RouteCollection routes($getShared = true)
- * @method static Router router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, \CodeIgniter\HTTP\Request $request = null, $getShared = true)
- * @method static Security security(\Config\App $config = null, $getShared = true)
- * @method static Session session(\Config\App $config = null, $getShared = true)
+ * @method static Security security(App $config = null, $getShared = true)
+ * @method static Session session(App $config = null, $getShared = true)
  * @method static Throttler throttler($getShared = true)
  * @method static Timer timer($getShared = true)
- * @method static Toolbar toolbar(\Config\Toolbar $config = null, $getShared = true)
- * @method static URI uri($uri = null, $getShared = true)
- * @method static Validation validation(\Config\Validation $config = null, $getShared = true)
- * @method static Cell viewcell($getShared = true)
+ * @method static Toolbar toolbar(ConfigToolbar $config = null, $getShared = true)
  * @method static Typography typography($getShared = true)
+ * @method static URI uri($uri = null, $getShared = true)
+ * @method static Validation validation(ConfigValidation $config = null, $getShared = true)
+ * @method static Cell viewcell($getShared = true)
  */
 class BaseService
 {
-	/**
-	 * Cache for instance of any services that
-	 * have been requested as a "shared" instance.
-	 * Keys should be lowercase service names.
-	 *
-	 * @var array
-	 */
-	protected static $instances = [];
+    /**
+     * Cache for instance of any services that
+     * have been requested as a "shared" instance.
+     * Keys should be lowercase service names.
+     *
+     * @var array
+     */
+    protected static $instances = [];
 
-	/**
-	 * Mock objects for testing which are returned if exist.
-	 *
-	 * @var array
-	 */
-	protected static $mocks = [];
+    /**
+     * Mock objects for testing which are returned if exist.
+     *
+     * @var array
+     */
+    protected static $mocks = [];
 
-	/**
-	 * Have we already discovered other Services?
-	 *
-	 * @var boolean
-	 */
-	protected static $discovered = false;
+    /**
+     * Have we already discovered other Services?
+     *
+     * @var bool
+     */
+    protected static $discovered = false;
 
-	/**
-	 * A cache of other service classes we've found.
-	 *
-	 * @var array
-	 */
-	protected static $services = [];
+    /**
+     * A cache of other service classes we've found.
+     *
+     * @var array
+     */
+    protected static $services = [];
 
-	/**
-	 * A cache of the names of services classes found.
-	 *
-	 * @var array<string>
-	 */
-	private static $serviceNames = [];
+    /**
+     * A cache of the names of services classes found.
+     *
+     * @var array<string>
+     */
+    private static $serviceNames = [];
 
-	/**
-	 * Returns a shared instance of any of the class' services.
-	 *
-	 * $key must be a name matching a service.
-	 *
-	 * @param string $key
-	 * @param array  ...$params
-	 *
-	 * @return mixed
-	 */
-	protected static function getSharedInstance(string $key, ...$params)
-	{
-		$key = strtolower($key);
+    /**
+     * Returns a shared instance of any of the class' services.
+     *
+     * $key must be a name matching a service.
+     *
+     * @param mixed ...$params
+     *
+     * @return mixed
+     */
+    protected static function getSharedInstance(string $key, ...$params)
+    {
+        $key = strtolower($key);
 
-		// Returns mock if exists
-		if (isset(static::$mocks[$key]))
-		{
-			return static::$mocks[$key];
-		}
+        // Returns mock if exists
+        if (isset(static::$mocks[$key])) {
+            return static::$mocks[$key];
+        }
 
-		if (! isset(static::$instances[$key]))
-		{
-			// Make sure $getShared is false
-			array_push($params, false);
+        if (! isset(static::$instances[$key])) {
+            // Make sure $getShared is false
+            $params[] = false;
 
-			static::$instances[$key] = static::$key(...$params);
-		}
+            static::$instances[$key] = AppServices::$key(...$params);
+        }
 
-		return static::$instances[$key];
-	}
+        return static::$instances[$key];
+    }
 
-	/**
-	 * The Autoloader class is the central class that handles our
-	 * spl_autoload_register method, and helper methods.
-	 *
-	 * @param boolean $getShared
-	 *
-	 * @return Autoloader
-	 */
-	public static function autoloader(bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			if (empty(static::$instances['autoloader']))
-			{
-				static::$instances['autoloader'] = new Autoloader();
-			}
+    /**
+     * The Autoloader class is the central class that handles our
+     * spl_autoload_register method, and helper methods.
+     *
+     * @return Autoloader
+     */
+    public static function autoloader(bool $getShared = true)
+    {
+        if ($getShared) {
+            if (empty(static::$instances['autoloader'])) {
+                static::$instances['autoloader'] = new Autoloader();
+            }
 
-			return static::$instances['autoloader'];
-		}
+            return static::$instances['autoloader'];
+        }
 
-		return new Autoloader();
-	}
+        return new Autoloader();
+    }
 
-	/**
-	 * The file locator provides utility methods for looking for non-classes
-	 * within namespaced folders, as well as convenience methods for
-	 * loading 'helpers', and 'libraries'.
-	 *
-	 * @param boolean $getShared
-	 *
-	 * @return FileLocator
-	 */
-	public static function locator(bool $getShared = true)
-	{
-		if ($getShared)
-		{
-			if (empty(static::$instances['locator']))
-			{
-				static::$instances['locator'] = new FileLocator(static::autoloader());
-			}
+    /**
+     * The file locator provides utility methods for looking for non-classes
+     * within namespaced folders, as well as convenience methods for
+     * loading 'helpers', and 'libraries'.
+     *
+     * @return FileLocator
+     */
+    public static function locator(bool $getShared = true)
+    {
+        if ($getShared) {
+            if (empty(static::$instances['locator'])) {
+                static::$instances['locator'] = new FileLocator(static::autoloader());
+            }
 
-			return static::$mocks['locator'] ?? static::$instances['locator'];
-		}
+            return static::$mocks['locator'] ?? static::$instances['locator'];
+        }
 
-		return new FileLocator(static::autoloader());
-	}
+        return new FileLocator(static::autoloader());
+    }
 
-	/**
-	 * Provides the ability to perform case-insensitive calling of service
-	 * names.
-	 *
-	 * @param string $name
-	 * @param array  $arguments
-	 *
-	 * @return mixed
-	 */
-	public static function __callStatic(string $name, array $arguments)
-	{
-		$service = static::serviceExists($name);
+    /**
+     * Provides the ability to perform case-insensitive calling of service
+     * names.
+     *
+     * @return mixed
+     */
+    public static function __callStatic(string $name, array $arguments)
+    {
+        $service = static::serviceExists($name);
 
-		if ($service === null)
-		{
-			return null;
-		}
+        if ($service === null) {
+            return null;
+        }
 
-		return $service::$name(...$arguments);
-	}
+        return $service::$name(...$arguments);
+    }
 
-	/**
-	 * Check if the requested service is defined and return the declaring
-	 * class. Return null if not found.
-	 *
-	 * @param string $name
-	 *
-	 * @return string|null
-	 */
-	public static function serviceExists(string $name): ?string
-	{
-		static::buildServicesCache();
-		$services = array_merge(self::$serviceNames, [Services::class]);
-		$name     = strtolower($name);
+    /**
+     * Check if the requested service is defined and return the declaring
+     * class. Return null if not found.
+     */
+    public static function serviceExists(string $name): ?string
+    {
+        static::buildServicesCache();
+        $services = array_merge(self::$serviceNames, [Services::class]);
+        $name     = strtolower($name);
 
-		foreach ($services as $service)
-		{
-			if (method_exists($service, $name))
-			{
-				return $service;
-			}
-		}
+        foreach ($services as $service) {
+            if (method_exists($service, $name)) {
+                return $service;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Reset shared instances and mocks for testing.
-	 *
-	 * @param boolean $initAutoloader Initializes autoloader instance
-	 */
-	public static function reset(bool $initAutoloader = false)
-	{
-		static::$mocks     = [];
-		static::$instances = [];
+    /**
+     * Reset shared instances and mocks for testing.
+     */
+    public static function reset(bool $initAutoloader = false)
+    {
+        static::$mocks     = [];
+        static::$instances = [];
 
-		if ($initAutoloader)
-		{
-			static::autoloader()->initialize(new Autoload(), new Modules());
-		}
-	}
+        if ($initAutoloader) {
+            static::autoloader()->initialize(new Autoload(), new Modules());
+        }
+    }
 
-	/**
-	 * Inject mock object for testing.
-	 *
-	 * @param string $name
-	 * @param mixed  $mock
-	 */
-	public static function injectMock(string $name, $mock)
-	{
-		static::$mocks[strtolower($name)] = $mock;
-	}
+    /**
+     * Resets any mock and shared instances for a single service.
+     */
+    public static function resetSingle(string $name)
+    {
+        unset(static::$mocks[$name], static::$instances[$name]);
+    }
 
-	/**
-	 * Will scan all psr4 namespaces registered with system to look
-	 * for new Config\Services files. Caches a copy of each one, then
-	 * looks for the service method in each, returning an instance of
-	 * the service, if available.
-	 *
-	 * @param string $name
-	 * @param array  $arguments
-	 *
-	 * @return mixed
-	 *
-	 * @deprecated
-	 *
-	 * @codeCoverageIgnore
-	 */
-	protected static function discoverServices(string $name, array $arguments)
-	{
-		if (! static::$discovered)
-		{
-			$config = config('Modules');
+    /**
+     * Inject mock object for testing.
+     *
+     * @param mixed $mock
+     */
+    public static function injectMock(string $name, $mock)
+    {
+        static::$mocks[strtolower($name)] = $mock;
+    }
 
-			if ($config->shouldDiscover('services'))
-			{
-				$locator = static::locator();
-				$files   = $locator->search('Config/Services');
+    /**
+     * Will scan all psr4 namespaces registered with system to look
+     * for new Config\Services files. Caches a copy of each one, then
+     * looks for the service method in each, returning an instance of
+     * the service, if available.
+     *
+     * @return mixed
+     *
+     * @deprecated
+     *
+     * @codeCoverageIgnore
+     */
+    protected static function discoverServices(string $name, array $arguments)
+    {
+        if (! static::$discovered) {
+            $config = config('Modules');
 
-				if (empty($files))
-				{
-					// no files at all found - this would be really, really bad
-					return null;
-				}
+            if ($config->shouldDiscover('services')) {
+                $locator = static::locator();
+                $files   = $locator->search('Config/Services');
 
-				// Get instances of all service classes and cache them locally.
-				foreach ($files as $file)
-				{
-					$classname = $locator->getClassname($file);
+                if (empty($files)) {
+                    // no files at all found - this would be really, really bad
+                    return null;
+                }
 
-					if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true))
-					{
-						static::$services[] = new $classname();
-					}
-				}
-			}
+                // Get instances of all service classes and cache them locally.
+                foreach ($files as $file) {
+                    $classname = $locator->getClassname($file);
 
-			static::$discovered = true;
-		}
+                    if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true)) {
+                        static::$services[] = new $classname();
+                    }
+                }
+            }
 
-		if (! static::$services)
-		{
-			// we found stuff, but no services - this would be really bad
-			return null;
-		}
+            static::$discovered = true;
+        }
 
-		// Try to find the desired service method
-		foreach (static::$services as $class)
-		{
-			if (method_exists($class, $name))
-			{
-				return $class::$name(...$arguments);
-			}
-		}
+        if (! static::$services) {
+            // we found stuff, but no services - this would be really bad
+            return null;
+        }
 
-		return null;
-	}
+        // Try to find the desired service method
+        foreach (static::$services as $class) {
+            if (method_exists($class, $name)) {
+                return $class::$name(...$arguments);
+            }
+        }
 
-	protected static function buildServicesCache(): void
-	{
-		if (! static::$discovered)
-		{
-			$config = config('Modules');
+        return null;
+    }
 
-			if ($config->shouldDiscover('services'))
-			{
-				$locator = static::locator();
-				$files   = $locator->search('Config/Services');
+    protected static function buildServicesCache(): void
+    {
+        if (! static::$discovered) {
+            $config = config('Modules');
 
-				// Get instances of all service classes and cache them locally.
-				foreach ($files as $file)
-				{
-					$classname = $locator->getClassname($file);
+            if ($config->shouldDiscover('services')) {
+                $locator = static::locator();
+                $files   = $locator->search('Config/Services');
 
-					if ($classname !== 'CodeIgniter\\Config\\Services')
-					{
-						self::$serviceNames[] = $classname;
-						static::$services[]   = new $classname();
-					}
-				}
-			}
+                // Get instances of all service classes and cache them locally.
+                foreach ($files as $file) {
+                    $classname = $locator->getClassname($file);
 
-			static::$discovered = true;
-		}
-	}
+                    if ($classname !== 'CodeIgniter\\Config\\Services') {
+                        self::$serviceNames[] = $classname;
+                        static::$services[]   = new $classname();
+                    }
+                }
+            }
+
+            static::$discovered = true;
+        }
+    }
 }

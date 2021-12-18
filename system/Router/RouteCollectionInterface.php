@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Router;
@@ -25,223 +25,163 @@ use Closure;
  */
 interface RouteCollectionInterface
 {
-	/**
-	 * Adds a single route to the collection.
-	 *
-	 * @param string       $from
-	 * @param array|string $to
-	 * @param array        $options
-	 *
-	 * @return mixed
-	 */
-	public function add(string $from, $to, array $options = null);
+    /**
+     * Adds a single route to the collection.
+     *
+     * @param array|Closure|string $to
+     * @param array                $options
+     *
+     * @return mixed
+     */
+    public function add(string $from, $to, ?array $options = null);
 
-	//--------------------------------------------------------------------
+    /**
+     * Registers a new constraint with the system. Constraints are used
+     * by the routes as placeholders for regular expressions to make defining
+     * the routes more human-friendly.
+     *
+     * You can pass an associative array as $placeholder, and have
+     * multiple placeholders added at once.
+     *
+     * @param array|string $placeholder
+     * @param string       $pattern
+     *
+     * @return mixed
+     */
+    public function addPlaceholder($placeholder, ?string $pattern = null);
 
-	/**
-	 * Registers a new constraint with the system. Constraints are used
-	 * by the routes as placeholders for regular expressions to make defining
-	 * the routes more human-friendly.
-	 *
-	 * You can pass an associative array as $placeholder, and have
-	 * multiple placeholders added at once.
-	 *
-	 * @param string|array $placeholder
-	 * @param string       $pattern
-	 *
-	 * @return mixed
-	 */
-	public function addPlaceholder($placeholder, string $pattern = null);
+    /**
+     * Sets the default namespace to use for Controllers when no other
+     * namespace has been specified.
+     *
+     * @return mixed
+     */
+    public function setDefaultNamespace(string $value);
 
-	//--------------------------------------------------------------------
+    /**
+     * Sets the default controller to use when no other controller has been
+     * specified.
+     *
+     * @return mixed
+     */
+    public function setDefaultController(string $value);
 
-	/**
-	 * Sets the default namespace to use for Controllers when no other
-	 * namespace has been specified.
-	 *
-	 * @param string $value
-	 *
-	 * @return mixed
-	 */
-	public function setDefaultNamespace(string $value);
+    /**
+     * Sets the default method to call on the controller when no other
+     * method has been set in the route.
+     *
+     * @return mixed
+     */
+    public function setDefaultMethod(string $value);
 
-	//--------------------------------------------------------------------
+    /**
+     * Tells the system whether to convert dashes in URI strings into
+     * underscores. In some search engines, including Google, dashes
+     * create more meaning and make it easier for the search engine to
+     * find words and meaning in the URI for better SEO. But it
+     * doesn't work well with PHP method names....
+     *
+     * @return mixed
+     */
+    public function setTranslateURIDashes(bool $value);
 
-	/**
-	 * Sets the default controller to use when no other controller has been
-	 * specified.
-	 *
-	 * @param string $value
-	 *
-	 * @return mixed
-	 */
-	public function setDefaultController(string $value);
+    /**
+     * If TRUE, the system will attempt to match the URI against
+     * Controllers by matching each segment against folders/files
+     * in APPPATH/Controllers, when a match wasn't found against
+     * defined routes.
+     *
+     * If FALSE, will stop searching and do NO automatic routing.
+     */
+    public function setAutoRoute(bool $value): self;
 
-	//--------------------------------------------------------------------
+    /**
+     * Sets the class/method that should be called if routing doesn't
+     * find a match. It can be either a closure or the controller/method
+     * name exactly like a route is defined: Users::index
+     *
+     * This setting is passed to the Router class and handled there.
+     *
+     * @param callable|null $callable
+     */
+    public function set404Override($callable = null): self;
 
-	/**
-	 * Sets the default method to call on the controller when no other
-	 * method has been set in the route.
-	 *
-	 * @param string $value
-	 *
-	 * @return mixed
-	 */
-	public function setDefaultMethod(string $value);
+    /**
+     * Returns the 404 Override setting, which can be null, a closure
+     * or the controller/string.
+     *
+     * @return Closure|string|null
+     */
+    public function get404Override();
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the name of the default controller. With Namespace.
+     *
+     * @return string
+     */
+    public function getDefaultController();
 
-	/**
-	 * Tells the system whether to convert dashes in URI strings into
-	 * underscores. In some search engines, including Google, dashes
-	 * create more meaning and make it easier for the search engine to
-	 * find words and meaning in the URI for better SEO. But it
-	 * doesn't work well with PHP method names....
-	 *
-	 * @param boolean $value
-	 *
-	 * @return mixed
-	 */
-	public function setTranslateURIDashes(bool $value);
+    /**
+     * Returns the name of the default method to use within the controller.
+     *
+     * @return string
+     */
+    public function getDefaultMethod();
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the current value of the translateURIDashes setting.
+     *
+     * @return mixed
+     */
+    public function shouldTranslateURIDashes();
 
-	/**
-	 * If TRUE, the system will attempt to match the URI against
-	 * Controllers by matching each segment against folders/files
-	 * in APPPATH/Controllers, when a match wasn't found against
-	 * defined routes.
-	 *
-	 * If FALSE, will stop searching and do NO automatic routing.
-	 *
-	 * @param boolean $value
-	 *
-	 * @return RouteCollectionInterface
-	 */
-	public function setAutoRoute(bool $value): self;
+    /**
+     * Returns the flag that tells whether to autoRoute URI against Controllers.
+     *
+     * @return bool
+     */
+    public function shouldAutoRoute();
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the raw array of available routes.
+     *
+     * @return mixed
+     */
+    public function getRoutes();
 
-	/**
-	 * Sets the class/method that should be called if routing doesn't
-	 * find a match. It can be either a closure or the controller/method
-	 * name exactly like a route is defined: Users::index
-	 *
-	 * This setting is passed to the Router class and handled there.
-	 *
-	 * @param callable|null $callable
-	 *
-	 * @return RouteCollectionInterface
-	 */
-	public function set404Override($callable = null): self;
+    /**
+     * Returns the current HTTP Verb being used.
+     *
+     * @return string
+     */
+    public function getHTTPVerb();
 
-	//--------------------------------------------------------------------
+    /**
+     * Attempts to look up a route based on it's destination.
+     *
+     * If a route exists:
+     *
+     *      'path/(:any)/(:any)' => 'Controller::method/$1/$2'
+     *
+     * This method allows you to know the Controller and method
+     * and get the route that leads to it.
+     *
+     *      // Equals 'path/$param1/$param2'
+     *      reverseRoute('Controller::method', $param1, $param2);
+     *
+     * @param array ...$params
+     *
+     * @return false|string
+     */
+    public function reverseRoute(string $search, ...$params);
 
-	/**
-	 * Returns the 404 Override setting, which can be null, a closure
-	 * or the controller/string.
-	 *
-	 * @return string|Closure|null
-	 */
-	public function get404Override();
+    /**
+     * Determines if the route is a redirecting route.
+     */
+    public function isRedirect(string $from): bool;
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the name of the default controller. With Namespace.
-	 *
-	 * @return string
-	 */
-	public function getDefaultController();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the name of the default method to use within the controller.
-	 *
-	 * @return string
-	 */
-	public function getDefaultMethod();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the current value of the translateURIDashes setting.
-	 *
-	 * @return mixed
-	 */
-	public function shouldTranslateURIDashes();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the flag that tells whether to autoRoute URI against Controllers.
-	 *
-	 * @return boolean
-	 */
-	public function shouldAutoRoute();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the raw array of available routes.
-	 *
-	 * @return mixed
-	 */
-	public function getRoutes();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the current HTTP Verb being used.
-	 *
-	 * @return string
-	 */
-	public function getHTTPVerb();
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to look up a route based on it's destination.
-	 *
-	 * If a route exists:
-	 *
-	 *      'path/(:any)/(:any)' => 'Controller::method/$1/$2'
-	 *
-	 * This method allows you to know the Controller and method
-	 * and get the route that leads to it.
-	 *
-	 *      // Equals 'path/$param1/$param2'
-	 *      reverseRoute('Controller::method', $param1, $param2);
-	 *
-	 * @param string $search
-	 * @param array  ...$params
-	 *
-	 * @return string|false
-	 */
-	public function reverseRoute(string $search, ...$params);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines if the route is a redirecting route.
-	 *
-	 * @param string $from
-	 *
-	 * @return boolean
-	 */
-	public function isRedirect(string $from): bool;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Grabs the HTTP status code from a redirecting Route.
-	 *
-	 * @param string $from
-	 *
-	 * @return integer
-	 */
-	public function getRedirectCode(string $from): int;
-
-	//--------------------------------------------------------------------
+    /**
+     * Grabs the HTTP status code from a redirecting Route.
+     */
+    public function getRedirectCode(string $from): int;
 }

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Encryption;
@@ -23,172 +23,150 @@ use Config\Encryption as EncryptionConfig;
  */
 class Encryption
 {
-	/**
-	 * The encrypter we create
-	 *
-	 * @var EncrypterInterface
-	 */
-	protected $encrypter;
+    /**
+     * The encrypter we create
+     *
+     * @var EncrypterInterface
+     */
+    protected $encrypter;
 
-	/**
-	 * The driver being used
-	 *
-	 * @var string
-	 */
-	protected $driver;
+    /**
+     * The driver being used
+     *
+     * @var string
+     */
+    protected $driver;
 
-	/**
-	 * The key/seed being used
-	 *
-	 * @var string
-	 */
-	protected $key;
+    /**
+     * The key/seed being used
+     *
+     * @var string
+     */
+    protected $key;
 
-	/**
-	 * The derived HMAC key
-	 *
-	 * @var string
-	 */
-	protected $hmacKey;
+    /**
+     * The derived HMAC key
+     *
+     * @var string
+     */
+    protected $hmacKey;
 
-	/**
-	 * HMAC digest to use
-	 *
-	 * @var string
-	 */
-	protected $digest = 'SHA512';
+    /**
+     * HMAC digest to use
+     *
+     * @var string
+     */
+    protected $digest = 'SHA512';
 
-	/**
-	 * Map of drivers to handler classes, in preference order
-	 *
-	 * @var array
-	 */
-	protected $drivers = [
-		'OpenSSL',
-		'Sodium',
-	];
+    /**
+     * Map of drivers to handler classes, in preference order
+     *
+     * @var array
+     */
+    protected $drivers = [
+        'OpenSSL',
+        'Sodium',
+    ];
 
-	/**
-	 * Handlers that are to be installed
-	 *
-	 * @var array<string, boolean>
-	 */
-	protected $handlers = [];
+    /**
+     * Handlers that are to be installed
+     *
+     * @var array<string, boolean>
+     */
+    protected $handlers = [];
 
-	/**
-	 * Class constructor
-	 *
-	 * @param EncryptionConfig $config Configuration parameters
-	 *
-	 * @throws EncryptionException
-	 *
-	 * @return void
-	 */
-	public function __construct(EncryptionConfig $config = null)
-	{
-		$config = $config ?? new EncryptionConfig();
+    /**
+     * @throws EncryptionException
+     */
+    public function __construct(?EncryptionConfig $config = null)
+    {
+        $config = $config ?? new EncryptionConfig();
 
-		$this->key    = $config->key;
-		$this->driver = $config->driver;
-		$this->digest = $config->digest ?? 'SHA512';
+        $this->key    = $config->key;
+        $this->driver = $config->driver;
+        $this->digest = $config->digest ?? 'SHA512';
 
-		// Map what we have installed
-		$this->handlers = [
-			'OpenSSL' => extension_loaded('openssl'),
-			// the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
-			'Sodium'  => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
-		];
+        $this->handlers = [
+            'OpenSSL' => extension_loaded('openssl'),
+            // the SodiumHandler uses some API (like sodium_pad) that is available only on v1.0.14+
+            'Sodium' => extension_loaded('sodium') && version_compare(SODIUM_LIBRARY_VERSION, '1.0.14', '>='),
+        ];
 
-		// If requested driver is not active, bail
-		if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver]))
-		{
-			// this should never happen in travis-ci
-			throw EncryptionException::forNoHandlerAvailable($this->driver);
-		}
-	}
+        if (! in_array($this->driver, $this->drivers, true) || (array_key_exists($this->driver, $this->handlers) && ! $this->handlers[$this->driver])) {
+            throw EncryptionException::forNoHandlerAvailable($this->driver);
+        }
+    }
 
-	/**
-	 * Initialize or re-initialize an encrypter
-	 *
-	 * @param EncryptionConfig $config Configuration parameters
-	 *
-	 * @throws EncryptionException
-	 *
-	 * @return EncrypterInterface
-	 */
-	public function initialize(EncryptionConfig $config = null)
-	{
-		// override config?
-		if ($config)
-		{
-			$this->key    = $config->key;
-			$this->driver = $config->driver;
-			$this->digest = $config->digest ?? 'SHA512';
-		}
+    /**
+     * Initialize or re-initialize an encrypter
+     *
+     * @throws EncryptionException
+     *
+     * @return EncrypterInterface
+     */
+    public function initialize(?EncryptionConfig $config = null)
+    {
+        if ($config) {
+            $this->key    = $config->key;
+            $this->driver = $config->driver;
+            $this->digest = $config->digest ?? 'SHA512';
+        }
 
-		// Insist on a driver
-		if (empty($this->driver))
-		{
-			throw EncryptionException::forNoDriverRequested();
-		}
+        if (empty($this->driver)) {
+            throw EncryptionException::forNoDriverRequested();
+        }
 
-		// Check for an unknown driver
-		if (! in_array($this->driver, $this->drivers, true))
-		{
-			throw EncryptionException::forUnKnownHandler($this->driver);
-		}
+        if (! in_array($this->driver, $this->drivers, true)) {
+            throw EncryptionException::forUnKnownHandler($this->driver);
+        }
 
-		if (empty($this->key))
-		{
-			throw EncryptionException::forNeedsStarterKey();
-		}
+        if (empty($this->key)) {
+            throw EncryptionException::forNeedsStarterKey();
+        }
 
-		// Derive a secret key for the encrypter
-		$this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
+        $this->hmacKey = bin2hex(\hash_hkdf($this->digest, $this->key));
 
-		$handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
-		$this->encrypter = new $handlerName($config);
+        $handlerName     = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
+        $this->encrypter = new $handlerName($config);
 
-		return $this->encrypter;
-	}
+        return $this->encrypter;
+    }
 
-	/**
-	 * Create a random key
-	 *
-	 * @param integer $length Output length
-	 *
-	 * @return string
-	 */
-	public static function createKey($length = 32)
-	{
-		return random_bytes($length);
-	}
+    /**
+     * Create a random key
+     *
+     * @param int $length Output length
+     *
+     * @return string
+     */
+    public static function createKey($length = 32)
+    {
+        return random_bytes($length);
+    }
 
-	/**
-	 * __get() magic, providing readonly access to some of our protected properties
-	 *
-	 * @param string $key Property name
-	 *
-	 * @return mixed
-	 */
-	public function __get($key)
-	{
-		if ($this->__isset($key))
-		{
-			return $this->{$key};
-		}
+    /**
+     * __get() magic, providing readonly access to some of our protected properties
+     *
+     * @param string $key Property name
+     *
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if ($this->__isset($key)) {
+            return $this->{$key};
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * __isset() magic, providing checking for some of our protected properties
-	 *
-	 * @param  string $key Property name
-	 * @return boolean
-	 */
-	public function __isset($key): bool
-	{
-		return in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
-	}
+    /**
+     * __isset() magic, providing checking for some of our protected properties
+     *
+     * @param string $key Property name
+     */
+    public function __isset($key): bool
+    {
+        return in_array($key, ['key', 'digest', 'driver', 'drivers'], true);
+    }
 }

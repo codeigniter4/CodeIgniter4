@@ -6,8 +6,8 @@ use CodeIgniter\Database\Seeder;
 
 class {class} extends Seeder
 {
-	public function run()
-	{
-		//
-	}
+    public function run()
+    {
+        //
+    }
 }

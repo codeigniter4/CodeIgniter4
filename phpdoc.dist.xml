@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<phpdoc>
+<phpdocumentor
+    configVersion="3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://www.phpdoc.org"
+    xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
+>
     <title>CodeIgniter v4.0.0 API</title>
-    <parser>
-        <target>api/data/</target>
-    </parser>
-    <transformer>
-        <target>api/build/</target>
-    </transformer>
-    <files>
-        <directory>system</directory>
-        <ignore>vendor/*</ignore>
-        <ignore>tests/*</ignore>
-        <ignore>ThirdParty/*</ignore>
-        <ignore>*.tpl.php</ignore>
-        <ignore>*.js.php</ignore>
-        <ignore>bootstrap.php</ignore>
-        <ignore>Validation/Views/*</ignore>
-        <ignore>Pager/Views/</ignore>
-    </files>
-
-    <logging>
-        <level>err</level>
-        <paths>
-            <default>api/log/{DATE}.log</default>
-            <errors>api/{DATE}.errors.log</errors>
-        </paths>
-    </logging>
-
-    <transformations>
-        <template name="responsive-twig" />
-    </transformations>
-</phpdoc>
+    <paths>
+        <output>api/build/</output>
+        <cache>api/cache/</cache>
+    </paths>
+    <version number="4.0.0">
+        <api format="php">
+            <source dsn=".">
+                <path>system</path>
+            </source>
+            <output>api</output>
+            <ignore hidden="true" symlinks="true">
+                <path>system/ThirdParty/**/*</path>
+                <path>*.tpl.php</path>
+                <path>*.js.php</path>
+                <path>**/Views/*</path>
+                <path>bootstrap.php</path>
+            </ignore>
+        </api>
+    </version>
+    <template name="default" />
+</phpdocumentor>

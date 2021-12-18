@@ -1,9 +1,10 @@
-/*! CodeIgniter 4 - Debug bar
- * ============================================================================
- * Forum: 	https://forum.codeigniter.com
- * Github:	https://github.com/codeigniter4/codeigniter4
- * Slack: 	https://codeigniterchat.slack.com
- * Website: https://codeigniter.com
+/**
+ * This file is part of the CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 // IMPORTS
@@ -17,38 +18,38 @@
 // ========================================================================== */
 
 #debug-icon {
-	// Position
-	bottom: 0;
-	position: fixed;
-	right: 0;
-	z-index: 10000;
+    // Position
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    z-index: 10000;
 
-	// Size
-	height: 36px;
-	width: 36px;
+    // Size
+    height: 36px;
+    width: 36px;
 
-	// Spacing
-	margin: 0px;
-	padding: 0px;
+    // Spacing
+    margin: 0px;
+    padding: 0px;
 
-	// Content
-	clear: both;
-	text-align: center;
+    // Content
+    clear: both;
+    text-align: center;
 
-	a svg {
-		margin: 8px;
-		max-width: 20px;
-		max-height: 20px;
-	}
+    a svg {
+        margin: 8px;
+        max-width: 20px;
+        max-height: 20px;
+    }
 
-	&.fixed-top {
-		bottom: auto;
-		top: 0;
-	}
+    &.fixed-top {
+        bottom: auto;
+        top: 0;
+    }
 
-	.debug-bar-ndisplay {
-		display: none;
-	}
+    .debug-bar-ndisplay {
+        display: none;
+    }
 }
 
 
@@ -56,299 +57,352 @@
 // ========================================================================== */
 
 #debug-bar {
-	// Position
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	z-index: 10000;
+    // Position
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 10000;
 
-	// Size
-	height: 36px;
+    // Size
+    height: 36px;
 
-	// Spacing
-	line-height: 36px;
+    // Spacing
+    line-height: 36px;
 
-	// Typography
-	font-family: $base-font;
-	font-size: $base-size;
-	font-weight: 400;
+    // Typography
+    font-family: $base-font;
+    font-size: $base-size;
+    font-weight: 400;
 
-	// General elements
-	h1 {
-		bottom: 0;
-		display: inline-block;
-		font-size: $base-size - 2;
-		font-weight: normal;
-		margin: 0 16px 0 0;
-		padding: 0;
-		position: absolute;
-		right: 30px;
-		text-align: left;
-		top: 0;
+    // General elements
+    h1 {
+        bottom: 0;
+        display: inline-block;
+        font-size: $base-size - 2;
+        font-weight: normal;
+        margin: 0 16px 0 0;
+        padding: 0;
+        position: absolute;
+        right: 30px;
+        text-align: left;
+        top: 0;
 
-		svg {
-			width: 16px;
-			margin-right: 5px;
-		}
-	}
+        svg {
+            width: 16px;
+            margin-right: 5px;
+        }
+    }
 
-	h2 {
-		font-size: $base-size;
-		margin: 0;
-		padding: 5px 0 10px 0;
+    h2 {
+        font-size: $base-size;
+        margin: 0;
+        padding: 5px 0 10px 0;
 
-		span {
-			font-size: 13px;
-		}
-	}
+        span {
+            font-size: 13px;
+        }
+    }
 
-	h3 {
-		font-size: $base-size - 4;
-		font-weight: 200;
-		margin: 0 0 0 10px;
-		padding: 0;
-		text-transform: uppercase;
-	}
+    h3 {
+        font-size: $base-size - 4;
+        font-weight: 200;
+        margin: 0 0 0 10px;
+        padding: 0;
+        text-transform: uppercase;
+    }
 
-	p {
-		font-size: $base-size - 4;
-		margin: 0 0 0 15px;
-		padding: 0;
-	}
+    p {
+        font-size: $base-size - 4;
+        margin: 0 0 0 15px;
+        padding: 0;
+    }
 
-	a {
-		text-decoration: none;
+    a {
+        text-decoration: none;
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 
-	button {
-		border: 1px solid;
-		@include border-radius(4px);
-		cursor: pointer;
-		line-height: 15px;
+    button {
+        border: 1px solid;
+        @include border-radius(4px);
+        cursor: pointer;
+        line-height: 15px;
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 
-	table {
-		border-collapse: collapse;
-		font-size: $base-size - 2;
-		line-height: normal;
-		margin: 5px 10px 15px 10px; // Tables indentation
-		width: calc(100% - 10px); // Make sure it still fits the container, even with the margins
+    table {
+        border-collapse: collapse;
+        font-size: $base-size - 2;
+        line-height: normal;
 
-		strong {
-			font-weight: 500;
-		}
+        // Tables indentation
+        margin: 5px 10px 15px 10px;
 
-		th {
-			display: table-cell;
-			font-weight: 600;
-			padding-bottom: 0.7em;
-			text-align: left;
-		}
+        // Make sure it still fits the container, even with the margins
+        width: calc(100% - 10px);
 
-		tr {
-			border: none;
-		}
+        strong {
+            font-weight: 500;
+        }
 
-		td {
-			border: none;
-			display: table-cell;
-			margin: 0;
-			text-align: left;
+        th {
+            display: table-cell;
+            font-weight: 600;
+            padding-bottom: 0.7em;
+            text-align: left;
+        }
 
-			&:first-child {
-				max-width: 20%;
+        tr {
+            border: none;
+        }
 
-				&.narrow {
-					width: 7em;
-				}
-			}
-		}
-	}
+        td {
+            border: none;
+            display: table-cell;
+            margin: 0;
+            text-align: left;
 
-	td[data-debugbar-route] {
-		form {
-			display: none;
-		}
+            &:first-child {
+                max-width: 20%;
 
-		&:hover {
-			form {
-				display: block;
-			}
+                &.narrow {
+                    width: 7em;
+                }
+            }
+        }
+    }
 
-			&>div {
-				display: none;
-			}
-		}
+    td[data-debugbar-route] {
+        form {
+            display: none;
+        }
 
-		input[type=text] {
-			padding: 2px;
-		}
-	}
+        &:hover {
+            form {
+                display: block;
+            }
 
-	// The toolbar
-	.toolbar {
-		display: flex;
-		overflow: hidden;
-		overflow-y: auto;
-		padding: 0 12px 0 12px;
-		/* give room for OS X scrollbar */
-		white-space: nowrap;
-		z-index: 10000;
-	}
+            &>div {
+                display: none;
+            }
+        }
 
-	// Fixed top
-	&.fixed-top {
-		bottom: auto;
-		top: 0;
+        input[type=text] {
+            padding: 2px;
+        }
+    }
 
-		.tab {
-			bottom: auto;
-			top: 36px;
-		}
-	}
+    // The toolbar
+    .toolbar {
+        display: flex;
+        overflow: hidden;
+        overflow-y: auto;
+        padding: 0 12px 0 12px;
+        
+        // Give room for OS X scrollbar
+        white-space: nowrap;
+        z-index: 10000;
+    }
 
-	// The toolbar preferences
-	#toolbar-position,
-	#toolbar-theme {
-		a {
-			// float: left;
-			padding: 0 6px;
-			display: inline-flex;
-			vertical-align: top;
+    // Fixed top
+    &.fixed-top {
+        bottom: auto;
+        top: 0;
 
-			&:hover {
-				text-decoration: none;
-			}
-		}
-	}
+        .tab {
+            bottom: auto;
+            top: 36px;
+        }
+    }
 
-	// The "Open/Close" toggle
-	#debug-bar-link {
-		bottom: 0;
-		display: inline-block;
-		font-size: $base-size;
-		line-height: 36px;
-		padding: 6px;
-		position: absolute;
-		right: 10px;
-		top: 0;
-		width: 24px;
-	}
+    // The toolbar preferences
+    #toolbar-position,
+    #toolbar-theme {
+        a {
+            padding: 0 6px;
+            display: inline-flex;
+            vertical-align: top;
 
-	// The toolbar menus
-	.ci-label {
-		display: inline-flex;
-		font-size: $base-size - 2;
-		// vertical-align: baseline;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
 
-		&:hover {
-			cursor: pointer;
-		}
+    // The "Open/Close" toggle
+    #debug-bar-link {
+        bottom: 0;
+        display: inline-block;
+        font-size: $base-size;
+        line-height: 36px;
+        padding: 6px;
+        position: absolute;
+        right: 10px;
+        top: 0;
+        width: 24px;
+    }
 
-		a {
-			color: inherit;
-			display: flex;
-			letter-spacing: normal;
-			padding: 0 10px;
-			text-decoration: none;
-			align-items: center;
-		}
+    // The toolbar menus
+    .ci-label {
+        display: inline-flex;
+        font-size: $base-size - 2;
 
-		// The toolbar icons
-		img {
-			// clear: left;
-			// display: inline-block;
-			// float: left;
-			margin: 6px 3px 6px 0;
-			width: 16px !important;
-		}
+        &:hover {
+            cursor: pointer;
+        }
 
-		// The toolbar notification badges
-		.badge {
-			@include border-radius(12px);
-			display: inline-block;
-			font-size: 75%;
-			font-weight: bold;
-			line-height: 12px;
-			margin-left: 5px;
-			padding: 2px 5px;
-			text-align: center;
-			vertical-align: baseline;
-			white-space: nowrap;
-		}
-	}
+        a {
+            color: inherit;
+            display: flex;
+            letter-spacing: normal;
+            padding: 0 10px;
+            text-decoration: none;
+            align-items: center;
+        }
 
-	// The tabs container
-	.tab {
-		bottom: 35px;
-		display: none;
-		left: 0;
-		max-height: 62%;
-		overflow: hidden;
-		overflow-y: auto;
-		padding: 1em 2em;
-		position: fixed;
-		right: 0;
-		z-index: 9999;
-	}
+        // The toolbar icons
+        img {
+            margin: 6px 3px 6px 0;
+            width: 16px !important;
+        }
 
-	// The "Timeline" tab
-	.timeline {
-		margin-left: 0;
-		width: 100%;
+        // The toolbar notification badges
+        .badge {
+            @include border-radius(12px);
+            display: inline-block;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 12px;
+            margin-left: 5px;
+            padding: 2px 5px;
+            text-align: center;
+            vertical-align: baseline;
+            white-space: nowrap;
+        }
+    }
 
-		th {
-			border-left: 1px solid;
-			font-size: $base-size - 4;
-			font-weight: 200;
-			padding: 5px 5px 10px 5px;
-			position: relative;
-			text-align: left;
+    // The tabs container
+    .tab {
+        bottom: 35px;
+        display: none;
+        left: 0;
+        max-height: 62%;
+        overflow: hidden;
+        overflow-y: auto;
+        padding: 1em 2em;
+        position: fixed;
+        right: 0;
+        z-index: 9999;
+    }
 
-			&:first-child {
-				border-left: 0;
-			}
-		}
+    // The "Timeline" tab
+    .timeline {
+        margin-left: 0;
+        width: 100%;
 
-		td {
-			border-left: 1px solid;
-			padding: 5px;
-			position: relative;
+        th {
+            border-left: 1px solid;
+            font-size: $base-size - 4;
+            font-weight: 200;
+            padding: 5px 5px 10px 5px;
+            position: relative;
+            text-align: left;
 
-			&:first-child {
-				border-left: 0;
-			}
-		}
+            &:first-child {
+                border-left: 0;
+            }
+        }
 
-		.timer {
-			@include border-radius(4px);
-			display: inline-block;
-			padding: 5px;
-			position: absolute;
-			top: 30%;
-		}
-	}
+        td {
+            border-left: 1px solid;
+            padding: 5px;
+            position: relative;
 
-	// The "Routes" tab
-	.route-params,
-	.route-params-item {
-		vertical-align: top;
+            &:first-child {
+                border-left: 0;
+                max-width: none;
+            }
 
-		td:first-child {
-			font-style: italic;
-			padding-left: 1em;
-			text-align: right;
-		}
-	}
+            &.child-container {
+                padding: 0px;
+
+                .timeline {
+                    margin: 0px;
+
+                    td {
+                        &:first-child {
+                            &:not(.child-container) {
+                                padding-left: calc(5px + 10px * var(--level));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .timer {
+            @include border-radius(4px);
+            display: inline-block;
+            padding: 5px;
+            position: absolute;
+            top: 30%;
+        }
+
+        .timeline-parent {
+            cursor: pointer;
+
+            td {
+                &:first-child {
+                    nav {
+                        background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAxNTAiPjxwYXRoIGQ9Ik02IDdoMThsLTkgMTV6bTAgMzBoMThsLTkgMTV6bTAgNDVoMThsLTktMTV6bTAgMzBoMThsLTktMTV6bTAgMTJsMTggMThtLTE4IDBsMTgtMTgiIGZpbGw9IiM1NTUiLz48cGF0aCBkPSJNNiAxMjZsMTggMThtLTE4IDBsMTgtMTgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTU1Ii8+PC9zdmc+") no-repeat scroll 0 0/15px 75px transparent;
+                        background-position: 0 25%;
+                        display: inline-block;
+                        height: 15px;
+                        width: 15px;
+                        margin-right: 3px;
+                        vertical-align: middle;
+                    }
+                }
+            }
+        }
+
+        .timeline-parent-open {
+            background-color: #DFDFDF;
+
+            td {
+                &:first-child {
+                    nav {
+                        background-position: 0 75%;
+                    }
+                }
+            }
+        }
+
+        .child-row {
+            &:hover {
+                background: transparent;
+            }
+        }
+    }
+
+    // The "Routes" tab
+    .route-params,
+    .route-params-item {
+        vertical-align: top;
+
+        td:first-child {
+            font-style: italic;
+            padding-left: 1em;
+            text-align: right;
+        }
+    }
 }
 
 
@@ -356,21 +410,21 @@
 // ========================================================================== */
 
 .debug-view.show-view {
-	border: 1px solid;
-	margin: 4px;
+    border: 1px solid;
+    margin: 4px;
 }
 
 .debug-view-path {
-	font-family: monospace;
-	font-size: $base-size - 4;
-	letter-spacing: normal;
-	min-height: 16px;
-	padding: 2px;
-	text-align: left;
+    font-family: monospace;
+    font-size: $base-size - 4;
+    letter-spacing: normal;
+    min-height: 16px;
+    padding: 2px;
+    text-align: left;
 }
 
 .show-view .debug-view-path {
-	display: block !important;
+    display: block !important;
 }
 
 
@@ -378,17 +432,17 @@
 // ========================================================================== */
 
 @media screen and (max-width: 1024px) {
-	#debug-bar {
-		.ci-label {
-			img {
-				margin: unset
-			}
-		}
-	}
+    #debug-bar {
+        .ci-label {
+            img {
+                margin: unset
+            }
+        }
+    }
 
-	.hide-sm {
-		display: none !important;
-	}
+    .hide-sm {
+        display: none !important;
+    }
 }
 
 
@@ -400,22 +454,22 @@
 
 // If the browser supports "prefers-color-scheme" and the scheme is "Dark"
 @media (prefers-color-scheme: dark) {
-	@import '_theme-dark';
+    @import '_theme-dark';
 }
 
 // If we force the "Dark" theme
 #toolbarContainer.dark {
-	@import '_theme-dark';
+    @import '_theme-dark';
 
-	td[data-debugbar-route] input[type=text] {
-		background: #000;
-		color: #fff;
-	}
+    td[data-debugbar-route] input[type=text] {
+        background: #000;
+        color: #fff;
+    }
 }
 
 // If we force the "Light" theme
 #toolbarContainer.light {
-	@import '_theme-light';
+    @import '_theme-light';
 }
 
 
@@ -423,41 +477,41 @@
 // ========================================================================== */
 
 .debug-bar-width30 {
-	width: 30%;
+    width: 30%;
 }
 
 .debug-bar-width10 {
-	width: 10%;
+    width: 10%;
 }
 
 .debug-bar-width70p {
-	width: 70px;
+    width: 70px;
 }
 
 .debug-bar-width140p {
-	width: 140px;
+    width: 140px;
 }
 
 .debug-bar-width20e {
-	width: 20em;
+    width: 20em;
 }
 
 .debug-bar-width6r {
-	width: 6rem;
+    width: 6rem;
 }
 
 .debug-bar-ndisplay {
-	display: none;
+    display: none;
 }
 
 .debug-bar-alignRight {
-	text-align: right;
+    text-align: right;
 }
 
 .debug-bar-alignLeft {
-	text-align: left;
+    text-align: left;
 }
 
 .debug-bar-noverflow {
-	overflow: hidden;
+    overflow: hidden;
 }

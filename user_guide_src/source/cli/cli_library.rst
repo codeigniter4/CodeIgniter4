@@ -38,7 +38,7 @@ Getting Input from the User
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
-handled with the ``prompt()`` method.
+handled with the ``prompt()`` or ``promptByKey()`` method.
 
 You can provide a question by passing it in as the first parameter::
 
@@ -59,7 +59,39 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 
 Validation rules can also be written in the array syntax.::
 
-	$email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+    $email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+
+
+**promptByKey()**
+
+Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
+``promptByKey()`` allows the user to select an option by its key instead of its value::
+
+    $fruit = CLI::promptByKey('These are your choices:', ['The red apple', 'The plump orange', 'The ripe banana']);
+
+    //These are your choices:
+    //  [0]  The red apple
+    //  [1]  The plump orange
+    //  [2]  The ripe banana
+    //
+    //[0, 1, 2]:
+
+Named keys are also possible::
+
+    $fruit = CLI::promptByKey(['These are your choices:', 'Which would you like?'], [
+        'apple' => 'The red apple',
+        'orange' => 'The plump orange',
+        'banana' => 'The ripe banana'
+    ]);
+
+    //These are your choices:
+    //  [apple]   The red apple
+    //  [orange]  The plump orange
+    //  [banana]  The ripe banana
+    //
+    //Which would you like? [apple, orange, banana]:
+
+Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
 Providing Feedback
 ==================
@@ -119,8 +151,7 @@ Instead it prints it to the screen wherever the cursor is currently. This allows
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
 print "Done" on the same line::
 
-    for ($i = 0; $i <= 10; $i++)
-    {
+    for ($i = 0; $i <= 10; $i++) {
         CLI::print($i);
     }
 
@@ -168,15 +199,27 @@ on the right with their descriptions. By default, this will wrap back to the lef
 doesn't allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
 every line after the first line, so that you will have a crisp column edge on the left::
 
+    $titles = [
+        'task1a',
+        'task1abc',
+    ];
+    $descriptions = [
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        "Lorem Ipsum has been the industry's standard dummy text ever since the",
+    ];
+
     // Determine the maximum length of all titles
     // to determine the width of the left column
     $maxlen = max(array_map('strlen', $titles));
 
-    for ($i=0; $i < count($titles); $i++)
-    {
+    for ($i = 0; $i < count($titles); $i++) {
         CLI::write(
             // Display the title on the left of the row
-            $titles[$i] . '   ' .
+            substr(
+                $titles[$i] . str_repeat(' ', $maxlen + 3),
+                0,
+                $maxlen + 3
+            ) .
             // Wrap the descriptions in a right-hand column
             // with its left side 3 characters wider than
             // the longest item on the left.
@@ -188,11 +231,12 @@ Would create something like this:
 
 .. code-block:: none
 
-    task1a   Lorem Ipsum is simply dummy
-               text of the printing and typesetting
-               industry.
-    task1abc   Lorem Ipsum has been the industry's
-               standard dummy text ever since the
+    task1a     Lorem Ipsum is simply dummy
+               text of the printing and
+               typesetting industry.
+    task1abc   Lorem Ipsum has been the
+               industry's standard dummy
+               text ever since the
 
 **newLine()**
 
@@ -227,8 +271,7 @@ pass ``false`` as the first parameter and the progress bar will be removed.
     $totalSteps = count($tasks);
     $currStep   = 1;
 
-    foreach ($tasks as $task)
-    {
+    foreach ($tasks as $task) {
         CLI::showProgress($currStep++, $totalSteps);
         $task->run();
     }

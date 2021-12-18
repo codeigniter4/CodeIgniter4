@@ -22,8 +22,7 @@ you are currently connected to. Example::
 
     $tables = $db->listTables();
 
-    foreach ($tables as $table)
-    {
+    foreach ($tables as $table) {
         echo $table;
     }
 
@@ -35,10 +34,9 @@ Determine If a Table Exists
 **$db->tableExists();**
 
 Sometimes it's helpful to know whether a particular table exists before
-running an operation on it. Returns a boolean TRUE/FALSE. Usage example::
+running an operation on it. Returns a boolean true/false. Usage example::
 
-    if ($db->tableExists('table_name'))
-    {
+    if ($db->tableExists('table_name')) {
         // some code...
     }
 
@@ -60,8 +58,7 @@ two ways:
 
     $fields = $db->getFieldNames('table_name');
 
-    foreach ($fields as $field)
-    {
+    foreach ($fields as $field) {
         echo $field;
     }
 
@@ -70,8 +67,7 @@ calling the function from your query result object::
 
     $query = $db->query('SELECT * FROM some_table');
 
-    foreach ($query->getFieldNames() as $field)
-    {
+    foreach ($query->getFieldNames() as $field) {
         echo $field;
     }
 
@@ -81,10 +77,9 @@ Determine If a Field is Present in a Table
 **$db->fieldExists()**
 
 Sometimes it's helpful to know whether a particular field exists before
-performing an action. Returns a boolean TRUE/FALSE. Usage example::
+performing an action. Returns a boolean true/false. Usage example::
 
-    if ($db->fieldExists('field_name', 'table_name'))
-    {
+    if ($db->fieldExists('field_name', 'table_name')) {
         // some code...
     }
 
@@ -108,8 +103,7 @@ Usage example::
 
     $fields = $db->getFieldData('table_name');
 
-    foreach ($fields as $field)
-    {
+    foreach ($fields as $field) {
         echo $field->name;
         echo $field->type;
         echo $field->max_length;
@@ -141,11 +135,10 @@ Usage example::
 
     $keys = $db->getIndexData('table_name');
 
-    foreach ($keys as $key)
-    {
-    echo $key->name;
-    echo $key->type;
-    echo $key->fields; // array of field names
+    foreach ($keys as $key) {
+        echo $key->name;
+        echo $key->type;
+        echo $key->fields; // array of field names
     }
 
 The key types may be unique to the database you are using.
@@ -160,8 +153,7 @@ Usage example::
 
     $keys = $db->getForeignKeyData('table_name');
 
-    foreach ($keys as $key)
-    {
+    foreach ($keys as $key) {
         echo $key->constraint_name;
         echo $key->table_name;
         echo $key->column_name;

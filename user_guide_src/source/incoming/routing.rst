@@ -68,7 +68,7 @@ Placeholders Description
 (:num)       will match any integer.
 (:alpha)     will match any string of alphabetic characters
 (:alphanum)  will match any string of alphabetic characters or integers, or any combination of the two.
-(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
+(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids.
 ============ ===========================================================================================================
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
@@ -92,7 +92,7 @@ The ID will be set to “34”::
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup');
+    $routes->add('product/(:any)', 'Catalog::productLookup');
 
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method::
@@ -101,9 +101,9 @@ and the “productLookupByID” method passing in the match as a variable to the
 
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
 
-	$routes->add('product/(:any)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:any)', 'Catalog::productLookup/$1');
 
-will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the 
+will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
 Controller should take into account the maximum parameters::
 
     public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
@@ -112,15 +112,19 @@ Controller should take into account the maximum parameters::
         echo $seg3; // false in first and second, 789 in third
     }
 
-If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the 
+If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above::
 
-	$routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+    $routes->add('product/(:segment)', 'Catalog::productLookup/$1');
 
 will only match product/123 and generate 404 errors for other example.
 
-.. important:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
-    routes, described below, as it is more secure. It will also provide a slight performance increase, since
+.. warning:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
+    routes, described below, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
+    will not work.
+
+.. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
 
@@ -171,9 +175,9 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view::
 
-    $routes->add('feed', function()
-    {
+    $routes->add('feed', function () {
         $rss = new RSSFeeder();
+
         return $rss->feed('general');
     });
 
@@ -184,11 +188,12 @@ While the add() method is simple to use, it is often handier to work with multip
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
-    $routes = [];
-    $routes['product/(:num)']      = 'Catalog::productLookupById';
-    $routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
+    $multipleRoutes = [
+        'product/(:num)'      => 'Catalog::productLookupById',
+        'product/(:alphanum)' => 'Catalog::productLookupByName',
+    ];
 
-    $collection->map($routes);
+    $routes->map($multipleRoutes);
 
 Redirecting Routes
 ==================
@@ -216,51 +221,51 @@ You can group your routes under a common name with the ``group()`` method. The g
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area::
 
-    $routes->group('admin', function($routes)
-    {
+    $routes->group('admin', function ($routes) {
         $routes->add('users', 'Admin\Users::index');
         $routes->add('blog', 'Admin\Blog::index');
     });
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
 
-If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback::
 
-    $routes->group('api', ['namespace' => 'App\API\v1'], function($routes)
-    {
+    $routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
         $routes->resource('users');
     });
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
-You can also use a specific `filter <filters.html>`_ for a group of routes. This will always
+You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
-    $routes->group('api', ['filter' => 'api-auth'], function($routes)
-    {
+    $routes->group('api', ['filter' => 'api-auth'], function ($routes) {
         $routes->resource('users');
     });
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``.
+The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
 It is possible to nest groups within groups for finer organization if you need it::
 
-    $routes->group('admin', function($routes)
-    {
-        $routes->group('users', function($routes)
-        {
+    $routes->group('admin', function ($routes) {
+        $routes->group('users', function ($routes) {
             $routes->add('list', 'Admin\Users::list');
         });
-
     });
 
-This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example 
+This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example
 ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
-At some point, you may want to group routes for the purpose of applying filters or other route 
-config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass 
-an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the 
-given route config options.
+At some point, you may want to group routes for the purpose of applying filters or other route
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
+given route config options::
+
+    $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
+        $routes->get('login', 'AuthController::login', ['as' => 'login']);
+        $routes->post('login', 'AuthController::attemptLogin');
+        $routes->get('logout', 'AuthController::logout');
+    });
 
 Environment Restrictions
 ========================
@@ -270,8 +275,7 @@ tools that only the developer can use on their local machines that are not reach
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment::
 
-    $routes->environment('development', function($routes)
-    {
+    $routes->environment('development', function ($routes) {
         $routes->add('builder', 'Tools\Builder::index');
     });
 
@@ -332,7 +336,7 @@ Command-Line only Routes
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. This is great for building cronjobs or CLI-only tools. Any route created by any of the HTTP-verb-based
-route methods will also be inaccessible from the CLI, but routes created by the ``any()`` method will still be
+route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line::
 
     $routes->cli('migrate', 'App\Database::migrate');
@@ -340,7 +344,7 @@ available from the command line::
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
+All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
     $routes->add('from', 'to', $options);
@@ -354,20 +358,53 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
     $routes->match(['get', 'put'], 'from', 'to', $options);
     $routes->resource('photos', $options);
     $routes->map($array, $options);
-    $routes->group('name', $options, function());
+    $routes->group('name', $options, function ());
+
+.. _applying-filters:
 
 Applying Filters
 ----------------
 
-You can alter the behavior of specific routes by supplying a filter to run before or after the controller. This is especially handy during authentication or api logging::
+You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
+The value for the filter can be a string or an array of strings:
+
+* matching the aliases defined in **app/Config/Filters.php**.
+* filter classnames
+
+See :doc:`Controller filters <filters>` for more information on setting up filters.
+
+.. Warning:: If you set filters to routes in **app/Config/Routes.php**
+    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
+    When auto-routing is enabled, it may be possible that a controller can be accessed
+    via a different URL than the configured route,
+    in which case the filter you specified to the route will not be applied.
+    See :ref:`use-defined-routes-only` to disable auto-routing.
+
+**Alias filter**
+
+You specify an alias defined in **app/Config/Filters.php** for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
-The value for the filter must match one of the aliases defined within ``app/Config/Filters.php``. You may also supply arguments to be passed to the filter's ``before()`` and ``after()`` methods::
+You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods::
 
     $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
-See `Controller filters <filters.html>`_ for more information on setting up filters.
+**Classname filter**
+
+You specify a filter classname for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+
+**Multiple filters**
+
+.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
+
+You specify an array for the filter value::
+
+    $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+
+.. _assigning-namespace:
 
 Assigning Namespace
 -------------------
@@ -389,7 +426,7 @@ Limit to Hostname
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array::
 
-    $collection->get('from', 'to', ['hostname' => 'accounts.example.com']);
+    $routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
 
 This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
 It would not work under the main site at "example.com".
@@ -427,11 +464,42 @@ be used when the first parameter is a language string::
     // Creates:
     $routes['users/(:num)'] = 'users/show/$2';
 
+.. _routing-priority:
+
+Route processing queue
+----------------------
+
+When working with modules, it can be a problem if the routes in the application contain wildcards.
+Then the module routes will not be processed correctly.
+You can solve this problem by lowering the priority of route processing using the ``priority`` option. The parameter
+accepts positive integers and zero. The higher the number specified in the "priority", the lower
+route priority in the processing queue::
+
+    // First you need to enable sorting.
+    $routes->setPrioritize();
+
+    // App\Config\Routes
+    $routes->add('(.*)', 'Posts::index', ['priority' => 1]);
+
+    // Modules\Acme\Config\Routes
+    $routes->add('admin', 'Admin::index');
+
+    // The "admin" route will now be processed before the wildcard router.
+
+
+To disable this functionality, you must call the method with the parameter ``false``::
+
+    $routes->setPrioritize(false);
+
+.. note:: By default, all routes have a priority of 0.
+    Negative integers will be cast to the absolute value.
+
+
 Routes Configuration Options
 ============================
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of `/app/Config/Routes.php`.
+application's needs. These options are available at the top of **app/Config/Routes.php**.
 
 Default Namespace
 -----------------
@@ -494,6 +562,8 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 
     $routes->setTranslateURIDashes(true);
 
+.. _use-defined-routes-only:
+
 Use Defined Routes Only
 -----------------------
 
@@ -502,6 +572,9 @@ controllers and methods as described above. You can disable this automatic match
 to only those defined by you, by setting the ``setAutoRoute()`` option to false::
 
     $routes->setAutoRoute(false);
+
+.. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
 404 Override
 ------------
@@ -514,7 +587,21 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     $routes->set404Override('App\Errors::show404');
 
     // Will display a custom view
-    $routes->set404Override(function()
+    $routes->set404Override(function ()
     {
         echo view('my_errors/not_found.html');
     });
+
+
+Route processing by priority
+----------------------------
+
+Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
+Disabled by default. This functionality affects all routes.
+For an example use of lowering the priority see :ref:`routing-priority`::
+
+    // to enable
+    $routes->setPrioritize();
+
+    // to disable
+    $routes->setPrioritize(false);

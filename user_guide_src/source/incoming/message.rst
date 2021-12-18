@@ -123,7 +123,7 @@ Class Reference
     .. php:method:: hasHeader($name)
 
         :param  string  $name: The name of the header you want to see if it exists.
-        :returns: Returns TRUE if it exists, FALSE otherwise.
+        :returns: Returns true if it exists, false otherwise.
         :rtype: bool
 
     .. php:method:: getHeaderLine($name)

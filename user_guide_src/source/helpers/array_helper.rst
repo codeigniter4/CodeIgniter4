@@ -33,10 +33,10 @@ The following functions are available:
         $data = [
             'foo' => [
                 'buzz' => [
-                    'fizz' => 11
+                    'fizz' => 11,
                 ],
                 'bar' => [
-                    'baz' => 23
+                    'baz' => 23,
                 ]
             ]
         ]
@@ -56,6 +56,23 @@ The following functions are available:
 
         // Returns: 23
         $baz = dot_array_search('foo.*.baz', $data);
+
+    If the array key contains a dot, then the key can be escaped with a backslash::
+
+        $data = [
+            'foo' => [
+                'bar.baz' => 23,
+            ],
+            'foo.bar' => [
+                'baz' => 43,
+            ],
+        ];
+
+        // Returns: 23
+        $barBaz = dot_array_search('foo.bar\.baz', $data);
+        // Returns: 43
+        $fooBar = dot_array_search('foo\.bar.baz', $data);
+
 
 ..  php:function:: array_deep_search($key, array $array)
 

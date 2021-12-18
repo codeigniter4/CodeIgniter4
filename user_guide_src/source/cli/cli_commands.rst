@@ -31,6 +31,10 @@ Some commands take additional arguments, which should be provided directly after
 
     > php spark db:seed DevUserSeeder
 
+You may always pass ``--no-header`` to suppress the header output, helpful for parsing results::
+
+    > php spark cache:clear --no-header
+
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly::
 
@@ -183,12 +187,9 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
         A convenience method to maintain a consistent and clear error output to the CLI::
 
-            try
-            {
+            try {
                 . . .
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $this->showError($e);
             }
 
@@ -204,8 +205,8 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI::
 
             $pad = $this->getPad($this->options, 6);
-            foreach ($this->options as $option => $description)
-            {
+
+            foreach ($this->options as $option => $description) {
                 CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
             }
 

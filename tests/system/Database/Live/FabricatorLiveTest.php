@@ -1,79 +1,103 @@
-<?php namespace CodeIgniter\Database\Live;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Exceptions\FrameworkException;
-use CodeIgniter\Test\CIDatabaseTestCase;
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Fabricator;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class FabricatorLiveTest extends CIDatabaseTestCase
+final class FabricatorLiveTest extends CIUnitTestCase
 {
-	protected $refresh = true;
+    use DatabaseTestTrait;
 
-	public function testCreateAddsToDatabase()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+    protected $refresh = true;
 
-		// Some countries violate the 40 character limit so override that
-		$fabricator->setOverrides(['country' => 'Spain']);
+    public function testCreateAddsToDatabase()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-		$result = $fabricator->create();
+        // Some countries violate the 40 character limit so override that
+        $fabricator->setOverrides(['country' => 'Spain']);
 
-		$this->seeInDatabase('user', ['name' => $result->name]);
-	}
+        $result = $fabricator->create();
 
-	public function testCreateAddsCountToDatabase()
-	{
-		$count = 10;
+        $this->seeInDatabase('user', ['name' => $result->name]);
+    }
 
-		$fabricator = new Fabricator(UserModel::class);
+    public function testCreateAddsCountToDatabase()
+    {
+        $count = 10;
 
-		// Some countries violate the 40 character limit so override that
-		$fabricator->setOverrides(['country' => 'France']);
+        $fabricator = new Fabricator(UserModel::class);
 
-		$result = $fabricator->create($count);
+        // Some countries violate the 40 character limit so override that
+        $fabricator->setOverrides(['country' => 'France']);
 
-		$this->seeNumRecords($count, 'user', []);
-	}
+        $result = $fabricator->create($count);
 
-	public function testHelperCreates()
-	{
-		helper('test');
+        $this->seeNumRecords($count, 'user', []);
+    }
 
-		$result = fake(UserModel::class, ['country' => 'Italy']);
+    public function testHelperCreates()
+    {
+        helper('test');
 
-		$this->seeInDatabase('user', ['name' => $result->name]);
-	}
+        $result = fake(UserModel::class, ['country' => 'Italy']);
 
-	public function testCreateIncrementsCount()
-	{
-		$fabricator = new Fabricator(UserModel::class);
-		$fabricator->setOverrides(['country' => 'China']);
+        $this->seeInDatabase('user', ['name' => $result->name]);
+    }
 
-		$count = Fabricator::getCount('user');
+    public function testCreateIncrementsCount()
+    {
+        $fabricator = new Fabricator(UserModel::class);
+        $fabricator->setOverrides(['country' => 'China']);
 
-		$fabricator->create();
+        $count = Fabricator::getCount('user');
 
-		$this->assertEquals($count + 1, Fabricator::getCount('user'));
-	}
+        $fabricator->create();
 
-	public function testHelperIncrementsCount()
-	{
-		$count = Fabricator::getCount('user');
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
+    }
 
-		fake(UserModel::class, ['country' => 'Italy']);
+    public function testHelperIncrementsCount()
+    {
+        $count = Fabricator::getCount('user');
 
-		$this->assertEquals($count + 1, Fabricator::getCount('user'));
-	}
+        fake(UserModel::class, ['country' => 'Italy']);
 
-	public function testCreateThrowsOnFailure()
-	{
-		$this->expectException(FrameworkException::class);
-		$this->expectExceptionMessage(lang('Fabricator.createFailed', ['job', 'Too short, man!']));
+        $this->assertSame($count + 1, Fabricator::getCount('user'));
+    }
 
-		fake(ValidModel::class, ['name' => 'eh']);
-	}
+    public function testCreateThrowsOnFailure()
+    {
+        $this->expectException(FrameworkException::class);
+        $this->expectExceptionMessage(lang('Fabricator.createFailed', ['job', 'Too short, man!']));
+
+        fake(ValidModel::class, ['name' => 'eh']);
+    }
+
+    public function testHelperDoesNotPersist()
+    {
+        helper('test');
+        $result = fake(UserModel::class, ['name' => 'Derek'], false);
+        $this->assertSame('Derek', $result->name);
+        $this->dontSeeInDatabase('user', ['name' => 'Derek']);
+    }
 }

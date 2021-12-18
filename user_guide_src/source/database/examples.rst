@@ -6,6 +6,10 @@ The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
 describing each function.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Initializing the Database Class
 ===============================
 
@@ -24,11 +28,10 @@ Standard Query With Multiple Results (Object Version)
 
 ::
 
-    $query = $db->query('SELECT name, title, email FROM my_table');
+    $query   = $db->query('SELECT name, title, email FROM my_table');
     $results = $query->getResult();
 
-    foreach ($results as $row)
-    {
+    foreach ($results as $row) {
         echo $row->title;
         echo $row->name;
         echo $row->email;
@@ -47,8 +50,7 @@ Standard Query With Multiple Results (Array Version)
     $query   = $db->query('SELECT name, title, email FROM my_table');
     $results = $query->getResultArray();
 
-    foreach ($results as $row)
-    {
+    foreach ($results as $row) {
         echo $row['title'];
         echo $row['name'];
         echo $row['email'];
@@ -98,8 +100,7 @@ means of retrieving data::
 
     $query = $db->table('table_name')->get();
 
-    foreach ($query->getResult() as $row)
-    {
+    foreach ($query->getResult() as $row) {
         echo $row->title;
     }
 
@@ -120,4 +121,3 @@ Query Builder Insert
 
     $db->table('mytable')->insert($data);
     // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
-

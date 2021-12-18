@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Config\Factories;
@@ -9,314 +18,330 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
+/**
+ * @internal
+ */
 final class ValidationModelTest extends LiveModelTestCase
 {
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->createModel(ValidModel::class);
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->createModel(ValidModel::class);
+    }
 
-	public function testValidationBasics(): void
-	{
-		$data = [
-			'name'        => null,
-			'description' => 'some great marketing stuff',
-		];
+    public function testValid(): void
+    {
+        $data = [
+            'name'        => 'some name',
+            'description' => 'some great marketing stuff',
+        ];
 
-		$this->assertFalse($this->model->insert($data));
+        $this->assertIsInt($this->model->insert($data));
 
-		$errors = $this->model->errors();
-		$this->assertSame('You forgot to name the baby.', $errors['name']);
-	}
+        $errors = $this->model->errors();
+        $this->assertSame([], $errors);
+    }
 
-	public function testValidationWithSetValidationRule(): void
-	{
-		$data = [
-			'name'        => 'some name',
-			'description' => 'some great marketing stuff',
-		];
+    public function testValidationBasics(): void
+    {
+        $data = [
+            'name'        => null,
+            'description' => 'some great marketing stuff',
+        ];
 
-		$this->model->setValidationRule('description', [
-			'rules'  => 'required|min_length[50]',
-			'errors' => [
-				'min_length' => 'Description is too short baby.',
-			],
-		]);
-		$this->assertFalse($this->model->insert($data));
+        $this->assertFalse($this->model->insert($data));
 
-		$errors = $this->model->errors();
-		$this->assertSame('Description is too short baby.', $errors['description']);
-	}
+        $errors = $this->model->errors();
+        $this->assertSame('You forgot to name the baby.', $errors['name']);
+    }
 
-	public function testValidationWithSetValidationRules(): void
-	{
-		$data = [
-			'name'        => '',
-			'description' => 'some great marketing stuff',
-		];
+    public function testValidationWithSetValidationRule(): void
+    {
+        $data = [
+            'name'        => 'some name',
+            'description' => 'some great marketing stuff',
+        ];
 
-		$this->model->setValidationRules([
-			'name'        => [
-				'rules'  => 'required',
-				'errors' => [
-					'required' => 'Give me a name baby.',
-				],
-			],
-			'description' => [
-				'rules'  => 'required|min_length[50]',
-				'errors' => [
-					'min_length' => 'Description is too short baby.',
-				],
-			],
-		]);
-		$this->assertFalse($this->model->insert($data));
+        $this->model->setValidationRule('description', [
+            'rules'  => 'required|min_length[50]',
+            'errors' => [
+                'min_length' => 'Description is too short baby.',
+            ],
+        ]);
+        $this->assertFalse($this->model->insert($data));
 
-		$errors = $this->model->errors();
-		$this->assertSame('Give me a name baby.', $errors['name']);
-		$this->assertSame('Description is too short baby.', $errors['description']);
-	}
+        $errors = $this->model->errors();
+        $this->assertSame('Description is too short baby.', $errors['description']);
+    }
 
-	public function testValidationWithSetValidationMessage(): void
-	{
-		$data = [
-			'name'        => null,
-			'description' => 'some great marketing stuff',
-		];
+    public function testValidationWithSetValidationRules(): void
+    {
+        $data = [
+            'name'        => '',
+            'description' => 'some great marketing stuff',
+        ];
 
-		$this->model->setValidationMessage('name', [
-			'required'   => 'Your baby name is missing.',
-			'min_length' => 'Too short, man!',
-		]);
-		$this->assertFalse($this->model->insert($data));
+        $this->model->setValidationRules([
+            'name' => [
+                'rules'  => 'required',
+                'errors' => [
+                    'required' => 'Give me a name baby.',
+                ],
+            ],
+            'description' => [
+                'rules'  => 'required|min_length[50]',
+                'errors' => [
+                    'min_length' => 'Description is too short baby.',
+                ],
+            ],
+        ]);
+        $this->assertFalse($this->model->insert($data));
 
-		$errors = $this->model->errors();
-		$this->assertSame('Your baby name is missing.', $errors['name']);
-	}
+        $errors = $this->model->errors();
+        $this->assertSame('Give me a name baby.', $errors['name']);
+        $this->assertSame('Description is too short baby.', $errors['description']);
+    }
 
-	public function testValidationPlaceholdersSuccess(): void
-	{
-		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
-			'token' => 13,
-		];
+    public function testValidationWithSetValidationMessage(): void
+    {
+        $data = [
+            'name'        => null,
+            'description' => 'some great marketing stuff',
+        ];
 
-		$this->assertTrue($this->model->validate($data));
-	}
+        $this->model->setValidationMessage('name', [
+            'required'   => 'Your baby name is missing.',
+            'min_length' => 'Too short, man!',
+        ]);
+        $this->assertFalse($this->model->insert($data));
 
-	public function testValidationPlaceholdersFail(): void
-	{
-		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
-			'token' => 12,
-		];
+        $errors = $this->model->errors();
+        $this->assertSame('Your baby name is missing.', $errors['name']);
+    }
 
-		$this->assertFalse($this->model->validate($data));
-	}
+    public function testValidationPlaceholdersSuccess(): void
+    {
+        $data = [
+            'name'  => 'abc',
+            'id'    => 13,
+            'token' => 13,
+        ];
 
-	public function testSkipValidation(): void
-	{
-		$data = [
-			'name'        => '2',
-			'description' => 'some great marketing stuff',
-		];
+        $this->assertTrue($this->model->validate($data));
+    }
 
-		$this->assertIsNumeric($this->model->skipValidation(true)->insert($data));
-	}
+    public function testValidationPlaceholdersFail(): void
+    {
+        $data = [
+            'name'  => 'abc',
+            'id'    => 13,
+            'token' => 12,
+        ];
 
-	public function testCleanValidationRemovesAllWhenNoDataProvided(): void
-	{
-		$cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+        $this->assertFalse($this->model->validate($data));
+    }
 
-		$rules = [
-			'name' => 'required',
-			'foo'  => 'bar',
-		];
+    public function testSkipValidation(): void
+    {
+        $data = [
+            'name'        => '2',
+            'description' => 'some great marketing stuff',
+        ];
 
-		$rules = call_user_func($cleaner, $rules, null);
-		$this->assertEmpty($rules);
-	}
+        $this->assertIsNumeric($this->model->skipValidation(true)->insert($data));
+    }
 
-	public function testCleanValidationRemovesOnlyForFieldsNotProvided(): void
-	{
-		$cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+    public function testCleanValidationRemovesAllWhenNoDataProvided(): void
+    {
+        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
-		$rules = [
-			'name' => 'required',
-			'foo'  => 'required',
-		];
+        $rules = [
+            'name' => 'required',
+            'foo'  => 'bar',
+        ];
 
-		$data = [
-			'foo' => 'bar',
-		];
+        $rules = $cleaner($rules, null);
+        $this->assertEmpty($rules);
+    }
 
-		$rules = call_user_func($cleaner, $rules, $data);
-		$this->assertArrayHasKey('foo', $rules);
-		$this->assertArrayNotHasKey('name', $rules);
-	}
+    public function testCleanValidationRemovesOnlyForFieldsNotProvided(): void
+    {
+        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
-	public function testCleanValidationReturnsAllWhenAllExist(): void
-	{
-		$cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
+        $rules = [
+            'name' => 'required',
+            'foo'  => 'required',
+        ];
 
-		$rules = [
-			'name' => 'required',
-			'foo'  => 'required',
-		];
+        $data = [
+            'foo' => 'bar',
+        ];
 
-		$data = [
-			'foo'  => 'bar',
-			'name' => null,
-		];
+        $rules = $cleaner($rules, $data);
+        $this->assertArrayHasKey('foo', $rules);
+        $this->assertArrayNotHasKey('name', $rules);
+    }
 
-		$rules = call_user_func($cleaner, $rules, $data);
-		$this->assertArrayHasKey('foo', $rules);
-		$this->assertArrayHasKey('name', $rules);
-	}
+    public function testCleanValidationReturnsAllWhenAllExist(): void
+    {
+        $cleaner = $this->getPrivateMethodInvoker($this->model, 'cleanValidationRules');
 
-	public function testValidationPassesWithMissingFields(): void
-	{
-		$data = [
-			'foo' => 'bar',
-		];
+        $rules = [
+            'name' => 'required',
+            'foo'  => 'required',
+        ];
 
-		$result = $this->model->validate($data);
-		$this->assertTrue($result);
-	}
+        $data = [
+            'foo'  => 'bar',
+            'name' => null,
+        ];
 
-	public function testValidationWithGroupName(): void
-	{
-		$config = new Validation();
+        $rules = $cleaner($rules, $data);
+        $this->assertArrayHasKey('foo', $rules);
+        $this->assertArrayHasKey('name', $rules);
+    }
 
-		$config->grouptest = [
-			'name'  => [
-				'required',
-				'min_length[3]',
-			],
-			'token' => 'in_list[{id}]',
-		];
+    public function testValidationPassesWithMissingFields(): void
+    {
+        $data = [
+            'foo' => 'bar',
+        ];
 
-		$data = [
-			'name'  => 'abc',
-			'id'    => 13,
-			'token' => 13,
-		];
+        $result = $this->model->validate($data);
+        $this->assertTrue($result);
+    }
 
-		Factories::injectMock('config', 'Validation', $config);
+    public function testValidationWithGroupName(): void
+    {
+        $config = new Validation();
 
-		$this->createModel(ValidModel::class);
-		$this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
-		$this->assertTrue($this->model->validate($data));
-	}
+        $config->grouptest = [
+            'name' => [
+                'required',
+                'min_length[3]',
+            ],
+            'token' => 'in_list[{id}]',
+        ];
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1584
-	 */
-	public function testUpdateWithValidation(): void
-	{
-		$data = [
-			'description' => 'This is a first test!',
-			'name'        => 'valid',
-			'id'          => 42,
-			'token'       => 42,
-		];
+        $data = [
+            'name'  => 'abc',
+            'id'    => 13,
+            'token' => 13,
+        ];
 
-		$id = $this->model->insert($data);
-		$this->assertTrue((bool) $id);
+        Factories::injectMock('config', 'Validation', $config);
 
-		$data['description'] = 'This is a second test!';
-		unset($data['name']);
+        $this->createModel(ValidModel::class);
+        $this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
+        $this->assertTrue($this->model->validate($data));
+    }
 
-		$result = $this->model->update($id, $data);
-		$this->assertTrue($result);
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1584
+     */
+    public function testUpdateWithValidation(): void
+    {
+        $data = [
+            'description' => 'This is a first test!',
+            'name'        => 'valid',
+            'id'          => 42,
+            'token'       => 42,
+        ];
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
-	 */
-	public function testRequiredWithValidationEmptyString(): void
-	{
-		$this->assertFalse($this->model->insert(['name' => '']));
-	}
+        $id = $this->model->insert($data);
+        $this->assertTrue((bool) $id);
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
-	 */
-	public function testRequiredWithValidationNull(): void
-	{
-		$this->assertFalse($this->model->insert(['name' => null]));
-	}
+        $data['description'] = 'This is a second test!';
+        unset($data['name']);
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
-	 */
-	public function testRequiredWithValidationTrue(): void
-	{
-		$data = [
-			'name'        => 'foobar',
-			'description' => 'just because we have to',
-		];
+        $result = $this->model->update($id, $data);
+        $this->assertTrue($result);
+    }
 
-		$this->assertTrue($this->model->insert($data) !== false);
-	}
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+     */
+    public function testRequiredWithValidationEmptyString(): void
+    {
+        $this->assertFalse($this->model->insert(['name' => '']));
+    }
 
-	/**
-	 * @see https://github.com/codeigniter4/CodeIgniter4/issues/1574
-	 */
-	public function testValidationIncludingErrors(): void
-	{
-		$data = [
-			'description' => 'This is a first test!',
-			'name'        => 'valid',
-			'id'          => 42,
-			'token'       => 42,
-		];
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+     */
+    public function testRequiredWithValidationNull(): void
+    {
+        $this->assertFalse($this->model->insert(['name' => null]));
+    }
 
-		$this->createModel(ValidErrorsModel::class);
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1717
+     */
+    public function testRequiredWithValidationTrue(): void
+    {
+        $data = [
+            'name'        => 'foobar',
+            'description' => 'just because we have to',
+        ];
 
-		$id = $this->model->insert($data);
-		$this->assertFalse((bool)$id);
-		$this->assertSame('Minimum Length Error', $this->model->errors()['name']);
-	}
+        $this->assertNotFalse($this->model->insert($data));
+    }
 
-	public function testValidationByObject(): void
-	{
-		$data = new stdClass();
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1574
+     */
+    public function testValidationIncludingErrors(): void
+    {
+        $data = [
+            'description' => 'This is a first test!',
+            'name'        => 'valid',
+            'id'          => 42,
+            'token'       => 42,
+        ];
 
-		$data->name  = 'abc';
-		$data->id    = '13';
-		$data->token = '13';
+        $this->createModel(ValidErrorsModel::class);
 
-		$this->assertTrue($this->model->validate($data));
-	}
+        $id = $this->model->insert($data);
+        $this->assertFalse((bool) $id);
+        $this->assertSame('Minimum Length Error', $this->model->errors()['name']);
+    }
 
-	public function testGetValidationRules(): void
-	{
-		$this->createModel(JobModel::class);
-		$this->setPrivateProperty($this->model, 'validationRules', ['description' => 'required']);
+    public function testValidationByObject(): void
+    {
+        $data = new stdClass();
 
-		$rules = $this->model->getValidationRules();
-		$this->assertSame('required', $rules['description']);
-	}
+        $data->name  = 'abc';
+        $data->id    = '13';
+        $data->token = '13';
 
-	public function testGetValidationMessages(): void
-	{
-		$jobData = [
-			[
-				'name'        => 'Comedian',
-				'description' => null,
-			],
-		];
+        $this->assertTrue($this->model->validate($data));
+    }
 
-		$this->createModel(JobModel::class);
-		$this->setPrivateProperty($this->model, 'validationRules', ['description' => 'required']);
-		$this->setPrivateProperty($this->model, 'validationMessages', ['description' => 'Description field is required.']);
+    public function testGetValidationRules(): void
+    {
+        $this->createModel(JobModel::class);
+        $this->setPrivateProperty($this->model, 'validationRules', ['description' => 'required']);
 
-		$this->assertFalse($this->model->insertBatch($jobData));
+        $rules = $this->model->getValidationRules();
+        $this->assertSame('required', $rules['description']);
+    }
 
-		$error = $this->model->getValidationMessages();
-		$this->assertSame('Description field is required.', $error['description']);
-	}
+    public function testGetValidationMessages(): void
+    {
+        $jobData = [
+            [
+                'name'        => 'Comedian',
+                'description' => null,
+            ],
+        ];
+
+        $this->createModel(JobModel::class);
+        $this->setPrivateProperty($this->model, 'validationRules', ['description' => 'required']);
+        $this->setPrivateProperty($this->model, 'validationMessages', ['description' => 'Description field is required.']);
+
+        $this->assertFalse($this->model->insertBatch($jobData));
+
+        $error = $this->model->getValidationMessages();
+        $this->assertSame('Description field is required.', $error['description']);
+    }
 }

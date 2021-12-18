@@ -2,19 +2,25 @@
 
 declare(strict_types=1);
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Utils\Rector;
 
-use Nette\Utils\Strings;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
-use Rector\BetterPhpDocParser\PhpDocManipulator\PropertyDocBlockManipulator;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
-use Rector\Core\RectorDefinition\CodeSample;
-use Rector\Core\Util\StaticRectorStrings;
-use Rector\NodeTypeResolver\Node\AttributeKey;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
@@ -23,145 +29,123 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 {
-	/**
-	 * @var string
-	 * @see https://regex101.com/r/OtFn8I/1
-	 */
-	private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
+    /**
+     * @see https://regex101.com/r/OtFn8I/1
+     */
+    private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
 
-	/**
-	 * @var PropertyDocBlockManipulator
-	 */
-	private $propertyDocBlockManipulator;
+    /**
+     * @var ReservedKeywordAnalyzer
+     */
+    private $reservedKeywordAnalyzer;
 
-	/**
-	 * @var ReservedKeywordAnalyzer
-	 */
-	private $reservedKeywordAnalyzer;
-
-	public function __construct(
-		PropertyDocBlockManipulator $propertyDocBlockManipulator,
-		ReservedKeywordAnalyzer $reservedKeywordAnalyzer
-	)
-	{
-		$this->propertyDocBlockManipulator = $propertyDocBlockManipulator;
-		$this->reservedKeywordAnalyzer     = $reservedKeywordAnalyzer;
-	}
-
-	public function getRuleDefinition(): RuleDefinition
-	{
-		return new RuleDefinition('Change under_score names to camelCase', [
-			new CodeSample(
-				<<<'CODE_SAMPLE'
-final class SomeClass
-{
-    public function run($a_b)
-    {
-        $some_value = $a_b;
+    public function __construct(
+        ReservedKeywordAnalyzer $reservedKeywordAnalyzer
+    ) {
+        $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
     }
-}
-CODE_SAMPLE
+
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition('Change under_score names to camelCase', [
+            new CodeSample(
+                <<<'CODE_SAMPLE'
+                    final class SomeClass
+                    {
+                        public function run($a_b)
+                        {
+                            $some_value = $a_b;
+                        }
+                    }
+                    CODE_SAMPLE
 ,
-				<<<'CODE_SAMPLE'
-final class SomeClass
-{
-    public function run($aB)
-    {
-        $someValue = $aB;
+                <<<'CODE_SAMPLE'
+                    final class SomeClass
+                    {
+                        public function run($aB)
+                        {
+                            $someValue = $aB;
+                        }
+                    }
+                    CODE_SAMPLE
+            ),
+        ]);
     }
-}
-CODE_SAMPLE
-			),
-		]);
-	}
 
-	/**
-	 * @return string[]
-	 */
-	public function getNodeTypes(): array
-	{
-		return [Variable::class];
-	}
+    /**
+     * @return string[]
+     */
+    public function getNodeTypes(): array
+    {
+        return [Variable::class];
+    }
 
-	/**
-	 * @param Variable $node
-	 */
-	public function refactor(Node $node): ?Node
-	{
-		$nodeName = $this->getName($node);
-		if ($nodeName === null)
-		{
-			return null;
-		}
+    /**
+     * @param Variable $node
+     */
+    public function refactor(Node $node): ?Node
+    {
+        $nodeName = $this->getName($node);
+        if ($nodeName === null) {
+            return null;
+        }
 
-		if (! Strings::contains($nodeName, '_'))
-		{
-			return null;
-		}
+        if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName)) {
+            return null;
+        }
 
-		if ($this->reservedKeywordAnalyzer->isNativeVariable($nodeName))
-		{
-			return null;
-		}
+        $underscorePosition = strpos($nodeName, '_');
+        // underscore not found, or in the first char, skip
+        if ((int) $underscorePosition === 0) {
+            return null;
+        }
 
-		if ($nodeName[0] === '_')
-		{
-			return null;
-		}
+        $replaceUnderscoreToSpace = str_replace('_', ' ', $nodeName);
+        $uppercaseFirstChar       = ucwords($replaceUnderscoreToSpace);
+        $camelCaseName            = lcfirst(str_replace(' ', '', $uppercaseFirstChar));
 
-		$camelCaseName = StaticRectorStrings::underscoreToCamelCase($nodeName);
-		if ($camelCaseName === 'this')
-		{
-			return null;
-		}
+        if ($camelCaseName === 'this') {
+            return null;
+        }
 
-		$node->name = $camelCaseName;
-		$this->updateDocblock($node, $nodeName, $camelCaseName);
+        $node->name = $camelCaseName;
+        $this->updateDocblock($node, $nodeName, $camelCaseName);
 
-		return $node;
-	}
+        return $node;
+    }
 
-	private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
-	{
-		$parentNode = $variable->getAttribute(AttributeKey::PARENT_NODE);
-		while ($parentNode)
-		{
-			/**
-			 * @var ClassMethod|Function_ $parentNode
-			 */
-			$parentNode = $parentNode->getAttribute(AttributeKey::PARENT_NODE);
-			if ($parentNode instanceof ClassMethod || $parentNode instanceof Function_)
-			{
-				break;
-			}
-		}
+    private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
+    {
+        $parentClassMethodOrFunction = $this->betterNodeFinder->findParentByTypes($variable, [ClassMethod::class, Function_::class]);
 
-		if ($parentNode === null)
-		{
-			return;
-		}
+        if ($parentClassMethodOrFunction === null) {
+            return;
+        }
 
-		$docComment = $parentNode->getDocComment();
-		if ($docComment === null)
-		{
-			return;
-		}
+        $docComment = $parentClassMethodOrFunction->getDocComment();
+        if ($docComment === null) {
+            return;
+        }
 
-		$docCommentText = $docComment->getText();
-		if ($docCommentText === null)
-		{
-			return;
-		}
+        $docCommentText = $docComment->getText();
+        if ($docCommentText === null) {
+            return;
+        }
 
-		if (! $match = Strings::match($docCommentText, sprintf(self::PARAM_NAME_REGEX, $variableName)))
-		{
-			return;
-		}
+        if (! preg_match(sprintf(self::PARAM_NAME_REGEX, $variableName), $docCommentText)) {
+            return;
+        }
 
-		$this->propertyDocBlockManipulator->renameParameterNameInDocBlock(
-			$parentNode,
-			$match['paramName'],
-			$camelCaseName
-		);
-	}
+        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentClassMethodOrFunction);
+        $paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
+
+        foreach ($paramTagValueNodes as $paramTagValueNode) {
+            if ($paramTagValueNode->parameterName === '$' . $variableName) {
+                $paramTagValueNode->parameterName = '$' . $camelCaseName;
+                break;
+            }
+        }
+
+        $parentClassMethodOrFunction->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
+    }
 }

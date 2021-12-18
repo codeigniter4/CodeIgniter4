@@ -9,7 +9,7 @@ on:
 jobs:
   framework:
     name: Deploy to framework
-    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-latest
     steps:
       - name: Identify
@@ -36,15 +36,15 @@ jobs:
         run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
-            const release = await github.repos.getLatestRelease({
+            const release = await github.rest.repos.getLatestRelease({
               owner: context.repo.owner,
               repo: context.repo.repo
             })
-            github.repos.createRelease({
+            github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: 'framework',
               tag_name: release.data.tag_name,
@@ -54,7 +54,7 @@ jobs:
 
   appstarter:
     name: Deploy to appstarter
-    if: (github.repository == 'codeigniter4/CodeIgniter4')
+    if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-latest
     steps:
       - name: Identify
@@ -81,15 +81,15 @@ jobs:
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
-            const release = await github.repos.getLatestRelease({
+            const release = await github.rest.repos.getLatestRelease({
               owner: context.repo.owner,
               repo: context.repo.repo
             })
-            github.repos.createRelease({
+            github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: 'appstarter',
               tag_name: release.data.tag_name,

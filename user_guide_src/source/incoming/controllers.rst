@@ -224,12 +224,9 @@ be passed as a parameter to the ``_remap()`` method::
 
     public function _remap($method)
     {
-        if ($method === 'some_method')
-        {
+        if ($method === 'some_method') {
             return $this->$method();
-        }
-        else
-        {
+        } else {
             return $this->default_method();
         }
     }
@@ -242,10 +239,11 @@ Example::
     public function _remap($method, ...$params)
     {
         $method = 'process_'.$method;
-        if (method_exists($this, $method))
-        {
+
+        if (method_exists($this, $method)) {
             return $this->$method(...$params);
         }
+
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 
@@ -264,7 +262,7 @@ if you were to define a method like this for the `Helloworld` controller::
 
 then trying to access it using the following URL will not work::
 
-	example.com/index.php/helloworld/utility/
+    example.com/index.php/helloworld/utility/
 
 Organizing Your Controllers into Sub-directories
 ================================================
@@ -290,7 +288,7 @@ one and place your controller classes within them.
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your 'default_controller' as specified in
-your *app/Config/Routes.php* file.
+your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
 
@@ -321,8 +319,7 @@ An instance of the :doc:`Logger <../general/logging>` class is available as a cl
 A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers::
 
-    if (! $this->request->isSecure())
-    {
+    if (! $this->request->isSecure()) {
         $this->forceHTTPS();
     }
 
@@ -330,9 +327,8 @@ By default, and in modern browsers that support the HTTP Strict Transport Securi
 call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
 modify this by passing the duration (in seconds) as the first parameter::
 
-    if (! $this->request->isSecure())
-    {
-        $this->forceHTTPS(31536000);    // one year
+    if (! $this->request->isSecure()) {
+        $this->forceHTTPS(31536000); // one year
     }
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including YEAR, MONTH, and more.
@@ -367,8 +363,7 @@ rule and message array formats, as well as available rules.::
         if (! $this->validate([
             'email' => "required|is_unique[users.email,id,{$userID}]",
             'name'  => 'required|alpha_numeric_spaces'
-        ]))
-        {
+        ])) {
             return view('users/update', [
                 'errors' => $this->validator->getErrors()
             ]);
@@ -382,8 +377,7 @@ the $rules array with the name of the group as defined in ``Config\Validation.ph
 
     public function updateUser(int $userID)
     {
-        if (! $this->validate('userRules'))
-        {
+        if (! $this->validate('userRules')) {
             return view('users/update', [
                 'errors' => $this->validator->getErrors()
             ]);

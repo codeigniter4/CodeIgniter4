@@ -8,8 +8,6 @@ var ciDebugBar = {
 	toolbar : null,
 	icon : null,
 
-	//--------------------------------------------------------------------
-
 	init : function () {
 		this.toolbarContainer = document.getElementById('toolbarContainer');
 		this.toolbar          = document.getElementById('debug-bar');
@@ -53,8 +51,6 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	createListeners : function () {
 		var buttons = [].slice.call(document.querySelectorAll('#debug-bar .ci-label a'));
 
@@ -62,9 +58,14 @@ var ciDebugBar = {
 		{
 			buttons[i].addEventListener('click', ciDebugBar.showTab, true);
 		}
-	},
 
-	//--------------------------------------------------------------------
+		// Hook up generic toggle via data attributes `data-toggle="foo"`
+		var links = document.querySelectorAll('[data-toggle]');
+		for (var i = 0; i < links.length; i++)
+		{
+			links[i].addEventListener('click', ciDebugBar.toggleRows, true);
+		}
+	},
 
 	showTab: function () {
 		// Get the target tab, if any
@@ -108,8 +109,6 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	addClass : function (el, className) {
 		if (el.classList)
 		{
@@ -120,8 +119,6 @@ var ciDebugBar = {
 			el.className += ' ' + className;
 		}
 	},
-
-	//--------------------------------------------------------------------
 
 	removeClass : function (el, className) {
 		if (el.classList)
@@ -134,7 +131,20 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
+	/**
+	 * Toggle display of another object based on
+	 * the data-toggle value of this object
+	 *
+	 * @param event
+	 */
+	toggleRows : function(event) {
+		if(event.target)
+		{
+			let row = event.target.closest('tr');
+			let target = document.getElementById(row.getAttribute('data-toggle'));
+			target.style.display = target.style.display === 'none' ? 'table-row' : 'none';
+		}
+	},
 
 	/**
 	 * Toggle display of a data table
@@ -149,9 +159,29 @@ var ciDebugBar = {
 
 		if (obj)
 		{
-			obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
+			obj.style.display = obj.style.display === 'none' ? 'block' : 'none';
 		}
 	},
+
+	/**
+	 * Toggle display of timeline child elements
+	 *
+	 * @param obj
+	 */
+	toggleChildRows : function (obj) {
+		if (typeof obj == 'string')
+		{
+			par = document.getElementById(obj + '_parent')
+			obj = document.getElementById(obj + '_children');
+		}
+
+		if (par && obj)
+		{
+			obj.style.display = obj.style.display === 'none' ? '' : 'none';
+			par.classList.toggle('timeline-parent-open');
+		}
+	},
+
 
 	//--------------------------------------------------------------------
 
@@ -169,8 +199,6 @@ var ciDebugBar = {
 		ciDebugBar.createCookie('debug-bar-state', open == true ? 'minimized' : 'open' , 365);
 	},
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the initial state of the toolbar (open or minimized) when
 	 * the page is first loaded to allow it to remember the state between refreshes.
@@ -181,8 +209,6 @@ var ciDebugBar = {
 		ciDebugBar.icon.style.display    = open != 'open' ? 'inline-block' : 'none';
 		ciDebugBar.toolbar.style.display = open == 'open' ? 'inline-block' : 'none';
 	},
-
-	//--------------------------------------------------------------------
 
 	toggleViewsHints: function () {
 		// Avoid toggle hints on history requests that are not the initial
@@ -475,8 +501,6 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	setToolbarPosition: function () {
 		var btnPosition = document.getElementById('toolbar-position');
 
@@ -505,8 +529,6 @@ var ciDebugBar = {
 			}
 		}, true);
 	},
-
-	//--------------------------------------------------------------------
 
 	setToolbarTheme: function () {
 		var btnTheme    = document.getElementById('toolbar-theme');
@@ -556,8 +578,6 @@ var ciDebugBar = {
 		}, true);
 	},
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Helper to create a cookie.
 	 *
@@ -582,8 +602,6 @@ var ciDebugBar = {
 		document.cookie = name + "=" + value + expires + "; path=/; samesite=Lax";
 	},
 
-	//--------------------------------------------------------------------
-
 	readCookie : function (name) {
 		var nameEQ = name + "=";
 		var ca     = document.cookie.split(';');
@@ -602,8 +620,6 @@ var ciDebugBar = {
 		}
 		return null;
 	},
-
-	//--------------------------------------------------------------------
 
 	trimSlash: function (text) {
 		return text.replace(/^\/|\/$/g, '');
@@ -668,5 +684,4 @@ var ciDebugBar = {
 			})
 		}
 	}
-
 };

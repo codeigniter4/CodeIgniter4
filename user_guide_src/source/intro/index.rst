@@ -37,10 +37,11 @@ CodeIgniter is right for you if:
 -  You need clear, thorough documentation.
 
 .. toctree::
-	:hidden:
-	:titlesonly:
+    :hidden:
+    :titlesonly:
 
-	self
-	requirements
-	credits
-	psr
+    self
+    requirements
+    credits
+    psr
+    License Agreement <../license>

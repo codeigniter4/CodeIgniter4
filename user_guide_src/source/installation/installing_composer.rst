@@ -1,5 +1,5 @@
 Composer Installation
-###############################################################################
+#####################
 
 .. contents::
     :local:
@@ -18,7 +18,7 @@ webapp,
    when you clone the repository to a new system.
 
 App Starter
-============================================================
+===========
 
 The `CodeIgniter 4 app starter <https://github.com/codeigniter4/appstarter>`_
 repository holds a skeleton application, with a composer dependency on
@@ -28,11 +28,11 @@ This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.
 
 Installation & Set Up
--------------------------------------------------------
+---------------------
 
 In the folder above your project root::
 
-    composer create-project codeigniter4/appstarter project-root
+    > composer create-project codeigniter4/appstarter project-root
 
 The command above will create a "project-root" folder.
 
@@ -46,20 +46,20 @@ trusted dependencies that we bundle, being composer-installed.
 
 A sample such installation command, using the default project-root "appstarter"::
 
-    composer create-project codeigniter4/appstarter --no-dev
+    > composer create-project codeigniter4/appstarter --no-dev
 
 After installation you should follow the steps in the "Upgrading" section.
 
 Upgrading
--------------------------------------------------------
+---------
 
 Whenever there is a new release, then from the command line in your project root::
 
-    composer update
+    > composer update
 
 If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with ``--prefer-source``::
 
-    composer update codeigniter4/framework --prefer-source
+    > composer update codeigniter4/framework --prefer-source
 
 If ``--prefer-source`` doesn't automatically update to pull latest framework source structure, you can remove first::
 
@@ -71,17 +71,17 @@ would be appropriate to do so here too, i.e., ``composer update --no-dev``.
 Read the upgrade instructions, and check designated  ``app/Config`` folders for affected changes.
 
 Pros
--------------------------------------------------------
+----
 
 Simple installation; easy to update
 
 Cons
--------------------------------------------------------
+----
 
 You still need to check for ``app/Config`` changes after updating
 
 Structure
--------------------------------------------------------
+---------
 
 Folders in your project after set up:
 
@@ -90,7 +90,7 @@ Folders in your project after set up:
 - vendor/codeigniter4/framework/app & public (compare with yours after updating when using ``--prefer-source``)
 
 Latest Dev
--------------------------------------------------------
+----------
 
 The App Starter repo comes with a ``builds`` scripts to switch Composer sources between the
 current stable release and the latest development branch of the framework. Use this script
@@ -114,7 +114,7 @@ After using the ``builds`` command be sure to run ``composer update`` to sync yo
 folder with the latest target build.
 
 Adding CodeIgniter4 to an Existing Project
-============================================================
+==========================================
 
 The same `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository described in "Manual Installation" can also be added to an
@@ -125,13 +125,13 @@ will be your document root.
 
 In your project root::
 
-    composer require codeigniter4/framework --prefer-source
+    > composer require codeigniter4/framework --prefer-source
 
 As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
 
 Set Up
--------------------------------------------------------
+------
 
 Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
 to your project root
@@ -140,30 +140,30 @@ Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 ``vendor/codeigniter4/framework`` to your project root
 
 You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
-- the ``$systemDirectory`` variable in ``app/Config/Paths.php``
+- the ``$systemDirectory`` variable in **app/Config/Paths.php**
 
 Upgrading
--------------------------------------------------------
+---------
 
 Whenever there is a new release, then from the command line in your project root::
 
-    composer update --prefer-source
+    > composer update --prefer-source
 
 Read the upgrade instructions, and check designated
 ``app/Config`` folders for affected changes.
 
 Pros
--------------------------------------------------------
+----
 
 Relatively simple installation; easy to update
 
 Cons
--------------------------------------------------------
+----
 
 You still need to check for ``app/Config`` changes after updating
 
 Structure
--------------------------------------------------------
+---------
 
 Folders in your project after set up:
 
@@ -172,13 +172,13 @@ Folders in your project after set up:
 
 
 Translations Installation
-============================================================
+=========================
 
 If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.
 
 From the command line inside your project root::
 
-    composer require codeigniter4/translations
+    > composer require codeigniter4/translations
 
 These will be updated along with the framework whenever you do a ``composer update``.

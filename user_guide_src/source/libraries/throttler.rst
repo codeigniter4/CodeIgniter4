@@ -49,8 +49,8 @@ start using it in your application.
 The Code
 ========
 
-You could make your own Throttler filter, at **app/Filters/Throttle.php**, 
-along the lines of:: 
+You could make your own Throttler filter, at **app/Filters/Throttle.php**,
+along the lines of::
 
     <?php
 
@@ -67,8 +67,7 @@ along the lines of::
          * This is a demo implementation of using the Throttler class
          * to implement rate limiting for your application.
          *
-         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-         * @param array|null                                         $arguments
+         * @param array|null $arguments
          *
          * @return mixed
          */
@@ -76,23 +75,17 @@ along the lines of::
         {
             $throttler = Services::throttler();
 
-            // Restrict an IP address to no more
-            // than 1 request per second across the
-            // entire site.
-            if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-            {
+            // Restrict an IP address to no more than 1 request
+            // per second across the entire site.
+            if ($throttler->check(md5($request->getIPAddress()), 60, MINUTE) === false) {
                 return Services::response()->setStatusCode(429);
             }
         }
 
-        //--------------------------------------------------------------------
-
         /**
          * We don't have anything to do here.
          *
-         * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
-         * @param ResponseInterface|\CodeIgniter\HTTP\Response       $response
-         * @param array|null                                         $arguments
+         * @param array|null $arguments
          *
          * @return mixed
          */
@@ -116,15 +109,15 @@ to apply only to POST requests, though API's might want to limit every request m
 this to incoming requests, you need to edit **/app/Config/Filters.php** and first add an alias to the
 filter::
 
-	public $aliases = [
-		...
-		'throttle' => \App\Filters\Throttle::class
-	];
+    public $aliases = [
+        ...
+        'throttle' => \App\Filters\Throttle::class,
+    ];
 
 Next, we assign it to all POST requests made on the site::
 
     public $methods = [
-        'post' => ['throttle', 'CSRF']
+        'post' => ['throttle', 'csrf'],
     ];
 
 And that's all there is to it. Now all POST requests made on the site will have to be rate limited.
@@ -139,7 +132,7 @@ Class Reference
     :param int $capacity: The number of tokens the bucket holds
     :param int $seconds: The number of seconds it takes for a bucket to completely fill
     :param int $cost: The number of tokens that are spent on this action
-    :returns: TRUE if action can be performed, FALSE if not
+    :returns: true if action can be performed, false if not
     :rtype: bool
 
     Checks to see if there are any tokens left within the bucket, or if too many have
@@ -151,6 +144,15 @@ Class Reference
     :returns: The number of seconds until another token should be available.
     :rtype: integer
 
-    After ``check()`` has been run and returned FALSE, this method can be used
+    After ``check()`` has been run and returned false, this method can be used
     to determine the time until a new token should be available and the action can be
     tried again. In this case, the minimum enforced wait time is one second.
+
+.. php:method:: remove(string $key) : self
+
+    :param string $key: The name of the bucket
+    :returns: $this
+    :rtype: self
+
+    Removes & resets the bucket.
+    Won't fail if the bucket doesn't exist.

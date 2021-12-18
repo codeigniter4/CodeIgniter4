@@ -8,7 +8,7 @@ use to test your application. Those details can be found in the documentation.
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this 
-writing we are running version 8.5.13. Support for this has been built into the 
+writing we are running version 9.x. Support for this has been built into the 
 **composer.json** file that ships with CodeIgniter and can easily be installed 
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
@@ -27,11 +27,11 @@ A number of the tests use a running database.
 In order to set up the database edit the details for the `tests` group in 
 **app/Config/Database.php** or **phpunit.xml**. Make sure that you provide a database engine 
 that is currently running on your machine. More details on a test database setup are in the 
-*Docs>>Testing>>Testing Your Database* section of the documentation.
+[Testing Your Database](https://codeigniter.com/user_guide/testing/database.html) section of the documentation.
 
 If you want to run the tests without using live database you can 
-exclude @DatabaseLive group. Or make a copy of **phpunit.dist.xml** - 
-call it **phpunit.xml** - and comment out the <testsuite> named "database". This will make
+exclude `@DatabaseLive` group. Or make a copy of **phpunit.dist.xml** - 
+call it **phpunit.xml** - and comment out the `<testsuite>` named `Database`. This will make
 the tests run quite a bit faster.
 
 ## Running the tests
@@ -47,11 +47,11 @@ directory name after phpunit. All core tests are stored under **tests/system**.
 
 Individual tests can be run by including the relative path to the test file.
 
-	> ./phpunit tests/system/HTTP/RequestTest
+	> ./phpunit tests/system/HTTP/RequestTest.php
 
-You can run the tests without running the live database tests.
+You can run the tests without running the live database and the live cache tests.
 
-	> ./phpunit --exclude-group DatabaseLive
+	> ./phpunit --exclude-group DatabaseLive,CacheLive
 
 ## Generating Code Coverage
 

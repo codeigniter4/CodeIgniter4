@@ -41,10 +41,10 @@ Entity itself at **app/Entities/User.php**.
 ::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -59,7 +59,7 @@ Create the Model
 Create the model first at **app/Models/UserModel.php** so that we can interact with it::
 
     <?php
-    
+
     namespace App\Models;
 
     use CodeIgniter\Model;
@@ -68,9 +68,9 @@ Create the model first at **app/Models/UserModel.php** so that we can interact w
     {
         protected $table         = 'users';
         protected $allowedFields = [
-            'username', 'email', 'password'
+            'username', 'email', 'password',
         ];
-        protected $returnType    = 'App\Entities\User';
+        protected $returnType    = \App\Entities\User::class;
         protected $useTimestamps = true;
     }
 
@@ -93,10 +93,11 @@ Now that all of the pieces are in place, you would work with the Entity class as
 
     // Updating
     unset($user->username);
-    if (! isset($user->username)
-    {
+
+    if (! isset($user->username) {
         $user->username = 'something new';
     }
+
     $userModel->save($user);
 
     // Create
@@ -105,13 +106,13 @@ Now that all of the pieces are in place, you would work with the Entity class as
     $user->email    = 'foo@example.com';
     $userModel->save($user);
 
-You may have noticed that the User class has not set any properties for the columns, but you can still
-access them as if they were public properties. The base class, **CodeIgniter\\Entity**, takes care of this for you, as
-well as providing the ability to check the properties with **isset()**, or **unset()** the property, and keep track
+You may have noticed that the ``User`` class has not set any properties for the columns, but you can still
+access them as if they were public properties. The base class, ``CodeIgniter\Entity\Entity``, takes care of this for you, as
+well as providing the ability to check the properties with ``isset()``, or ``unset()`` the property, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
-When the User is passed to the model's **save()** method, it automatically takes care of reading the  properties
-and saving any changes to columns listed in the model's **$allowedFields** property. It also knows whether to create
+When the User is passed to the model's ``save()`` method, it automatically takes care of reading the  properties
+and saving any changes to columns listed in the model's ``$allowedFields`` property. It also knows whether to create
 a new row, or update an existing one.
 
 .. note:: When we are making a call to the ``insert()`` all the values from Entity are passed to the method, but when we
@@ -122,7 +123,7 @@ Filling Properties Quickly
 
 The Entity class also provides a method, ``fill()`` that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
-the model, only the fields in $allowedFields will actually be saved to the database, so you can store additional data
+the model, only the fields in ``$allowedFields`` will actually be saved to the database, so you can store additional data
 on your entities without worrying much about stray fields getting saved incorrectly.
 
 ::
@@ -160,10 +161,10 @@ the attributes directly, allowing you to enforce any business logic or data conv
 Here's an updated User entity to provide some examples of how this could be used::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
     use CodeIgniter\I18n\Time;
 
     class User extends Entity
@@ -197,7 +198,7 @@ Here's an updated User entity to provide some examples of how this could be used
 
 The first thing to notice is the name of the methods we've added. For each one, the class expects the snake_case
 column name to be converted into PascalCase, and prefixed with either ``set`` or ``get``. These methods will then
-be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., $user->email).
+be automatically called whenever you set or retrieve the class property using the direct syntax (i.e., ``$user->email``).
 The methods do not need to be public unless you want them accessed from other classes. For example, the ``created_at``
 class property will be accessed through the ``setCreatedAt()`` and ``getCreatedAt()`` methods.
 
@@ -230,18 +231,18 @@ with the Entity class' data mapping features.
 As an example, imagine you have the simplified User Entity that is used throughout your application::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
         protected $attributes = [
-            'id' => null,
-            'name' => null,        // Represents a username
-            'email' => null,
-            'password' => null,
+            'id'         => null,
+            'name'       => null, // Represents a username
+            'email'      => null,
+            'password'   => null,
             'created_at' => null,
             'updated_at' => null,
         ];
@@ -257,30 +258,30 @@ property from ``$name`` to ``$full_name``, but that would require changes throug
 simply map the ``full_name`` column in the database to the ``$name`` property, and be done with the Entity changes::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
         protected $attributes = [
-            'id' => null,
-            'name' => null,        // Represents a username
-            'email' => null,
-            'password' => null,
+            'id'         => null,
+            'name'       => null, // Represents a username
+            'email'      => null,
+            'password'   => null,
             'created_at' => null,
             'updated_at' => null,
         ];
 
         protected $datamap = [
-            'full_name' => 'name',
+            'name' => 'full_name',
         ];
     }
 
 By adding our new database name to the ``$datamap`` array, we can tell the class what class property the database column
-should be accessible through. The key of the array is the name of the column in the database, where the value in the array
-is class property to map it to.
+should be accessible through. The key of the array is class property to map it to, where the value in the array is the
+name of the column in the database.
 
 In this example, when the model sets the ``full_name`` field on the User class, it actually assigns that value to the
 class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will still be accessible
@@ -298,13 +299,13 @@ By default, the Entity class will convert fields named `created_at`, `updated_at
 :doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.
 
-You can define which properties are automatically converted by adding the name to the **options['dates']** array::
+You can define which properties are automatically converted by adding the name to the ``$dates`` property::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -326,25 +327,25 @@ current timezone, as set in **app/Config/App.php**::
 Property Casting
 ----------------
 
-You can specify that properties in your Entity should be converted to common data types with the **casts** property.
+You can specify that properties in your Entity should be converted to common data types with the ``$casts`` property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
 either the entity or the database. Properties can be cast to any of the following data types:
-**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and **timestamp**.
+**integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, and **uri**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
-For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
+For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
         protected $casts = [
-            'is_banned' => 'boolean',
+            'is_banned'          => 'boolean',
             'is_banned_nullable' => '?boolean',
         ];
     }
@@ -355,8 +356,8 @@ Array/Json Casting
 Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:
 
 * an **array**, they will automatically be unserialized,
-* a **json**, they will automatically be set as an value of json_decode($value, false),
-* a **json-array**, they will automatically be set as an value of json_decode($value, true),
+* a **json**, they will automatically be set as an value of ``json_decode($value, false)``,
+* a **json-array**, they will automatically be set as an value of ``json_decode($value, true)``,
 
 when you set the property's value.
 Unlike the rest of the data types that you can cast properties into, the:
@@ -367,10 +368,10 @@ Unlike the rest of the data types that you can cast properties into, the:
 the value whenever the property is set::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class User extends Entity
     {
@@ -400,10 +401,10 @@ a simpler alternative will result in a string that uses less space and is more e
 by humans::
 
     <?php
-    
+
     namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entity\Entity;
 
     class Widget extends Entity
     {
@@ -418,13 +419,125 @@ Stored in the database as "red,yellow,green"::
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
+Custom casting
+--------------
+
+You can define your own conversion types for getting and setting data.
+
+At first you need to create a handler class for your type.
+Let's say the class will be located in the **app/Entity/Cast** directory::
+
+    <?php
+
+    namespace App\Entity\Cast;
+
+    use CodeIgniter\Entity\Cast\BaseCast;
+
+    // The class must inherit the CodeIgniter\Entity\Cast\BaseCast class
+    class CastBase64 extends BaseCast
+    {
+        public static function get($value, array $params = [])
+        {
+            return base64_decode($value);
+        }
+
+        public static function set($value, array $params = [])
+        {
+            return base64_encode($value);
+        }
+    }
+
+Now you need to register it::
+
+    <?php
+
+    namespace App\Entities;
+
+    use CodeIgniter\Entity\Entity;
+
+    class MyEntity extends Entity
+    {
+        // Specifying the type for the field
+        protected $casts = [
+            'key' => 'base64',
+        ];
+
+        // Bind the type to the handler
+        protected $castHandlers = [
+            'base64' => \App\Entity\Cast\CastBase64::class,
+        ];
+    }
+
+    // ...
+
+    $entity->key = 'test'; // dGVzdA==
+    echo $entity->key;     // test
+
+
+If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method::
+
+    use CodeIgniter\Entity\Cast\BaseCast;
+
+    class CastBase64 extends BaseCast
+    {
+        public static function get($value, array $params = [])
+        {
+            return base64_decode($value);
+        }
+    }
+
+
+**Parameters**
+
+In some cases, one type is not enough. In this situation, you can use additional parameters.
+Additional parameters are indicated in square brackets and listed with a comma.
+
+**type[param1, param2]**
+
+::
+
+    // Defining a type with parameters
+    protected $casts = [
+        'some_attribute' => 'class[App\SomeClass, param2, param3]',
+    ];
+
+    // Bind the type to the handler
+    protected $castHandlers = [
+        'class' => 'SomeHandler',
+    ];
+
+::
+
+    use CodeIgniter\Entity\Cast\BaseCast;
+
+    class SomeHandler extends BaseCast
+    {
+        public static function get($value, array $params = [])
+        {
+            var_dump($params);
+            // array(3) {
+            //   [0]=>
+            //   string(13) "App\SomeClass"
+            //   [1]=>
+            //   string(6) "param2"
+            //   [2]=>
+            //   string(6) "param3"
+            // }
+        }
+    }
+
+.. note:: If the casting type is marked as nullable ``?bool`` and the passed value is not null, then the parameter with
+    the value ``nullable`` will be passed to the casting type handler.
+    If casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
+
+
 Checking for Changed Attributes
--------------------------------
+===============================
 
 You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check::
 
-    $user = new User();
+    $user = new \App\Entities\User();
     $user->hasChanged('name'); // false
 
     $user->name = 'Fred';
@@ -432,4 +545,4 @@ attribute to check::
 
 Or to check the whole entity for changed values omit the parameter::
 
-    $user->hasChanged();       // true
+    $user->hasChanged(); // true

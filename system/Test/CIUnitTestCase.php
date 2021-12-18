@@ -1,364 +1,541 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Test;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Events\Events;
+use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockCache;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
+use Config\App;
+use Config\Autoload;
+use Config\Modules;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
- * PHPunit test case.
+ * Framework test case for PHPUnit.
  */
 abstract class CIUnitTestCase extends TestCase
 {
-	use ReflectionHelper;
+    use ReflectionHelper;
 
-	/**
-	 * @var \CodeIgniter\CodeIgniter
-	 */
-	protected $app;
+    /**
+     * @var CodeIgniter
+     */
+    protected $app;
 
-	/**
-	 * Methods to run during setUp.
-	 *
-	 * @var array of methods
-	 */
-	protected $setUpMethods = [
-		'resetFactories',
-		'mockCache',
-		'mockEmail',
-		'mockSession',
-	];
+    /**
+     * Methods to run during setUp.
+     *
+     * @var array of methods
+     */
+    protected $setUpMethods = [
+        'resetFactories',
+        'mockCache',
+        'mockEmail',
+        'mockSession',
+    ];
 
-	/**
-	 * Methods to run during tearDown.
-	 *
-	 * @var array of methods
-	 */
-	protected $tearDownMethods = [];
+    /**
+     * Methods to run during tearDown.
+     *
+     * @var array of methods
+     */
+    protected $tearDownMethods = [];
 
-	//--------------------------------------------------------------------
-	// Staging
-	//--------------------------------------------------------------------
+    /**
+     * Store of identified traits.
+     *
+     * @var string[]|null
+     */
+    private $traits;
 
-	/**
-	 * Load the helpers.
-	 */
-	public static function setUpBeforeClass(): void
-	{
-		parent::setUpBeforeClass();
+    //--------------------------------------------------------------------
+    // Database Properties
+    //--------------------------------------------------------------------
 
-		helper(['url', 'test']);
-	}
+    /**
+     * Should run db migration?
+     *
+     * @var bool
+     */
+    protected $migrate = true;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Should run db migration only once?
+     *
+     * @var bool
+     */
+    protected $migrateOnce = false;
 
-		if (! $this->app) // @phpstan-ignore-line
-		{
-			$this->app = $this->createApplication();
-		}
+    /**
+     * Should run seeding only once?
+     *
+     * @var bool
+     */
+    protected $seedOnce = false;
 
-		foreach ($this->setUpMethods as $method)
-		{
-			$this->$method();
-		}
-	}
+    /**
+     * Should the db be refreshed before test?
+     *
+     * @var bool
+     */
+    protected $refresh = true;
 
-	protected function tearDown(): void
-	{
-		parent::tearDown();
+    /**
+     * The seed file(s) used for all tests within this test case.
+     * Should be fully-namespaced or relative to $basePath
+     *
+     * @var array|string
+     */
+    protected $seed = '';
 
-		foreach ($this->tearDownMethods as $method)
-		{
-			$this->$method();
-		}
-	}
+    /**
+     * The path to the seeds directory.
+     * Allows overriding the default application directories.
+     *
+     * @var string
+     */
+    protected $basePath = SUPPORTPATH . 'Database';
 
-	//--------------------------------------------------------------------
-	// Mocking
-	//--------------------------------------------------------------------
+    /**
+     * The namespace(s) to help us find the migration classes.
+     * Empty is equivalent to running `spark migrate -all`.
+     * Note that running "all" runs migrations in date order,
+     * but specifying namespaces runs them in namespace order (then date)
+     *
+     * @var array|string|null
+     */
+    protected $namespace = 'Tests\Support';
 
-	/**
-	 * Resets shared instanced for all Factories components
-	 */
-	protected function resetFactories()
-	{
-		Factories::reset();
-	}
+    /**
+     * The name of the database group to connect to.
+     * If not present, will use the defaultGroup.
+     *
+     * @var string
+     */
+    protected $DBGroup = 'tests';
 
-	/**
-	 * Resets shared instanced for all Services
-	 */
-	protected function resetServices()
-	{
-		Services::reset();
-	}
+    /**
+     * Our database connection.
+     *
+     * @var BaseConnection
+     */
+    protected $db;
 
-	/**
-	 * Injects the mock Cache driver to prevent filesystem collisions
-	 */
-	protected function mockCache()
-	{
-		Services::injectMock('cache', new MockCache());
-	}
+    /**
+     * Migration Runner instance.
+     *
+     * @var MigrationRunner|mixed
+     */
+    protected $migrations;
 
-	/**
-	 * Injects the mock email driver so no emails really send
-	 */
-	protected function mockEmail()
-	{
-		Services::injectMock('email', new MockEmail(config('Email')));
-	}
+    /**
+     * Seeder instance
+     *
+     * @var Seeder
+     */
+    protected $seeder;
 
-	/**
-	 * Injects the mock session driver into Services
-	 */
-	protected function mockSession()
-	{
-		$_SESSION = [];
+    /**
+     * Stores information needed to remove any
+     * rows inserted via $this->hasInDatabase();
+     *
+     * @var array
+     */
+    protected $insertCache = [];
 
-		$config  = config('App');
-		$session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
+    //--------------------------------------------------------------------
+    // Feature Properties
+    //--------------------------------------------------------------------
 
-		Services::injectMock('session', $session);
-	}
+    /**
+     * If present, will override application
+     * routes when using call().
+     *
+     * @var RouteCollection|null
+     */
+    protected $routes;
 
-	//--------------------------------------------------------------------
-	// Assertions
-	//--------------------------------------------------------------------
+    /**
+     * Values to be set in the SESSION global
+     * before running the test.
+     *
+     * @var array
+     */
+    protected $session = [];
 
-	/**
-	 * Custom function to hook into CodeIgniter's Logging mechanism
-	 * to check if certain messages were logged during code execution.
-	 *
-	 * @param string      $level
-	 * @param string|null $expectedMessage
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public function assertLogged(string $level, $expectedMessage = null)
-	{
-		$result = TestLogger::didLog($level, $expectedMessage);
+    /**
+     * Enabled auto clean op buffer after request call
+     *
+     * @var bool
+     */
+    protected $clean = true;
 
-		$this->assertTrue($result);
-		return $result;
-	}
+    /**
+     * Custom request's headers
+     *
+     * @var array
+     */
+    protected $headers = [];
 
-	/**
-	 * Hooks into CodeIgniter's Events system to check if a specific
-	 * event was triggered or not.
-	 *
-	 * @param string $eventName
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public function assertEventTriggered(string $eventName): bool
-	{
-		$found     = false;
-		$eventName = strtolower($eventName);
+    /**
+     * Allows for formatting the request body to what
+     * the controller is going to expect
+     *
+     * @var string
+     */
+    protected $bodyFormat = '';
 
-		foreach (Events::getPerformanceLogs() as $log)
-		{
-			if ($log['event'] !== $eventName)
-			{
-				continue;
-			}
+    /**
+     * Allows for directly setting the body to what
+     * it needs to be.
+     *
+     * @var mixed
+     */
+    protected $requestBody = '';
 
-			$found = true;
-			break;
-		}
+    //--------------------------------------------------------------------
+    // Staging
+    //--------------------------------------------------------------------
 
-		$this->assertTrue($found);
-		return $found;
-	}
+    /**
+     * Load the helpers.
+     */
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
 
-	/**
-	 * Hooks into xdebug's headers capture, looking for a specific header
-	 * emitted
-	 *
-	 * @param string  $header     The leading portion of the header we are looking for
-	 * @param boolean $ignoreCase
-	 *
-	 * @throws Exception
-	 */
-	public function assertHeaderEmitted(string $header, bool $ignoreCase = false): void
-	{
-		$found = false;
+        helper(['url', 'test']);
+    }
 
-		if (! function_exists('xdebug_get_headers'))
-		{
-			$this->markTestSkipped('XDebug not found.');
-		}
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		foreach (xdebug_get_headers() as $emitted)
-		{
-			$found = $ignoreCase ?
-					(stripos($emitted, $header) === 0) :
-					(strpos($emitted, $header) === 0);
-			if ($found)
-			{
-				break;
-			}
-		}
+        if (! $this->app) {
+            $this->app = $this->createApplication();
+        }
 
-		$this->assertTrue($found, "Didn't find header for {$header}");
-	}
+        foreach ($this->setUpMethods as $method) {
+            $this->{$method}();
+        }
 
-	/**
-	 * Hooks into xdebug's headers capture, looking for a specific header
-	 * emitted
-	 *
-	 * @param string  $header     The leading portion of the header we don't want to find
-	 * @param boolean $ignoreCase
-	 *
-	 * @throws Exception
-	 */
-	public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): void
-	{
-		$found = false;
+        // Check for the database trait
+        if (method_exists($this, 'setUpDatabase')) {
+            $this->setUpDatabase();
+        }
 
-		if (! function_exists('xdebug_get_headers'))
-		{
-			$this->markTestSkipped('XDebug not found.');
-		}
+        // Check for other trait methods
+        $this->callTraitMethods('setUp');
+    }
 
-		foreach (xdebug_get_headers() as $emitted)
-		{
-			$found = $ignoreCase ?
-					(stripos($emitted, $header) === 0) :
-					(strpos($emitted, $header) === 0);
-			if ($found)
-			{
-				break;
-			}
-		}
+    protected function tearDown(): void
+    {
+        parent::tearDown();
 
-		$success = ! $found;
-		$this->assertTrue($success, "Found header for {$header}");
-	}
+        foreach ($this->tearDownMethods as $method) {
+            $this->{$method}();
+        }
 
-	/**
-	 * Custom function to test that two values are "close enough".
-	 * This is intended for extended execution time testing,
-	 * where the result is close but not exactly equal to the
-	 * expected time, for reasons beyond our control.
-	 *
-	 * @param integer $expected
-	 * @param mixed   $actual
-	 * @param string  $message
-	 * @param integer $tolerance
-	 *
-	 * @throws Exception
-	 */
-	public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
-	{
-		$difference = abs($expected - (int) floor($actual));
+        // Check for the database trait
+        if (method_exists($this, 'tearDownDatabase')) {
+            $this->tearDownDatabase();
+        }
 
-		$this->assertLessThanOrEqual($tolerance, $difference, $message);
-	}
+        // Check for other trait methods
+        $this->callTraitMethods('tearDown');
+    }
 
-	/**
-	 * Custom function to test that two values are "close enough".
-	 * This is intended for extended execution time testing,
-	 * where the result is close but not exactly equal to the
-	 * expected time, for reasons beyond our control.
-	 *
-	 * @param mixed   $expected
-	 * @param mixed   $actual
-	 * @param string  $message
-	 * @param integer $tolerance
-	 *
-	 * @return void|boolean
-	 * @throws Exception
-	 */
-	public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
-	{
-		$expected = (string) $expected;
-		$actual   = (string) $actual;
-		if (strlen($expected) !== strlen($actual))
-		{
-			return false;
-		}
+    /**
+     * Checks for traits with corresponding
+     * methods for setUp or tearDown.
+     *
+     * @param string $stage 'setUp' or 'tearDown'
+     */
+    private function callTraitMethods(string $stage): void
+    {
+        if ($this->traits === null) {
+            $this->traits = class_uses_recursive($this);
+        }
 
-		try
-		{
-			$expected   = (int) substr($expected, -2);
-			$actual     = (int) substr($actual, -2);
-			$difference = abs($expected - $actual);
+        foreach ($this->traits as $trait) {
+            $method = $stage . class_basename($trait);
 
-			$this->assertLessThanOrEqual($tolerance, $difference, $message);
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-	}
+            if (method_exists($this, $method)) {
+                $this->{$method}();
+            }
+        }
+    }
 
-	//--------------------------------------------------------------------
-	// Utility
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Mocking
+    //--------------------------------------------------------------------
 
-	/**
-	 * Loads up an instance of CodeIgniter
-	 * and gets the environment setup.
-	 *
-	 * @return CodeIgniter
-	 */
-	protected function createApplication()
-	{
-		$path = __DIR__ . '/../bootstrap.php';
-		$path = realpath($path) ?: $path;
-		return require $path;
-	}
+    /**
+     * Resets shared instanced for all Factories components
+     */
+    protected function resetFactories()
+    {
+        Factories::reset();
+    }
 
-	/**
-	 * Return first matching emitted header.
-	 *
-	 * @param string  $header     Identifier of the header of interest
-	 * @param boolean $ignoreCase
-	 *
-	 * @return string|null The value of the header found, null if not found
-	 */
-	protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
-	{
-		$found = false;
+    /**
+     * Resets shared instanced for all Services
+     */
+    protected function resetServices()
+    {
+        Services::reset();
+    }
 
-		if (! function_exists('xdebug_get_headers'))
-		{
-			$this->markTestSkipped('XDebug not found.');
-		}
+    /**
+     * Injects the mock Cache driver to prevent filesystem collisions
+     */
+    protected function mockCache()
+    {
+        Services::injectMock('cache', new MockCache());
+    }
 
-		foreach (xdebug_get_headers() as $emitted)
-		{
-			$found = $ignoreCase ?
-					(stripos($emitted, $header) === 0) :
-					(strpos($emitted, $header) === 0);
-			if ($found)
-			{
-				return $emitted;
-			}
-		}
+    /**
+     * Injects the mock email driver so no emails really send
+     */
+    protected function mockEmail()
+    {
+        Services::injectMock('email', new MockEmail(config('Email')));
+    }
 
-		return null;
-	}
+    /**
+     * Injects the mock session driver into Services
+     */
+    protected function mockSession()
+    {
+        $_SESSION = [];
+
+        $config  = config('App');
+        $session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
+
+        Services::injectMock('session', $session);
+    }
+
+    //--------------------------------------------------------------------
+    // Assertions
+    //--------------------------------------------------------------------
+
+    /**
+     * Custom function to hook into CodeIgniter's Logging mechanism
+     * to check if certain messages were logged during code execution.
+     *
+     * @param string|null $expectedMessage
+     *
+     * @throws Exception
+     *
+     * @return bool
+     */
+    public function assertLogged(string $level, $expectedMessage = null)
+    {
+        $result = TestLogger::didLog($level, $expectedMessage);
+
+        $this->assertTrue($result, sprintf(
+            'Failed asserting that expected message "%s" with level "%s" was logged.',
+            $expectedMessage ?? '',
+            $level
+        ));
+
+        return $result;
+    }
+
+    /**
+     * Hooks into CodeIgniter's Events system to check if a specific
+     * event was triggered or not.
+     *
+     * @throws Exception
+     */
+    public function assertEventTriggered(string $eventName): bool
+    {
+        $found     = false;
+        $eventName = strtolower($eventName);
+
+        foreach (Events::getPerformanceLogs() as $log) {
+            if ($log['event'] !== $eventName) {
+                continue;
+            }
+
+            $found = true;
+            break;
+        }
+
+        $this->assertTrue($found);
+
+        return $found;
+    }
+
+    /**
+     * Hooks into xdebug's headers capture, looking for a specific header
+     * emitted
+     *
+     * @param string $header The leading portion of the header we are looking for
+     *
+     * @throws Exception
+     */
+    public function assertHeaderEmitted(string $header, bool $ignoreCase = false): void
+    {
+        $found = false;
+
+        if (! function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('XDebug not found.');
+        }
+
+        foreach (xdebug_get_headers() as $emitted) {
+            $found = $ignoreCase ?
+                    (stripos($emitted, $header) === 0) :
+                    (strpos($emitted, $header) === 0);
+            if ($found) {
+                break;
+            }
+        }
+
+        $this->assertTrue($found, "Didn't find header for {$header}");
+    }
+
+    /**
+     * Hooks into xdebug's headers capture, looking for a specific header
+     * emitted
+     *
+     * @param string $header The leading portion of the header we don't want to find
+     *
+     * @throws Exception
+     */
+    public function assertHeaderNotEmitted(string $header, bool $ignoreCase = false): void
+    {
+        $found = false;
+
+        if (! function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('XDebug not found.');
+        }
+
+        foreach (xdebug_get_headers() as $emitted) {
+            $found = $ignoreCase ?
+                    (stripos($emitted, $header) === 0) :
+                    (strpos($emitted, $header) === 0);
+            if ($found) {
+                break;
+            }
+        }
+
+        $success = ! $found;
+        $this->assertTrue($success, "Found header for {$header}");
+    }
+
+    /**
+     * Custom function to test that two values are "close enough".
+     * This is intended for extended execution time testing,
+     * where the result is close but not exactly equal to the
+     * expected time, for reasons beyond our control.
+     *
+     * @param mixed $actual
+     *
+     * @throws Exception
+     */
+    public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
+    {
+        $difference = abs($expected - (int) floor($actual));
+
+        $this->assertLessThanOrEqual($tolerance, $difference, $message);
+    }
+
+    /**
+     * Custom function to test that two values are "close enough".
+     * This is intended for extended execution time testing,
+     * where the result is close but not exactly equal to the
+     * expected time, for reasons beyond our control.
+     *
+     * @param mixed $expected
+     * @param mixed $actual
+     *
+     * @throws Exception
+     *
+     * @return bool|void
+     */
+    public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
+    {
+        $expected = (string) $expected;
+        $actual   = (string) $actual;
+        if (strlen($expected) !== strlen($actual)) {
+            return false;
+        }
+
+        try {
+            $expected   = (int) substr($expected, -2);
+            $actual     = (int) substr($actual, -2);
+            $difference = abs($expected - $actual);
+
+            $this->assertLessThanOrEqual($tolerance, $difference, $message);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    //--------------------------------------------------------------------
+    // Utility
+    //--------------------------------------------------------------------
+
+    /**
+     * Loads up an instance of CodeIgniter
+     * and gets the environment setup.
+     *
+     * @return CodeIgniter
+     */
+    protected function createApplication()
+    {
+        // Initialize the autoloader.
+        Services::autoloader()->initialize(new Autoload(), new Modules());
+
+        $app = new MockCodeIgniter(new App());
+        $app->initialize();
+
+        return $app;
+    }
+
+    /**
+     * Return first matching emitted header.
+     *
+     * @param string $header Identifier of the header of interest
+     *
+     * @return string|null The value of the header found, null if not found
+     */
+    protected function getHeaderEmitted(string $header, bool $ignoreCase = false): ?string
+    {
+        if (! function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('XDebug not found.');
+        }
+
+        foreach (xdebug_get_headers() as $emitted) {
+            $found = $ignoreCase ?
+                    (stripos($emitted, $header) === 0) :
+                    (strpos($emitted, $header) === 0);
+            if ($found) {
+                return $emitted;
+            }
+        }
+
+        return null;
+    }
 }

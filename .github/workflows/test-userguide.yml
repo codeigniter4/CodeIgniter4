@@ -6,18 +6,22 @@ name: Test User Guide
 
 on:
   pull_request:
-    branches:
-      - 'develop'
-      - '4.*'
     paths:
       - 'user_guide_src/**'
+      - '.github/workflows/test-userguide.yml'
 
 jobs:
   syntax_check:
     name: Check User Guide syntax
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Detect usage of tabs in RST files
+        run: php utils/check_tabs_in_rst.php
+
       - uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src

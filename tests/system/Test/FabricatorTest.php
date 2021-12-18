@@ -1,494 +1,489 @@
-<?php namespace CodeIgniter\Test;
+<?php
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\ModelFactory;
-use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
+use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
 use Tests\Support\Models\UserModel;
 
-class FabricatorTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class FabricatorTest extends CIUnitTestCase
 {
-	/**
-	 * Default formatters to use for UserModel. Should match detected version.
-	 *
-	 * @var array
-	 */
-	protected $formatters = [
-		'name'       => 'name',
-		'email'      => 'email',
-		'country'    => 'country',
-		'deleted_at' => 'date',
-	];
+    /**
+     * Default formatters to use for UserModel. Should match detected version.
+     *
+     * @var array
+     */
+    protected $formatters = [
+        'name'       => 'name',
+        'email'      => 'email',
+        'country'    => 'country',
+        'deleted_at' => 'date',
+    ];
 
-	protected function tearDown(): void
-	{
-		parent::tearDown();
+    protected function tearDown(): void
+    {
+        parent::tearDown();
 
-		Fabricator::resetCounts();
-	}
+        Fabricator::resetCounts();
+    }
 
-	//--------------------------------------------------------------------
+    public function testConstructorWithString()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testConstructorWithString()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertInstanceOf(Fabricator::class, $fabricator);
+    }
 
-		$this->assertInstanceOf(Fabricator::class, $fabricator);
-	}
+    public function testConstructorWithInstance()
+    {
+        $model = new UserModel();
 
-	public function testConstructorWithInstance()
-	{
-		$model = new UserModel();
+        $fabricator = new Fabricator($model);
 
-		$fabricator = new Fabricator($model);
+        $this->assertInstanceOf(Fabricator::class, $fabricator);
+    }
 
-		$this->assertInstanceOf(Fabricator::class, $fabricator);
-	}
+    public function testConstructorWithInvalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
-	public function testConstructorWithInvalid()
-	{
-		$this->expectException(\InvalidArgumentException::class);
-		$this->expectExceptionMessage(lang('Fabricator.invalidModel'));
+        new Fabricator('SillyRabbit\Models\AreForKids');
+    }
 
-		$fabricator = new Fabricator('SillyRabbit\Models\AreForKids');
-	}
+    public function testConstructorSetsFormatters()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-	public function testConstructorSetsFormatters()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
+    }
 
-		$this->assertEquals($this->formatters, $fabricator->getFormatters());
-	}
+    public function testConstructorGuessesFormatters()
+    {
+        $fabricator = new Fabricator(UserModel::class, null);
 
-	public function testConstructorGuessesFormatters()
-	{
-		$fabricator = new Fabricator(UserModel::class, null);
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
+    }
 
-		$this->assertEquals($this->formatters, $fabricator->getFormatters());
-	}
+    public function testConstructorDefaultsToAppLocale()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testConstructorDefaultsToAppLocale()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertSame(config('App')->defaultLocale, $fabricator->getLocale());
+    }
 
-		$this->assertEquals(config('App')->defaultLocale, $fabricator->getLocale());
-	}
+    public function testConstructorUsesProvidedLocale()
+    {
+        $locale = 'fr_FR';
 
-	public function testConstructorUsesProvidedLocale()
-	{
-		$locale = 'fr_FR';
+        $fabricator = new Fabricator(UserModel::class, null, $locale);
 
-		$fabricator = new Fabricator(UserModel::class, null, $locale);
+        $this->assertSame($locale, $fabricator->getLocale());
+    }
 
-		$this->assertEquals($locale, $fabricator->getLocale());
-	}
+    public function testModelUsesNewInstance()
+    {
+        // Inject the wrong model for UserModel to show it is ignored by Fabricator
+        $mock = new FabricatorModel();
+        ModelFactory::injectMock('Tests\Support\Models\UserModel', $mock);
 
-	//--------------------------------------------------------------------
+        $fabricator = new Fabricator(UserModel::class);
+        $this->assertInstanceOf(UserModel::class, $fabricator->getModel());
+    }
 
-	public function testModelUsesNewInstance()
-	{
-		// Inject the wrong model for UserModel to show it is ignored by Fabricator
-		$mock = new FabricatorModel();
-		ModelFactory::injectMock('Tests\Support\Models\UserModel', $mock);
+    public function testGetModelReturnsModel()
+    {
+        $fabricator = new Fabricator(UserModel::class);
+        $this->assertInstanceOf(UserModel::class, $fabricator->getModel());
 
-		$fabricator = new Fabricator(UserModel::class);
-		$this->assertInstanceOf(UserModel::class, $fabricator->getModel());
-	}
+        $model       = new UserModel();
+        $fabricator2 = new Fabricator($model);
+        $this->assertInstanceOf(UserModel::class, $fabricator2->getModel());
+    }
 
-	public function testGetModelReturnsModel()
-	{
-		$fabricator = new Fabricator(UserModel::class);
-		$this->assertInstanceOf(UserModel::class, $fabricator->getModel());
+    public function testGetFakerReturnsUsableGenerator()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-		$model       = new UserModel();
-		$fabricator2 = new Fabricator($model);
-		$this->assertInstanceOf(UserModel::class, $fabricator2->getModel());
-	}
+        $faker = $fabricator->getFaker();
 
-	public function testGetFakerReturnsUsableGenerator()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertIsNumeric($faker->randomDigit);
+    }
 
-		$faker = $fabricator->getFaker();
+    public function testSetFormattersChangesFormatters()
+    {
+        $formatters = ['boo' => 'hiss'];
+        $fabricator = new Fabricator(UserModel::class);
 
-		$this->assertIsNumeric($faker->randomDigit);
-	}
+        $fabricator->setFormatters($formatters);
 
-	//--------------------------------------------------------------------
+        $this->assertSame($formatters, $fabricator->getFormatters());
+    }
 
-	public function testSetFormattersChangesFormatters()
-	{
-		$formatters = ['boo' => 'hiss'];
-		$fabricator = new Fabricator(UserModel::class);
+    public function testSetFormattersDetectsFormatters()
+    {
+        $formatters = ['boo' => 'hiss'];
+        $fabricator = new Fabricator(UserModel::class, $formatters);
 
-		$fabricator->setFormatters($formatters);
+        $fabricator->setFormatters();
 
-		$this->assertEquals($formatters, $fabricator->getFormatters());
-	}
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
+    }
 
-	public function testSetFormattersDetectsFormatters()
-	{
-		$formatters = ['boo' => 'hiss'];
-		$fabricator = new Fabricator(UserModel::class, $formatters);
+    public function testDetectFormattersDetectsFormatters()
+    {
+        $formatters = ['boo' => 'hiss'];
+        $fabricator = new Fabricator(UserModel::class, $formatters);
 
-		$fabricator->setFormatters();
+        $method = $this->getPrivateMethodInvoker($fabricator, 'detectFormatters');
 
-		$this->assertEquals($this->formatters, $fabricator->getFormatters());
-	}
+        $method();
 
-	public function testDetectFormattersDetectsFormatters()
-	{
-		$formatters = ['boo' => 'hiss'];
-		$fabricator = new Fabricator(UserModel::class, $formatters);
+        $this->assertSame($this->formatters, $fabricator->getFormatters());
+    }
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'detectFormatters');
+    public function testSetOverridesSets()
+    {
+        $overrides  = ['name' => 'Steve'];
+        $fabricator = new Fabricator(UserModel::class);
 
-		$method();
+        $fabricator->setOverrides($overrides);
 
-		$this->assertEquals($this->formatters, $fabricator->getFormatters());
-	}
+        $this->assertSame($overrides, $fabricator->getOverrides());
+    }
 
-	//--------------------------------------------------------------------
+    public function testSetOverridesDefaultPersists()
+    {
+        $overrides  = ['name' => 'Steve'];
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testSetOverridesSets()
-	{
-		$overrides  = ['name' => 'Steve'];
-		$fabricator = new Fabricator(UserModel::class);
+        $fabricator->setOverrides($overrides);
+        $fabricator->getOverrides();
 
-		$fabricator->setOverrides($overrides);
+        $this->assertSame($overrides, $fabricator->getOverrides());
+    }
 
-		$this->assertEquals($overrides, $fabricator->getOverrides());
-	}
+    public function testSetOverridesOnce()
+    {
+        $overrides  = ['name' => 'Steve'];
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testSetOverridesDefaultPersists()
-	{
-		$overrides  = ['name' => 'Steve'];
-		$fabricator = new Fabricator(UserModel::class);
+        $fabricator->setOverrides($overrides, false);
+        $fabricator->getOverrides();
 
-		$fabricator->setOverrides($overrides);
-		$fabricator->getOverrides();
+        $this->assertSame([], $fabricator->getOverrides());
+    }
 
-		$this->assertEquals($overrides, $fabricator->getOverrides());
-	}
+    public function testGuessFormattersReturnsActual()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testSetOverridesOnce()
-	{
-		$overrides  = ['name' => 'Steve'];
-		$fabricator = new Fabricator(UserModel::class);
+        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
-		$fabricator->setOverrides($overrides, false);
-		$fabricator->getOverrides();
+        $field     = 'catchPhrase';
+        $formatter = $method($field);
 
-		$this->assertEquals([], $fabricator->getOverrides());
-	}
+        $this->assertSame($field, $formatter);
+    }
 
-	//--------------------------------------------------------------------
+    public function testGuessFormattersFieldReturnsDateFormat()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testGuessFormattersReturnsActual()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $field     = 'created_at';
+        $formatter = $method($field);
 
-		$field     = 'catchPhrase';
-		$formatter = $method($field);
+        $this->assertSame('date', $formatter);
+    }
 
-		$this->assertEquals($field, $formatter);
-	}
+    public function testGuessFormattersPrimaryReturnsNumberBetween()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testGuessFormattersFieldReturnsDateFormat()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $field     = 'id';
+        $formatter = $method($field);
 
-		$field     = 'created_at';
-		$formatter = $method($field);
+        $this->assertSame('numberBetween', $formatter);
+    }
 
-		$this->assertEquals('date', $formatter);
-	}
+    public function testGuessFormattersMatchesPartial()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testGuessFormattersPrimaryReturnsNumberBetween()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $field     = 'business_email';
+        $formatter = $method($field);
 
-		$field     = 'id';
-		$formatter = $method($field);
+        $this->assertSame('email', $formatter);
+    }
 
-		$this->assertEquals('numberBetween', $formatter);
-	}
+    public function testGuessFormattersFallback()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testGuessFormattersMatchesPartial()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $field     = 'zaboomafoo';
+        $formatter = $method($field);
 
-		$field     = 'business_email';
-		$formatter = $method($field);
+        $this->assertSame($fabricator->defaultFormatter, $formatter);
+    }
 
-		$this->assertEquals('email', $formatter);
-	}
+    public function testMakeArrayReturnsArray()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-	public function testGuessFormattersFallback()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $result = $fabricator->makeArray();
 
-		$method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $this->assertIsArray($result);
+    }
 
-		$field     = 'zaboomafoo';
-		$formatter = $method($field);
+    public function testMakeArrayUsesOverrides()
+    {
+        $overrides = ['name' => 'The Admiral'];
 
-		$this->assertEquals($fabricator->defaultFormatter, $formatter);
-	}
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $fabricator->setOverrides($overrides);
 
-	//--------------------------------------------------------------------
+        $result = $fabricator->makeArray();
 
-	public function testMakeArrayReturnsArray()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $this->assertSame($overrides['name'], $result['name']);
+    }
 
-		$result = $fabricator->makeArray();
+    public function testMakeArrayReturnsValidData()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-		$this->assertIsArray($result);
-	}
+        $result = $fabricator->makeArray();
 
-	public function testMakeArrayUsesOverrides()
-	{
-		$overrides = ['name' => 'The Admiral'];
+        $this->assertSame($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
+    }
 
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
-		$fabricator->setOverrides($overrides);
+    public function testMakeArrayUsesFakeMethod()
+    {
+        $fabricator = new Fabricator(FabricatorModel::class);
 
-		$result = $fabricator->makeArray();
+        $result = $fabricator->makeArray();
 
-		$this->assertEquals($overrides['name'], $result['name']);
-	}
+        $this->assertSame($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
+    }
 
-	public function testMakeArrayReturnsValidData()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+    public function testMakeObjectReturnsModelReturnType()
+    {
+        $fabricator = new Fabricator(EntityModel::class);
+        $expected   = $fabricator->getModel()->returnType;
 
-		$result = $fabricator->makeArray();
+        $result = $fabricator->makeObject();
 
-		$this->assertEquals($result['email'], filter_var($result['email'], FILTER_VALIDATE_EMAIL));
-	}
+        $this->assertInstanceOf($expected, $result);
+    }
 
-	public function testMakeArrayUsesFakeMethod()
-	{
-		$fabricator = new Fabricator(FabricatorModel::class);
+    public function testMakeObjectReturnsProvidedClass()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $className  = 'Tests\Support\Models\SimpleEntity';
 
-		$result = $fabricator->makeArray();
+        $result = $fabricator->makeObject($className);
 
-		$this->assertEquals($result['name'], filter_var($result['name'], FILTER_VALIDATE_IP));
-	}
+        $this->assertInstanceOf($className, $result);
+    }
 
-	//--------------------------------------------------------------------
+    public function testMakeObjectReturnsStdClassForArrayReturnType()
+    {
+        $fabricator = new Fabricator(EventModel::class);
 
-	public function testMakeObjectReturnsModelReturnType()
-	{
-		$fabricator = new Fabricator(EntityModel::class);
-		$expected   = $fabricator->getModel()->returnType;
+        $result = $fabricator->makeObject();
 
-		$result = $fabricator->makeObject();
+        $this->assertInstanceOf(stdClass::class, $result);
+    }
 
-		$this->assertInstanceOf($expected, $result);
-	}
+    public function testMakeObjectReturnsStdClassForObjectReturnType()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-	public function testMakeObjectReturnsProvidedClass()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
-		$className  = 'Tests\Support\Models\SimpleEntity';
+        $result = $fabricator->makeObject();
 
-		$result = $fabricator->makeObject($className);
+        $this->assertInstanceOf(stdClass::class, $result);
+    }
 
-		$this->assertInstanceOf($className, $result);
-	}
+    public function testMakeObjectUsesOverrides()
+    {
+        $overrides = ['name' => 'The Admiral'];
 
-	public function testMakeObjectReturnsStdClassForArrayReturnType()
-	{
-		$fabricator = new Fabricator(EventModel::class);
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $fabricator->setOverrides($overrides);
 
-		$result = $fabricator->makeObject();
+        $result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
-	}
+        $this->assertSame($overrides['name'], $result->name);
+    }
 
-	public function testMakeObjectReturnsStdClassForObjectReturnType()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+    public function testMakeObjectReturnsValidData()
+    {
+        $fabricator = new Fabricator(UserModel::class, $this->formatters);
 
-		$result = $fabricator->makeObject();
+        $result = $fabricator->makeObject();
 
-		$this->assertInstanceOf(\stdClass::class, $result);
-	}
+        $this->assertSame($result->email, filter_var($result->email, FILTER_VALIDATE_EMAIL));
+    }
 
-	public function testMakeObjectUsesOverrides()
-	{
-		$overrides = ['name' => 'The Admiral'];
+    public function testMakeObjectUsesFakeMethod()
+    {
+        $fabricator = new Fabricator(FabricatorModel::class);
 
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
-		$fabricator->setOverrides($overrides);
+        $result = $fabricator->makeObject();
 
-		$result = $fabricator->makeObject();
+        $this->assertSame($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
+    }
 
-		$this->assertEquals($overrides['name'], $result->name);
-	}
+    public function testMakeReturnsSingleton()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testMakeObjectReturnsValidData()
-	{
-		$fabricator = new Fabricator(UserModel::class, $this->formatters);
+        $result = $fabricator->make();
 
-		$result = $fabricator->makeObject();
+        $this->assertInstanceOf('stdClass', $result);
+    }
 
-		$this->assertEquals($result->email, filter_var($result->email, FILTER_VALIDATE_EMAIL));
-	}
+    public function testMakeReturnsExpectedCount()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	public function testMakeObjectUsesFakeMethod()
-	{
-		$fabricator = new Fabricator(FabricatorModel::class);
+        $count  = 10;
+        $result = $fabricator->make($count);
 
-		$result = $fabricator->makeObject();
+        $this->assertIsArray($result);
+        $this->assertCount($count, $result);
+    }
 
-		$this->assertEquals($result->name, filter_var($result->name, FILTER_VALIDATE_IP));
-	}
+    public function testCreateMockReturnsSingleton()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-	//--------------------------------------------------------------------
+        $result = $fabricator->create(null, true);
 
-	public function testMakeReturnsSingleton()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertInstanceOf('stdClass', $result);
+    }
 
-		$result = $fabricator->make();
+    public function testCreateMockReturnsExpectedCount()
+    {
+        $fabricator = new Fabricator(UserModel::class);
 
-		$this->assertInstanceOf('stdClass', $result);
-	}
+        $count  = 10;
+        $result = $fabricator->create($count, true);
 
-	public function testMakeReturnsExpectedCount()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertIsArray($result);
+        $this->assertCount($count, $result);
+    }
 
-		$count  = 10;
-		$result = $fabricator->make($count);
+    public function testCreateMockSetsDatabaseFields()
+    {
+        $fabricator = new Fabricator(FabricatorModel::class);
 
-		$this->assertIsArray($result);
-		$this->assertCount($count, $result);
-	}
+        $result = $fabricator->create(null, true);
 
-	//--------------------------------------------------------------------
+        $this->assertIsInt($result->id);
+        $this->assertIsInt($result->created_at);
+        $this->assertIsInt($result->updated_at);
 
-	public function testCreateMockReturnsSingleton()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+        $this->assertObjectHasAttribute('deleted_at', $result);
+        $this->assertNull($result->deleted_at);
+    }
 
-		$result = $fabricator->create(null, true);
+    public function testSetCountReturnsCount()
+    {
+        $result = Fabricator::setCount('goblins', 42);
 
-		$this->assertInstanceOf('stdClass', $result);
-	}
+        $this->assertSame(42, $result);
+    }
 
-	public function testCreateMockReturnsExpectedCount()
-	{
-		$fabricator = new Fabricator(UserModel::class);
+    public function testSetCountSetsValue()
+    {
+        Fabricator::setCount('trolls', 3);
+        $result = Fabricator::getCount('trolls');
 
-		$count  = 10;
-		$result = $fabricator->create($count, true);
+        $this->assertSame(3, $result);
+    }
 
-		$this->assertIsArray($result);
-		$this->assertCount($count, $result);
-	}
+    public function testGetCountNewTableReturnsZero()
+    {
+        $result = Fabricator::getCount('gremlins');
 
-	public function testCreateMockSetsDatabaseFields()
-	{
-		$fabricator = new Fabricator(FabricatorModel::class);
+        $this->assertSame(0, $result);
+    }
 
-		$result = $fabricator->create(null, true);
+    public function testUpCountIncrementsValue()
+    {
+        Fabricator::setCount('orcs', 12);
+        Fabricator::upCount('orcs');
 
-		$this->assertIsInt($result->id);
-		$this->assertIsInt($result->created_at);
-		$this->assertIsInt($result->updated_at);
+        $this->assertSame(13, Fabricator::getCount('orcs'));
+    }
 
-		$this->assertObjectHasAttribute('deleted_at', $result);
-		$this->assertNull($result->deleted_at);
-	}
+    public function testUpCountReturnsValue()
+    {
+        Fabricator::setCount('hobgoblins', 12);
+        $result = Fabricator::upCount('hobgoblins');
 
-	//--------------------------------------------------------------------
+        $this->assertSame(13, $result);
+    }
 
-	public function testSetCountReturnsCount()
-	{
-		$result = Fabricator::setCount('goblins', 42);
+    public function testUpCountNewTableReturnsOne()
+    {
+        $result = Fabricator::upCount('ogres');
 
-		$this->assertEquals(42, $result);
-	}
+        $this->assertSame(1, $result);
+    }
 
-	public function testSetCountSetsValue()
-	{
-		Fabricator::setCount('trolls', 3);
-		$result = Fabricator::getCount('trolls');
+    public function testDownCountDecrementsValue()
+    {
+        Fabricator::setCount('orcs', 12);
+        Fabricator::downCount('orcs');
 
-		$this->assertEquals(3, $result);
-	}
+        $this->assertSame(11, Fabricator::getCount('orcs'));
+    }
 
-	public function testGetCountNewTableReturnsZero()
-	{
-		$result = Fabricator::getCount('gremlins');
+    public function testDownCountReturnsValue()
+    {
+        Fabricator::setCount('hobgoblins', 12);
+        $result = Fabricator::downCount('hobgoblins');
 
-		$this->assertEquals(0, $result);
-	}
+        $this->assertSame(11, $result);
+    }
 
-	public function testUpCountIncrementsValue()
-	{
-		Fabricator::setCount('orcs', 12);
-		Fabricator::upCount('orcs');
+    public function testDownCountNewTableReturnsNegativeOne()
+    {
+        $result = Fabricator::downCount('ogres');
 
-		$this->assertEquals(13, Fabricator::getCount('orcs'));
-	}
+        $this->assertSame(-1, $result);
+    }
 
-	public function testUpCountReturnsValue()
-	{
-		Fabricator::setCount('hobgoblins', 12);
-		$result = Fabricator::upCount('hobgoblins');
+    public function testResetClearsValue()
+    {
+        Fabricator::setCount('giants', 1000);
+        Fabricator::resetCounts();
 
-		$this->assertEquals(13, $result);
-	}
-
-	public function testUpCountNewTableReturnsOne()
-	{
-		$result = Fabricator::upCount('ogres');
-
-		$this->assertEquals(1, $result);
-	}
-
-	public function testDownCountDecrementsValue()
-	{
-		Fabricator::setCount('orcs', 12);
-		Fabricator::downCount('orcs');
-
-		$this->assertEquals(11, Fabricator::getCount('orcs'));
-	}
-
-	public function testDownCountReturnsValue()
-	{
-		Fabricator::setCount('hobgoblins', 12);
-		$result = Fabricator::downCount('hobgoblins');
-
-		$this->assertEquals(11, $result);
-	}
-
-	public function testDownCountNewTableReturnsNegativeOne()
-	{
-		$result = Fabricator::downCount('ogres');
-
-		$this->assertEquals(-1, $result);
-	}
-
-	public function testResetClearsValue()
-	{
-		Fabricator::setCount('giants', 1000);
-		Fabricator::resetCounts();
-
-		$this->assertEquals(0, Fabricator::getCount('giants'));
-	}
+        $this->assertSame(0, Fabricator::getCount('giants'));
+    }
 }

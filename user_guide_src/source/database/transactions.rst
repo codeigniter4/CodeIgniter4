@@ -12,6 +12,10 @@ online resource to learn about them for your particular database. The
 information below assumes you have a basic understanding of
 transactions.
 
+.. contents::
+    :local:
+    :depth: 2
+
 CodeIgniter's Approach to Transactions
 ======================================
 
@@ -70,8 +74,7 @@ debugging is turned off, you can manage your own errors like this::
     $this->db->query('ANOTHER QUERY...');
     $this->db->transComplete();
 
-    if ($this->db->transStatus() === FALSE)
-    {
+    if ($this->db->transStatus() === false) {
         // generate an error... or use the log_message() function to log your error
     }
 
@@ -82,7 +85,6 @@ Transactions are enabled by default. If you would like to disable transactions y
 can do so using ``$this->db->transOff()``::
 
     $this->db->transOff();
-
     $this->db->transStart();
     $this->db->query('AN SQL QUERY...');
     $this->db->transComplete();
@@ -96,7 +98,7 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-``$this->db->transStart()`` function to TRUE::
+``$this->db->transStart()`` function to true::
 
     $this->db->transStart(true); // Query will be rolled back
     $this->db->query('AN SQL QUERY...');
@@ -113,12 +115,9 @@ If you would like to run transactions manually you can do so as follows::
     $this->db->query('ANOTHER QUERY...');
     $this->db->query('AND YET ANOTHER QUERY...');
 
-    if ($this->db->transStatus() === FALSE)
-    {
+    if ($this->db->transStatus() === false) {
         $this->db->transRollback();
-    }
-    else
-    {
+    } else {
         $this->db->transCommit();
     }
 

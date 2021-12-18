@@ -2,6 +2,10 @@
 Custom Function Calls
 #####################
 
+.. contents::
+    :local:
+    :depth: 2
+
 $db->callFunction();
 ============================
 

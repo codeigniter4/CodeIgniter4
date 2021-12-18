@@ -8,8 +8,8 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has six directories: ``/app``, ``/system``, ``/public``,
-``/writable``, ``/tests`` and possibly ``/docs``.
+A fresh install has five directories: ``/app``, ``/public``,
+``/writable``, ``/tests`` and ``/system`` or ``/vendor``.
 Each of these directories has a very specific part to play.
 
 app
@@ -44,6 +44,9 @@ All files in this directory live under the ``App`` namespace, though you are fre
 
 system
 ------
+
+.. note:: If you install CodeIgniter with Composer, the ``system`` is located in ``vendor/codeigniter4/framework/system``.
+
 This directory stores the files that make up the framework, itself. While you have a lot of flexibility in how you
 use the application directory, the files in the system directory should never be modified. Instead, you should
 extend the classes, or create new classes, to provide the desired functionality.
@@ -75,15 +78,10 @@ This directory is set up to hold your test files. The ``_support`` directory hol
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.
 
-docs
-----
-If this directory is part of your project, it holds a local copy of the CodeIgniter4
-User Guide.
-
 Modifying Directory Locations
 -----------------------------
 
 If you've relocated any of the main directories, you can change the configuration
-settings inside ``app/Config/Paths``.
+settings inside **app/Config/Paths.php**.
 
-Please read `Managing your Applications <../general/managing_apps.html>`_
+Please read :doc:`Managing your Applications <../general/managing_apps>`.

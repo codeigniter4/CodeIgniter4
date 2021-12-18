@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\HTTP;
@@ -15,8 +15,6 @@ use Config\App;
 use RuntimeException;
 
 /**
- * Class CLIRequest
- *
  * Represents a request from the command-line. Provides additional
  * tools to interact with that request since CLI requests are not
  * static like HTTP requests might be.
@@ -29,209 +27,174 @@ use RuntimeException;
  */
 class CLIRequest extends Request
 {
-	/**
-	 * Stores the segments of our cli "URI" command.
-	 *
-	 * @var array
-	 */
-	protected $segments = [];
+    /**
+     * Stores the segments of our cli "URI" command.
+     *
+     * @var array
+     */
+    protected $segments = [];
 
-	/**
-	 * Command line options and their values.
-	 *
-	 * @var array
-	 */
-	protected $options = [];
+    /**
+     * Command line options and their values.
+     *
+     * @var array
+     */
+    protected $options = [];
 
-	/**
-	 * Set the expected HTTP verb
-	 *
-	 * @var string
-	 */
-	protected $method = 'cli';
+    /**
+     * Set the expected HTTP verb
+     *
+     * @var string
+     */
+    protected $method = 'cli';
 
-	/**
-	 * Constructor
-	 *
-	 * @param App $config
-	 */
-	public function __construct(App $config)
-	{
-		if (! is_cli())
-		{
-			throw new RuntimeException(static::class . ' needs to run from the command line.'); // @codeCoverageIgnore
-		}
+    /**
+     * Constructor
+     */
+    public function __construct(App $config)
+    {
+        if (! is_cli()) {
+            throw new RuntimeException(static::class . ' needs to run from the command line.'); // @codeCoverageIgnore
+        }
 
-		parent::__construct($config);
+        parent::__construct($config);
 
-		// Don't terminate the script when the cli's tty goes away
-		ignore_user_abort(true);
+        // Don't terminate the script when the cli's tty goes away
+        ignore_user_abort(true);
 
-		$this->parseCommand();
-	}
+        $this->parseCommand();
+    }
 
-	/**
-	 * Returns the "path" of the request script so that it can be used
-	 * in routing to the appropriate controller/method.
-	 *
-	 * The path is determined by treating the command line arguments
-	 * as if it were a URL - up until we hit our first option.
-	 *
-	 * Example:
-	 *      php index.php users 21 profile -foo bar
-	 *
-	 *      // Routes to /users/21/profile (index is removed for routing sake)
-	 *      // with the option foo = bar.
-	 *
-	 * @return string
-	 */
-	public function getPath(): string
-	{
-		$path = implode('/', $this->segments);
+    /**
+     * Returns the "path" of the request script so that it can be used
+     * in routing to the appropriate controller/method.
+     *
+     * The path is determined by treating the command line arguments
+     * as if it were a URL - up until we hit our first option.
+     *
+     * Example:
+     *      php index.php users 21 profile -foo bar
+     *
+     *      // Routes to /users/21/profile (index is removed for routing sake)
+     *      // with the option foo = bar.
+     */
+    public function getPath(): string
+    {
+        $path = implode('/', $this->segments);
 
-		return empty($path) ? '' : $path;
-	}
+        return empty($path) ? '' : $path;
+    }
 
-	/**
-	 * Returns an associative array of all CLI options found, with
-	 * their values.
-	 *
-	 * @return array
-	 */
-	public function getOptions(): array
-	{
-		return $this->options;
-	}
+    /**
+     * Returns an associative array of all CLI options found, with
+     * their values.
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
 
-	/**
-	 * Returns the path segments.
-	 *
-	 * @return array
-	 */
-	public function getSegments(): array
-	{
-		return $this->segments;
-	}
+    /**
+     * Returns the path segments.
+     */
+    public function getSegments(): array
+    {
+        return $this->segments;
+    }
 
-	/**
-	 * Returns the value for a single CLI option that was passed in.
-	 *
-	 * @param string $key
-	 *
-	 * @return string|null
-	 */
-	public function getOption(string $key)
-	{
-		return $this->options[$key] ?? null;
-	}
+    /**
+     * Returns the value for a single CLI option that was passed in.
+     *
+     * @return string|null
+     */
+    public function getOption(string $key)
+    {
+        return $this->options[$key] ?? null;
+    }
 
-	/**
-	 * Returns the options as a string, suitable for passing along on
-	 * the CLI to other commands.
-	 *
-	 * Example:
-	 *      $options = [
-	 *          'foo' => 'bar',
-	 *          'baz' => 'queue some stuff'
-	 *      ];
-	 *
-	 *      getOptionString() = '-foo bar -baz "queue some stuff"'
-	 *
-	 * @param boolean $useLongOpts
-	 *
-	 * @return string
-	 */
-	public function getOptionString(bool $useLongOpts = false): string
-	{
-		if (empty($this->options))
-		{
-			return '';
-		}
+    /**
+     * Returns the options as a string, suitable for passing along on
+     * the CLI to other commands.
+     *
+     * Example:
+     *      $options = [
+     *          'foo' => 'bar',
+     *          'baz' => 'queue some stuff'
+     *      ];
+     *
+     *      getOptionString() = '-foo bar -baz "queue some stuff"'
+     */
+    public function getOptionString(bool $useLongOpts = false): string
+    {
+        if (empty($this->options)) {
+            return '';
+        }
 
-		$out = '';
+        $out = '';
 
-		foreach ($this->options as $name => $value)
-		{
-			if ($useLongOpts && mb_strlen($name) > 1)
-			{
-				$out .= "--{$name} ";
-			}
-			else
-			{
-				$out .= "-{$name} ";
-			}
+        foreach ($this->options as $name => $value) {
+            if ($useLongOpts && mb_strlen($name) > 1) {
+                $out .= "--{$name} ";
+            } else {
+                $out .= "-{$name} ";
+            }
 
-			// If there's a space, we need to group
-			// so it will pass correctly.
-			if (mb_strpos($value, ' ') !== false)
-			{
-				$out .= '"' . $value . '" ';
-			}
-			elseif ($value !== null)
-			{
-				$out .= "{$value} ";
-			}
-		}
+            if ($value === null) {
+                continue;
+            }
 
-		return trim($out);
-	}
+            if (mb_strpos($value, ' ') !== false) {
+                $out .= '"' . $value . '" ';
+            } else {
+                $out .= "{$value} ";
+            }
+        }
 
-	//--------------------------------------------------------------------
+        return trim($out);
+    }
 
-	/**
-	 * Parses the command line it was called from and collects all options
-	 * and valid segments.
-	 *
-	 * NOTE: I tried to use getopt but had it fail occasionally to find
-	 * any options, where argv has always had our back.
-	 */
-	protected function parseCommand()
-	{
-		$args = $this->getServer('argv');
-		array_shift($args); // Scrap index.php
+    /**
+     * Parses the command line it was called from and collects all options
+     * and valid segments.
+     *
+     * NOTE: I tried to use getopt but had it fail occasionally to find
+     * any options, where argv has always had our back.
+     */
+    protected function parseCommand()
+    {
+        $args = $this->getServer('argv');
+        array_shift($args); // Scrap index.php
 
-		$optionValue = false;
+        $optionValue = false;
 
-		foreach ($args as $i => $arg)
-		{
-			if (mb_strpos($arg, '-') !== 0)
-			{
-				if ($optionValue)
-				{
-					$optionValue = false;
-				}
-				else
-				{
-					$this->segments[] = filter_var($arg, FILTER_SANITIZE_STRING);
-				}
+        foreach ($args as $i => $arg) {
+            if (mb_strpos($arg, '-') !== 0) {
+                if ($optionValue) {
+                    $optionValue = false;
+                } else {
+                    $this->segments[] = $arg;
+                }
 
-				continue;
-			}
+                continue;
+            }
 
-			$arg   = filter_var(ltrim($arg, '-'), FILTER_SANITIZE_STRING);
-			$value = null;
+            $arg   = ltrim($arg, '-');
+            $value = null;
 
-			if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0)
-			{
-				$value       = filter_var($args[$i + 1], FILTER_SANITIZE_STRING);
-				$optionValue = true;
-			}
+            if (isset($args[$i + 1]) && mb_strpos($args[$i + 1], '-') !== 0) {
+                $value       = $args[$i + 1];
+                $optionValue = true;
+            }
 
-			$this->options[$arg] = $value;
-		}
-	}
+            $this->options[$arg] = $value;
+        }
+    }
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines if this request was made from the command line (CLI).
-	 *
-	 * @return boolean
-	 */
-	public function isCLI(): bool
-	{
-		return is_cli();
-	}
-
-	//--------------------------------------------------------------------
+    /**
+     * Determines if this request was made from the command line (CLI).
+     */
+    public function isCLI(): bool
+    {
+        return is_cli();
+    }
 }

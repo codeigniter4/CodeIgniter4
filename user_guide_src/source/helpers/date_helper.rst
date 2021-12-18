@@ -20,11 +20,11 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: now([$timezone = NULL])
+.. php:function:: now([$timezone = null])
 
-    :param	string	$timezone: Timezone
-    :returns:	UNIX timestamp
-    :rtype:	int
+    :param    string    $timezone: Timezone
+    :returns:    UNIX timestamp
+    :rtype:    int
 
     Returns the current time as a UNIX timestamp, referenced either to your server's
     local time or any PHP supported timezone, based on the "time reference" setting
@@ -41,12 +41,12 @@ The following functions are available:
 
 .. php:function:: timezone_select([$class = '', $default = '', $what = \DateTimeZone::ALL, $country = null])
 
-    :param	string	$class: Optional class to apply to the select field
-    :param	string	$default: Default value for initial selection
-    :param	int	$what: DateTimeZone class constants (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
-    :param	string	$country: A two-letter ISO 3166-1 compatible country code (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
-    :returns:	Preformatted HTML select field
-    :rtype:	string
+    :param    string    $class: Optional class to apply to the select field
+    :param    string    $default: Default value for initial selection
+    :param    int    $what: DateTimeZone class constants (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
+    :param    string    $country: A two-letter ISO 3166-1 compatible country code (see `listIdentifiers <https://www.php.net/manual/en/datetimezone.listidentifiers.php>`_)
+    :returns:    Preformatted HTML select field
+    :rtype:    string
 
     Generates a `select` form field of available timezones (optionally filtered by `$what` and `$country`).
     You can supply an option class to apply to the field to make formatting easier, as well as a default

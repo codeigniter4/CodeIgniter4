@@ -1,14 +1,31 @@
 # Release Process
 
-> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021
+> Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
+> Updated for `4.1.2` on May 17, 2021.
 > -MGatner
+
+## Labeling PRs
+
+To auto-generate changelog, each PR to be listed in changelog must have one of the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
+- **bug** ... PRs that fix bugs
+- **enhancement** ... PRs to improve existing functionalities
+- **new feature** ... PRs for new features
+- **refactor** ... PRs to refactor
+
+And PRs that have the breaking changes must have the following label:
+- **breaking change** ... PRs that may break existing functionalities
 
 ## Preparation
 
 * Work off direct clones of the repos so the release branches persist for a time
 * Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and resolve any necessary PRs
-* Generate a new **CHANGELOG.md** ahead of time using [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator)
-* The Action deploy scripts *do not remove hidden files* (e.g. if you delete **.gitattributes**)! Vet the **admin/** folders for issues ahead of time
+* Vet the **admin/** folders for any removed hidden files (Action deploy scripts *do not remove these*)
+* Generate a new **CHANGELOG.md** ahead of time using [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator):
+```
+github_changelog_generator --user codeigniter4 --project codeigniter4 --since-tag v4.0.4 --future-release v4.0.5 --token {your_github_token}
+...or
+github_changelog_generator --user codeigniter4 --project codeigniter4 --since-commit "2021-02-01 13:26:28" --future-release v4.0.5 --token {your_github_token}
+```
 
 ## CodeIgniter4
 
@@ -51,13 +68,14 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 * Build the HTML version of the User Guide: `make html`
 * Build the ePub version of the User Guide: `make epub`
 * Switch to the **userguide** repo and create a new branch `release-4.x.x`
-* Copy the contents of **CodeIgniter4/user_guide_src/build/html** into **docs/**
+* Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
+* Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders with an underscore prefix
 * Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter4.x.x.epub**
 * Commit the changes with "Update for 4.x.x" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
 	* Title: "Update for 4.x.x"
 	* Description: blank
-* Merge the PR then fast-forward `develop` to catch the merge commit
+* Merge the PR
 * Create a new Release:
 	* Version: "v4.x.x"
 	* Title: "CodeIgniter 4.x.x User Guide"
@@ -68,7 +86,7 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 
 Currently the User Guide on the website has to be updated manually. Visit Jim's user home
 where the served directory **codeigniter.com** exists. Copy the latest **docs** folder from
-the User Guide repo into **public** and updated the symlink.
+the User Guide repo to **public/userguide4** and browse to the website to make sure it works.
 
 ## Announcement
 

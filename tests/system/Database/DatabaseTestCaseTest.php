@@ -1,65 +1,80 @@
-<?php namespace CodeIgniter\Database;
+<?php
 
-use CodeIgniter\Test\CIDatabaseTestCase;
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace CodeIgniter\Database;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
 
 /**
  * @group DatabaseLive
+ *
+ * @internal
  */
-class DatabaseTestCaseTest extends CIDatabaseTestCase
+final class DatabaseTestCaseTest extends CIUnitTestCase
 {
-	protected static $loaded = false;
+    use DatabaseTestTrait;
 
-	/**
-	 * Should the db be refreshed before
-	 * each test?
-	 *
-	 * @var boolean
-	 */
-	protected $refresh = true;
+    protected static $loaded = false;
 
-	/**
-	 * The seed file(s) used for all tests within this test case.
-	 * Should be fully-namespaced or relative to $basePath
-	 *
-	 * @var string|array
-	 */
-	protected $seed = [
-		'Tests\Support\Database\Seeds\CITestSeeder',
-		'Tests\Support\Database\Seeds\AnotherSeeder',
-	];
+    /**
+     * Should the db be refreshed before
+     * each test?
+     *
+     * @var bool
+     */
+    protected $refresh = true;
 
-	/**
-	 * The namespace(s) to help us find the migration classes.
-	 * Empty is equivalent to running `spark migrate -all`.
-	 * Note that running "all" runs migrations in date order,
-	 * but specifying namespaces runs them in namespace order (then date)
-	 *
-	 * @var string|array|null
-	 */
-	protected $namespace = [
-		'Tests\Support',
-		'Tests\Support\MigrationTestMigrations',
-	];
+    /**
+     * The seed file(s) used for all tests within this test case.
+     * Should be fully-namespaced or relative to $basePath
+     *
+     * @var array|string
+     */
+    protected $seed = [
+        'Tests\Support\Database\Seeds\CITestSeeder',
+        'Tests\Support\Database\Seeds\AnotherSeeder',
+    ];
 
-	public function setUp(): void
-	{
-		if (! self::$loaded)
-		{
-			Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-			self::$loaded = true;
-		}
+    /**
+     * The namespace(s) to help us find the migration classes.
+     * Empty is equivalent to running `spark migrate -all`.
+     * Note that running "all" runs migrations in date order,
+     * but specifying namespaces runs them in namespace order (then date)
+     *
+     * @var array|string|null
+     */
+    protected $namespace = [
+        'Tests\Support',
+        'Tests\Support\MigrationTestMigrations',
+    ];
 
-		parent::setUp();
-	}
+    protected function setUp(): void
+    {
+        if (! self::$loaded) {
+            Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
+            self::$loaded = true;
+        }
 
-	public function testMultipleSeeders()
-	{
-		$this->seeInDatabase('user', ['name' => 'Jerome Lohan']);
-	}
+        parent::setUp();
+    }
 
-	public function testMultipleMigrationNamespaces()
-	{
-		$this->seeInDatabase('foo', ['key' => 'foobar']);
-	}
+    public function testMultipleSeeders()
+    {
+        $this->seeInDatabase('user', ['name' => 'Jerome Lohan']);
+    }
+
+    public function testMultipleMigrationNamespaces()
+    {
+        $this->seeInDatabase('foo', ['key' => 'foobar']);
+    }
 }

@@ -1,63 +1,76 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-class SessionsCommandsTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class SessionsCommandsTest extends CIUnitTestCase
 {
-	private $streamFilter;
+    private $streamFilter;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		CITestStreamFilter::$buffer = '';
+        CITestStreamFilter::$buffer = '';
 
-		$this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-		$this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-	}
+        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+    }
 
-	public function tearDown(): void
-	{
-		stream_filter_remove($this->streamFilter);
+    protected function tearDown(): void
+    {
+        stream_filter_remove($this->streamFilter);
 
-		$result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
-		$file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-		file_exists($file) && unlink($file);
-	}
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 
-	public function testCreateMigrationCommand()
-	{
-		command('session:migration');
+    public function testCreateMigrationCommand()
+    {
+        command('session:migration');
 
-		// make sure we end up with a migration class in the right place
-		// or at least that we claim to have done so
-		// separate assertions avoid console color codes
-		$this->assertStringContainsString('_CreateCiSessionsTable.php', CITestStreamFilter::$buffer);
-	}
+        // make sure we end up with a migration class in the right place
+        // or at least that we claim to have done so
+        // separate assertions avoid console color codes
+        $this->assertStringContainsString('_CreateCiSessionsTable.php', CITestStreamFilter::$buffer);
+    }
 
-	public function testOverriddenCreateMigrationCommand()
-	{
-		command('session:migration -t mygoodies');
+    public function testOverriddenCreateMigrationCommand()
+    {
+        command('session:migration -t mygoodies');
 
-		// make sure we end up with a migration class in the right place
-		$this->assertStringContainsString('_CreateMygoodiesTable.php', CITestStreamFilter::$buffer);
-	}
+        // make sure we end up with a migration class in the right place
+        $this->assertStringContainsString('_CreateMygoodiesTable.php', CITestStreamFilter::$buffer);
+    }
 
-	public function testCannotWriteFileOnCreateMigrationCommand()
-	{
-		if ('\\' === DIRECTORY_SEPARATOR)
-		{
-			$this->markTestSkipped('chmod does not work as expected on Windows');
-		}
+    public function testCannotWriteFileOnCreateMigrationCommand()
+    {
+        if ('\\' === DIRECTORY_SEPARATOR) {
+            $this->markTestSkipped('chmod does not work as expected on Windows');
+        }
 
-		chmod(APPPATH . 'Database/Migrations', 0444);
+        chmod(APPPATH . 'Database/Migrations', 0444);
 
-		command('session:migration');
-		$this->assertStringContainsString('Error while creating file:', CITestStreamFilter::$buffer);
+        command('session:migration');
+        $this->assertStringContainsString('Error while creating file:', CITestStreamFilter::$buffer);
 
-		chmod(APPPATH . 'Database/Migrations', 0755);
-	}
+        chmod(APPPATH . 'Database/Migrations', 0755);
+    }
 }

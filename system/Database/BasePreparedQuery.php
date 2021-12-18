@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Database;
@@ -19,228 +19,171 @@ use CodeIgniter\Events\Events;
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
-	/**
-	 * The prepared statement itself.
-	 *
-	 * @var object|resource
-	 */
-	protected $statement;
+    /**
+     * The prepared statement itself.
+     *
+     * @var object|resource
+     */
+    protected $statement;
 
-	/**
-	 * The error code, if any.
-	 *
-	 * @var integer
-	 */
-	protected $errorCode;
+    /**
+     * The error code, if any.
+     *
+     * @var int
+     */
+    protected $errorCode;
 
-	/**
-	 * The error message, if any.
-	 *
-	 * @var string
-	 */
-	protected $errorString;
+    /**
+     * The error message, if any.
+     *
+     * @var string
+     */
+    protected $errorString;
 
-	/**
-	 * Holds the prepared query object
-	 * that is cloned during execute.
-	 *
-	 * @var Query
-	 */
-	protected $query;
+    /**
+     * Holds the prepared query object
+     * that is cloned during execute.
+     *
+     * @var Query
+     */
+    protected $query;
 
-	/**
-	 * A reference to the db connection to use.
-	 *
-	 * @var BaseConnection
-	 */
-	protected $db;
+    /**
+     * A reference to the db connection to use.
+     *
+     * @var BaseConnection
+     */
+    protected $db;
 
-	//--------------------------------------------------------------------
+    public function __construct(BaseConnection $db)
+    {
+        $this->db = &$db;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param BaseConnection $db
-	 */
-	public function __construct(BaseConnection $db)
-	{
-		$this->db = &$db;
-	}
+    /**
+     * Prepares the query against the database, and saves the connection
+     * info necessary to execute the query later.
+     *
+     * NOTE: This version is based on SQL code. Child classes should
+     * override this method.
+     *
+     * @return mixed
+     */
+    public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
+    {
+        // We only supports positional placeholders (?)
+        // in order to work with the execute method below, so we
+        // need to replace our named placeholders (:name)
+        $sql = preg_replace('/:[^\s,)]+/', '?', $sql);
 
-	//--------------------------------------------------------------------
+        /** @var Query $query */
+        $query = new $queryClass($this->db);
 
-	/**
-	 * Prepares the query against the database, and saves the connection
-	 * info necessary to execute the query later.
-	 *
-	 * NOTE: This version is based on SQL code. Child classes should
-	 * override this method.
-	 *
-	 * @param string $sql
-	 * @param array  $options    Passed to the connection's prepare statement.
-	 * @param string $queryClass
-	 *
-	 * @return mixed
-	 */
-	public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
-	{
-		// We only supports positional placeholders (?)
-		// in order to work with the execute method below, so we
-		// need to replace our named placeholders (:name)
-		$sql = preg_replace('/:[^\s,)]+/', '?', $sql);
+        $query->setQuery($sql);
 
-		/**
-		 * @var \CodeIgniter\Database\Query $query
-		 */
-		$query = new $queryClass($this->db);
+        if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix)) {
+            $query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
+        }
 
-		$query->setQuery($sql);
+        $this->query = $query;
 
-		if (! empty($this->db->swapPre) && ! empty($this->db->DBPrefix))
-		{
-			$query->swapPrefix($this->db->DBPrefix, $this->db->swapPre);
-		}
+        return $this->_prepare($query->getOriginalQuery(), $options);
+    }
 
-		$this->query = $query;
+    /**
+     * The database-dependent portion of the prepare statement.
+     *
+     * @return mixed
+     */
+    abstract public function _prepare(string $sql, array $options = []);
 
-		return $this->_prepare($query->getOriginalQuery(), $options);
-	}
+    /**
+     * Takes a new set of data and runs it against the currently
+     * prepared query. Upon success, will return a Results object.
+     *
+     * @return ResultInterface
+     */
+    public function execute(...$data)
+    {
+        // Execute the Query.
+        $startTime = microtime(true);
 
-	//--------------------------------------------------------------------
+        $this->_execute($data);
 
-	/**
-	 * The database-dependent portion of the prepare statement.
-	 *
-	 * @param string $sql
-	 * @param array  $options Passed to the connection's prepare statement.
-	 *
-	 * @return mixed
-	 */
-	abstract public function _prepare(string $sql, array $options = []);
+        // Update our query object
+        $query = clone $this->query;
+        $query->setBinds($data);
 
-	//--------------------------------------------------------------------
+        $query->setDuration($startTime);
 
-	/**
-	 * Takes a new set of data and runs it against the currently
-	 * prepared query. Upon success, will return a Results object.
-	 *
-	 * @param array $data
-	 *
-	 * @return ResultInterface
-	 */
-	public function execute(...$data)
-	{
-		// Execute the Query.
-		$startTime = microtime(true);
+        // Let others do something with this query
+        Events::trigger('DBQuery', $query);
 
-		$result = $this->_execute($data);
+        // Return a result object
+        $resultClass = str_replace('PreparedQuery', 'Result', static::class);
 
-		// Update our query object
-		$query = clone $this->query;
-		$query->setBinds($data);
+        $resultID = $this->_getResult();
 
-		$query->setDuration($startTime);
+        return new $resultClass($this->db->connID, $resultID);
+    }
 
-		// Let others do something with this query
-		Events::trigger('DBQuery', $query);
+    /**
+     * The database dependant version of the execute method.
+     */
+    abstract public function _execute(array $data): bool;
 
-		// Return a result object
-		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
+    /**
+     * Returns the result object for the prepared query.
+     *
+     * @return mixed
+     */
+    abstract public function _getResult();
 
-		$resultID = $this->_getResult();
+    /**
+     * Explicitly closes the statement.
+     */
+    public function close()
+    {
+        if (! is_object($this->statement) || ! method_exists($this->statement, 'close')) {
+            return;
+        }
 
-		return new $resultClass($this->db->connID, $resultID);
-	}
+        $this->statement->close();
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * Returns the SQL that has been prepared.
+     */
+    public function getQueryString(): string
+    {
+        if (! $this->query instanceof QueryInterface) {
+            throw new BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
+        }
 
-	/**
-	 * The database dependant version of the execute method.
-	 *
-	 * @param array $data
-	 *
-	 * @return boolean
-	 */
-	abstract public function _execute(array $data): bool;
+        return $this->query->getQuery();
+    }
 
-	//--------------------------------------------------------------------
+    /**
+     * A helper to determine if any error exists.
+     */
+    public function hasError(): bool
+    {
+        return ! empty($this->errorString);
+    }
 
-	/**
-	 * Returns the result object for the prepared query.
-	 *
-	 * @return mixed
-	 */
-	abstract public function _getResult();
+    /**
+     * Returns the error code created while executing this statement.
+     */
+    public function getErrorCode(): int
+    {
+        return $this->errorCode;
+    }
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Explicitly closes the statement.
-	 *
-	 * @return void
-	 */
-	public function close()
-	{
-		if (! is_object($this->statement))
-		{
-			return;
-		}
-
-		$this->statement->close();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the SQL that has been prepared.
-	 *
-	 * @return string
-	 */
-	public function getQueryString(): string
-	{
-		if (! $this->query instanceof QueryInterface)
-		{
-			throw new BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
-		}
-
-		return $this->query->getQuery();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * A helper to determine if any error exists.
-	 *
-	 * @return boolean
-	 */
-	public function hasError(): bool
-	{
-		return ! empty($this->errorString);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the error code created while executing this statement.
-	 *
-	 * @return integer
-	 */
-	public function getErrorCode(): int
-	{
-		return $this->errorCode;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the error message created while executing this statement.
-	 *
-	 * @return string
-	 */
-	public function getErrorMessage(): string
-	{
-		return $this->errorString;
-	}
-
-	//--------------------------------------------------------------------
+    /**
+     * Returns the error message created while executing this statement.
+     */
+    public function getErrorMessage(): string
+    {
+        return $this->errorString;
+    }
 }

@@ -24,12 +24,9 @@ execution is then sent to the error handler which displays the appropriate error
 
 If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block::
 
-    try
-    {
+    try {
         $user = $userModel->find($id);
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
         die($e->getMessage());
     }
 
@@ -40,16 +37,14 @@ In the example above, we catch any type of Exception. If we only want to watch f
 a ``UnknownFileException``, we can specify that in the catch parameter. Any other exceptions that are thrown and are
 not child classes of the caught exception will be passed on to the error handler::
 
-    catch (\CodeIgniter\UnknownFileException $e)
-    {
+    catch (\CodeIgniter\UnknownFileException $e) {
         // do something here...
     }
 
 This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block::
 
-    catch (\CodeIgniter\UnknownFileException $e)
-    {
+    catch (\CodeIgniter\UnknownFileException $e) {
         // do something here...
 
         throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
@@ -60,7 +55,7 @@ Configuration
 
 By default, CodeIgniter will display all errors in the ``development`` and ``testing`` environments, and will not
 display any errors in the ``production`` environment. You can change this by setting the ``CI_ENVIRONMENT`` variable
-in the ``.env`` file.
+in the **.env** file.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
 
@@ -98,8 +93,7 @@ This is used to signal a 404, Page Not Found error. When thrown, the system will
 If, in ``Config/Routes.php``, you have specified a 404 Override, that will be called instead of the standard
 404 page::
 
-    if (! $page = $pageModel->find($id))
-    {
+    if (! $page = $pageModel->find($id)) {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 
