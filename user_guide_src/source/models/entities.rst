@@ -425,11 +425,11 @@ Custom casting
 You can define your own conversion types for getting and setting data.
 
 At first you need to create a handler class for your type.
-Let's say the class will be located in the **app/Entity/Cast** directory::
+Let's say the class will be located in the **app/Entities/Cast** directory::
 
     <?php
 
-    namespace App\Entity\Cast;
+    namespace App\Entities\Cast;
 
     use CodeIgniter\Entity\Cast\BaseCast;
 
@@ -464,7 +464,7 @@ Now you need to register it::
 
         // Bind the type to the handler
         protected $castHandlers = [
-            'base64' => \App\Entity\Cast\CastBase64::class,
+            'base64' => \App\Entities\Cast\CastBase64::class,
         ];
     }
 
