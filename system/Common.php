@@ -332,6 +332,41 @@ if (! function_exists('dd')) {
     }
 }
 
+if (! function_exists('d')) {
+    /**
+     * Prints a Kint debug report with CSP support
+     *
+     * @param array ...$vars
+     */
+    function d(...$vars)
+    {
+        Kint::$aliases[] = 'd';
+
+        ob_start();
+        Kint::dump(...$vars);
+        $output = ob_get_clean();
+
+        /** @var App $config */
+        $config = config(App::class);
+
+        if ($config->CSPEnabled === true) {
+            $output = str_replace(
+                [
+                    '<script class="kint-rich-script">',
+                    '<style class="kint-rich-style">',
+                ],
+                [
+                    '<script {csp-script-nonce} class="kint-rich-script">',
+                    '<style {csp-style-nonce} class="kint-rich-style">',
+                ],
+                $output
+            );
+        }
+
+        echo $output;
+    }
+}
+
 if (! function_exists('env')) {
     /**
      * Allows user to retrieve values from the environment

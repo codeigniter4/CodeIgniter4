@@ -29,6 +29,7 @@ use Config\App;
 use Config\Logger;
 use Config\Modules;
 use InvalidArgumentException;
+use Kint;
 use stdClass;
 use Tests\Support\Models\JobModel;
 
@@ -481,5 +482,23 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
+    }
+
+    public function testDWithCSP()
+    {
+        /** @var App $config */
+        $config       = config(App::class);
+        $CSPEnabled   = $config->CSPEnabled;
+        $cliDetection = Kint::$cli_detection;
+
+        $config->CSPEnabled  = true;
+        Kint::$cli_detection = false;
+
+        $this->expectOutputRegex('/<script {csp-script-nonce} class="kint-rich-script">/u');
+        d('string');
+
+        // Restore settings
+        $config->CSPEnabled  = $CSPEnabled;
+        Kint::$cli_detection = $cliDetection;
     }
 }
