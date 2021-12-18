@@ -481,8 +481,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Executes a stored procedure
      *
-     * @param string $package   package name in which the stored procedure is in
-     * @param string $procedure stored procedure name to execute
+     * @param string $procedureName procedure name to execute
      *
      * @return mixed
      *
@@ -495,14 +494,14 @@ class Connection extends BaseConnection implements ConnectionInterface
      * type     yes       the type of the parameter
      * length   yes       the max size of the parameter
      */
-    public function storedProcedure(string $package, string $procedure, array $params)
+    public function storedProcedure(string $procedureName, array $params)
     {
-        if ($package === '' || $procedure === '') {
-            throw new DatabaseException(lang('Database.invalidArgument', [$package . $procedure]));
+        if ($procedureName === '') {
+            throw new DatabaseException(lang('Database.invalidArgument', [$procedureName]));
         }
 
         // Build the query string
-        $sql = 'BEGIN ' . $package . '.' . $procedure . '(';
+        $sql = 'BEGIN ' . $procedureName . '(';
 
         $haveCursor = false;
 
@@ -518,7 +517,7 @@ class Connection extends BaseConnection implements ConnectionInterface
         $this->resetStmtId = false;
         $this->stmtId      = oci_parse($this->connID, $sql);
         $this->bindParams($params);
-        $result            = $this->query($sql, false, $haveCursor);
+        $result            = $this->query($sql);
         $this->resetStmtId = true;
 
         return $result;
@@ -538,13 +537,13 @@ class Connection extends BaseConnection implements ConnectionInterface
         }
 
         foreach ($params as $param) {
-            foreach (['name', 'value', 'type', 'length'] as $val) {
-                if (! isset($param[$val])) {
-                    $param[$val] = '';
-                }
-            }
-
-            oci_bind_by_name($this->stmtId, $param['name'], $param['value'], $param['length'], $param['type']);
+            oci_bind_by_name(
+                $this->stmtId,
+                $param['name'],
+                $param['value'],
+                $param['length'] ?? -1,
+                $param['type'] ?? SQLT_CHR
+            );
         }
     }
 
