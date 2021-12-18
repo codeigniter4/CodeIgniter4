@@ -860,18 +860,17 @@ if (!function_exists('str_contains')) {
      * @param  string|string[]  $needles
      * @return bool
      */
-    function str_contains(string $haystack, string $needles): bool
+    function str_contains(string $haystack, string $needle): bool
     {
         if (phpversion() >= 8) {
-            return str_contains($haystack, $needles);
+            return str_contains($haystack, $needle);
         }
 
-        foreach ((array) $needles as $needle) {
-            if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
-                return true;
-            }
+        if ($haystack !== '' && $needle !== '' && mb_strpos($haystack, $needle) !== false) {
+            return true;
         }
 
         return false;
     }
 }
+//--------------------------------------------------------------------
