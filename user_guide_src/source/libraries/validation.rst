@@ -530,7 +530,7 @@ or the value that was validated you can add the ``{field}``, ``{param}`` and ``{
 On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”
 
-.. note:: If you pass the last parameter the labeled style error messages will be ignored.
+.. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
 Translation Of Messages And Validation Labels
 =============================================
