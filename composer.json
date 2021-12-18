@@ -37,6 +37,9 @@
     "extra": {
         "branch-alias": {
             "dev-develop": "4.x-dev"
+        },
+        "kint": {
+            "disable-helpers": true
         }
     },
     "autoload": {
