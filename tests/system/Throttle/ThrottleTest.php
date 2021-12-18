@@ -127,7 +127,10 @@ final class ThrottleTest extends CIUnitTestCase
 
     public function testFlooding()
     {
+        $time = 1639441295;
+
         $throttler = new Throttler($this->cache);
+        $throttler->setTestTime($time);
 
         $rate = 60; // allow 1 per second after the bucket is emptied
         $cost = 1;
@@ -141,7 +144,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertFalse($throttler->check('127.0.0.1', $rate, MINUTE, $cost));
         $this->assertSame(0, $this->cache->get('throttler_127.0.0.1'));
 
-        $throttler = $throttler->setTestTime(strtotime('+10 seconds'));
+        $throttler = $throttler->setTestTime($time + 10);
 
         $this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE, 0));
         $this->assertSame(10.0, round($this->cache->get('throttler_127.0.0.1')));
