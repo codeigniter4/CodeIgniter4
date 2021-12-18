@@ -53,9 +53,9 @@ can instantiate it directly::
     $parser = new \CodeIgniter\View\Parser();
 
 Then you can use any of the three standard rendering methods that it provides:
-**render(viewpath, options, save)**, **setVar(name, value, context)** and
-**setData(data, context)**. You will also be able to specify delimiters directly,
-through the **setDelimiters(left, right)** method.
+``render(viewpath, options, save)``, ``setVar(name, value, context)`` and
+``setData(data, context)``. You will also be able to specify delimiters directly,
+through the ``setDelimiters(left, right)`` method.
 
 Using the ``Parser``, your view templates are processed only by the Parser
 itself, and not like a conventional view PHP script. PHP code in such a script
@@ -221,12 +221,12 @@ method::
                 ->render('blog_template');
 
 If the array you are trying to loop over contains objects instead of arrays,
-the parser will first look for an ``asArray`` method on the object. If it exists,
+the parser will first look for an ``asArray()`` method on the object. If it exists,
 that method will be called and the resulting array is then looped over just as
-described above. If no ``asArray`` method exists, the object will be cast as
+described above. If no ``asArray()`` method exists, the object will be cast as
 an array and its public properties will be made available to the Parser.
 
-This is especially useful with the Entity classes, which has an asArray method
+This is especially useful with the Entity classes, which has an ``asArray()`` method
 that returns all public and protected properties (minus the _options property) and
 makes them available to the Parser.
 
@@ -262,8 +262,8 @@ A **blog_template.php** that might work for the above::
         </div>
     {/blog_entry}
 
-If you would like the other pseudo-variables accessible inside the "blog_entry"
-scope, then make sure that the "cascadeData" option is set to true.
+If you would like the other pseudo-variables accessible inside the ``blog_entry``
+scope, then make sure that the ``cascadeData`` option is set to true.
 
 Comments
 ========
@@ -362,9 +362,9 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 Escaping Data
 =============
 
-By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc`` method
-supports several different contexts, like general **html**, when it's in an HTML **attr**, in **css**, etc. If nothing
-else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the **esc**
+By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc()`` method
+supports several different contexts, like general ``html``, when it's in an HTML ``attr``, in ``css``, etc. If nothing
+else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the ``esc()``
 filter::
 
     { user_styles | esc(css) }
