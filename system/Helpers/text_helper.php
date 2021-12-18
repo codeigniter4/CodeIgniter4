@@ -851,28 +851,3 @@ if (! function_exists('excerpt'))
 
 	//--------------------------------------------------------------------
 }
-
-if (!function_exists('str_contains')) {
-    /**
-     * Determine if a given string contains in a given substring.
-     *
-     * @param  string  $haystack
-     * @param  string|string[]  $needles
-     * @return bool
-     */
-    function str_contains(string $haystack, string $needles): bool
-    {
-        if (phpversion() >= 8) {
-            return str_contains($haystack, $needles);
-        }
-
-        foreach ((array) $needles as $needle) {
-            if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-}
-//--------------------------------------------------------------------
