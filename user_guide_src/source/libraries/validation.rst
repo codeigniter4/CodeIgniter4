@@ -594,7 +594,7 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     }
 
 Customizing Error Display
-************************************************
+*************************
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
 that determines how the errors are displayed. By default, they display with a class of ``errors`` on the wrapping div.
