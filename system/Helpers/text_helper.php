@@ -683,11 +683,7 @@ if (!function_exists('str_contains')) {
      */
     function str_contains(string $haystack, string $needle): bool
     {
-        if (phpversion() >= 8) {
-            return str_contains($haystack, $needle);
-        }
-
-        if ($haystack !== '' && $needle !== '' && mb_strpos($haystack, $needle) !== false) {
+        if ($haystack !== '' && $needle !== '' && strpos($haystack, $needle) !== false) {
             return true;
         }
 
