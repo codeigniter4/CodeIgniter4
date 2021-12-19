@@ -25,19 +25,19 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
-use Kint\Object\MethodObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\InstanceValue;
+use Kint\Zval\MethodValue;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 use ReflectionClass;
 
 class ClassMethodsPlugin extends Plugin
 {
-    private static $cache = array();
+    private static $cache = [];
 
     public function getTypes()
     {
-        return array('object');
+        return ['object'];
     }
 
     public function getTriggers()
@@ -45,21 +45,21 @@ class ClassMethodsPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         $class = \get_class($var);
 
         // assuming class definition will not change inside one request
         if (!isset(self::$cache[$class])) {
-            $methods = array();
+            $methods = [];
 
             $reflection = new ReflectionClass($class);
 
             foreach ($reflection->getMethods() as $method) {
-                $methods[] = new MethodObject($method);
+                $methods[] = new MethodValue($method);
             }
 
-            \usort($methods, array('Kint\\Parser\\ClassMethodsPlugin', 'sort'));
+            \usort($methods, ['Kint\\Parser\\ClassMethodsPlugin', 'sort']);
 
             self::$cache[$class] = $methods;
         }
@@ -91,19 +91,19 @@ class ClassMethodsPlugin extends Plugin
         }
     }
 
-    private static function sort(MethodObject $a, MethodObject $b)
+    private static function sort(MethodValue $a, MethodValue $b)
     {
         $sort = ((int) $a->static) - ((int) $b->static);
         if ($sort) {
             return $sort;
         }
 
-        $sort = BasicObject::sortByAccess($a, $b);
+        $sort = Value::sortByAccess($a, $b);
         if ($sort) {
             return $sort;
         }
 
-        $sort = InstanceObject::sortByHierarchy($a->owner_class, $b->owner_class);
+        $sort = InstanceValue::sortByHierarchy($a->owner_class, $b->owner_class);
         if ($sort) {
             return $sort;
         }

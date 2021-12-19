@@ -26,33 +26,36 @@
 namespace Kint\Renderer;
 
 use Kint\Kint;
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
 use Kint\Utils;
+use Kint\Zval\InstanceValue;
+use Kint\Zval\Value;
 
 class TextRenderer extends Renderer
 {
     /**
      * TextRenderer plugins should be instances of Kint\Renderer\Text\Plugin.
      */
-    public static $plugins = array(
+    public static $plugins = [
+        'array_limit' => 'Kint\\Renderer\\Text\\ArrayLimitPlugin',
         'blacklist' => 'Kint\\Renderer\\Text\\BlacklistPlugin',
         'depth_limit' => 'Kint\\Renderer\\Text\\DepthLimitPlugin',
         'microtime' => 'Kint\\Renderer\\Text\\MicrotimePlugin',
         'recursion' => 'Kint\\Renderer\\Text\\RecursionPlugin',
         'trace' => 'Kint\\Renderer\\Text\\TracePlugin',
-    );
+    ];
 
     /**
      * Parser plugins must be instanceof one of these or
      * it will be removed for performance reasons.
      */
-    public static $parser_plugin_whitelist = array(
+    public static $parser_plugin_whitelist = [
+        'Kint\\Parser\\ArrayLimitPlugin',
+        'Kint\\Parser\\ArrayObjectPlugin',
         'Kint\\Parser\\BlacklistPlugin',
         'Kint\\Parser\\MicrotimePlugin',
         'Kint\\Parser\\StreamPlugin',
         'Kint\\Parser\\TracePlugin',
-    );
+    ];
 
     /**
      * The maximum length of a string before it is truncated.
@@ -94,7 +97,7 @@ class TextRenderer extends Renderer
     public $header_width = 80;
     public $indent_width = 4;
 
-    protected $plugin_objs = array();
+    protected $plugin_objs = [];
 
     public function __construct()
     {
@@ -102,10 +105,11 @@ class TextRenderer extends Renderer
         $this->indent_width = self::$default_indent;
     }
 
-    public function render(BasicObject $o)
+    public function render(Value $o)
     {
         if ($plugin = $this->getPlugin(self::$plugins, $o->hints)) {
-            if (\strlen($output = $plugin->render($o))) {
+            $output = $plugin->render($o);
+            if (null !== $output && \strlen($output)) {
                 return $output;
             }
         }
@@ -149,7 +153,7 @@ class TextRenderer extends Renderer
         return $out;
     }
 
-    public function renderTitle(BasicObject $o)
+    public function renderTitle(Value $o)
     {
         $name = (string) $o->getName();
 
@@ -160,9 +164,9 @@ class TextRenderer extends Renderer
         return Utils::truncateString($name, $this->header_width);
     }
 
-    public function renderHeader(BasicObject $o)
+    public function renderHeader(Value $o)
     {
-        $output = array();
+        $output = [];
 
         if ($o->depth) {
             if (null !== ($s = $o->getModifiers())) {
@@ -200,7 +204,7 @@ class TextRenderer extends Renderer
         return \str_repeat(' ', $o->depth * $this->indent_width).\implode(' ', $output);
     }
 
-    public function renderChildren(BasicObject $o)
+    public function renderChildren(Value $o)
     {
         if ('array' === $o->type) {
             $output = ' [';
@@ -213,7 +217,7 @@ class TextRenderer extends Renderer
         $children = '';
 
         if ($o->value && \is_array($o->value->contents)) {
-            if ($o instanceof InstanceObject && 'properties' === $o->value->getName()) {
+            if ($o instanceof InstanceValue && 'properties' === $o->value->getName()) {
                 foreach (self::sortProperties($o->value->contents, self::$sort) as $obj) {
                     $children .= $this->render($obj);
                 }
@@ -274,7 +278,7 @@ class TextRenderer extends Renderer
 
     public function filterParserPlugins(array $plugins)
     {
-        $return = array();
+        $return = [];
 
         foreach ($plugins as $index => $plugin) {
             foreach (self::$parser_plugin_whitelist as $whitelist) {
@@ -313,7 +317,7 @@ class TextRenderer extends Renderer
                 !empty($this->call_info['callee']['class']) ||
                 !\in_array(
                     $this->call_info['callee']['function'],
-                    array('include', 'include_once', 'require', 'require_once'),
+                    ['include', 'include_once', 'require', 'require_once'],
                     true
                 )
             )

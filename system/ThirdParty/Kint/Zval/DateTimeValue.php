@@ -23,32 +23,31 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use Exception;
-use InvalidArgumentException;
-use Throwable;
+use DateTime;
 
-class ThrowableObject extends InstanceObject
+class DateTimeValue extends InstanceValue
 {
-    public $message;
-    public $hints = array('object', 'throwable');
+    public $dt;
 
-    public function __construct($throw)
+    public $hints = ['object', 'datetime'];
+
+    public function __construct(DateTime $dt)
     {
-        if (!$throw instanceof Exception && (!KINT_PHP70 || !$throw instanceof Throwable)) {
-            throw new InvalidArgumentException('ThrowableObject must be constructed with a Throwable');
-        }
-
         parent::__construct();
 
-        $this->message = $throw->getMessage();
+        $this->dt = clone $dt;
     }
 
     public function getValueShort()
     {
-        if (\strlen($this->message)) {
-            return '"'.$this->message.'"';
+        $stamp = $this->dt->format('Y-m-d H:i:s');
+        if ((int) ($micro = $this->dt->format('u'))) {
+            $stamp .= '.'.$micro;
         }
+        $stamp .= $this->dt->format('P T');
+
+        return $stamp;
     }
 }

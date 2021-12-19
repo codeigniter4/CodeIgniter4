@@ -25,16 +25,16 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\Representation\MicrotimeRepresentation;
-use Kint\Object\Representation\Representation;
 use Kint\Utils;
+use Kint\Zval\Representation\MicrotimeRepresentation;
+use Kint\Zval\Representation\Representation;
 
 class MicrotimePlugin extends Plugin implements TabPluginInterface
 {
     public function renderTab(Representation $r)
     {
         if (!($r instanceof MicrotimeRepresentation)) {
-            return false;
+            return;
         }
 
         $out = $r->getDateTime()->format('Y-m-d H:i:s.u');

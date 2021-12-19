@@ -25,11 +25,11 @@
 
 namespace Kint\Renderer\Text;
 
-use Kint\Object\BasicObject;
+use Kint\Zval\Value;
 
 class BlacklistPlugin extends Plugin
 {
-    public function render(BasicObject $o)
+    public function render(Value $o)
     {
         $out = '';
 

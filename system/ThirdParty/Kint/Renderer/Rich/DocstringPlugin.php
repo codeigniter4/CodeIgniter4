@@ -26,25 +26,25 @@
 namespace Kint\Renderer\Rich;
 
 use Kint\Kint;
-use Kint\Object\Representation\DocstringRepresentation;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\DocstringRepresentation;
+use Kint\Zval\Representation\Representation;
 
 class DocstringPlugin extends Plugin implements TabPluginInterface
 {
     public function renderTab(Representation $r)
     {
         if (!($r instanceof DocstringRepresentation)) {
-            return false;
+            return;
         }
 
-        $docstring = array();
+        $docstring = [];
         foreach (\explode("\n", $r->contents) as $line) {
             $docstring[] = \trim($line);
         }
 
         $docstring = \implode("\n", $docstring);
 
-        $location = array();
+        $location = [];
 
         if ($r->class) {
             $location[] = 'Inherited from '.$this->renderer->escape($r->class);

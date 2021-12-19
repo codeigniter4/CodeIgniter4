@@ -23,31 +23,32 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use DateTime;
+use Kint\Kint;
 
-class DateTimeObject extends InstanceObject
+class StreamValue extends ResourceValue
 {
-    public $dt;
+    public $stream_meta;
 
-    public $hints = array('object', 'datetime');
-
-    public function __construct(DateTime $dt)
+    public function __construct(array $meta = null)
     {
         parent::__construct();
-
-        $this->dt = clone $dt;
+        $this->stream_meta = $meta;
     }
 
     public function getValueShort()
     {
-        $stamp = $this->dt->format('Y-m-d H:i:s');
-        if ((int) ($micro = $this->dt->format('u'))) {
-            $stamp .= '.'.$micro;
+        if (empty($this->stream_meta['uri'])) {
+            return;
         }
-        $stamp .= $this->dt->format('P T');
 
-        return $stamp;
+        $uri = $this->stream_meta['uri'];
+
+        if (\stream_is_local($uri)) {
+            return Kint::shortenPath($uri);
+        }
+
+        return $uri;
     }
 }

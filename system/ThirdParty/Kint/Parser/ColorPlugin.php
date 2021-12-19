@@ -25,14 +25,14 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\ColorRepresentation;
+use Kint\Zval\Representation\ColorRepresentation;
+use Kint\Zval\Value;
 
 class ColorPlugin extends Plugin
 {
     public function getTypes()
     {
-        return array('string');
+        return ['string'];
     }
 
     public function getTriggers()
@@ -40,7 +40,7 @@ class ColorPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         if (\strlen($var) > 32) {
             return;

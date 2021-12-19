@@ -23,29 +23,29 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object\Representation;
+namespace Kint\Zval\Representation;
 
 use Kint\Utils;
 use SplFileInfo;
 
 class SplFileInfoRepresentation extends Representation
 {
-    public $perms;
+    public $perms = null;
     public $flags;
     public $path;
-    public $realpath;
-    public $linktarget;
+    public $realpath = null;
+    public $linktarget = null;
     public $size;
     public $is_dir = false;
     public $is_file = false;
     public $is_link = false;
-    public $owner;
-    public $group;
+    public $owner = null;
+    public $group = null;
     public $ctime;
     public $mtime;
     public $typename = 'Unknown file';
     public $typeflag = '-';
-    public $hints = array('fspath');
+    public $hints = ['fspath'];
 
     public function __construct(SplFileInfo $fileInfo)
     {
@@ -109,7 +109,7 @@ class SplFileInfoRepresentation extends Representation
                 break;
         }
 
-        $this->flags = array($this->typeflag);
+        $this->flags = [$this->typeflag];
 
         // User
         $this->flags[] = (($this->perms & 0400) ? 'r' : '-');

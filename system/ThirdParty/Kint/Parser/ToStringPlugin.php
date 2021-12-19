@@ -25,20 +25,20 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 use ReflectionClass;
 
 class ToStringPlugin extends Plugin
 {
-    public static $blacklist = array(
+    public static $blacklist = [
         'SimpleXMLElement',
         'SplFileObject',
-    );
+    ];
 
     public function getTypes()
     {
-        return array('object');
+        return ['object'];
     }
 
     public function getTriggers()
@@ -46,7 +46,7 @@ class ToStringPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         $reflection = new ReflectionClass($var);
         if (!$reflection->hasMethod('__toString')) {
