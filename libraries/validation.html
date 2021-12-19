@@ -819,11 +819,15 @@ or the value that was validated you can add the <code class="docutils literal no
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Supplied value ({value}) for {field} must have at least {param} characters.&#39;</span>
 </pre></div>
 </div>
-<p>On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
+<p>On a field with the human name Username and a rule of <code class="docutils literal notranslate"><span class="pre">min_length[6]</span></code> with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you get the error messages with <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> or <code class="docutils literal notranslate"><span class="pre">getError()</span></code>, the messages are not HTML escaped. If you use user input data like <code class="docutils literal notranslate"><span class="pre">({value})</span></code> to make the error message, it might contain HTML tags. If you don’t escape the messages before displying them, XSS attacks are possible.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you pass the last parameter the labeled style error messages will be ignored.</p>
+<p>When using label-style error messages, if you pass the second parameter to <code class="docutils literal notranslate"><span class="pre">setRules()</span></code>, it will be overwritten with the value of the first parameter.</p>
 </div>
 </section>
 <section id="translation-of-messages-and-validation-labels">
@@ -933,11 +937,11 @@ short alias they can be referenced by. If we were to add our example file from a
 </section>
 <section id="specifying-the-template">
 <h3><a class="toc-backref" href="#id31">Specifying the Template</a><a class="headerlink" href="#specifying-the-template" title="Permalink to this headline"></a></h3>
-<p>You can specify the template to use by passing it’s alias as the first parameter in <code class="docutils literal notranslate"><span class="pre">listErrors</span></code>:</p>
+<p>You can specify the template to use by passing it’s alias as the first parameter in <code class="docutils literal notranslate"><span class="pre">listErrors()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">(</span><span class="s1">&#39;my_list&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>When showing field-specific errors, you can pass the alias as the second parameter to the <code class="docutils literal notranslate"><span class="pre">showError</span></code> method,
+<p>When showing field-specific errors, you can pass the alias as the second parameter to the <code class="docutils literal notranslate"><span class="pre">showError()</span></code> method,
 right after the name of the field the error should belong to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">showError</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;my_single&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
