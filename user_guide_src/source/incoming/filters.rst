@@ -207,7 +207,7 @@ The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot
 InvalidChars
 =============
 
-This filter checks if user input data (``$_GET``, ``$_POST``, ``$_COOKIE``, ``php://input``) do not contain the following characters:
+This filter prohibits user input data (``$_GET``, ``$_POST``, ``$_COOKIE``, ``php://input``) from containing the following characters:
 
 - invalid UTF-8 characters
 - control characters except line break and tab code
