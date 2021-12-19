@@ -249,7 +249,7 @@ class CodeIgniter
          */
         $config = config('Config\Kint');
 
-        Kint::$max_depth           = $config->maxDepth;
+        Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
 
@@ -261,7 +261,7 @@ class CodeIgniter
         RichRenderer::$folder = $config->richFolder;
         RichRenderer::$sort   = $config->richSort;
         if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
-            RichRenderer::$object_plugins = $config->richObjectPlugins;
+            RichRenderer::$value_plugins = $config->richObjectPlugins;
         }
         if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins)) {
             RichRenderer::$tab_plugins = $config->richTabPlugins;
