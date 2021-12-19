@@ -344,11 +344,11 @@ is an object-oriented representation of the HTTP request. It provides everything
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>  <span class="c1">// GET, POST, PUT, etc</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>  <span class="c1">// get, post, put, etc</span>
 </pre></div>
 </div>
 <p>The request class does a lot of work in the background for you, that you never need to worry about.
-The <cite>isAJAX()</cite> and <cite>isSecure()</cite> methods check several different methods to determine the correct answer.</p>
+The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> and <code class="docutils literal notranslate"><span class="pre">isSecure()</span></code> methods check several different methods to determine the correct answer.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span></code> method depends on the <code class="docutils literal notranslate"><span class="pre">X-Requested-With</span></code> header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
@@ -386,7 +386,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 15, 2021.
+      <span class="lastupdated">Last updated on Dec 19, 2021.
       </span></p>
   </div>
 
