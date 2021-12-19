@@ -675,15 +675,19 @@ if (! function_exists('excerpt')) {
 
 if (!function_exists('str_contains')) {
     /**
-     * Determine if a given string contains in a given substring.
-     *
-     * @param  string  $haystack
-     * @param  string|string[]  $needles
-     * @return bool
-     */
+	 * str_contains.
+	 *
+	 * Determine if a given string contains in a given substring.
+	 *
+	 * @param  string  $haystack String to search the needle
+	 * @param  string  $needle	 Needle that will be check if it exist on a string.
+	 *
+	 * @return bool
+	 *
+	 */
     function str_contains(string $haystack, string $needle): bool
     {
-        if ($haystack !== '' && $needle !== '' && strpos($haystack, $needle) !== false) {
+        if ($needle !== '' && strpos($haystack, $needle) !== false) {
             return true;
         }
 
