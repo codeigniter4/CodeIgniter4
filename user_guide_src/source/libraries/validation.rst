@@ -527,10 +527,12 @@ or the value that was validated you can add the ``{field}``, ``{param}`` and ``{
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of min_length[6] with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
+On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”
 
-.. note:: If you pass the last parameter the labeled style error messages will be ignored.
+.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displying them, XSS attacks are possible.
+
+.. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
 Translation Of Messages And Validation Labels
 =============================================
@@ -592,7 +594,7 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     }
 
 Customizing Error Display
-************************************************
+*************************
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
 that determines how the errors are displayed. By default, they display with a class of ``errors`` on the wrapping div.
@@ -643,11 +645,11 @@ short alias they can be referenced by. If we were to add our example file from a
 Specifying the Template
 =======================
 
-You can specify the template to use by passing it's alias as the first parameter in ``listErrors``::
+You can specify the template to use by passing it's alias as the first parameter in ``listErrors()``::
 
     <?= $validation->listErrors('my_list') ?>
 
-When showing field-specific errors, you can pass the alias as the second parameter to the ``showError`` method,
+When showing field-specific errors, you can pass the alias as the second parameter to the ``showError()`` method,
 right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
