@@ -338,9 +338,9 @@ can instantiate it directly:</p>
 </pre></div>
 </div>
 <p>Then you can use any of the three standard rendering methods that it provides:
-<strong>render(viewpath, options, save)</strong>, <strong>setVar(name, value, context)</strong> and
-<strong>setData(data, context)</strong>. You will also be able to specify delimiters directly,
-through the <strong>setDelimiters(left, right)</strong> method.</p>
+<code class="docutils literal notranslate"><span class="pre">render(viewpath,</span> <span class="pre">options,</span> <span class="pre">save)</span></code>, <code class="docutils literal notranslate"><span class="pre">setVar(name,</span> <span class="pre">value,</span> <span class="pre">context)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setData(data,</span> <span class="pre">context)</span></code>. You will also be able to specify delimiters directly,
+through the <code class="docutils literal notranslate"><span class="pre">setDelimiters(left,</span> <span class="pre">right)</span></code> method.</p>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">Parser</span></code>, your view templates are processed only by the Parser
 itself, and not like a conventional view PHP script. PHP code in such a script
 is ignored by the parser, and only substitutions are performed.</p>
@@ -492,11 +492,11 @@ method:</p>
 </pre></div>
 </div>
 <p>If the array you are trying to loop over contains objects instead of arrays,
-the parser will first look for an <code class="docutils literal notranslate"><span class="pre">asArray</span></code> method on the object. If it exists,
+the parser will first look for an <code class="docutils literal notranslate"><span class="pre">asArray()</span></code> method on the object. If it exists,
 that method will be called and the resulting array is then looped over just as
-described above. If no <code class="docutils literal notranslate"><span class="pre">asArray</span></code> method exists, the object will be cast as
+described above. If no <code class="docutils literal notranslate"><span class="pre">asArray()</span></code> method exists, the object will be cast as
 an array and its public properties will be made available to the Parser.</p>
-<p>This is especially useful with the Entity classes, which has an asArray method
+<p>This is especially useful with the Entity classes, which has an <code class="docutils literal notranslate"><span class="pre">asArray()</span></code> method
 that returns all public and protected properties (minus the _options property) and
 makes them available to the Parser.</p>
 </section>
@@ -530,8 +530,8 @@ the variable pair loop for that variable.</p>
 <span class="p">{</span><span class="o">/</span><span class="nx">blog_entry</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>If you would like the other pseudo-variables accessible inside the “blog_entry”
-scope, then make sure that the “cascadeData” option is set to true.</p>
+<p>If you would like the other pseudo-variables accessible inside the <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code>
+scope, then make sure that the <code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> option is set to true.</p>
 </section>
 <section id="comments">
 <h3><a class="toc-backref" href="#id8">Comments</a><a class="headerlink" href="#comments" title="Permalink to this headline"></a></h3>
@@ -616,17 +616,17 @@ of the comparison operators you would normally, like <code class="docutils liter
 <span class="p">{</span><span class="k">endif</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In the background, conditionals are parsed using an <strong>eval()</strong>, so you must ensure that you take
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In the background, conditionals are parsed using an <code class="docutils literal notranslate"><span class="pre">eval()</span></code>, so you must ensure that you take
 care with the user data that is used within conditionals, or you could open your application up to security risks.</p>
 </div>
 </section>
 <section id="escaping-data">
 <h3><a class="toc-backref" href="#id12">Escaping Data</a><a class="headerlink" href="#escaping-data" title="Permalink to this headline"></a></h3>
-<p>By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">esc</span></code> method
-supports several different contexts, like general <strong>html</strong>, when it’s in an HTML <strong>attr</strong>, in <strong>css</strong>, etc. If nothing
-else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the <strong>esc</strong>
+<p>By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">esc()</span></code> method
+supports several different contexts, like general <code class="docutils literal notranslate"><span class="pre">html</span></code>, when it’s in an HTML <code class="docutils literal notranslate"><span class="pre">attr</span></code>, in <code class="docutils literal notranslate"><span class="pre">css</span></code>, etc. If nothing
+else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the <code class="docutils literal notranslate"><span class="pre">esc()</span></code>
 filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="nx">user_styles</span> <span class="o">|</span> <span class="nx">esc</span><span class="p">(</span><span class="nx">css</span><span class="p">)</span> <span class="p">}</span>
 <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;{ user_link | esc(attr) }&quot;</span><span class="o">&gt;</span><span class="p">{</span> <span class="nx">title</span> <span class="p">}</span><span class="o">&lt;/</span><span class="nx">a</span><span class="o">&gt;</span>
@@ -663,178 +663,140 @@ left to right:</p>
 <p>The following filters are available when using the parser:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 16%" />
-<col style="width: 46%" />
-<col style="width: 27%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
+<col style="width: 45%" />
+<col style="width: 29%" />
 </colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Filter</p></th>
+<th class="head"><p>Arguments</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td rowspan="2"><p><strong>Filter</strong></p></td>
-<td rowspan="2"><p><strong>Arguments</strong></p></td>
-<td rowspan="2"><p><strong>Description</strong></p></td>
-<td rowspan="2"><p><strong>Example</strong></p></td>
+<tr class="row-even"><td><p>abs</p></td>
+<td></td>
+<td><p>Displays the absolute value of a number.</p></td>
+<td><p>{ v|abs }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2"><p>abs</p></td>
-<td rowspan="2"></td>
-<td rowspan="2"><p>Displays the absolute value of a number.</p></td>
-<td rowspan="2"><p>{ v|abs }</p></td>
-</tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>capitalize</p></td>
-<td rowspan="3"></td>
-<td rowspan="3"><p>Displays the string in sentence case: all lowercase
+<tr class="row-odd"><td><p>capitalize</p></td>
+<td></td>
+<td><p>Displays the string in sentence case: all lowercase
 with firstletter capitalized.</p></td>
-<td rowspan="3"><p>{ v|capitalize}</p></td>
+<td><p>{ v|capitalize}</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>date</p></td>
-<td rowspan="2"><p>format (Y-m-d)</p></td>
-<td rowspan="2"><p>A PHP <strong>date</strong>-compatible formatting string.</p></td>
-<td rowspan="2"><p>{ v|date(Y-m-d) }</p></td>
+<tr class="row-even"><td><p>date</p></td>
+<td><p>format (Y-m-d)</p></td>
+<td><p>A PHP <strong>date</strong>-compatible formatting string.</p></td>
+<td><p>{ v|date(Y-m-d) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3"><p>date_modify</p></td>
-<td rowspan="3"><p>value to add
+<tr class="row-odd"><td><p>date_modify</p></td>
+<td><p>value to add
 / subtract</p></td>
-<td rowspan="3"><p>A <strong>strtotime</strong> compatible string to modify the date,
+<td><p>A <strong>strtotime</strong> compatible string to modify the date,
 like <code class="docutils literal notranslate"><span class="pre">+5</span> <span class="pre">day</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span> <span class="pre">week</span></code>.</p></td>
-<td rowspan="3"><p>{ v|date_modify(+1 day) }</p></td>
+<td><p>{ v|date_modify(+1 day) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>default</p></td>
-<td rowspan="3"><p>default value</p></td>
-<td rowspan="3"><p>Displays the default value if the variable is empty or
+<tr class="row-even"><td><p>default</p></td>
+<td><p>default value</p></td>
+<td><p>Displays the default value if the variable is empty or
 undefined.</p></td>
-<td rowspan="3"><p>{ v|default(just in case) }</p></td>
+<td><p>{ v|default(just in case) }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>esc</p></td>
-<td rowspan="2"><p>html, attr, css, js</p></td>
-<td rowspan="2"><p>Specifies the context to escape the data.</p></td>
-<td rowspan="2"><p>{ v|esc(attr) }</p></td>
+<tr class="row-odd"><td><p>esc</p></td>
+<td><p>html, attr,
+css, js</p></td>
+<td><p>Specifies the context to escape the data.</p></td>
+<td><p>{ v|esc(attr) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3"><p>excerpt</p></td>
-<td rowspan="3"><p>phrase, radius</p></td>
-<td rowspan="3"><p>Returns the text within a radius of words from a given
+<tr class="row-even"><td><p>excerpt</p></td>
+<td><p>phrase, radius</p></td>
+<td><p>Returns the text within a radius of words from a given
 phrase. Same as <strong>excerpt</strong> helper function.</p></td>
-<td rowspan="3"><p>{ v|excerpt(green giant, 20) }</p></td>
+<td><p>{ v|excerpt(green giant, 20) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>highlight</p></td>
-<td rowspan="3"><p>phrase</p></td>
-<td rowspan="3"><p>Highlights a given phrase within the text using
+<tr class="row-odd"><td><p>highlight</p></td>
+<td><p>phrase</p></td>
+<td><p>Highlights a given phrase within the text using
 ‘&lt;mark&gt;&lt;/mark&gt;’ tags.</p></td>
-<td rowspan="3"><p>{ v|highlight(view parser) }</p></td>
+<td><p>{ v|highlight(view parser) }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>highlight_code</p></td>
-<td rowspan="2"></td>
-<td rowspan="2"><p>Highlights code samples with HTML/CSS.</p></td>
-<td rowspan="2"><p>{ v|highlight_code }</p></td>
+<tr class="row-even"><td><p>highlight_code</p></td>
+<td></td>
+<td><p>Highlights code samples with HTML/CSS.</p></td>
+<td><p>{ v|highlight_code }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>limit_chars</p></td>
-<td rowspan="2"><p>limit</p></td>
-<td rowspan="2"><p>Limits the number of characters to $limit.</p></td>
-<td rowspan="2"><p>{ v|limit_chars(100) }</p></td>
+<tr class="row-odd"><td><p>limit_chars</p></td>
+<td><p>limit</p></td>
+<td><p>Limits the number of characters to $limit.</p></td>
+<td><p>{ v|limit_chars(100) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>limit_words</p></td>
-<td rowspan="2"><p>limit</p></td>
-<td rowspan="2"><p>Limits the number of words to $limit.</p></td>
-<td rowspan="2"><p>{ v|limit_words(20) }</p></td>
+<tr class="row-even"><td><p>limit_words</p></td>
+<td><p>limit</p></td>
+<td><p>Limits the number of words to $limit.</p></td>
+<td><p>{ v|limit_words(20) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3"><p>local_currency</p></td>
-<td rowspan="3"><p>currency, locale</p></td>
-<td rowspan="3"><p>Displays a localized version of a currency. “currency”
+<tr class="row-odd"><td><p>local_currency</p></td>
+<td><p>currency, locale</p></td>
+<td><p>Displays a localized version of a currency. “currency”
 valueis any 3-letter ISO 4217 currency code.</p></td>
-<td rowspan="3"><p>{ v|local_currency(EUR,en_US) }</p></td>
+<td><p>{ v|local_currency(EUR,en_US) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="4"><p>local_number</p></td>
-<td rowspan="4"><p>type, precision,
+<tr class="row-even"><td><p>local_number</p></td>
+<td><p>type, precision,
 locale</p></td>
-<td rowspan="4"><p>Displays a localized version of a number. “type” can be
+<td><p>Displays a localized version of a number. “type” can be
 one of: decimal, currency, percent, scientific, spellout,
 ordinal, duration.</p></td>
-<td rowspan="4"><p>{ v|local_number(decimal,2,en_US) }</p></td>
+<td><p>{ v|local_number(decimal,2,en_US) }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2"><p>lower</p></td>
-<td rowspan="2"></td>
-<td rowspan="2"><p>Converts a string to lowercase.</p></td>
-<td rowspan="2"><p>{ v|lower }</p></td>
+<tr class="row-odd"><td><p>lower</p></td>
+<td></td>
+<td><p>Converts a string to lowercase.</p></td>
+<td><p>{ v|lower }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="2"><p>nl2br</p></td>
-<td rowspan="2"></td>
-<td rowspan="2"><p>Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</p></td>
-<td rowspan="2"><p>{ v|nl2br }</p></td>
+<tr class="row-even"><td><p>nl2br</p></td>
+<td></td>
+<td><p>Replaces all newline characters (n) to an HTML &lt;br/&gt; tag.</p></td>
+<td><p>{ v|nl2br }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>number_format</p></td>
-<td rowspan="3"><p>places</p></td>
-<td rowspan="3"><p>Wraps PHP <strong>number_format</strong> function for use within the
+<tr class="row-odd"><td><p>number_format</p></td>
+<td><p>places</p></td>
+<td><p>Wraps PHP <strong>number_format</strong> function for use within the
 parser.</p></td>
-<td rowspan="3"><p>{ v|number_format(3) }</p></td>
+<td><p>{ v|number_format(3) }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3"><p>prose</p></td>
-<td rowspan="3"></td>
-<td rowspan="3"><p>Takes a body of text and uses the <strong>auto_typography()</strong>
+<tr class="row-even"><td><p>prose</p></td>
+<td></td>
+<td><p>Takes a body of text and uses the <strong>auto_typography()</strong>
 method to turn it into prettier, easier-to-read, prose.</p></td>
-<td rowspan="3"><p>{ v|prose }</p></td>
+<td><p>{ v|prose }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>round</p></td>
-<td rowspan="3"><p>places, type</p></td>
-<td rowspan="3"><p>Rounds a number to the specified places. Types of <strong>ceil</strong>
+<tr class="row-odd"><td><p>round</p></td>
+<td><p>places, type</p></td>
+<td><p>Rounds a number to the specified places. Types of <strong>ceil</strong>
 and <strong>floor</strong> can be passed to use those functions instead.</p></td>
-<td rowspan="3"><p>{ v|round(3) } { v|round(ceil) }</p></td>
+<td><p>{ v|round(3) } { v|round(ceil) }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="3"><p>strip_tags</p></td>
-<td rowspan="3"><p>allowed chars</p></td>
-<td rowspan="3"><p>Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
+<tr class="row-even"><td><p>strip_tags</p></td>
+<td><p>allowed chars</p></td>
+<td><p>Wraps PHP <strong>strip_tags</strong>. Can accept a string of allowed
 tags.</p></td>
-<td rowspan="3"><p>{ v|strip_tags(&lt;br&gt;) }</p></td>
+<td><p>{ v|strip_tags(&lt;br&gt;) }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"><td rowspan="3"><p>title</p></td>
-<td rowspan="3"></td>
-<td rowspan="3"><p>Displays a “title case” version of the string, with all
+<tr class="row-odd"><td><p>title</p></td>
+<td></td>
+<td><p>Displays a “title case” version of the string, with all
 lowercase, and each word capitalized.</p></td>
-<td rowspan="3"><p>{ v|title }</p></td>
+<td><p>{ v|title }</p></td>
 </tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"><p>upper</p></td>
-<td rowspan="2"></td>
-<td rowspan="2"><p>Displays the string in all uppercase.</p></td>
-<td rowspan="2"><p>{ v|upper }</p></td>
+<tr class="row-even"><td><p>upper</p></td>
+<td></td>
+<td><p>Displays the string in all uppercase.</p></td>
+<td><p>{ v|upper }</p></td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"><td rowspan="2"></td>
-<td rowspan="2"></td>
-<td rowspan="2"></td>
-<td rowspan="2"></td>
-</tr>
-<tr class="row-odd"></tr>
 </tbody>
 </table>
 <p>See <a class="reference external" href="https://www.php.net/manual/en/numberformatter.create.php">PHP’s NumberFormatter</a> for details relevant to the
@@ -892,10 +854,10 @@ key/value pairs:</p>
 <p>The following plugins are available when using the parser:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 10%" />
-<col style="width: 13%" />
+<col style="width: 12%" />
+<col style="width: 17%" />
+<col style="width: 29%" />
 <col style="width: 42%" />
-<col style="width: 34%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Plugin</p></th>
@@ -937,7 +899,8 @@ key/value pairs:</p>
 </tr>
 <tr class="row-even"><td><p>validation_errors</p></td>
 <td><p>fieldname(optional)</p></td>
-<td><p>Returns either error string for the field (if specified) or all validation errors.</p></td>
+<td><p>Returns either error string for the field
+(if specified) or all validation errors.</p></td>
 <td><p>{+ validation_errors +} , {+ validation_errors field=”email” +}</p></td>
 </tr>
 <tr class="row-odd"><td><p>route</p></td>
