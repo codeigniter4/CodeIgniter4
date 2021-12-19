@@ -357,6 +357,6 @@ final class TextHelperTest extends CIUnitTestCase
 
         $needle1 = 'weak';
         $string1 = 'I love Codeigniter';
-        $this->assertFalse(str_contains($string1, $needle1));
+        $this->assertStringNotContainsString($needle1, $string1);
     }
 }
