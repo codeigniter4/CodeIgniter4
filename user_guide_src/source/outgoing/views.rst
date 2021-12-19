@@ -113,6 +113,8 @@ example, you could load the **blog_view.php** file from **example/blog/Views** b
 
     echo view('Example\Blog\Views\blog_view');
 
+.. _caching-views:
+
 Caching Views
 =============
 

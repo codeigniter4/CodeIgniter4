@@ -179,9 +179,10 @@ Service Accessors
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
 
-    Currently, only two options are available for use within the ``$options`` array:
+    Currently, these options are available for use within the ``$options`` array:
 
     - ``saveData`` specifies that data will persistent between multiple calls to ``view()`` within the same request. If you do not want the data to be persisted, specify false.
+    - ``cache`` specifies the number of seconds to cache the view for. See :ref:`caching-views` for the details.
     - ``debug`` can be set to false to disable the addition of debug code for :ref:`Debug Toolbar <the-debug-toolbar>`.
 
     The ``$option`` array is provided primarily to facilitate third-party integrations with
