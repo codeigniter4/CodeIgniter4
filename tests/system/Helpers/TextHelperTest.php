@@ -353,7 +353,7 @@ final class TextHelperTest extends CIUnitTestCase
     {
         $needle = 'codeigniter';
         $string = 'codeigniter is small but powerful php framework';
-        $this->assertTrue(str_contains($string, $needle));
+        $this->assertStringContainsString($needle, $string);
 
         $needle1 = 'weak';
         $string1 = 'I love Codeigniter';
