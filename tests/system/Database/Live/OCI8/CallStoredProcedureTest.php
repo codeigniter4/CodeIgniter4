@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\Live\OCI8;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -39,17 +38,17 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
         $this->db->storedProcedure('calculator.plus', [
             [
-                'name' => ':left',
+                'name'  => ':left',
                 'value' => 2,
             ],
             [
-                'name' => ':right',
+                'name'  => ':right',
                 'value' => 5,
             ],
             [
-                'name' => ':output',
+                'name'  => ':output',
                 'value' => &$result,
-            ]
+            ],
 
         ]);
 
@@ -62,17 +61,17 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 
         $this->db->storedProcedure('plus', [
             [
-                'name' => ':left',
+                'name'  => ':left',
                 'value' => 2,
             ],
             [
-                'name' => ':right',
+                'name'  => ':right',
                 'value' => 5,
             ],
             [
-                'name' => ':output',
+                'name'  => ':output',
                 'value' => &$result,
-            ]
+            ],
 
         ]);
 
