@@ -23,52 +23,57 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use Kint\Object\Representation\Representation;
-use Kint\Object\Representation\SourceRepresentation;
+use InvalidArgumentException;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Representation\SourceRepresentation;
 use ReflectionFunction;
 use ReflectionMethod;
 
-class TraceFrameObject extends BasicObject
+class TraceFrameValue extends Value
 {
     public $trace;
-    public $hints = array('trace_frame');
+    public $hints = ['trace_frame'];
 
-    public function __construct(BasicObject $base, array $raw_frame)
+    public function __construct(Value $base, array $raw_frame)
     {
         parent::__construct();
 
         $this->transplant($base);
 
-        $this->trace = array(
-            'function' => isset($raw_frame['function']) ? $raw_frame['function'] : null,
+        if (!isset($this->value)) {
+            throw new InvalidArgumentException('Tried to create TraceFrameValue from Value with no value representation');
+        }
+
+        $this->trace = [
+            'function' => $raw_frame['function'],
             'line' => isset($raw_frame['line']) ? $raw_frame['line'] : null,
             'file' => isset($raw_frame['file']) ? $raw_frame['file'] : null,
             'class' => isset($raw_frame['class']) ? $raw_frame['class'] : null,
             'type' => isset($raw_frame['type']) ? $raw_frame['type'] : null,
             'object' => null,
             'args' => null,
-        );
+        ];
 
         if ($this->trace['class'] && \method_exists($this->trace['class'], $this->trace['function'])) {
             $func = new ReflectionMethod($this->trace['class'], $this->trace['function']);
-            $this->trace['function'] = new MethodObject($func);
+            $this->trace['function'] = new MethodValue($func);
         } elseif (!$this->trace['class'] && \function_exists($this->trace['function'])) {
             $func = new ReflectionFunction($this->trace['function']);
-            $this->trace['function'] = new MethodObject($func);
+            $this->trace['function'] = new MethodValue($func);
         }
 
         foreach ($this->value->contents as $frame_prop) {
             if ('object' === $frame_prop->name) {
                 $this->trace['object'] = $frame_prop;
                 $this->trace['object']->name = null;
-                $this->trace['object']->operator = BasicObject::OPERATOR_NONE;
+                $this->trace['object']->operator = Value::OPERATOR_NONE;
             }
             if ('args' === $frame_prop->name) {
                 $this->trace['args'] = $frame_prop->value->contents;
 
-                if ($this->trace['function'] instanceof MethodObject) {
+                if ($this->trace['function'] instanceof MethodValue) {
                     foreach (\array_values($this->trace['function']->parameters) as $param) {
                         if (isset($this->trace['args'][$param->position])) {
                             $this->trace['args'][$param->position]->name = $param->getName();

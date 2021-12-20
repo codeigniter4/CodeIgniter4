@@ -23,49 +23,22 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object\Representation;
+namespace Kint\Renderer\Text;
 
-class Representation
+use Kint\Zval\Value;
+
+class ArrayLimitPlugin extends Plugin
 {
-    public $label;
-    public $implicit_label = false;
-    public $hints = array();
-    public $contents = array();
-
-    protected $name;
-
-    public function __construct($label, $name = null)
+    public function render(Value $o)
     {
-        $this->label = $label;
+        $out = '';
 
-        if (null === $name) {
-            $name = $label;
+        if (0 == $o->depth) {
+            $out .= $this->renderer->colorTitle($this->renderer->renderTitle($o)).PHP_EOL;
         }
 
-        $this->setName($name);
-    }
+        $out .= $this->renderer->renderHeader($o).' '.$this->renderer->colorValue('ARRAY LIMIT').PHP_EOL;
 
-    public function getLabel()
-    {
-        if (\is_array($this->contents) && \count($this->contents) > 1) {
-            return $this->label.' ('.\count($this->contents).')';
-        }
-
-        return $this->label;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = \preg_replace('/[^a-z0-9]+/', '_', \strtolower($name));
-    }
-
-    public function labelIsImplicit()
-    {
-        return $this->implicit_label;
+        return $out;
     }
 }

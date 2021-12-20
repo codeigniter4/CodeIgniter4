@@ -23,56 +23,49 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval\Representation;
 
-class InstanceObject extends BasicObject
+class Representation
 {
-    public $type = 'object';
-    public $classname;
-    public $hash;
-    public $filename;
-    public $startline;
-    public $hints = array('object');
+    public $label;
+    public $implicit_label = false;
+    public $hints = [];
+    public $contents = [];
 
-    public function getType()
+    protected $name;
+
+    public function __construct($label, $name = null)
     {
-        return $this->classname;
+        $this->label = $label;
+
+        if (null === $name) {
+            $name = $label;
+        }
+
+        $this->setName($name);
     }
 
-    public function transplant(BasicObject $old)
+    public function getLabel()
     {
-        parent::transplant($old);
-
-        if ($old instanceof self) {
-            $this->classname = $old->classname;
-            $this->hash = $old->hash;
-            $this->filename = $old->filename;
-            $this->startline = $old->startline;
+        if (\is_array($this->contents) && \count($this->contents) > 1) {
+            return $this->label.' ('.\count($this->contents).')';
         }
+
+        return $this->label;
     }
 
-    public static function sortByHierarchy($a, $b)
+    public function getName()
     {
-        if (\is_string($a) && \is_string($b)) {
-            $aclass = $a;
-            $bclass = $b;
-        } elseif (!($a instanceof BasicObject) || !($b instanceof BasicObject)) {
-            return 0;
-        } elseif ($a instanceof self && $b instanceof self) {
-            $aclass = $a->classname;
-            $bclass = $b->classname;
-        } else {
-            return 0;
-        }
+        return $this->name;
+    }
 
-        if (\is_subclass_of($aclass, $bclass)) {
-            return -1;
-        }
+    public function setName($name)
+    {
+        $this->name = \preg_replace('/[^a-z0-9]+/', '_', \strtolower($name));
+    }
 
-        if (\is_subclass_of($bclass, $aclass)) {
-            return 1;
-        }
-
-        return 0;
+    public function labelIsImplicit()
+    {
+        return $this->implicit_label;
     }
 }

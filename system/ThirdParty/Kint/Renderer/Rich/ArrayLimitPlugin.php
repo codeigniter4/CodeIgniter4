@@ -23,44 +23,14 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Parser;
+namespace Kint\Renderer\Rich;
 
-use InvalidArgumentException;
 use Kint\Zval\Value;
 
-class ProxyPlugin extends Plugin
+class ArrayLimitPlugin extends Plugin implements ValuePluginInterface
 {
-    protected $types;
-    protected $triggers;
-    protected $callback;
-
-    public function __construct(array $types, $triggers, $callback)
+    public function renderValue(Value $o)
     {
-        if (!\is_int($triggers)) {
-            throw new InvalidArgumentException('ProxyPlugin triggers must be an int bitmask');
-        }
-
-        if (!\is_callable($callback)) {
-            throw new InvalidArgumentException('ProxyPlugin callback must be callable');
-        }
-
-        $this->types = $types;
-        $this->triggers = $triggers;
-        $this->callback = $callback;
-    }
-
-    public function getTypes()
-    {
-        return $this->types;
-    }
-
-    public function getTriggers()
-    {
-        return $this->triggers;
-    }
-
-    public function parse(&$var, Value &$o, $trigger)
-    {
-        return \call_user_func_array($this->callback, [&$var, &$o, $trigger, $this->parser]);
+        return '<dl>'.$this->renderLockedHeader($o, '<var>Array Limit</var>').'</dl>';
     }
 }

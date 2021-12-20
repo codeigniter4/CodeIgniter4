@@ -24,6 +24,7 @@
  */
 
 use Kint\Kint;
+use Kint\Renderer\CliRenderer;
 
 if (!\function_exists('d')) {
     /**
@@ -35,7 +36,7 @@ if (!\function_exists('d')) {
     {
         $args = \func_get_args();
 
-        return \call_user_func_array(array('Kint', 'dump'), $args);
+        return \call_user_func_array(['Kint', 'dump'], $args);
     }
 
     Kint::$aliases[] = 'd';
@@ -59,23 +60,28 @@ if (!\function_exists('s')) {
      */
     function s()
     {
-        if (!Kint::$enabled_mode) {
+        if (false === Kint::$enabled_mode) {
             return 0;
         }
 
-        $stash = Kint::$enabled_mode;
+        $kstash = Kint::$enabled_mode;
+        $cstash = CliRenderer::$cli_colors;
 
         if (Kint::MODE_TEXT !== Kint::$enabled_mode) {
             Kint::$enabled_mode = Kint::MODE_PLAIN;
+
             if (PHP_SAPI === 'cli' && true === Kint::$cli_detection) {
                 Kint::$enabled_mode = Kint::$mode_default_cli;
             }
         }
 
-        $args = \func_get_args();
-        $out = \call_user_func_array(array('Kint', 'dump'), $args);
+        CliRenderer::$cli_colors = false;
 
-        Kint::$enabled_mode = $stash;
+        $args = \func_get_args();
+        $out = \call_user_func_array(['Kint', 'dump'], $args);
+
+        Kint::$enabled_mode = $kstash;
+        CliRenderer::$cli_colors = $cstash;
 
         return $out;
     }

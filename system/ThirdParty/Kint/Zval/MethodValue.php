@@ -23,27 +23,27 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use Kint\Object\Representation\DocstringRepresentation;
 use Kint\Utils;
+use Kint\Zval\Representation\DocstringRepresentation;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 
-class MethodObject extends BasicObject
+class MethodValue extends Value
 {
     public $type = 'method';
     public $filename;
     public $startline;
     public $endline;
-    public $parameters = array();
+    public $parameters = [];
     public $abstract;
     public $final;
     public $internal;
     public $docstring;
     public $returntype;
     public $return_reference = false;
-    public $hints = array('callable', 'method');
+    public $hints = ['callable', 'method'];
     public $showparams = true;
 
     private $paramcache;
@@ -61,7 +61,7 @@ class MethodObject extends BasicObject
         $this->return_reference = $method->returnsReference();
 
         foreach ($method->getParameters() as $param) {
-            $this->parameters[] = new ParameterObject($param);
+            $this->parameters[] = new ParameterValue($param);
         }
 
         if (KINT_PHP70) {
@@ -73,15 +73,15 @@ class MethodObject extends BasicObject
 
         if ($method instanceof ReflectionMethod) {
             $this->static = $method->isStatic();
-            $this->operator = $this->static ? BasicObject::OPERATOR_STATIC : BasicObject::OPERATOR_OBJECT;
+            $this->operator = $this->static ? Value::OPERATOR_STATIC : Value::OPERATOR_OBJECT;
             $this->abstract = $method->isAbstract();
             $this->final = $method->isFinal();
             $this->owner_class = $method->getDeclaringClass()->name;
-            $this->access = BasicObject::ACCESS_PUBLIC;
+            $this->access = Value::ACCESS_PUBLIC;
             if ($method->isProtected()) {
-                $this->access = BasicObject::ACCESS_PROTECTED;
+                $this->access = Value::ACCESS_PROTECTED;
             } elseif ($method->isPrivate()) {
-                $this->access = BasicObject::ACCESS_PRIVATE;
+                $this->access = Value::ACCESS_PRIVATE;
             }
         }
 
@@ -100,9 +100,9 @@ class MethodObject extends BasicObject
         $this->value = $docstring;
     }
 
-    public function setAccessPathFrom(InstanceObject $parent)
+    public function setAccessPathFrom(InstanceValue $parent)
     {
-        static $magic = array(
+        static $magic = [
             '__call' => true,
             '__callstatic' => true,
             '__clone' => true,
@@ -118,7 +118,7 @@ class MethodObject extends BasicObject
             '__tostring' => true,
             '__unset' => true,
             '__wakeup' => true,
-        );
+        ];
 
         $name = \strtolower($this->name);
 
@@ -172,12 +172,12 @@ class MethodObject extends BasicObject
 
     public function getModifiers()
     {
-        $mods = array(
+        $mods = [
             $this->abstract ? 'abstract' : null,
             $this->final ? 'final' : null,
             $this->getAccess(),
             $this->static ? 'static' : null,
-        );
+        ];
 
         $out = '';
 
@@ -209,7 +209,7 @@ class MethodObject extends BasicObject
             return $this->paramcache;
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->parameters as $p) {
             $type = $p->getType();

@@ -25,12 +25,12 @@
 
 namespace Kint\Renderer\Text;
 
-use Kint\Object\BasicObject;
-use Kint\Object\MethodObject;
+use Kint\Zval\MethodValue;
+use Kint\Zval\Value;
 
 class TracePlugin extends Plugin
 {
-    public function render(BasicObject $o)
+    public function render(Value $o)
     {
         $out = '';
 
@@ -66,7 +66,7 @@ class TracePlugin extends Plugin
 
             if (\is_string($frame->trace['function'])) {
                 $framedesc .= $this->renderer->escape($frame->trace['function']).'(...)';
-            } elseif ($frame->trace['function'] instanceof MethodObject) {
+            } elseif ($frame->trace['function'] instanceof MethodValue) {
                 $framedesc .= $this->renderer->escape($frame->trace['function']->getName());
                 $framedesc .= '('.$this->renderer->escape($frame->trace['function']->getParams()).')';
             }

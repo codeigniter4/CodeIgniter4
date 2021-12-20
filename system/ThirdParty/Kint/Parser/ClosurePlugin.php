@@ -26,17 +26,17 @@
 namespace Kint\Parser;
 
 use Closure;
-use Kint\Object\BasicObject;
-use Kint\Object\ClosureObject;
-use Kint\Object\ParameterObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\ClosureValue;
+use Kint\Zval\ParameterValue;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 use ReflectionFunction;
 
 class ClosurePlugin extends Plugin
 {
     public function getTypes()
     {
-        return array('object');
+        return ['object'];
     }
 
     public function getTriggers()
@@ -44,13 +44,13 @@ class ClosurePlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         if (!$var instanceof Closure) {
             return;
         }
 
-        $object = new ClosureObject();
+        $object = new ClosureValue();
         $object->transplant($o);
         $o = $object;
         $object->removeRepresentation('properties');
@@ -61,24 +61,24 @@ class ClosurePlugin extends Plugin
         $o->startline = $closure->getStartLine();
 
         foreach ($closure->getParameters() as $param) {
-            $o->parameters[] = new ParameterObject($param);
+            $o->parameters[] = new ParameterValue($param);
         }
 
         $p = new Representation('Parameters');
         $p->contents = &$o->parameters;
         $o->addRepresentation($p, 0);
 
-        $statics = array();
+        $statics = [];
 
-        if (\method_exists($closure, 'getClosureThis') && $v = $closure->getClosureThis()) {
-            $statics = array('this' => $v);
+        if ($v = $closure->getClosureThis()) {
+            $statics = ['this' => $v];
         }
 
         if (\count($statics = $statics + $closure->getStaticVariables())) {
-            $statics_parsed = array();
+            $statics_parsed = [];
 
             foreach ($statics as $name => &$static) {
-                $obj = BasicObject::blank('$'.$name);
+                $obj = Value::blank('$'.$name);
                 $obj->depth = $o->depth + 1;
                 $statics_parsed[$name] = $this->parser->parse($static, $obj);
                 if (null === $statics_parsed[$name]->value) {

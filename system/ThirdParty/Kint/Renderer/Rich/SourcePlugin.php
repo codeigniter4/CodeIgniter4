@@ -25,15 +25,15 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\Representation\Representation;
-use Kint\Object\Representation\SourceRepresentation;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Representation\SourceRepresentation;
 
 class SourcePlugin extends Plugin implements TabPluginInterface
 {
     public function renderTab(Representation $r)
     {
         if (!($r instanceof SourceRepresentation) || empty($r->source)) {
-            return false;
+            return;
         }
 
         $source = $r->source;

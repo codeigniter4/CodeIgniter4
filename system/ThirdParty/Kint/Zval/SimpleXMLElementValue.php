@@ -23,44 +23,26 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Parser;
+namespace Kint\Zval;
 
-use InvalidArgumentException;
-use Kint\Zval\Value;
-
-class ProxyPlugin extends Plugin
+class SimpleXMLElementValue extends InstanceValue
 {
-    protected $types;
-    protected $triggers;
-    protected $callback;
+    public $hints = ['object', 'simplexml_element'];
 
-    public function __construct(array $types, $triggers, $callback)
+    protected $is_string_value = false;
+
+    /**
+     * @param bool $is_string_value
+     */
+    public function setIsStringValue($is_string_value)
     {
-        if (!\is_int($triggers)) {
-            throw new InvalidArgumentException('ProxyPlugin triggers must be an int bitmask');
+        $this->is_string_value = $is_string_value;
+    }
+
+    public function getValueShort()
+    {
+        if ($this->is_string_value && ($rep = $this->value) && 'contents' === $rep->getName() && 'string' === \gettype($rep->contents)) {
+            return '"'.$rep->contents.'"';
         }
-
-        if (!\is_callable($callback)) {
-            throw new InvalidArgumentException('ProxyPlugin callback must be callable');
-        }
-
-        $this->types = $types;
-        $this->triggers = $triggers;
-        $this->callback = $callback;
-    }
-
-    public function getTypes()
-    {
-        return $this->types;
-    }
-
-    public function getTriggers()
-    {
-        return $this->triggers;
-    }
-
-    public function parse(&$var, Value &$o, $trigger)
-    {
-        return \call_user_func_array($this->callback, [&$var, &$o, $trigger, $this->parser]);
     }
 }

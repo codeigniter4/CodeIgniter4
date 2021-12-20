@@ -25,8 +25,8 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 use Traversable;
 
 class IteratorPlugin extends Plugin
@@ -40,17 +40,17 @@ class IteratorPlugin extends Plugin
      *
      * @var array
      */
-    public static $blacklist = array(
+    public static $blacklist = [
         'DOMNamedNodeMap',
         'DOMNodeList',
         'mysqli_result',
         'PDOStatement',
         'SplFileObject',
-    );
+    ];
 
     public function getTypes()
     {
-        return array('object');
+        return ['object'];
     }
 
     public function getTriggers()
@@ -58,7 +58,7 @@ class IteratorPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         if (!$var instanceof Traversable) {
             return;
@@ -66,14 +66,14 @@ class IteratorPlugin extends Plugin
 
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                $b = new BasicObject();
+                $b = new Value();
                 $b->name = $class.' Iterator Contents';
                 $b->access_path = 'iterator_to_array('.$o->access_path.', true)';
                 $b->depth = $o->depth + 1;
                 $b->hints[] = 'blacklist';
 
                 $r = new Representation('Iterator');
-                $r->contents = array($b);
+                $r->contents = [$b];
 
                 $o->addRepresentation($r);
 
@@ -81,14 +81,9 @@ class IteratorPlugin extends Plugin
             }
         }
 
-        /** @var array|false */
         $data = \iterator_to_array($var);
 
-        if (false === $data) {
-            return;
-        }
-
-        $base_obj = new BasicObject();
+        $base_obj = new Value();
         $base_obj->depth = $o->depth;
 
         if ($o->access_path) {
@@ -101,7 +96,7 @@ class IteratorPlugin extends Plugin
 
         $primary = $o->getRepresentations();
         $primary = \reset($primary);
-        if ($primary && $primary === $o->value && $primary->contents === array()) {
+        if ($primary && $primary === $o->value && [] === $primary->contents) {
             $o->addRepresentation($r, 0);
         } else {
             $o->addRepresentation($r);

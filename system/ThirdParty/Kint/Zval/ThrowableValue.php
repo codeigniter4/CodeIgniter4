@@ -23,32 +23,32 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use Kint\Kint;
+use Exception;
+use InvalidArgumentException;
+use Throwable;
 
-class StreamObject extends ResourceObject
+class ThrowableValue extends InstanceValue
 {
-    public $stream_meta;
+    public $message;
+    public $hints = ['object', 'throwable'];
 
-    public function __construct(array $meta = null)
+    public function __construct($throw)
     {
+        if (!$throw instanceof Exception && (!KINT_PHP70 || !$throw instanceof Throwable)) {
+            throw new InvalidArgumentException('ThrowableValue must be constructed with a Throwable');
+        }
+
         parent::__construct();
-        $this->stream_meta = $meta;
+
+        $this->message = $throw->getMessage();
     }
 
     public function getValueShort()
     {
-        if (empty($this->stream_meta['uri'])) {
-            return;
+        if (\strlen($this->message)) {
+            return '"'.$this->message.'"';
         }
-
-        $uri = $this->stream_meta['uri'];
-
-        if (\stream_is_local($uri)) {
-            return Kint::shortenPath($uri);
-        }
-
-        return $uri;
     }
 }

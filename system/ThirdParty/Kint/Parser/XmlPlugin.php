@@ -27,8 +27,8 @@ namespace Kint\Parser;
 
 use DOMDocument;
 use Exception;
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 
 class XmlPlugin extends Plugin
 {
@@ -45,7 +45,7 @@ class XmlPlugin extends Plugin
 
     public function getTypes()
     {
-        return array('string');
+        return ['string'];
     }
 
     public function getTriggers()
@@ -53,7 +53,7 @@ class XmlPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
         if ('<?xml' !== \substr($var, 0, 5)) {
             return;
@@ -63,7 +63,7 @@ class XmlPlugin extends Plugin
             return;
         }
 
-        $xml = \call_user_func(array(\get_class($this), 'xmlTo'.self::$parse_method), $var, $o->access_path);
+        $xml = \call_user_func([\get_class($this), 'xmlTo'.self::$parse_method], $var, $o->access_path);
 
         if (empty($xml)) {
             return;
@@ -71,7 +71,7 @@ class XmlPlugin extends Plugin
 
         list($xml, $access_path, $name) = $xml;
 
-        $base_obj = new BasicObject();
+        $base_obj = new Value();
         $base_obj->depth = $o->depth + 1;
         $base_obj->name = $name;
         $base_obj->access_path = $access_path;
@@ -96,7 +96,7 @@ class XmlPlugin extends Plugin
             return;
         }
 
-        if (!$xml) {
+        if (false === $xml) {
             return;
         }
 
@@ -108,7 +108,7 @@ class XmlPlugin extends Plugin
 
         $name = $xml->getName();
 
-        return array($xml, $access_path, $name);
+        return [$xml, $access_path, $name];
     }
 
     /**
@@ -135,16 +135,23 @@ class XmlPlugin extends Plugin
 
         $xml = new DOMDocument();
         $xml->loadXML($var);
-        $xml = $xml->firstChild;
+
+        if ($xml->childNodes->count() > 1) {
+            $xml = $xml->childNodes;
+            $access_path = 'childNodes';
+        } else {
+            $xml = $xml->firstChild;
+            $access_path = 'firstChild';
+        }
 
         if (null === $parent_path) {
             $access_path = null;
         } else {
-            $access_path = '@\\DOMDocument::loadXML('.$parent_path.')->firstChild';
+            $access_path = '(function($s){$x = new \\DomDocument(); $x->loadXML($s); return $x;})('.$parent_path.')->'.$access_path;
         }
 
-        $name = $xml->nodeName;
+        $name = isset($xml->nodeName) ? $xml->nodeName : null;
 
-        return array($xml, $access_path, $name);
+        return [$xml, $access_path, $name];
     }
 }

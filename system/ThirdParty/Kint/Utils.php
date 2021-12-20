@@ -25,8 +25,7 @@
 
 namespace Kint;
 
-use InvalidArgumentException;
-use Kint\Object\BlobObject;
+use Kint\Zval\BlobValue;
 use ReflectionNamedType;
 use ReflectionType;
 
@@ -51,15 +50,36 @@ final class Utils
      */
     public static function getHumanReadableBytes($value)
     {
-        static $unit = array('B', 'KB', 'MB', 'GB', 'TB');
+        static $unit = ['B', 'KB', 'MB', 'GB', 'TB'];
 
-        $i = \floor(\log($value, 1024));
-        $i = \min($i, 4); // Only go up to TB
+        $negative = $value < 0;
+        $value = \abs($value);
 
-        return array(
-            'value' => (float) ($value / \pow(1024, $i)),
+        if ($value < 1024) {
+            $i = 0;
+            $value = \floor($value);
+        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 40) {
+            $i = 1;
+        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 30) {
+            $i = 2;
+        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 20) {
+            $i = 3;
+        } else {
+            $i = 4;
+        }
+
+        if ($i) {
+            $value = $value / \pow(1024, $i);
+        }
+
+        if ($negative) {
+            $value *= -1;
+        }
+
+        return [
+            'value' => \round($value, 1),
             'unit' => $unit[$i],
-        );
+        ];
     }
 
     public static function isSequential(array $array)
@@ -67,9 +87,14 @@ final class Utils
         return \array_keys($array) === \range(0, \count($array) - 1);
     }
 
+    public static function isAssoc(array $array)
+    {
+        return (bool) \count(\array_filter(\array_keys($array), 'is_string'));
+    }
+
     public static function composerGetExtras($key = 'kint')
     {
-        $extras = array();
+        $extras = [];
 
         if (0 === \strpos(KINT_DIR, 'phar://')) {
             // Only run inside phar file, so skip for code coverage
@@ -131,7 +156,7 @@ final class Utils
             return false;
         }
 
-        static $bt_structure = array(
+        static $bt_structure = [
             'function' => 'string',
             'line' => 'integer',
             'file' => 'string',
@@ -139,7 +164,7 @@ final class Utils
             'object' => 'object',
             'type' => 'string',
             'args' => 'array',
-        );
+        ];
 
         $file_found = false;
 
@@ -169,7 +194,7 @@ final class Utils
     public static function traceFrameIsListed(array $frame, array $matches)
     {
         if (isset($frame['class'])) {
-            $called = array(\strtolower($frame['class']), \strtolower($frame['function']));
+            $called = [\strtolower($frame['class']), \strtolower($frame['function'])];
         } else {
             $called = \strtolower($frame['function']);
         }
@@ -189,10 +214,10 @@ final class Utils
                     \preg_match('/^'.$name_regex.'$/', $alias[1]) &&
                     \preg_match('/^\\\\?('.$name_regex.'\\\\)*'.$name_regex.'$/', $alias[0])
                 ) {
-                    $alias = array(
+                    $alias = [
                         \strtolower(\ltrim($alias[0], '\\')),
                         \strtolower($alias[1]),
-                    );
+                    ];
                 } else {
                     unset($aliases[$index]);
                     continue;
@@ -216,14 +241,15 @@ final class Utils
     public static function truncateString($input, $length = PHP_INT_MAX, $end = '...', $encoding = false)
     {
         $length = (int) $length;
-        $endlength = BlobObject::strlen($end);
+        $endlength = BlobValue::strlen($end);
 
         if ($endlength >= $length) {
-            throw new InvalidArgumentException('Can\'t truncate a string to '.$length.' characters if ending with string '.$endlength.' characters long');
+            $endlength = 0;
+            $end = '';
         }
 
-        if (BlobObject::strlen($input, $encoding) > $length) {
-            return BlobObject::substr($input, 0, $length - $endlength, $encoding).$end;
+        if (BlobValue::strlen($input, $encoding) > $length) {
+            return BlobValue::substr($input, 0, $length - $endlength, $encoding).$end;
         }
 
         return $input;
@@ -232,7 +258,12 @@ final class Utils
     public static function getTypeString(ReflectionType $type)
     {
         if ($type instanceof ReflectionNamedType) {
-            return $type->getName();
+            $name = $type->getName();
+            if ($type->allowsNull() && false === \strpos($name, '|')) {
+                $name = '?'.$name;
+            }
+
+            return $name;
         }
 
         return (string) $type; // @codeCoverageIgnore

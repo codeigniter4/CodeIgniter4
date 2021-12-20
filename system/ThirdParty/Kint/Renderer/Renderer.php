@@ -25,8 +25,8 @@
 
 namespace Kint\Renderer;
 
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
+use Kint\Zval\InstanceValue;
+use Kint\Zval\Value;
 
 abstract class Renderer
 {
@@ -34,11 +34,11 @@ abstract class Renderer
     const SORT_VISIBILITY = 1;
     const SORT_FULL = 2;
 
-    protected $call_info = array();
-    protected $statics = array();
+    protected $call_info = [];
+    protected $statics = [];
     protected $show_trace = true;
 
-    abstract public function render(BasicObject $o);
+    abstract public function render(Value $o);
 
     abstract public function renderNothing();
 
@@ -49,7 +49,7 @@ abstract class Renderer
         }
 
         if (!isset($info['modifiers']) || !\is_array($info['modifiers'])) {
-            $info['modifiers'] = array();
+            $info['modifiers'] = [];
         }
 
         if (!isset($info['callee'])) {
@@ -61,16 +61,16 @@ abstract class Renderer
         }
 
         if (!isset($info['trace']) || !\is_array($info['trace'])) {
-            $info['trace'] = array();
+            $info['trace'] = [];
         }
 
-        $this->call_info = array(
+        $this->call_info = [
             'params' => $info['params'],
             'modifiers' => $info['modifiers'],
             'callee' => $info['callee'],
             'caller' => $info['caller'],
             'trace' => $info['trace'],
-        );
+        ];
     }
 
     public function getCallInfo()
@@ -109,7 +109,7 @@ abstract class Renderer
      */
     public function matchPlugins(array $plugins, array $hints)
     {
-        $out = array();
+        $out = [];
 
         foreach ($hints as $key) {
             if (isset($plugins[$key])) {
@@ -135,40 +135,40 @@ abstract class Renderer
         return '';
     }
 
-    public static function sortPropertiesFull(BasicObject $a, BasicObject $b)
+    public static function sortPropertiesFull(Value $a, Value $b)
     {
-        $sort = BasicObject::sortByAccess($a, $b);
+        $sort = Value::sortByAccess($a, $b);
         if ($sort) {
             return $sort;
         }
 
-        $sort = BasicObject::sortByName($a, $b);
+        $sort = Value::sortByName($a, $b);
         if ($sort) {
             return $sort;
         }
 
-        return InstanceObject::sortByHierarchy($a->owner_class, $b->owner_class);
+        return InstanceValue::sortByHierarchy($a->owner_class, $b->owner_class);
     }
 
     /**
-     * Sorts an array of BasicObject.
+     * Sorts an array of Value.
      *
-     * @param BasicObject[] $contents Object properties to sort
-     * @param int           $sort
+     * @param Value[] $contents Object properties to sort
+     * @param int     $sort
      *
-     * @return BasicObject[]
+     * @return Value[]
      */
     public static function sortProperties(array $contents, $sort)
     {
         switch ($sort) {
             case self::SORT_VISIBILITY:
-                /** @var array<array-key, BasicObject[]> Containers to quickly stable sort by type */
-                $containers = array(
-                    BasicObject::ACCESS_PUBLIC => array(),
-                    BasicObject::ACCESS_PROTECTED => array(),
-                    BasicObject::ACCESS_PRIVATE => array(),
-                    BasicObject::ACCESS_NONE => array(),
-                );
+                // Containers to quickly stable sort by type
+                $containers = [
+                    Value::ACCESS_PUBLIC => [],
+                    Value::ACCESS_PROTECTED => [],
+                    Value::ACCESS_PRIVATE => [],
+                    Value::ACCESS_NONE => [],
+                ];
 
                 foreach ($contents as $item) {
                     $containers[$item->access][] = $item;
@@ -176,7 +176,7 @@ abstract class Renderer
 
                 return \call_user_func_array('array_merge', $containers);
             case self::SORT_FULL:
-                \usort($contents, array('Kint\\Renderer\\Renderer', 'sortPropertiesFull'));
+                \usort($contents, ['Kint\\Renderer\\Renderer', 'sortPropertiesFull']);
                 // no break
             default:
                 return $contents;
