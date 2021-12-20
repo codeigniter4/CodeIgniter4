@@ -282,7 +282,8 @@
 </li>
 <li><p><a class="reference internal" href="#provided-filters" id="id10">Provided Filters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#secureheaders" id="id11">SecureHeaders</a></p></li>
+<li><p><a class="reference internal" href="#invalidchars" id="id11">InvalidChars</a></p></li>
+<li><p><a class="reference internal" href="#secureheaders" id="id12">SecureHeaders</a></p></li>
 </ul>
 </li>
 </ul>
@@ -472,13 +473,21 @@ a list of URI patterns that filter should apply to:</p>
 </section>
 <section id="provided-filters">
 <h2><a class="toc-backref" href="#id10">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
-<p>The filters bundled with CodeIgniter4 are: <code class="docutils literal notranslate"><span class="pre">Honeypot</span></code>, <code class="docutils literal notranslate"><span class="pre">CSRF</span></code>, <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code>, <code class="docutils literal notranslate"><span class="pre">SecureHeaders</span></code>, and <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code>.</p>
+<p>The filters bundled with CodeIgniter4 are: <a class="reference internal" href="../libraries/honeypot.html"><span class="doc">Honeypot</span></a>, <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a>, <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code>, <code class="docutils literal notranslate"><span class="pre">SecureHeaders</span></code>, and <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">DebugToolbar</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The filters are executed in the order defined in the config file. However, if enabled, <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code> is always executed last because it should be able to capture everything that happens in the other filters.</p>
 </div>
+<section id="invalidchars">
+<h3><a class="toc-backref" href="#id11">InvalidChars</a><a class="headerlink" href="#invalidchars" title="Permalink to this headline"></a></h3>
+<p>This filter prohibits user input data (<code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">php://input</span></code>) from containing the following characters:</p>
+<ul class="simple">
+<li><p>invalid UTF-8 characters</p></li>
+<li><p>control characters except line break and tab code</p></li>
+</ul>
+</section>
 <section id="secureheaders">
-<h3><a class="toc-backref" href="#id11">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
 <p>This filter adds HTTP response headers that your application can use to increase the security of your application.</p>
 <p>If you want to customize the headers, extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\SecureHeaders</span></code> and override the <code class="docutils literal notranslate"><span class="pre">$headers</span></code> property. And change the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> property in <strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
@@ -504,7 +513,7 @@ a list of URI patterns that filter should apply to:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 19, 2021.
+      <span class="lastupdated">Last updated on Dec 20, 2021.
       </span></p>
   </div>
 
