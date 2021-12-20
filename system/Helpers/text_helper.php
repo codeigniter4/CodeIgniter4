@@ -673,7 +673,7 @@ if (! function_exists('excerpt')) {
     }
 }
 
-if (!function_exists('str_contains')) {
+if (! function_exists('str_contains')) {
     /**
 	 * str_contains.
      *
