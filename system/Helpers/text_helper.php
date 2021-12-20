@@ -675,7 +675,7 @@ if (! function_exists('excerpt')) {
 
 if (! function_exists('str_contains')) {
     /**
-	 * str_contains.
+     * str_contains.
      *
      * Determine if a given string contains in a given substring.
      *
