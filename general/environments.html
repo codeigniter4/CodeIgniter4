@@ -282,7 +282,6 @@ tools loaded that you don’t in production environments, etc.</p>
 <li><p><a class="reference internal" href="#effects-on-default-framework-behavior" id="id6">Effects On Default Framework Behavior</a></p>
 <ul>
 <li><p><a class="reference internal" href="#error-reporting" id="id7">Error Reporting</a></p></li>
-<li><p><a class="reference internal" href="#configuration-files" id="id8">Configuration Files</a></p></li>
 </ul>
 </li>
 </ul>
@@ -361,19 +360,11 @@ constant is used. This section describes how default framework behavior
 is affected.</p>
 <section id="error-reporting">
 <h3><a class="toc-backref" href="#id7">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
-<p>Setting the ENVIRONMENT constant to a value of ‘development’ will cause
+<p>Setting the ENVIRONMENT constant to a value of <code class="docutils literal notranslate"><span class="pre">development</span></code> will cause
 all PHP errors to be rendered to the browser when they occur.
-Conversely, setting the constant to ‘production’ will disable all error
+Conversely, setting the constant to <code class="docutils literal notranslate"><span class="pre">production</span></code> will disable all error
 output. Disabling error reporting in production is a
 <a class="reference internal" href="../concepts/security.html"><span class="doc">good security practice</span></a>.</p>
-</section>
-<section id="configuration-files">
-<h3><a class="toc-backref" href="#id8">Configuration Files</a><a class="headerlink" href="#configuration-files" title="Permalink to this headline"></a></h3>
-<p>Optionally, you can have CodeIgniter load environment-specific
-configuration files. This may be useful for managing things like
-differing API keys across multiple environments. This is described in
-more detail in the Handling Different Environments section of the
-<a class="reference internal" href="configuration.html"><span class="doc">Working with Configuration Files</span></a> documentation.</p>
 </section>
 </section>
 </section>
