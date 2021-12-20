@@ -693,8 +693,8 @@ class BaseBuilder
                     $op = ' =';
                 }
 
-                if ($this->isSubQuery($v)) {
-                    $v = $this->buildSubQuery($v, true);
+                if ($this->isSubquery($v)) {
+                    $v = $this->buildSubquery($v, true);
                 } else {
                     $bind = $this->setBind($k, $v, $escape);
                     $v    = " :{$bind}:";
@@ -844,7 +844,7 @@ class BaseBuilder
             return $this; // @codeCoverageIgnore
         }
 
-        if ($values === null || (! is_array($values) && ! $this->isSubQuery($values))) {
+        if ($values === null || (! is_array($values) && ! $this->isSubquery($values))) {
             if (CI_DEBUG) {
                 throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
             }
@@ -864,8 +864,8 @@ class BaseBuilder
 
         $not = ($not) ? ' NOT' : '';
 
-        if ($this->isSubQuery($values)) {
-            $ok = $this->buildSubQuery($values);
+        if ($this->isSubquery($values)) {
+            $ok = $this->buildSubquery($values);
         } else {
             $whereIn = array_values($values);
             $ok      = $this->setBind($ok, $whereIn, $escape);
@@ -874,7 +874,7 @@ class BaseBuilder
         $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
         $whereIn = [
-            'condition' => $prefix . $key . $not . ($this->isSubQuery($values) ? " IN ({$ok})" : " IN :{$ok}:"),
+            'condition' => $prefix . $key . $not . ($this->isSubquery($values) ? " IN ({$ok})" : " IN :{$ok}:"),
             'escape'    => false,
         ];
 
@@ -2733,7 +2733,7 @@ class BaseBuilder
     /**
      * @param mixed $value
      */
-    protected function isSubQuery($value): bool
+    protected function isSubquery($value): bool
     {
         return $value instanceof BaseBuilder || $value instanceof Closure;
     }
@@ -2742,15 +2742,15 @@ class BaseBuilder
      * @param BaseBuilder|Closure $builder
      * @param bool                $wrapped Wrap the subquery in brackets
      */
-    protected function buildSubQuery($builder, bool $wrapped = false): string
+    protected function buildSubquery($builder, bool $wrapped = false): string
     {
         if ($builder instanceof Closure) {
             $instance = (clone $this)->from([], true)->resetQuery();
             $builder  = $builder($instance);
         }
 
-        $subQuery = strtr($builder->getCompiledSelect(), "\n", ' ');
+        $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
 
-        return $wrapped ? '(' . $subQuery . ')' : $subQuery;
+        return $wrapped ? '(' . $subquery . ')' : $subquery;
     }
 }
