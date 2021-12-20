@@ -36,13 +36,49 @@ final class ThrottleTest extends CIUnitTestCase
         // set $rate
         $rate = 1;    // allow 1 request per minute
 
-        // first check just creates a bucket, so tokenTime should be 0
+        // When the first check you have a token, so tokenTime should be 0
         $throttler->check('127.0.0.1', $rate, MINUTE);
         $this->assertSame(0, $throttler->getTokenTime());
 
-        // additional check affects tokenTime, so tokenTime should be 1 or greater
+        // When additional check you don't have one token, so tokenTime should be 1 or greater
         $throttler->check('127.0.0.1', $rate, MINUTE);
         $this->assertGreaterThanOrEqual(1, $throttler->getTokenTime());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5458
+     */
+    public function testTokenTimeCalculation()
+    {
+        $time = 1639441295;
+
+        $throttler = new Throttler($this->cache);
+        $throttler->setTestTime($time);
+
+        $capacity = 2;
+        $seconds  = 200;
+
+        // refresh = 200 / 2 = 100 seconds
+        // refresh rate = 2 / 200 = 0.01 token per second
+
+        // token should be 2
+        $this->assertTrue($throttler->check('test', $capacity, $seconds));
+        // token should be 2 - 1 = 1
+        $this->assertSame(0, $throttler->getTokenTime(), 'Wrong token time');
+
+        // do nothing for 3 seconds
+        $throttler = $throttler->setTestTime($time + 3);
+
+        // token should be 1 + 3 * 0.01 = 1.03
+        $this->assertTrue($throttler->check('test', $capacity, $seconds));
+        // token should be 1.03 - 1 = 0.03
+        $this->assertSame(0, $throttler->getTokenTime(), 'Wrong token time');
+
+        $this->assertFalse($throttler->check('test', $capacity, $seconds));
+        // token should still be 0.03 because check failed
+
+        // expect remaining time: (1 - 0.03) * 100 = 97
+        $this->assertSame(97, $throttler->getTokenTime(), 'Wrong token time');
     }
 
     public function testIPSavesBucket()
