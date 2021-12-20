@@ -569,9 +569,10 @@ timing if a timer with this name is already running.</p>
 and tells it to render the specified view. Simply provides
 a convenience method that can be used in Controllers,
 libraries, and routed closures.</p>
-<p>Currently, only two options are available for use within the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
+<p>Currently, these options are available for use within the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> specifies that data will persistent between multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> within the same request. If you do not want the data to be persisted, specify false.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> specifies the number of seconds to cache the view for. See <a class="reference internal" href="../outgoing/views.html#caching-views"><span class="std std-ref">Caching Views</span></a> for the details.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code> can be set to false to disable the addition of debug code for <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a>.</p></li>
 </ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">$option</span></code> array is provided primarily to facilitate third-party integrations with
