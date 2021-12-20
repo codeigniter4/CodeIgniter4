@@ -19,6 +19,8 @@ If you find a case where you do need direct access though, you may load it throu
 
     $security = \Config\Services::security();
 
+.. _cross-site-request-forgery:
+
 *********************************
 Cross-site request forgery (CSRF)
 *********************************

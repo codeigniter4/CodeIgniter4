@@ -200,9 +200,17 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Provided Filters
 ****************
 
-The filters bundled with CodeIgniter4 are: ``Honeypot``, ``CSRF``, ``InvalidChars``, ``SecureHeaders``, and ``DebugToolbar``.
+The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot>`, :ref:`CSRF <cross-site-request-forgery>`, ``InvalidChars``, ``SecureHeaders``, and :ref:`DebugToolbar <the-debug-toolbar>`.
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+InvalidChars
+=============
+
+This filter prohibits user input data (``$_GET``, ``$_POST``, ``$_COOKIE``, ``php://input``) from containing the following characters:
+
+- invalid UTF-8 characters
+- control characters except line break and tab code
 
 SecureHeaders
 =============
