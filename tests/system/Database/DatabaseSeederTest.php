@@ -38,6 +38,9 @@ final class DatabaseSeederTest extends CIUnitTestCase
         new Seeder($config);
     }
 
+    /**
+     * @TODO remove this when Seeder::faker() is removed
+     */
     public function testFakerGet()
     {
         $this->assertInstanceOf(Generator::class, Seeder::faker());

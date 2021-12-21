@@ -68,6 +68,8 @@ class Seeder
      * Faker Generator instance.
      *
      * @var Generator|null
+     *
+     * @deprecated
      */
     private static $faker;
 
@@ -98,6 +100,8 @@ class Seeder
 
     /**
      * Gets the Faker Generator instance.
+     *
+     * @deprecated
      */
     public static function faker(): ?Generator
     {
