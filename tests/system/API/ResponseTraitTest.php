@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
@@ -30,7 +31,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     protected $response;
 
     /**
-     * @var Response formatter
+     * @var FormatterInterface|null
      */
     protected $formatter;
 
