@@ -502,21 +502,18 @@ final class CommonFunctionsTest extends CIUnitTestCase
         Kint::$cli_detection = $cliDetection;
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
     public function testTraceWithCSP()
     {
         /** @var App $config */
-        $config       = config(App::class);
-        $CSPEnabled   = $config->CSPEnabled;
-        $cliDetection = Kint::$cli_detection;
-
+        $config              = config(App::class);
         $config->CSPEnabled  = true;
         Kint::$cli_detection = false;
 
         $this->expectOutputRegex('/<style {csp-style-nonce} class="kint-rich-style">/u');
         trace();
-
-        // Restore settings
-        $config->CSPEnabled  = $CSPEnabled;
-        Kint::$cli_detection = $cliDetection;
     }
 }
