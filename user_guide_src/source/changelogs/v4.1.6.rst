@@ -42,6 +42,8 @@ Changes
 Deprecations
 ************
 
+- ``Seeder::faker()`` and ``Seeder::$faker`` are deprecated.
+
 Sending Cookies
 ===============
 

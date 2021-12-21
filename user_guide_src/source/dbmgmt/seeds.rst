@@ -67,41 +67,6 @@ anywhere the autoloader can find them. This is great for more modular code bases
         $this->call('My\Database\Seeds\CountrySeeder');
     }
 
-Using Faker
-===========
-
-If you want to automate the generation of seed data, you can use
-the `Faker library <https://github.com/fakerphp/faker>`_.
-
-To install Faker into your project::
-
-    > composer require --dev fakerphp/faker
-
-After installation, an instance of ``Faker\Generator`` is available in the main ``Seeder``
-class and is accessible by all child seeders. You must use the static method ``faker()``
-to access the instance.
-
-::
-
-    <?php
-
-    namespace App\Database\Seeds;
-
-    use CodeIgniter\Database\Seeder;
-
-    class UserSeeder extends Seeder
-    {
-        public function run()
-        {
-            $model = model('UserModel');
-
-            $model->insert([
-                'email'      => static::faker()->email,
-                'ip_address' => static::faker()->ipv4,
-            ]);
-        }
-    }
-
 Using Seeders
 =============
 
