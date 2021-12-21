@@ -1096,7 +1096,29 @@ if (! function_exists('trace')) {
     function trace()
     {
         Kint::$aliases[] = 'trace';
+
+        ob_start();
         Kint::trace();
+        $output = ob_get_clean();
+
+        /** @var App $config */
+        $config = config(App::class);
+
+        if ($config->CSPEnabled === true) {
+            $output = str_replace(
+                [
+                    '<script class="kint-rich-script">',
+                    '<style class="kint-rich-style">',
+                ],
+                [
+                    '<script {csp-script-nonce} class="kint-rich-script">',
+                    '<style {csp-style-nonce} class="kint-rich-style">',
+                ],
+                $output
+            );
+        }
+
+        echo $output;
     }
 }
 
