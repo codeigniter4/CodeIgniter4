@@ -49,5 +49,5 @@ jobs:
           remote_server_ip: ${{ secrets.DEPLOY_SSH_BOX }}
           ssh_port: ${{ secrets.DEPLOY_PORT }}
           ssh_private_key: ${{ secrets.DEPLOY_KEY }}
-          source_path: "./user_guide_src/build/html/*"
-          destination_path: "/home/public_html/userguides/v4/"
+          source_path: "user_guide_src/build/html/*"
+          destination_path: "/home/public_html/userguides/user_guide_4/"
