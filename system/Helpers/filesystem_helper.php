@@ -91,7 +91,9 @@ if (! function_exists('directory_mirror')) {
             $target = $targetDir . substr($origin, $dirLen);
 
             if ($file->isDir()) {
-                mkdir($target, 0755);
+                if (! is_dir($target)) {
+                    mkdir($target, 0755);
+                }
             } elseif (! is_file($target) || ($overwrite && is_file($target))) {
                 copy($origin, $target);
             }

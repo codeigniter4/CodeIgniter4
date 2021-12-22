@@ -14,6 +14,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @internal
@@ -159,6 +160,34 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $result = file_get_contents($root . 'boo/faz');
 
         $this->assertSame($this->structure['boo']['faz'], $result);
+    }
+
+    public function testDirectoryMirrorSkipExistingFolder()
+    {
+        $this->assertTrue(function_exists('directory_mirror'));
+
+        $this->structure = [
+            'src' => [
+                'AnEmptyFolder' => [],
+            ],
+            'dest' => [
+                'AnEmptyFolder' => [],
+            ],
+        ];
+        vfsStream::setup('root', null, $this->structure);
+        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        // skips the existing folder
+        directory_mirror($root . 'src', $root . 'dest');
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
+
+        // skips the existing folder (the same as overwrite = true)
+        directory_mirror($root . 'src', $root . 'dest', false);
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
     }
 
     public function testWriteFileSuccess()
