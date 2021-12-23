@@ -297,24 +297,14 @@ been deprecated as of PHP 7.2.</p>
 <ul>
 <li><p><a class="reference internal" href="#configuring-the-library" id="id4">Configuring the Library</a></p></li>
 <li><p><a class="reference internal" href="#default-behavior" id="id5">Default Behavior</a></p></li>
-<li><p><a class="reference internal" href="#setting-your-encryption-key" id="id6">Setting Your Encryption Key</a></p>
-<ul>
-<li><p><a class="reference internal" href="#encoding-keys-or-results" id="id7">Encoding Keys or Results</a></p></li>
-<li><p><a class="reference internal" href="#using-prefixes-in-storing-keys" id="id8">Using Prefixes in Storing Keys</a></p></li>
+<li><p><a class="reference internal" href="#setting-your-encryption-key" id="id6">Setting Your Encryption Key</a></p></li>
+<li><p><a class="reference internal" href="#padding" id="id7">Padding</a></p></li>
+<li><p><a class="reference internal" href="#encryption-handler-notes" id="id8">Encryption Handler Notes</a></p></li>
+<li><p><a class="reference internal" href="#message-length" id="id9">Message Length</a></p></li>
+<li><p><a class="reference internal" href="#using-the-encryption-service-directly" id="id10">Using the Encryption Service Directly</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#padding" id="id9">Padding</a></p></li>
-<li><p><a class="reference internal" href="#encryption-handler-notes" id="id10">Encryption Handler Notes</a></p>
-<ul>
-<li><p><a class="reference internal" href="#openssl-notes" id="id11">OpenSSL Notes</a></p></li>
-<li><p><a class="reference internal" href="#sodium-notes" id="id12">Sodium Notes</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#message-length" id="id13">Message Length</a></p></li>
-<li><p><a class="reference internal" href="#using-the-encryption-service-directly" id="id14">Using the Encryption Service Directly</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#class-reference" id="id15">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id11">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-encryption-library">
@@ -403,7 +393,7 @@ and set:</p>
 </pre></div>
 </div>
 <section id="encoding-keys-or-results">
-<h4><a class="toc-backref" href="#id7">Encoding Keys or Results</a><a class="headerlink" href="#encoding-keys-or-results" title="Permalink to this headline"></a></h4>
+<h4>Encoding Keys or Results<a class="headerlink" href="#encoding-keys-or-results" title="Permalink to this headline"></a></h4>
 <p>You’ll notice that the <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method outputs binary data, which
 is hard to deal with (i.e., a copy-paste may damage it), so you may use
 <code class="docutils literal notranslate"><span class="pre">bin2hex()</span></code>, or <code class="docutils literal notranslate"><span class="pre">base64_encode</span></code> to work with the key in
@@ -424,7 +414,7 @@ of encryption:</p>
 </div>
 </section>
 <section id="using-prefixes-in-storing-keys">
-<h4><a class="toc-backref" href="#id8">Using Prefixes in Storing Keys</a><a class="headerlink" href="#using-prefixes-in-storing-keys" title="Permalink to this headline"></a></h4>
+<h4>Using Prefixes in Storing Keys<a class="headerlink" href="#using-prefixes-in-storing-keys" title="Permalink to this headline"></a></h4>
 <p>You may take advantage of two special prefixes in storing your
 encryption keys: <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> and <code class="docutils literal notranslate"><span class="pre">base64:</span></code>. When these prefixes
 immediately precede the value of your key, <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> will
@@ -448,7 +438,7 @@ the library.</p>
 </section>
 </section>
 <section id="padding">
-<h3><a class="toc-backref" href="#id9">Padding</a><a class="headerlink" href="#padding" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Padding</a><a class="headerlink" href="#padding" title="Permalink to this headline"></a></h3>
 <p>Sometimes, the length of a message may provide a lot of information about its nature. If
 a message is one of “yes”, “no” and “maybe”, encrypting the message doesn’t help: knowing
 the length is enough to know what the message is.</p>
@@ -468,9 +458,9 @@ effortlessly get a copy of the password.</p>
 </div>
 </section>
 <section id="encryption-handler-notes">
-<h3><a class="toc-backref" href="#id10">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline"></a></h3>
 <section id="openssl-notes">
-<h4><a class="toc-backref" href="#id11">OpenSSL Notes</a><a class="headerlink" href="#openssl-notes" title="Permalink to this headline"></a></h4>
+<h4>OpenSSL Notes<a class="headerlink" href="#openssl-notes" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference external" href="https://www.php.net/openssl">OpenSSL</a> extension has been a standard part of PHP for a long time.</p>
 <p>CodeIgniter’s OpenSSL handler uses the AES-256-CTR cipher.</p>
 <p>The <em>key</em> your configuration provides is used to derive two other keys, one for
@@ -478,7 +468,7 @@ encryption and one for authentication. This is achieved by way of a technique kn
 as an <a class="reference external" href="https://en.wikipedia.org/wiki/HKDF">HMAC-based Key Derivation Function</a> (HKDF).</p>
 </section>
 <section id="sodium-notes">
-<h4><a class="toc-backref" href="#id12">Sodium Notes</a><a class="headerlink" href="#sodium-notes" title="Permalink to this headline"></a></h4>
+<h4>Sodium Notes<a class="headerlink" href="#sodium-notes" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference external" href="https://www.php.net/manual/en/book.sodium">Sodium</a> extension is bundled by default in PHP as
 of PHP 7.2.0.</p>
 <p>Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
@@ -494,7 +484,7 @@ wiped out from the buffers. You may need to provide again the key before startin
 </section>
 </section>
 <section id="message-length">
-<h3><a class="toc-backref" href="#id13">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline"></a></h3>
 <p>An encrypted string is usually longer than the original, plain-text string (depending on the cipher).</p>
 <p>This is influenced by the cipher algorithm itself, the initialization vector (IV)
 prepended to the cipher-text, and the HMAC authentication message that is also prepended.
@@ -504,7 +494,7 @@ for storage and transmission regardless of the character-set in use.</p>
 Cookies, for example, can only hold 4K of information.</p>
 </section>
 <section id="using-the-encryption-service-directly">
-<h3><a class="toc-backref" href="#id14">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline"></a></h3>
 <p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>,
 you can create an “Encrypter” directly, or change the settings of an existing instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// create an Encryption instance</span>
@@ -518,7 +508,7 @@ you can create an “Encrypter” directly, or change the settings of an existin
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id15">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Encryption\Encryption</code></dt>
@@ -663,7 +653,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 22, 2021.
+      <span class="lastupdated">Last updated on Dec 23, 2021.
       </span></p>
   </div>
 

@@ -267,10 +267,21 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#initial-configuration-set-up" id="id2">Initial Configuration &amp; Set Up</a></p></li>
 <li><p><a class="reference internal" href="#local-development-server" id="id3">Local Development Server</a></p></li>
-<li><p><a class="reference internal" href="#hosting-with-apache" id="id4">Hosting with Apache</a></p></li>
-<li><p><a class="reference internal" href="#hosting-with-nginx" id="id5">Hosting with Nginx</a></p></li>
-<li><p><a class="reference internal" href="#hosting-with-vagrant" id="id6">Hosting with Vagrant</a></p></li>
-<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id7">Bootstrapping the App</a></p></li>
+<li><p><a class="reference internal" href="#hosting-with-apache" id="id4">Hosting with Apache</a></p>
+<ul>
+<li><p><a class="reference internal" href="#htaccess" id="id5">.htaccess</a></p></li>
+<li><p><a class="reference internal" href="#virtual-hosting" id="id6">Virtual Hosting</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id7">Testing</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#hosting-with-nginx" id="id8">Hosting with Nginx</a></p></li>
+<li><p><a class="reference internal" href="#hosting-with-vagrant" id="id9">Hosting with Vagrant</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-up" id="id10">Setting Up</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id11">Testing</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id12">Bootstrapping the App</a></p></li>
 </ul>
 </div>
 <p>A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
@@ -349,7 +360,7 @@ Apache’s <code class="docutils literal notranslate"><span class="pre">httpd</s
 <p>Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from <a class="reference external" href="https://bitnami.com/stacks/infrastructure">Bitnami</a>.</p>
 <section id="htaccess">
-<h3>.htaccess<a class="headerlink" href="#htaccess" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">.htaccess</a><a class="headerlink" href="#htaccess" title="Permalink to this headline"></a></h3>
 <p>The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
 in our user guide.</p>
 <p>Make sure that the rewrite module is enabled (uncommented) in the main
@@ -368,7 +379,7 @@ in the “AllowOverride” setting:</p>
 </div>
 </section>
 <section id="virtual-hosting">
-<h3>Virtual Hosting<a class="headerlink" href="#virtual-hosting" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Virtual Hosting</a><a class="headerlink" href="#virtual-hosting" title="Permalink to this headline"></a></h3>
 <p>We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,</p>
 <p>Make sure that the virtual hosting module is enabled (uncommented) in the main
@@ -396,13 +407,13 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 &lt;VirtualHost&gt; element may need a nested &lt;Directory&gt; element to grant the web server access to the files.</p>
 </section>
 <section id="testing">
-<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
 <p>With the above configuration, your webapp would be accessed with the URL <code class="docutils literal notranslate"><span class="pre">http://myproject.local</span></code> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
 </section>
 </section>
 <section id="hosting-with-nginx">
-<h2><a class="toc-backref" href="#id5">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
 <p>Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.</p>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
@@ -439,7 +450,7 @@ Here you can find an example configuration using PHP 7.3 FPM (unix sockets) unde
 </div>
 </section>
 <section id="hosting-with-vagrant">
-<h2><a class="toc-backref" href="#id6">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline"></a></h2>
 <p>Virtualization is an effective way to test your webapp in the environment you
 plan to deploy on, even if you develop on a different one.
 Even if you are using the same platform for both, virtualization provides an
@@ -447,7 +458,7 @@ isolated environment for testing.</p>
 <p>The codebase comes with a <code class="docutils literal notranslate"><span class="pre">VagrantFile.dist</span></code>, that can be copied to <code class="docutils literal notranslate"><span class="pre">VagrantFile</span></code>
 and tailored for your system, for instance enabling access to specific database or caching engines.</p>
 <section id="setting-up">
-<h3>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <p>It assumes that you have installed <a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> and
 <a class="reference external" href="https://www.vagrantup.com/downloads.html">Vagrant</a>
 for your platform.</p>
@@ -457,7 +468,7 @@ for your platform.</p>
 </div>
 </section>
 <section id="id1">
-<h3>Testing<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Testing</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>Once set up, you can then launch your webapp inside a VM, with the command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">vagrant</span> <span class="nx">up</span>
 </pre></div>
@@ -468,7 +479,7 @@ it at <code class="docutils literal notranslate"><span class="pre">http://localh
 </section>
 </section>
 <section id="bootstrapping-the-app">
-<h2><a class="toc-backref" href="#id7">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
 <p>In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
@@ -491,7 +502,7 @@ paths align with the expected directory structure for your installation method.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 22, 2021.
+      <span class="lastupdated">Last updated on Dec 23, 2021.
       </span></p>
   </div>
 
