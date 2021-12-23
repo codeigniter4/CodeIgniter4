@@ -305,6 +305,7 @@ methods:
     $builder->where($where);
 
 .. _query-builder-where-subquery:
+
 #. **Subqueries:**
 
     ::
