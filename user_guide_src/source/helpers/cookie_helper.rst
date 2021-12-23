@@ -6,7 +6,8 @@ The Cookie Helper file contains functions that assist in working with
 cookies.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

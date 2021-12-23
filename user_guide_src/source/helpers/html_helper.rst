@@ -7,6 +7,7 @@ HTML.
 
 .. contents::
     :local:
+    :depth: 2
 
 Loading this Helper
 ===================

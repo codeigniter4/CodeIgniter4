@@ -6,7 +6,8 @@ The Number Helper file contains functions that help you work with
 numeric data in a locale-aware manner.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

@@ -6,7 +6,8 @@ The Form Helper file contains functions that assist in working with
 forms.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

@@ -4,7 +4,7 @@ Upgrading from 4.1.4 to 4.1.5
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 Breaking Changes
 ================

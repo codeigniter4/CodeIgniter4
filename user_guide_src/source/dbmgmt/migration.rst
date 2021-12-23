@@ -15,7 +15,8 @@ state. You can also use ``$migration->setNamespace(null)->latest()`` to
 include migrations from all namespaces.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 ********************
 Migration file names

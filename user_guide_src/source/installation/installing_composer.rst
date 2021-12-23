@@ -3,7 +3,7 @@ Composer Installation
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 Composer can be used in several ways to install CodeIgniter4 on your system.
 

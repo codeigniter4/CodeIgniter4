@@ -7,6 +7,7 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 
 .. contents::
     :local:
+    :depth: 2
 
 Loading this Helper
 ===================

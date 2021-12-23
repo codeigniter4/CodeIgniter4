@@ -6,7 +6,8 @@ The Date Helper file contains functions that assist in working with
 dates.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

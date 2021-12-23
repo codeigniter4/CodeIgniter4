@@ -6,7 +6,8 @@ The Inflector Helper file contains functions that permit you to change
 **English** words to plural, singular, camel case, etc.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================
