@@ -304,6 +304,7 @@ methods:
     $where = "name={$name} AND status='boss' OR status='active'";
     $builder->where($where);
 
+.. _query-builder-where-subquery:
 #. **Subqueries:**
 
     ::
@@ -318,9 +319,7 @@ methods:
 
         // With builder directly
         $subQuery = $db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2)
-
         $builder->where('advance_amount <', $subQuery);
-
 
 **$builder->orWhere()**
 
@@ -350,7 +349,6 @@ You can use subqueries instead of an array of values::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
     $builder->whereIn('id', $subQuery);
 
 **$builder->orWhereIn()**
@@ -373,7 +371,6 @@ You can use subqueries instead of an array of values::
 
         // With builder directly
         $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
         $builder->orWhereIn('id', $subQuery);
 
 **$builder->whereNotIn()**
@@ -396,7 +393,6 @@ You can use subqueries instead of an array of values::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
     $builder->whereNotIn('id', $subQuery);
 
 **$builder->orWhereNotIn()**
@@ -419,7 +415,6 @@ You can use subqueries instead of an array of values::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-
     $builder->orWhereNotIn('id', $subQuery);
 
 ************************
@@ -561,7 +556,6 @@ You can use subqueries instead of an array of values.::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
     $builder->havingIn('id', $subQuery);
 
 **$builder->orHavingIn()**
@@ -586,7 +580,6 @@ You can use subqueries instead of an array of values.::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
     $builder->orHavingIn('id', $subQuery);
 
 **$builder->havingNotIn()**
@@ -611,7 +604,6 @@ You can use subqueries instead of an array of values.::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
     $builder->havingNotIn('id', $subQuery);
 
 **$builder->orHavingNotIn()**
@@ -636,7 +628,6 @@ You can use subqueries instead of an array of values.::
 
     // With builder directly
     $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-
     $builder->orHavingNotIn('id', $subQuery);
 
 **$builder->havingLike()**

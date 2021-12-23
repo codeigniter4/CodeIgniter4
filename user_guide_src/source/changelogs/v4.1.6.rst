@@ -33,6 +33,7 @@ Enhancements
 ************
 
 - Database pane on debug toolbar now displays location where Query was called from. Also displays full backtrace.
+- :ref:`Subqueries<query-builder-where-subquery>` in QueryBuilder can now be an instance of the BaseBuilder class.
 
 Changes
 *******
@@ -43,6 +44,7 @@ Deprecations
 ************
 
 - ``Seeder::faker()`` and ``Seeder::$faker`` are deprecated.
+- ``BaseBuilder::cleanClone()`` is deprecated.
 
 Sending Cookies
 ===============
