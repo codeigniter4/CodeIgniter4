@@ -284,8 +284,8 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Checks the datamap to see if this column name is being mapped,
-     * and returns the mapped name, if any, or the original name.
+     * Checks the datamap to see if this property name is being mapped,
+     * and returns the db column name, if any, or the original property name.
      *
      * @return mixed|string
      */
@@ -510,6 +510,10 @@ class Entity implements JsonSerializable
      */
     public function __isset(string $key): bool
     {
+        if ($this->isMappedDbColumn($key)) {
+            return false;
+        }
+
         $key = $this->mapProperty($key);
 
         $method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
@@ -526,6 +530,37 @@ class Entity implements JsonSerializable
      */
     public function __unset(string $key): void
     {
+        if ($this->isMappedDbColumn($key)) {
+            return;
+        }
+
+        $key = $this->mapProperty($key);
+
         unset($this->attributes[$key]);
+    }
+
+    /**
+     * Whether this key is mapped db column name?
+     */
+    protected function isMappedDbColumn(string $key): bool
+    {
+        $maybeColumnName = $this->mapProperty($key);
+
+        // Property name which has mapped column name
+        if (($key !== $maybeColumnName)) {
+            return false;
+        }
+
+        return $this->hasMappedProperty($key);
+    }
+
+    /**
+     * Whether this key has mapped property?
+     */
+    protected function hasMappedProperty(string $key): bool
+    {
+        $property = array_search($key, $this->datamap, true);
+
+        return $property !== false;
     }
 }
