@@ -35,7 +35,10 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-*
+* ``app/Config/Filters.php``
+* ``app/Config/Mimes.php``
+* ``app/Config/Security.php``
+* ``app/Config/Toolbar.php``
 
 All Changes
 ===========
@@ -43,4 +46,8 @@ All Changes
 This is a list of all files in the project space that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-*
+* ``app/Config/Filters.php``
+* ``app/Config/Mimes.php``
+* ``app/Config/Security.php``
+* ``app/Config/Toolbar.php``
+* ``app/Views/errors/html/error_exception.php``

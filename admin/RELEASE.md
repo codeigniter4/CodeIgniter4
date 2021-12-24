@@ -1,31 +1,30 @@
 # Release Process
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
-> Updated for `4.1.2` on May 17, 2021.
+>
+> Updated for `4.1.6` on December 24, 2021.
+>
 > -MGatner
 
-## Labeling PRs
+## Changelog
 
-To auto-generate changelog, each PR to be listed in changelog must have one of the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
+When generating the changelog each Pull Request to be included must have one of the following [labels](https://github.com/codeigniter4/CodeIgniter4/labels):
 - **bug** ... PRs that fix bugs
 - **enhancement** ... PRs to improve existing functionalities
 - **new feature** ... PRs for new features
 - **refactor** ... PRs to refactor
 
-And PRs that have the breaking changes must have the following label:
+PRs with breaking changes must have the following additional label:
 - **breaking change** ... PRs that may break existing functionalities
+
+To auto-generate, start drafting a new Release and use the "Auto-generate release notes" button.
+Copy the resulting content into **CHANGELOG.md** and adjust the format to match the existing content.
 
 ## Preparation
 
 * Work off direct clones of the repos so the release branches persist for a time
 * Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and resolve any necessary PRs
 * Vet the **admin/** folders for any removed hidden files (Action deploy scripts *do not remove these*)
-* Generate a new **CHANGELOG.md** ahead of time using [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator):
-```
-github_changelog_generator --user codeigniter4 --project codeigniter4 --since-tag v4.0.4 --future-release v4.0.5 --token {your_github_token}
-...or
-github_changelog_generator --user codeigniter4 --project codeigniter4 --since-commit "2021-02-01 13:26:28" --future-release v4.0.5 --token {your_github_token}
-```
 
 ## CodeIgniter4
 

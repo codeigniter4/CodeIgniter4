@@ -1,5 +1,65 @@
 # Changelog
 
+## [v4.1.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.6) (2021-12-24)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.5...v4.1.6)
+
+**Breaking Changes**
+
+* fix: Incorrect type `BaseBuilder::$tableName` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5378
+* fix: Validation cannot handle array item by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5405
+
+**Fixed Bugs**
+
+* fix: FileLocator cannot find files in sub-namespaces of the same vendor by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5292
+* fix: add a workaround for upgraded users who do not update Config\Exceptions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5314
+* Fix db escape negative integers by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5277
+* Fix: remove incorrect processing of CLI params by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5274
+* fix: table alias is prefixed when LIKE clause by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5361
+* fix: `dot_array_search()` unexpected array structure causes Type Error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5372
+* fix: UploadedFile::move() may return incorrect value by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5302
+* fix: BaseModel::insert() may not pass all the values from Entity by @katie1348 in https://github.com/codeigniter4/CodeIgniter4/pull/4980
+* fix: `IncomingRequest::getJsonVar()` may cause TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5392
+* chore: fix example test code for appstarter and module by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5421
+* fix: Model::save() may call unneeded countAllResults() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5439
+* fix: errors when MariaDB/MySQL has `ANSI_QUOTES` enabled by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5425
+* fix: Security class sends cookies immediately by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5429
+* fix: `is_cli()` returns `true` when `$_SERVER['HTTP_USER_AGENT']` is missing by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5393
+* fix: `MySQLi\Connection::_foreignKeyData()` may return duplicated rows by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5416
+* fix: `number_to_currency()` error on PHP 8.1 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5454
+* fix: VENDORPATH definition by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5453
+* fix: Throttler does not show correct token time by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5470
+* fix: directory_mirror() throws an error if destination directory exists by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5493
+
+**New Features**
+
+* feat: add filter to check invalid chars in user input by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5227
+
+**Enhancements**
+
+* Toolbar - Make it possible to turn off var data collection by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/5295
+* feat: add CSRF token randomization by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5283
+* Display file:line and trace information to database queries in debug toolbar by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/5334
+* feat: add SecureHeaders filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5419
+* Feature: BaseBuilder instance as subquery. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5488
+
+**Refactoring**
+
+* Do not inappropriately register bind when the value is a closure by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5247
+* refactor: replace $request->uri with $request->getUri() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5346
+* Determine if binds are simple or named by looking at the $binds array by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5138
+* Remove unneeded cast to array by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5379
+* Additional fix for deprecated `null` usage by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5388
+* refactor: dot_array_search() regex by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5443
+* refactor: Time::getDst() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5415
+* The View class. Optimizing duplicate code. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5455
+* refactor: fix `ThrottleTest::testFlooding` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5463
+* refactor: update deprecated method in DatetimeCast by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5474
+
+**New Contributors**
+
+* @katie1348 made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4980
+
 ## [v4.1.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.5) (2021-11-08)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.4...v4.1.5)
