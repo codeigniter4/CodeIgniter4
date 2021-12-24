@@ -865,16 +865,18 @@ class BaseBuilder
         $not = ($not) ? ' NOT' : '';
 
         if ($this->isSubquery($values)) {
-            $ok = $this->buildSubquery($values);
+            $whereIn = $this->buildSubquery($values, true);
+            $escape  = false;
         } else {
             $whereIn = array_values($values);
-            $ok      = $this->setBind($ok, $whereIn, $escape);
         }
+
+        $ok = $this->setBind($ok, $whereIn, $escape);
 
         $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
         $whereIn = [
-            'condition' => $prefix . $key . $not . ($this->isSubquery($values) ? " IN ({$ok})" : " IN :{$ok}:"),
+            'condition' => "{$prefix}{$key}{$not} IN :{$ok}:",
             'escape'    => false,
         ];
 
