@@ -693,9 +693,8 @@ class BaseBuilder
                     $op = ' =';
                 }
 
-                if ($v instanceof Closure) {
-                    $builder = $this->cleanClone();
-                    $v       = ' (' . strtr($v($builder)->getCompiledSelect(), "\n", ' ') . ')';
+                if ($this->isSubquery($v)) {
+                    $v = $this->buildSubquery($v, true);
                 } else {
                     $bind = $this->setBind($k, $v, $escape);
                     $v    = " :{$bind}:";
@@ -723,7 +722,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -736,7 +735,7 @@ class BaseBuilder
      * Generates a WHERE field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -749,7 +748,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -762,7 +761,7 @@ class BaseBuilder
      * Generates a WHERE field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -775,7 +774,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -788,7 +787,7 @@ class BaseBuilder
      * Generates a HAVING field IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -801,7 +800,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'AND' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -814,7 +813,7 @@ class BaseBuilder
      * Generates a HAVING field NOT IN('item', 'item') SQL query,
      * joined with 'OR' if appropriate.
      *
-     * @param array|Closure|string $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|string $values The values searched on, or anonymous function with subquery
      *
      * @return $this
      */
@@ -829,7 +828,7 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
-     * @param array|Closure|null $values The values searched on, or anonymous function with subquery
+     * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
      *
      * @throws InvalidArgumentException
      *
@@ -845,7 +844,7 @@ class BaseBuilder
             return $this; // @codeCoverageIgnore
         }
 
-        if ($values === null || (! is_array($values) && ! ($values instanceof Closure))) {
+        if ($values === null || (! is_array($values) && ! $this->isSubquery($values))) {
             if (CI_DEBUG) {
                 throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
             }
@@ -865,18 +864,19 @@ class BaseBuilder
 
         $not = ($not) ? ' NOT' : '';
 
-        if ($values instanceof Closure) {
-            $builder = $this->cleanClone();
-            $ok      = strtr($values($builder)->getCompiledSelect(), "\n", ' ');
+        if ($this->isSubquery($values)) {
+            $whereIn = $this->buildSubquery($values, true);
+            $escape  = false;
         } else {
             $whereIn = array_values($values);
-            $ok      = $this->setBind($ok, $whereIn, $escape);
         }
+
+        $ok = $this->setBind($ok, $whereIn, $escape);
 
         $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
 
         $whereIn = [
-            'condition' => $prefix . $key . $not . ($values instanceof Closure ? " IN ({$ok})" : " IN :{$ok}:"),
+            'condition' => "{$prefix}{$key}{$not} IN :{$ok}:",
             'escape'    => false,
         ];
 
@@ -2724,9 +2724,35 @@ class BaseBuilder
      * Returns a clone of a Base Builder with reset query builder values.
      *
      * @return $this
+     *
+     * @deprecated
      */
     protected function cleanClone()
     {
         return (clone $this)->from([], true)->resetQuery();
+    }
+
+    /**
+     * @param mixed $value
+     */
+    protected function isSubquery($value): bool
+    {
+        return $value instanceof BaseBuilder || $value instanceof Closure;
+    }
+
+    /**
+     * @param BaseBuilder|Closure $builder
+     * @param bool                $wrapped Wrap the subquery in brackets
+     */
+    protected function buildSubquery($builder, bool $wrapped = false): string
+    {
+        if ($builder instanceof Closure) {
+            $instance = (clone $this)->from([], true)->resetQuery();
+            $builder  = $builder($instance);
+        }
+
+        $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
+
+        return $wrapped ? '(' . $subquery . ')' : $subquery;
     }
 }
