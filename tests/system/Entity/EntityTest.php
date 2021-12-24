@@ -178,10 +178,10 @@ final class EntityTest extends CIUnitTestCase
     public function testDateMutationFromString()
     {
         $entity     = $this->getEntity();
-        $attributes = ['created_at' => '2017-07-15 13:23:34'];
+        $attributes = ['createdAt' => '2017-07-15 13:23:34'];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
-        $time = $entity->created_at;
+        $time = $entity->createdAt;
 
         $this->assertInstanceOf(Time::class, $time);
         $this->assertSame('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
@@ -191,10 +191,10 @@ final class EntityTest extends CIUnitTestCase
     {
         $stamp      = time();
         $entity     = $this->getEntity();
-        $attributes = ['created_at' => $stamp];
+        $attributes = ['createdAt' => $stamp];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
-        $time = $entity->created_at;
+        $time = $entity->createdAt;
 
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
@@ -204,10 +204,10 @@ final class EntityTest extends CIUnitTestCase
     {
         $dt         = new DateTime('now');
         $entity     = $this->getEntity();
-        $attributes = ['created_at' => $dt];
+        $attributes = ['createdAt' => $dt];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
-        $time = $entity->created_at;
+        $time = $entity->createdAt;
 
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
@@ -217,10 +217,10 @@ final class EntityTest extends CIUnitTestCase
     {
         $dt         = Time::now();
         $entity     = $this->getEntity();
-        $attributes = ['created_at' => $dt];
+        $attributes = ['createdAt' => $dt];
         $this->setPrivateProperty($entity, 'attributes', $attributes);
 
-        $time = $entity->created_at;
+        $time = $entity->createdAt;
 
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
@@ -230,9 +230,9 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getEntity();
 
-        $entity->created_at = '2017-07-15 13:23:34';
+        $entity->createdAt = '2017-07-15 13:23:34';
 
-        $time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
+        $time = $this->getPrivateProperty($entity, 'attributes')['createdAt'];
         $this->assertInstanceOf(Time::class, $time);
         $this->assertSame('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
     }
@@ -242,9 +242,9 @@ final class EntityTest extends CIUnitTestCase
         $stamp  = time();
         $entity = $this->getEntity();
 
-        $entity->created_at = $stamp;
+        $entity->createdAt = $stamp;
 
-        $time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
+        $time = $this->getPrivateProperty($entity, 'attributes')['createdAt'];
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
@@ -256,7 +256,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->created_at = $dt;
 
-        $time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
+        $time = $this->getPrivateProperty($entity, 'attributes')['createdAt'];
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
@@ -268,7 +268,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->created_at = $dt;
 
-        $time = $this->getPrivateProperty($entity, 'attributes')['created_at'];
+        $time = $this->getPrivateProperty($entity, 'attributes')['createdAt'];
         $this->assertInstanceOf(Time::class, $time);
         $this->assertCloseEnoughString($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
     }
@@ -719,16 +719,16 @@ final class EntityTest extends CIUnitTestCase
         $result = $entity->toArray(false, true, true);
 
         $this->assertSame([
-            'foo'     => null,
-            'bar'     => ':bar',
-            'default' => 'sumfin',
-            'entity'  => [
+            'foo'       => null,
+            'bar'       => ':bar',
+            'default'   => 'sumfin',
+            'createdAt' => null,
+            'entity'    => [
                 'foo'       => null,
                 'bar'       => ':bar',
                 'default'   => 'sumfin',
                 'createdAt' => null,
             ],
-            'createdAt' => null,
         ], $result);
     }
 
@@ -739,8 +739,8 @@ final class EntityTest extends CIUnitTestCase
         $result = $entity->toArray();
 
         $this->assertSame([
-            'bar'  => null,
-            'orig' => ':oo',
+            'foo'    => null,
+            'simple' => ':oo',
         ], $result);
     }
 
@@ -792,10 +792,10 @@ final class EntityTest extends CIUnitTestCase
         $result = $entity->toRawArray();
 
         $this->assertSame([
-            'foo'        => null,
-            'bar'        => null,
-            'default'    => 'sumfin',
-            'created_at' => null,
+            'foo'       => null,
+            'bar'       => null,
+            'default'   => 'sumfin',
+            'createdAt' => null,
         ], $result);
     }
 
@@ -807,15 +807,15 @@ final class EntityTest extends CIUnitTestCase
         $result = $entity->toRawArray(false, true);
 
         $this->assertSame([
-            'foo'        => null,
-            'bar'        => null,
-            'default'    => 'sumfin',
-            'created_at' => null,
-            'entity'     => [
-                'foo'        => null,
-                'bar'        => null,
-                'default'    => 'sumfin',
-                'created_at' => null,
+            'foo'       => null,
+            'bar'       => null,
+            'default'   => 'sumfin',
+            'createdAt' => null,
+            'entity'    => [
+                'foo'       => null,
+                'bar'       => null,
+                'default'   => 'sumfin',
+                'createdAt' => null,
             ],
         ], $result);
     }
@@ -926,19 +926,24 @@ final class EntityTest extends CIUnitTestCase
     {
         return new class () extends Entity {
             protected $attributes = [
-                'foo'        => null,
-                'bar'        => null,
-                'default'    => 'sumfin',
-                'created_at' => null,
+                'foo'       => null,
+                'bar'       => null,
+                'default'   => 'sumfin',
+                'createdAt' => null,
             ];
             protected $original = [
-                'foo'        => null,
-                'bar'        => null,
-                'default'    => 'sumfin',
-                'created_at' => null,
+                'foo'       => null,
+                'bar'       => null,
+                'default'   => 'sumfin',
+                'createdAt' => null,
             ];
             protected $datamap = [
                 'createdAt' => 'created_at',
+            ];
+            protected $dates = [
+                'createdAt',
+                'updated_at',
+                'deleted_at',
             ];
 
             public function setBar($value)
@@ -972,10 +977,10 @@ final class EntityTest extends CIUnitTestCase
                 'simple' => null,
             ];
 
-            // 'bar' is db column, 'foo' is internal representation
+            // 'foo' is internal representation, 'bar' is db column
             protected $datamap = [
-                'bar'  => 'foo',
-                'orig' => 'simple',
+                'foo'    => 'bar',
+                'simple' => 'orig',
             ];
 
             protected function setSimple(string $val)
@@ -1003,6 +1008,7 @@ final class EntityTest extends CIUnitTestCase
             ];
             protected $datamap = [
                 'bar'          => 'foo',
+                // @TODO Is it possible that one column has two properties?
                 'foo'          => 'bar',
                 'original_bar' => 'bar',
             ];

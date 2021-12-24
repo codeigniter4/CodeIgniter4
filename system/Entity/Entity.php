@@ -299,8 +299,9 @@ class Entity implements JsonSerializable
             return $key;
         }
 
-        if (! empty($this->datamap[$key])) {
-            return $this->datamap[$key];
+        $property = array_search($key, $this->datamap, true);
+        if ($property !== false) {
+            return $property;
         }
 
         return $key;
