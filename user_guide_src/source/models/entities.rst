@@ -267,7 +267,7 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
     {
         protected $attributes = [
             'id'         => null,
-            'name'       => null, // Represents a username
+            'full_name'  => null, // In the $attributes, the key is the column name
             'email'      => null,
             'password'   => null,
             'created_at' => null,
@@ -286,8 +286,8 @@ name of the column in the database.
 In this example, when the model sets the ``full_name`` field on the User class, it actually assigns that value to the
 class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will still be accessible
 through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
-to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
-``full_name``.
+to the database. However, ``unset()`` and ``isset()`` only work on the mapped property, ``$user->name``, not on the database column name,
+``$user->full_name``.
 
 Mutators
 ========
