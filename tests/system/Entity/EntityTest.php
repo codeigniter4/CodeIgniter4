@@ -151,9 +151,8 @@ final class EntityTest extends CIUnitTestCase
         // maps to 'foo'
         $entity->bar = 'here';
 
-        $attributes = $this->getPrivateProperty($entity, 'attributes');
-        $this->assertArrayHasKey('foo', $attributes);
-        $this->assertArrayNotHasKey('bar', $attributes);
+        $this->assertTrue(isset($entity->foo));
+        $this->assertTrue(isset($entity->bar));
     }
 
     public function testUnsetWorksWithMapping()
@@ -165,14 +164,16 @@ final class EntityTest extends CIUnitTestCase
         // doesn't work on original name
         unset($entity->bar);
 
+        $this->assertTrue(isset($entity->bar));
         $this->assertSame('here', $entity->bar);
+        $this->assertTrue(isset($entity->foo));
         $this->assertSame('here', $entity->foo);
 
         // does work on mapped field
         unset($entity->foo);
 
-        $this->assertNull($entity->foo);
-        $this->assertNull($entity->bar);
+        $this->assertFalse(isset($entity->foo));
+        $this->assertFalse(isset($entity->bar));
     }
 
     public function testDateMutationFromString()
@@ -1007,7 +1008,7 @@ final class EntityTest extends CIUnitTestCase
                 'bar' => 'bar',
             ];
             protected $datamap = [
-                'bar'          => 'foo',
+                'bar' => 'foo',
                 // @TODO Is it possible that one column has two properties?
                 'foo'          => 'bar',
                 'original_bar' => 'bar',
