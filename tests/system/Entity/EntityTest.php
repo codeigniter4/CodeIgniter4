@@ -146,7 +146,7 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('oo:second:oo', $entity->simple);
     }
 
-    public function testIssetWorksWithMapping()
+    public function testDataMappingIsset()
     {
         $entity = $this->getMappedEntity();
 
@@ -764,7 +764,7 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
-    public function testSwapped()
+    public function testDataMappingIssetSwapped()
     {
         $entity = $this->getSimpleSwappedEntity();
 
@@ -785,6 +785,23 @@ final class EntityTest extends CIUnitTestCase
             'foo' => '222',
             'bar' => '111',
         ], $result);
+    }
+
+    public function testDataMappingIssetUnsetSwapped()
+    {
+        $entity = $this->getSimpleSwappedEntity();
+
+        $entity->foo = '111';
+        $entity->bar = '222';
+        unset($entity->foo);
+
+        $isset = isset($entity->foo);
+        $this->assertFalse($isset);
+        $this->assertNull($entity->foo);
+
+        $isset = isset($entity->bar);
+        $this->assertTrue($isset);
+        $this->assertSame('222', $entity->bar);
     }
 
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
@@ -929,18 +946,18 @@ final class EntityTest extends CIUnitTestCase
         $this->assertFalse($entity->hasChanged('xxx'));
     }
 
-    public function testIssetKeyMap()
+    public function testDataMappingIssetSetGetMethod()
     {
-        $entity             = $this->getEntity();
+        $entity = $this->getEntity();
+
         $entity->created_at = '12345678';
-        $entity->bar        = 'foo';
 
         $issetReturn = isset($entity->createdAt);
-
         $this->assertTrue($issetReturn);
 
-        $issetReturn = isset($entity->FakeBar);
+        $entity->bar = 'foo';
 
+        $issetReturn = isset($entity->FakeBar);
         $this->assertTrue($issetReturn);
     }
 
