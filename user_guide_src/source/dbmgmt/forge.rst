@@ -151,7 +151,7 @@ Additionally, the following key/values can be used:
     ];
 
 After the fields have been defined, they can be added using
-``$forge->addField($fields);`` followed by a call to the
+``$forge->addField($fields)`` followed by a call to the
 ``createTable()`` method.
 
 **$forge->addField()**
