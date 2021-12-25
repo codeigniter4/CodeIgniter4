@@ -71,6 +71,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SKIP, [
         __DIR__ . '/app/Views',
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
+        __DIR__ . '/system/Debug/Kint/RichRenderer.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/_support',
