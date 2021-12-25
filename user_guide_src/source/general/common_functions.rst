@@ -309,7 +309,7 @@ Miscellaneous Functions
         // Go back to the previous page
         return redirect()->back();
 
-        // Go to specific UI
+        // Go to specific URI
         return redirect()->to('/admin');
 
         // Go to a named/reverse-routed URI
