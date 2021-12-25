@@ -13,7 +13,7 @@ Initializing the Forge Class
 ****************************
 
 .. important:: In order to initialize the Forge class, your database
-    driver must already be running, since the forge class relies on it.
+    driver must already be running, since the Forge class relies on it.
 
 Load the Forge Class as follows::
 
@@ -91,7 +91,7 @@ There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
 mechanism for this.
 
-Adding fields
+Adding Fields
 =============
 
 Fields are normally created via an associative array. Within the array, you must
@@ -243,7 +243,7 @@ You can specify the desired action for the "on delete" and "on update" propertie
     $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name'], 'CASCADE', 'CASCADE');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`) ON DELETE CASCADE ON UPDATE CASCADE
 
-Creating a table
+Creating a Table
 ================
 
 After fields and keys have been declared, you can create a new table
@@ -272,7 +272,7 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``::
     ``createTable()`` will always add them with your configured *charset*
     and *DBCollat* values, as long as they are not empty (MySQL only).
 
-Dropping a table
+Dropping a Table
 ================
 
 Execute a ``DROP TABLE`` statement and optionally add an ``IF EXISTS`` clause.
@@ -314,7 +314,7 @@ Execute a DROP KEY.
     // Produces: DROP INDEX `users_index` ON `tablename`
     $forge->dropKey('tablename', 'users_index');
 
-Renaming a table
+Renaming a Table
 ================
 
 Executes a TABLE rename
@@ -419,7 +419,7 @@ Class Reference
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
-                Adds a field to the set that will be used to create a table. Usage:  See `Adding fields`_.
+                Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = ''])
 
@@ -476,7 +476,7 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Creates a new table. Usage:  See `Creating a table`_.
+        Creates a new table. Usage:  See `Creating a Table`_.
 
     .. php:method:: dropColumn($table, $column_name)
 
@@ -502,7 +502,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a table. Usage:  See `Dropping a table`_.
+        Drops a table. Usage:  See `Dropping a Table`_.
 
     .. php:method:: modifyColumn($table, $field)
 
@@ -520,4 +520,4 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Renames a table. Usage:  See `Renaming a table`_.
+        Renames a table. Usage:  See `Renaming a Table`_.
