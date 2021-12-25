@@ -312,7 +312,7 @@ Miscellaneous Functions
         // Go to specific URI
         return redirect()->to('/admin');
 
-        // Go to a named/reverse-routed URI
+        // Go to a named route
         return redirect()->route('named_route');
 
         // Keep the old input values upon redirect so they can be used by the `old()` function
