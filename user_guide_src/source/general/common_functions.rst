@@ -328,7 +328,7 @@ Miscellaneous Functions
         return redirect()->back()->withHeaders();
 
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using redirect()->route()::
+    treating it the same as using ``redirect()->route()``::
 
         // Go to a named/reverse-routed URI
         return redirect('named_route');
