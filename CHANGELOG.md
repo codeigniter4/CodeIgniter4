@@ -37,6 +37,7 @@
 
 **Enhancements**
 
+* Add support for PHP 8.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4883
 * Toolbar - Make it possible to turn off var data collection by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/5295
 * feat: add CSRF token randomization by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5283
 * Display file:line and trace information to database queries in debug toolbar by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/5334
