@@ -242,18 +242,18 @@ class DatabaseHandler extends BaseHandler
     }
 
     /**
-     * Cleans up expired sessions.
-     *
-     * @param int $max_lifetime Sessions that have not updated
-     *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
-     */
+    * Cleans up expired sessions.
+    *
+    * @param int $maxLifetime Sessions that have not updated
+                            for the last max_lifetime seconds will be removed.
+    *
+    * @return false|int Returns the number of deleted sessions on success, or false on failure.
+    */
     #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($maxLifetime)
     {
         $separator = $this->platform === 'postgre' ? '\'' : ' ';
-        $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
+        $interval  = implode($separator, ['', "{$maxLifetime} second", '']);
 
         return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
     }

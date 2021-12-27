@@ -781,7 +781,7 @@ class RouteCollection implements RouteCollectionInterface
             }
         }
 
-        $as = (isset($options['as'])) ? $options['as'] : null;
+        $as = $options['as'] ?? null;
 
         if (in_array('index', $methods, true)) {
             $options['as'] = (isset($options['as'])) ? $as . '.index' : null;

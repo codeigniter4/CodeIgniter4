@@ -260,15 +260,15 @@ class FileHandler extends BaseHandler
     }
 
     /**
-     * Cleans up expired sessions.
-     *
-     * @param int $max_lifetime Sessions that have not updated
-     *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
-     */
+    * Cleans up expired sessions.
+    *
+    * @param int $maxLifetime Sessions that have not updated
+                            for the last max_lifetime seconds will be removed.
+    *
+    * @return false|int Returns the number of deleted sessions on success, or false on failure.
+    */
     #[ReturnTypeWillChange]
-    public function gc($max_lifetime)
+    public function gc($maxLifetime)
     {
         if (! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false) {
             $this->logger->debug("Session: Garbage collector couldn't list files under directory '" . $this->savePath . "'.");
@@ -276,7 +276,7 @@ class FileHandler extends BaseHandler
             return false;
         }
 
-        $ts = time() - $max_lifetime;
+        $ts = time() - $maxLifetime;
 
         $pattern = $this->matchIP === true ? '[0-9a-f]{32}' : '';
 
