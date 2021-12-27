@@ -309,10 +309,10 @@ Miscellaneous Functions
         // Go back to the previous page
         return redirect()->back();
 
-        // Go to specific UI
+        // Go to specific URI
         return redirect()->to('/admin');
 
-        // Go to a named/reverse-routed URI
+        // Go to a named route
         return redirect()->route('named_route');
 
         // Keep the old input values upon redirect so they can be used by the `old()` function
@@ -328,7 +328,7 @@ Miscellaneous Functions
         return redirect()->back()->withHeaders();
 
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using redirect()->route()::
+    treating it the same as using ``redirect()->route()``::
 
         // Go to a named/reverse-routed URI
         return redirect('named_route');
