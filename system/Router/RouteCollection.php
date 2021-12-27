@@ -229,7 +229,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function addPlaceholder($placeholder, ?string $pattern = null): RouteCollectionInterface
     {
-        if (! is_array($placeholder)) {
+        if (!is_array($placeholder)) {
             $placeholder = [$placeholder => $pattern];
         }
 
@@ -781,30 +781,41 @@ class RouteCollection implements RouteCollectionInterface
             }
         }
 
+        $as = (isset($options['as'])) ? $options['as'] : null;
+
         if (in_array('index', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.index' : null;
             $this->get($name, $newName . '::index', $options);
         }
         if (in_array('show', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.show' : null;
             $this->get($name . '/show/' . $id, $newName . '::show/$1', $options);
         }
         if (in_array('new', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.new' : null;
             $this->get($name . '/new', $newName . '::new', $options);
         }
         if (in_array('create', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.create' : null;
             $this->post($name . '/create', $newName . '::create', $options);
         }
         if (in_array('edit', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.edit' : null;
             $this->get($name . '/edit/' . $id, $newName . '::edit/$1', $options);
         }
         if (in_array('update', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.update' : null;
             $this->post($name . '/update/' . $id, $newName . '::update/$1', $options);
         }
         if (in_array('remove', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.remove' : null;
             $this->get($name . '/remove/' . $id, $newName . '::remove/$1', $options);
         }
         if (in_array('delete', $methods, true)) {
+            $options['as'] = (isset($options['as'])) ? $as . '.delete' : null;
             $this->post($name . '/delete/' . $id, $newName . '::delete/$1', $options);
         }
+        unset($options['as']);
         if (in_array('show', $methods, true)) {
             $this->get($name . '/' . $id, $newName . '::show/$1', $options);
         }
@@ -982,7 +993,7 @@ class RouteCollection implements RouteCollectionInterface
                 $to   = $route['route'][$from];
 
                 // ignore closures
-                if (! is_string($to)) {
+                if (!is_string($to)) {
                     continue;
                 }
 
@@ -1088,7 +1099,7 @@ class RouteCollection implements RouteCollectionInterface
         // Build our resulting string, inserting the $params in
         // the appropriate places.
         foreach ($matches[0] as $index => $pattern) {
-            if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
+            if (!preg_match('#^' . $pattern . '$#u', $params[$index])) {
                 throw RouterException::forInvalidParameterType();
             }
 
@@ -1133,7 +1144,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Hostname limiting?
-        if (! empty($options['hostname'])) {
+        if (!empty($options['hostname'])) {
             // @todo determine if there's a way to whitelist hosts?
             if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname'])) {
                 return;
@@ -1143,10 +1154,10 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Limiting to subdomains?
-        elseif (! empty($options['subdomain'])) {
+        elseif (!empty($options['subdomain'])) {
             // If we don't match the current subdomain, then
             // we don't need to add the route.
-            if (! $this->checkSubdomains($options['subdomain'])) {
+            if (!$this->checkSubdomains($options['subdomain'])) {
                 return;
             }
 
@@ -1179,7 +1190,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // If is redirect, No processing
-        if (! isset($options['redirect']) && is_string($to)) {
+        if (!isset($options['redirect']) && is_string($to)) {
             // If no namespace found, add the default namespace
             if (strpos($to, '\\') === false || strpos($to, '\\') > 0) {
                 $namespace = $options['namespace'] ?? $this->defaultNamespace;
@@ -1197,7 +1208,7 @@ class RouteCollection implements RouteCollectionInterface
         // routes should always be the "source of truth".
         // this works only because discovered routes are added just prior
         // to attempting to route the request.
-        if (isset($this->routes[$verb][$name]) && ! $overwrite) {
+        if (isset($this->routes[$verb][$name]) && !$overwrite) {
             return;
         }
 
@@ -1222,7 +1233,7 @@ class RouteCollection implements RouteCollectionInterface
     private function checkSubdomains($subdomains): bool
     {
         // CLI calls can't be on subdomain.
-        if (! isset($_SERVER['HTTP_HOST'])) {
+        if (!isset($_SERVER['HTTP_HOST'])) {
             return false;
         }
 
@@ -1230,13 +1241,13 @@ class RouteCollection implements RouteCollectionInterface
             $this->currentSubdomain = $this->determineCurrentSubdomain();
         }
 
-        if (! is_array($subdomains)) {
+        if (!is_array($subdomains)) {
             $subdomains = [$subdomains];
         }
 
         // Routes can be limited to any sub-domain. In that case, though,
         // it does require a sub-domain to be present.
-        if (! empty($this->currentSubdomain) && in_array('*', $subdomains, true)) {
+        if (!empty($this->currentSubdomain) && in_array('*', $subdomains, true)) {
             return true;
         }
 
