@@ -807,10 +807,10 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
 
-<span class="c1">// Go to specific UI</span>
+<span class="c1">// Go to specific URI</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">);</span>
 
-<span class="c1">// Go to a named/reverse-routed URI</span>
+<span class="c1">// Go to a named route</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
 
 <span class="c1">// Keep the old input values upon redirect so they can be used by the `old()` function</span>
@@ -827,7 +827,7 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 </pre></div>
 </div>
 <p>When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-treating it the same as using redirect()-&gt;route():</p>
+treating it the same as using <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
 </pre></div>
