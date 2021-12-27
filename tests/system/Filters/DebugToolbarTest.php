@@ -47,9 +47,6 @@ final class DebugToolbarTest extends CIUnitTestCase
 
         $expectedBefore = $this->request;
         $expectedAfter  = $this->response;
-
-        // nothing should change here, since we have no before logic
-        $filter->before($this->request);
         $this->assertSame($expectedBefore, $this->request);
 
         // nothing should change here, since we are running in the CLI

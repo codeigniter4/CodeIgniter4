@@ -23,7 +23,6 @@ final class DummyHandlerTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->handler = new DummyHandler();
-        $this->handler->initialize();
     }
 
     public function testNew()

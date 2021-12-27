@@ -48,7 +48,6 @@ final class FileHandlerTest extends AbstractHandlerTest
         }
 
         $this->handler = new FileHandler($this->config);
-        $this->handler->initialize();
     }
 
     protected function tearDown(): void
@@ -89,7 +88,6 @@ final class FileHandlerTest extends AbstractHandlerTest
         $config->file['storePath'] = null;
 
         $this->handler = new FileHandler($config);
-        $this->handler->initialize();
 
         $this->assertInstanceOf(FileHandler::class, $this->handler);
     }
@@ -273,7 +271,6 @@ final class FileHandlerTest extends AbstractHandlerTest
         $config->file['mode'] = $int;
 
         $this->handler = new FileHandler($config);
-        $this->handler->initialize();
 
         $this->handler->save(self::$key1, 'value');
 
