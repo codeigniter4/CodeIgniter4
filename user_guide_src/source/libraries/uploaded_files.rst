@@ -272,7 +272,7 @@ In controller::
         }
     }
 
-where the **images** is a loop from the form field name
+where the ``images`` is a loop from the form field name.
 
 If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually::
 In controller::
