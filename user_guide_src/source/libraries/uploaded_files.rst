@@ -231,7 +231,7 @@ Single File
 If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
 Simplest usage
-^^^^^^^^^^^^^^
+--------------
 
 With the simplest usage, a single file might be submitted like::
 
@@ -242,7 +242,7 @@ Which would return a simple file instance like::
     $file = $this->request->getFile('userfile');
 
 Array notation
-^^^^^^^^^^^^^^
+--------------
 
 If you used an array notation for the name, the input would look something like::
 
@@ -253,7 +253,8 @@ For get the file instance::
     $file = $this->request->getFile('my-form.details.avatar');
 
 Multiple files
-^^^^^^^^^^^^^^
+==============
+
 ::
 
     <input type="file" name="images[]" multiple />
