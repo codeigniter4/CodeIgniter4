@@ -274,7 +274,8 @@ In controller::
 
 where the ``images`` is a loop from the form field name.
 
-If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually::
+If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually.
+
 In controller::
 
     $file1 = $this->request->getFile('images.0');
