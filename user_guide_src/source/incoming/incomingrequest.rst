@@ -316,6 +316,8 @@ multi-file upload, based on the filename given in the HTML file input::
 
     $files = $request->getFileMultiple('userfile');
 
+.. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
+
 Content Negotiation
 -------------------
 

@@ -194,6 +194,8 @@ Which would return a simple array like::
         'avatar' => // UploadedFile instance
     ]
 
+.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
+
 If you used an array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]" />
@@ -302,7 +304,9 @@ Working With the File
 Once you've retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
 move the file to a new location.
 
-Verify A File
+.. _verify-a-file:
+
+Verify a File
 =============
 
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method::
