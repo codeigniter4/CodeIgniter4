@@ -293,8 +293,8 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile')) {
-        $file = $files->getFile('uploadedfile');
+    if ($files->hasFile('userfile')) {
+        $file = $files->getFile('userfile');
 
         // Generate a new secure name
         $name = $file->getRandomName();
@@ -309,12 +309,12 @@ and uses best practices to minimize any security risks.
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
-    $file = $request->getFile('uploadedfile');
+    $file = $request->getFile('userfile');
 
 You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input::
 
-    $files = $request->getFileMultiple('uploadedfile');
+    $files = $request->getFileMultiple('userfile');
 
 Content Negotiation
 -------------------
