@@ -264,7 +264,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|string $tableName tablename or tablenames with or without aliases
+     * @param array|BaseBuilder|Closure|string $tableName tablename or tablenames with or without aliases
      *
      * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
@@ -515,7 +515,7 @@ class BaseBuilder
     /**
      * Generates the FROM portion of the query
      *
-     * @param array|string $from
+     * @param array|BaseBuilder|Closure|string $from
      *
      * @return $this
      */
@@ -526,22 +526,40 @@ class BaseBuilder
             $this->db->setAliasedTables([]);
         }
 
+        $tableProcessing = function (string $table, bool $protectIdentifiers = true): void {
+            $table = trim($table);
+            $this->trackAliases($table);
+
+            $this->QBFrom[] = $protectIdentifiers
+                ? $this->db->protectIdentifiers($table, true, null, false)
+                : $table;
+        };
+
+        if (is_array($from) && count($from) === 2 || $this->isSubquery($from)) {
+            [$table, $alias] = is_array($from) ? $from : [$from, ''];
+            if ($this->isSubquery($table)) {
+                if ($this->QBFrom !== [] && $alias === '') {
+                    throw new DatabaseException('Subquery must have an alias');
+                }
+
+                $table = $this->buildSubquery($table, true, $alias);
+                $tableProcessing($table, false);
+
+                return $this;
+            }
+        }
+
         foreach ((array) $from as $val) {
+            if (! is_string($val)) {
+                throw new DatabaseException('Table name must be string or instance of the BaseBuilder');
+            }
+
             if (strpos($val, ',') !== false) {
                 foreach (explode(',', $val) as $v) {
-                    $v = trim($v);
-                    $this->trackAliases($v);
-
-                    $this->QBFrom[] = $this->db->protectIdentifiers($v, true, null, false);
+                    $tableProcessing($v);
                 }
             } else {
-                $val = trim($val);
-
-                // Extract any aliases that might exist. We use this information
-                // in the protectIdentifiers to know whether to add a table prefix
-                $this->trackAliases($val);
-
-                $this->QBFrom[] = $this->db->protectIdentifiers($val, true, null, false);
+                $tableProcessing($val);
             }
         }
 
@@ -2744,7 +2762,7 @@ class BaseBuilder
      * @param BaseBuilder|Closure $builder
      * @param bool                $wrapped Wrap the subquery in brackets
      */
-    protected function buildSubquery($builder, bool $wrapped = false): string
+    protected function buildSubquery($builder, bool $wrapped = false, string $alias = ''): string
     {
         if ($builder instanceof Closure) {
             $instance = (clone $this)->from([], true)->resetQuery();
@@ -2753,6 +2771,14 @@ class BaseBuilder
 
         $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
 
-        return $wrapped ? '(' . $subquery . ')' : $subquery;
+        if ($wrapped) {
+            $subquery = '(' . $subquery . ')';
+
+            if ($alias !== '') {
+                $subquery .= " AS {$alias}";
+            }
+        }
+
+        return $subquery;
     }
 }

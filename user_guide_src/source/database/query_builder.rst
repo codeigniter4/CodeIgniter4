@@ -210,6 +210,26 @@ Permits you to write the FROM portion of your query::
     in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
     to the FROM portion of your query.
 
+#. **Subqueries:**
+
+In special cases, you can compose a database query using subqueries::
+
+    $subquery = $db->table('users);
+    $builder  = $db->table($subquery);
+    $query = $builder->get();
+
+    // Produces: SELECT * FROM (SELECT * FROM users)
+
+You can specify an alias for a subquery by passing an array the first value of which will be the subquery, and the second an alias.::
+
+    $subquery = $db->table('users)->select('id, name');
+    $builder  = $db->table([$subquery, 't']);
+    $query = $builder->get();
+
+    // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
+
+.. note:: Only one subquery can be passed to a method.
+
 **$builder->join()**
 
 Permits you to write the JOIN portion of your query::
@@ -1394,7 +1414,7 @@ Class Reference
 
     .. php:method:: from($from[, $overwrite = false])
 
-        :param mixed $from: Table name(s); string or array
+        :param mixed $from: Table name(s); string, array or BaseBuilder
         :param bool    $overwrite: Should we remove the first table existing?
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``

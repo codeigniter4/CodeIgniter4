@@ -68,7 +68,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = $this->getFullName($value);
+            $from[] = strpos($value, '(SELECT') === 0 ? $value : $this->getFullName($value);
         }
 
         return implode(', ', $from);

@@ -837,7 +837,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|string $tableName
+     * @param array|BaseBuilder|Closure|string $tableName
      *
      * @throws DatabaseException
      *
