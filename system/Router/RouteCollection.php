@@ -169,9 +169,9 @@ class RouteCollection implements RouteCollectionInterface
      * Stores copy of current options being
      * applied during creation.
      *
-     * @var array|null
+     * @var array
      */
-    protected $currentOptions;
+    protected $currentOptions = [];
 
     /**
      * A little performance booster.
@@ -495,7 +495,7 @@ class RouteCollection implements RouteCollectionInterface
      * It does not allow any options to be set on the route, or to
      * define the method used.
      */
-    public function map(array $routes = [], ?array $options = null): RouteCollectionInterface
+    public function map(array $routes = [], array $options = []): RouteCollectionInterface
     {
         foreach ($routes as $from => $to) {
             $this->add($from, $to, $options);
@@ -512,7 +512,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function add(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('*', $from, $to, $options);
 
@@ -652,10 +652,10 @@ class RouteCollection implements RouteCollectionInterface
      *      POST		/photos/{id}/delete delete
      *      POST        /photos/{id}        update
      *
-     * @param string     $name    The name of the resource/controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param string $name    The name of the resource/controller to route to.
+     * @param array  $options An list of possible ways to customize the routing.
      */
-    public function resource(string $name, ?array $options = null): RouteCollectionInterface
+    public function resource(string $name, array $options = []): RouteCollectionInterface
     {
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
@@ -746,10 +746,10 @@ class RouteCollection implements RouteCollectionInterface
      *      GET         /photos/remove/{id} remove          show a form to confirm deletion of a specific photo object
      *      POST        /photos/delete/{id} delete          deleting the specified photo object
      *
-     * @param string     $name    The name of the controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param string $name    The name of the controller to route to.
+     * @param array  $options An list of possible ways to customize the routing.
      */
-    public function presenter(string $name, ?array $options = null): RouteCollectionInterface
+    public function presenter(string $name, array $options = []): RouteCollectionInterface
     {
         // In order to allow customization of the route the
         // resources are sent to, we need to have a new name
@@ -769,7 +769,9 @@ class RouteCollection implements RouteCollectionInterface
         // Make sure we capture back-references
         $id = '(' . trim($id, '()') . ')';
 
-        $methods = isset($options['only']) ? (is_string($options['only']) ? explode(',', $options['only']) : $options['only']) : ['index', 'show', 'new', 'create', 'edit', 'update', 'remove', 'delete'];
+        $methods = isset($options['only'])
+            ? (is_string($options['only']) ? explode(',', $options['only']) : $options['only'])
+            : ['index', 'show', 'new', 'create', 'edit', 'update', 'remove', 'delete'];
 
         if (isset($options['except'])) {
             $options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
@@ -823,7 +825,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
+    public function match(array $verbs = [], string $from = '', $to = '', array $options = []): RouteCollectionInterface
     {
         if (empty($from) || empty($to)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
@@ -843,7 +845,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function get(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('get', $from, $to, $options);
 
@@ -855,7 +857,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function post(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('post', $from, $to, $options);
 
@@ -867,7 +869,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function put(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('put', $from, $to, $options);
 
@@ -879,7 +881,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function delete(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('delete', $from, $to, $options);
 
@@ -891,7 +893,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function head(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('head', $from, $to, $options);
 
@@ -903,7 +905,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function patch(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('patch', $from, $to, $options);
 
@@ -915,7 +917,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function options(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('options', $from, $to, $options);
 
@@ -927,7 +929,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
+    public function cli(string $from, $to, array $options = []): RouteCollectionInterface
     {
         $this->create('cli', $from, $to, $options);
 
@@ -1108,7 +1110,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param array|Closure|string $to
      */
-    protected function create(string $verb, string $from, $to, ?array $options = null)
+    protected function create(string $verb, string $from, $to, array $options = [])
     {
         $overwrite = false;
         $prefix    = $this->group === null ? '' : $this->group . '/';
@@ -1121,7 +1123,7 @@ class RouteCollection implements RouteCollectionInterface
             $from = trim($from, '/');
         }
 
-        $options = array_merge($this->currentOptions ?? [], $options ?? []);
+        $options = array_merge($this->currentOptions, $options);
 
         // Route priority detect
         if (isset($options['priority'])) {
