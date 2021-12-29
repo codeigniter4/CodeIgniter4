@@ -345,6 +345,21 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
+    public function testCustomLogsCorrectly()
+    {
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        $expected = 'CUSTOM - ' . date('Y-m-d') . ' --> Test message';
+
+        $logger->log('custom', 'Test message');
+
+        $logs = TestHandler::getLogs();
+
+        $this->assertCount(1, $logs);
+        $this->assertSame($expected, $logs[0]);
+    }
+
     public function testLogLevels()
     {
         $config = new LoggerConfig();

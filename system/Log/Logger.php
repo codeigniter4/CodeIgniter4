@@ -81,7 +81,7 @@ class Logger implements LoggerInterface
     /**
      * Caches instances of the handlers.
      *
-     * @var array
+     * @var HandlerInterface[]
      */
     protected $handlers = [];
 
@@ -252,13 +252,8 @@ class Logger implements LoggerInterface
             $level = array_search((int) $level, $this->logLevels, true);
         }
 
-        // Is the level a valid level?
-        if (! array_key_exists($level, $this->logLevels)) {
-            throw LogException::forInvalidLogLevel($level);
-        }
-
-        // Does the app want to log this right now?
-        if (! in_array($level, $this->loggableLevels, true)) {
+        // Is the level a valid level and Does the app want to log this right now?
+        if (array_key_exists($level, $this->logLevels) && ! in_array($level, $this->loggableLevels, true)) {
             return false;
         }
 
@@ -276,20 +271,25 @@ class Logger implements LoggerInterface
             ];
         }
 
+        $handlers = [];
+
         foreach ($this->handlerConfig as $className => $config) {
             if (! array_key_exists($className, $this->handlers)) {
                 $this->handlers[$className] = new $className($config);
             }
 
-            /**
-             * @var HandlerInterface $handler
-             */
             $handler = $this->handlers[$className];
 
-            if (! $handler->canHandle($level)) {
-                continue;
+            if ($handler->canHandle($level)) {
+                $handlers[] = $handler;
             }
+        }
 
+        if (! in_array($level, $this->loggableLevels, true) && empty($handlers)) {
+            throw LogException::forInvalidLogLevel($level);
+        }
+
+        foreach ($handlers as $handler) {
             // If the handler returns false, then we
             // don't execute any other handlers.
             if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {

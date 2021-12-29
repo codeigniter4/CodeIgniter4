@@ -92,6 +92,7 @@ class MockLogger
                 'info',
                 'notice',
                 'warning',
+                'custom',
             ],
 
             // Logging Directory Path
