@@ -114,10 +114,6 @@ jobs:
         if: matrix.db-platforms == 'OCI8'
         run: echo -e "ALTER SESSION SET CONTAINER = XEPDB1;\nCREATE BIGFILE TABLESPACE \"TEST\" DATAFILE '/opt/oracle/product/18c/dbhomeXE/dbs/TEST' SIZE 10M AUTOEXTEND ON MAXSIZE UNLIMITED SEGMENT SPACE MANAGEMENT AUTO EXTENT MANAGEMENT LOCAL AUTOALLOCATE;\nCREATE USER \"ORACLE\" IDENTIFIED BY \"ORACLE\" DEFAULT TABLESPACE \"TEST\" TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON \"TEST\";\nGRANT CONNECT,RESOURCE TO \"ORACLE\";\nexit;" | /lib/oracle/18.5/client64/bin/sqlplus -s sys/Oracle18@localhost:1521/XE as sysdba
 
-      - name: Create stored procedure for Oracle Database
-        if: matrix.db-platforms == 'OCI8'
-        run: echo -e "CREATE OR REPLACE PACKAGE calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER); END;\n/\nCREATE OR REPLACE PACKAGE BODY calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER) IS BEGIN result := left + right; END plus; END calculator;\n/\nCREATE OR REPLACE PROCEDURE plus(left IN NUMBER, right IN NUMBER, output OUT NUMBER) IS BEGIN output := left  + right; END;\n/\n\n" | /lib/oracle/18.5/client64/bin/sqlplus -s ORACLE/ORACLE@localhost:1521/XEPDB1
-
       - name: Checkout
         uses: actions/checkout@v2
 

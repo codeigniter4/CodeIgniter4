@@ -189,10 +189,6 @@ class Connection extends BaseConnection implements ConnectionInterface
     {
         try {
             if ($this->resetStmtId === true) {
-                $sql = rtrim($sql, ';');
-                if (strpos(ltrim($sql), 'BEGIN') === 0) {
-                    $sql .= ';';
-                }
                 $this->stmtId = oci_parse($this->connID, $sql);
             }
 
