@@ -552,8 +552,8 @@ and uses best practices to minimize any security risks.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">();</span>
 
 <span class="c1">// Grab the file by name given in HTML form</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$files</span><span class="o">-&gt;</span><span class="na">hasFile</span><span class="p">(</span><span class="s1">&#39;uploadedFile&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;uploadedfile&#39;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$files</span><span class="o">-&gt;</span><span class="na">hasFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 
     <span class="c1">// Generate a new secure name</span>
     <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
@@ -568,13 +568,17 @@ and uses best practices to minimize any security risks.</p>
 </pre></div>
 </div>
 <p>You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;uploadedfile&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">&#39;uploadedfile&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFileMultiple</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The files here correspond to <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code>. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the <code class="docutils literal notranslate"><span class="pre">isValid()</span></code> method in UploadedFile. See <a class="reference internal" href="../libraries/uploaded_files.html#verify-a-file"><span class="std std-ref">Verify a File</span></a> for more details.</p>
 </div>
 </section>
 <section id="content-negotiation">
@@ -961,7 +965,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 27, 2021.
+      <span class="lastupdated">Last updated on Dec 29, 2021.
       </span></p>
   </div>
 
