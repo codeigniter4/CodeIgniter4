@@ -23,6 +23,8 @@ final class CallStoredProcedureTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    protected $refresh = true;
+
     protected function setUp(): void
     {
         parent::setUp();
