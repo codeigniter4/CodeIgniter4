@@ -214,7 +214,7 @@ Permits you to write the FROM portion of your query::
 
 In special cases, you can compose a database query using subqueries::
 
-    $subquery = $db->table('users);
+    $subquery = $db->table('users');
     $builder  = $db->table($subquery);
     $query = $builder->get();
 
@@ -222,7 +222,7 @@ In special cases, you can compose a database query using subqueries::
 
 You can specify an alias for a subquery by passing an array the first value of which will be the subquery, and the second an alias.::
 
-    $subquery = $db->table('users)->select('id, name');
+    $subquery = $db->table('users')->select('id, name');
     $builder  = $db->table([$subquery, 't']);
     $query = $builder->get();
 

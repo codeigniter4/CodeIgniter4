@@ -2761,6 +2761,7 @@ class BaseBuilder
     /**
      * @param BaseBuilder|Closure $builder
      * @param bool                $wrapped Wrap the subquery in brackets
+     * @param string              $alias   Subquery alias
      */
     protected function buildSubquery($builder, bool $wrapped = false, string $alias = ''): string
     {
