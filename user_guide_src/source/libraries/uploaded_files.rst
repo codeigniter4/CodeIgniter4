@@ -194,6 +194,8 @@ Which would return a simple array like::
         'avatar' => // UploadedFile instance
     ]
 
+.. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
+
 If you used an array notation for the name, the input would look something like::
 
     <input type="file" name="my-form[details][avatar]" />
@@ -231,7 +233,7 @@ Single File
 If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
 Simplest usage
-^^^^^^^^^^^^^^
+--------------
 
 With the simplest usage, a single file might be submitted like::
 
@@ -242,7 +244,7 @@ Which would return a simple file instance like::
     $file = $this->request->getFile('userfile');
 
 Array notation
-^^^^^^^^^^^^^^
+--------------
 
 If you used an array notation for the name, the input would look something like::
 
@@ -253,7 +255,8 @@ For get the file instance::
     $file = $this->request->getFile('my-form.details.avatar');
 
 Multiple files
-^^^^^^^^^^^^^^
+==============
+
 ::
 
     <input type="file" name="images[]" multiple />
@@ -269,9 +272,10 @@ In controller::
         }
     }
 
-where the **images** is a loop from the form field name
+where the ``images`` is a loop from the form field name.
 
-If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually::
+If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually.
+
 In controller::
 
     $file1 = $this->request->getFile('images.0');
@@ -301,7 +305,9 @@ Working With the File
 Once you've retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
 move the file to a new location.
 
-Verify A File
+.. _verify-a-file:
+
+Verify a File
 =============
 
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method::

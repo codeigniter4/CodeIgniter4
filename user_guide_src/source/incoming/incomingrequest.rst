@@ -293,8 +293,8 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile')) {
-        $file = $files->getFile('uploadedfile');
+    if ($files->hasFile('userfile')) {
+        $file = $files->getFile('userfile');
 
         // Generate a new secure name
         $name = $file->getRandomName();
@@ -309,12 +309,14 @@ and uses best practices to minimize any security risks.
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
-    $file = $request->getFile('uploadedfile');
+    $file = $request->getFile('userfile');
 
 You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input::
 
-    $files = $request->getFileMultiple('uploadedfile');
+    $files = $request->getFileMultiple('userfile');
+
+.. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
 
 Content Negotiation
 -------------------
