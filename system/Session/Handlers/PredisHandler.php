@@ -13,19 +13,19 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
-use Redis;
-use RedisCluster;
+use Predis\PredisException;
 use ReturnTypeWillChange;
+use Predis\Client;
 
 /**
- * Session handler using Redis for persistence
+ * Session handler using Predis for persistence
  */
-class RedisHandler extends BaseHandler
+class PredisHandler extends BaseHandler
 {
     /**
      * phpRedis instance
      *
-     * @var Redis|RedisCluster|null
+     * @var Client|null
      */
     protected $redis;
 
@@ -59,63 +59,44 @@ class RedisHandler extends BaseHandler
 
     /**
      * Initialize connection to redis server
-     * @throws \Exception
      */
     private function _connectToRedisServer()
     {
-        $redis = new Redis();
+        $parameters = ['prefix' => $this->keyPrefix];
+        if(isset($this->savePath['password'])) {
+            $parameters['password'] = $this->savePath['password'];
+        }
+        if(isset($this->savePath['database'])) {
+            $parameters['database'] = $this->savePath['database'];
+        }
+        $this->redis = new Client($this->savePath, $parameters);
 
-        if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout'])) {
-            throw new \Exception('Unable to connect to Redis with the configured settings.');
-        }
-        if (isset($this->savePath['password'])) {
-            // Redis 6+ accepts username/password
-            if (isset($this->savePath['username'])) {
-                $auth = [
-                    'user' => $this->savePath['username'],
-                    'pass' => $this->savePath['password']
-                ];
-            } else {
-                $auth = $this->savePath['password'];
-            }
-            // auth will throw an exception on error
-            $redis->auth($auth);
-        }
-        if (!empty($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
-            throw new \Exception('Select database failed.');
-        }
-
-        $this->redis = $redis;
+        $this->redis = new Client($this->savePath, ['prefix' => $this->keyPrefix]);
+        $this->redis->time();
     }
 
     /**
      * Initialize connection to redis cluster
-     * @throws \RedisClusterException
      */
     private function _connectToRedisCluster()
     {
-        // Plugging in multiple nodes into savePath would be a nightmare, so only allow connectivity to a singular node.
-        // Might be more worthwhile for a user to use ConfiguredCacheHandler instead, easier to configure.
         $cluster = ["{$this->savePath['host']}:{$this->savePath['port']}"];
         $timeout = $this->savePath['timeout'] ?? 0;
-        $auth = null;
-        if(isset($this->savePath['password'])) {
-            if (isset($this->savePath['username'])) {
-                $auth = [
-                    'user' => $this->savePath['username'],
-                    'pass' => $this->savePath['password']
-                ];
-            } else {
-                $auth = $this->savePath['password'];
-            }
-        }
-
-        $this->redis = new RedisCluster(null, $cluster, $timeout, $timeout, $this->savePath['persistent'], $auth);
-        // @phpstan-ignore-next-line
-        $this->redis->setOption(RedisCluster::OPT_SLAVE_FAILOVER, RedisCluster::FAILOVER_DISTRIBUTE_SLAVES);
+        $parameters = [
+            'read_write_timeout' => $timeout,
+            'timeout' => $timeout,
+            'username' => $this->savePath['username'],
+            'password' => $this->savePath['password'],
+            'prefix' => $this->keyPrefix,
+            'persistent' => $this->savePath['persistent'],
+        ];
+        $this->redis = new Client($cluster,['cluster' => 'redis', 'parameters' => $parameters]);
+        // ping(), time(), etc. are not supported for predis cluster mode, so try to grab a key to check connectivity.
+        $this->redis->get('testkey');
     }
 
     /**
+     * Create PredisHandler instance
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -126,7 +107,7 @@ class RedisHandler extends BaseHandler
             throw SessionException::forEmptySavepath();
         }
 
-        // TODO: Add TLS compatibility
+        // TODO: add TLS compatibility
         if (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches)) {
             if (! isset($matches[3])) {
                 $matches[3] = ''; // Just to avoid undefined index notices below
@@ -139,7 +120,7 @@ class RedisHandler extends BaseHandler
                 'username' => preg_match('#username=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
                 'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
                 'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
-                // Accept a value of 'true' or > 0 to enable cluster mode.
+                // Accept a value of 'true' or > 0 to enable cluster mode
                 'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
                 'persistent'  => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
             ];
@@ -164,42 +145,35 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Re-initialize existing session, or creates a new one.
-     *
-     * @param string $path The path where to store/retrieve the session
-     * @param string $name The session name
+     * @inheritDoc
      */
     public function open($path, $name): bool
     {
         $rtnVal = false;
-        try {
-            if (empty($this->savePath)) {
-                throw new \Exception("No 'savePath' in configuration");
+        if(!empty($this->savePath)) {
+            try {
+                if ($this->savePath['isCluster']) {
+                    $this->_connectToRedisCluster();
+                } else {
+                    $this->_connectToRedisServer();
+                }
+                $rtnVal = true;
+            } catch (\Throwable $t) {
+                $this->logger->error("Session: Unable to connect to redis: {$t->getMessage()}");
             }
-            if($this->savePath['isCluster']) {
-                $this->_connectToRedisCluster();
-            } else {
-                $this->_connectToRedisServer();
-            }
-            $rtnVal = true;
-        } catch (\Throwable $t) {
-            $this->logger->error('Session: '.$t->getMessage());
         }
 
         return $rtnVal;
     }
 
     /**
-     * Reads the session data from the session storage, and returns the results.
-     *
-     * @param string $id The session ID
-     *
-     * @return false|string Returns an encoded string of the read data.
-     *                      If nothing was read, it must return false.
+     * @inheritDoc
      */
     #[ReturnTypeWillChange]
     public function read($id)
     {
+        $rtnVal = '';
+
         if (isset($this->redis) && $this->lockSession($id)) {
             if (! isset($this->sessionID)) {
                 $this->sessionID = $id;
@@ -215,17 +189,14 @@ class RedisHandler extends BaseHandler
 
             $this->fingerprint = md5($data);
 
-            return $data;
+            $rtnVal = $data;
         }
 
-        return '';
+        return $rtnVal;
     }
 
     /**
-     * Writes the session data to the session storage.
-     *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * @inheritDoc
      */
     public function write($id, $data): bool
     {
@@ -246,7 +217,7 @@ class RedisHandler extends BaseHandler
             $this->redis->expire($this->lockKey, 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($data)) || $this->keyExists === false) {
-                if ($this->redis->set($this->keyPrefix . $id, $data, $this->sessionExpiration)) {
+                if ($this->redis->setex($this->keyPrefix . $id, $this->sessionExpiration, $data)) {
                     $this->fingerprint = $fingerprint;
                     $this->keyExists   = true;
 
@@ -256,14 +227,14 @@ class RedisHandler extends BaseHandler
                 return false;
             }
 
-            return $this->redis->expire($this->keyPrefix . $id, $this->sessionExpiration);
+            return boolval($this->redis->expire($this->keyPrefix . $id, $this->sessionExpiration));
         }
 
         return false;
     }
 
     /**
-     * Closes the current session.
+     * @inheritDoc
      */
     public function close(): bool
     {
@@ -273,13 +244,9 @@ class RedisHandler extends BaseHandler
                     $this->redis->del($this->lockKey);
                 }
 
-                if (! $this->redis->close()) {
-                    return false;
-                }
-            } catch (\RedisException $e) {
-                $this->logger->error('Session: Got RedisException on close(): ' . $e->getMessage());
-            } catch (\RedisClusterException $e) {
-                $this->logger->error('Session: Got RedisClusterException on close(): ' . $e->getMessage());
+                $this->redis->disconnect();
+            } catch (PredisException $e) {
+                $this->logger->error('Session: Got PredisException on close(): ' . $e->getMessage());
             }
 
             $this->redis = null;
@@ -291,9 +258,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Destroys a session
-     *
-     * @param string $id The session ID being destroyed
+     * @inheritDoc
      */
     public function destroy($id): bool
     {
@@ -309,12 +274,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Cleans up expired sessions.
-     *
-     * @param int $max_lifetime Sessions that have not updated
-     *                          for the last max_lifetime seconds will be removed.
-     *
-     * @return false|int Returns the number of deleted sessions on success, or false on failure.
+     * @inheritDoc
      */
     #[ReturnTypeWillChange]
     public function gc($max_lifetime)
@@ -323,9 +283,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Acquires an emulated lock.
-     *
-     * @param string $sessionID Session ID
+     * @inheritDoc
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -372,7 +330,7 @@ class RedisHandler extends BaseHandler
     }
 
     /**
-     * Releases a previously acquired lock
+     * @inheritDoc
      */
     protected function releaseLock(): bool
     {

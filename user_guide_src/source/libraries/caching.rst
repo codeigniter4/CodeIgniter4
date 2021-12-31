@@ -299,11 +299,20 @@ Config options to connect to redis server stored in the cache configuration file
 
     public $redis = [
         'host'     => '127.0.0.1',
+        'username' => null,
         'password' => null,
         'port'     => 6379,
         'timeout'  => 0,
         'database' => 0,
+        'isCluster' => false,
+        'persistent' => false,
     ];
+
+.. note:: If you are using Redis in cluster mode, you can pass a list of comma-separated servers for the
+    ``'host'`` key, for example: ``'host' => 'redis-host-1,redis-host-2,redis-host-3'``. This is not
+    really necessary since the phpredis driver auto-discovers all hosts, but the option is available. If
+    your hosts don't have a port appended to them, CodeIgniter will grab the ``port`` value and append it
+    to each host while connecting.
 
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
@@ -319,6 +328,10 @@ To use it, from the command line inside your project root::
 
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
+
+.. note:: Redis and Predis both share the same configuration, described above. When connecting to a cluster,
+    CodeIgniter initializes a Predis connection using the ``'cluster' => 'redis'`` option, and relies on Redis
+    to manage where keys should be stored.  Predis's driver-based cluster option is not supported.
 
 ===========
 Dummy Cache
