@@ -594,7 +594,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $nonce = $this->csp->getScriptNonce();
 
-        $this->assertMatchesRegularExpression('/[0-9a-z]{24}/', $nonce);
+        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
     }
 
     public function testGetStyleNonce()
@@ -603,7 +603,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $nonce = $this->csp->getStyleNonce();
 
-        $this->assertMatchesRegularExpression('/[0-9a-z]{24}/', $nonce);
+        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
     }
 
     /**
