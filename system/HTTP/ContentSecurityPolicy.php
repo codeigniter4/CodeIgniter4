@@ -651,21 +651,25 @@ class ContentSecurityPolicy
 
         // Replace style placeholders with nonces
         $body = preg_replace_callback('/{csp-style-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
-
-            $this->styleSrc[] = 'nonce-' . $nonce;
+            $nonce = $this->getStyleNonce();
 
             return "nonce=\"{$nonce}\"";
-        }, $body);
+        }, $body, -1, $count);
+
+        if ($count > 0) {
+            $this->styleSrc[] = 'nonce-' . $this->styleNonce;
+        }
 
         // Replace script placeholders with nonces
         $body = preg_replace_callback('/{csp-script-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
-
-            $this->scriptSrc[] = 'nonce-' . $nonce;
+            $nonce = $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
-        }, $body);
+        }, $body, -1, $count);
+
+        if ($count > 0) {
+            $this->scriptSrc[] = 'nonce-' . $this->scriptNonce;
+        }
 
         $response->setBody($body);
     }
