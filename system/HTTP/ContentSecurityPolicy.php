@@ -205,6 +205,13 @@ class ContentSecurityPolicy
     protected $scriptNonceTag = '{csp-script-nonce}';
 
     /**
+     * Replace nonce tag automatically
+     *
+     * @var bool
+     */
+    protected $autoNonce = true;
+
+    /**
      * An array of header info since we have
      * to build ourself before passing to Response.
      *
@@ -288,6 +295,10 @@ class ContentSecurityPolicy
      */
     public function finalize(ResponseInterface &$response)
     {
+        if ($this->autoNonce === false) {
+            return;
+        }
+
         $this->generateNonces($response);
         $this->buildHeaders($response);
     }

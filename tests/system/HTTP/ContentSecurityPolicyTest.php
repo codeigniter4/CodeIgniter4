@@ -480,6 +480,38 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce=', $response->getBody());
     }
 
+    public function testBodyScriptNonceDisableAutoNonce()
+    {
+        $config            = new CSPConfig();
+        $config->autoNonce = false;
+        $csp               = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {csp-script-nonce} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('{csp-script-nonce}', $response->getBody());
+    }
+
+    public function testBodyStyleNonceDisableAutoNonce()
+    {
+        $config            = new CSPConfig();
+        $config->autoNonce = false;
+        $csp               = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {csp-style-nonce} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('{csp-style-nonce}', $response->getBody());
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled

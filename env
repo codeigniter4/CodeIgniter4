@@ -75,6 +75,7 @@
 # contentsecuritypolicy.upgradeInsecureRequests = false
 # contentsecuritypolicy.styleNonceTag = '{csp-style-nonce}'
 # contentsecuritypolicy.scriptNonceTag = '{csp-script-nonce}'
+# contentsecuritypolicy.autoNonce = true
 
 #--------------------------------------------------------------------
 # COOKIE
