@@ -36,11 +36,11 @@ class RichRenderer extends KintRichRenderer
 
                 switch ($type) {
                     case 'script':
-                        $output .= '<script {csp-script-nonce} class="kint-rich-script">' . $contents . '</script>';
+                        $output .= '<script ' . csp_script_nonce() . ' class="kint-rich-script">' . $contents . '</script>';
                         break;
 
                     case 'style':
-                        $output .= '<style {csp-style-nonce} class="kint-rich-style">' . $contents . '</style>';
+                        $output .= '<style ' . csp_style_nonce() . ' class="kint-rich-style">' . $contents . '</style>';
                         break;
 
                     default:

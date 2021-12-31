@@ -527,7 +527,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled  = true;
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<script {csp-script-nonce} class="kint-rich-script">/u');
+        $this->expectOutputRegex('/<script nonce="[0-9a-z]{24}" class="kint-rich-script">/u');
         d('string');
 
         // Restore settings
@@ -546,7 +546,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled  = true;
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<style {csp-style-nonce} class="kint-rich-style">/u');
+        $this->expectOutputRegex('/<style nonce="[0-9a-z]{24}" class="kint-rich-style">/u');
         trace();
     }
 
