@@ -519,4 +519,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertHeaderNotEmitted('content-security-policy', true);
     }
+
+    public function testGetScriptNonce()
+    {
+        $this->prepare();
+
+        $nonce = $this->csp->getScriptNonce();
+
+        $this->assertMatchesRegularExpression('/[0-9a-z]{24}/', $nonce);
+    }
+
+    public function testGetStyleNonce()
+    {
+        $this->prepare();
+
+        $nonce = $this->csp->getStyleNonce();
+
+        $this->assertMatchesRegularExpression('/[0-9a-z]{24}/', $nonce);
+    }
 }

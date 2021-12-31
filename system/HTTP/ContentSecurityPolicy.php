@@ -177,6 +177,20 @@ class ContentSecurityPolicy
     protected $nonces = [];
 
     /**
+     * Nonce for style
+     *
+     * @var string
+     */
+    protected $styleNonce;
+
+    /**
+     * Nonce for script
+     *
+     * @var string
+     */
+    protected $scriptNonce;
+
+    /**
      * An array of header info since we have
      * to build ourself before passing to Response.
      *
@@ -227,6 +241,30 @@ class ContentSecurityPolicy
     public function enabled(): bool
     {
         return $this->CSPEnabled;
+    }
+
+    /**
+     * Get the nonce for the style tag.
+     */
+    public function getStyleNonce(): string
+    {
+        if ($this->styleNonce === null) {
+            $this->styleNonce = bin2hex(random_bytes(12));
+        }
+
+        return $this->styleNonce;
+    }
+
+    /**
+     * Get the nonce for the script tag.
+     */
+    public function getScriptNonce(): string
+    {
+        if ($this->scriptNonce === null) {
+            $this->scriptNonce = bin2hex(random_bytes(12));
+        }
+
+        return $this->scriptNonce;
     }
 
     /**
