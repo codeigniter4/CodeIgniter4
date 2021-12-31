@@ -402,11 +402,11 @@ class Toolbar
             $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8);
 
             $script = PHP_EOL
-                . '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
+                . '<script type="text/javascript" ' . csp_script_nonce() . ' id="debugbar_loader" '
                 . 'data-time="' . $time . '" '
                 . 'src="' . site_url() . '?debugbar"></script>'
-                . '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
-                . '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
+                . '<script type="text/javascript" ' . csp_script_nonce() . ' id="debugbar_dynamic_script"></script>'
+                . '<style type="text/css" ' . csp_style_nonce() . ' id="debugbar_dynamic_style"></style>'
                 . $kintScript
                 . PHP_EOL;
 
