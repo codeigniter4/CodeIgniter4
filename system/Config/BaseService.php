@@ -28,6 +28,7 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\ContentSecurityPolicy;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
@@ -56,6 +57,7 @@ use CodeIgniter\View\View;
 use Config\App;
 use Config\Autoload;
 use Config\Cache;
+use Config\ContentSecurityPolicy as CSPConfig;
 use Config\Encryption;
 use Config\Exceptions as ConfigExceptions;
 use Config\Filters as ConfigFilters;
@@ -94,6 +96,7 @@ use Config\View as ConfigView;
  * @method static CLIRequest clirequest(App $config = null, $getShared = true)
  * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
+ * @method static ContentSecurityPolicy contentsecuritypolicy(CSPConfig $config = null, $getShared = true)
  * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
  * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)

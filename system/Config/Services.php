@@ -28,6 +28,7 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\ContentSecurityPolicy;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
@@ -56,6 +57,7 @@ use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
 use Config\App;
 use Config\Cache;
+use Config\ContentSecurityPolicy as CSPConfig;
 use Config\Email as EmailConfig;
 use Config\Encryption as EncryptionConfig;
 use Config\Exceptions as ExceptionsConfig;
@@ -151,6 +153,22 @@ class Services extends BaseService
         }
 
         return new Commands();
+    }
+
+    /**
+     * Content Security Policy
+     *
+     * @return ContentSecurityPolicy
+     */
+    public static function contentsecuritypolicy(?CSPConfig $config = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('contentsecuritypolicy', $config);
+        }
+
+        $config = $config ?? config('ContentSecurityPolicy');
+
+        return new ContentSecurityPolicy($config);
     }
 
     /**

@@ -241,6 +241,9 @@ class ContentSecurityPolicy
      */
     public function __construct(ContentSecurityPolicyConfig $config)
     {
+        $appConfig        = config('App');
+        $this->CSPEnabled = $appConfig->CSPEnabled;
+
         foreach (get_object_vars($config) as $setting => $value) {
             if (property_exists($this, $setting)) {
                 $this->{$setting} = $value;
