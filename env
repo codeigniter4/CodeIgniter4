@@ -73,6 +73,8 @@
 # contentsecuritypolicy.reportURI = null
 # contentsecuritypolicy.sandbox = false
 # contentsecuritypolicy.upgradeInsecureRequests = false
+# contentsecuritypolicy.styleNonceTag = '{csp-style-nonce}'
+# contentsecuritypolicy.scriptNonceTag = '{csp-script-nonce}'
 
 #--------------------------------------------------------------------
 # COOKIE

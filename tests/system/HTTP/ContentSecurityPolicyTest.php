@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\ContentSecurityPolicy as CSPConfig;
 
 /**
  * Test the CSP policy directive creation.
@@ -463,6 +464,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce-', $result);
     }
 
+    public function testBodyScriptNonceCustomScriptTag()
+    {
+        $config                 = new CSPConfig();
+        $config->scriptNonceTag = '{custom-script-nonce-tag}';
+        $csp                    = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {custom-script-nonce-tag} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('nonce=', $response->getBody());
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -479,6 +496,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce=', $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('nonce-', $result);
+    }
+
+    public function testBodyStyleNonceCustomStyleTag()
+    {
+        $config                = new CSPConfig();
+        $config->styleNonceTag = '{custom-style-nonce-tag}';
+        $csp                   = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {custom-style-nonce-tag} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('nonce=', $response->getBody());
     }
 
     /**

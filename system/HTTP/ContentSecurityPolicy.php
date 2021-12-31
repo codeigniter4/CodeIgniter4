@@ -191,6 +191,20 @@ class ContentSecurityPolicy
     protected $scriptNonce;
 
     /**
+     * Nonce tag for style
+     *
+     * @var string
+     */
+    protected $styleNonceTag = '{csp-style-nonce}';
+
+    /**
+     * Nonce tag for script
+     *
+     * @var string
+     */
+    protected $scriptNonceTag = '{csp-script-nonce}';
+
+    /**
      * An array of header info since we have
      * to build ourself before passing to Response.
      *
@@ -650,7 +664,8 @@ class ContentSecurityPolicy
         }
 
         // Replace style placeholders with nonces
-        $body = preg_replace_callback('/{csp-style-nonce}/', function () {
+        $pattern = '/' . preg_quote($this->styleNonceTag, '/') . '/';
+        $body    = preg_replace_callback($pattern, function () {
             $nonce = $this->getStyleNonce();
 
             return "nonce=\"{$nonce}\"";
@@ -661,7 +676,8 @@ class ContentSecurityPolicy
         }
 
         // Replace script placeholders with nonces
-        $body = preg_replace_callback('/{csp-script-nonce}/', function () {
+        $pattern = '/' . preg_quote($this->scriptNonceTag, '/') . '/';
+        $body    = preg_replace_callback($pattern, function () {
             $nonce = $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
