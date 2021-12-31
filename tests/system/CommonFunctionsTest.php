@@ -549,4 +549,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->expectOutputRegex('/<style {csp-style-nonce} class="kint-rich-style">/u');
         trace();
     }
+
+    public function testCspStyleNonce()
+    {
+        $this->assertStringContainsString('nonce="', csp_style_nonce());
+    }
+
+    public function testCspScriptNonce()
+    {
+        $this->assertStringContainsString('nonce="', csp_script_nonce());
+    }
 }

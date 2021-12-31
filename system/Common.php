@@ -21,6 +21,7 @@ use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Model;
@@ -285,6 +286,40 @@ if (! function_exists('csrf_meta')) {
     function csrf_meta(?string $id = null): string
     {
         return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
+    }
+}
+
+if (! function_exists('csp_style_nonce')) {
+    /**
+     * Generates a nonce attribute for style tag.
+     */
+    function csp_style_nonce(): string
+    {
+        /** @var Response $response */
+        $response = Services::response();
+
+        if (! $response->CSP->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $response->CSP->getStyleNonce() . '"';
+    }
+}
+
+if (! function_exists('csp_script_nonce')) {
+    /**
+     * Generates a nonce attribute for script tag.
+     */
+    function csp_script_nonce(): string
+    {
+        /** @var Response $response */
+        $response = Services::response();
+
+        if (! $response->CSP->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $response->CSP->getScriptNonce() . '"';
     }
 }
 
