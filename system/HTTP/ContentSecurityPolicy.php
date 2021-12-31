@@ -252,14 +252,6 @@ class ContentSecurityPolicy
     }
 
     /**
-     * Enable CSP
-     */
-    public function enable(): void
-    {
-        $this->CSPEnabled = true;
-    }
-
-    /**
      * Whether Content Security Policy is being enforced.
      */
     public function enabled(): bool

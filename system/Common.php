@@ -295,14 +295,13 @@ if (! function_exists('csp_style_nonce')) {
      */
     function csp_style_nonce(): string
     {
-        /** @var Response $response */
-        $response = Services::response();
+        $csp = Services::contentsecuritypolicy();
 
-        if (! $response->CSP->enabled()) {
+        if (! $csp->enabled()) {
             return '';
         }
 
-        return 'nonce="' . $response->CSP->getStyleNonce() . '"';
+        return 'nonce="' . $csp->getStyleNonce() . '"';
     }
 }
 
@@ -312,14 +311,13 @@ if (! function_exists('csp_script_nonce')) {
      */
     function csp_script_nonce(): string
     {
-        /** @var Response $response */
-        $response = Services::response();
+        $csp = Services::contentsecuritypolicy();
 
-        if (! $response->CSP->enabled()) {
+        if (! $csp->enabled()) {
             return '';
         }
 
-        return 'nonce="' . $response->CSP->getScriptNonce() . '"';
+        return 'nonce="' . $csp->getScriptNonce() . '"';
     }
 }
 

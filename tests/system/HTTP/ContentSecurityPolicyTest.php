@@ -28,7 +28,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)
     {
-        $config             = new App();
+        $this->resetServices();
+        $this->resetFactories();
+
+        $config             = config('App');
         $config->CSPEnabled = $CSPEnabled;
         $this->response     = new Response($config);
         $this->response->pretend(false);
