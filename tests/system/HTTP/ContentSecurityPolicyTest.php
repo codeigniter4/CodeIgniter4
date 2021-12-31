@@ -605,4 +605,19 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertMatchesRegularExpression('/[0-9a-z]{24}/', $nonce);
     }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled()
+    {
+        $this->prepare();
+
+        $this->csp->getScriptNonce();
+        $this->work();
+
+        $result = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertStringContainsString("script-src 'self' 'nonce-", $result);
+    }
 }

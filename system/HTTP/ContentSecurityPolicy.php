@@ -249,6 +249,14 @@ class ContentSecurityPolicy
                 $this->{$setting} = $value;
             }
         }
+
+        if (! is_array($this->styleSrc)) {
+            $this->styleSrc = [$this->styleSrc];
+        }
+
+        if (! is_array($this->scriptSrc)) {
+            $this->scriptSrc = [$this->scriptSrc];
+        }
     }
 
     /**
@@ -266,6 +274,7 @@ class ContentSecurityPolicy
     {
         if ($this->styleNonce === null) {
             $this->styleNonce = bin2hex(random_bytes(12));
+            $this->styleSrc[] = 'nonce-' . $this->styleNonce;
         }
 
         return $this->styleNonce;
@@ -278,6 +287,7 @@ class ContentSecurityPolicy
     {
         if ($this->scriptNonce === null) {
             $this->scriptNonce = bin2hex(random_bytes(12));
+            $this->scriptSrc[] = 'nonce-' . $this->scriptNonce;
         }
 
         return $this->scriptNonce;
@@ -661,25 +671,13 @@ class ContentSecurityPolicy
             return;
         }
 
-        if (! is_array($this->styleSrc)) {
-            $this->styleSrc = [$this->styleSrc];
-        }
-
-        if (! is_array($this->scriptSrc)) {
-            $this->scriptSrc = [$this->scriptSrc];
-        }
-
         // Replace style placeholders with nonces
         $pattern = '/' . preg_quote($this->styleNonceTag, '/') . '/';
         $body    = preg_replace_callback($pattern, function () {
             $nonce = $this->getStyleNonce();
 
             return "nonce=\"{$nonce}\"";
-        }, $body, -1, $count);
-
-        if ($count > 0) {
-            $this->styleSrc[] = 'nonce-' . $this->styleNonce;
-        }
+        }, $body);
 
         // Replace script placeholders with nonces
         $pattern = '/' . preg_quote($this->scriptNonceTag, '/') . '/';
@@ -687,11 +685,7 @@ class ContentSecurityPolicy
             $nonce = $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
-        }, $body, -1, $count);
-
-        if ($count > 0) {
-            $this->scriptSrc[] = 'nonce-' . $this->scriptNonce;
-        }
+        }, $body);
 
         $response->setBody($body);
     }
