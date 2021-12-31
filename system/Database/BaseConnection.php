@@ -837,7 +837,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns a non-shared new instance of the query builder for this connection.
      *
-     * @param array|BaseBuilder|Closure|string $tableName
+     * @param array|string $tableName
      *
      * @throws DatabaseException
      *
@@ -852,6 +852,14 @@ abstract class BaseConnection implements ConnectionInterface
         $className = str_replace('Connection', 'Builder', static::class);
 
         return new $className($tableName, $this);
+    }
+
+    /**
+     * Returns a new instance of the BaseBuilder class without a table.
+     */
+    public function newQuery(): BaseBuilder
+    {
+        return $this->table('crunch')->from([], true);
     }
 
     /**

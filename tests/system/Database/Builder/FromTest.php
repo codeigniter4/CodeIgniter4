@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -107,7 +106,7 @@ final class FromTest extends CIUnitTestCase
         // Subquery as table
         $expectedSQL = 'SELECT * FROM (SELECT * FROM "users")';
         $subquery    = new BaseBuilder('users', $this->db);
-        $builder     = new BaseBuilder($subquery, $this->db);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
@@ -115,23 +114,9 @@ final class FromTest extends CIUnitTestCase
         $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") AS users_1';
 
         $subquery = (new BaseBuilder('users', $this->db))->select('id, name');
-        $builder  = new BaseBuilder([$subquery, 'users_1'], $this->db);
+        $builder  = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-    }
-
-    public function testFromSubqueryExceptions()
-    {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Table name must be string or instance of the BaseBuilder');
-        $subquery = new BaseBuilder('users', $this->db);
-        $builder  = new BaseBuilder([$subquery], $this->db);
-
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Subquery must have an alias');
-        $subquery = new BaseBuilder('users', $this->db);
-        $builder  = new BaseBuilder('jobs', $this->db);
-        $builder->from($subquery);
     }
 
     public function testFromWithMultipleTablesAsStringWithSQLSRV()
@@ -155,7 +140,7 @@ final class FromTest extends CIUnitTestCase
 
         $builder = new SQLSRVBuilder('jobs', $this->db);
 
-        $builder->from([$subquery, 'users_1']);
+        $builder->fromSubquery($subquery, 'users_1');
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") AS users_1';
 

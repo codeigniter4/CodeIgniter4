@@ -264,7 +264,7 @@ class BaseBuilder
     /**
      * Constructor
      *
-     * @param array|BaseBuilder|Closure|string $tableName tablename or tablenames with or without aliases
+     * @param array|string $tableName tablename or tablenames with or without aliases
      *
      * Examples of $tableName: `mytable`, `jobs j`, `jobs j, users u`, `['jobs j','users u']`
      *
@@ -515,53 +515,42 @@ class BaseBuilder
     /**
      * Generates the FROM portion of the query
      *
-     * @param array|BaseBuilder|Closure|string $from
+     * @param array|string $from
      *
      * @return $this
      */
-    public function from($from, bool $overwrite = false)
+    public function from($from, bool $overwrite = false): self
     {
         if ($overwrite === true) {
             $this->QBFrom = [];
             $this->db->setAliasedTables([]);
         }
 
-        $tableProcessing = function (string $table, bool $protectIdentifiers = true): void {
-            $table = trim($table);
-            $this->trackAliases($table);
-
-            $this->QBFrom[] = $protectIdentifiers
-                ? $this->db->protectIdentifiers($table, true, null, false)
-                : $table;
-        };
-
-        if (is_array($from) && count($from) === 2 || $this->isSubquery($from)) {
-            [$table, $alias] = is_array($from) ? $from : [$from, ''];
-            if ($this->isSubquery($table)) {
-                if ($this->QBFrom !== [] && $alias === '') {
-                    throw new DatabaseException('Subquery must have an alias');
-                }
-
-                $table = $this->buildSubquery($table, true, $alias);
-                $tableProcessing($table, false);
-
-                return $this;
-            }
-        }
-
-        foreach ((array) $from as $val) {
-            if (! is_string($val)) {
-                throw new DatabaseException('Table name must be string or instance of the BaseBuilder');
-            }
-
-            if (strpos($val, ',') !== false) {
-                foreach (explode(',', $val) as $v) {
-                    $tableProcessing($v);
-                }
+        foreach ((array) $from as $table) {
+            if (strpos($table, ',') !== false) {
+                $this->from(explode(',', $table));
             } else {
-                $tableProcessing($val);
+                $table = trim($table);
+                $this->trackAliases($table);
+                $this->QBFrom[] = $this->db->protectIdentifiers($table, true, null, false);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @param BaseBuilder $from  Expected subquery
+     * @param string      $alias Subquery alias
+     *
+     * @return $this
+     */
+    public function fromSubquery(BaseBuilder $from, string $alias): self
+    {
+        $table = $this->buildSubquery($from, true, $alias);
+
+        $this->trackAliases($table);
+        $this->QBFrom[] = $table;
 
         return $this;
     }
@@ -2766,8 +2755,7 @@ class BaseBuilder
     protected function buildSubquery($builder, bool $wrapped = false, string $alias = ''): string
     {
         if ($builder instanceof Closure) {
-            $instance = (clone $this)->from([], true)->resetQuery();
-            $builder  = $builder($instance);
+            $builder($builder = $this->db->newQuery());
         }
 
         $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');

@@ -210,20 +210,22 @@ Permits you to write the FROM portion of your query::
     in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
     to the FROM portion of your query.
 
-#. **Subqueries:**
+**$builder->fromSubquery()**
 
-In special cases, you can compose a database query using subqueries::
+Permits you to write part of a FROM query as a subquery.
+
+This is where we add a subquery to an existing table.::
 
     $subquery = $db->table('users');
-    $builder  = $db->table($subquery);
+    $builder  = $db->table('jobs')->fromSubquery($subquery, 'alias');
     $query = $builder->get();
 
-    // Produces: SELECT * FROM (SELECT * FROM users)
+    // Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS alias
 
-You can specify an alias for a subquery by passing an array the first value of which will be the subquery, and the second an alias.::
+Use the ``$db->newQuery()`` method to make a subquery the main table.::
 
     $subquery = $db->table('users')->select('id, name');
-    $builder  = $db->table([$subquery, 't']);
+    $builder  = $db->newQuery()->fromSubquery($subquery, 't');
     $query = $builder->get();
 
     // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
@@ -1414,12 +1416,21 @@ Class Reference
 
     .. php:method:: from($from[, $overwrite = false])
 
-        :param mixed $from: Table name(s); string, array or BaseBuilder
+        :param mixed $from: Table name(s); string or array
         :param bool    $overwrite: Should we remove the first table existing?
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
         Specifies the ``FROM`` clause of a query.
+
+    .. php:method:: fromSubquery($from, $alias)
+
+        :param BaseBuilder $from: Instance of the BaseBuilder class
+        :param string      $alias: Subquery alias
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Specifies the ``FROM`` clause of a query using a subquery.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
