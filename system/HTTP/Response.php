@@ -155,6 +155,9 @@ class Response extends Message implements MessageInterface, ResponseInterface
         $this->CSP = new ContentSecurityPolicy(new CSPConfig());
 
         $this->CSPEnabled = $config->CSPEnabled;
+        if ($config->CSPEnabled) {
+            $this->CSP->enable();
+        }
 
         // DEPRECATED COOKIE MANAGEMENT
 

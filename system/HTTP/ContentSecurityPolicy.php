@@ -193,6 +193,13 @@ class ContentSecurityPolicy
     protected $reportOnlyHeaders = [];
 
     /**
+     * Whether Content Security Policy is being enforced.
+     *
+     * @var bool
+     */
+    protected $CSPEnabled = false;
+
+    /**
      * Constructor.
      *
      * Stores our default values from the Config file.
@@ -204,6 +211,22 @@ class ContentSecurityPolicy
                 $this->{$setting} = $value;
             }
         }
+    }
+
+    /**
+     * Enable CSP
+     */
+    public function enable(): void
+    {
+        $this->CSPEnabled = true;
+    }
+
+    /**
+     * Whether Content Security Policy is being enforced.
+     */
+    public function enabled(): bool
+    {
+        return $this->CSPEnabled;
     }
 
     /**

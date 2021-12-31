@@ -38,6 +38,8 @@ trait ResponseTrait
      * Whether Content Security Policy is being enforced.
      *
      * @var bool
+     *
+     * @deprecated Use $this->CSP->enabled() instead.
      */
     protected $CSPEnabled = false;
 
@@ -433,7 +435,7 @@ trait ResponseTrait
     {
         // If we're enforcing a Content Security Policy,
         // we need to give it a chance to build out it's headers.
-        if ($this->CSPEnabled === true) {
+        if ($this->CSP->enabled()) {
             $this->CSP->finalize($this);
         } else {
             $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body ?? '');
