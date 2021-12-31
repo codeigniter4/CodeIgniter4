@@ -437,6 +437,8 @@ Preference                     Default                                      Opti
                                                                             CodeIgniter\\Session\\Handlers\\DatabaseHandler
                                                                             CodeIgniter\\Session\\Handlers\\MemcachedHandler
                                                                             CodeIgniter\\Session\\Handlers\\RedisHandler
+                                                                            CodeIgniter\\Session\\Handlers\\PredisHandler
+                                                                            CodeIgniter\\Session\\Handlers\\ConfiguredCacheHandler
                                                                             CodeIgniter\\Session\\Handlers\\ArrayHandler
 **sessionCookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
@@ -485,13 +487,15 @@ Preference           Default         Description
 Session Drivers
 ***************
 
-As already mentioned, the Session library comes with 4 handlers, or storage
+As already mentioned, the Session library comes with 7 handlers, or storage
 engines, that you can use:
 
   - CodeIgniter\\Session\\Handlers\\FileHandler
   - CodeIgniter\\Session\\Handlers\\DatabaseHandler
   - CodeIgniter\\Session\\Handlers\\MemcachedHandler
   - CodeIgniter\\Session\\Handlers\\RedisHandler
+  - CodeIgniter\\Session\\Handlers\\PredisHandler
+  - CodeIgniter\\Session\\Handlers\\ConfiguredCacheHandler
   - CodeIgniter\\Session\\Handlers\\ArrayHandler
 
 By default, the ``FileHandler`` Driver will be used when a session is initialized,
@@ -671,8 +675,36 @@ link you to it:
 For the most common case however, a simple ``host:port`` pair should be
 sufficient::
 
-    public $sessionDiver    = 'CodeIgniter\Session\Handlers\RedisHandler';
+    public $sessionDriver    = 'CodeIgniter\Session\Handlers\RedisHandler';
     public $sessionSavePath = 'tcp://localhost:6379';
+
+Other configuration options - these can be added like a query string after the host:port for your save path:
+
+=============== ========== ================================================================================================================================== ============
+Key             Type       Description                                                                                                                        Default
+=============== ========== ================================================================================================================================== ============
+**username**    String     Username to connect with - only for Redis 6+ ACL.                                                                                  null
+**password**    String     Password to connect with - works for Redis 6+ ACL, as well Redis versions <= 5.                                                    null
+**database**    Integer    Database to select. Note that databases are not supported for Redis cluster mode, so this will be ignored.                         0
+**timeout**     Integer    Set the connection/read/write timeout. Separate timeout values for connection and read/write are not currently supported.          0
+**isCluster**   Bool/Int   Set to 'true' or '1' to use Redis in cluster mode.                                                                                 false
+**persistent**  Bool/Int   Set to 'true' or '1' to use persistent Redis connections.                                                                          false
+=============== ========== ================================================================================================================================== ============
+
+Here's an example of what those options should look like::
+
+    public $sessionDriver = 'tcp://127.0.0.1:6379?username=redis&password=redis&database=2&timeout=3&isCluster=false&persistent=true'
+
+PredisHandler Driver
+====================
+
+This accepts the same configuration as the RedisHandler driver, but uses the Predis
+library for interfacing with Redis.
+
+.. warning:: There appears to be a bug with Predis - if you have an established connection, then
+    try to create a new connection (e.g. via Predis session handler), the new connection will fail.
+    You can work around this issue by setting ``persistent`` to ``true`` in your savePath string.
+    Use the ConfiguredCacheHandler driver to not worry about this workaround.
 
 MemcachedHandler Driver
 =======================
@@ -715,3 +747,15 @@ separate the multiple server paths with commas::
     // localhost will be given higher priority (5) here,
     // compared to 192.0.2.1 with a weight of 1.
     public $sessionSavePath = 'localhost:11211:5,192.0.2.1:11211:1';
+
+ConfiguredCacheHandler Driver
+=============================
+
+If you have configured a cache handler that you'd also like to use as your
+session handler, you can set your ``$sessionDriver`` to 'ConfiguredCacheHandler'
+to reuse your cache handler as your session handler.  This allows you to fine-tune
+the config for your cache, as well as reusing an existing cache connection, rather
+than having to create two connections to the same caching mechanism.
+
+.. note:: The ``savePath`` parameter is ignored, since all of your configuration is 
+    handled within your cache configuration.

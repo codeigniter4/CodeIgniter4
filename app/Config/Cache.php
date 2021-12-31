@@ -150,14 +150,17 @@ class Cache extends BaseConfig
      * Your Redis server can be specified below, if you are using
      * the Redis or Predis drivers.
      *
-     * @var array<string, int|string|null>
+     * @var array<string, int|string|null|boolean>
      */
     public $redis = [
         'host'     => '127.0.0.1',
+        'username' => null,
         'password' => null,
         'port'     => 6379,
         'timeout'  => 0,
         'database' => 0,
+        'isCluster' => false,
+        'persistent' => false,
     ];
 
     /**

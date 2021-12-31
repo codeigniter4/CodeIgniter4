@@ -13,7 +13,6 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
-use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
 
@@ -28,12 +27,16 @@ class PredisHandler extends BaseHandler
      * @var array
      */
     protected $config = [
-        'scheme'   => 'tcp',
         'host'     => '127.0.0.1',
+        'username' => null,
         'password' => null,
         'port'     => 6379,
         'timeout'  => 0,
+        'database' => 0,
+        'isCluster' => false,
+        'persistent' => false,
     ];
+
 
     /**
      * Predis connection
@@ -52,14 +55,69 @@ class PredisHandler extends BaseHandler
     }
 
     /**
+     * Initiate connection to individual redis server
+     * @param array $config
+     */
+    private function _connectToRedisServer(array $config)
+    {
+        $this->redis = new Client($config, ['prefix' => $this->prefix]);
+        $this->redis->time();
+    }
+
+    /**
+     * Initiate connection to redis cluster
+     * @param array $config
+     * @throws \Exception
+     */
+    private function _connectToRedisCluster(array $config)
+    {
+        if (empty($hosts = str_getcsv($config['host']))) {
+            throw new \Exception("Must specify one or more comma-separated hosts to work with in 'host' configuration.");
+        }
+        $port = $config['port'] ?? 6379;
+        if($port > 0) {
+            // User defined a port so let's make sure it's setup for all of the cluster hosts.
+            foreach($hosts as &$host) {
+                if(!preg_match('/:\d+$/',$host)) {
+                    // User didn't append :port to their cluster server name so let's do that for them.
+                    $host .= ":{$config['port']}";
+                }
+            }
+        }
+        $timeout = $config['timeout'] ?? 0;
+        $parameters = [
+            'read_write_timeout' => $timeout,
+            'timeout' => $timeout,
+            'persistent' => boolval($config['persistent']),
+            'username' => $config['username'],
+            'password' => $config['password'],
+            'prefix' => $this->prefix,
+        ];
+        // For cluster mode, the first argument is the list of servers to connect to.
+        // Use server-side clustering like phpredis RedisCluster does.
+        $this->redis = new Client($hosts, ['cluster' => 'redis', 'parameters' => $parameters]);
+        // ping(), time(), etc. are not supported for predis cluster mode, so try to grab a key to check connectivity.
+        $this->redis->get('testkey');
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function initialize()
     {
+        $config = $this->config;
         try {
-            $this->redis = new Client($this->config, ['prefix' => $this->prefix]);
-            $this->redis->time();
-        } catch (Exception $e) {
+            // User must specify whether they are connecting to a cluster or not.
+            if($config['isCluster']) {
+                $this->_connectToRedisCluster($config);
+            } else {
+                $this->_connectToRedisServer($config);
+            }
+
+            // NOTE: Using php's serializer automatically, like we do for phpredis, requires installation of phpiredis,
+            // which in turn requires installation of another package. Rather than incurring the bloat of all of these
+            // packages, we'll use serialize/userialize for our get/set functions.
+        } catch (\Exception $e) {
             throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
         }
     }
@@ -71,31 +129,11 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        $data = array_combine(
-            ['__ci_type', '__ci_value'],
-            $this->redis->hmget($key, ['__ci_type', '__ci_value'])
-        );
-
-        if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false) {
-            return null;
+        if(!(is_null($data = $this->redis->get($key)))) {
+            $data = unserialize($data);
         }
 
-        switch ($data['__ci_type']) {
-            case 'array':
-            case 'object':
-                return unserialize($data['__ci_value']);
-
-            case 'boolean':
-            case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
-            case 'string':
-            case 'NULL':
-                return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
-
-            case 'resource':
-            default:
-                return null;
-        }
+        return $data;
     }
 
     /**
@@ -105,31 +143,9 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        switch ($dataType = gettype($value)) {
-            case 'array':
-            case 'object':
-                $value = serialize($value);
-                break;
+        $value = serialize($value);
 
-            case 'boolean':
-            case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
-            case 'string':
-            case 'NULL':
-                break;
-
-            case 'resource':
-            default:
-                return false;
-        }
-
-        if (! $this->redis->hmset($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
-            return false;
-        }
-
-        if ($ttl) {
-            $this->redis->expireat($key, time() + $ttl);
-        }
+        $this->redis->setex($key, $ttl, $value);
 
         return true;
     }
@@ -200,21 +216,21 @@ class PredisHandler extends BaseHandler
     public function getMetaData(string $key)
     {
         $key = static::validateKey($key);
+        $rtnVal = null;
 
-        $data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
-
-        if (isset($data['__ci_value']) && $data['__ci_value'] !== false) {
+        if(!is_null($data = $this->redis->get($key))) {
+            $data = unserialize($data);
             $time = time();
             $ttl  = $this->redis->ttl($key);
 
-            return [
+            $rtnVal = [
                 'expire' => $ttl > 0 ? time() + $ttl : null,
                 'mtime'  => $time,
-                'data'   => $data['__ci_value'],
+                'data'   => $data,
             ];
         }
 
-        return null;
+        return $rtnVal;
     }
 
     /**
