@@ -855,11 +855,11 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * Returns a new instance of the BaseBuilder class without a table.
+     * Returns a new instance of the BaseBuilder class with a cleared FROM clause.
      */
     public function newQuery(): BaseBuilder
     {
-        return $this->table('crunch')->from([], true);
+        return $this->table(uniqid())->from([], true);
     }
 
     /**
