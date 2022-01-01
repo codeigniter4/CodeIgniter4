@@ -417,35 +417,35 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 <p>Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.</p>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">listen</span> <span class="s">[::]:80</span><span class="p">;</span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:80</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kn">server_name</span> <span class="s">example.com</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">example.com</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kn">root</span>  <span class="s">/var/www/example.com/public</span><span class="p">;</span>
-    <span class="kn">index</span> <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">root</span><span class="w">  </span><span class="s">/var/www/example.com/public</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">index</span><span class="w"> </span><span class="s">index.php</span><span class="w"> </span><span class="s">index.html</span><span class="w"> </span><span class="s">index.htm</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kn">location</span> <span class="p">~</span> <span class="sr">\.php$</span> <span class="p">{</span>
-        <span class="kn">include</span> <span class="s">snippets/fastcgi-php.conf</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="p">~</span><span class="w"> </span><span class="sr">\.php$</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kn">include</span><span class="w"> </span><span class="s">snippets/fastcgi-php.conf</span><span class="p">;</span><span class="w"></span>
 
-        <span class="c1"># With php-fpm:</span>
-        <span class="kn">fastcgi_pass</span> <span class="s">unix:/run/php/php7.3-fpm.sock</span><span class="p">;</span>
-        <span class="c1"># With php-cgi:</span>
-        <span class="c1"># fastcgi_pass 127.0.0.1:9000;</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1"># With php-fpm:</span>
+<span class="w">        </span><span class="kn">fastcgi_pass</span><span class="w"> </span><span class="s">unix:/run/php/php7.3-fpm.sock</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># With php-cgi:</span>
+<span class="w">        </span><span class="c1"># fastcgi_pass 127.0.0.1:9000;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="kn">error_page</span> <span class="mi">404</span> <span class="s">/index.php</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">error_page</span><span class="w"> </span><span class="mi">404</span><span class="w"> </span><span class="s">/index.php</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1"># deny access to hidden files such as .htaccess</span>
-    <span class="kn">location</span> <span class="p">~</span> <span class="sr">/\.</span> <span class="p">{</span>
-        <span class="kn">deny</span> <span class="s">all</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1"># deny access to hidden files such as .htaccess</span>
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="p">~</span><span class="w"> </span><span class="sr">/\.</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kn">deny</span><span class="w"> </span><span class="s">all</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -501,8 +501,8 @@ paths align with the expected directory structure for your installation method.<
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 29, 2021.
+    <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Jan 01, 2022.
       </span></p>
   </div>
 
