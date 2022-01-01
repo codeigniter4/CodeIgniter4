@@ -9,8 +9,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+namespace CodeIgniter\Publisher;
+
 use CodeIgniter\Publisher\Exceptions\PublisherException;
-use CodeIgniter\Publisher\Publisher;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Publishers\TestPublisher;
 
