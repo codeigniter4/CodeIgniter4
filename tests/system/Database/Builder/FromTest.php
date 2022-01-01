@@ -104,9 +104,9 @@ final class FromTest extends CIUnitTestCase
     public function testFromSubquery()
     {
         // Subquery as table
-        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users")';
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") AS alias';
         $subquery    = new BaseBuilder('users', $this->db);
-        $builder     = $this->db->newQuery()->fromSubquery($subquery);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias');
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
