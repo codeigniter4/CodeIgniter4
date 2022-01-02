@@ -110,7 +110,6 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
         $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") AS users_1';
-
         $subquery = (new BaseBuilder('users', $this->db))->select('id, name');
         $builder  = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
 
