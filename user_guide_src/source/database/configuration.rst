@@ -221,8 +221,18 @@ Explanation of Values:
 
 ==============  ===========================================================================================================
 
-.. note:: Depending on what database platform you are using (MySQL, PostgreSQL,
-    etc.) not all values will be needed. For example, when using SQLite you
-    will not need to supply a username or password, and the database name
-    will be the path to your database file. The information above assumes
-    you are using MySQL.
+.. note:: The information above assumes you are using MySQL. Depending on what database platform you are using (MySQL, PostgreSQL, 
+          etc.) not all values will be needed.  			
+
+For example, when using SQLite you will not need to supply a username or password, and the database name will be the path to your database file::
+          
+        database.default.DBDriver = SQLite3
+       
+        # database.sqlite is in the writable folder:
+        database.default.database = database.sqlite
+
+        # or
+
+        # database.sqlite is in an other application folder:
+        database.default.database = ../data/database.sqlite
+        # the path to the file is relative to the writable folder
