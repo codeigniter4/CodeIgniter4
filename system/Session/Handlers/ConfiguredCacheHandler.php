@@ -24,7 +24,7 @@ class ConfiguredCacheHandler extends BaseHandler
     protected $cache = null;
 
     /**
-     * TODO make configurable via savePath? What should a savePath URI look like?
+     * TODO make configurable via savePath? What should a savePath URI look like for this class?
      *
      * @var string
      */
@@ -124,7 +124,7 @@ class ConfiguredCacheHandler extends BaseHandler
         if (isset($this->cache)) {
             try {
                 if(isset($this->lockKey)) {
-                    $rtnVal = $this->cache->delete($this->lockKey);
+                    $rtnVal = boolval($this->cache->delete($this->lockKey));
                 }
             } catch (\Throwable $t) {
                 $this->logger->error('Session: Got Exception on close(): ' . $t->getMessage());
