@@ -461,4 +461,15 @@ class App extends BaseConfig
      * @var bool
      */
     public $CSPEnabled = false;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        // app.supportedLocales = 'fr,  en ,de' => $this->supportedLocales = array('fr,'en,'de');
+        $envSupportedLocales = getenv('app.supportedLocales');
+        if ($envSupportedLocales)
+        {
+            $this->supportedLocales = array_map('trim', explode(',', $envSupportedLocales));
+        }
+    }
 }
