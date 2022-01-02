@@ -35,14 +35,14 @@ final class BaseCommandTest extends CIUnitTestCase
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertTrue(isset($command->group));
+        $this->assertObjectHasAttribute('group', $command);
     }
 
     public function testMagicIssetFalse()
     {
         $command = new AppInfo($this->logger, service('commands'));
 
-        $this->assertFalse(isset($command->foobar));
+        $this->assertObjectNotHasAttribute('foobar', $command);
     }
 
     public function testMagicGet()
