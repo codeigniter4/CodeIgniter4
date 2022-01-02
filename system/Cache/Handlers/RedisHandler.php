@@ -184,7 +184,6 @@ class RedisHandler extends BaseHandler
         }
 
         // Use the php serializer to handle everything we set/get from redis.
-        // @phpstan-ignore-next-line
         $this->redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
     }
 

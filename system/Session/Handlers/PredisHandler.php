@@ -62,16 +62,16 @@ class PredisHandler extends BaseHandler
      */
     private function _connectToRedisServer()
     {
-        $parameters = ['prefix' => $this->keyPrefix];
+        $parameters = [];
         if(isset($this->savePath['password'])) {
             $parameters['password'] = $this->savePath['password'];
         }
         if(isset($this->savePath['database'])) {
             $parameters['database'] = $this->savePath['database'];
         }
+
         $this->redis = new Client($this->savePath, $parameters);
 
-        $this->redis = new Client($this->savePath, ['prefix' => $this->keyPrefix]);
         $this->redis->time();
     }
 
@@ -116,7 +116,7 @@ class PredisHandler extends BaseHandler
             $this->savePath = [
                 'host'     => $matches[1],
                 'port'     => empty($matches[2]) ? 6379 : $matches[2],
-                'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
+                'password' => preg_match('#(password|auth)=([^\s&]+)#', $matches[3], $match) ? $match[2] : null,
                 'username' => preg_match('#username=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
                 'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
                 'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
@@ -124,11 +124,6 @@ class PredisHandler extends BaseHandler
                 'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
                 'persistent'  => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
             ];
-
-            if(isset($this->savePath['username']) && is_null($this->savePath['password'])) {
-                // Allow a user to set 'password' instead of 'auth'
-                $this->savePath['password'] = preg_match('#password=([^\s&]+)#', $matches[3], $match) ? $match[1] : null;
-            }
 
             preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
         } else {
@@ -291,7 +286,7 @@ class PredisHandler extends BaseHandler
         // so we need to check here if the lock key is for the
         // correct session ID.
         if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock') {
-            return $this->redis->expire($this->lockKey, 300);
+            return boolval($this->redis->expire($this->lockKey, 300));
         }
 
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
