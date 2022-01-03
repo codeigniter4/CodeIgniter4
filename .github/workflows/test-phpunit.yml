@@ -137,7 +137,7 @@ jobs:
       - name: Run Coveralls
         if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
         run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4 symfony/console:^5
+          composer global require --ansi php-coveralls/php-coveralls:^2.4
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
