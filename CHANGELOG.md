@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.1.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.6) (2021-12-24)
+## [v4.1.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.6) (2022-01-03)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.5...v4.1.6)
 
@@ -30,6 +30,7 @@
 * fix: VENDORPATH definition by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5453
 * fix: Throttler does not show correct token time by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5470
 * fix: directory_mirror() throws an error if destination directory exists by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5493
+* fix: KINT visual error when activating CSP by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5501
 
 **New Features**
 
@@ -56,6 +57,7 @@
 * The View class. Optimizing duplicate code. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5455
 * refactor: fix `ThrottleTest::testFlooding` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5463
 * refactor: update deprecated method in DatetimeCast by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5474
+* Remove semicolons from SQL statements. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5513
 
 **New Contributors**
 
