@@ -59,6 +59,15 @@ class CliRenderer extends TextRenderer
      */
     public static $min_terminal_width = 40;
 
+    /**
+     * Which stream to check for VT100 support on windows.
+     *
+     * null uses STDOUT if it's defined
+     *
+     * @var null|resource
+     */
+    public static $windows_stream = null;
+
     protected static $terminal_width = null;
 
     protected $windows_output = false;
@@ -69,8 +78,22 @@ class CliRenderer extends TextRenderer
     {
         parent::__construct();
 
-        if (!self::$force_utf8) {
-            $this->windows_output = KINT_WIN;
+        if (!self::$force_utf8 && KINT_WIN) {
+            if (!KINT_PHP72) {
+                $this->windows_output = true;
+            } else {
+                $stream = self::$windows_stream;
+
+                if (!$stream && \defined('STDOUT')) {
+                    $stream = STDOUT;
+                }
+
+                if (!$stream) {
+                    $this->windows_output = true;
+                } else {
+                    $this->windows_output = !\sapi_windows_vt100_support($stream);
+                }
+            }
         }
 
         if (!self::$terminal_width) {
@@ -153,7 +176,7 @@ class CliRenderer extends TextRenderer
     {
         return \str_replace(
             ['┌', '═', '┐', '│', '└', '─', '┘'],
-            ["\xda", "\xdc", "\xbf", "\xb3", "\xc0", "\xc4", "\xd9"],
+            [' ', '=', ' ', '|', ' ', '-', ' '],
             $string
         );
     }
