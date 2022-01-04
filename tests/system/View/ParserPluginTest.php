@@ -133,4 +133,17 @@ final class ParserPluginTest extends CIUnitTestCase
     {
         return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
     }
+
+    public function testCspScriptNonceWithCspEnabled()
+    {
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $template = 'aaa {+ csp_script_nonce +} bbb';
+
+        $this->assertMatchesRegularExpression(
+            '/aaa nonce="[0-9a-z]{24}" bbb/',
+            $this->parser->renderString($template)
+        );
+    }
 }
