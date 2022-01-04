@@ -129,17 +129,19 @@ class Filters
 
 		$files = $locator->search('Config/Filters.php');
 
-		foreach ($files as $file)
-		{
+		foreach ($files as $file) {
+
 			$className = $locator->getClassname($file);
 
 			// Don't include our main Filter config again...
-			if ($className === 'Config\\Filters')
-			{
+			if ($className === 'Config\\Filters') {
+
 				continue;
 			}
 
 			include $file;
+
+			$this->config = new $className;
 		}
 	}
 
@@ -167,47 +169,39 @@ class Filters
 	{
 		$this->initialize(strtolower($uri));
 
-		foreach ($this->filtersClass[$position] as $className)
-		{
+		foreach ($this->filtersClass[$position] as $className) {
 			$class = new $className();
 
-			if (! $class instanceof FilterInterface)
-			{
+			if (!$class instanceof FilterInterface) {
 				throw FilterException::forIncorrectInterface(get_class($class));
 			}
 
-			if ($position === 'before')
-			{
+			if ($position === 'before') {
 				$result = $class->before($this->request, $this->argumentsClass[$className] ?? null);
 
-				if ($result instanceof RequestInterface)
-				{
+				if ($result instanceof RequestInterface) {
 					$this->request = $result;
 					continue;
 				}
 
 				// If the response object was sent back,
 				// then send it and quit.
-				if ($result instanceof ResponseInterface)
-				{
+				if ($result instanceof ResponseInterface) {
 					// short circuit - bypass any other filters
 					return $result;
 				}
 				// Ignore an empty result
-				if (empty($result))
-				{
+				if (empty($result)) {
 					continue;
 				}
 
 				return $result;
 			}
 
-			if ($position === 'after')
-			{
+			if ($position === 'after') {
 				$result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
 
-				if ($result instanceof ResponseInterface)
-				{
+				if ($result instanceof ResponseInterface) {
 					$this->response = $result;
 
 					continue;
@@ -237,13 +231,11 @@ class Filters
 	 */
 	public function initialize(string $uri = null)
 	{
-		if ($this->initialized === true)
-		{
+		if ($this->initialized === true) {
 			return $this;
 		}
 
-		if ($this->modules->shouldDiscover('filters'))
-		{
+		if ($this->modules->shouldDiscover('filters')) {
 			$this->discoverFilters();
 		}
 
@@ -252,11 +244,11 @@ class Filters
 		$this->processFilters($uri);
 
 		// Set the toolbar filter to the last position to be executed
-		if (in_array('toolbar', $this->filters['after'], true) &&
+		if (
+			in_array('toolbar', $this->filters['after'], true) &&
 			($count = count($this->filters['after'])) > 1 &&
 			$this->filters['after'][$count - 1] !== 'toolbar'
-		)
-		{
+		) {
 			array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
 			$this->filters['after'][] = 'toolbar';
 		}
@@ -305,13 +297,11 @@ class Filters
 	{
 		$alias = $alias ?? md5($class);
 
-		if (! isset($this->config->{$section}))
-		{
+		if (!isset($this->config->{$section})) {
 			$this->config->{$section} = [];
 		}
 
-		if (! isset($this->config->{$section}[$when]))
-		{
+		if (!isset($this->config->{$section}[$when])) {
 			$this->config->{$section}[$when] = [];
 		}
 
@@ -337,8 +327,7 @@ class Filters
 	public function enableFilter(string $name, string $when = 'before')
 	{
 		// Get parameters and clean name
-		if (strpos($name, ':') !== false)
-		{
+		if (strpos($name, ':') !== false) {
 			list($name, $params) = explode(':', $name);
 
 			$params = explode(',', $params);
@@ -349,20 +338,17 @@ class Filters
 			$this->arguments[$name] = $params;
 		}
 
-		if (! array_key_exists($name, $this->config->aliases))
-		{
+		if (!array_key_exists($name, $this->config->aliases)) {
 			throw FilterException::forNoAlias($name);
 		}
 
 		$classNames = (array) $this->config->aliases[$name];
 
-		foreach ($classNames as $className)
-		{
+		foreach ($classNames as $className) {
 			$this->argumentsClass[$className] = $this->arguments[$name] ?? null;
 		}
 
-		if (! isset($this->filters[$when][$name]))
-		{
+		if (!isset($this->filters[$when][$name])) {
 			$this->filters[$when][]    = $name;
 			$this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
 		}
@@ -395,8 +381,7 @@ class Filters
 	 */
 	protected function processGlobals(string $uri = null)
 	{
-		if (! isset($this->config->globals) || ! is_array($this->config->globals))
-		{
+		if (!isset($this->config->globals) || !is_array($this->config->globals)) {
 			return;
 		}
 
@@ -408,34 +393,25 @@ class Filters
 			'after',
 		];
 
-		foreach ($sets as $set)
-		{
-			if (isset($this->config->globals[$set]))
-			{
+		foreach ($sets as $set) {
+			if (isset($this->config->globals[$set])) {
 				// look at each alias in the group
-				foreach ($this->config->globals[$set] as $alias => $rules)
-				{
+				foreach ($this->config->globals[$set] as $alias => $rules) {
 					$keep = true;
-					if (is_array($rules))
-					{
+					if (is_array($rules)) {
 						// see if it should be excluded
-						if (isset($rules['except']))
-						{
+						if (isset($rules['except'])) {
 							// grab the exclusion rules
 							$check = $rules['except'];
-							if ($this->pathApplies($uri, $check))
-							{
+							if ($this->pathApplies($uri, $check)) {
 								$keep = false;
 							}
 						}
-					}
-					else
-					{
+					} else {
 						$alias = $rules; // simple name of filter to apply
 					}
 
-					if ($keep)
-					{
+					if ($keep) {
 						$this->filters[$set][] = $alias;
 					}
 				}
@@ -450,16 +426,14 @@ class Filters
 	 */
 	protected function processMethods()
 	{
-		if (! isset($this->config->methods) || ! is_array($this->config->methods))
-		{
+		if (!isset($this->config->methods) || !is_array($this->config->methods)) {
 			return;
 		}
 
 		// Request method won't be set for CLI-based requests
 		$method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
-		if (array_key_exists($method, $this->config->methods))
-		{
+		if (array_key_exists($method, $this->config->methods)) {
 			$this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
 			return;
 		}
@@ -474,31 +448,25 @@ class Filters
 	 */
 	protected function processFilters(string $uri = null)
 	{
-		if (! isset($this->config->filters) || ! $this->config->filters)
-		{
+		if (!isset($this->config->filters) || !$this->config->filters) {
 			return;
 		}
 
 		$uri = strtolower(trim($uri, '/ '));
 
 		// Add any filters that apply to this URI
-		foreach ($this->config->filters as $alias => $settings)
-		{
+		foreach ($this->config->filters as $alias => $settings) {
 			// Look for inclusion rules
-			if (isset($settings['before']))
-			{
+			if (isset($settings['before'])) {
 				$path = $settings['before'];
-				if ($this->pathApplies($uri, $path))
-				{
+				if ($this->pathApplies($uri, $path)) {
 					$this->filters['before'][] = $alias;
 				}
 			}
 
-			if (isset($settings['after']))
-			{
+			if (isset($settings['after'])) {
 				$path = $settings['after'];
-				if ($this->pathApplies($uri, $path))
-				{
+				if ($this->pathApplies($uri, $path)) {
 					$this->filters['after'][] = $alias;
 				}
 			}
@@ -515,24 +483,18 @@ class Filters
 	 */
 	protected function processAliasesToClass(string $position)
 	{
-		foreach ($this->filters[$position] as $alias => $rules)
-		{
-			if (is_numeric($alias) && is_string($rules))
-			{
+		foreach ($this->filters[$position] as $alias => $rules) {
+			if (is_numeric($alias) && is_string($rules)) {
 				$alias = $rules;
 			}
 
-			if (! array_key_exists($alias, $this->config->aliases))
-			{
+			if (!array_key_exists($alias, $this->config->aliases)) {
 				throw FilterException::forNoAlias($alias);
 			}
 
-			if (is_array($this->config->aliases[$alias]))
-			{
+			if (is_array($this->config->aliases[$alias])) {
 				$this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
-			}
-			else
-			{
+			} else {
 				$this->filtersClass[$position][] = $this->config->aliases[$alias];
 			}
 		}
@@ -554,27 +516,23 @@ class Filters
 	private function pathApplies(string $uri, $paths)
 	{
 		// empty path matches all
-		if (empty($paths))
-		{
+		if (empty($paths)) {
 			return true;
 		}
 
 		// make sure the paths are iterable
-		if (is_string($paths))
-		{
+		if (is_string($paths)) {
 			$paths = [$paths];
 		}
 
 		// treat each paths as pseudo-regex
-		foreach ($paths as $path)
-		{
+		foreach ($paths as $path) {
 			// need to escape path separators
 			$path = str_replace('/', '\/', trim($path, '/ '));
 			// need to make pseudo wildcard real
 			$path = strtolower(str_replace('*', '.*', $path));
 			// Does this rule apply here?
-			if (preg_match('#^' . $path . '$#', $uri, $match) === 1)
-			{
+			if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
 				return true;
 			}
 		}
