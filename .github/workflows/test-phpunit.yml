@@ -4,12 +4,7 @@ on:
   push:
     branches:
       - develop
-      - '4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
-      - 'tests/**'
       - composer.json
       - spark
       - phpunit.xml.dist
@@ -18,12 +13,7 @@ on:
   pull_request:
     branches:
       - develop
-      - '4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
-      - 'tests/**'
       - composer.json
       - spark
       - phpunit.xml.dist
@@ -31,22 +21,24 @@ on:
       - .github/workflows/test-phpunit.yml
 
 jobs:
-
   tests:
+    name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['7.3', '7.4', '8.0', '8.1']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
         mysql-versions: ['5.7']
         include:
           - php-versions: '7.4'
             db-platforms: MySQLi
             mysql-versions: '8.0'
+          # @todo remove once 8.1 is stable enough
+          - php-versions: '8.1'
+            composer-flag: '--ignore-platform-req=php'
 
     services:
       mysql:
@@ -57,6 +49,7 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
       postgres:
         image: postgres
         env:
@@ -66,6 +59,7 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3
+
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04
         env:
@@ -75,11 +69,13 @@ jobs:
         ports:
           - 1433:1433
         options: --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'" --health-interval=10s --health-timeout=5s --health-retries=3
+
       redis:
         image: redis
         ports:
           - 6379:6379
         options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
       memcached:
         image: memcached:1.6-alpine
         ports:
@@ -105,6 +101,7 @@ jobs:
 
       - name: Install latest ImageMagick
         run: |
+          sudo apt-get update
           sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback ttf-dejavu-core
           sudo apt-get install -y imagemagick
           sudo apt-get install --fix-broken
@@ -122,13 +119,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --ansi --no-interaction
-          composer remove --ansi --dev --unused -W rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
+          composer update --ansi --no-interaction ${{ matrix.composer-flag }}
+          composer remove --ansi --dev --unused -W ${{ matrix.composer-flag }} -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Profile slow tests in PHP 7.4 MySQLi for now
-        if: matrix.php-versions == '7.4' && matrix.db-platforms == 'MySQLi'
+      - name: Profile slow tests in PHP 8.0
+        if: matrix.php-versions == '8.0'
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
       - name: Test with PHPUnit
@@ -137,10 +134,10 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '7.4'
-        name: Run Coveralls
+      - name: Run Coveralls
+        if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
         run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4
+          composer global require --ansi php-coveralls/php-coveralls:^2.4 symfony/console:^5
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -151,6 +148,7 @@ jobs:
     if: github.repository_owner == 'codeigniter4'
     needs: [tests]
     runs-on: ubuntu-20.04
+
     steps:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master

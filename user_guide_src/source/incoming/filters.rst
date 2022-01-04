@@ -91,6 +91,13 @@ Configuring Filters
 Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php**.
 This file contains four properties that allow you to configure exactly when the filters run.
 
+.. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
+
+.. Warning:: It is recommended that you should always add ``*`` at the end of a URI in the filter settings.
+    Because a controller method might be accessible by different URLs than you think.
+    For example, when auto-routing is enabled, if you have ``Blog::index``,
+    it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
+
 $aliases
 ========
 
@@ -133,7 +140,7 @@ run on every request. Filters can be specified by adding their alias to either t
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
-an array with the 'except' key and a uri to match as the value alongside the alias::
+an array with the 'except' key and a URI to match as the value alongside the alias::
 
     public $globals = [
         'before' => [
@@ -193,6 +200,28 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Provided Filters
 ****************
 
-Three filters are bundled with CodeIgniter4: ``Honeypot``, ``CSRF``, and ``DebugToolbar``.
+The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot>`, :ref:`CSRF <cross-site-request-forgery>`, ``InvalidChars``, ``SecureHeaders``, and :ref:`DebugToolbar <the-debug-toolbar>`.
 
-.. note:: The filters are executed in the declared order  that is defined in the config file, but there is one exception to this and it concerns the ``DebugToolbar``, which is always executed last. This is because ``DebugToolbar`` should be able to register everything that happens in other filters.
+.. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+InvalidChars
+=============
+
+This filter prohibits user input data (``$_GET``, ``$_POST``, ``$_COOKIE``, ``php://input``) from containing the following characters:
+
+- invalid UTF-8 characters
+- control characters except line break and tab code
+
+SecureHeaders
+=============
+
+This filter adds HTTP response headers that your application can use to increase the security of your application.
+
+If you want to customize the headers, extend ``CodeIgniter\Filters\SecureHeaders`` and override the ``$headers`` property. And change the ``$aliases`` property in **app/Config/Filters.php**::
+
+    public $aliases = [
+        ...
+        'secureheaders' => \App\Filters\SecureHeaders::class,
+    ];
+
+If you want to know about secure headers, see `OWASP Secure Headers Project <https://owasp.org/www-project-secure-headers/>`_.

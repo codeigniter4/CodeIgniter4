@@ -20,7 +20,13 @@ if (! function_exists('dot_array_search')) {
      */
     function dot_array_search(string $index, array $array)
     {
-        $segments = preg_split('/(?<!\\\)\./', rtrim($index, '* '), 0, PREG_SPLIT_NO_EMPTY);
+        // See https://regex101.com/r/44Ipql/1
+        $segments = preg_split(
+            '/(?<!\\\\)\./',
+            rtrim($index, '* '),
+            0,
+            PREG_SPLIT_NO_EMPTY
+        );
 
         $segments = array_map(static function ($key) {
             return str_replace('\.', '.', $key);
@@ -53,6 +59,10 @@ if (! function_exists('_array_search_dot')) {
             $answer = [];
 
             foreach ($array as $value) {
+                if (! is_array($value)) {
+                    return null;
+                }
+
                 $answer[] = _array_search_dot($indexes, $value);
             }
 

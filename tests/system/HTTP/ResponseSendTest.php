@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\Services;
 
 /**
  * This test suite has been created separately from
@@ -134,5 +136,39 @@ final class ResponseSendTest extends CIUnitTestCase
         // and what actually got sent?
         $this->assertHeaderEmitted('Set-Cookie: foo=bar;');
         $this->assertHeaderEmitted('Set-Cookie: login_time');
+    }
+
+    /**
+     * Make sure secure cookies are not sent with HTTP request
+     *
+     * @ runInSeparateProcess
+     * @ preserveGlobalState  disabled
+     */
+    public function testDoNotSendUnSecureCookie(): void
+    {
+        $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed');
+
+        $request = $this->createMock(IncomingRequest::class);
+        $request->method('isSecure')->willReturn(false);
+        Services::injectMock('request', $request);
+
+        $response = new Response(new App());
+        $response->pretend(false);
+        $body = 'Hello';
+        $response->setBody($body);
+
+        $response->setCookie(
+            'foo',
+            'bar',
+            '',
+            '',
+            '/',
+            '',
+            true
+        );
+
+        // send it
+        $response->send();
     }
 }

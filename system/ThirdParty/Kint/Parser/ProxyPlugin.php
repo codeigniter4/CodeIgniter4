@@ -26,7 +26,7 @@
 namespace Kint\Parser;
 
 use InvalidArgumentException;
-use Kint\Object\BasicObject;
+use Kint\Zval\Value;
 
 class ProxyPlugin extends Plugin
 {
@@ -59,8 +59,8 @@ class ProxyPlugin extends Plugin
         return $this->triggers;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
-        return \call_user_func_array($this->callback, array(&$var, &$o, $trigger, $this->parser));
+        return \call_user_func_array($this->callback, [&$var, &$o, $trigger, $this->parser]);
     }
 }

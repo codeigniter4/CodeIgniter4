@@ -37,6 +37,10 @@ final class MemcachedHandlerTest extends AbstractHandlerTest
     {
         parent::setUp();
 
+        if (! extension_loaded('memcached')) {
+            $this->markTestSkipped('Memcached extension not loaded.');
+        }
+
         $this->config = new Cache();
 
         $this->handler = new MemcachedHandler($this->config);

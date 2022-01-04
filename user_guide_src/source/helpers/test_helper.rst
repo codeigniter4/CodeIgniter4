@@ -5,7 +5,8 @@ Test Helper
 The Test Helper file contains functions that assist in testing your project.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

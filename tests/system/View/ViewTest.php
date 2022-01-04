@@ -316,8 +316,8 @@ final class ViewTest extends CIUnitTestCase
 
         $content = $view->render('extend_include');
 
-        $this->assertTrue(strpos($content, '<p>Open</p>') !== false);
-        $this->assertTrue(strpos($content, '<h1>Hello World</h1>') !== false);
+        $this->assertStringContainsString('<p>Open</p>', $content);
+        $this->assertStringContainsString('<h1>Hello World</h1>', $content);
         $this->assertSame(2, substr_count($content, 'Hello World'));
     }
 

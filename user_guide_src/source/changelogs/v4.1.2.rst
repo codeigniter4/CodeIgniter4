@@ -38,7 +38,7 @@ Changes:
 
 Deprecations:
 
-- Deprecated ``Codeigniter\View\View::$currentSection`` property.
+- Deprecated ``CodeIgniter\View\View::$currentSection`` property.
 - Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
 - Deprecated `CodeIgniter\Entity` in favor of `CodeIgniter\Entity\Entity`
 - Deprecated cookie-related properties of ``Response`` in order to use the ``Cookie`` class.

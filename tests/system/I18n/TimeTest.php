@@ -42,8 +42,7 @@ final class TimeTest extends CIUnitTestCase
             'yyyy-MM-dd HH:mm:ss'
         );
 
-        $time = new Time(null, 'America/Chicago');
-
+        $time = new Time('', 'America/Chicago');
         $this->assertSame($formatter->format($time), (string) $time);
     }
 
@@ -1023,7 +1022,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $datetime = new DateTime();
         $time     = Time::createFromInstance($datetime);
-        $this->assertTrue($time instanceof Time);
+        $this->assertInstanceOf(Time::class, $time);
         $this->assertTrue($time->sameAs($datetime));
     }
 

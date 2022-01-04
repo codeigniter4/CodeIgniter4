@@ -135,7 +135,7 @@ class Forge
      *
      * @var false|string
      */
-    protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s;';
+    protected $renameTableStr = 'ALTER TABLE %s RENAME TO %s';
 
     /**
      * UNSIGNED support
@@ -462,7 +462,7 @@ class Forge
     public function dropForeignKey(string $table, string $foreignName)
     {
         $sql = sprintf(
-            $this->dropConstraintStr,
+            (string) $this->dropConstraintStr,
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
             $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
         );
@@ -1042,14 +1042,14 @@ class Forge
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
                     . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 
                 continue;
             }
 
             $sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                 . ' ON ' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
         }
 
         return $sqls;

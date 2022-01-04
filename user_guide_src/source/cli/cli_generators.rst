@@ -260,7 +260,7 @@ generator command are recognized by the scaffold command.
 
 Running this in your terminal::
 
-    php spark make:scaffold user
+    > php spark make:scaffold user
 
 will create the following classes:
 

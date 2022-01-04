@@ -358,7 +358,7 @@ class CURLRequest extends Request
 
         // Do we need to delay this request?
         if ($this->delay > 0) {
-            sleep($this->delay); // @phpstan-ignore-line
+            sleep($this->delay);
         }
 
         $output = $this->sendRequest($curlOptions);
@@ -424,7 +424,7 @@ class CURLRequest extends Request
         $this->method                       = $method;
         $curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
 
-        $size = strlen($this->body);
+        $size = strlen($this->body ?? '');
 
         // Have content?
         if ($size > 0) {

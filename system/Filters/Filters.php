@@ -397,13 +397,10 @@ class Filters
             return;
         }
 
-        $uri = strtolower(trim($uri, '/ '));
+        $uri = strtolower(trim($uri ?? '', '/ '));
 
         // Add any global filters, unless they are excluded for this URI
-        $sets = [
-            'before',
-            'after',
-        ];
+        $sets = ['before', 'after'];
 
         foreach ($sets as $set) {
             if (isset($this->config->globals[$set])) {

@@ -16,13 +16,14 @@ use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
+use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
 use InvalidArgumentException;
 
 /**
- * Request Trait
+ * Response Trait
  *
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
@@ -435,7 +436,7 @@ trait ResponseTrait
         if ($this->CSPEnabled === true) {
             $this->CSP->finalize($this);
         } else {
-            $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body);
+            $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body ?? '');
         }
 
         $this->sendHeaders();
@@ -446,7 +447,7 @@ trait ResponseTrait
     }
 
     /**
-     * Sends the headers of this HTTP request to the browser.
+     * Sends the headers of this HTTP response to the browser.
      *
      * @return Response
      */
@@ -535,15 +536,15 @@ trait ResponseTrait
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|string $name     Cookie name or array containing binds
-     * @param string       $value    Cookie value
-     * @param string       $expire   Cookie expiration time in seconds
-     * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
-     * @param string       $path     Cookie path (default: '/')
-     * @param string       $prefix   Cookie name prefix
-     * @param bool         $secure   Whether to only transfer cookies via SSL
-     * @param bool         $httponly Whether only make the cookie accessible via HTTP (no javascript)
-     * @param string|null  $samesite
+     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
+     * @param string              $value    Cookie value
+     * @param string              $expire   Cookie expiration time in seconds
+     * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
+     * @param string              $path     Cookie path (default: '/')
+     * @param string              $prefix   Cookie name prefix
+     * @param bool                $secure   Whether to only transfer cookies via SSL
+     * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param string|null         $samesite
      *
      * @return $this
      */
@@ -558,6 +559,12 @@ trait ResponseTrait
         $httponly = false,
         $samesite = null
     ) {
+        if ($name instanceof Cookie) {
+            $this->cookieStore = $this->cookieStore->put($name);
+
+            return $this;
+        }
+
         if (is_array($name)) {
             // always leave 'name' in last place, as the loop will break otherwise, due to $$item
             foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item) {
@@ -689,7 +696,51 @@ trait ResponseTrait
             return;
         }
 
-        $this->cookieStore->dispatch();
+        $this->dispatchCookies();
+    }
+
+    private function dispatchCookies(): void
+    {
+        /** @var IncomingRequest $request */
+        $request = Services::request();
+
+        foreach ($this->cookieStore->display() as $cookie) {
+            if ($cookie->isSecure() && ! $request->isSecure()) {
+                throw SecurityException::forDisallowedAction();
+            }
+
+            $name    = $cookie->getPrefixedName();
+            $value   = $cookie->getValue();
+            $options = $cookie->getOptions();
+
+            if ($cookie->isRaw()) {
+                $this->doSetRawCookie($name, $value, $options);
+            } else {
+                $this->doSetCookie($name, $value, $options);
+            }
+        }
+
+        $this->cookieStore->clear();
+    }
+
+    /**
+     * Extracted call to `setrawcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    private function doSetRawCookie(string $name, string $value, array $options): void
+    {
+        setrawcookie($name, $value, $options);
+    }
+
+    /**
+     * Extracted call to `setcookie()` in order to run unit tests on it.
+     *
+     * @codeCoverageIgnore
+     */
+    private function doSetCookie(string $name, string $value, array $options): void
+    {
+        setcookie($name, $value, $options);
     }
 
     /**

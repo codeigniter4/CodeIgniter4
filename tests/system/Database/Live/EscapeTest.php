@@ -38,9 +38,9 @@ final class EscapeTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
      */
-    public function testEscapeProtectsNegativeNumbers()
+    public function testDoesNotEscapeNegativeNumbers()
     {
-        $this->assertSame("'-100'", $this->db->escape(-100));
+        $this->assertSame(-100, $this->db->escape(-100));
     }
 
     public function testEscape()

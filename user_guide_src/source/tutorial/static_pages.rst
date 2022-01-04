@@ -39,9 +39,7 @@ code.
 
     namespace App\Controllers;
 
-    use CodeIgniter\Controller;
-
-    class Pages extends Controller
+    class Pages extends BaseController
     {
         public function index()
         {
@@ -66,7 +64,7 @@ displays the CodeIgniter welcome page.
     Both are *technically* a function. But when you create a function in a class,
     it's called a method.
 
-The ``Pages`` class is extending the
+The ``Pages`` class is extending the ``BaseController`` class that extends the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
 (**system/Controller.php**).
@@ -180,7 +178,7 @@ From the command line, at the root of your project:
 
 ::
 
-    php spark serve
+    > php spark serve
 
 will start a web server, accessible on port 8080. If you set the location field
 in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.

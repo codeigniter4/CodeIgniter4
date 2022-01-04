@@ -114,10 +114,10 @@ class Autoloader
     public function register()
     {
         // Prepend the PSR4  autoloader for maximum performance.
-        spl_autoload_register([$this, 'loadClass'], true, true); // @phpstan-ignore-line
+        spl_autoload_register([$this, 'loadClass'], true, true);
 
         // Now prepend another loader for the files in our class map.
-        spl_autoload_register([$this, 'loadClassmap'], true, true); // @phpstan-ignore-line
+        spl_autoload_register([$this, 'loadClassmap'], true, true);
 
         // Load our non-class files
         foreach ($this->files as $file) {

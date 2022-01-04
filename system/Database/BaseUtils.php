@@ -200,7 +200,7 @@ abstract class BaseUtils
     public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
     {
         $out = '';
-        // First generate the headings from the table column names
+
         foreach ($query->getFieldNames() as $name) {
             $out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
         }
@@ -212,7 +212,7 @@ abstract class BaseUtils
             $line = [];
 
             foreach ($row as $item) {
-                $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
+                $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item ?? '') . $enclosure;
             }
 
             $out .= implode($delim, $line) . $newline;

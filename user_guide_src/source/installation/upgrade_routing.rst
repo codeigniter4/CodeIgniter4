@@ -3,14 +3,14 @@ Upgrade Routing
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
 ==============
 
-- `URI Routing Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
-- :doc:`URI Routing Documentation Codeigniter 4.X </incoming/routing>`
+- `URI Routing Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/routing.html>`_
+- :doc:`URI Routing Documentation CodeIgniter 4.X </incoming/routing>`
 
 
 What has been changed
@@ -19,18 +19,18 @@ What has been changed
 
 Upgrade Guide
 =============
-1. You have to change the syntax of each routing line and append it in ``app/Config/Routes.php``. For example:
+1. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
 
-- ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'App\Blogs');`` this would map to the ``index()`` method in the "Blogs" class.
-- ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
-- ``$route['login/(.+)'] = 'auth/login/$1';`` to ``$routes->add('login/(.+)', 'Auth::login/$1');``
+    - ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'Blogs::index');``. This would map to the ``index()`` method in the ``Blogs`` controller.
+    - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
+    - ``$route['login/(.+)'] = 'auth/login/$1';`` to ``$routes->add('login/(.+)', 'Auth::login/$1');``
 
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
-Path: ``application/config/routes.php``::
+Path: **application/config/routes.php**::
 
     <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
@@ -45,9 +45,9 @@ Path: ``application/config/routes.php``::
     $route['drivers/update'] = 'drivers/update';
     $route['posts/(:any)'] = 'posts/view/$1';
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
-Path: ``app/Config/Routes.php``::
+Path: **app/Config/Routes.php**::
 
     <?php
 
@@ -64,12 +64,12 @@ Path: ``app/Config/Routes.php``::
 
     ...
 
-    $routes->add('posts', 'Posts::index');
+    $routes->add('posts/index', 'Posts::index');
     $routes->add('teams/create', 'Teams::create');
-    $routes->add('teams/edit/(:any)', 'Teams::edit/$1');
+    $routes->add('teams/update', 'Teams::update');
 
     $routes->add('posts/create', 'Posts::create');
-    $routes->add('posts/edit/(:any)', 'Posts::edit/$1');
+    $routes->add('posts/update', 'Posts::update');
     $routes->add('drivers/create', 'Drivers::create');
-    $routes->add('drivers/edit/(:any)', 'Drivers::edit/$1');
+    $routes->add('drivers/update', 'Drivers::update');
     $routes->add('posts/(:any)', 'Posts::view/$1');

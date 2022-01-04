@@ -9,7 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\Publisher\Publisher;
+namespace CodeIgniter\Publisher;
+
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**

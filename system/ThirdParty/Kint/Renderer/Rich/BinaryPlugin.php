@@ -25,7 +25,7 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
 
 class BinaryPlugin extends Plugin implements TabPluginInterface
 {
@@ -36,12 +36,17 @@ class BinaryPlugin extends Plugin implements TabPluginInterface
     {
         $out = '<pre>';
 
-        $chunks = \str_split($r->contents, self::$line_length);
+        /** @var string[] Psalm bug workaround */
+        $lines = \str_split($r->contents, self::$line_length);
 
-        foreach ($chunks as $index => $chunk) {
+        foreach ($lines as $index => $line) {
             $out .= \sprintf('%08X', $index * self::$line_length).":\t";
-            $out .= \implode(' ', \str_split(\str_pad(\bin2hex($chunk), 2 * self::$line_length, ' '), self::$chunk_length));
-            $out .= "\t".\preg_replace('/[^\\x20-\\x7E]/', '.', $chunk)."\n";
+
+            /** @var string[] Psalm bug workaround */
+            $chunks = \str_split(\str_pad(\bin2hex($line), 2 * self::$line_length, ' '), self::$chunk_length);
+
+            $out .= \implode(' ', $chunks);
+            $out .= "\t".\preg_replace('/[^\\x20-\\x7E]/', '.', $line)."\n";
         }
 
         $out .= '</pre>';

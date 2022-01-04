@@ -5,7 +5,8 @@ Text Helper
 The Text Helper file contains functions that assist in working with Text.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

@@ -166,7 +166,7 @@ class MockConnection extends BaseConnection
      */
     public function insertID(): int
     {
-        return $this->connID->insert_id; // @phpstan-ignore-line
+        return $this->connID->insert_id;
     }
 
     /**

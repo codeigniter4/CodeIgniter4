@@ -29,6 +29,7 @@ use Config\App;
 use Config\Logger;
 use Config\Modules;
 use InvalidArgumentException;
+use Kint;
 use stdClass;
 use Tests\Support\Models\JobModel;
 
@@ -41,10 +42,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        parent::setUp();
-        $renderer = Services::renderer();
-        $renderer->resetData();
         unset($_ENV['foo'], $_SERVER['foo']);
+        Services::reset();
+
+        parent::setUp();
     }
 
     public function testStringifyAttributes()
@@ -300,7 +301,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $_GET     = ['foo' => 'bar'];
         $_POST    = [
             'bar'    => 'baz',
-            'zibble' => serialize('fritz'),
+            'zibble' => 'fritz',
         ];
 
         $response = new RedirectResponse(new App());
@@ -308,7 +309,40 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertSame('bar', old('foo')); // regular parameter
         $this->assertSame('doo', old('yabba dabba', 'doo')); // non-existing parameter
-        $this->assertSame('fritz', old('zibble')); // serialized parameter
+        $this->assertSame('fritz', old('zibble'));
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testOldInputSerializeData()
+    {
+        $this->injectSessionMock();
+        // setup from RedirectResponseTest...
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $this->config          = new App();
+        $this->config->baseURL = 'http://example.com/';
+
+        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        Services::injectMock('routes', $this->routes);
+
+        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        Services::injectMock('request', $this->request);
+
+        // setup & ask for a redirect...
+        $_SESSION = [];
+        $_GET     = [];
+        $_POST    = [
+            'zibble' => serialize('fritz'),
+        ];
+
+        $response = new RedirectResponse(new App());
+        $response->withInput();
+
+        // serialized parameters are only HTML-escaped.
+        $this->assertSame('s:5:&quot;fritz&quot;;', old('zibble'));
     }
 
     /**
@@ -481,5 +515,38 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
+    }
+
+    public function testDWithCSP()
+    {
+        /** @var App $config */
+        $config       = config(App::class);
+        $CSPEnabled   = $config->CSPEnabled;
+        $cliDetection = Kint::$cli_detection;
+
+        $config->CSPEnabled  = true;
+        Kint::$cli_detection = false;
+
+        $this->expectOutputRegex('/<script {csp-script-nonce} class="kint-rich-script">/u');
+        d('string');
+
+        // Restore settings
+        $config->CSPEnabled  = $CSPEnabled;
+        Kint::$cli_detection = $cliDetection;
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testTraceWithCSP()
+    {
+        /** @var App $config */
+        $config              = config(App::class);
+        $config->CSPEnabled  = true;
+        Kint::$cli_detection = false;
+
+        $this->expectOutputRegex('/<style {csp-style-nonce} class="kint-rich-style">/u');
+        trace();
     }
 }

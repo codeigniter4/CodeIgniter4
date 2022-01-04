@@ -3,13 +3,13 @@ Upgrade Views
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 Documentations
 ==============
 
-- `View Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
-- :doc:`View Documentation Codeigniter 4.X </outgoing/views>`
+- `View Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/views.html>`_
+- :doc:`View Documentation CodeIgniter 4.X </outgoing/views>`
 
 What has been changed
 =====================
@@ -22,7 +22,7 @@ What has been changed
 Upgrade Guide
 =============
 
-1. First, move all views  to the folder ``app/Views``
+1. First, move all views  to the folder **app/Views**
 2. Change the loading syntax of views in every script where you load views from
    ``$this->load->view('directory_name/file_name')`` to ``echo view('directory_name/file_name');``
 3. (optional) You can change the echo syntax in views from ``<?php echo $title; ?>`` to ``<?= $title ?>``
@@ -30,10 +30,10 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/views``::
+Path: **application/views**::
 
     <html>
     <head>
@@ -53,10 +53,10 @@ Path: ``application/views``::
     </body>
     </html>
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Views``::
+Path: **app/Views**::
 
     <html>
     <head>
@@ -70,7 +70,7 @@ Path: ``app/Views``::
         <ul>
         <?php foreach ($todo_list as $item): ?>
             <li><?= esc($item) ?></li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
     </body>

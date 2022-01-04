@@ -25,14 +25,14 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\BlobObject;
+use Kint\Zval\BlobValue;
+use Kint\Zval\Value;
 
 class BinaryPlugin extends Plugin
 {
     public function getTypes()
     {
-        return array('string');
+        return ['string'];
     }
 
     public function getTriggers()
@@ -40,9 +40,9 @@ class BinaryPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, $trigger)
     {
-        if (!$o instanceof BlobObject || !\in_array($o->encoding, array('ASCII', 'UTF-8'), true)) {
+        if (!$o instanceof BlobValue || !\in_array($o->encoding, ['ASCII', 'UTF-8'], true)) {
             $o->value->hints[] = 'binary';
         }
     }

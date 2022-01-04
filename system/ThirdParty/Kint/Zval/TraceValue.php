@@ -23,27 +23,23 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-class ResourceObject extends BasicObject
+class TraceValue extends Value
 {
-    public $resource_type;
+    public $hints = ['trace'];
 
     public function getType()
     {
-        if ($this->resource_type) {
-            return $this->resource_type.' resource';
-        }
-
-        return 'resource';
+        return 'Debug Backtrace';
     }
 
-    public function transplant(BasicObject $old)
+    public function getSize()
     {
-        parent::transplant($old);
-
-        if ($old instanceof self) {
-            $this->resource_type = $old->resource_type;
+        if (!$this->size) {
+            return 'empty';
         }
+
+        return parent::getSize();
     }
 }

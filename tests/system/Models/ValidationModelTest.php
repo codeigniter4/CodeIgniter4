@@ -284,7 +284,7 @@ final class ValidationModelTest extends LiveModelTestCase
             'description' => 'just because we have to',
         ];
 
-        $this->assertTrue($this->model->insert($data) !== false);
+        $this->assertNotFalse($this->model->insert($data));
     }
 
     /**

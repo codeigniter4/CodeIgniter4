@@ -269,12 +269,36 @@ final class BaseQueryTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3566
      */
-    public function testNamedBindsWithColonElseWhere()
+    public function testNamedBindsWithColonElsewhere()
     {
         $query = new Query($this->db);
         $query->setQuery('SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = :id:', ['id' => 10]);
 
         $sql = 'SELECT `email`, @total:=(total+1) FROM `users` WHERE `id` = 10';
+        $this->assertSame($sql, $query->getQuery());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5138
+     */
+    public function testNamedBindsWithBindMarkerElsewhere()
+    {
+        $query = new Query($this->db);
+        $query->setQuery('SELECT * FROM posts WHERE id = :id: AND title = \'The default bind marker is "?"\'', ['id' => 10]);
+
+        $sql = 'SELECT * FROM posts WHERE id = 10 AND title = \'The default bind marker is "?"\'';
+        $this->assertSame($sql, $query->getQuery());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5138
+     */
+    public function testSimpleBindsWithNamedBindPlaceholderElsewhere()
+    {
+        $query = new Query($this->db);
+        $query->setQuery('SELECT * FROM posts WHERE id = ? AND title = \'A named bind placeholder looks like ":foobar:"\'', 10);
+
+        $sql = 'SELECT * FROM posts WHERE id = 10 AND title = \'A named bind placeholder looks like ":foobar:"\'';
         $this->assertSame($sql, $query->getQuery());
     }
 
@@ -341,6 +365,38 @@ final class BaseQueryTest extends CIUnitTestCase
         $query->setQuery('UPDATE user_table SET `x` = NOW() WHERE `id` = :id:', $binds, false);
 
         $expected = 'UPDATE user_table SET `x` = NOW() WHERE `id` = 22';
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4973
+     */
+    public function testSetQueryBindsWithSetEscapeNegativeIntegers()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM product WHERE date_pickup < DateAdd(month, ?, Convert(date, GetDate())',
+            [-6],
+            true
+        );
+
+        $expected = 'SELECT * FROM product WHERE date_pickup < DateAdd(month, -6, Convert(date, GetDate())';
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetQueryNamedBindsWithNegativeIntegers()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery(
+            'SELECT * FROM product WHERE date_pickup < DateAdd(month, :num:, Convert(date, GetDate())',
+            ['num' => -6]
+        );
+
+        $expected = 'SELECT * FROM product WHERE date_pickup < DateAdd(month, -6, Convert(date, GetDate())';
 
         $this->assertSame($expected, $query->getQuery());
     }

@@ -31,7 +31,8 @@ A more comprehensive package like `Halite <https://github.com/paragonie/halite>`
     been deprecated as of PHP 7.2.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 .. _usage:
 

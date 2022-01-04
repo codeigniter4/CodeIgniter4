@@ -153,7 +153,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->updateBatch($data, 'name'));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['country']));
+        $this->assertArrayHasKey('country', $error);
     }
 
     public function testUpdateBatchWithEntity(): void

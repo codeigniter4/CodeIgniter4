@@ -13,7 +13,7 @@ Loading the Library
 *******************
 
 Because Publisher instances are specific to their source and destination this library is not available
-through ``Services`` but should be instantiated or extended directly. E.g.
+through ``Services`` but should be instantiated or extended directly. E.g.::
 
     $publisher = new \CodeIgniter\Publisher\Publisher();
 
@@ -152,12 +152,9 @@ You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will 
         {
             $publisher = new Publisher('/path/to/photos/', FCPATH . 'assets/images');
 
-            try
-            {
+            try {
                 $publisher->addPath('daily_photo.jpg')->copy(true); // `true` to enable overwrites
-            }
-            catch (Throwable $e)
-            {
+            } catch (Throwable $e) {
                 $this->showError($e);
             }
         }
@@ -281,27 +278,23 @@ into an application for use::
 
             $publisher = new Publisher($source, APPATH);
 
-            try
-            {
+            try {
                 // Add only the desired components
                 $publisher->addPaths([
                     'Controllers',
                     'Database/Migrations',
                     'Models',
                 ])->merge(false); // Be careful not to overwrite anything
-            }
-            catch (Throwable $e)
-            {
+            } catch (Throwable $e) {
                 $this->showError($e);
                 return;
             }
 
             // If publication succeeded then update namespaces
-            foreach ($publisher->getPublished() as $file)
-            {
+            foreach ($publisher->getPublished() as $file) {
                 // Replace the namespace
                 $contents = file_get_contents($file);
-                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, );
+                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, $contents);
                 file_put_contents($file, $contents);
             }
         }
@@ -343,18 +336,18 @@ Returns success or failure.
 Returns the temporary workspace, creating it if necessary. Some operations use intermediate storage to stage
 files and changes, and this provides the path to a transient, writable directory that you may use as well.
 
-**getErrors(): array<string,Throwable>**
+**getErrors(): array<string, Throwable>**
 
 Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use ``getMessage()`` on the Throwable to get the error message.
 
-**addPath(string $path, bool $recursive = true)**
+**addPath(string $path, bool $recursive = true)** /
 **addPaths(array $path, bool $recursive = true)**
 
 Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
 
-**addUri(string $uri)**
+**addUri(string $uri)** /
 **addUris(array $uris)**
 
 Downloads the contents of a URI using ``CURLRequest`` into the scratch workspace then adds the resulting

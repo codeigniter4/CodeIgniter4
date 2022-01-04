@@ -23,46 +23,56 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-class ClosureObject extends InstanceObject
+class InstanceValue extends Value
 {
-    public $parameters = array();
-    public $hints = array('object', 'callable', 'closure');
+    public $type = 'object';
+    public $classname;
+    public $spl_object_hash;
+    public $filename;
+    public $startline;
+    public $hints = ['object'];
 
-    private $paramcache;
-
-    public function getAccessPath()
+    public function getType()
     {
-        if (null !== $this->access_path) {
-            return parent::getAccessPath().'('.$this->getParams().')';
+        return $this->classname;
+    }
+
+    public function transplant(Value $old)
+    {
+        parent::transplant($old);
+
+        if ($old instanceof self) {
+            $this->classname = $old->classname;
+            $this->spl_object_hash = $old->spl_object_hash;
+            $this->filename = $old->filename;
+            $this->startline = $old->startline;
         }
     }
 
-    public function getSize()
+    public static function sortByHierarchy($a, $b)
     {
-    }
-
-    public function getParams()
-    {
-        if (null !== $this->paramcache) {
-            return $this->paramcache;
+        if (\is_string($a) && \is_string($b)) {
+            $aclass = $a;
+            $bclass = $b;
+        } elseif (!($a instanceof Value) || !($b instanceof Value)) {
+            return 0;
+        } elseif ($a instanceof self && $b instanceof self) {
+            $aclass = $a->classname;
+            $bclass = $b->classname;
+        } else {
+            return 0;
         }
 
-        $out = array();
-
-        foreach ($this->parameters as $p) {
-            $type = $p->getType();
-
-            $ref = $p->reference ? '&' : '';
-
-            if ($type) {
-                $out[] = $type.' '.$ref.$p->getName();
-            } else {
-                $out[] = $ref.$p->getName();
-            }
+        if (\is_subclass_of($aclass, $bclass)) {
+            return -1;
         }
 
-        return $this->paramcache = \implode(', ', $out);
+        if (\is_subclass_of($bclass, $aclass)) {
+            return 1;
+        }
+
+        return 0;
     }
 }

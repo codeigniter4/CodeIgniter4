@@ -124,7 +124,6 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        // @phpstan-ignore-next-line
         $this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
     }
 

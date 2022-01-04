@@ -41,7 +41,7 @@ final class ConfigTest extends CIUnitTestCase
         $Config  = Config::get('DocTypes');
         $Config2 = Config::get('Config\\DocTypes');
 
-        $this->assertTrue($Config === $Config2);
+        $this->assertSame($Config2, $Config);
     }
 
     public function testCreateNonConfig()

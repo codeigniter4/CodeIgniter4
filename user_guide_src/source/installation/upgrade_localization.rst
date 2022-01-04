@@ -3,14 +3,14 @@ Upgrade Localization
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
 ==============
 
-- `Language Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
-- :doc:`Localization Documentation Codeigniter 4.X </outgoing/localization>`
+- `Language Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
+- :doc:`Localization Documentation CodeIgniter 4.X </outgoing/localization>`
 
 
 What has been changed
@@ -19,11 +19,11 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Specify the default language in *Config/App.php*:::
+1. Specify the default language in **Config/App.php**::
 
     public $defaultLocale = 'en';
 
-2. Now move your language files to ``app/Language/<locale>/``.
+2. Now move your language files to **app/Language/<locale>**.
 3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look like.
 4. Remove from every file the language loader ``$this->lang->load($file, $lang);``.
 5. Replace the method to load the language line ``$this->lang->line('error_email_missing')`` with ``echo lang('Errors.errorEmailMissing');``.
@@ -31,7 +31,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -45,7 +45,7 @@ Codeigniter Version 3.11
     $this->lang->load('error', $lang);
     echo $this->lang->line('error_email_missing');
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

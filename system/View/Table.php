@@ -179,9 +179,8 @@ class Table
             }
 
             $new[] = $temp;
-        } while (count($array) > 0);
+        } while ($array !== []);
 
-        // @phpstan-ignore-next-line
         return $new;
     }
 

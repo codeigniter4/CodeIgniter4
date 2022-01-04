@@ -13,7 +13,8 @@ body:
         whether still open or closed, related to your report**.
         If there is, your report will be closed promptly.
 
-        And if you are not using the [latest version](https://github.com/codeigniter4/CodeIgniter4/releases) of CodeIgniter, please update.
+        For example, if you get the error "*Undefined property: Config\\Exceptions::$sensitiveDataInTrace*",
+        you can search the GitHub repository with the keyword "[$sensitiveDataInTrace](https://github.com/codeigniter4/CodeIgniter4/search?q=%24sensitiveDataInTrace&type=issues)".
 
         ---
 
@@ -35,6 +36,23 @@ body:
     id: codeigniter-version
     attributes:
       label: CodeIgniter4 Version
+      description: |
+        e.g. 4.1.5
+        If you are not using the [latest version](https://github.com/codeigniter4/CodeIgniter4/releases), please
+        check to see if the problem occurs with the latest version.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: codeigniter-installation
+    attributes:
+      label: CodeIgniter4 Installation Method
+      multiple: false
+      options:
+        - Composer (using `codeigniter4/appstarter`)
+        - Composer (as dependency to an existing project)
+        - Manual (zip or tar.gz)
+        - Git
     validations:
       required: true
 
@@ -69,6 +87,7 @@ body:
     id: database
     attributes:
       label: Database
+      description: e.g. MySQL 5.6, MariaDB 10.2, PostgreSQL 9.6
     validations:
       required: false
 

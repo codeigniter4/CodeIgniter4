@@ -68,7 +68,7 @@ Then you would add the ``routes`` service in **app/Config/Services.php** to load
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(static::locator(), config('Modules'));
+        return new \App\Libraries\RouteCollection(static::locator(), config('Modules'));
     }
 
 Extending Core Classes

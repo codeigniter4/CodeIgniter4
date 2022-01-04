@@ -316,7 +316,7 @@ final class ServicesTest extends CIUnitTestCase
         $response2 = service('response');
         $this->assertInstanceOf(MockResponse::class, $response2);
 
-        $this->assertTrue($response !== $response2);
+        $this->assertNotSame($response2, $response);
     }
 
     /**

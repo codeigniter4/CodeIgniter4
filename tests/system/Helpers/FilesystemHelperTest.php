@@ -14,6 +14,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @internal
@@ -37,11 +38,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
             'simpleFile'    => 'A tap-tap-tapping upon my door',
             '.hidden'       => 'There is no spoon',
         ];
+
+        helper('filesystem');
     }
 
     public function testDirectoryMapDefaults()
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
@@ -65,7 +67,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDirectoryMapShowsHiddenFiles()
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
@@ -159,6 +160,34 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $result = file_get_contents($root . 'boo/faz');
 
         $this->assertSame($this->structure['boo']['faz'], $result);
+    }
+
+    public function testDirectoryMirrorSkipExistingFolder()
+    {
+        $this->assertTrue(function_exists('directory_mirror'));
+
+        $this->structure = [
+            'src' => [
+                'AnEmptyFolder' => [],
+            ],
+            'dest' => [
+                'AnEmptyFolder' => [],
+            ],
+        ];
+        vfsStream::setup('root', null, $this->structure);
+        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        // skips the existing folder
+        directory_mirror($root . 'src', $root . 'dest');
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
+
+        // skips the existing folder (the same as overwrite = true)
+        directory_mirror($root . 'src', $root . 'dest', false);
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
     }
 
     public function testWriteFileSuccess()
@@ -257,7 +286,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenames()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -279,7 +308,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetFilenamesWithHidden()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.

@@ -1,11 +1,183 @@
 # Changelog
 
+## [v4.1.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.6) (2022-01-03)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.5...v4.1.6)
+
+**Breaking Changes**
+
+* fix: Incorrect type `BaseBuilder::$tableName` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5378
+* fix: Validation cannot handle array item by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5405
+
+**Fixed Bugs**
+
+* fix: FileLocator cannot find files in sub-namespaces of the same vendor by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5292
+* fix: add a workaround for upgraded users who do not update Config\Exceptions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5314
+* Fix db escape negative integers by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5277
+* Fix: remove incorrect processing of CLI params by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5274
+* fix: table alias is prefixed when LIKE clause by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5361
+* fix: `dot_array_search()` unexpected array structure causes Type Error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5372
+* fix: UploadedFile::move() may return incorrect value by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5302
+* fix: BaseModel::insert() may not pass all the values from Entity by @katie1348 in https://github.com/codeigniter4/CodeIgniter4/pull/4980
+* fix: `IncomingRequest::getJsonVar()` may cause TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5392
+* chore: fix example test code for appstarter and module by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5421
+* fix: Model::save() may call unneeded countAllResults() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5439
+* fix: errors when MariaDB/MySQL has `ANSI_QUOTES` enabled by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5425
+* fix: Security class sends cookies immediately by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5429
+* fix: `is_cli()` returns `true` when `$_SERVER['HTTP_USER_AGENT']` is missing by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5393
+* fix: `MySQLi\Connection::_foreignKeyData()` may return duplicated rows by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5416
+* fix: `number_to_currency()` error on PHP 8.1 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5454
+* fix: VENDORPATH definition by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5453
+* fix: Throttler does not show correct token time by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5470
+* fix: directory_mirror() throws an error if destination directory exists by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5493
+* fix: KINT visual error when activating CSP by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5501
+
+**New Features**
+
+* feat: add filter to check invalid chars in user input by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5227
+
+**Enhancements**
+
+* Add support for PHP 8.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4883
+* Toolbar - Make it possible to turn off var data collection by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/5295
+* feat: add CSRF token randomization by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5283
+* Display file:line and trace information to database queries in debug toolbar by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/5334
+* feat: add SecureHeaders filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5419
+* Feature: BaseBuilder instance as subquery. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5488
+
+**Refactoring**
+
+* Do not inappropriately register bind when the value is a closure by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5247
+* refactor: replace $request->uri with $request->getUri() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5346
+* Determine if binds are simple or named by looking at the $binds array by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5138
+* Remove unneeded cast to array by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5379
+* Additional fix for deprecated `null` usage by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5388
+* refactor: dot_array_search() regex by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5443
+* refactor: Time::getDst() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5415
+* The View class. Optimizing duplicate code. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5455
+* refactor: fix `ThrottleTest::testFlooding` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5463
+* refactor: update deprecated method in DatetimeCast by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5474
+* Remove semicolons from SQL statements. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5513
+
+**New Contributors**
+
+* @katie1348 made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4980
+
+## [v4.1.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.5) (2021-11-08)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.4...v4.1.5)
+
+**Fixed bugs:**
+
+* Fix entity name generation when bundled in model by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5055
+* Fix `Model::__call` throwing `BadMethodCallException` on empty results by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5139
+* Fixed an issue where the dropForeginKey method would execute an empty query when the dropConstraintStr property was empty. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5173
+* Update 'updated_at' when enabled in replace() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4684
+* Fix query binding with two colons in query by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5117
+* Fixed the problem that _createTable does not take into account that it returns true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5133
+* Fixed a problem with not run escape for identities in like when `insensitiveSearch` is true. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5170
+* Fixed an issue where an unnecessary prefix was given when the random number was a column. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5179
+* Always escape identifiers in the set(), setUpdateBatch(), and insertBatch() by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5132
+* Error when value is an object - validating api data by @daycry in https://github.com/codeigniter4/CodeIgniter4/pull/5142
+* Fix color not updated in several places of the precompiled CSS by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5155
+* Fix debugbar styles printing by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5100
+* Fix highlighting in database debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5129
+* Fix debug toolbar db connection count by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5172
+* Fix CSRF filter does not work when set it to only post by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5194
+* Add CSRF Protection for PUT/PATCH/DELETE by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5228
+* Fix GC issue when session lifetime is set to 0 by @lf-uraku-yuki in https://github.com/codeigniter4/CodeIgniter4/pull/4744
+* Fix wrong helper path resolution by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5246
+* Fix: remove CURLRequest headers sharing from $_SERVER by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5249
+* Fix Localization not working/being ignored for 404 page by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5267
+* fix: module filters are not discovered when using route filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5280
+* IncomingRequest - Trim trailing slash by @najdanovicivan in https://github.com/codeigniter4/CodeIgniter4/pull/4974
+* Previous Responses by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5034
+* (Paging) Ensure page validity by @puschie286 in https://github.com/codeigniter4/CodeIgniter4/pull/5125
+* Fix variable variable `$$id` in RedisHandler by @Terrorboy in https://github.com/codeigniter4/CodeIgniter4/pull/5062
+* Fixes and enhancements to Exceptions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5052
+
+**Implemented enhancements:**
+
+* feat: `_` can be used as separators in environment variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5156
+* Multiple filters for a route and classname filter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5128
+* Feature - Mark duplicate queries by @danielTiringer in https://github.com/codeigniter4/CodeIgniter4/pull/5185
+* [Debug] Add formatted query string to timeline. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5196
+* [Debug] Improve keyword highlighting and escaping of query strings.  by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5200
+* Add `dropKey` method to `Forge` by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5171
+* Reduce memory usage of insertBatch(), updateBatch() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5202
+* Add Session based CSRF Protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5201
+* feat: add valid_url_strict rule by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5268
+
+**Merged pull requests:**
+
+* Merge branch '4.2' by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5060
+* Update to latest laminas-escaper 2.9.0 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5065
+* Remove unintended dead code in pre-commit by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5116
+* Adjust orange color in debug toolbar by @vlakoff in https://github.com/codeigniter4/CodeIgniter4/pull/5136
+* Extract method to get prefix for DB access function by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/5178
+* Improve `model()` auto-completion by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5186
+* Rename toolbar loader to be a regular JS file by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5224
+* [HTTP] Update Http Status Description based on latest iana.org by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/5235
+* Remove CSRF properties by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5231
+* Remove static variables for PHP 8.1 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5262
+* Replace usage of `FILTER_SANITIZE_STRING` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5263
+* Simplify logic of `number_to_roman` function by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5270
+* Fix compatibility of `PgSql\Result` on closing the result instance by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5279
+* Fix compatibility of Postgres result for PHP 8.1 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5278
+
+**New Contributors**
+
+* @Terrorboy made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5062
+* @vlakoff made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5136
+* @Felipebros made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5152
+* @daycry made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5142
+* @danielTiringer made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/5172
+
 ## [v4.1.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.4) (2021-09-06)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.3...v4.1.4)
 
 This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 [CodeIgniter Coding Standard](https://github.com/CodeIgniter/coding-standard) (based on PSR-12).
 
-*Note: Full changelog forthcoming.*
+**What's Changed**
+
+* Use php-cs-fixer as coding style tool by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4770
+* Remove unused local variables by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4783
+* Use static lambda if a binding to `$this` is not required. by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4784
+* Use/Fix `preg_quote()` delimiters by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4789
+* Don't override `$path` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4787
+* Don't override `$value` parameter by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4788
+* Add brackets to clarify intent and avoid unwanted side-effects by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4791
+* Remove removed `safe_mode` ini Option by @jeromegamez in https://github.com/codeigniter4/CodeIgniter4/pull/4795
+* It will fix undefined index cid error when sending emails with embedded images by @mmfarhan in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* Revert Model coalesce by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/4819
+* Master language constructs shall be used instead of aliases. by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4847
+* [Commands] Remove unused $minPHPVersion property at Serve command by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4852
+* Update to latest laminas-escaper ^2.8 by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/4878
+* Remove 'memory_usage' from 'displayPerformanceMetrics()' comment by @Mauricevb in https://github.com/codeigniter4/CodeIgniter4/pull/4939
+* Remove useless code separator comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4946
+* Optimize Filters by @mostafakhudair in https://github.com/codeigniter4/CodeIgniter4/pull/4965
+* Fix properly the phpstan error in 0.12.93 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4970
+* Manual cleanup of docblocks and comments by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/4964
+* Make Cookie compatible with ArrayAccess by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5004
+* Replace deprecated FILTER_SANITIZE_STRING by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5005
+* Make CookieStore compatible with IteratorAggregate::getIterator by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5010
+* Make the session handlers all compatible with SessionHandlerInterface by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5012
+* Make CITestStreamFilter compatible with php_user_filter by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5014
+* Make Time compatible with DateTime by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5022
+* Add `ReturnTypeWillChange` attribute to Entity by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5028
+* Replace unused Entity private method by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5029
+* Make File compatible with SplFileInfo by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5040
+* Update documentation code samples by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5039
+* PHP Copy-Paste Detector by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/5031
+* Fix key casting in form_dropdown helper. by @sfadschm in https://github.com/codeigniter4/CodeIgniter4/pull/5035
+* Switch to official coding standard by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5038
+
+**New Contributors**
+
+* @mmfarhan made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4798
+* @Mauricevb made their first contribution in https://github.com/codeigniter4/CodeIgniter4/pull/4939
 
 ## [v4.1.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.3) (2021-06-06)
 

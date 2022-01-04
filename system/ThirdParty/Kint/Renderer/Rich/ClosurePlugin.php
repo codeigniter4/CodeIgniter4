@@ -26,16 +26,16 @@
 namespace Kint\Renderer\Rich;
 
 use Kint\Kint;
-use Kint\Object\BasicObject;
-use Kint\Object\ClosureObject;
+use Kint\Zval\ClosureValue;
+use Kint\Zval\Value;
 
-class ClosurePlugin extends Plugin implements ObjectPluginInterface
+class ClosurePlugin extends Plugin implements ValuePluginInterface
 {
-    public function renderObject(BasicObject $o)
+    public function renderValue(Value $o)
     {
         $children = $this->renderer->renderChildren($o);
 
-        if (!($o instanceof ClosureObject)) {
+        if (!($o instanceof ClosureValue)) {
             $header = $this->renderer->renderHeader($o);
         } else {
             $header = '';

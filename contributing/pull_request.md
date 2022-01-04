@@ -214,17 +214,27 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 2. Go to the [CodeIgniter4 repository](https://github.com/codeigniter4/CodeIgniter4).
 3. [Fork](https://help.github.com/en/articles/fork-a-repo) it (to your GitHub account).
 4. [Clone](https://help.github.com/en/articles/cloning-a-repository) your CodeIgniter repository: `git@github.com:<your-name>/CodeIgniter4.git`
-5. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
-6. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
-7. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
-8. Commit messages are expected to be descriptive of what you changed specifically. Commit messages like
-   "Fixes #1234" would be asked by the reviewer to be revised.
+   - `> git clone git@github.com:<your-name>/CodeIgniter4.git`
+5. Install Composer dependencies.
+   - `> cd CodeIgniter4/`
+   - `> composer update`
+6. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
+   - `> git checkout -b <new-branch-name>`
+7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
+8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
+   - `> git commit`
+   - Commit messages are expected to be descriptive of what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
 9. If there are intermediate commits that are not meaningful to the overall PR, such as "Fixed error on style guide", "Fixed phpstan error", "Fixing mistake in code", and other related commits, it is advised to squash your commits so that we can have a clean commit history.
 10. If you have touched PHP code, run static analysis.
+   - `> composer analyze`
+   - `> vendor/bin/rector process`
 11. Run unit tests on the specific file you modified. If there are no existing tests yet, please create one.
-12. Make sure the tests pass to have a higher chance of merging.
-13. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
-14. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+   - `> vendor/bin/phpunit tests/system/path/to/file/you/modified`
+   - Make sure the tests pass to have a higher chance of merging.
+12. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
+   - `> git push origin <new-branch-name>`
+13. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+14. Label your pull request with the appropriate label if you can.
 
 See [Contribution workflow](./workflow.md) for Git workflow details.
 

@@ -268,13 +268,13 @@ final class CookieTest extends CIUnitTestCase
     {
         $cookie = new Cookie('cookie', 'monster');
 
-        $this->assertTrue(isset($cookie['expire']));
+        $this->assertArrayHasKey('expire', $cookie);
         $this->assertSame($cookie['expire'], $cookie->getExpiresTimestamp());
-        $this->assertTrue(isset($cookie['httponly']));
+        $this->assertArrayHasKey('httponly', $cookie);
         $this->assertSame($cookie['httponly'], $cookie->isHTTPOnly());
-        $this->assertTrue(isset($cookie['samesite']));
+        $this->assertArrayHasKey('samesite', $cookie);
         $this->assertSame($cookie['samesite'], $cookie->getSameSite());
-        $this->assertTrue(isset($cookie['path']));
+        $this->assertArrayHasKey('path', $cookie);
         $this->assertSame($cookie['path'], $cookie->getPath());
 
         $this->expectException(InvalidArgumentException::class);

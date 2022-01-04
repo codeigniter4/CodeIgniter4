@@ -84,4 +84,20 @@ final class AliasTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5360
+     */
+    public function testAliasSimpleLikeWithDBPrefix()
+    {
+        $this->setPrivateProperty($this->db, 'DBPrefix', 'db_');
+        $builder = $this->db->table('jobs j');
+
+        $builder->like('j.name', 'veloper');
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "db_jobs" "j" WHERE "j"."name" LIKE '%veloper%' ESCAPE '!'
+            SQL;
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }

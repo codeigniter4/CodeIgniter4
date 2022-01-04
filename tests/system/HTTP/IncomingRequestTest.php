@@ -107,8 +107,10 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getOldInput('pineapple.name'));
     }
 
-    // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
-    public function testCanGetOldInputArray()
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+     */
+    public function testCanGetOldInputArrayWithSESSION()
     {
         $_SESSION['_ci_old_input'] = [
             'get'  => ['apple' => ['name' => 'two']],
@@ -119,13 +121,13 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(['name' => 'foo'], $this->request->getOldInput('banana'));
     }
 
-    // Reference: https://github.com/codeigniter4/CodeIgniter4/issues/1492
-
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+     *
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */
-    public function testCanSerializeOldArray()
+    public function testCanGetOldInputArrayWithSessionService()
     {
         $locations = [
             'AB' => 'Alberta',
@@ -394,6 +396,29 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('buzz', $all['fizz']);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5391
+     */
+    public function testGetJsonVarReturnsNullFromNullBody()
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = null;
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $this->assertNull($request->getJsonVar('myKey'));
+    }
+
+    public function testgetJSONReturnsNullFromNullBody()
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = null;
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $this->assertNull($request->getJSON());
+    }
+
     public function testCanGrabGetRawInput()
     {
         $rawstring = 'username=admin001&role=administrator&usepass=0';
@@ -544,8 +569,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         // Use `false` here to simulate file_get_contents returning a false value
         $request = new IncomingRequest(new App(), new URI(), false, new UserAgent());
 
-        $this->assertTrue($request->getBody() !== false);
-        $this->assertTrue($request->getBody() === null);
+        $this->assertNotFalse($request->getBody());
+        $this->assertNull($request->getBody());
     }
 
     /**
@@ -650,6 +675,6 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $request->setPath('apples');
 
-        $this->assertSame('apples', $request->uri->getPath());
+        $this->assertSame('apples', $request->getUri()->getPath());
     }
 }

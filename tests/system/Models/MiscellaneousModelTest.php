@@ -93,7 +93,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->replace($jobData));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['description']));
+        $this->assertArrayHasKey('description', $error);
     }
 
     public function testUndefinedTypeInTransformDataToArray(): void

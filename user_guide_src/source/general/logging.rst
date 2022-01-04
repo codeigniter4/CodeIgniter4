@@ -97,7 +97,7 @@ into the message string::
     // Generates a message like: User 123 logged into the system from 127.0.0.1
     $info = [
         'id' => $user->id,
-        'ip_address' => $this->request->ip_address()
+        'ip_address' => $this->request->getIPAddress()
     ];
 
     log_message('info', 'User {id} logged into the system from {ip_address}', $info);
@@ -136,8 +136,8 @@ Using Third-Party Loggers
 =========================
 
 You can use any other logger that you might like as long as it extends from either
-``Psr\Log\LoggerInterface`` and is `PSR3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
-that you can easily drop in use for any PSR3-compatible logger, or create your own.
+``Psr\Log\LoggerInterface`` and is `PSR-3 <https://www.php-fig.org/psr/psr-3/>`_ compatible. This means
+that you can easily drop in use for any PSR-3 compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
 the **app/Config/Autoload.php** configuration file, or through another autoloader,

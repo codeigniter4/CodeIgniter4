@@ -9,9 +9,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+namespace CodeIgniter\Files;
+
 use CodeIgniter\Files\Exceptions\FileException;
-use CodeIgniter\Files\File;
-use CodeIgniter\Files\FileCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**

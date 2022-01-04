@@ -79,10 +79,9 @@ class Throttler implements ThrottlerInterface
      *
      * Example:
      *
-     *  if (! $throttler->check($request->ipAddress(), 60, MINUTE))
-     * {
+     *  if (! $throttler->check($request->ipAddress(), 60, MINUTE)) {
      *      die('You submitted over 60 requests within a minute.');
-     * }
+     *  }
      *
      * @param string $key      The name to use as the "bucket" name.
      * @param int    $capacity The number of requests the "bucket" can hold
@@ -95,12 +94,20 @@ class Throttler implements ThrottlerInterface
     {
         $tokenName = $this->prefix . $key;
 
+        // Number of tokens to add back per second
+        $rate = $capacity / $seconds;
+        // Number of seconds to get one token
+        $refresh = 1 / $rate;
+
         // Check to see if the bucket has even been created yet.
         if (($tokens = $this->cache->get($tokenName)) === null) {
             // If it hasn't been created, then we'll set it to the maximum
             // capacity - 1, and save it to the cache.
-            $this->cache->save($tokenName, $capacity - $cost, $seconds);
-            $this->cache->save($tokenName . 'Time', time(), $seconds);
+            $tokens = $capacity - $cost;
+            $this->cache->save($tokenName, $tokens, $seconds);
+            $this->cache->save($tokenName . 'Time', $this->time(), $seconds);
+
+            $this->tokenTime = 0;
 
             return true;
         }
@@ -109,15 +116,6 @@ class Throttler implements ThrottlerInterface
         // based on how long it's been since the last update.
         $throttleTime = $this->cache->get($tokenName . 'Time');
         $elapsed      = $this->time() - $throttleTime;
-
-        // Number of tokens to add back per second
-        $rate = $capacity / $seconds;
-
-        // How many seconds till a new token is available.
-        // We must have a minimum wait of 1 second for a new token.
-        // Primarily stored to allow devs to report back to users.
-        $newTokenAvailable = (1 / $rate) - $elapsed;
-        $this->tokenTime   = max(1, $newTokenAvailable);
 
         // Add tokens based up on number per second that
         // should be refilled, then checked against capacity
@@ -128,11 +126,20 @@ class Throttler implements ThrottlerInterface
         // If $tokens >= 1, then we are safe to perform the action, but
         // we need to decrement the number of available tokens.
         if ($tokens >= 1) {
-            $this->cache->save($tokenName, $tokens - $cost, $seconds);
-            $this->cache->save($tokenName . 'Time', time(), $seconds);
+            $tokens = $tokens - $cost;
+            $this->cache->save($tokenName, $tokens, $seconds);
+            $this->cache->save($tokenName . 'Time', $this->time(), $seconds);
+
+            $this->tokenTime = 0;
 
             return true;
         }
+
+        // How many seconds till a new token is available.
+        // We must have a minimum wait of 1 second for a new token.
+        // Primarily stored to allow devs to report back to users.
+        $newTokenAvailable = (int) ($refresh - $elapsed - $refresh * $tokens);
+        $this->tokenTime   = max(1, $newTokenAvailable);
 
         return false;
     }
@@ -164,6 +171,8 @@ class Throttler implements ThrottlerInterface
 
     /**
      * Return the test time, defaulting to current.
+     *
+     * @TODO should be private
      */
     public function time(): int
     {

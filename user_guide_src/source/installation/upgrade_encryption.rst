@@ -3,14 +3,14 @@ Upgrade Encryption
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
 ==============
 
-- `Encryption Library Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
-- :doc:`Encryption Service Documentation Codeigniter 4.X </libraries/encryption>`
+- `Encryption Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
+- :doc:`Encryption Service Documentation CodeIgniter 4.X </libraries/encryption>`
 
 
 What has been changed
@@ -19,13 +19,13 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Within your configs the ``$config['encryption_key'] = 'abc123';`` moved from ``application/config/config.php`` to ``public $key = 'abc123';`` in ``app/Config/Encryption.php``.
+1. Within your configs the ``$config['encryption_key'] = 'abc123';`` moved from **application/config/config.php** to ``public $key = 'abc123';`` in **app/Config/Encryption.php**.
 2. Wherever you have used the encryption library you have to replace ``$this->load->library('encryption');`` with ``$encrypter = service('encrypter');`` and change the methods for encryption and decrypting like in the following code example.
 
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -38,7 +38,7 @@ Codeigniter Version 3.11
     echo $this->encryption->decrypt($ciphertext);
 
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

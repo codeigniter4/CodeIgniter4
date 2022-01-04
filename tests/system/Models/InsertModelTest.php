@@ -15,8 +15,10 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
 use stdClass;
+use Tests\Support\Entity\User;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
@@ -74,7 +76,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->insertBatch($jobData));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['description']));
+        $this->assertArrayHasKey('description', $error);
     }
 
     public function testInsertBatchSetsIntTimestamps(): void
@@ -285,5 +287,25 @@ final class InsertModelTest extends LiveModelTestCase
         $result = $this->model->where('name', 'Scott')->where('country', '2')->where('email', '2+2')->first();
 
         $this->assertCloseEnough(time(), strtotime($result->created_at));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4247
+     */
+    public function testInsertWithDefaultValue(): void
+    {
+        $this->createModel(UserObjModel::class);
+
+        $entity             = new User();
+        $entity->name       = 'Mark';
+        $entity->email      = 'mark@example.com';
+        $entity->country    = 'India';  // same as the default
+        $entity->deleted    = 0;
+        $entity->created_at = new Time('now');
+
+        $this->model->insert($entity);
+
+        $id = $this->model->getInsertID();
+        $this->assertSame($entity->country, $this->model->find($id)->country);
     }
 }

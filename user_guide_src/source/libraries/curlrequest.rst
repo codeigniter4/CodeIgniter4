@@ -299,6 +299,8 @@ if it's not already set::
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
 
+.. _curlrequest-request-options-headers:
+
 headers
 =======
 

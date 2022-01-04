@@ -81,7 +81,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw, null
+    Valid context values: html, js, css, url, attr, raw
 
 .. php:function:: helper($filename)
 
@@ -179,11 +179,13 @@ Service Accessors
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
 
-    Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-    that data will persistent between multiple calls to `view()` within the same request. By default, the
-    data for that view is forgotten after displaying that single view file.
+    Currently, these options are available for use within the ``$options`` array:
 
-    The $option array is provided primarily to facilitate third-party integrations with
+    - ``saveData`` specifies that data will persistent between multiple calls to ``view()`` within the same request. If you do not want the data to be persisted, specify false.
+    - ``cache`` specifies the number of seconds to cache the view for. See :ref:`caching-views` for the details.
+    - ``debug`` can be set to false to disable the addition of debug code for :ref:`Debug Toolbar <the-debug-toolbar>`.
+
+    The ``$option`` array is provided primarily to facilitate third-party integrations with
     libraries like Twig.
 
     Example::
@@ -307,10 +309,10 @@ Miscellaneous Functions
         // Go back to the previous page
         return redirect()->back();
 
-        // Go to specific UI
+        // Go to specific URI
         return redirect()->to('/admin');
 
-        // Go to a named/reverse-routed URI
+        // Go to a named route
         return redirect()->route('named_route');
 
         // Keep the old input values upon redirect so they can be used by the `old()` function
@@ -326,7 +328,7 @@ Miscellaneous Functions
         return redirect()->back()->withHeaders();
 
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using redirect()->route()::
+    treating it the same as using ``redirect()->route()``::
 
         // Go to a named/reverse-routed URI
         return redirect('named_route');

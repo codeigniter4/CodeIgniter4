@@ -231,7 +231,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         parent::setUp();
 
-        if (! $this->app) { // @phpstan-ignore-line
+        if (! $this->app) {
             $this->app = $this->createApplication();
         }
 

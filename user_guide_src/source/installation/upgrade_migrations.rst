@@ -3,13 +3,13 @@ Upgrade Migrations
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 Documentations
 ==============
 
-- `Database Migrations Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html>`_
-- :doc:`Database Migrations Documentation Codeigniter 4.X </dbmgmt/migration>`
+- `Database Migrations Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/migration.html>`_
+- :doc:`Database Migrations Documentation CodeIgniter 4.X </dbmgmt/migration>`
 
 What has been changed
 =====================
@@ -25,7 +25,7 @@ Upgrade Guide
 =============
 
 1. If your v3 project uses sequential migration names you have to change those to timestamp names.
-2. You have to move all migration files to the new folder ``app/Database/Migrations``.
+2. You have to move all migration files to the new folder **app/Database/Migrations**.
 3. Remove the following line ``defined('BASEPATH') OR exit('No direct script access allowed');``.
 4. Add this line just after the opening php tag: ``namespace App\Database\Migrations;``.
 5. Below the ``namespace App\Database\Migrations;`` line add this line: ``use CodeIgniter\Database\Migration;``
@@ -48,10 +48,10 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 
-Path: ``application/migrations``::
+Path: **application/migrations**::
 
     <?php
 
@@ -63,13 +63,13 @@ Path: ``application/migrations``::
         {
             $this->dbforge->add_field(array(
                 'blog_id' => array(
-                    'type' => 'INT',
-                    'constraint' => 5,
-                    'unsigned' => true,
+                    'type'           => 'INT',
+                    'constraint'     => 5,
+                    'unsigned'       => true,
                     'auto_increment' => true,
                 ),
                 'blog_title' => array(
-                    'type' => 'VARCHAR',
+                    'type'       => 'VARCHAR',
                     'constraint' => '100',
                 ),
                 'blog_description' => array(
@@ -87,10 +87,10 @@ Path: ``application/migrations``::
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 
-Path: ``app/Database/Migrations``::
+Path: **app/Database/Migrations**::
 
     <?php
 

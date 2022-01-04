@@ -67,7 +67,7 @@ final class ConsoleTest extends CIUnitTestCase
         $console = new Console($this->app);
         $console->showHeader();
         $result = CITestStreamFilter::$buffer;
-        $this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)) > 0);
+        $this->assertGreaterThan(0, strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)));
     }
 
     public function testNoHeader()

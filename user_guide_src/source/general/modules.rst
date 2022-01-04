@@ -15,8 +15,8 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 Namespaces
 ==========
 
-The core element of the modules functionality comes from the :doc:`PSR4-compatible autoloading </concepts/autoloader>`
-that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the primary way to take full advantage of
+The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading </concepts/autoloader>`
+that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
@@ -128,8 +128,8 @@ present, then no auto-discovery will happen for that item, but the others in the
 Discovery and Composer
 ======================
 
-Packages that were installed via Composer will also be discovered by default. This only requires that the namespace
-that Composer knows about is a PSR4 namespace. PSR0 namespaces will not be detected.
+Packages installed via Composer using PSR-4 namespaces will also be discovered by default.
+PSR-0 namespaced packages will not be detected.
 
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
 by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``::
@@ -152,6 +152,9 @@ the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
+
+When working with modules, it can be a problem if the routes in the application contain wildcards.
+In that case, see :ref:`routing-priority`.
 
 Filters
 =======
@@ -190,6 +193,13 @@ with the ``new`` command::
     $config = new \Acme\Blog\Config\Blog();
 
 Config files are automatically discovered whenever using the **config()** function that is always available.
+
+.. note:: We don't recommend you use the same short classname in modules.
+    Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.
+
+.. note:: **config()** finds the file in **app/Config/** when there is a class with the same shortname,
+    even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-options` for more information.
 
 Migrations
 ==========

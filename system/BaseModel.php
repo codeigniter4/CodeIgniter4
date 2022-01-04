@@ -1578,7 +1578,7 @@ abstract class BaseModel
         // properties representing the collection elements, we need to grab
         // them as an array.
         if (is_object($data) && ! $data instanceof stdClass) {
-            $data = $this->objectToArray($data, true, true);
+            $data = $this->objectToArray($data, ($type === 'update'), true);
         }
 
         // If it's still a stdClass, go ahead and convert to

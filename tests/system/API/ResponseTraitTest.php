@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\URI;
@@ -30,7 +31,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     protected $response;
 
     /**
-     * @var Response formatter
+     * @var FormatterInterface|null
      */
     protected $formatter;
 
@@ -488,7 +489,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
 
-        $this->assertSame('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
+        $this->assertInstanceOf('CodeIgniter\Format\XMLFormatter', $this->formatter);
 
         $controller->respondCreated(['id' => 3], 'A Custom Reason');
         $expected = <<<'EOH'

@@ -19,7 +19,7 @@ Using the example controller you created in the controller page, let’s add a v
 Creating a View
 ===============
 
-Using your text editor, create a file called ``BlogView.php`` and put this in it::
+Using your text editor, create a file called ``blog_view.php`` and put this in it::
 
     <html>
         <head>
@@ -53,7 +53,7 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
     {
         public function index()
         {
-            echo view('BlogView');
+            echo view('blog_view');
         }
     }
 
@@ -107,11 +107,13 @@ You can store views under a **View** directory that is namespaced, and load that
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.
 
-If you have ``Blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
+If you have ``example/blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
-example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
+example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name::
 
-    echo view('Example\Blog\Views\BlogView');
+    echo view('Example\Blog\Views\blog_view');
+
+.. _caching-views:
 
 Caching Views
 =============
@@ -140,7 +142,7 @@ Here's an example::
         'message' => 'My Message',
     ];
 
-    echo view('blogview', $data);
+    echo view('blog_view', $data);
 
 Let's try it with your controller file. Open it and add this code::
 
@@ -155,7 +157,7 @@ Let's try it with your controller file. Open it and add this code::
             $data['title']   = "My Real Title";
             $data['heading'] = "My Real Heading";
 
-            echo view('blogview', $data);
+            echo view('blog_view', $data);
         }
     }
 
@@ -163,10 +165,10 @@ Now open your view file and change the text to variables that correspond to the 
 
     <html>
         <head>
-            <title><?= $title ?></title>
+            <title><?= esc($title) ?></title>
         </head>
         <body>
-            <h1><?= $heading ?></h1>
+            <h1><?= esc($heading) ?></h1>
         </body>
     </html>
 
@@ -184,7 +186,7 @@ into the `$option` array in the third parameter.
         'message' => 'My Message',
     ];
 
-    echo view('blogview', $data, ['saveData' => true]);
+    echo view('blog_view', $data, ['saveData' => true]);
 
 Additionally, if you would like the default functionality of the view function to be that it does save the data
 between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
@@ -212,7 +214,7 @@ Here’s a simple example. Add this to your controller::
                 'heading'   => 'My Real Heading',
             ];
 
-            echo view('blogview', $data);
+            echo view('blog_view', $data);
         }
     }
 
@@ -220,19 +222,19 @@ Now open your view file and create a loop::
 
     <html>
     <head>
-        <title><?= $title ?></title>
+        <title><?= esc($title) ?></title>
     </head>
     <body>
-        <h1><?= $heading ?></h1>
+        <h1><?= esc($heading) ?></h1>
 
         <h3>My Todo List</h3>
 
         <ul>
-        <?php foreach ($todo_list as $item):?>
+        <?php foreach ($todo_list as $item): ?>
 
-            <li><?= $item ?></li>
+            <li><?= esc($item) ?></li>
 
-        <?php endforeach;?>
+        <?php endforeach ?>
         </ul>
 
     </body>

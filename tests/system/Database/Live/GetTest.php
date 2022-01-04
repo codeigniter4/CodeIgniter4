@@ -78,8 +78,8 @@ final class GetTest extends CIUnitTestCase
     {
         $jobs = $this->db->table('job')->get()->getFieldNames();
 
-        $this->assertTrue(in_array('name', $jobs, true));
-        $this->assertTrue(in_array('description', $jobs, true));
+        $this->assertContains('name', $jobs);
+        $this->assertContains('description', $jobs);
     }
 
     public function testGetFieldData()

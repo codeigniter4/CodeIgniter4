@@ -188,7 +188,7 @@ class GDHandler extends BaseHandler
             imagesavealpha($dest, true);
         }
 
-        $copy($dest, $src, 0, 0, $this->xAxis, $this->yAxis, $this->width, $this->height, $origWidth, $origHeight);
+        $copy($dest, $src, 0, 0, (int) $this->xAxis, (int) $this->yAxis, $this->width, $this->height, $origWidth, $origHeight);
 
         imagedestroy($src);
         $this->resource = $dest;
@@ -472,9 +472,9 @@ class GDHandler extends BaseHandler
         // Add the shadow to the source image
         if (! empty($options['fontPath'])) {
             // We have to add fontheight because imagettftext locates the bottom left corner, not top-left corner.
-            imagettftext($src, $options['fontSize'], 0, $xAxis, $yAxis + $options['fontheight'], $color, $options['fontPath'], $text);
+            imagettftext($src, $options['fontSize'], 0, (int) $xAxis, (int) ($yAxis + $options['fontheight']), $color, $options['fontPath'], $text);
         } else {
-            imagestring($src, $options['fontSize'], $xAxis, $yAxis, $text, $color);
+            imagestring($src, (int) $options['fontSize'], (int) $xAxis, (int) $yAxis, $text, $color);
         }
 
         $this->resource = $src;

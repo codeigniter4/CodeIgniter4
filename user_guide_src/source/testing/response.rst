@@ -4,11 +4,15 @@ Testing Responses
 
 The ``TestResponse`` class provides a number of helpful functions for parsing and testing responses
 from your test cases. Usually a ``TestResponse`` will be provided for you as a result of your
-`Controller Tests <controllers.html>`_ or `HTTP Feature Tests <feature.html>`_, but you can always
+:doc:`Controller Tests <controllers>` or :doc:`HTTP Feature Tests <feature>`, but you can always
 create your own directly using any ``ResponseInterface``::
 
     $result = new \CodeIgniter\Test\TestResponse($response);
     $result->assertOK();
+
+.. contents::
+    :local:
+    :depth: 2
 
 Testing the Response
 ====================
@@ -37,7 +41,7 @@ Checking Response Status
 **isOK()**
 
 Returns a boolean true/false based on whether the response is perceived to be "ok". This is primarily determined by
-a response status code in the 200 or 300's.
+a response status code in the 200 or 300's. An empty body is not considered valid, unless in redirects.
 ::
 
     if ($result->isOK()) {

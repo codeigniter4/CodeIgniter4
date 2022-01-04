@@ -23,23 +23,14 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Renderer\Rich;
 
-class TraceObject extends BasicObject
+use Kint\Zval\Value;
+
+interface ValuePluginInterface extends PluginInterface
 {
-    public $hints = array('trace');
-
-    public function getType()
-    {
-        return 'Debug Backtrace';
-    }
-
-    public function getSize()
-    {
-        if (!$this->size) {
-            return 'empty';
-        }
-
-        return parent::getSize();
-    }
+    /**
+     * @return null|string
+     */
+    public function renderValue(Value $o);
 }

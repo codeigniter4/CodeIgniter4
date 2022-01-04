@@ -23,51 +23,50 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object\Representation;
+namespace Kint\Zval\Representation;
 
-class DocstringRepresentation extends Representation
+class SourceRepresentation extends Representation
 {
-    public $file;
-    public $line;
-    public $class;
-    public $hints = array('docstring');
+    public $hints = ['source'];
+    public $source = [];
+    public $filename;
+    public $line = 0;
+    public $showfilename = false;
 
-    public function __construct($docstring, $file, $line, $class = null)
+    public function __construct($filename, $line, $padding = 7)
     {
-        parent::__construct('Docstring');
+        parent::__construct('Source');
 
-        $this->file = $file;
+        $this->filename = $filename;
         $this->line = $line;
-        $this->class = $class;
-        $this->contents = $docstring;
+
+        $start_line = \max($line - $padding, 1);
+        $length = $line + $padding + 1 - $start_line;
+        $this->source = self::getSource($filename, $start_line, $length);
+        if (null !== $this->source) {
+            $this->contents = \implode("\n", $this->source);
+        }
     }
 
     /**
-     * Returns the representation's docstring without surrounding comments.
+     * Gets section of source code.
      *
-     * Note that this will not work flawlessly.
+     * @param string   $filename   Full path to file
+     * @param int      $start_line The first line to display (1 based)
+     * @param null|int $length     Amount of lines to show
      *
-     * On comments with whitespace after the stars the lines will begin with
-     * whitespace, since we can't accurately guess how much of an indentation
-     * is required.
-     *
-     * And on lines without stars on the left this may eat bullet points.
-     *
-     * Long story short: If you want the docstring read the contents. If you
-     * absolutely must have it without comments (ie renderValueShort) this will
-     * probably do.
-     *
-     * @return null|string Docstring with comments stripped
+     * @return null|array
      */
-    public function getDocstringWithoutComments()
+    public static function getSource($filename, $start_line = 1, $length = null)
     {
-        if (!$this->contents) {
+        if (!$filename || !\file_exists($filename) || !\is_readable($filename)) {
             return null;
         }
 
-        $string = \substr($this->contents, 3, -2);
-        $string = \preg_replace('/^\\s*\\*\\s*?(\\S|$)/m', '\\1', $string);
+        $source = \preg_split("/\r\n|\n|\r/", \file_get_contents($filename));
+        $source = \array_combine(\range(1, \count($source)), $source);
+        $source = \array_slice($source, $start_line - 1, $length, true);
 
-        return \trim($string);
+        return $source;
     }
 }

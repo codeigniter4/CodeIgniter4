@@ -9,7 +9,7 @@ Using CodeIgniter's Model
 Models
 ======
 
-Models provide a way to interact with a specific table in your database. They come out of the box with helper
+Models provide a way to interact with a specific **table** in your database. They come out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
@@ -100,7 +100,7 @@ Connecting to the Database
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
-modify which group is used on a per-model basis by adding the DBGroup property to your class.
+modify which group is used on a per-model basis by adding the ``$DBGroup`` property to your class.
 This ensures that within the model any references to ``$this->db`` are made through the appropriate
 connection.
 ::
@@ -175,7 +175,7 @@ Specifies if the table uses an auto-increment feature for ``$primaryKey``. If se
 then you are responsible for providing primary key value for every record in the table. This
 feature may be handy when we want to implement 1:1 relation or use UUIDs for our model.
 
-.. note:: If you set ``$useAutoIncrement`` to ``false`` then make sure to set your primary
+.. note:: If you set ``$useAutoIncrement`` to ``false``, then make sure to set your primary
     key in the database to ``unique``. This way you will make sure that all of Model's features
     will still work the same as before.
 
@@ -183,52 +183,52 @@ feature may be handy when we want to implement 1:1 relation or use UUIDs for our
 
 The Model's CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
-the type of data that is returned. Valid values are 'array', 'object', or the fully
-qualified name of a class that can be used with the Result object's getCustomResultObject()
+the type of data that is returned. Valid values are '**array**' (the default), '**object**', or the **fully
+qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
 method.
 
 **$useSoftDeletes**
 
-If true, then any delete* method calls will set ``deleted_at`` in the database, instead of
+If true, then any ``delete()`` method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
-part of a security trail. If true, the find* methods will only return non-deleted rows, unless
-the withDeleted() method is called prior to calling the find* method.
+part of a security trail. If true, the **find*()** methods will only return non-deleted rows, unless
+the ``withDeleted()`` method is called prior to calling the **find*()** method.
 
 This requires either a DATETIME or INTEGER field in the database as per the model's
-$dateFormat setting. The default field name is ``deleted_at`` however this name can be
-configured to any name of your choice by using $deletedField property.
+``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
+configured to any name of your choice by using ``$deletedField`` property.
 
 **$allowedFields**
 
-This array should be updated with the field names that can be set during save, insert, or
-update methods. Any field names other than these will be discarded. This helps to protect
+This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
+``update()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
 **$useTimestamps**
 
 This boolean value determines whether the current date is automatically added to all inserts
-and updates. If true, will set the current time in the format specified by $dateFormat. This
-requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
+and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
+requires that the table have columns named **created_at** and **updated_at** in the appropriate
 data type.
 
 **$createdField**
 
 Specifies which database field to use for data record create timestamp.
-Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled)
+Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled).
 
 **$updatedField**
 
 Specifies which database field should use for keep data record update timestamp.
-Leave it empty to avoid update it (even useTimestamps is enabled)
+Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
 **$dateFormat**
 
-This value works with $useTimestamps and $useSoftDeletes to ensure that the correct type of
+This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: datetime, date, or int (a PHP timestamp). Using 'useSoftDeletes' or
-'useTimestamps' with an invalid or missing dateFormat will cause an exception.
+valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
+**useTimestamps** with an invalid or missing dateFormat will cause an exception.
 
 **$validationRules**
 
@@ -243,7 +243,7 @@ described in :ref:`validation-custom-errors`. Described in more detail below.
 
 **$skipValidation**
 
-Whether validation should be skipped during all ``inserts`` and ``updates``. The default
+Whether validation should be skipped during all **inserts** and **updates**. The default
 value is false, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
@@ -268,8 +268,8 @@ Working With Data
 Finding Data
 ------------
 
-Several functions are provided for doing basic CRUD work on your tables, including find(),
-insert(), update(), delete() and more.
+Several functions are provided for doing basic CRUD work on your tables, including ``find()``,
+``insert()``, ``update()``, ``delete()`` and more.
 
 **find()**
 
@@ -277,7 +277,7 @@ Returns a single row where the primary key matches the value passed in as the fi
 
     $user = $userModel->find($user_id);
 
-The value is returned in the format specified in $returnType.
+The value is returned in the format specified in ``$returnType``.
 
 You can specify more than one row to return by passing an array of primaryKey values instead
 of just one::
@@ -285,7 +285,7 @@ of just one::
     $users = $userModel->find([1,2,3]);
 
 If no parameters are passed in, will return all rows in that model's table, effectively acting
-like findAll(), though less explicit.
+like ``findAll()``, though less explicit.
 
 **findColumn()**
 
@@ -293,7 +293,7 @@ Returns null or an indexed array of column values::
 
     $user = $userModel->findColumn($column_name);
 
-$column_name should be a name of single column else you will get the DataException.
+``$column_name`` should be a name of single column else you will get the DataException.
 
 **findAll()**
 
@@ -321,8 +321,8 @@ Returns the first row in the result set. This is best used in combination with t
 
 **withDeleted()**
 
-If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted_at IS NOT null'.
-To temporarily override this, you can use the withDeleted() method prior to calling the find* method.
+If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
+To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 ::
 
     // Only gets non-deleted rows (deleted = 0)
@@ -333,8 +333,8 @@ To temporarily override this, you can use the withDeleted() method prior to call
 
 **onlyDeleted()**
 
-Whereas withDeleted() will return both deleted and not-deleted rows, this method modifies
-the next find* methods to return only soft deleted rows::
+Whereas ``withDeleted()`` will return both deleted and not-deleted rows, this method modifies
+the next **find*()** methods to return only soft deleted rows::
 
     $deletedUsers = $userModel->onlyDeleted()->findAll();
 
@@ -344,7 +344,7 @@ Saving Data
 **insert()**
 
 An associative array of data is passed into this method as the only parameter to create a new
-row of data in the database. The array's keys must match the name of the columns in a $table, while
+row of data in the database. The array's keys must match the name of the columns in a ``$table``, while
 the array's values are the values to save for that key::
 
     $data = [
@@ -356,9 +356,9 @@ the array's values are the values to save for that key::
 
 **update()**
 
-Updates an existing record in the database. The first parameter is the $primaryKey of the record to update.
+Updates an existing record in the database. The first parameter is the ``$primaryKey`` of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
-of the columns in a $table, while the array's values are the values to save for that key::
+of the columns in a ``$table``, while the array's values are the values to save for that key::
 
     $data = [
         'username' => 'darth',
@@ -385,8 +385,8 @@ update command, with the added benefit of validation, events, etc::
 
 **save()**
 
-This is a wrapper around the insert() and update() methods that handle inserting or updating the record
-automatically, based on whether it finds an array key matching the $primaryKey value::
+This is a wrapper around the ``insert()`` and ``update()`` methods that handle inserting or updating the record
+automatically, based on whether it finds an array key matching the **primary key** value::
 
     // Defined as a model property
     $primaryKey = 'id';
@@ -476,7 +476,7 @@ Takes a primary key value as the first parameter and deletes the matching record
 
     $userModel->delete(12);
 
-If the model's $useSoftDeletes value is true, this will update the row to set ``deleted_at`` to the current
+If the model's ``$useSoftDeletes`` value is true, this will update the row to set ``deleted_at`` to the current
 date and time. You can force a permanent delete by setting the second parameter as true.
 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once::
@@ -591,17 +591,16 @@ The other way to set the validation message to fields by functions,
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
 the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors::
 
-    if ($model->save($data) === false)
-    {
+    if ($model->save($data) === false) {
         return view('updateUser', ['errors' => $model->errors()]);
     }
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
 errors at the top of the form, or to display them individually::
 
-    <?php if (! empty($errors)) : ?>
+    <?php if (! empty($errors)): ?>
         <div class="alert alert-danger">
-        <?php foreach ($errors as $field => $error) : ?>
+        <?php foreach ($errors as $field => $error): ?>
             <p><?= $error ?></p>
         <?php endforeach ?>
         </div>
@@ -629,7 +628,7 @@ method directly, with options::
     $rules = $model->getValidationRules($options);
 
 The ``$options`` parameter is an associative array with one element,
-whose key is either "except" or "only", and which has as its
+whose key is either ``'except'`` or ``'only'``, and which has as its
 value an array of fieldnames of interest.::
 
     // get the rules for all but the "username" field
@@ -642,7 +641,7 @@ Validation Placeholders
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
-the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
+the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
 replaced by the **value** of the matched incoming field. An example should clarify this::
 
     protected $validationRules = [
@@ -694,7 +693,7 @@ need it::
 
     $builder = $userModel->builder();
 
-This builder is already set up with the model's $table. If you need access to another table
+This builder is already set up with the model's ``$table``. If you need access to another table
 you can pass it in as a parameter, but be aware that this will not return a shared instance::
 
     $groupBuilder = $userModel->builder('groups');
@@ -713,22 +712,22 @@ very elegant use::
 Runtime Return Type Changes
 ----------------------------
 
-You can specify the format that data should be returned as when using the find*() methods as the class property,
-$returnType. There may be times that you would like the data back in a different format, though. The Model
+You can specify the format that data should be returned as when using the **find*()** methods as the class property,
+``$returnType``. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.
 
-.. note:: These methods only change the return type for the next find*() method call. After that,
+.. note:: These methods only change the return type for the next **find*()** method call. After that,
     it is reset to its default value.
 
 **asArray()**
 
-Returns data from the next find*() method as associative arrays::
+Returns data from the next **find*()** method as associative arrays::
 
     $users = $userModel->asArray()->where('status', 'active')->findAll();
 
 **asObject()**
 
-Returns data from the next find*() method as standard objects or custom class intances::
+Returns data from the next **find*()** method as standard objects or custom class intances::
 
     // Return as standard objects
     $users = $userModel->asObject()->where('status', 'active')->findAll();
@@ -757,14 +756,14 @@ Model Events
 
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
-points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
-**$beforeUpdate**, **$afterUpdate**, **$afterFind**, and **$afterDelete**.
+points in the model's execution can be affected, each through a class property: ``$beforeInsert``, ``$afterInsert``,
+``$beforeUpdate``, ``$afterUpdate``, ``$afterFind``, and ``$afterDelete``.
 
 Defining Callbacks
 ------------------
 
 You specify the callbacks by first creating a new class method in your model to use. This class will always
-receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
+receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
 will always contain a key named **data** that contains the primary data passed to the original method. In the case
 of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
 main array will also contain the other values passed to the method, and be detailed later. The callback method
@@ -774,7 +773,9 @@ must return the original $data array so other callbacks have the full informatio
 
     protected function hashPassword(array $data)
     {
-        if (! isset($data['data']['password'])) return $data;
+        if (! isset($data['data']['password'])) {
+            return $data;
+        }
 
         $data['data']['password_hash'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
         unset($data['data']['password']);
@@ -785,14 +786,14 @@ must return the original $data array so other callbacks have the full informatio
 Specifying Callbacks To Run
 ---------------------------
 
-You specify when to run the callbacks by adding the method name to the appropriate class property (beforeInsert, afterUpdate,
+You specify when to run the callbacks by adding the method name to the appropriate class property (``$beforeInsert``, ``$afterUpdate``,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events::
 
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
 
-Additionally, each model may allow (default) or deny callbacks class-wide by setting its $allowCallbacks property::
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its ``$allowCallbacks`` property::
 
     protected $allowCallbacks = false;
 
@@ -804,7 +805,7 @@ You may also change this setting temporarily for a single model call sing the ``
 Event Parameters
 ----------------
 
-Since the exact data passed to each callback varies a bit, here are the details on what is in the $data parameter
+Since the exact data passed to each callback varies a bit, here are the details on what is in the ``$data`` parameter
 passed to each event:
 
 ================ =========================================================================================================

@@ -5,7 +5,8 @@ Security Helper
 The Security Helper file contains security related functions.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

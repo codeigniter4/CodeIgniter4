@@ -380,7 +380,7 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * Valid context values: html, js, css, url, attr, raw, null
+     * Valid context values: html, js, css, url, attr, raw
      *
      * @param array|string $data
      * @param string       $encoding
@@ -480,9 +480,9 @@ if (! function_exists('force_https')) {
         $uri = URI::createURIString(
             'https',
             $baseURL,
-            $request->uri->getPath(), // Absolute URIs should use a "/" for an empty path
-            $request->uri->getQuery(),
-            $request->uri->getFragment()
+            $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
+            $request->getUri()->getQuery(),
+            $request->getUri()->getFragment()
         );
 
         // Set an HSTS header
@@ -643,16 +643,13 @@ if (! function_exists('is_cli')) {
      */
     function is_cli(): bool
     {
-        if (defined('STDIN')) {
+        if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
             return true;
         }
 
-        if (! isset($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']) && isset($_SERVER['argv']) && count($_SERVER['argv']) > 0) {
-            return true;
-        }
-
-        // if source of request is from CLI, the `$_SERVER` array will not populate this key
-        return ! isset($_SERVER['REQUEST_METHOD']);
+        // PHP_SAPI could be 'cgi-fcgi', 'fpm-fcgi'.
+        // See https://github.com/codeigniter4/CodeIgniter4/pull/5393
+        return ! isset($_SERVER['REMOTE_ADDR']) && ! isset($_SERVER['REQUEST_METHOD']);
     }
 }
 
@@ -811,11 +808,6 @@ if (! function_exists('old')) {
         // found in the old input.
         if ($value === null) {
             return $default;
-        }
-
-        // If the result was serialized array or string, then unserialize it for use...
-        if (is_string($value) && (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
-            $value = unserialize($value);
         }
 
         return $escape === false ? $value : esc($value, $escape);
@@ -1156,7 +1148,6 @@ if (! function_exists('class_uses_recursive')) {
 
         $results = [];
 
-        // @phpstan-ignore-next-line
         foreach (array_reverse(class_parents($class)) + [$class => $class] as $class) {
             $results += trait_uses_recursive($class);
         }

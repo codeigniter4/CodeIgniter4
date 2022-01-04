@@ -34,7 +34,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service);
         $service2 = single_service($service);
 
-        $this->assertSame(get_class($service1), get_class($service2));
+        $this->assertInstanceOf(get_class($service1), $service2);
         $this->assertNotSame($service1, $service2);
     }
 
@@ -62,7 +62,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service, ...$params);
         $service2 = single_service($service, ...$params);
 
-        $this->assertSame(get_class($service1), get_class($service2));
+        $this->assertInstanceOf(get_class($service1), $service2);
         $this->assertNotSame($service1, $service2);
 
         if ($service === 'commands') {
@@ -77,7 +77,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
 
         // Assert that even passing true as last param this will
         // not create a shared instance.
-        $this->assertSame(get_class($cache1), get_class($cache2));
+        $this->assertInstanceOf(get_class($cache1), $cache2);
         $this->assertNotSame($cache1, $cache2);
     }
 

@@ -20,7 +20,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\Rector\AbstractRector;
-use Rector\NodeNestingScope\ParentFinder;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -40,17 +39,10 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
      */
     private $reservedKeywordAnalyzer;
 
-    /**
-     * @var ParentFinder
-     */
-    private $parentFinder;
-
     public function __construct(
-        ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
-        ParentFinder $parentFinder
+        ReservedKeywordAnalyzer $reservedKeywordAnalyzer
     ) {
         $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
-        $this->parentFinder            = $parentFinder;
     }
 
     public function getRuleDefinition(): RuleDefinition
@@ -124,7 +116,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
     private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
     {
-        $parentClassMethodOrFunction = $this->parentFinder->findByTypes($variable, [ClassMethod::class, Function_::class]);
+        $parentClassMethodOrFunction = $this->betterNodeFinder->findParentByTypes($variable, [ClassMethod::class, Function_::class]);
 
         if ($parentClassMethodOrFunction === null) {
             return;

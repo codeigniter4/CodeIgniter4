@@ -1,6 +1,10 @@
 Manual Installation
 ###################
 
+.. contents::
+    :local:
+    :depth: 2
+
 The `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository holds the released versions of the framework.
 It is intended for developers who do not wish to use Composer.
@@ -10,7 +14,7 @@ will be your public-facing document root. Do not change anything inside the ``sy
 folder!
 
 .. note:: This is the installation technique closest to that described
-   for `CodeIgniter 3 <https://codeigniter.com/user_guide/installation/index.html>`_.
+   for `CodeIgniter 3 <https://codeigniter.com/userguide3/installation/index.html>`_.
 
 Installation
 ============

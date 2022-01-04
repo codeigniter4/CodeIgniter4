@@ -89,6 +89,7 @@ class Database extends BaseCollector
                 'query'     => $query,
                 'string'    => $queryString,
                 'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
+                'trace'     => debug_backtrace(),
             ];
         }
     }
@@ -133,11 +134,34 @@ class Database extends BaseCollector
         $data['queries'] = array_map(static function (array $query) {
             $isDuplicate = $query['duplicate'] === true;
 
+            // Find the first line that doesn't include `system` in the backtrace
+            $line = [];
+
+            foreach ($query['trace'] as &$traceLine) {
+                // Clean up the file paths
+                $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
+                $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
+                if (defined('VENDORPATH')) {
+                    // VENDORPATH is not defined unless `vendor/autoload.php` exists
+                    $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+                }
+                $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
+
+                if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
+                    continue;
+                }
+                $line = empty($line) ? $traceLine : $line;
+            }
+
             return [
-                'hover'    => $isDuplicate ? 'This query was called more than once.' : '',
-                'class'    => $isDuplicate ? 'duplicate' : '',
-                'duration' => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
-                'sql'      => $query['query']->debugToolbarDisplay(),
+                'hover'      => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'      => $isDuplicate ? 'duplicate' : '',
+                'duration'   => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
+                'sql'        => $query['query']->debugToolbarDisplay(),
+                'trace'      => $query['trace'],
+                'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
+                'trace-line' => $line['line'] ?? '',
+                'qid'        => md5($query['query'] . microtime()),
             ];
         }, static::$queries);
 

@@ -3,14 +3,14 @@ Upgrade Validations
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations of Library
 =========================
 
-- `Form Validation Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
-- :doc:`Validation Documentation Codeigniter 4.X </libraries/validation>`
+- `Form Validation Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
+- :doc:`Validation Documentation CodeIgniter 4.X </libraries/validation>`
 
 
 What has been changed
@@ -44,9 +44,9 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
-Path: ``application/views``::
+Path: **application/views**::
 
     <html>
     <head>
@@ -77,7 +77,7 @@ Path: ``application/views``::
     </body>
     </html>
 
-Path: ``application/controllers/``::
+Path: **application/controllers**::
 
     <?php
 
@@ -102,9 +102,9 @@ Path: ``application/controllers/``::
         }
     }
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
-Path: ``app/Views``::
+Path: **app/Views**::
 
     <html>
     <head>
@@ -135,7 +135,7 @@ Path: ``app/Views``::
     </body>
     </html>
 
-Path: ``app/Controllers/``::
+Path: **app/Controllers**::
 
     <?php
 

@@ -124,7 +124,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertTrue(count($_POST) === 1);
+        $this->assertCount(1, $_POST);
     }
 
     public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch()
@@ -206,7 +206,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
-        $this->assertTrue($request->getBody() === '{"foo":"bar"}');
+        $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
     public function testRegenerateWithFalseSecurityRegenerateProperty()

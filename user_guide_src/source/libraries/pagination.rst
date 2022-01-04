@@ -250,7 +250,7 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
             </li>
         <?php endif ?>
 
-        <?php foreach ($pager->links() as $link) : ?>
+        <?php foreach ($pager->links() as $link): ?>
             <li <?= $link['active'] ? 'class="active"' : '' ?>>
                 <a href="<?= $link['uri'] ?>">
                     <?= $link['title'] ?>
@@ -328,7 +328,7 @@ See following an example with these changes::
                 </li>
             <?php endif ?>
 
-            <?php foreach ($pager->links() as $link) : ?>
+            <?php foreach ($pager->links() as $link): ?>
                 <li <?= $link['active'] ? 'class="active"' : '' ?>>
                     <a href="<?= $link['uri'] ?>">
                         <?= $link['title'] ?>

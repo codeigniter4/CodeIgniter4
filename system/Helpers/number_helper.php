@@ -77,7 +77,7 @@ if (! function_exists('number_to_amount')) {
     {
         // Strip any formatting & ensure numeric input
         try {
-            $num = 0 + str_replace(',', '', $num); // @phpstan-ignore-line
+            $num = 0 + str_replace(',', '', $num);
         } catch (ErrorException $ee) {
             return false;
         }
@@ -112,11 +112,7 @@ if (! function_exists('number_to_amount')) {
 }
 
 if (! function_exists('number_to_currency')) {
-    /**
-     * @param string $locale
-     * @param int    $fraction
-     */
-    function number_to_currency(float $num, string $currency, ?string $locale = null, ?int $fraction = null): string
+    function number_to_currency(float $num, string $currency, ?string $locale = null, int $fraction = 0): string
     {
         return format_number($num, 1, $locale, [
             'type'     => NumberFormatter::CURRENCY,

@@ -26,21 +26,21 @@
 namespace Kint\Renderer;
 
 use Kint\Kint;
-use Kint\Object\BasicObject;
-use Kint\Object\BlobObject;
+use Kint\Zval\BlobValue;
+use Kint\Zval\Value;
 
 class PlainRenderer extends TextRenderer
 {
-    public static $pre_render_sources = array(
-        'script' => array(
-            array('Kint\\Renderer\\PlainRenderer', 'renderJs'),
-            array('Kint\\Renderer\\Text\\MicrotimePlugin', 'renderJs'),
-        ),
-        'style' => array(
-            array('Kint\\Renderer\\PlainRenderer', 'renderCss'),
-        ),
-        'raw' => array(),
-    );
+    public static $pre_render_sources = [
+        'script' => [
+            ['Kint\\Renderer\\PlainRenderer', 'renderJs'],
+            ['Kint\\Renderer\\Text\\MicrotimePlugin', 'renderJs'],
+        ],
+        'style' => [
+            ['Kint\\Renderer\\PlainRenderer', 'renderCss'],
+        ],
+        'raw' => [],
+    ];
 
     /**
      * Path to the CSS file to load by default.
@@ -118,7 +118,7 @@ class PlainRenderer extends TextRenderer
         return '<u>'.$string.'</u>';
     }
 
-    public function renderTitle(BasicObject $o)
+    public function renderTitle(Value $o)
     {
         if (self::$disable_utf8) {
             return $this->utf8ToHtmlentity(parent::renderTitle($o));
@@ -193,7 +193,7 @@ class PlainRenderer extends TextRenderer
     public function escape($string, $encoding = false)
     {
         if (false === $encoding) {
-            $encoding = BlobObject::detectEncoding($string);
+            $encoding = BlobValue::detectEncoding($string);
         }
 
         $original_encoding = $encoding;
@@ -206,7 +206,7 @@ class PlainRenderer extends TextRenderer
 
         // this call converts all non-ASCII characters into numeirc htmlentities
         if (\function_exists('mb_encode_numericentity') && 'ASCII' !== $original_encoding) {
-            $string = \mb_encode_numericentity($string, array(0x80, 0xffff, 0, 0xffff), $encoding);
+            $string = \mb_encode_numericentity($string, [0x80, 0xFFFF, 0, 0xFFFF], $encoding);
         }
 
         return $string;
@@ -215,8 +215,8 @@ class PlainRenderer extends TextRenderer
     protected function utf8ToHtmlentity($string)
     {
         return \str_replace(
-            array('┌', '═', '┐', '│', '└', '─', '┘'),
-            array('&#9484;', '&#9552;', '&#9488;', '&#9474;', '&#9492;', '&#9472;', '&#9496;'),
+            ['┌', '═', '┐', '│', '└', '─', '┘'],
+            ['&#9484;', '&#9552;', '&#9488;', '&#9474;', '&#9492;', '&#9472;', '&#9496;'],
             $string
         );
     }

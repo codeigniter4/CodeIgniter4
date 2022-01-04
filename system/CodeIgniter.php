@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Debug\Kint\RichRenderer;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
@@ -33,7 +34,6 @@ use Config\Services;
 use Exception;
 use Kint;
 use Kint\Renderer\CliRenderer;
-use Kint\Renderer\RichRenderer;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -45,7 +45,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.1.5';
+    public const CI_VERSION = '4.1.6';
 
     private const MIN_PHP_VERSION = '7.3';
 
@@ -249,7 +249,7 @@ class CodeIgniter
          */
         $config = config('Config\Kint');
 
-        Kint::$max_depth           = $config->maxDepth;
+        Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
 
@@ -257,11 +257,13 @@ class CodeIgniter
             Kint::$plugins = $config->plugins;
         }
 
+        Kint::$renderers[Kint::MODE_RICH] = RichRenderer::class;
+
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
         RichRenderer::$sort   = $config->richSort;
         if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
-            RichRenderer::$object_plugins = $config->richObjectPlugins;
+            RichRenderer::$value_plugins = $config->richObjectPlugins;
         }
         if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins)) {
             RichRenderer::$tab_plugins = $config->richTabPlugins;
@@ -537,7 +539,6 @@ class CodeIgniter
             return;
         }
 
-        // @phpstan-ignore-next-line
         if (is_cli() && ENVIRONMENT !== 'testing') {
             // @codeCoverageIgnoreStart
             $this->request = Services::clirequest($this->config);
@@ -721,7 +722,7 @@ class CodeIgniter
         // If a {locale} segment was matched in the final route,
         // then we need to set the correct locale on our Request.
         if ($this->router->hasLocale()) {
-            $this->request->setLocale($this->router->getLocale()); // @phpstan-ignore-line
+            $this->request->setLocale($this->router->getLocale());
         }
 
         $this->benchmark->stop('routing');
@@ -816,7 +817,7 @@ class CodeIgniter
     protected function runController($class)
     {
         // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params(); // @phpstan-ignore-line
+        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
 
         if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
@@ -969,7 +970,7 @@ class CodeIgniter
             return;
         }
 
-        $method = $this->request->getPost('_method'); // @phpstan-ignore-line
+        $method = $this->request->getPost('_method');
 
         if (empty($method)) {
             return;

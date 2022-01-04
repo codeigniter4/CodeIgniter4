@@ -3,14 +3,14 @@ Upgrade Pagination
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
 ==============
 
-- `Pagination Class Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
-- :doc:`Pagination Documentation Codeigniter 4.X </libraries/pagination>`
+- `Pagination Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
+- :doc:`Pagination Documentation CodeIgniter 4.X </libraries/pagination>`
 
 
 What has been changed
@@ -34,23 +34,23 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
     $this->load->library('pagination');
-    $config['base_url'] = base_url().'users/index/';
-    $config['total_rows'] = $this->db->count_all('users');
-    $config['per_page'] = 10;
+    $config['base_url']    = base_url().'users/index/';
+    $config['total_rows']  = $this->db->count_all('users');
+    $config['per_page']    = 10;
     $config['uri_segment'] = 3;
-    $config['attributes'] = array('class' => 'pagination-link');
+    $config['attributes']  = array('class' => 'pagination-link');
     $this->pagination->initialize($config);
 
     $data['users'] = $this->user_model->get_users(FALSE, $config['per_page'], $offset);
 
     $this->load->view('posts/index', $data);
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

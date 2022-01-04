@@ -23,18 +23,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
 use Kint\Utils;
 use ReflectionException;
 use ReflectionParameter;
 
-class ParameterObject extends BasicObject
+class ParameterValue extends Value
 {
     public $type_hint;
     public $default;
     public $position;
-    public $hints = array('parameter');
+    public $hints = ['parameter'];
 
     public function __construct(ReflectionParameter $param)
     {
@@ -64,7 +64,6 @@ class ParameterObject extends BasicObject
         $this->position = $param->getPosition();
 
         if ($param->isDefaultValueAvailable()) {
-            /** @var mixed Psalm bug workaround */
             $default = $param->getDefaultValue();
             switch (\gettype($default)) {
                 case 'NULL':

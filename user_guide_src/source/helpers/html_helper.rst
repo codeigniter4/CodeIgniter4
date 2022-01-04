@@ -7,10 +7,7 @@ HTML.
 
 .. contents::
     :local:
-
-.. raw:: html
-
-    <div class="custom-index container"></div>
+    :depth: 2
 
 Loading this Helper
 ===================

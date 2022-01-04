@@ -89,7 +89,7 @@ class Views extends BaseCollector
     {
         $data = [];
 
-        $rows = $this->viewer->getPerformanceData(); // @phpstan-ignore-line
+        $rows = $this->viewer->getPerformanceData();
 
         foreach ($rows as $info) {
             $data[] = [
@@ -122,7 +122,7 @@ class Views extends BaseCollector
     public function getVarData(): array
     {
         return [
-            // @phpstan-ignore-next-line
+
             'View Data' => $this->viewer->getData(),
         ];
     }
@@ -132,7 +132,7 @@ class Views extends BaseCollector
      */
     public function getBadgeValue(): int
     {
-        return count($this->viewer->getPerformanceData()); // @phpstan-ignore-line
+        return count($this->viewer->getPerformanceData());
     }
 
     /**

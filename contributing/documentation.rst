@@ -15,21 +15,10 @@ It is created automatically by inserting the following:
 
     .. contents::
         :local:
-
-    .. raw:: html
-
-    <div class="custom-index container"></div>
+        :depth: 2
 
 .. contents::
   :local:
-
-.. raw:: html
-
-  <div class="custom-index container"></div>
-
-The <div> that is inserted as raw HTML is a event for the documentation's
-JavaScript to dynamically add links to any function and method definitions
-contained in the current page.
 
 **************
 Tools Required
@@ -92,3 +81,32 @@ create these with the following tab triggers::
 
         SubSubSubSubSection (!)
         """""""""""""""""""""""
+
+**********
+References
+**********
+
+References to a Section
+=======================
+
+If you need to link to a specific section, the first you add the label before a header::
+
+    .. _curlrequest-request-options-headers:
+
+    headers
+    =======
+
+And then you can reference it like this::
+
+    See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to add.
+
+    See :ref:`curlrequest-request-options-headers` for how to add.
+
+References to a Page
+====================
+
+You can reference a page like the following::
+
+    :doc:`Session <../libraries/sessions>` library
+
+    :doc:`../libraries/sessions` library

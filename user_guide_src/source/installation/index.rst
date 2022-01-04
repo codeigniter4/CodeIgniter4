@@ -19,6 +19,7 @@ Which is right for you?
     installing_manual
     running
     upgrading
+    ../changelogs/index
     troubleshooting
     repositories
 

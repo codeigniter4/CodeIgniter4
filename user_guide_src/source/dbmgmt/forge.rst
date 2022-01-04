@@ -13,7 +13,7 @@ Initializing the Forge Class
 ****************************
 
 .. important:: In order to initialize the Forge class, your database
-    driver must already be running, since the forge class relies on it.
+    driver must already be running, since the Forge class relies on it.
 
 Load the Forge Class as follows::
 
@@ -40,7 +40,7 @@ Returns true/false based on success or failure::
         echo 'Database created!';
     }
 
-An optional second parameter set to true will add IF EXISTS statement
+An optional second parameter set to true will add ``IF EXISTS`` statement
 or will check if a database exists before create it (depending on DBMS).
 
 ::
@@ -67,7 +67,7 @@ will complain that the database creation has failed.
 
 To start, just type the command and the name of the database (e.g., ``foo``)::
 
-    php spark db:create foo
+    > php spark db:create foo
 
 If everything went fine, you should expect the ``Database "foo" successfully created.`` message displayed.
 
@@ -76,7 +76,7 @@ for the file where the database will be created using the ``--ext`` option. Vali
 ``sqlite`` and defaults to ``db``. Remember that these should not be preceded by a period.
 ::
 
-    php spark db:create foo --ext sqlite
+    > php spark db:create foo --ext sqlite
     // will create the db file in WRITEPATH/foo.sqlite
 
 .. note:: When using the special SQLite3 database name ``:memory:``, expect that the command will still
@@ -91,13 +91,13 @@ There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
 mechanism for this.
 
-Adding fields
+Adding Fields
 =============
 
 Fields are normally created via an associative array. Within the array, you must
-include a 'type' key that relates to the datatype of the field. For
+include a ``type`` key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
-also require a 'constraint' key.
+also require a ``constraint`` key.
 
 ::
 
@@ -111,14 +111,14 @@ also require a 'constraint' key.
 
 Additionally, the following key/values can be used:
 
--  unsigned/true : to generate "UNSIGNED" in the field definition.
--  default/value : to generate a default value in the field definition.
--  null/true : to generate "null" in the field definition. Without this,
+-  ``unsigned``/true : to generate "UNSIGNED" in the field definition.
+-  ``default``/value : to generate a default value in the field definition.
+-  ``null``/true : to generate "null" in the field definition. Without this,
    the field will default to "NOT null".
--  auto_increment/true : generates an auto_increment flag on the
+-  ``auto_increment``/true : generates an auto_increment flag on the
    field. Note that the field type must be a type that supports this,
    such as integer.
--  unique/true : to generate a unique key for the field definition.
+-  ``unique``/true : to generate a unique key for the field definition.
 
 ::
 
@@ -151,7 +151,7 @@ Additionally, the following key/values can be used:
     ];
 
 After the fields have been defined, they can be added using
-``$forge->addField($fields);`` followed by a call to the
+``$forge->addField($fields)`` followed by a call to the
 ``createTable()`` method.
 
 **$forge->addField()**
@@ -162,15 +162,13 @@ Passing strings as fields
 -------------------------
 
 If you know exactly how you want a field to be created, you can pass the
-string into the field definitions with addField()
-
-::
+string into the field definitions with ``addField()``::
 
     $forge->addField("label varchar(100) NOT NULL DEFAULT 'default label'");
 
 .. note:: Passing raw strings as fields cannot be followed by ``addKey()`` calls on those fields.
 
-.. note:: Multiple calls to addField() are cumulative.
+.. note:: Multiple calls to ``addField()`` are cumulative.
 
 Creating an id field
 --------------------
@@ -188,10 +186,10 @@ Adding Keys
 ===========
 
 Generally speaking, you'll want your table to have Keys. This is
-accomplished with $forge->addKey('field'). The optional second
+accomplished with ``$forge->addKey('field')``. The optional second
 parameter set to true will make it a primary key and the third
-parameter set to true will make it a unique key. Note that addKey()
-must be followed by a call to createTable().
+parameter set to true will make it a unique key. Note that ``addKey()``
+must be followed by a call to ``createTable()``.
 
 Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
@@ -223,6 +221,7 @@ and unique keys with specific methods::
     $forge->addUniqueKey(['blog_id', 'uri']);
     // gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
 
+.. _adding-foreign-keys:
 
 Adding Foreign Keys
 ===================
@@ -230,21 +229,21 @@ Adding Foreign Keys
 Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
 you may add them directly in forge::
 
-    $forge->addForeignKey('users_id','users','id');
+    $forge->addForeignKey('users_id', 'users', 'id');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
 
-    $forge->addForeignKey(['users_id', 'users_name'],'users',['id', 'name']);
+    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name']);
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`)
 
 You can specify the desired action for the "on delete" and "on update" properties of the constraint::
 
-    $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+    $forge->addForeignKey('users_id', 'users', 'id', 'CASCADE', 'CASCADE');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 
-    $forge->addForeignKey(['users_id', 'users_name'],'users',['id', 'name'],'CASCADE','CASCADE');
+    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name'], 'CASCADE', 'CASCADE');
     // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`) ON DELETE CASCADE ON UPDATE CASCADE
 
-Creating a table
+Creating a Table
 ================
 
 After fields and keys have been declared, you can create a new table
@@ -255,7 +254,7 @@ with
     $forge->createTable('table_name');
     // gives CREATE TABLE table_name
 
-An optional second parameter set to true adds an "IF NOT EXISTS" clause
+An optional second parameter set to true adds an ``IF NOT EXISTS`` clause
 into the definition
 
 ::
@@ -273,10 +272,10 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``::
     ``createTable()`` will always add them with your configured *charset*
     and *DBCollat* values, as long as they are not empty (MySQL only).
 
-Dropping a table
+Dropping a Table
 ================
 
-Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
+Execute a ``DROP TABLE`` statement and optionally add an ``IF EXISTS`` clause.
 
 ::
 
@@ -286,7 +285,7 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
     // Produces: DROP TABLE IF EXISTS `table_name`
     $forge->dropTable('table_name', true);
 
-A third parameter can be passed to add a "CASCADE" option, which might be required for some
+A third parameter can be passed to add a ``CASCADE`` option, which might be required for some
 drivers to handle removal of tables with foreign keys.
 
 ::
@@ -302,7 +301,7 @@ Execute a DROP FOREIGN KEY.
 ::
 
     // Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`
-    $forge->dropForeignKey('tablename','users_foreign');
+    $forge->dropForeignKey('tablename', 'users_foreign');
 
 
 Dropping a Key
@@ -313,9 +312,9 @@ Execute a DROP KEY.
 ::
 
     // Produces: DROP INDEX `users_index` ON `tablename`
-    $forge->dropKey('tablename','users_index');
+    $forge->dropKey('tablename', 'users_index');
 
-Renaming a table
+Renaming a Table
 ================
 
 Executes a TABLE rename
@@ -347,7 +346,7 @@ number of additional fields.
     // Executes: ALTER TABLE `table_name` ADD `preferences` TEXT
 
 If you are using MySQL or CUBIRD, then you can take advantage of their
-AFTER and FIRST clauses to position the new column.
+``AFTER`` and ``FIRST`` clauses to position the new column.
 
 Examples::
 
@@ -420,7 +419,7 @@ Class Reference
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
-                Adds a field to the set that will be used to create a table. Usage:  See `Adding fields`_.
+                Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = ''])
 
@@ -463,7 +462,7 @@ Class Reference
     .. php:method:: createDatabase($dbName[, $ifNotExists = false])
 
         :param    string    $db_name: Name of the database to create
-        :param    string    $ifNotExists: Set to true to add an 'IF NOT EXISTS' clause or check if database exists
+        :param    string    $ifNotExists: Set to true to add an ``IF NOT EXISTS`` clause or check if database exists
         :returns:    true on success, false on failure
         :rtype:    bool
 
@@ -472,12 +471,12 @@ Class Reference
     .. php:method:: createTable($table[, $if_not_exists = false[, array $attributes = []]])
 
         :param    string    $table: Name of the table to create
-        :param    string    $if_not_exists: Set to true to add an 'IF NOT EXISTS' clause
+        :param    string    $if_not_exists: Set to true to add an ``IF NOT EXISTS`` clause
         :param    string    $attributes: An associative array of table attributes
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Creates a new table. Usage:  See `Creating a table`_.
+        Creates a new table. Usage:  See `Creating a Table`_.
 
     .. php:method:: dropColumn($table, $column_name)
 
@@ -499,11 +498,11 @@ Class Reference
     .. php:method:: dropTable($table_name[, $if_exists = false])
 
         :param    string    $table: Name of the table to drop
-        :param    string    $if_exists: Set to true to add an 'IF EXISTS' clause
+        :param    string    $if_exists: Set to true to add an ``IF EXISTS`` clause
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a table. Usage:  See `Dropping a table`_.
+        Drops a table. Usage:  See `Dropping a Table`_.
 
     .. php:method:: modifyColumn($table, $field)
 
@@ -521,4 +520,4 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Renames a table. Usage:  See `Renaming a table`_.
+        Renames a table. Usage:  See `Renaming a Table`_.

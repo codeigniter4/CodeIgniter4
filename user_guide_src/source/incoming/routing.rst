@@ -188,11 +188,12 @@ While the add() method is simple to use, it is often handier to work with multip
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
-    $routes = [];
-    $routes['product/(:num)'] = 'Catalog::productLookupById';
-    $routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
+    $multipleRoutes = [
+        'product/(:num)'      => 'Catalog::productLookupById',
+        'product/(:alphanum)' => 'Catalog::productLookupByName',
+    ];
 
-    $collection->map($routes);
+    $routes->map($multipleRoutes);
 
 Redirecting Routes
 ==================
@@ -227,7 +228,7 @@ extensive set of routes that all share the opening string, like when building an
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
 
-If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback::
 
     $routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
         $routes->resource('users');
@@ -235,7 +236,7 @@ If you need to assign options to a group, like a `namespace <#assigning-namespac
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
-You can also use a specific `filter <filters.html>`_ for a group of routes. This will always
+You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
 
     $routes->group('api', ['filter' => 'api-auth'], function ($routes) {
@@ -258,7 +259,13 @@ This would handle the URL at ``admin/users/list``. Note that options passed to t
 At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options.
+given route config options::
+
+    $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
+        $routes->get('login', 'AuthController::login', ['as' => 'login']);
+        $routes->post('login', 'AuthController::attemptLogin');
+        $routes->get('logout', 'AuthController::logout');
+    });
 
 Environment Restrictions
 ========================
@@ -329,7 +336,7 @@ Command-Line only Routes
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. This is great for building cronjobs or CLI-only tools. Any route created by any of the HTTP-verb-based
-route methods will also be inaccessible from the CLI, but routes created by the ``any()`` method will still be
+route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line::
 
     $routes->cli('migrate', 'App\Database::migrate');
@@ -337,7 +344,7 @@ available from the command line::
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, `resource <restful.html>`_ etc) can take an array of options that
+All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
     $routes->add('from', 'to', $options);
@@ -353,6 +360,8 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
     $routes->map($array, $options);
     $routes->group('name', $options, function ());
 
+.. _applying-filters:
+
 Applying Filters
 ----------------
 
@@ -362,7 +371,7 @@ The value for the filter can be a string or an array of strings:
 * matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
-See `Controller filters <filters.html>`_ for more information on setting up filters.
+See :doc:`Controller filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
@@ -389,11 +398,13 @@ You specify a filter classname for the filter value::
 
 **Multiple filters**
 
-.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See *Multiple filters for a route* in :doc:`/installation/upgrade_415` for the details.
+.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
 
 You specify an array for the filter value::
 
     $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+
+.. _assigning-namespace:
 
 Assigning Namespace
 -------------------
@@ -415,7 +426,7 @@ Limit to Hostname
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array::
 
-    $collection->get('from', 'to', ['hostname' => 'accounts.example.com']);
+    $routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
 
 This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
 It would not work under the main site at "example.com".
@@ -453,7 +464,7 @@ be used when the first parameter is a language string::
     // Creates:
     $routes['users/(:num)'] = 'users/show/$2';
 
-.. _priority:
+.. _routing-priority:
 
 Route processing queue
 ----------------------
@@ -587,7 +598,7 @@ Route processing by priority
 
 Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
-For an example of use lowering the priority see :ref:`priority`::
+For an example use of lowering the priority see :ref:`routing-priority`::
 
     // to enable
     $routes->setPrioritize();

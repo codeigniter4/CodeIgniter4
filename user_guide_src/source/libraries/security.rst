@@ -6,7 +6,7 @@ The Security Class contains methods that help protect your site against Cross-Si
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 *******************
 Loading the Library
@@ -19,6 +19,8 @@ If you find a case where you do need direct access though, you may load it throu
 
     $security = \Config\Services::security();
 
+.. _cross-site-request-forgery:
+
 *********************************
 Cross-site request forgery (CSRF)
 *********************************
@@ -26,8 +28,13 @@ Cross-site request forgery (CSRF)
 .. warning:: The CSRF Protection is only available for **POST/PUT/PATCH/DELETE** requests.
     Requests for other methods are not protected.
 
+Config for CSRF
+===============
+
+.. _csrf-protection-methods:
+
 CSRF Protection Methods
-=======================
+-----------------------
 
 By default, the Cookie based CSRF Protection is used. It is
 `Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
@@ -40,6 +47,49 @@ You can set to use the Session based CSRF protection by editing the following co
 **app/Config/Security.php**::
 
     public $csrfProtection = 'session';
+
+Token Randomization
+-------------------
+
+To mitigate compression side-channel attacks like `BREACH`_, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (off by default).
+
+If you enable it, a random mask is added to the token and used to scramble it.
+
+.. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
+
+You can enable it by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $tokenRandomize = true;
+
+Token Regeneration
+------------------
+
+Tokens may be either regenerated on every submission (default) or
+kept the same throughout the life of the CSRF cookie. The default
+regeneration of tokens provides stricter security, but may result
+in usability concerns as other tokens become invalid (back/forward
+navigation, multiple tabs/windows, asynchronous actions, etc). You
+may alter this behavior by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $regenerate  = true;
+
+Redirection on Failure
+----------------------
+
+When a request fails the CSRF validation check, it will redirect to the previous page by default,
+setting an ``error`` flash message that you can display to the end user with the following code in your view::
+
+    <?= session()->getFlashdata('error') ?>
+
+This provides a nicer experience
+than simply crashing. This can be turned off by editing the following config parameter value in
+**app/Config/Security.php**::
+
+    public $redirect = false;
+
+Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
 
 Enable CSRF Protection
 ======================
@@ -119,31 +169,6 @@ The order of checking the availability of the CSRF token is as follows:
 1. ``$_POST`` array
 2. HTTP header
 3. ``php://input`` (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it
-
-Token Regeneration
-===================
-
-Tokens may be either regenerated on every submission (default) or
-kept the same throughout the life of the CSRF cookie. The default
-regeneration of tokens provides stricter security, but may result
-in usability concerns as other tokens become invalid (back/forward
-navigation, multiple tabs/windows, asynchronous actions, etc). You
-may alter this behavior by editing the following config parameter value in
-**app/Config/Security.php**::
-
-    public $regenerate  = true;
-
-Redirection on Failure
-======================
-
-When a request fails the CSRF validation check, it will redirect to the previous page by default,
-setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
-than simply crashing. This can be turned off by editing the following config parameter value in
-**app/Config/Security.php**::
-
-    public $redirect = false;
-
-Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
 
 *********************
 Other Helpful Methods

@@ -15,7 +15,8 @@ state. You can also use ``$migration->setNamespace(null)->latest()`` to
 include migrations from all namespaces.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 ********************
 Migration file names
@@ -199,13 +200,13 @@ You can use (migrate) with the following options:
 
 - ``-g`` - to chose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``-all`` - to migrate all namespaces to the latest migration
+- ``--all`` - to migrate all namespaces to the latest migration
 
-This example will migrate Blog namespace with any new migrations on the test database group::
+This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group::
 
-    > php spark migrate -g test -n Blog
+    > php spark migrate -g test -n 'Acme\Blog'
 
-When using the ``-all`` option, it will scan through all namespaces attempting to find any migrations that have
+When using the ``--all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
@@ -231,7 +232,7 @@ You can use (refresh) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``-all`` - to refresh all namespaces
+- ``--all`` - to refresh all namespaces
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
 **status**
@@ -300,10 +301,10 @@ Class Reference
         This locates migrations for a namespace (or all namespaces), determines which migrations
         have not yet been run, and runs them in order of their version (namespaces intermingled).
 
-    .. php:method:: regress($batch, $group)
+    .. php:method:: regress($targetBatch, $group)
 
-        :param    mixed    $batch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
-        :param    mixed    $group: database group name, if null default database group will be used.
+        :param    int    $targetBatch: previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means "three batches back")
+        :param    ?string    $group: database group name, if null default database group will be used.
         :returns:    ``true`` on success, ``false`` on failure or no migrations are found
         :rtype:    bool
 

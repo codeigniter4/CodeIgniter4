@@ -26,11 +26,11 @@
 namespace Kint;
 
 use InvalidArgumentException;
-use Kint\Object\BasicObject;
 use Kint\Parser\Parser;
 use Kint\Parser\Plugin;
 use Kint\Renderer\Renderer;
 use Kint\Renderer\TextRenderer;
+use Kint\Zval\Value;
 
 class Kint
 {
@@ -102,12 +102,12 @@ class Kint
      *
      * Defaults to [$_SERVER['DOCUMENT_ROOT'] => '<ROOT>']
      */
-    public static $app_root_dirs = array();
+    public static $app_root_dirs = [];
 
     /**
-     * @var int max array/object levels to go deep, if zero no limits are applied
+     * @var int depth limit for array/object traversal. 0 for no limit
      */
-    public static $max_depth = 6;
+    public static $depth_limit = 7;
 
     /**
      * @var bool expand all trees by default for rich view
@@ -124,23 +124,24 @@ class Kint
     /**
      * @var array Kint aliases. Add debug functions in Kint wrappers here to fix modifiers and backtraces
      */
-    public static $aliases = array(
-        array('Kint\\Kint', 'dump'),
-        array('Kint\\Kint', 'trace'),
-        array('Kint\\Kint', 'dumpArray'),
-    );
+    public static $aliases = [
+        ['Kint\\Kint', 'dump'],
+        ['Kint\\Kint', 'trace'],
+        ['Kint\\Kint', 'dumpArray'],
+    ];
 
     /**
      * @var array<mixed, string> Array of modes to renderer class names
      */
-    public static $renderers = array(
+    public static $renderers = [
         self::MODE_RICH => 'Kint\\Renderer\\RichRenderer',
         self::MODE_PLAIN => 'Kint\\Renderer\\PlainRenderer',
         self::MODE_TEXT => 'Kint\\Renderer\\TextRenderer',
         self::MODE_CLI => 'Kint\\Renderer\\CliRenderer',
-    );
+    ];
 
-    public static $plugins = array(
+    public static $plugins = [
+        'Kint\\Parser\\ArrayLimitPlugin',
         'Kint\\Parser\\ArrayObjectPlugin',
         'Kint\\Parser\\Base64Plugin',
         'Kint\\Parser\\BlacklistPlugin',
@@ -162,9 +163,9 @@ class Kint
         'Kint\\Parser\\TimestampPlugin',
         'Kint\\Parser\\TracePlugin',
         'Kint\\Parser\\XmlPlugin',
-    );
+    ];
 
-    protected static $plugin_pool = array();
+    protected static $plugin_pool = [];
 
     protected $parser;
     protected $renderer;
@@ -199,24 +200,25 @@ class Kint
     {
         $this->renderer->setStatics($statics);
 
-        $this->parser->setDepthLimit(isset($statics['max_depth']) ? $statics['max_depth'] : false);
+        $this->parser->setDepthLimit(isset($statics['depth_limit']) ? $statics['depth_limit'] : 0);
         $this->parser->clearPlugins();
 
         if (!isset($statics['plugins'])) {
             return;
         }
 
-        $plugins = array();
+        $plugins = [];
 
         foreach ($statics['plugins'] as $plugin) {
             if ($plugin instanceof Plugin) {
                 $plugins[] = $plugin;
-            } elseif (\is_string($plugin) && \is_subclass_of($plugin, 'Kint\\Parser\\Plugin')) {
-                if (!isset(self::$plugin_pool[$plugin])) {
+            } elseif (\is_string($plugin) && \is_subclass_of($plugin, Plugin::class)) {
+                if (!isset(static::$plugin_pool[$plugin])) {
+                    /** @psalm-suppress UnsafeInstantiation */
                     $p = new $plugin();
-                    self::$plugin_pool[$plugin] = $p;
+                    static::$plugin_pool[$plugin] = $p;
                 }
-                $plugins[] = self::$plugin_pool[$plugin];
+                $plugins[] = static::$plugin_pool[$plugin];
             }
         }
 
@@ -232,7 +234,7 @@ class Kint
         $this->renderer->setCallInfo($info);
 
         if (isset($info['modifiers']) && \is_array($info['modifiers']) && \in_array('+', $info['modifiers'], true)) {
-            $this->parser->setDepthLimit(false);
+            $this->parser->setDepthLimit(0);
         }
 
         $this->parser->setCallerClass(isset($info['caller']['class']) ? $info['caller']['class'] : null);
@@ -241,8 +243,8 @@ class Kint
     /**
      * Renders a list of vars including the pre and post renders.
      *
-     * @param array         $vars Data to dump
-     * @param BasicObject[] $base Base objects
+     * @param array $vars Data to dump
+     * @param array $base Base Zval\Value objects
      *
      * @return string
      */
@@ -254,13 +256,13 @@ class Kint
 
         $output = $this->renderer->preRender();
 
-        if ($vars === array()) {
+        if ([] === $vars) {
             $output .= $this->renderer->renderNothing();
         }
 
         foreach ($vars as $key => $arg) {
-            if (!$base[$key] instanceof BasicObject) {
-                throw new InvalidArgumentException('Kint::dumpAll requires all elements of the second argument to be BasicObject instances');
+            if (!$base[$key] instanceof Value) {
+                throw new InvalidArgumentException('Kint::dumpAll requires all elements of the second argument to be Value instances');
             }
             $output .= $this->dumpVar($arg, $base[$key]);
         }
@@ -273,12 +275,12 @@ class Kint
     /**
      * Dumps and renders a var.
      *
-     * @param mixed       $var  Data to dump
-     * @param BasicObject $base Base object
+     * @param mixed $var  Data to dump
+     * @param Value $base Base object
      *
      * @return string
      */
-    public function dumpVar(&$var, BasicObject $base)
+    public function dumpVar(&$var, Value $base)
     {
         return $this->renderer->render(
             $this->parser->parse($var, $base)
@@ -292,21 +294,21 @@ class Kint
      */
     public static function getStatics()
     {
-        return array(
-            'aliases' => self::$aliases,
-            'app_root_dirs' => self::$app_root_dirs,
-            'cli_detection' => self::$cli_detection,
-            'display_called_from' => self::$display_called_from,
-            'enabled_mode' => self::$enabled_mode,
-            'expanded' => self::$expanded,
-            'file_link_format' => self::$file_link_format,
-            'max_depth' => self::$max_depth,
-            'mode_default' => self::$mode_default,
-            'mode_default_cli' => self::$mode_default_cli,
-            'plugins' => self::$plugins,
-            'renderers' => self::$renderers,
-            'return' => self::$return,
-        );
+        return [
+            'aliases' => static::$aliases,
+            'app_root_dirs' => static::$app_root_dirs,
+            'cli_detection' => static::$cli_detection,
+            'depth_limit' => static::$depth_limit,
+            'display_called_from' => static::$display_called_from,
+            'enabled_mode' => static::$enabled_mode,
+            'expanded' => static::$expanded,
+            'file_link_format' => static::$file_link_format,
+            'mode_default' => static::$mode_default,
+            'mode_default_cli' => static::$mode_default_cli,
+            'plugins' => static::$plugins,
+            'renderers' => static::$renderers,
+            'return' => static::$return,
+        ];
     }
 
     /**
@@ -325,7 +327,7 @@ class Kint
         if (isset($statics['enabled_mode'])) {
             $mode = $statics['enabled_mode'];
 
-            if (true === $statics['enabled_mode'] && isset($statics['mode_default'])) {
+            if (true === $mode && isset($statics['mode_default'])) {
                 $mode = $statics['mode_default'];
 
                 if (PHP_SAPI === 'cli' && !empty($statics['cli_detection']) && isset($statics['mode_default_cli'])) {
@@ -334,7 +336,7 @@ class Kint
             }
         }
 
-        if (!$mode) {
+        if (false === $mode) {
             return null;
         }
 
@@ -345,7 +347,8 @@ class Kint
             $renderer = new $statics['renderers'][$mode]();
         }
 
-        return new self(new Parser(), $renderer);
+        /** @psalm-suppress UnsafeInstantiation */
+        return new static(new Parser(), $renderer);
     }
 
     /**
@@ -354,11 +357,11 @@ class Kint
      * @param array $params Parameters as returned from getCallInfo
      * @param int   $argc   Number of arguments the helper was called with
      *
-     * @return BasicObject[] Base objects for the arguments
+     * @return Value[] Base objects for the arguments
      */
     public static function getBasesFromParamInfo(array $params, $argc)
     {
-        static $blacklist = array(
+        static $blacklist = [
             'null',
             'true',
             'false',
@@ -372,10 +375,10 @@ class Kint
             'b"..."',
             "'...'",
             "b'...'",
-        );
+        ];
 
         $params = \array_values($params);
-        $bases = array();
+        $bases = [];
 
         for ($i = 0; $i < $argc; ++$i) {
             if (isset($params[$i])) {
@@ -402,7 +405,7 @@ class Kint
                 $access_path = '$'.$i;
             }
 
-            $bases[] = BasicObject::blank($name, $access_path);
+            $bases[] = Value::blank($name, $access_path);
         }
 
         return $bases;
@@ -424,23 +427,21 @@ class Kint
         $found = false;
         $callee = null;
         $caller = null;
-        $miniTrace = array();
+        $miniTrace = [];
 
         foreach ($trace as $index => $frame) {
             if (Utils::traceFrameIsListed($frame, $aliases)) {
                 $found = true;
-                $miniTrace = array();
+                $miniTrace = [];
             }
 
-            if (!Utils::traceFrameIsListed($frame, array('spl_autoload_call'))) {
+            if (!Utils::traceFrameIsListed($frame, ['spl_autoload_call'])) {
                 $miniTrace[] = $frame;
             }
         }
 
         if ($found) {
             $callee = \reset($miniTrace) ?: null;
-
-            /** @var null|array Psalm bug workaround */
             $caller = \next($miniTrace) ?: null;
         }
 
@@ -455,15 +456,15 @@ class Kint
 
         $miniTrace = \array_values($miniTrace);
 
-        $call = self::getSingleCall($callee ?: array(), $argc);
+        $call = static::getSingleCall($callee ?: [], $argc);
 
-        $ret = array(
+        $ret = [
             'params' => null,
-            'modifiers' => array(),
+            'modifiers' => [],
             'callee' => $callee,
             'caller' => $caller,
             'trace' => $miniTrace,
-        );
+        ];
 
         if ($call) {
             $ret['params'] = $call['parameters'];
@@ -482,23 +483,21 @@ class Kint
      */
     public static function trace()
     {
-        if (!self::$enabled_mode) {
+        if (false === static::$enabled_mode) {
             return 0;
         }
 
-        Utils::normalizeAliases(self::$aliases);
+        Utils::normalizeAliases(static::$aliases);
 
-        $args = \func_get_args();
+        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \func_num_args());
 
-        $call_info = self::getCallInfo(self::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \count($args));
-
-        $statics = self::getStatics();
+        $statics = static::getStatics();
 
         if (\in_array('~', $call_info['modifiers'], true)) {
-            $statics['enabled_mode'] = self::MODE_TEXT;
+            $statics['enabled_mode'] = static::MODE_TEXT;
         }
 
-        $kintstance = self::createFromStatics($statics);
+        $kintstance = static::createFromStatics($statics);
         if (!$kintstance) {
             // Should never happen
             return 0; // @codeCoverageIgnore
@@ -513,23 +512,25 @@ class Kint
         $kintstance->setStatesFromStatics($statics);
         $kintstance->setStatesFromCallInfo($call_info);
 
-        $trimmed_trace = array();
-        $trace = \debug_backtrace(true);
+        $trimmed_trace = [];
+        $trace = \debug_backtrace();
 
         foreach ($trace as $frame) {
-            if (Utils::traceFrameIsListed($frame, self::$aliases)) {
-                $trimmed_trace = array();
+            if (Utils::traceFrameIsListed($frame, static::$aliases)) {
+                $trimmed_trace = [];
             }
 
             $trimmed_trace[] = $frame;
         }
 
+        \array_shift($trimmed_trace);
+
         $output = $kintstance->dumpAll(
-            array($trimmed_trace),
-            array(BasicObject::blank('Kint\\Kint::trace()', 'debug_backtrace(true)'))
+            [$trimmed_trace],
+            [Value::blank('Kint\\Kint::trace()', 'debug_backtrace()')]
         );
 
-        if (self::$return || \in_array('@', $call_info['modifiers'], true)) {
+        if (static::$return || \in_array('@', $call_info['modifiers'], true)) {
             return $output;
         }
 
@@ -545,29 +546,29 @@ class Kint
     /**
      * Dumps some data.
      *
-     * Functionally equivalent to Kint::dump(1) or Kint::dump(debug_backtrace(true))
+     * Functionally equivalent to Kint::dump(1) or Kint::dump(debug_backtrace())
      *
      * @return int|string
      */
     public static function dump()
     {
-        if (!self::$enabled_mode) {
+        if (false === static::$enabled_mode) {
             return 0;
         }
 
-        Utils::normalizeAliases(self::$aliases);
+        Utils::normalizeAliases(static::$aliases);
 
         $args = \func_get_args();
 
-        $call_info = self::getCallInfo(self::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \count($args));
+        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \count($args));
 
-        $statics = self::getStatics();
+        $statics = static::getStatics();
 
         if (\in_array('~', $call_info['modifiers'], true)) {
-            $statics['enabled_mode'] = self::MODE_TEXT;
+            $statics['enabled_mode'] = static::MODE_TEXT;
         }
 
-        $kintstance = self::createFromStatics($statics);
+        $kintstance = static::createFromStatics($statics);
         if (!$kintstance) {
             // Should never happen
             return 0; // @codeCoverageIgnore
@@ -582,40 +583,13 @@ class Kint
         $kintstance->setStatesFromStatics($statics);
         $kintstance->setStatesFromCallInfo($call_info);
 
-        // If the call is Kint::dump(1) then dump a backtrace instead
-        if ($args === array(1) && (!isset($call_info['params'][0]['name']) || '1' === $call_info['params'][0]['name'])) {
-            $args = \debug_backtrace(true);
-            $trace = array();
+        $bases = static::getBasesFromParamInfo(
+            isset($call_info['params']) ? $call_info['params'] : [],
+            \count($args)
+        );
+        $output = $kintstance->dumpAll($args, $bases);
 
-            foreach ($args as $index => $frame) {
-                if (Utils::traceFrameIsListed($frame, self::$aliases)) {
-                    $trace = array();
-                }
-
-                $trace[] = $frame;
-            }
-
-            if (isset($call_info['callee']['function'])) {
-                $tracename = $call_info['callee']['function'].'(1)';
-                if (isset($call_info['callee']['class'], $call_info['callee']['type'])) {
-                    $tracename = $call_info['callee']['class'].$call_info['callee']['type'].$tracename;
-                }
-            } else {
-                $tracename = 'Kint\\Kint::dump(1)';
-            }
-
-            $tracebase = BasicObject::blank($tracename, 'debug_backtrace(true)');
-
-            $output = $kintstance->dumpAll(array($trace), array($tracebase));
-        } else {
-            $bases = self::getBasesFromParamInfo(
-                isset($call_info['params']) ? $call_info['params'] : array(),
-                \count($args)
-            );
-            $output = $kintstance->dumpAll($args, $bases);
-        }
-
-        if (self::$return || \in_array('@', $call_info['modifiers'], true)) {
+        if (static::$return || \in_array('@', $call_info['modifiers'], true)) {
             return $output;
         }
 
@@ -643,7 +617,7 @@ class Kint
         $longest_match = 0;
         $match = '/';
 
-        foreach (self::$app_root_dirs as $path => $alias) {
+        foreach (static::$app_root_dirs as $path => $alias) {
             if (empty($path)) {
                 continue;
             }
@@ -657,7 +631,7 @@ class Kint
         }
 
         if ($longest_match) {
-            $file = \array_merge(array($match), \array_slice($file, $longest_match));
+            $file = \array_merge([$match], \array_slice($file, $longest_match));
 
             return \implode('/', $file);
         }
@@ -676,7 +650,7 @@ class Kint
 
     public static function getIdeLink($file, $line)
     {
-        return \str_replace(array('%f', '%l'), array($file, $line), self::$file_link_format);
+        return \str_replace(['%f', '%l'], [$file, $line], static::$file_link_format);
     }
 
     /**
@@ -696,7 +670,7 @@ class Kint
         if (empty($frame['class'])) {
             $callfunc = $frame['function'];
         } else {
-            $callfunc = array($frame['class'], $frame['function']);
+            $callfunc = [$frame['class'], $frame['function']];
         }
 
         $calls = CallFinder::getFunctionCalls(
@@ -711,32 +685,30 @@ class Kint
             $is_unpack = false;
 
             // Handle argument unpacking as a last resort
-            if (KINT_PHP56) {
-                foreach ($call['parameters'] as $i => &$param) {
-                    if (0 === \strpos($param['name'], '...')) {
-                        if ($i < $argc && $i === \count($call['parameters']) - 1) {
-                            for ($j = 1; $j + $i < $argc; ++$j) {
-                                $call['parameters'][] = array(
-                                    'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
-                                    'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
-                                    'expression' => false,
-                                );
-                            }
-
-                            $param['name'] = 'reset('.\substr($param['name'], 3).')';
-                            $param['path'] = 'reset('.\substr($param['path'], 3).')';
-                            $param['expression'] = false;
-                        } else {
-                            $call['parameters'] = \array_slice($call['parameters'], 0, $i);
+            foreach ($call['parameters'] as $i => &$param) {
+                if (0 === \strpos($param['name'], '...')) {
+                    if ($i < $argc && $i === \count($call['parameters']) - 1) {
+                        for ($j = 1; $j + $i < $argc; ++$j) {
+                            $call['parameters'][] = [
+                                'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
+                                'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
+                                'expression' => false,
+                            ];
                         }
 
-                        $is_unpack = true;
-                        break;
+                        $param['name'] = 'reset('.\substr($param['name'], 3).')';
+                        $param['path'] = 'reset('.\substr($param['path'], 3).')';
+                        $param['expression'] = false;
+                    } else {
+                        $call['parameters'] = \array_slice($call['parameters'], 0, $i);
                     }
 
-                    if ($i >= $argc) {
-                        continue 2;
-                    }
+                    $is_unpack = true;
+                    break;
+                }
+
+                if ($i >= $argc) {
+                    continue 2;
                 }
             }
 

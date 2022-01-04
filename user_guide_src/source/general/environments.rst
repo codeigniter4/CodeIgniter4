@@ -9,6 +9,10 @@ while developing an application, but it may also pose a security issue
 when "live". In development environments, you might want additional
 tools loaded that you don't in production environments, etc.
 
+.. contents::
+    :local:
+    :depth: 2
+
 The ENVIRONMENT Constant
 ========================
 
@@ -93,17 +97,9 @@ is affected.
 Error Reporting
 ---------------
 
-Setting the ENVIRONMENT constant to a value of 'development' will cause
+Setting the ENVIRONMENT constant to a value of ``development`` will cause
 all PHP errors to be rendered to the browser when they occur.
-Conversely, setting the constant to 'production' will disable all error
+Conversely, setting the constant to ``production`` will disable all error
 output. Disabling error reporting in production is a
 :doc:`good security practice </concepts/security>`.
 
-Configuration Files
--------------------
-
-Optionally, you can have CodeIgniter load environment-specific
-configuration files. This may be useful for managing things like
-differing API keys across multiple environments. This is described in
-more detail in the Handling Different Environments section of the
-:doc:`Working with Configuration Files </general/configuration>` documentation.

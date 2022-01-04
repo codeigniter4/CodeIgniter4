@@ -34,7 +34,7 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
-- `HTTP library <../incoming/incomingrequest.html>`_ provides for input field filtering & content metadata
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for input field filtering & content metadata
 - Form validation library
 
 *********************************************
@@ -56,7 +56,7 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
-- `Session <../libraries/sessions.html>`_ library
+- :doc:`Session <../libraries/sessions>` library
 - :doc:`Security </libraries/security>` library provides for CSRF validation
 - Easy to add third party authentication
 
@@ -217,5 +217,5 @@ OWASP recommendations
 CodeIgniter provisions
 ----------------------
 
-- `HTTP library <../incoming/incomingrequest.html>`_ provides for ...
-- `Session <../libraries/sessions.html>`_ library provides flashdata
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for ...
+- :doc:`Session <../libraries/sessions>` library provides flashdata

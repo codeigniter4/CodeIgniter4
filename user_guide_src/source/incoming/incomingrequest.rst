@@ -149,7 +149,7 @@ data that you want or you can use "dot" notation to dig into the JSON to get dat
 
 ::
 
-    //With a request body of:
+    // With a request body of:
     {
         "foo": "bar",
         "fizz": {
@@ -157,10 +157,10 @@ data that you want or you can use "dot" notation to dig into the JSON to get dat
         }
     }
     $data = $request->getVar('foo');
-    //$data = "bar"
+    // $data = "bar"
 
     $data = $request->getVar('fizz.buzz');
-    //$data = "baz"
+    // $data = "baz"
 
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
@@ -169,12 +169,12 @@ correct ``CONTENT_TYPE`` header.
 
 ::
 
-    //With the same request as above
+    // With the same request as above
     $data = $request->getJsonVar('fizz');
-    //$data->buzz = "baz"
+    // $data->buzz = "baz"
 
     $data = $request->getJsonVar('fizz', true);
-    //$data = ["buzz" => "baz"]
+    // $data = ["buzz" => "baz"]
 
 .. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
 
@@ -249,13 +249,13 @@ The Request URL
 ---------------
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
-``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
+``$request->getUri()`` method. You can cast this object as a string to get a full URL for the current request::
 
-    $uri = (string)$request->uri;
+    $uri = (string) $request->getUri();
 
 The object gives you full abilities to grab any part of the request on it's own::
 
-    $uri = $request->uri;
+    $uri = $request->getUri();
 
     echo $uri->getScheme();         // http
     echo $uri->getAuthority();      // snoopy:password@example.com:88
@@ -293,8 +293,8 @@ and uses best practices to minimize any security risks.
     $files = $request->getFiles();
 
     // Grab the file by name given in HTML form
-    if ($files->hasFile('uploadedFile')) {
-        $file = $files->getFile('uploadedfile');
+    if ($files->hasFile('userfile')) {
+        $file = $files->getFile('userfile');
 
         // Generate a new secure name
         $name = $file->getRandomName();
@@ -309,12 +309,14 @@ and uses best practices to minimize any security risks.
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 
-    $file = $request->getFile('uploadedfile');
+    $file = $request->getFile('userfile');
 
 You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input::
 
-    $files = $request->getFileMultiple('uploadedfile');
+    $files = $request->getFileMultiple('userfile');
+
+.. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
 
 Content Negotiation
 -------------------

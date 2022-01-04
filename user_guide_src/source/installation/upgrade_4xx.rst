@@ -39,26 +39,26 @@ General Adjustments
 
 **Application Structure**
 
-- The ``application`` folder is renamed as ``app`` and the framework still has ``system`` folders,
+- The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
-- The framework now provides for a ``public`` folder, intended as the document root for your app.
-- There is also a ``writable`` folder, to hold cache data, logs, and session data.
-- The ``app`` folder looks very similar to ``application`` for CI3, with some
-  name changes, and some subfolders moved to the ``writable`` folder.
-- There is no longer a nested ``application/core`` folder, as we have
+- The framework now provides for a **public** folder, intended as the document root for your app.
+- There is also a **writable** folder, to hold cache data, logs, and session data.
+- The **app** folder looks very similar to **application** for CI3, with some
+  name changes, and some subfolders moved to the **writable** folder.
+- There is no longer a nested **application/core** folder, as we have
   a different mechanism for extending framework components (see below).
 
 **Model, View and Controller**
 
 - CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
   are one of the most important things you have to handle.
-- In CodeIgniter 4, models are now located in ``app/Models`` and you have to add the lines
+- In CodeIgniter 4, models are now located in **app/Models** and you have to add the lines
   ``namespace App\Models;`` along with ``use CodeIgniter\Model;`` right after the opening php tag.
   The last step is to replace ``extends CI_Model`` with ``extends Model``.
-- The views of CodeIgniter 4 have been moved ``to app/Views``. Furthermore, you have to change
+- The views of CodeIgniter 4 have been moved to **app/Views**. Furthermore, you have to change
   the syntax of loading views from ``$this->load->view('directory_name/file_name')`` to
   ``echo view('directory_name/file_name');``.
-- Controllers of CodeIgniter 4 have to be moved to ``app/Controllers;``. After that,
+- Controllers of CodeIgniter 4 have to be moved to **app/Controllers**. After that,
   add ``namespace App\Controllers;`` after the opening php tag.
   Lastly, replace ``extends CI_Controller`` with ``extends BaseController``.
 - For more information we recommend you the following upgrade guides, which will give
@@ -77,23 +77,24 @@ General Adjustments
   references magically injected as properties of your controller.
 - Classes are instantiated where needed, and components are managed
   by ``Services``.
-- The class loader automatically handles PSR4 style class locating,
-  within the ``App`` (application) and ``CodeIgniter`` (i.e., system) top level
-  namespaces; with composer autoloading support, and even using educated
-  guessing to find your models and libraries if they are in the right
-  folder even though not namespaced.
+- The class loader automatically handles PSR-4 style class locating,
+  within the ``App`` (**app**) and ``CodeIgniter`` (i.e., **system**) top level
+  namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
 
 **Libraries**
 
-- Your app classes can still go inside ``app/Libraries``, but they don't have to.
+- Your app classes can still go inside **app/Libraries**, but they don't have to.
 - Instead of CI3's ``$this->load->library(x);`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your component.
 
 **Helpers**
 
 - Helpers are pretty much the same as before, though some have been simplified.
+- In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+    - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
+    - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
 
 **Events**
 
@@ -104,18 +105,18 @@ General Adjustments
 
 **Extending the framework**
 
-- You don't need a ``core`` folder to hold ``MY_...`` framework
+- You don't need a **core** folder to hold ``MY_...`` framework
   component extensions or replacements.
 - You don't need ``MY_x`` classes inside your libraries folder
   to extend or replace CI4 pieces.
 - Make any such classes where you like, and add appropriate
-  service methods in ``app/Config/Services.php`` to load
+  service methods in **app/Config/Services.php** to load
   your components instead of the default ones.
 
 Upgrading Libraries
 ===================
 
-- Your app classes can still go inside ``app/Libraries``, but they don’t have to.
+- Your app classes can still go inside **app/Libraries**, but they don’t have to.
 - Instead of CI3’s ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
   following namespaced conventions for your component.
 - Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these

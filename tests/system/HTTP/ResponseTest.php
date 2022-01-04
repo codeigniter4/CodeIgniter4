@@ -30,14 +30,18 @@ final class ResponseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->server = $_SERVER;
+
+        Services::reset();
+
+        parent::setUp();
     }
 
     protected function tearDown(): void
     {
-        $_SERVER = $this->server;
         Factories::reset('config');
+
+        $_SERVER = $this->server;
     }
 
     public function testCanSetStatusCode()
@@ -63,7 +67,7 @@ final class ResponseTest extends CIUnitTestCase
         $config->CSPEnabled = true;
         $response           = new Response($config);
 
-        $this->assertTrue($response instanceof Response);
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testSetStatusCodeSetsReason()
@@ -327,7 +331,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setJSON($body);
 
         $this->assertSame($expected, $response->getJSON());
-        $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
+        $this->assertStringContainsString('application/json', $response->getHeaderLine('content-type'));
     }
 
     public function testJSONGetFromNormalBody()
@@ -364,7 +368,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setXML($body);
 
         $this->assertSame($expected, $response->getXML());
-        $this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
+        $this->assertStringContainsString('application/xml', $response->getHeaderLine('content-type'));
     }
 
     public function testXMLGetFromNormalBody()

@@ -6,7 +6,8 @@ The Table Class provides methods that enable you to auto-generate HTML
 tables from arrays or database result sets.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 *********************
 Using the Table Class

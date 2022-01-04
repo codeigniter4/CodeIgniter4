@@ -3,14 +3,14 @@ Upgrade Database
 
 .. contents::
     :local:
-    :depth: 1
+    :depth: 2
 
 
 Documentations
 ==============
 
-- `Database Reference Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
-- :doc:`Working with Databases Documentation Codeigniter 4.X </database/index>`
+- `Database Reference Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
+- :doc:`Working with Databases Documentation CodeIgniter 4.X </database/index>`
 
 
 What has been changed
@@ -20,7 +20,7 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Add your database credentials to ``app/Config/Database.php``. The options are pretty much the same as in CI3 only some names have changed slightly.
+1. Add your database credentials to **app/Config/Database.php**. The options are pretty much the same as in CI3 only some names have changed slightly.
 2. Everywhere you have used the database you have to replace ``$this->load->database();`` with ``$db = db_connect();``.
 3. If you use multiple databases use the following code to load additional databases ``$db = db_connect('group_name');``.
 4. Now you have to change all database queries. The most important change here is to replace ``$this->db`` with just ``$db`` and adjust the method name and ``$db``. Here are some examples:
@@ -46,7 +46,7 @@ Upgrade Guide
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.11
 ------------------------
 ::
 
@@ -55,7 +55,7 @@ Codeigniter Version 3.11
                 ->limit(10, 20)
                 ->get('mytable');
 
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
 ::
 

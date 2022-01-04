@@ -100,19 +100,19 @@ class Connection extends BaseConnection
             if ($this->strictOn) {
                 $this->mysqli->options(
                     MYSQLI_INIT_COMMAND,
-                    'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")'
+                    "SET SESSION sql_mode = CONCAT(@@sql_mode, ',', 'STRICT_ALL_TABLES')"
                 );
             } else {
                 $this->mysqli->options(
                     MYSQLI_INIT_COMMAND,
-                    'SET SESSION sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                    "SET SESSION sql_mode = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
                                         @@sql_mode,
-                                        "STRICT_ALL_TABLES,", ""),
-                                    ",STRICT_ALL_TABLES", ""),
-                                "STRICT_ALL_TABLES", ""),
-                            "STRICT_TRANS_TABLES,", ""),
-                        ",STRICT_TRANS_TABLES", ""),
-                    "STRICT_TRANS_TABLES", "")'
+                                        'STRICT_ALL_TABLES,', ''),
+                                    ',STRICT_ALL_TABLES', ''),
+                                'STRICT_ALL_TABLES', ''),
+                            'STRICT_TRANS_TABLES,', ''),
+                        ',STRICT_TRANS_TABLES', ''),
+                    'STRICT_TRANS_TABLES', '')"
                 );
             }
         }
@@ -485,8 +485,10 @@ class Connection extends BaseConnection
                     FROM information_schema.TABLE_CONSTRAINTS AS tc
                     INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
                         ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+                        AND tc.CONSTRAINT_SCHEMA = rc.CONSTRAINT_SCHEMA
                     INNER JOIN information_schema.KEY_COLUMN_USAGE AS kcu
                         ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
+                        AND tc.CONSTRAINT_SCHEMA = kcu.CONSTRAINT_SCHEMA
                     WHERE
                         tc.CONSTRAINT_TYPE = ' . $this->escape('FOREIGN KEY') . ' AND
                         tc.TABLE_SCHEMA = ' . $this->escape($this->database) . ' AND

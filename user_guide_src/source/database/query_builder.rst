@@ -295,23 +295,32 @@ methods:
         $where = "name='Joe' AND status='boss' OR status='active'";
         $builder->where($where);
 
-    If you are using user-supplied data within the string, you MUST escape the
+.. warning:: If you are using user-supplied data within the string, you MUST escape the
     data manually. Failure to do so could result in SQL injections.
 
     ::
 
-        $name = $builder->db->escape('Joe');
-        $where = "name={$name} AND status='boss' OR status='active'";
-        $builder->where($where);
+    $name = $builder->db->escape('Joe');
+    $where = "name={$name} AND status='boss' OR status='active'";
+    $builder->where($where);
+
+.. _query-builder-where-subquery:
 
 #. **Subqueries:**
 
-    You can use an anonymous function to create a subquery::
+    ::
+
+        // With closure
 
         $builder->where('advance_amount <', function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
         });
+
         // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
+
+        // With builder directly
+        $subQuery = $db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2)
+        $builder->where('advance_amount <', $subQuery);
 
 **$builder->orWhere()**
 
@@ -333,10 +342,15 @@ appropriate::
 
 You can use subqueries instead of an array of values::
 
+    // With closure
     $builder->whereIn('id', function (BaseBuilder $builder) {
         return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
     });
     // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
+    $builder->whereIn('id', $subQuery);
 
 **$builder->orWhereIn()**
 
@@ -349,11 +363,16 @@ appropriate::
 
 You can use subqueries instead of an array of values::
 
+        // With closure
         $builder->orWhereIn('id', function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
         // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+        // With builder directly
+        $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
+        $builder->orWhereIn('id', $subQuery);
 
 **$builder->whereNotIn()**
 
@@ -366,11 +385,16 @@ AND if appropriate::
 
 You can use subqueries instead of an array of values::
 
+    // With closure
     $builder->whereNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
     });
 
     // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
+    $builder->whereNotIn('id', $subQuery);
 
 **$builder->orWhereNotIn()**
 
@@ -383,11 +407,16 @@ if appropriate::
 
 You can use subqueries instead of an array of values::
 
+    // With closure
     $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
     });
 
     // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
+    $builder->orWhereNotIn('id', $subQuery);
 
 ************************
 Looking for Similar Data
@@ -512,22 +541,23 @@ Identical to ``having()``, only separates multiple clauses with "OR".
 **$builder->havingIn()**
 
 Generates a ``HAVING field IN ('item', 'item')`` SQL query joined with AND if
-appropriate
-
-::
+appropriate::
 
     $groups = [1, 2, 3];
     $builder->havingIn('group_id', $groups);
     // Produces: HAVING group_id IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
+You can use subqueries instead of an array of values.::
 
-::
-
+    // With closure
     $builder->havingIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
     // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
+    $builder->havingIn('id', $subQuery);
 
 **$builder->orHavingIn()**
 
@@ -540,15 +570,18 @@ appropriate
     $builder->orHavingIn('group_id', $groups);
     // Produces: OR group_id IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
+You can use subqueries instead of an array of values.::
 
-::
-
+    //With closure
     $builder->orHavingIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 
     // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
+    $builder->orHavingIn('id', $subQuery);
 
 **$builder->havingNotIn()**
 
@@ -561,16 +594,18 @@ AND if appropriate
     $builder->havingNotIn('group_id', $groups);
     // Produces: HAVING group_id NOT IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
+You can use subqueries instead of an array of values.::
 
-::
-
+    //With closure
     $builder->havingNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 
     // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
+    $builder->havingNotIn('id', $subQuery);
 
 **$builder->orHavingNotIn()**
 
@@ -583,15 +618,18 @@ if appropriate
     $builder->havingNotIn('group_id', $groups);
     // Produces: OR group_id NOT IN (1, 2, 3)
 
-You can use subqueries instead of an array of values.
+You can use subqueries instead of an array of values.::
 
-::
-
+    //With closure
     $builder->orHavingNotIn('id', function (BaseBuilder $builder) {
         return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
     });
 
     // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
+
+    // With builder directly
+    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
+    $builder->orHavingNotIn('id', $subQuery);
 
 **$builder->havingLike()**
 
@@ -886,15 +924,15 @@ Example::
         'date'  => 'My date',
     ];
 
-    $sql = $builder->set($data)->getCompiledInsert('mytable');
+    $sql = $builder->set($data)->getCompiledInsert();
     echo $sql;
 
     // Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')
 
-The second parameter enables you to set whether or not the query builder query
+The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be--just like ``$builder->insert()``)::
 
-    echo $builder->set('title', 'My Title')->getCompiledInsert('mytable', false);
+    echo $builder->set('title', 'My Title')->getCompiledInsert(false);
 
     // Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
 
@@ -902,9 +940,7 @@ will be reset (by default it will be--just like ``$builder->insert()``)::
 
     // Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
-The key thing to notice in the above example is that the second query did not
-utilize ``$builder->from()`` nor did it pass a table name into the first
-parameter. The reason this worked is that the query has not been executed
+The reason the second query worked is that the query has not been executed
 using ``$builder->insert()`` which resets values or reset directly using
 ``$builder->resetQuery()``.
 
@@ -1399,7 +1435,7 @@ Class Reference
     .. php:method:: orWhereIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1409,7 +1445,7 @@ Class Reference
     .. php:method:: orWhereNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1419,7 +1455,7 @@ Class Reference
     .. php:method:: whereIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1429,7 +1465,7 @@ Class Reference
     .. php:method:: whereNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1542,7 +1578,7 @@ Class Reference
     .. php:method:: orHavingIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1552,7 +1588,7 @@ Class Reference
     .. php:method:: orHavingNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: The field to search
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1562,7 +1598,7 @@ Class Reference
     .. php:method:: havingIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1572,7 +1608,7 @@ Class Reference
     .. php:method:: havingNotIn([$key = null[, $values = null[, $escape = null]]])
 
         :param string $key: Name of field to examine
-        :param array|Closure $values: Array of target values, or anonymous function for subquery
+        :param array|BaseBulder|Closure $values: Array of target values, or anonymous function for subquery
         :param bool $escape: Whether to escape values and identifiers
         :param bool $insensitiveSearch: Whether to force a case-insensitive search
         :returns:   ``BaseBuilder`` instance (method chaining)

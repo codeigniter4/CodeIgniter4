@@ -111,6 +111,22 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereAssociateArrayKeyHasEqualValueIsNull()
+    {
+        $builder = $this->db->table('users');
+
+        $where = [
+            'deleted_at =' => null,
+        ];
+
+        $expectedSQL   = 'SELECT * FROM "users" WHERE "deleted_at" IS NULL';
+        $expectedBinds = [];
+
+        $builder->where($where);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testWhereCustomString()
     {
         $builder = $this->db->table('jobs');
@@ -125,14 +141,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereValueClosure()
+    public function testWhereValueSubQuery()
     {
+        $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
+
+        // Closure
         $builder = $this->db->table('neworder');
 
         $builder->where('advance_amount <', static function (BaseBuilder $builder) {
             return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
         });
-        $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('neworder');
+
+        $subQuery = $this->db->table('orders')
+            ->select('MAX(advance_amount)', false)
+            ->where('id >', 2);
+
+        $builder->where('advance_amount <', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -202,15 +231,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereInClosure()
+    public function testWhereInSubQuery()
     {
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+        // Closure
         $builder = $this->db->table('jobs');
 
         $builder->whereIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
-        $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('jobs');
+
+        $subQuery = $this->db->table('users_jobs')
+            ->select('job_id')
+            ->where('user_id', 3);
+
+        $builder->whereIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -279,15 +320,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereNotInClosure()
+    public function testWhereNotInSubQuery()
     {
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+        // Closure
         $builder = $this->db->table('jobs');
 
         $builder->whereNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
-        $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('jobs');
+
+        $subQuery = $this->db->table('users_jobs')
+            ->select('job_id')
+            ->where('user_id', 3);
+
+        $builder->whereNotIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -317,15 +370,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testOrWhereInClosure()
+    public function testOrWhereInSubQuery()
     {
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+        // Closure
         $builder = $this->db->table('jobs');
 
         $builder->where('deleted_at', null)->orWhereIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
-        $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('jobs');
+
+        $subQuery = $this->db->table('users_jobs')
+            ->select('job_id')
+            ->where('user_id', 3);
+
+        $builder->where('deleted_at', null)->orWhereIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
@@ -355,15 +420,27 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testOrWhereNotInClosure()
+    public function testOrWhereNotInSubQuery()
     {
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+
+        // Closure
         $builder = $this->db->table('jobs');
 
         $builder->where('deleted_at', null)->orWhereNotIn('id', static function (BaseBuilder $builder) {
             return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
         });
 
-        $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        // Builder
+        $builder = $this->db->table('jobs');
+
+        $subQuery = $this->db->table('users_jobs')
+            ->select('job_id')
+            ->where('user_id', 3);
+
+        $builder->where('deleted_at', null)->orWhereNotIn('id', $subQuery);
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }

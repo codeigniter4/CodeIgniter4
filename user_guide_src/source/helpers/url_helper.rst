@@ -5,7 +5,8 @@ URL Helper
 The URL Helper file contains functions that assist in working with URLs.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

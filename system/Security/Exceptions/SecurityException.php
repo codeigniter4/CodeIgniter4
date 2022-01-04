@@ -20,6 +20,22 @@ class SecurityException extends FrameworkException
         return new static(lang('Security.disallowedAction'), 403);
     }
 
+    public static function forInvalidUTF8Chars(string $source, string $string)
+    {
+        return new static(
+            'Invalid UTF-8 characters in ' . $source . ': ' . $string,
+            400
+        );
+    }
+
+    public static function forInvalidControlChars(string $source, string $string)
+    {
+        return new static(
+            'Invalid Control characters in ' . $source . ': ' . $string,
+            400
+        );
+    }
+
     /**
      * @deprecated Use `CookieException::forInvalidSameSite()` instead.
      *

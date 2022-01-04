@@ -142,9 +142,8 @@ a new ``News`` controller is defined. Create the new controller at
     namespace App\Controllers;
 
     use App\Models\NewsModel;
-    use CodeIgniter\Controller;
 
-    class News extends Controller
+    class News extends BaseController
     {
         public function index()
         {
@@ -217,7 +216,7 @@ and add the next piece of code.
             </div>
             <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
 
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
     <?php else: ?>
 

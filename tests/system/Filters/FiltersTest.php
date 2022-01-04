@@ -553,7 +553,7 @@ final class FiltersTest extends CIUnitTestCase
         $uri      = 'admin/foo/bar';
         $response = $filters->run($uri, 'before');
 
-        $this->assertTrue($response instanceof ResponseInterface);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame('http://google.com', $response->csp);
     }
 
@@ -737,7 +737,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters = $filters->initialize('admin/foo/bar');
         $filters = $filters->getFilters();
 
-        $this->assertTrue(in_array('some_alias', $filters['before'], true));
+        $this->assertContains('some_alias', $filters['before']);
     }
 
     public function testAddFilterSection()
@@ -753,7 +753,7 @@ final class FiltersTest extends CIUnitTestCase
             ->initialize('admin/foo/bar')
             ->getFilters();
 
-        $this->assertTrue(in_array('another', $list['before'], true));
+        $this->assertContains('another', $list['before']);
     }
 
     public function testInitializeTwice()
@@ -770,7 +770,7 @@ final class FiltersTest extends CIUnitTestCase
             ->initialize()
             ->getFilters();
 
-        $this->assertTrue(in_array('another', $list['before'], true));
+        $this->assertContains('another', $list['before']);
     }
 
     public function testEnableFilter()
@@ -791,7 +791,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->enableFilter('google', 'before');
         $filters = $filters->getFilters();
 
-        $this->assertTrue(in_array('google', $filters['before'], true));
+        $this->assertContains('google', $filters['before']);
     }
 
     public function testEnableFilterWithArguments()
@@ -813,7 +813,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->enableFilter('role:admin , super', 'after');
         $found = $filters->getFilters();
 
-        $this->assertTrue(in_array('role', $found['before'], true));
+        $this->assertContains('role', $found['before']);
         $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
         $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
 
@@ -845,7 +845,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->enableFilter('role', 'after');
         $found = $filters->getFilters();
 
-        $this->assertTrue(in_array('role', $found['before'], true));
+        $this->assertContains('role', $found['before']);
 
         $response = $filters->run('admin/foo/bar', 'before');
 

@@ -6,7 +6,8 @@ The Directory Helper file contains functions that assist in working with
 directories.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

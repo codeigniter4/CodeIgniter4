@@ -23,11 +23,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Object;
+namespace Kint\Zval;
 
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
 
-class BasicObject
+class Value
 {
     const ACCESS_NONE = null;
     const ACCESS_PUBLIC = 1;
@@ -51,9 +51,9 @@ class BasicObject
     public $depth = 0;
     public $size;
     public $value;
-    public $hints = array();
+    public $hints = [];
 
-    protected $representations = array();
+    protected $representations = [];
 
     public function __construct()
     {
@@ -70,7 +70,7 @@ class BasicObject
         } else {
             $this->representations = \array_merge(
                 \array_slice($this->representations, 0, $pos),
-                array($rep->getName() => $rep),
+                [$rep->getName() => $rep],
                 \array_slice($this->representations, $pos)
             );
         }
@@ -111,7 +111,7 @@ class BasicObject
 
     public function clearRepresentations()
     {
-        $this->representations = array();
+        $this->representations = [];
     }
 
     public function getType()
@@ -131,7 +131,7 @@ class BasicObject
             $out .= ' static';
         }
 
-        if (\strlen($out)) {
+        if (null !== $out && \strlen($out)) {
             return \ltrim($out);
         }
     }
@@ -188,7 +188,7 @@ class BasicObject
         return $this->access_path;
     }
 
-    public function transplant(BasicObject $old)
+    public function transplant(Value $old)
     {
         $this->name = $old->name;
         $this->size = $old->size;
@@ -212,7 +212,7 @@ class BasicObject
      * @param null|string $name
      * @param null|string $access_path
      *
-     * @return \Kint\Object\BasicObject
+     * @return \Kint\Zval\Value
      */
     public static function blank($name = null, $access_path = null)
     {
@@ -223,19 +223,19 @@ class BasicObject
         return $o;
     }
 
-    public static function sortByAccess(BasicObject $a, BasicObject $b)
+    public static function sortByAccess(Value $a, Value $b)
     {
-        static $sorts = array(
+        static $sorts = [
             self::ACCESS_PUBLIC => 1,
             self::ACCESS_PROTECTED => 2,
             self::ACCESS_PRIVATE => 3,
             self::ACCESS_NONE => 4,
-        );
+        ];
 
         return $sorts[$a->access] - $sorts[$b->access];
     }
 
-    public static function sortByName(BasicObject $a, BasicObject $b)
+    public static function sortByName(Value $a, Value $b)
     {
         $ret = \strnatcasecmp($a->name, $b->name);
 

@@ -6,7 +6,8 @@ The XML Helper file contains functions that assist in working with XML
 data.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================

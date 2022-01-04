@@ -8,6 +8,9 @@ services:
 		tags:
 			- phpstan.rules.rule
 
+includes:
+	- phpstan-baseline.neon.dist
+
 parameters:
 	tmpDir: build/phpstan
 	level: 5
@@ -18,7 +21,7 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- system/Test/bootstrap.php
-	excludes_analyse:
+	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
@@ -28,17 +31,6 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
-	ignoreErrors:
-		- '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli|\$schema#'
-		- '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers|\$schema)#'
-		- '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
-		- '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getFiltersForRoute|getRoutesOptions)\(\)#'
-		- '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
-		- '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'
-		- '#Method CodeIgniter\\Router\\RouteCollectionInterface::getRoutes\(\) invoked with 1 parameter, 0 required#'
-		- '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
-		- '#Negated boolean expression is always (true|false)#'
-		- '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
 	parallel:
 		processTimeout: 300.0
 	scanDirectories:
