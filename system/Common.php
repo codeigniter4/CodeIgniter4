@@ -294,7 +294,7 @@ if (! function_exists('csp_style_nonce')) {
      */
     function csp_style_nonce(): string
     {
-        $csp = Services::contentsecuritypolicy();
+        $csp = Services::csp();
 
         if (! $csp->enabled()) {
             return '';
@@ -310,7 +310,7 @@ if (! function_exists('csp_script_nonce')) {
      */
     function csp_script_nonce(): string
     {
-        $csp = Services::contentsecuritypolicy();
+        $csp = Services::csp();
 
         if (! $csp->enabled()) {
             return '';

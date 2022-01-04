@@ -160,10 +160,10 @@ class Services extends BaseService
      *
      * @return ContentSecurityPolicy
      */
-    public static function contentsecuritypolicy(?CSPConfig $config = null, bool $getShared = true)
+    public static function csp(?CSPConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('contentsecuritypolicy', $config);
+            return static::getSharedInstance('csp', $config);
         }
 
         $config = $config ?? config('ContentSecurityPolicy');

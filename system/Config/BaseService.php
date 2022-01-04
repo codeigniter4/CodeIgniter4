@@ -96,7 +96,7 @@ use Config\View as ConfigView;
  * @method static CLIRequest clirequest(App $config = null, $getShared = true)
  * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
  * @method static Commands commands($getShared = true)
- * @method static ContentSecurityPolicy contentsecuritypolicy(CSPConfig $config = null, $getShared = true)
+ * @method static ContentSecurityPolicy csp(CSPConfig $config = null, $getShared = true)
  * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email email($config = null, $getShared = true)
  * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)

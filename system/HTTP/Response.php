@@ -152,7 +152,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
         $this->noCache();
 
         // We need CSP object even if not enabled to avoid calls to non existing methods
-        $this->CSP = Services::contentsecuritypolicy();
+        $this->CSP = Services::csp();
 
         $this->CSPEnabled = $config->CSPEnabled;
 
