@@ -36,9 +36,6 @@ jobs:
           - php-versions: '7.4'
             db-platforms: MySQLi
             mysql-versions: '8.0'
-          # @todo remove once 8.1 is stable enough
-          - php-versions: '8.1'
-            composer-flag: '--ignore-platform-req=php'
 
     services:
       mysql:
@@ -119,8 +116,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --ansi --no-interaction ${{ matrix.composer-flag }}
-          composer remove --ansi --dev --unused -W ${{ matrix.composer-flag }} -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
+          composer update --ansi --no-interaction
+          composer remove --ansi --dev --unused -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
