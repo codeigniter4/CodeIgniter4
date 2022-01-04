@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.5...v4.1.6)
 
+**SECURITY**
+
+* *Deserialization of Untrusted Data* found in the ``old()`` function was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-w6jr-wj64-mc9x) for more information.
+
 **Breaking Changes**
 
 * fix: Incorrect type `BaseBuilder::$tableName` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5378
