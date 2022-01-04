@@ -520,7 +520,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testDWithCSP()
     {
         $this->resetServices();
-        $this->resetFactories();
 
         /** @var App $config */
         $config       = config('App');
@@ -543,7 +542,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testTraceWithCSP()
     {
         $this->resetServices();
-        $this->resetFactories();
 
         /** @var App $config */
         $config              = config('App');
@@ -557,7 +555,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testCspStyleNonce()
     {
         $this->resetServices();
-        $this->resetFactories();
 
         $config             = config('App');
         $config->CSPEnabled = true;
@@ -568,7 +565,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testCspScriptNonce()
     {
         $this->resetServices();
-        $this->resetFactories();
 
         $config             = config('App');
         $config->CSPEnabled = true;

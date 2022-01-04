@@ -29,7 +29,6 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     protected function prepare(bool $CSPEnabled = true)
     {
         $this->resetServices();
-        $this->resetFactories();
 
         $config             = config('App');
         $config->CSPEnabled = $CSPEnabled;
