@@ -126,7 +126,7 @@ jobs:
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --color=always"
+        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color

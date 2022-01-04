@@ -36,6 +36,9 @@
     </coverage>
 
     <testsuites>
+        <testsuite name="AutoReview">
+            <directory>./tests/AutoReview</directory>
+        </testsuite>
         <testsuite name="System">
             <directory>./tests/system</directory>
             <exclude>./tests/system/Database</exclude>
