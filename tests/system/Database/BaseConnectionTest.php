@@ -123,6 +123,16 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertGreaterThan(0.0, $db->getConnectDuration());
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5535
+     */
+    public function testStoresConnectionTimingsNotConnected()
+    {
+        $db = new MockConnection($this->options);
+
+        $this->assertSame('0.000000', $db->getConnectDuration());
+    }
+
     public function testMagicIssetTrue()
     {
         $db = new MockConnection($this->options);
