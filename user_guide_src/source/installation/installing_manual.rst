@@ -34,8 +34,7 @@ Upgrading
 
 Download a new copy of the framework, and then replace the ``system`` folder.
 
-Read the :doc:`upgrade instructions <upgrading>`, and check designated
-``app/Config`` folders for affected changes.
+Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
 ----

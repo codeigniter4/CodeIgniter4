@@ -70,7 +70,7 @@ If ``--prefer-source`` doesn't automatically update to pull latest framework sou
 If you used the ``--no-dev`` option when you created the project, it
 would be appropriate to do so here too, i.e., ``composer update --no-dev``.
 
-Read the :doc:`upgrade instructions <upgrading>`, and check designated  ``app/Config`` folders for affected changes.
+Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
 ----
@@ -153,8 +153,7 @@ Whenever there is a new release, then from the command line in your project root
 
     > composer update --prefer-source
 
-Read the :doc:`upgrade instructions <upgrading>`, and check designated
-``app/Config`` folders for affected changes.
+Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
 ----
