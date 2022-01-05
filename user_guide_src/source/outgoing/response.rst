@@ -133,6 +133,8 @@ to the ``Cache-Control`` header. You are free to set all of the options exactly 
 situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently handles
 the ``etag`` and ``last-modified`` options to their appropriate header.
 
+.. _content-security-policy:
+
 Content Security Policy
 =======================
 
@@ -246,6 +248,27 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
     // OR
     <style {csp-style-nonce}>
+        . . .
+    </style>
+
+.. warning:: If an attacker injects string like ``<script {csp-script-nonce}>``, it might become the real nonce attribute with this functionality. You can customize the placeholder string with the ``$scriptNonceTag`` and ``$styleNonceTag`` properties in **app/Config/ContentSecurityPolicy.php**.
+
+If you don't like this auto replacement functionality, you can turn it off with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
+
+In this case, you can use the functions, ``csp_script_nonce()`` and ``csp_style_nonce()``::
+
+    // Original
+    <script <?= csp_script_nonce() ?>>
+        console.log("Script won't run as it doesn't contain a nonce attribute");
+    </script>
+
+    // Becomes
+    <script nonce="Eskdikejidojdk978Ad8jf">
+        console.log("Script won't run as it doesn't contain a nonce attribute");
+    </script>
+
+    // OR
+    <style <?= csp_style_nonce() ?>>
         . . .
     </style>
 

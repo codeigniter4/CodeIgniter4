@@ -530,6 +530,10 @@ lang               language string           Alias for the lang helper function.
 validation_errors  fieldname(optional)       Returns either error string for the field    {+ validation_errors +} , {+ validation_errors field="email" +}
                                              (if specified) or all validation errors.
 route              route name                Alias for the route_to helper function.      {+ route "login" +}
+csp_script_nonce                             Alias for the csp_script_nonce helper        {+ csp_script_nonce +}
+                                             function.
+csp_style_nonce                              Alias for the csp_style_nonce helper         {+ csp_style_nonce +}
+                                             function.
 ================== ========================= ============================================ ================================================================
 
 Registering a Plugin
