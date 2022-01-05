@@ -27,14 +27,14 @@ Setting Up
 
 None
 
+.. _installing-manual-upgrading:
+
 Upgrading
 ---------
 
-Download a new copy of the framework, and then follow the upgrade
-instructions in the release notice or changelog to merge that with your project.
+Download a new copy of the framework, and then replace the ``system`` folder.
 
-Typically, you replace the ``system`` folder, and check designated
-``app/Config`` folders for affected changes.
+Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
 ----
