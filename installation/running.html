@@ -271,17 +271,18 @@
 <ul>
 <li><p><a class="reference internal" href="#htaccess" id="id5">.htaccess</a></p></li>
 <li><p><a class="reference internal" href="#virtual-hosting" id="id6">Virtual Hosting</a></p></li>
-<li><p><a class="reference internal" href="#testing" id="id7">Testing</a></p></li>
+<li><p><a class="reference internal" href="#with-mod-userdir-shared-hosts" id="id7">With mod_userdir (shared hosts)</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id8">Testing</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#hosting-with-nginx" id="id8">Hosting with Nginx</a></p></li>
-<li><p><a class="reference internal" href="#hosting-with-vagrant" id="id9">Hosting with Vagrant</a></p>
+<li><p><a class="reference internal" href="#hosting-with-nginx" id="id9">Hosting with Nginx</a></p></li>
+<li><p><a class="reference internal" href="#hosting-with-vagrant" id="id10">Hosting with Vagrant</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-up" id="id10">Setting Up</a></p></li>
-<li><p><a class="reference internal" href="#id1" id="id11">Testing</a></p></li>
+<li><p><a class="reference internal" href="#setting-up" id="id11">Setting Up</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id12">Testing</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id12">Bootstrapping the App</a></p></li>
+<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id13">Bootstrapping the App</a></p></li>
 </ul>
 </div>
 <p>A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
@@ -406,14 +407,77 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 <p>If your project folder is not a subfolder of the Apache document root, then your
 &lt;VirtualHost&gt; element may need a nested &lt;Directory&gt; element to grant the web server access to the files.</p>
 </section>
+<section id="with-mod-userdir-shared-hosts">
+<h3><a class="toc-backref" href="#id7">With mod_userdir (shared hosts)</a><a class="headerlink" href="#with-mod-userdir-shared-hosts" title="Permalink to this headline"></a></h3>
+<p>A common practice in shared hosting environments is to use the Apache module “mod_userdir” to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.</p>
+<p>The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/public_html.html">in the Apache documentation</a>.</p>
+<p>Because CodeIgniter4 expects the server to find the framework front controller at <code class="docutils literal notranslate"><span class="pre">/public/index.php</span></code> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
+<p>The default user web directory <code class="docutils literal notranslate"><span class="pre">~/public_html</span></code> is specified by the <code class="docutils literal notranslate"><span class="pre">UserDir</span></code> directive, typically in <code class="docutils literal notranslate"><span class="pre">/apache2/mods-available/userdir.conf</span></code> or <code class="docutils literal notranslate"><span class="pre">/apache2/conf/extra/httpd-userdir.conf</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="nx">public_html</span>
+</pre></div>
+</div>
+<p>So you will need to configure Apache to look for CodeIgniter’s public directory first before trying to serve the default:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
+</pre></div>
+</div>
+<p>Be sure to specify options and permissions for the CodeIgniter public directory as well. A <code class="docutils literal notranslate"><span class="pre">userdir.conf</span></code> might look like:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_userdir</span><span class="o">.</span><span class="nx">c</span><span class="o">&gt;</span>
+    <span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
+    <span class="nx">UserDir</span> <span class="nx">disabled</span> <span class="nx">root</span>
+
+    <span class="o">&lt;</span><span class="nx">Directory</span> <span class="o">/</span><span class="nx">home</span><span class="cm">/*/public_html&gt;</span>
+<span class="cm">            AllowOverride All</span>
+<span class="cm">            Options MultiViews Indexes FollowSymLinks</span>
+<span class="cm">            &lt;Limit GET POST OPTIONS&gt;</span>
+<span class="cm">                    # Apache &lt;= 2.2:</span>
+<span class="cm">                    # Order allow,deny</span>
+<span class="cm">                    # Allow from all</span>
+
+<span class="cm">                    # Apache &gt;= 2.4:</span>
+<span class="cm">                    Require all granted</span>
+<span class="cm">            &lt;/Limit&gt;</span>
+<span class="cm">            &lt;LimitExcept GET POST OPTIONS&gt;</span>
+<span class="cm">                    # Apache &lt;= 2.2:</span>
+<span class="cm">                    # Order deny,allow</span>
+<span class="cm">                    # Deny from all</span>
+
+<span class="cm">                    # Apache &gt;= 2.4:</span>
+<span class="cm">                    Require all denied</span>
+<span class="cm">            &lt;/LimitExcept&gt;</span>
+<span class="cm">    &lt;/Directory&gt;</span>
+
+<span class="cm">    &lt;Directory /home/*/</span><span class="nx">public_html</span><span class="o">/</span><span class="k">public</span><span class="o">&gt;</span>
+            <span class="nx">AllowOverride</span> <span class="nx">All</span>
+            <span class="nx">Options</span> <span class="nx">MultiViews</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
+            <span class="o">&lt;</span><span class="nx">Limit</span> <span class="nx">GET</span> <span class="nx">POST</span> <span class="nx">OPTIONS</span><span class="o">&gt;</span>
+                    <span class="c1"># Apache &lt;= 2.2:</span>
+                    <span class="c1"># Order allow,deny</span>
+                    <span class="c1"># Allow from all</span>
+
+                    <span class="c1"># Apache &gt;= 2.4:</span>
+                    <span class="k">Require</span> <span class="nx">all</span> <span class="nx">granted</span>
+            <span class="o">&lt;/</span><span class="nx">Limit</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">LimitExcept</span> <span class="nx">GET</span> <span class="nx">POST</span> <span class="nx">OPTIONS</span><span class="o">&gt;</span>
+                    <span class="c1"># Apache &lt;= 2.2:</span>
+                    <span class="c1"># Order deny,allow</span>
+                    <span class="c1"># Deny from all</span>
+
+                    <span class="c1"># Apache &gt;= 2.4:</span>
+                    <span class="k">Require</span> <span class="nx">all</span> <span class="nx">denied</span>
+            <span class="o">&lt;/</span><span class="nx">LimitExcept</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nx">IfModule</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
 <section id="testing">
-<h3><a class="toc-backref" href="#id7">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
 <p>With the above configuration, your webapp would be accessed with the URL <code class="docutils literal notranslate"><span class="pre">http://myproject.local</span></code> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
 </section>
 </section>
 <section id="hosting-with-nginx">
-<h2><a class="toc-backref" href="#id8">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
 <p>Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.</p>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
@@ -450,7 +514,7 @@ Here you can find an example configuration using PHP 7.3 FPM (unix sockets) unde
 </div>
 </section>
 <section id="hosting-with-vagrant">
-<h2><a class="toc-backref" href="#id9">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Hosting with Vagrant</a><a class="headerlink" href="#hosting-with-vagrant" title="Permalink to this headline"></a></h2>
 <p>Virtualization is an effective way to test your webapp in the environment you
 plan to deploy on, even if you develop on a different one.
 Even if you are using the same platform for both, virtualization provides an
@@ -458,7 +522,7 @@ isolated environment for testing.</p>
 <p>The codebase comes with a <code class="docutils literal notranslate"><span class="pre">VagrantFile.dist</span></code>, that can be copied to <code class="docutils literal notranslate"><span class="pre">VagrantFile</span></code>
 and tailored for your system, for instance enabling access to specific database or caching engines.</p>
 <section id="setting-up">
-<h3><a class="toc-backref" href="#id10">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <p>It assumes that you have installed <a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> and
 <a class="reference external" href="https://www.vagrantup.com/downloads.html">Vagrant</a>
 for your platform.</p>
@@ -468,7 +532,7 @@ for your platform.</p>
 </div>
 </section>
 <section id="id1">
-<h3><a class="toc-backref" href="#id11">Testing</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Testing</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>Once set up, you can then launch your webapp inside a VM, with the command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">vagrant</span> <span class="nx">up</span>
 </pre></div>
@@ -479,7 +543,7 @@ it at <code class="docutils literal notranslate"><span class="pre">http://localh
 </section>
 </section>
 <section id="bootstrapping-the-app">
-<h2><a class="toc-backref" href="#id12">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
 <p>In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
