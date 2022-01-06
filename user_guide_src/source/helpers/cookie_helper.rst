@@ -42,7 +42,7 @@ The following functions are available:
 .. php:function:: get_cookie($index[, $xssClean = false])
 
     :param    string    $index: Cookie name
-    :param    bool    $xss_clean: Whether to apply XSS filtering to the returned value
+    :param    bool    $xssClean: Whether to apply XSS filtering to the returned value
     :returns:    The cookie value or null if not found
     :rtype:    mixed
 
