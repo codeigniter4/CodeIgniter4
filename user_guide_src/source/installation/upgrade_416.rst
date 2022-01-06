@@ -20,6 +20,17 @@ Validation result changes
 
 Due to a bug fix, the Validation now might change the validation results when you validate an array item (see :ref:`Changelog <changelog-v416-validation-changes>`). So check the validation results for all the code that validates the array. Validating multiple fields like ``contacts.*.name`` is not affected.
 
+If you have the following form::
+
+    <input type='text' name='invoice_rule[1]'>
+    <input type='text' name='invoice_rule[2]'>
+
+And you have the validation rule like this::
+
+    'invoice_rule' =>  ['rules' => 'numeric', 'errors' => ['numeric' => 'Not numeric']]
+
+Change the rule key to ``invoice_rule.*`` and the validation will work.
+
 Breaking Enhancements
 *********************
 
