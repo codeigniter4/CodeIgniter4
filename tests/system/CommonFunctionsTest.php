@@ -559,7 +559,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config             = config('App');
         $config->CSPEnabled = true;
 
-        $this->assertStringContainsString('nonce="', csp_style_nonce());
+        $this->assertStringStartsWith('nonce="', csp_style_nonce());
     }
 
     public function testCspScriptNonce()
@@ -569,6 +569,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config             = config('App');
         $config->CSPEnabled = true;
 
-        $this->assertStringContainsString('nonce="', csp_script_nonce());
+        $this->assertStringStartsWith('nonce="', csp_script_nonce());
     }
 }
