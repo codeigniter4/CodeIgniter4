@@ -13,13 +13,23 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
-use DateTime;
+use CodeIgniter\Validation\FormatRules as NonStrictFormatRules;
 
 /**
  * Format validation Rules.
  */
 class FormatRules
 {
+    /**
+     * @var NonStrictFormatRules
+     */
+    private $nonStrictFormatRules;
+
+    public function __construct()
+    {
+        $this->nonStrictFormatRules = new NonStrictFormatRules();
+    }
+
     /**
      * Alpha
      *
@@ -31,7 +41,7 @@ class FormatRules
             return false;
         }
 
-        return ctype_alpha($str);
+        return $this->nonStrictFormatRules->alpha($str);
     }
 
     /**
@@ -51,8 +61,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/LhqHPO/1
-        return (bool) preg_match('/\A[A-Z ]+\z/i', $value);
+        return $this->nonStrictFormatRules->alpha_space($value);
     }
 
     /**
@@ -74,8 +83,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/XfVY3d/1
-        return preg_match('/\A[a-z0-9_-]+\z/i', $str) === 1;
+        return $this->nonStrictFormatRules->alpha_dash($str);
     }
 
     /**
@@ -103,8 +111,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/6N8dDY/1
-        return preg_match('/\A[A-Z0-9 ~!#$%\&\*\-_+=|:.]+\z/i', $str) === 1;
+        return $this->nonStrictFormatRules->alpha_numeric_punct($str);
     }
 
     /**
@@ -122,7 +129,7 @@ class FormatRules
             return false;
         }
 
-        return ctype_alnum($str);
+        return $this->nonStrictFormatRules->alpha_numeric($str);
     }
 
     /**
@@ -140,8 +147,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/0AZDME/1
-        return (bool) preg_match('/\A[A-Z0-9 ]+\z/i', $str ?? '');
+        return $this->nonStrictFormatRules->alpha_numeric_space($str);
     }
 
     /**
@@ -151,7 +157,7 @@ class FormatRules
      */
     public function string($str = null): bool
     {
-        return is_string($str);
+        return $this->nonStrictFormatRules->string($str);
     }
 
     /**
@@ -169,8 +175,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/HULifl/2/
-        return (bool) preg_match('/\A[-+]?\d{0,}\.?\d+\z/', $str ?? '');
+        return $this->nonStrictFormatRules->decimal($str);
     }
 
     /**
@@ -188,7 +193,7 @@ class FormatRules
             return false;
         }
 
-        return ctype_xdigit($str);
+        return $this->nonStrictFormatRules->hex($str);
     }
 
     /**
@@ -206,7 +211,7 @@ class FormatRules
             return false;
         }
 
-        return (bool) preg_match('/\A[\-+]?\d+\z/', $str);
+        return $this->nonStrictFormatRules->integer($str);
     }
 
     /**
@@ -224,7 +229,7 @@ class FormatRules
             return false;
         }
 
-        return ctype_digit($str);
+        return $this->nonStrictFormatRules->is_natural($str);
     }
 
     /**
@@ -242,7 +247,7 @@ class FormatRules
             return false;
         }
 
-        return $str !== '0' && ctype_digit($str);
+        return $this->nonStrictFormatRules->is_natural_no_zero($str);
     }
 
     /**
@@ -260,8 +265,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/bb9wtr/2
-        return (bool) preg_match('/\A[\-+]?\d*\.?\d+\z/', $str ?? '');
+        return $this->nonStrictFormatRules->numeric($str);
     }
 
     /**
@@ -275,11 +279,7 @@ class FormatRules
             return false;
         }
 
-        if (strpos($pattern, '/') !== 0) {
-            $pattern = "/{$pattern}/";
-        }
-
-        return (bool) preg_match($pattern, $str ?? '');
+        return $this->nonStrictFormatRules->regex_match($str, $pattern);
     }
 
     /**
@@ -296,7 +296,7 @@ class FormatRules
             return false;
         }
 
-        return in_array($str, timezone_identifiers_list(), true);
+        return $this->nonStrictFormatRules->timezone($str);
     }
 
     /**
@@ -313,7 +313,7 @@ class FormatRules
             return false;
         }
 
-        return base64_encode(base64_decode($str, true)) === $str;
+        return $this->nonStrictFormatRules->valid_base64($str);
     }
 
     /**
@@ -327,9 +327,7 @@ class FormatRules
             return false;
         }
 
-        json_decode($str);
-
-        return json_last_error() === JSON_ERROR_NONE;
+        return $this->nonStrictFormatRules->valid_json($str);
     }
 
     /**
@@ -343,12 +341,7 @@ class FormatRules
             return false;
         }
 
-        // @see https://regex101.com/r/wlJG1t/1/
-        if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str ?? '', $matches)) {
-            $str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
-        }
-
-        return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
+        return $this->nonStrictFormatRules->valid_email($str);
     }
 
     /**
@@ -365,19 +358,7 @@ class FormatRules
             return false;
         }
 
-        foreach (explode(',', $str) as $email) {
-            $email = trim($email);
-
-            if ($email === '') {
-                return false;
-            }
-
-            if ($this->valid_email($email) === false) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->nonStrictFormatRules->valid_emails($str);
     }
 
     /**
@@ -392,25 +373,7 @@ class FormatRules
             return false;
         }
 
-        if (empty($ip)) {
-            return false;
-        }
-
-        switch (strtolower($which ?? '')) {
-            case 'ipv4':
-                $which = FILTER_FLAG_IPV4;
-                break;
-
-            case 'ipv6':
-                $which = FILTER_FLAG_IPV6;
-                break;
-
-            default:
-                $which = 0;
-        }
-
-        return filter_var($ip, FILTER_VALIDATE_IP, $which) !== false
-            || (! ctype_print($ip) && filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $which) !== false);
+        return $this->nonStrictFormatRules->valid_ip($ip, $which);
     }
 
     /**
@@ -427,21 +390,7 @@ class FormatRules
             return false;
         }
 
-        if (empty($str)) {
-            return false;
-        }
-
-        if (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches)) {
-            if (! in_array($matches[1], ['http', 'https'], true)) {
-                return false;
-            }
-
-            $str = $matches[2];
-        }
-
-        $str = 'http://' . $str;
-
-        return filter_var($str, FILTER_VALIDATE_URL) !== false;
+        return $this->nonStrictFormatRules->valid_url($str);
     }
 
     /**
@@ -456,19 +405,7 @@ class FormatRules
             return false;
         }
 
-        if (empty($str)) {
-            return false;
-        }
-
-        // parse_url() may return null and false
-        $scheme       = strtolower((string) parse_url($str, PHP_URL_SCHEME));
-        $validSchemes = explode(
-            ',',
-            strtolower($validSchemes ?? 'http,https')
-        );
-
-        return in_array($scheme, $validSchemes, true)
-            && filter_var($str, FILTER_VALIDATE_URL) !== false;
+        return $this->nonStrictFormatRules->valid_url_strict($str, $validSchemes);
     }
 
     /**
@@ -482,13 +419,6 @@ class FormatRules
             return false;
         }
 
-        if (empty($format)) {
-            return strtotime($str) !== false;
-        }
-
-        $date   = DateTime::createFromFormat($format, $str);
-        $errors = DateTime::getLastErrors();
-
-        return $date !== false && $errors !== false && $errors['warning_count'] === 0 && $errors['error_count'] === 0;
+        return $this->nonStrictFormatRules->valid_date($str, $format);
     }
 }
