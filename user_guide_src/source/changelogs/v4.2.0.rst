@@ -1,0 +1,39 @@
+Version 4.2.0
+#############
+
+Release Date: Not Released
+
+**4.2.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+
+
+Enhancements
+************
+
+- Content Security Policy (CSP) enhancements
+    - Added the configs ``$scriptNonceTag`` and ``$styleNonceTag`` in  ``Config\ContentSecurityPolicy`` to customize the CSP placeholders (``{csp-script-nonce}`` and ``{csp-style-nonce}``)
+    - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement
+    - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
+    - See :ref:`content-security-policy` for details.
+
+Changes
+*******
+
+- The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.
+
+Deprecations
+************
+
+
+
+Bugs Fixed
+**********
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
