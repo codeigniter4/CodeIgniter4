@@ -57,6 +57,12 @@ CodeIgniter 4.x.x release.
 See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
 ```
 * Watch for the "Deploy Framework" Action to make sure **framework** and **appstarter** get updated
+* Run the following commands to install and test AppStarter and verify the new version:
+```bash
+composer create-project codeigniter4/appstarter release-test
+cd release-test
+composer test && composer info codeigniter4/framework
+```
 
 ## User Guide
 
