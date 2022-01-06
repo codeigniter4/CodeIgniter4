@@ -230,7 +230,7 @@ Miscellaneous Functions
     :returns: The CSP nonce attribute for style tag.
     :rtype: string
 
-    Returns the nonce attribute for style tag. That is string like ``nonce="Eskdikejidojdk978Ad8jf"``.
+    Returns the nonce attribute for a style tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
     See :ref:`content-security-policy`.
 
 .. php:function:: csrf_token ()
