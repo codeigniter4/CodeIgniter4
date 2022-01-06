@@ -13,14 +13,24 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use CodeIgniter\Validation\Rules as NonStrictRules;
 use Config\Database;
-use InvalidArgumentException;
 
 /**
  * Validation Rules.
  */
 class Rules
 {
+    /**
+     * @var NonStrictRules
+     */
+    private $nonStrictRules;
+
+    public function __construct()
+    {
+        $this->nonStrictRules = new NonStrictRules();
+    }
+
     /**
      * The value does not match another field in $data.
      *
@@ -33,11 +43,7 @@ class Rules
             return false;
         }
 
-        if (strpos($field, '.') !== false) {
-            return $str !== dot_array_search($field, $data);
-        }
-
-        return array_key_exists($field, $data) && $str !== $data[$field];
+        return $this->nonStrictRules->differs($str, $field, $data);
     }
 
     /**
@@ -47,7 +53,7 @@ class Rules
      */
     public function equals($str, string $val): bool
     {
-        return $str === $val;
+        return $this->nonStrictRules->equals($str, $val);
     }
 
     /**
@@ -62,15 +68,7 @@ class Rules
             return false;
         }
 
-        $val = explode(',', $val);
-
-        foreach ($val as $tmp) {
-            if (is_numeric($tmp) && (int) $tmp === mb_strlen($str ?? '')) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->nonStrictRules->exact_length($str, $val);
     }
 
     /**
@@ -80,7 +78,7 @@ class Rules
      */
     public function greater_than($str, string $min): bool
     {
-        return is_numeric($str) && $str > $min;
+        return $this->nonStrictRules->greater_than($str, $min);
     }
 
     /**
@@ -90,7 +88,7 @@ class Rules
      */
     public function greater_than_equal_to($str, string $min): bool
     {
-        return is_numeric($str) && $str >= $min;
+        return $this->nonStrictRules->greater_than_equal_to($str, $min);
     }
 
     /**
@@ -106,23 +104,7 @@ class Rules
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
-        // Grab any data for exclusion of a single row.
-        [$field, $whereField, $whereValue] = array_pad(explode(',', $field), 3, null);
-
-        // Break the table and field apart
-        sscanf($field, '%[^.].%[^.]', $table, $field);
-
-        $row = Database::connect($data['DBGroup'] ?? null)
-            ->table($table)
-            ->select('1')
-            ->where($field, $str)
-            ->limit(1);
-
-        if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue)) {
-            $row = $row->where($whereField, $whereValue);
-        }
-
-        return $row->get()->getRow() !== null;
+        return $this->nonStrictRules->is_not_unique($str, $field, $data);
     }
 
     /**
@@ -140,9 +122,7 @@ class Rules
             return false;
         }
 
-        $list = array_map('trim', explode(',', $list));
-
-        return in_array($value, $list, true);
+        return $this->nonStrictRules->in_list($value, $list);
     }
 
     /**
@@ -158,21 +138,7 @@ class Rules
      */
     public function is_unique($str, string $field, array $data): bool
     {
-        [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);
-
-        sscanf($field, '%[^.].%[^.]', $table, $field);
-
-        $row = Database::connect($data['DBGroup'] ?? null)
-            ->table($table)
-            ->select('1')
-            ->where($field, $str)
-            ->limit(1);
-
-        if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)) {
-            $row = $row->where("{$ignoreField} !=", $ignoreValue);
-        }
-
-        return $row->get()->getRow() === null;
+        return $this->nonStrictRules->is_unique($str, $field, $data);
     }
 
     /**
@@ -182,7 +148,7 @@ class Rules
      */
     public function less_than($str, string $max): bool
     {
-        return is_numeric($str) && $str < $max;
+        return $this->nonStrictRules->less_than($str, $max);
     }
 
     /**
@@ -192,7 +158,7 @@ class Rules
      */
     public function less_than_equal_to($str, string $max): bool
     {
-        return is_numeric($str) && $str <= $max;
+        return $this->nonStrictRules->less_than_equal_to($str, $max);
     }
 
     /**
@@ -203,11 +169,7 @@ class Rules
      */
     public function matches($str, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false) {
-            return $str === dot_array_search($field, $data);
-        }
-
-        return array_key_exists($field, $data) && $str === $data[$field];
+        return $this->nonStrictRules->matches($str, $field, $data);
     }
 
     /**
@@ -225,7 +187,7 @@ class Rules
             return false;
         }
 
-        return is_numeric($val) && $val >= mb_strlen($str);
+        return $this->nonStrictRules->max_length($str, $val);
     }
 
     /**
@@ -243,7 +205,7 @@ class Rules
             return false;
         }
 
-        return is_numeric($val) && $val <= mb_strlen($str);
+        return $this->nonStrictRules->min_length($str, $val);
     }
 
     /**
@@ -253,7 +215,7 @@ class Rules
      */
     public function not_equals($str, string $val): bool
     {
-        return $str !== $val;
+        return $this->nonStrictRules->not_equals($str, $val);
     }
 
     /**
@@ -275,7 +237,7 @@ class Rules
             return false;
         }
 
-        return ! $this->in_list($value, $list);
+        return $this->nonStrictRules->not_in_list($value, $list);
     }
 
     /**
@@ -283,19 +245,7 @@ class Rules
      */
     public function required($str = null): bool
     {
-        if ($str === null) {
-            return false;
-        }
-
-        if (is_object($str)) {
-            return true;
-        }
-
-        if (is_array($str)) {
-            return $str !== [];
-        }
-
-        return trim((string) $str) !== '';
+        return $this->nonStrictRules->required($str);
     }
 
     /**
@@ -312,32 +262,7 @@ class Rules
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
-        if ($fields === null || empty($data)) {
-            throw new InvalidArgumentException('You must supply the parameters: fields, data.');
-        }
-
-        // If the field is present we can safely assume that
-        // the field is here, no matter whether the corresponding
-        // search field is present or not.
-        $fields  = explode(',', $fields);
-        $present = $this->required($str ?? '');
-
-        if ($present) {
-            return true;
-        }
-
-        // Still here? Then we fail this test if
-        // any of the fields are present in $data
-        // as $fields is the lis
-        $requiredFields = [];
-
-        foreach ($fields as $field) {
-            if ((array_key_exists($field, $data) && ! empty($data[$field])) || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))) {
-                $requiredFields[] = $field;
-            }
-        }
-
-        return empty($requiredFields);
+        return $this->nonStrictRules->required_with($str, $fields, $data);
     }
 
     /**
@@ -352,28 +277,6 @@ class Rules
      */
     public function required_without($str = null, ?string $fields = null, array $data = []): bool
     {
-        if ($fields === null || empty($data)) {
-            throw new InvalidArgumentException('You must supply the parameters: fields, data.');
-        }
-
-        // If the field is present we can safely assume that
-        // the field is here, no matter whether the corresponding
-        // search field is present or not.
-        $fields  = explode(',', $fields);
-        $present = $this->required($str ?? '');
-
-        if ($present) {
-            return true;
-        }
-
-        // Still here? Then we fail this test if
-        // any of the fields are not present in $data
-        foreach ($fields as $field) {
-            if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) || (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->nonStrictRules->required_without($str, $fields, $data);
     }
 }
