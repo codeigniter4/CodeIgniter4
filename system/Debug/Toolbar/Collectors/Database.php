@@ -134,6 +134,8 @@ class Database extends BaseCollector
         $data['queries'] = array_map(static function (array $query) {
             $isDuplicate = $query['duplicate'] === true;
 
+            $firstNonSystemLine = '';
+
             foreach ($query['trace'] as $index => &$line) {
                 // simplify file and line
                 if (isset($line['file'])) {
@@ -141,6 +143,11 @@ class Database extends BaseCollector
                     unset($line['line']);
                 } else {
                     $line['file'] = '[internal function]';
+                }
+
+                // find the first trace line that does not originate from `system/`
+                if ($firstNonSystemLine === '' && strpos($line['file'], 'SYSTEMPATH') === false) {
+                    $firstNonSystemLine = $line['file'];
                 }
 
                 // simplify function call
@@ -160,20 +167,6 @@ class Database extends BaseCollector
                 $indexPadded = preg_replace('/\s/', chr(0xC2) . chr(0xA0), $indexPadded);
 
                 $line['index'] = $indexPadded . str_repeat(chr(0xC2) . chr(0xA0), 4);
-            }
-
-            // remove the caller trace which is duplicated as the last item
-            array_pop($query['trace']);
-
-            // Find the first line that doesn't include `system` in the backtrace
-            $firstNonSystemLine = '';
-
-            foreach ($query['trace'] as $line) {
-                if (strpos($line['file'], 'SYSTEMPATH') === false) {
-                    $firstNonSystemLine = $line['file'];
-
-                    break;
-                }
             }
 
             return [

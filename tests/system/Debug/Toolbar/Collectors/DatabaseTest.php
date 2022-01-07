@@ -54,8 +54,8 @@ final class DatabaseTest extends CIUnitTestCase
             $this->assertArrayHasKey('file', $trace);
 
             // since we dropped object & args in the backtrace for performance
+            // but args MAY STILL BE present in internal calls
             $this->assertArrayNotHasKey('object', $trace);
-            $this->assertArrayNotHasKey('args', $trace);
         }
     }
 }
