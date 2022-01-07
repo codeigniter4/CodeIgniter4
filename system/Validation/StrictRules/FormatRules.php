@@ -71,10 +71,6 @@ class FormatRules
      */
     public function alpha_dash($str = null): bool
     {
-        if ($str === null) {
-            return false;
-        }
-
         if (is_int($str)) {
             $str = (string) $str;
         }
