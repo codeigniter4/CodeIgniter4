@@ -84,7 +84,7 @@ var ciDebugBar = {
 		var state = tab.style.display;
 
 		// Hide all tabs
-		var tabs = this.toolbar.querySelectorAll('.tab');
+		var tabs = document.querySelectorAll('#debug-bar .tab');
 
 		for (var i = 0; i < tabs.length; i++)
 		{
@@ -92,7 +92,7 @@ var ciDebugBar = {
 		}
 
 		// Mark all labels as inactive
-		var labels = this.toolbar.querySelectorAll('.ci-label');
+		var labels = document.querySelectorAll('#debug-bar .ci-label');
 
 		for (var i = 0; i < labels.length; i++)
 		{
