@@ -34,8 +34,8 @@ class Rules
     /**
      * The value does not match another field in $data.
      *
-     * @param array $data Other field/value pairs
      * @param mixed $str
+     * @param array $data Other field/value pairs
      */
     public function differs($str, string $field, array $data): bool
     {
@@ -164,8 +164,8 @@ class Rules
     /**
      * Matches the value of another field in $data.
      *
-     * @param array $data Other field/value pairs
      * @param mixed $str
+     * @param array $data Other field/value pairs
      */
     public function matches($str, string $field, array $data): bool
     {
