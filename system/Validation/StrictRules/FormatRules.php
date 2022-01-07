@@ -47,11 +47,11 @@ class FormatRules
     /**
      * Alpha with spaces.
      *
-     * @param string|null $value Value.
+     * @param mixed $value Value.
      *
      * @return bool True if alpha with spaces, else false.
      */
-    public function alpha_space(?string $value = null): bool
+    public function alpha_space($value = null): bool
     {
         if ($value === null) {
             return true;
