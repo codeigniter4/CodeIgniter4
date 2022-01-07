@@ -93,16 +93,12 @@ class FormatRules
      * _ underscore, + plus, = equals, | vertical bar, : colon, . period
      * ~ ! # $ % & * - _ + = | : .
      *
-     * @param string|null $str
+     * @param mixed $str
      *
      * @return bool
      */
     public function alpha_numeric_punct($str)
     {
-        if ($str === null) {
-            return false;
-        }
-
         if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
@@ -153,7 +149,7 @@ class FormatRules
     /**
      * Any type of string
      *
-     * @param string|null $str
+     * @param mixed $str
      */
     public function string($str = null): bool
     {
@@ -288,7 +284,7 @@ class FormatRules
      *
      * @see http://php.net/manual/en/datetimezone.listidentifiers.php
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function timezone($str = null): bool
     {
@@ -305,7 +301,7 @@ class FormatRules
      * Tests a string for characters outside of the Base64 alphabet
      * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function valid_base64($str = null): bool
     {
@@ -319,7 +315,7 @@ class FormatRules
     /**
      * Valid JSON
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function valid_json($str = null): bool
     {
@@ -333,7 +329,7 @@ class FormatRules
     /**
      * Checks for a correctly formatted email address
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function valid_email($str = null): bool
     {
@@ -350,7 +346,7 @@ class FormatRules
      * Example:
      *     valid_emails[one@example.com,two@example.com]
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function valid_emails($str = null): bool
     {
