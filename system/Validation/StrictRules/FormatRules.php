@@ -364,8 +364,8 @@ class FormatRules
     /**
      * Validate an IP address (human readable format or binary string - inet_pton)
      *
-     * @param string|null $which IP protocol: 'ipv4' or 'ipv6'
      * @param mixed       $ip
+     * @param string|null $which IP protocol: 'ipv4' or 'ipv6'
      */
     public function valid_ip($ip = null, ?string $which = null): bool
     {
@@ -396,8 +396,8 @@ class FormatRules
     /**
      * Checks a URL to ensure it's formed correctly.
      *
-     * @param string|null $validSchemes comma separated list of allowed schemes
      * @param mixed       $str
+     * @param string|null $validSchemes comma separated list of allowed schemes
      */
     public function valid_url_strict($str = null, ?string $validSchemes = null): bool
     {
