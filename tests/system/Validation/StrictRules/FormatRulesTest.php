@@ -473,7 +473,7 @@ final class FormatRulesTest extends CIUnitTestCase
         yield from [
             [
                 null,
-                false,  // true in v4.1.6 and earlier
+                false,  // true in Traditional Rule
             ],
             [
                 self::ALPHABET,
@@ -840,17 +840,17 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         yield 'array with int' => [
             [555],
-            false,  // true in v4.1.5 and earlier
+            false,  // TypeError in Traditional Rule
         ];
 
         yield 'empty array' => [
             [],
-            false,  // true in v4.1.5 and earlier
+            false,  // TypeError in Traditional Rule
         ];
 
         yield 'bool true' => [
             true,
-            false,  // true in v4.1.5 and earlier
+            false,  // true in Traditional Rule
         ];
 
         yield 'bool false' => [
