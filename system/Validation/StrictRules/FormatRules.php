@@ -33,7 +33,7 @@ class FormatRules
     /**
      * Alpha
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function alpha($str = null): bool
     {
@@ -67,7 +67,7 @@ class FormatRules
     /**
      * Alphanumeric with underscores and dashes
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function alpha_dash($str = null): bool
     {
@@ -117,7 +117,7 @@ class FormatRules
     /**
      * Alphanumeric
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function alpha_numeric($str = null): bool
     {
@@ -135,7 +135,7 @@ class FormatRules
     /**
      * Alphanumeric w/ spaces
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function alpha_numeric_space($str = null): bool
     {
@@ -163,7 +163,7 @@ class FormatRules
     /**
      * Decimal number
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function decimal($str = null): bool
     {
@@ -181,7 +181,7 @@ class FormatRules
     /**
      * String of hexidecimal characters
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function hex($str = null): bool
     {
@@ -199,7 +199,7 @@ class FormatRules
     /**
      * Integer
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function integer($str = null): bool
     {
@@ -217,7 +217,7 @@ class FormatRules
     /**
      * Is a Natural number  (0,1,2,3, etc.)
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function is_natural($str = null): bool
     {
@@ -235,7 +235,7 @@ class FormatRules
     /**
      * Is a Natural number, but not a zero  (1,2,3, etc.)
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function is_natural_no_zero($str = null): bool
     {
@@ -253,7 +253,7 @@ class FormatRules
     /**
      * Numeric
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function numeric($str = null): bool
     {
@@ -365,7 +365,7 @@ class FormatRules
      * Validate an IP address (human readable format or binary string - inet_pton)
      *
      * @param string|null $which IP protocol: 'ipv4' or 'ipv6'
-     * @param mixed|null  $ip
+     * @param mixed       $ip
      */
     public function valid_ip($ip = null, ?string $which = null): bool
     {
@@ -382,7 +382,7 @@ class FormatRules
      * Warning: this rule will pass basic strings like
      * "banana"; use valid_url_strict for a stricter rule.
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function valid_url($str = null): bool
     {
@@ -397,7 +397,7 @@ class FormatRules
      * Checks a URL to ensure it's formed correctly.
      *
      * @param string|null $validSchemes comma separated list of allowed schemes
-     * @param mixed|null  $str
+     * @param mixed       $str
      */
     public function valid_url_strict($str = null, ?string $validSchemes = null): bool
     {
@@ -411,7 +411,7 @@ class FormatRules
     /**
      * Checks for a valid date and matches a given date format
      *
-     * @param mixed|null $str
+     * @param mixed $str
      */
     public function valid_date($str = null, ?string $format = null): bool
     {
