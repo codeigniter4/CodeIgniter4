@@ -89,7 +89,7 @@ class Database extends BaseCollector
                 'query'     => $query,
                 'string'    => $queryString,
                 'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
-                'trace'     => debug_backtrace(),
+                'trace'     => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
             ];
         }
     }
@@ -134,23 +134,46 @@ class Database extends BaseCollector
         $data['queries'] = array_map(static function (array $query) {
             $isDuplicate = $query['duplicate'] === true;
 
+            foreach ($query['trace'] as $index => &$line) {
+                // simplify file and line
+                if (isset($line['file'])) {
+                    $line['file'] = clean_path($line['file']) . ':' . $line['line'];
+                    unset($line['line']);
+                } else {
+                    $line['file'] = '[internal function]';
+                }
+
+                // simplify function call
+                if (isset($line['class'])) {
+                    $line['function'] = $line['class'] . $line['type'] . $line['function'];
+                    unset($line['class'], $line['type']);
+                }
+
+                if (strrpos($line['function'], '{closure}') === false) {
+                    $line['function'] .= '()';
+                }
+
+                $line['function'] = str_repeat(chr(0xC2) . chr(0xA0), 8) . $line['function'];
+
+                // add index numbering padded with nonbreaking space
+                $indexPadded = str_pad(sprintf('%d', $index + 1), 3, ' ', STR_PAD_LEFT);
+                $indexPadded = preg_replace('/\s/', chr(0xC2) . chr(0xA0), $indexPadded);
+
+                $line['index'] = $indexPadded . str_repeat(chr(0xC2) . chr(0xA0), 4);
+            }
+
+            // remove the caller trace which is duplicated as the last item
+            array_pop($query['trace']);
+
             // Find the first line that doesn't include `system` in the backtrace
-            $line = [];
+            $firstNonSystemLine = '';
 
-            foreach ($query['trace'] as &$traceLine) {
-                // Clean up the file paths
-                $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
-                $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
-                if (defined('VENDORPATH')) {
-                    // VENDORPATH is not defined unless `vendor/autoload.php` exists
-                    $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
-                }
-                $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
+            foreach ($query['trace'] as $line) {
+                if (strpos($line['file'], 'SYSTEMPATH') === false) {
+                    $firstNonSystemLine = $line['file'];
 
-                if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
-                    continue;
+                    break;
                 }
-                $line = empty($line) ? $traceLine : $line;
             }
 
             return [
@@ -159,8 +182,7 @@ class Database extends BaseCollector
                 'duration'   => ((float) $query['query']->getDuration(5) * 1000) . ' ms',
                 'sql'        => $query['query']->debugToolbarDisplay(),
                 'trace'      => $query['trace'],
-                'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
-                'trace-line' => $line['line'] ?? '',
+                'trace-file' => $firstNonSystemLine,
                 'qid'        => md5($query['query'] . microtime()),
             ];
         }, static::$queries);
