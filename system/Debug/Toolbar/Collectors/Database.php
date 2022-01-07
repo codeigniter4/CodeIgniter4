@@ -85,11 +85,19 @@ class Database extends BaseCollector
         if (count(static::$queries) < $max) {
             $queryString = $query->getQuery();
 
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+
+            if (! is_cli()) {
+                // when called in the browser, the first two trace arrays
+                // are from the DB event trigger, which are unneeded
+                $backtrace = array_slice($backtrace, 2);
+            }
+
             static::$queries[] = [
                 'query'     => $query,
                 'string'    => $queryString,
                 'duplicate' => in_array($queryString, array_column(static::$queries, 'string', null), true),
-                'trace'     => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
+                'trace'     => $backtrace,
             ];
         }
     }
