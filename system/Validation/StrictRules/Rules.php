@@ -211,7 +211,7 @@ class Rules
     /**
      * Does not equal the static value provided.
      *
-     * @param string $str
+     * @param mixed $str
      */
     public function not_equals($str, string $val): bool
     {
@@ -221,7 +221,7 @@ class Rules
     /**
      * Value should not be within an array of values.
      *
-     * @param string $value
+     * @param mixed $value
      */
     public function not_in_list($value, string $list): bool
     {
@@ -256,7 +256,7 @@ class Rules
      *
      *     required_with[password]
      *
-     * @param string|null $str
+     * @param mixed       $str
      * @param string|null $fields List of fields that we should check if present
      * @param array       $data   Complete list of fields from the form
      */
@@ -273,7 +273,7 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param string|null $str
+     * @param mixed $str
      */
     public function required_without($str = null, ?string $fields = null, array $data = []): bool
     {
