@@ -473,7 +473,7 @@ final class FormatRulesTest extends CIUnitTestCase
         yield from [
             [
                 null,
-                true,
+                false,  // true in v4.1.6 and earlier
             ],
             [
                 self::ALPHABET,

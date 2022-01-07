@@ -53,10 +53,6 @@ class FormatRules
      */
     public function alpha_space($value = null): bool
     {
-        if ($value === null) {
-            return true;
-        }
-
         if (! is_string($value)) {
             return false;
         }
