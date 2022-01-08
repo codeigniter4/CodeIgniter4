@@ -399,7 +399,7 @@ The methods provided by the parent classes that are available are:
         The second optional parameter lets you run the data through the PHP's
         filters. Pass in the desired filter type as the second parameter::
 
-            $request->getVar('some_data', FILTER_SANITIZE_STRING);
+            $request->getVar('some_data', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         To return an array of all POST items call without any parameters.
 
@@ -407,7 +407,7 @@ The methods provided by the parent classes that are available are:
         first parameter to null while setting the second parameter to the filter
         you want to use::
 
-            $request->getVar(null, FILTER_SANITIZE_STRING);
+            $request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             // returns all POST items with string sanitation
 
         To return an array of multiple POST parameters, pass all the required keys as an array::
@@ -417,7 +417,7 @@ The methods provided by the parent classes that are available are:
         Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
         the filter type to apply::
 
-            $request->getVar(['field1', 'field2'], FILTER_SANITIZE_STRING);
+            $request->getVar(['field1', 'field2'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
@@ -489,7 +489,7 @@ The methods provided by the parent classes that are available are:
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
 
             $request->getCookie('some_cookie');
-            $request->getCookie('some_cookie', FILTER_SANITIZE_STRING); // with filter
+            $request->getCookie('some_cookie', FILTER_SANITIZE_FULL_SPECIAL_CHARS); // with filter
 
         To return an array of multiple cookie values, pass all the required keys as an array::
 
