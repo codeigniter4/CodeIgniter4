@@ -773,7 +773,6 @@ if (! function_exists('model')) {
      * @param class-string<T> $name
      *
      * @return T
-     * @phpstan-return Model
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
