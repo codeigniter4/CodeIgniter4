@@ -13,9 +13,13 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Exception;
 use Redis;
 use RedisCluster;
+use RedisClusterException;
+use RedisException;
 use ReturnTypeWillChange;
+use Throwable;
 
 /**
  * Session handler using Redis for persistence
@@ -59,21 +63,22 @@ class RedisHandler extends BaseHandler
 
     /**
      * Initialize connection to redis server
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    private function _connectToRedisServer()
+    private function connectToRedisServer()
     {
         $redis = new Redis();
 
         if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout'])) {
-            throw new \Exception('Unable to connect to Redis with the configured settings.');
+            throw new Exception('Unable to connect to Redis with the configured settings.');
         }
         if (isset($this->savePath['password'])) {
             // Redis 6+ accepts username/password
             if (isset($this->savePath['username'])) {
                 $auth = [
                     'user' => $this->savePath['username'],
-                    'pass' => $this->savePath['password']
+                    'pass' => $this->savePath['password'],
                 ];
             } else {
                 $auth = $this->savePath['password'];
@@ -81,8 +86,8 @@ class RedisHandler extends BaseHandler
             // auth will throw an exception on error
             $redis->auth($auth);
         }
-        if (!empty($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
-            throw new \Exception('Select database failed.');
+        if (! empty($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
+            throw new Exception('Select database failed.');
         }
 
         $this->redis = $redis;
@@ -90,20 +95,21 @@ class RedisHandler extends BaseHandler
 
     /**
      * Initialize connection to redis cluster
-     * @throws \RedisClusterException
+     *
+     * @throws RedisClusterException
      */
-    private function _connectToRedisCluster()
+    private function connectToRedisCluster()
     {
         // Plugging in multiple nodes into savePath would be a nightmare, so only allow connectivity to a singular node.
         // Might be more worthwhile for a user to use ConfiguredCacheHandler instead, easier to configure.
         $cluster = ["{$this->savePath['host']}:{$this->savePath['port']}"];
         $timeout = $this->savePath['timeout'] ?? 0;
-        $auth = null;
-        if(isset($this->savePath['password'])) {
+        $auth    = null;
+        if (isset($this->savePath['password'])) {
             if (isset($this->savePath['username'])) {
                 $auth = [
                     'user' => $this->savePath['username'],
-                    'pass' => $this->savePath['password']
+                    'pass' => $this->savePath['password'],
                 ];
             } else {
                 $auth = $this->savePath['password'];
@@ -140,8 +146,8 @@ class RedisHandler extends BaseHandler
                 'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
                 'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
                 // Accept a value of 'true' or > 0 to enable cluster mode.
-                'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
-                'persistent'  => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
+                'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,
+                'persistent' => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,
             ];
 
             preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
@@ -167,18 +173,19 @@ class RedisHandler extends BaseHandler
     public function open($path, $name): bool
     {
         $rtnVal = false;
+
         try {
             if (empty($this->savePath)) {
-                throw new \Exception("No 'savePath' in configuration");
+                throw new Exception("No 'savePath' in configuration");
             }
-            if($this->savePath['isCluster']) {
-                $this->_connectToRedisCluster();
+            if ($this->savePath['isCluster']) {
+                $this->connectToRedisCluster();
             } else {
-                $this->_connectToRedisServer();
+                $this->connectToRedisServer();
             }
             $rtnVal = true;
-        } catch (\Throwable $t) {
-            $this->logger->error('Session: '.$t->getMessage());
+        } catch (Throwable $t) {
+            $this->logger->error('Session: ' . $t->getMessage());
         }
 
         return $rtnVal;
@@ -271,9 +278,9 @@ class RedisHandler extends BaseHandler
                 if (! $this->redis->close()) {
                     return false;
                 }
-            } catch (\RedisException $e) {
+            } catch (RedisException $e) {
                 $this->logger->error('Session: Got RedisException on close(): ' . $e->getMessage());
-            } catch (\RedisClusterException $e) {
+            } catch (RedisClusterException $e) {
                 $this->logger->error('Session: Got RedisClusterException on close(): ' . $e->getMessage());
             }
 

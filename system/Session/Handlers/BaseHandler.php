@@ -81,7 +81,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Current session ID
      *
-     * @var string
+     * @var string|null
      */
     protected $sessionID;
 
@@ -107,7 +107,7 @@ abstract class BaseHandler implements SessionHandlerInterface
         $this->cookiePath   = $config->cookiePath;
         $this->cookieSecure = $config->cookieSecure;
         $this->cookieName   = $config->sessionCookieName;
-        $this->matchIP      = $config->sessionMatchIP;
+        $this->matchIP      = (bool) ($config->sessionMatchIP);
         $this->savePath     = $config->sessionSavePath;
         $this->ipAddress    = $ipAddress;
     }
