@@ -13,6 +13,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
 use Config\App as AppConfig;
+use Throwable;
 
 /**
  * This class allows you to use whatever your configured cache handler is for managing sessions. This helps minimize
@@ -20,8 +21,10 @@ use Config\App as AppConfig;
  */
 class ConfiguredCacheHandler extends BaseHandler
 {
-    /** @var CacheInterface|null  */
-    protected $cache = null;
+    /**
+     * @var CacheInterface|null
+     */
+    protected $cache;
 
     /**
      * TODO make configurable via savePath? What should a savePath URI look like for this class?
@@ -42,7 +45,7 @@ class ConfiguredCacheHandler extends BaseHandler
      *
      * @var string|null
      */
-    protected $lockKey = null;
+    protected $lockKey;
 
     /**
      * Key exists flag
@@ -59,7 +62,7 @@ class ConfiguredCacheHandler extends BaseHandler
             ? (int) ini_get('session.gc_maxlifetime')
             : (int) $config->sessionExpiration;
 
-        if($this->matchIP === true) {
+        if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . '_';
         }
     }
@@ -71,28 +74,29 @@ class ConfiguredCacheHandler extends BaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
-        $lock = $this->keyPrefix. $sessionID . '_sessionLock';
+        $lock = $this->keyPrefix . $sessionID . '_sessionLock';
 
         if ($this->lockKey === $lock) {
             // This process owns this lock, re-up the expiration
-            return $this->cache->save($this->lockKey, (string)time(), 300);
+            return $this->cache->save($this->lockKey, (string) time(), 300);
         }
 
         $attempt = 0;
 
         do {
-            if(!empty($metadata = $this->cache->getMetaData($lock))) {
+            if (! empty($metadata = $this->cache->getMetaData($lock))) {
                 // Another process has this lock, check if it has expired, if not, then wait a second.
                 $ttl = $metadata['expire'] - time();
 
                 if ($ttl > 0) {
                     sleep(1);
+
                     continue;
                 }
             }
 
             // Either another process has expired or no other process has this lock. Create the lock for this process.
-            if (! $this->cache->save($lock, (string)time(), 300)) {
+            if (! $this->cache->save($lock, (string) time(), 300)) {
                 $this->logger->error('Session: Error while trying to obtain lock for ' . $sessionID);
 
                 return false;
@@ -115,18 +119,18 @@ class ConfiguredCacheHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function close()
+    public function close(): bool
     {
         $rtnVal = false;
 
         if (isset($this->cache)) {
             try {
-                if(isset($this->lockKey)) {
-                    $rtnVal = boolval($this->cache->delete($this->lockKey));
+                if (isset($this->lockKey)) {
+                    $rtnVal = (bool) ($this->cache->delete($this->lockKey));
                 }
-            } catch (\Throwable $t) {
+            } catch (Throwable $t) {
                 $this->logger->error('Session: Got Exception on close(): ' . $t->getMessage());
             }
         }
@@ -135,7 +139,7 @@ class ConfiguredCacheHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function destroy($id)
     {
@@ -145,11 +149,12 @@ class ConfiguredCacheHandler extends BaseHandler
             $this->cache->delete($this->lockKey);
             $rtnVal = $this->destroyCookie();
         }
+
         return $rtnVal;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function gc($max_lifetime)
     {
@@ -157,20 +162,21 @@ class ConfiguredCacheHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function open($path, $name): bool
     {
         try {
-            $rtnVal = !empty($this->cache = cache());
-        } catch (\Throwable $t) {
+            $rtnVal = ! empty($this->cache = cache());
+        } catch (Throwable $t) {
             $rtnVal = false;
         }
+
         return $rtnVal;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function read($id)
     {
@@ -190,10 +196,11 @@ class ConfiguredCacheHandler extends BaseHandler
 
             $this->fingerprint = md5($data);
         }
+
         return $data;
     }
 
-    public function releaseLock(): bool
+    protected function releaseLock(): bool
     {
         if (isset($this->cache, $this->lockKey) && $this->lock) {
             if (! $this->cache->delete($this->lockKey)) {
@@ -210,7 +217,7 @@ class ConfiguredCacheHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function write($id, $data)
     {

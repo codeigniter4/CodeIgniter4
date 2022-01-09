@@ -24,6 +24,8 @@ interface CacheInterface
     /**
      * Attempts to fetch an item from the cache store.
      *
+     * Returns null if no item found
+     *
      * @param string $key Cache item name
      *
      * @return mixed

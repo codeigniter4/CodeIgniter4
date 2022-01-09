@@ -13,9 +13,10 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Predis\Client;
 use Predis\PredisException;
 use ReturnTypeWillChange;
-use Predis\Client;
+use Throwable;
 
 /**
  * Session handler using Predis for persistence
@@ -60,13 +61,13 @@ class PredisHandler extends BaseHandler
     /**
      * Initialize connection to redis server
      */
-    private function _connectToRedisServer()
+    private function connectToRedisServer()
     {
         $parameters = [];
-        if(isset($this->savePath['password'])) {
+        if (isset($this->savePath['password'])) {
             $parameters['password'] = $this->savePath['password'];
         }
-        if(isset($this->savePath['database'])) {
+        if (isset($this->savePath['database'])) {
             $parameters['database'] = $this->savePath['database'];
         }
 
@@ -78,25 +79,26 @@ class PredisHandler extends BaseHandler
     /**
      * Initialize connection to redis cluster
      */
-    private function _connectToRedisCluster()
+    private function connectToRedisCluster()
     {
-        $cluster = ["{$this->savePath['host']}:{$this->savePath['port']}"];
-        $timeout = $this->savePath['timeout'] ?? 0;
+        $cluster    = ["{$this->savePath['host']}:{$this->savePath['port']}"];
+        $timeout    = $this->savePath['timeout'] ?? 0;
         $parameters = [
             'read_write_timeout' => $timeout,
-            'timeout' => $timeout,
-            'username' => $this->savePath['username'],
-            'password' => $this->savePath['password'],
-            'prefix' => $this->keyPrefix,
-            'persistent' => $this->savePath['persistent'],
+            'timeout'            => $timeout,
+            'username'           => $this->savePath['username'],
+            'password'           => $this->savePath['password'],
+            'prefix'             => $this->keyPrefix,
+            'persistent'         => $this->savePath['persistent'],
         ];
-        $this->redis = new Client($cluster,['cluster' => 'redis', 'parameters' => $parameters]);
+        $this->redis = new Client($cluster, ['cluster' => 'redis', 'parameters' => $parameters]);
         // ping(), time(), etc. are not supported for predis cluster mode, so try to grab a key to check connectivity.
         $this->redis->get('testkey');
     }
 
     /**
      * Create PredisHandler instance
+     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
@@ -121,8 +123,8 @@ class PredisHandler extends BaseHandler
                 'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
                 'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
                 // Accept a value of 'true' or > 0 to enable cluster mode
-                'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
-                'persistent'  => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] == 'true' || $match[1] > 0) : null,
+                'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,
+                'persistent' => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,
             ];
 
             preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
@@ -140,20 +142,20 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function open($path, $name): bool
     {
         $rtnVal = false;
-        if(!empty($this->savePath)) {
+        if (! empty($this->savePath)) {
             try {
                 if ($this->savePath['isCluster']) {
-                    $this->_connectToRedisCluster();
+                    $this->connectToRedisCluster();
                 } else {
-                    $this->_connectToRedisServer();
+                    $this->connectToRedisServer();
                 }
                 $rtnVal = true;
-            } catch (\Throwable $t) {
+            } catch (Throwable $t) {
                 $this->logger->error("Session: Unable to connect to redis: {$t->getMessage()}");
             }
         }
@@ -162,7 +164,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     #[ReturnTypeWillChange]
     public function read($id)
@@ -191,7 +193,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function write($id, $data): bool
     {
@@ -222,14 +224,14 @@ class PredisHandler extends BaseHandler
                 return false;
             }
 
-            return boolval($this->redis->expire($this->keyPrefix . $id, $this->sessionExpiration));
+            return (bool) ($this->redis->expire($this->keyPrefix . $id, $this->sessionExpiration));
         }
 
         return false;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function close(): bool
     {
@@ -253,7 +255,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function destroy($id): bool
     {
@@ -269,7 +271,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     #[ReturnTypeWillChange]
     public function gc($max_lifetime)
@@ -278,7 +280,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -286,7 +288,7 @@ class PredisHandler extends BaseHandler
         // so we need to check here if the lock key is for the
         // correct session ID.
         if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock') {
-            return boolval($this->redis->expire($this->lockKey, 300));
+            return (bool) ($this->redis->expire($this->lockKey, 300));
         }
 
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
@@ -325,7 +327,7 @@ class PredisHandler extends BaseHandler
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function releaseLock(): bool
     {

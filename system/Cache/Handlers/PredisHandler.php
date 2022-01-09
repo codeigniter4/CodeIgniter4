@@ -13,8 +13,10 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
+use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
+use Throwable;
 
 /**
  * Predis cache handler
@@ -27,21 +29,20 @@ class PredisHandler extends BaseHandler
      * @var array
      */
     protected $config = [
-        'host'     => '127.0.0.1',
-        'username' => null,
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-        'database' => 0,
-        'isCluster' => false,
+        'host'       => '127.0.0.1',
+        'username'   => null,
+        'password'   => null,
+        'port'       => 6379,
+        'timeout'    => 0,
+        'database'   => 0,
+        'isCluster'  => false,
         'persistent' => false,
     ];
-
 
     /**
      * Predis connection
      *
-     * @var Client
+     * @var Client|null
      */
     protected $redis;
 
@@ -49,16 +50,13 @@ class PredisHandler extends BaseHandler
     {
         $this->prefix = $config->prefix;
 
-        if (isset($config->redis)) {
-            $this->config = array_merge($this->config, $config->redis);
-        }
+        $this->config = array_merge($this->config, $config->redis);
     }
 
     /**
      * Initiate connection to individual redis server
-     * @param array $config
      */
-    private function _connectToRedisServer(array $config)
+    private function connectToRedisServer(array $config)
     {
         $this->redis = new Client($config, ['prefix' => $this->prefix]);
         $this->redis->time();
@@ -66,32 +64,32 @@ class PredisHandler extends BaseHandler
 
     /**
      * Initiate connection to redis cluster
-     * @param array $config
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    private function _connectToRedisCluster(array $config)
+    private function connectToRedisCluster(array $config)
     {
         if (empty($hosts = str_getcsv($config['host']))) {
-            throw new \Exception("Must specify one or more comma-separated hosts to work with in 'host' configuration.");
+            throw new Exception("Must specify one or more comma-separated hosts to work with in 'host' configuration.");
         }
         $port = $config['port'] ?? 6379;
-        if($port > 0) {
+        if ($port > 0) {
             // User defined a port so let's make sure it's setup for all of the cluster hosts.
-            foreach($hosts as &$host) {
-                if(!preg_match('/:\d+$/',$host)) {
+            foreach ($hosts as &$host) {
+                if (! preg_match('/:\d+$/', $host)) {
                     // User didn't append :port to their cluster server name so let's do that for them.
                     $host .= ":{$config['port']}";
                 }
             }
         }
-        $timeout = $config['timeout'] ?? 0;
+        $timeout    = $config['timeout'] ?? 0;
         $parameters = [
             'read_write_timeout' => $timeout,
-            'timeout' => $timeout,
-            'persistent' => boolval($config['persistent']),
-            'username' => $config['username'],
-            'password' => $config['password'],
-            'prefix' => $this->prefix,
+            'timeout'            => $timeout,
+            'persistent'         => (bool) ($config['persistent']),
+            'username'           => $config['username'],
+            'password'           => $config['password'],
+            'prefix'             => $this->prefix,
         ];
         // For cluster mode, the first argument is the list of servers to connect to.
         // Use server-side clustering like phpredis RedisCluster does.
@@ -106,19 +104,24 @@ class PredisHandler extends BaseHandler
     public function initialize()
     {
         $config = $this->config;
+
         try {
             // User must specify whether they are connecting to a cluster or not.
-            if($config['isCluster']) {
-                $this->_connectToRedisCluster($config);
+            if ($config['isCluster']) {
+                $this->connectToRedisCluster($config);
             } else {
-                $this->_connectToRedisServer($config);
+                $this->connectToRedisServer($config);
             }
 
             // NOTE: Using php's serializer automatically, like we do for phpredis, requires installation of phpiredis,
             // which in turn requires installation of another package. Rather than incurring the bloat of all of these
             // packages, we'll use serialize/userialize for our get/set functions.
-        } catch (\Exception $e) {
-            throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ').');
+        } catch (Throwable $t) {
+            $mode    = $config['isCluster'] ? 'server' : 'cluster';
+            $message = "Cache: Predis {$mode} connection refused ('{$t->getMessage()}').";
+            log_message('error', $message);
+
+            throw new CriticalError($message, 0, $t);
         }
     }
 
@@ -129,7 +132,7 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        if(!(is_null($data = $this->redis->get($key)))) {
+        if (! (null === ($data = $this->redis->get($key)))) {
             $data = unserialize($data);
         }
 
@@ -145,9 +148,16 @@ class PredisHandler extends BaseHandler
 
         $value = serialize($value);
 
-        $this->redis->setex($key, $ttl, $value);
+        if ($ttl > 0) {
+            $rtnVal = $this->redis->setex($key, $ttl, $value);
+        } else {
+            $rtnVal = $this->redis->set($key, $value);
+        }
+        if ($rtnVal instanceof \Predis\Response\Status) {
+            $rtnVal = $rtnVal->getPayload() === 'OK';
+        }
 
-        return true;
+        return $rtnVal;
     }
 
     /**
@@ -215,10 +225,10 @@ class PredisHandler extends BaseHandler
      */
     public function getMetaData(string $key)
     {
-        $key = static::validateKey($key);
+        $key    = static::validateKey($key);
         $rtnVal = null;
 
-        if(!is_null($data = $this->redis->get($key))) {
+        if (null !== ($data = $this->redis->get($key))) {
             $data = unserialize($data);
             $time = time();
             $ttl  = $this->redis->ttl($key);

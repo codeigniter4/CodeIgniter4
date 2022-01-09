@@ -13,8 +13,10 @@ namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
 use Config\Cache;
+use Exception;
 use Redis;
 use RedisCluster;
+use Throwable;
 
 /**
  * Redis cache handler
@@ -27,20 +29,20 @@ class RedisHandler extends BaseHandler
      * @var array
      */
     protected $config = [
-        'host'     => '127.0.0.1',
-        'username' => null,
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-        'database' => 0,
-        'isCluster' => false,
+        'host'       => '127.0.0.1',
+        'username'   => null,
+        'password'   => null,
+        'port'       => 6379,
+        'timeout'    => 0,
+        'database'   => 0,
+        'isCluster'  => false,
         'persistent' => false,
     ];
 
     /**
      * Redis connection
      *
-     * @var Redis|RedisCluster
+     * @var Redis|RedisCluster|null
      */
     protected $redis;
 
@@ -65,24 +67,22 @@ class RedisHandler extends BaseHandler
 
     /**
      * Initiate connection to redis server
-     * @param array $config
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    private function _connectToRedisServer(array $config)
+    private function connectToRedisServer(array $config)
     {
         $this->redis = new Redis();
 
         // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
         // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
 
-        if($config['persistent']) {
+        if ($config['persistent']) {
             if (! $this->redis->pconnect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
-                throw new \Exception('Connection failed. Check your configuration.');
+                throw new Exception('Connection failed. Check your configuration.');
             }
-        } else {
-            if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
-                throw new \Exception('Connection failed. Check your configuration.');
-            }
+        } elseif (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
+            throw new Exception('Connection failed. Check your configuration.');
         }
 
         if (isset($config['password'])) {
@@ -101,34 +101,34 @@ class RedisHandler extends BaseHandler
 
         // Don't select a database if it's set to false
         if ($config['database'] !== false && ! $this->redis->select($config['database'])) {
-            throw new \Exception('Select database failed.');
+            throw new Exception('Select database failed.');
         }
     }
 
     /**
      * Initiate connection to redis cluster
-     * @param array $config
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    private function _connectToRedisCluster(array $config)
+    private function connectToRedisCluster(array $config)
     {
         // NOTE: You can connect to redis cluster via a singular endpoint, the redis extension will automatically run
         // 'CLUSTER NODES' to discover what other nodes are available. We're preserving the ability to list an array
         // of comma-separated servers here in case someone still wants to configure it that way.
         if (empty($hosts = str_getcsv($config['host']))) {
-            throw new \Exception("Must specify one or more comma-separated hosts to work with in 'host' configuration.");
+            throw new Exception("Must specify one or more comma-separated hosts to work with in 'host' configuration.");
         }
         $port = $config['port'] ?? 6379;
-        if($port > 0) {
+        if ($port > 0) {
             // User defined a port so let's make sure it's setup for all of the cluster hosts.
-            foreach($hosts as &$host) {
-                if(!preg_match('/:\d+$/',$host)) {
+            foreach ($hosts as &$host) {
+                if (! preg_match('/:\d+$/', $host)) {
                     // User didn't append :port to their cluster server name so let's do that for them.
                     $host .= ":{$config['port']}";
                 }
             }
         }
-        $timeout = intval($config['timeout'] ?? 0);
+        $timeout = (int) ($config['timeout'] ?? 0);
 
         $auth = null;
         if (isset($config['password'])) {
@@ -151,7 +151,7 @@ class RedisHandler extends BaseHandler
          * Since $name isn't a shared feature, I'm not setting it up here, although it wouldn't be hard to have a new
          * 'clusterName' parameter in $config and be able to plug that in here.
         */
-        $this->redis = new RedisCluster(null, $hosts, $timeout, $timeout, boolval($config['persistent']), $auth);
+        $this->redis = new RedisCluster(null, $hosts, $timeout, $timeout, (bool) ($config['persistent']), $auth);
         // Prefer failover to an available replica.
         // @phpstan-ignore-next-line
         $this->redis->setOption(RedisCluster::OPT_SLAVE_FAILOVER, RedisCluster::FAILOVER_DISTRIBUTE_SLAVES);
@@ -165,26 +165,32 @@ class RedisHandler extends BaseHandler
         $config = $this->config;
 
         // User must specify whether they are connecting to a cluster or not.
-        $isCluster = boolval($config['isCluster']);
+        $isCluster = (bool) ($config['isCluster']);
 
         try {
             // TODO: add TLS compatibility for both of these.
-            if($isCluster) {
-                $this->_connectToRedisCluster($config);
+            if ($isCluster) {
+                $this->connectToRedisCluster($config);
             } else {
-                $this->_connectToRedisServer($config);
+                $this->connectToRedisServer($config);
             }
-        } catch (\Throwable $e) {
-            // Either connection function can throw \Exception, \RedisException, or \RedisClusterException. Catch any
+        } catch (Throwable $t) {
+            // Either connection function can throw Exception, RedisException, or RedisClusterException. Catch any
             // possible error and log it.
             $redisMode = $isCluster ? 'Redis' : 'RedisCluster';
-            $message = "Cache: {$redisMode}: ".$e->getMessage();
+            $message   = "Cache: {$redisMode}: {$t->getMessage()}";
             log_message('error', $message);
-            throw new CriticalError($message);
+
+            throw new CriticalError($message, 0, $t);
         }
 
         // Use the php serializer to handle everything we set/get from redis.
         $this->redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
+
+        if (! empty($this->prefix)) {
+            // Let the driver handle the prefix.
+            $this->redis->setOption(Redis::OPT_PREFIX, $this->prefix);
+        }
     }
 
     /**
@@ -192,8 +198,9 @@ class RedisHandler extends BaseHandler
      */
     public function get(string $key)
     {
-        $key  = static::validateKey($key, $this->prefix);
+        $key  = static::validateKey($key);
         $data = $this->redis->get($key);
+
         return $data === false ? null : $data;
     }
 
@@ -202,9 +209,15 @@ class RedisHandler extends BaseHandler
      */
     public function save(string $key, $value, int $ttl = 60)
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key = static::validateKey($key);
 
-        return $this->redis->setEx($key, $ttl, $value);
+        if ($ttl > 0) {
+            $rtnVal = $this->redis->setEx($key, $ttl, $value);
+        } else {
+            $rtnVal = $this->redis->set($key, $value);
+        }
+
+        return $rtnVal;
     }
 
     /**
@@ -212,7 +225,7 @@ class RedisHandler extends BaseHandler
      */
     public function delete(string $key)
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key = static::validateKey($key);
 
         return $this->redis->del($key) === 1;
     }
@@ -245,7 +258,7 @@ class RedisHandler extends BaseHandler
      */
     public function increment(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key = static::validateKey($key);
 
         return $this->redis->hIncrBy($key, 'data', $offset);
     }
@@ -255,7 +268,7 @@ class RedisHandler extends BaseHandler
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
+        $key = static::validateKey($key);
 
         return $this->redis->hIncrBy($key, 'data', -$offset);
     }
@@ -281,11 +294,11 @@ class RedisHandler extends BaseHandler
      */
     public function getMetaData(string $key)
     {
-        $key  = static::validateKey($key, $this->prefix);
+        $key    = static::validateKey($key);
         $rtnVal = null;
-        if(($value = $this->get($key)) !== false) {
-            $time = time();
-            $ttl  = $this->redis->ttl($key);
+        if (null !== ($value = $this->get($key))) {
+            $time   = time();
+            $ttl    = $this->redis->ttl($key);
             $rtnVal = [
                 'expire' => $ttl > 0 ? time() + $ttl : null,
                 'mtime'  => $time,
