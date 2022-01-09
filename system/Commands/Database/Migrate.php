@@ -91,7 +91,7 @@ class Migrate extends BaseCommand
                 CLI::write($message);
             }
 
-            CLI::write('Done migrations.', 'green');
+            CLI::write(lang('Migrations.done'), 'green');
 
             // @codeCoverageIgnoreStart
         } catch (Throwable $e) {
