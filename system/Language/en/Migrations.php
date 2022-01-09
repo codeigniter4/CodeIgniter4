@@ -36,7 +36,7 @@ return [
 
     'latest'            => 'Running all new migrations...',
     'generalFault'      => 'Migration failed!',
-    'done'              => 'Done migrations.',
+    'migrated'          => 'Migrations complete.',
     'migInvalidVersion' => 'Invalid version number provided.',
     'toVersionPH'       => 'Migrating to version %s...',
     'toVersion'         => 'Migrating to current version...',
