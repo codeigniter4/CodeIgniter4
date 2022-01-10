@@ -24,10 +24,10 @@ var ciDebugBar = {
 		document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
 
 		// Allows to highlight the row of the current history request
-		var btn = document.querySelector('button[data-time="' + localStorage.getItem('debugbar-time') + '"]');
+		var btn = this.toolbar.querySelector('button[data-time="' + localStorage.getItem('debugbar-time') + '"]');
 		ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
 
-		historyLoad = document.getElementsByClassName('ci-history-load');
+		historyLoad = this.toolbar.getElementsByClassName('ci-history-load');
 
 		for (var i = 0; i < historyLoad.length; i++)
 		{
@@ -52,7 +52,7 @@ var ciDebugBar = {
 	},
 
 	createListeners : function () {
-		var buttons = [].slice.call(document.querySelectorAll('#debug-bar .ci-label a'));
+		var buttons = [].slice.call(this.toolbar.querySelectorAll('.ci-label a'));
 
 		for (var i = 0; i < buttons.length; i++)
 		{
@@ -60,7 +60,7 @@ var ciDebugBar = {
 		}
 
 		// Hook up generic toggle via data attributes `data-toggle="foo"`
-		var links = document.querySelectorAll('[data-toggle]');
+		var links = this.toolbar.querySelectorAll('[data-toggle]');
 		for (var i = 0; i < links.length; i++)
 		{
 			links[i].addEventListener('click', ciDebugBar.toggleRows, true);
@@ -502,7 +502,7 @@ var ciDebugBar = {
 	},
 
 	setToolbarPosition: function () {
-		var btnPosition = document.getElementById('toolbar-position');
+		var btnPosition = this.toolbar.querySelector('#toolbar-position');
 
 		if (ciDebugBar.readCookie('debug-bar-position') === 'top')
 		{
@@ -531,7 +531,7 @@ var ciDebugBar = {
 	},
 
 	setToolbarTheme: function () {
-		var btnTheme    = document.getElementById('toolbar-theme');
+		var btnTheme    = this.toolbar.querySelector('#toolbar-theme');
 		var isDarkMode  = window.matchMedia("(prefers-color-scheme: dark)").matches;
 		var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
 
@@ -627,7 +627,7 @@ var ciDebugBar = {
 
 	routerLink: function () {
 		var row, _location;
-		var rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"]');
+		var rowGet = this.toolbar.querySelectorAll('td[data-debugbar-route="GET"]');
 		var patt   = /\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
 
 		for (var i = 0; i < rowGet.length; i++)
@@ -653,7 +653,7 @@ var ciDebugBar = {
 			}
 		}
 
-		rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"] form');
+		rowGet = this.toolbar.querySelectorAll('td[data-debugbar-route="GET"] form');
 		for (var i = 0; i < rowGet.length; i++)
 		{
 			row = rowGet[i];

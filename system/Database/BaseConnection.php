@@ -258,14 +258,14 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var float
      */
-    protected $connectTime;
+    protected $connectTime = 0.0;
 
     /**
      * How long it took to establish connection.
      *
      * @var float
      */
-    protected $connectDuration;
+    protected $connectDuration = 0.0;
 
     /**
      * If true, no queries will actually be

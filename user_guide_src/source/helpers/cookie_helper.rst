@@ -53,6 +53,8 @@ The following functions are available:
     the ``$cookiePrefix`` that you might've set in your
     **app/Config/App.php** file.
 
+.. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
+
 .. php:function:: delete_cookie($name[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
     :param string $name: Cookie name
