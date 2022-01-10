@@ -24,7 +24,7 @@ final class HTMLHelperTest extends CIUnitTestCase
     /**
      * @var string Path to the test file for img_data
      */
-    private $imgPath = SUPPORTPATH . 'Images' . DIRECTORY_SEPARATOR . 'ci-logo.gif';
+    private string $imgPath = SUPPORTPATH . 'Images' . DIRECTORY_SEPARATOR . 'ci-logo.gif';
 
     /**
      * @var string Expected base64 encoding of img path

@@ -148,9 +148,7 @@ final class WhereTest extends CIUnitTestCase
         // Closure
         $builder = $this->db->table('neworder');
 
-        $builder->where('advance_amount <', static function (BaseBuilder $builder) {
-            return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
-        });
+        $builder->where('advance_amount <', static fn (BaseBuilder $builder) => $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2));
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
