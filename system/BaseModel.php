@@ -293,7 +293,7 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation $validation
+         * @var Validation|null $validation
          */
         $validation ??= Services::validation(null, false);
         $this->validation = $validation;

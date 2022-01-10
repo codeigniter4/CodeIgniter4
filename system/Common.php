@@ -949,7 +949,6 @@ if (! function_exists('single_service')) {
         $method = new ReflectionMethod($service, $name);
         $count  = $method->getNumberOfParameters();
         $mParam = $method->getParameters();
-        $params ??= [];
 
         if ($count === 1) {
             // This service needs only one argument, which is the shared

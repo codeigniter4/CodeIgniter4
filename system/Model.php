@@ -92,7 +92,7 @@ class Model extends BaseModel
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
         /**
-         * @var BaseConnection $db
+         * @var BaseConnection|null $db
          */
         $db ??= Database::connect($this->DBGroup);
 

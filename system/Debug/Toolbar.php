@@ -348,8 +348,8 @@ class Toolbar
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         /**
-         * @var IncomingRequest $request
-         * @var Response        $response
+         * @var IncomingRequest|null $request
+         * @var Response|null        $response
          */
         if (CI_DEBUG && ! is_cli()) {
             global $app;
