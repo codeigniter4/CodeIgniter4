@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.1.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.7) (2022-01-XX)
+## [v4.1.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.7) (2022-01-09)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.6...v4.1.7)
 
