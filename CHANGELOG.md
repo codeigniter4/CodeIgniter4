@@ -1,5 +1,20 @@
 # Changelog
 
+## [v4.1.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.7) (2022-01-09)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.6...v4.1.7)
+
+**Breaking Changes**
+
+* fix: replace deprecated FILTER_SANITIZE_STRING by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5555
+
+**Fixed Bugs**
+
+* fix: BaseConnection::getConnectDuration() number_format(): Passing null to parameter by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5536
+* Fix: Debug toolbar selectors by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5544
+* Fix: Toolbar. ciDebugBar.showTab() context. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/5554
+* Refactor Database Collector display by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/5553
+
 ## [v4.1.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.6) (2022-01-03)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.5...v4.1.6)
