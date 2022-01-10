@@ -67,7 +67,6 @@ class Seeder
     /**
      * Faker Generator instance.
      *
-     *
      * @deprecated
      */
     private static ?Generator $faker = null;
