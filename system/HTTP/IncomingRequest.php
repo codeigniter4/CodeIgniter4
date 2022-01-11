@@ -391,7 +391,7 @@ class IncomingRequest extends Request
         $this->path = $path;
         $this->uri->setPath($path);
 
-        $config = $config ?? $this->config;
+        $config ??= $this->config;
 
         // It's possible the user forgot a trailing slash on their
         // baseURL, so let's help them out.
@@ -548,8 +548,8 @@ class IncomingRequest extends Request
         }
 
         if (! is_array($data)) {
-            $filter = $filter ?? FILTER_DEFAULT;
-            $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+            $filter ??= FILTER_DEFAULT;
+            $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
             return filter_var($data, $filter, $flags);
         }

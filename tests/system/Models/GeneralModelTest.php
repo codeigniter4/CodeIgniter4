@@ -28,10 +28,8 @@ final class GeneralModelTest extends CIUnitTestCase
 {
     /**
      * Current instance of the Model.
-     *
-     * @var Model
      */
-    private $model;
+    private ?object $model = null;
 
     protected function setUp(): void
     {

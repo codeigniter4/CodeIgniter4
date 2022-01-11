@@ -12,6 +12,7 @@
 namespace CodeIgniter\Security;
 
 use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -139,24 +140,17 @@ class Security implements SecurityInterface
      */
     protected $samesite = Cookie::SAMESITE_LAX;
 
-    /**
-     * @var RequestInterface
-     */
-    private $request;
+    private IncomingRequest $request;
 
     /**
      * CSRF Cookie Name without Prefix
-     *
-     * @var string
      */
-    private $rawCookieName;
+    private ?string $rawCookieName = null;
 
     /**
      * Session instance.
-     *
-     * @var Session
      */
-    private $session;
+    private ?Session $session = null;
 
     /**
      * Constructor.

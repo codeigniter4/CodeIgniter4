@@ -47,7 +47,7 @@ class CodeIgniter
      */
     public const CI_VERSION = '4.1.7';
 
-    private const MIN_PHP_VERSION = '7.3';
+    private const MIN_PHP_VERSION = '7.4';
 
     /**
      * App startup time.
@@ -576,7 +576,7 @@ class CodeIgniter
      * @param int $duration How long the Strict Transport Security
      *                      should be enforced for this URL.
      */
-    protected function forceSecureAccess($duration = 31536000)
+    protected function forceSecureAccess($duration = 31_536_000)
     {
         if ($this->config->forceGlobalSecureRequests !== true) {
             return;

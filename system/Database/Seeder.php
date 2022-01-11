@@ -67,11 +67,9 @@ class Seeder
     /**
      * Faker Generator instance.
      *
-     * @var Generator|null
-     *
      * @deprecated
      */
-    private static $faker;
+    private static ?Generator $faker = null;
 
     /**
      * Seeder constructor.
@@ -92,7 +90,7 @@ class Seeder
 
         $this->config = &$config;
 
-        $db = $db ?? Database::connect($this->DBGroup);
+        $db ??= Database::connect($this->DBGroup);
 
         $this->db    = &$db;
         $this->forge = Database::forge($this->DBGroup);

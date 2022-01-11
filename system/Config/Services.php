@@ -101,7 +101,7 @@ class Services extends BaseService
             return static::getSharedInstance('cache', $config);
         }
 
-        $config = $config ?? new Cache();
+        $config ??= new Cache();
 
         return CacheFactory::getHandler($config);
     }
@@ -118,7 +118,7 @@ class Services extends BaseService
             return static::getSharedInstance('clirequest', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         return new CLIRequest($config);
     }
@@ -134,7 +134,7 @@ class Services extends BaseService
             return static::getSharedInstance('codeigniter', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         return new CodeIgniter($config);
     }
@@ -165,8 +165,8 @@ class Services extends BaseService
             return static::getSharedInstance('curlrequest', $options, $response, $config);
         }
 
-        $config   = $config ?? config('App');
-        $response = $response ?? new Response($config);
+        $config ??= config('App');
+        $response ??= new Response($config);
 
         return new CURLRequest(
             $config,
@@ -209,7 +209,7 @@ class Services extends BaseService
             return static::getSharedInstance('encrypter', $config);
         }
 
-        $config     = $config ?? config('Encryption');
+        $config ??= config('Encryption');
         $encryption = new Encryption($config);
 
         return $encryption->initialize($config);
@@ -234,9 +234,9 @@ class Services extends BaseService
             return static::getSharedInstance('exceptions', $config, $request, $response);
         }
 
-        $config   = $config ?? config('Exceptions');
-        $request  = $request ?? AppServices::request();
-        $response = $response ?? AppServices::response();
+        $config ??= config('Exceptions');
+        $request ??= AppServices::request();
+        $response ??= AppServices::response();
 
         return new Exceptions($config, $request, $response);
     }
@@ -255,7 +255,7 @@ class Services extends BaseService
             return static::getSharedInstance('filters', $config);
         }
 
-        $config = $config ?? config('Filters');
+        $config ??= config('Filters');
 
         return new Filters($config, AppServices::request(), AppServices::response());
     }
@@ -271,7 +271,7 @@ class Services extends BaseService
             return static::getSharedInstance('format', $config);
         }
 
-        $config = $config ?? config('Format');
+        $config ??= config('Format');
 
         return new Format($config);
     }
@@ -288,7 +288,7 @@ class Services extends BaseService
             return static::getSharedInstance('honeypot', $config);
         }
 
-        $config = $config ?? config('Honeypot');
+        $config ??= config('Honeypot');
 
         return new Honeypot($config);
     }
@@ -305,7 +305,7 @@ class Services extends BaseService
             return static::getSharedInstance('image', $handler, $config);
         }
 
-        $config  = $config ?? config('Images');
+        $config ??= config('Images');
         $handler = $handler ?: $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
@@ -371,7 +371,7 @@ class Services extends BaseService
             return static::getSharedInstance('migrations', $config, $db);
         }
 
-        $config = $config ?? config('Migrations');
+        $config ??= config('Migrations');
 
         return new MigrationRunner($config, $db);
     }
@@ -389,7 +389,7 @@ class Services extends BaseService
             return static::getSharedInstance('negotiator', $request);
         }
 
-        $request = $request ?? AppServices::request();
+        $request ??= AppServices::request();
 
         return new Negotiate($request);
     }
@@ -405,8 +405,8 @@ class Services extends BaseService
             return static::getSharedInstance('pager', $config, $view);
         }
 
-        $config = $config ?? config('Pager');
-        $view   = $view ?? AppServices::renderer();
+        $config ??= config('Pager');
+        $view ??= AppServices::renderer();
 
         return new Pager($config, $view);
     }
@@ -423,7 +423,7 @@ class Services extends BaseService
         }
 
         $viewPath = $viewPath ?: config('Paths')->viewDirectory;
-        $config   = $config ?? config('View');
+        $config ??= config('View');
 
         return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -442,7 +442,7 @@ class Services extends BaseService
         }
 
         $viewPath = $viewPath ?: config('Paths')->viewDirectory;
-        $config   = $config ?? config('View');
+        $config ??= config('View');
 
         return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -458,7 +458,7 @@ class Services extends BaseService
             return static::getSharedInstance('request', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         return new IncomingRequest(
             $config,
@@ -479,7 +479,7 @@ class Services extends BaseService
             return static::getSharedInstance('response', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         return new Response($config);
     }
@@ -495,7 +495,7 @@ class Services extends BaseService
             return static::getSharedInstance('redirectresponse', $config);
         }
 
-        $config   = $config ?? config('App');
+        $config ??= config('App');
         $response = new RedirectResponse($config);
         $response->setProtocolVersion(AppServices::request()->getProtocolVersion());
 
@@ -529,8 +529,8 @@ class Services extends BaseService
             return static::getSharedInstance('router', $routes, $request);
         }
 
-        $routes  = $routes ?? AppServices::routes();
-        $request = $request ?? AppServices::request();
+        $routes ??= AppServices::routes();
+        $request ??= AppServices::request();
 
         return new Router($routes, $request);
     }
@@ -547,7 +547,7 @@ class Services extends BaseService
             return static::getSharedInstance('security', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         return new Security($config);
     }
@@ -563,7 +563,7 @@ class Services extends BaseService
             return static::getSharedInstance('session', $config);
         }
 
-        $config = $config ?? config('App');
+        $config ??= config('App');
         $logger = AppServices::logger();
 
         $driverName = $config->sessionDriver;
@@ -621,7 +621,7 @@ class Services extends BaseService
             return static::getSharedInstance('toolbar', $config);
         }
 
-        $config = $config ?? config('Toolbar');
+        $config ??= config('Toolbar');
 
         return new Toolbar($config);
     }
@@ -653,7 +653,7 @@ class Services extends BaseService
             return static::getSharedInstance('validation', $config);
         }
 
-        $config = $config ?? config('Validation');
+        $config ??= config('Validation');
 
         return new Validation($config, AppServices::renderer());
     }

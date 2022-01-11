@@ -208,10 +208,8 @@ class Database extends BaseCollector
     {
         $this->getConnections();
 
-        $queryCount  = count(static::$queries);
-        $uniqueCount = count(array_filter(static::$queries, static function ($query) {
-            return $query['duplicate'] === false;
-        }));
+        $queryCount      = count(static::$queries);
+        $uniqueCount     = count(array_filter(static::$queries, static fn ($query) => $query['duplicate'] === false));
         $connectionCount = count($this->connections);
 
         return sprintf(

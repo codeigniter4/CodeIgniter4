@@ -13,6 +13,7 @@ on:
   pull_request:
     branches:
       - develop
+      - 'v4.*'
     paths:
       - composer.json
       - spark
@@ -29,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4', '8.0', '8.1']
+        php-versions: ['7.4', '8.0', '8.1']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
         mysql-versions: ['5.7']
         include:

@@ -382,9 +382,7 @@ class Builder extends BaseBuilder
         }
 
         // Get the unique field names
-        $escKeyFields = array_map(function (string $field): string {
-            return $this->db->protectIdentifiers($field);
-        }, array_values(array_unique($keyFields)));
+        $escKeyFields = array_map(fn (string $field): string => $this->db->protectIdentifiers($field), array_values(array_unique($keyFields)));
 
         // Get the binds
         $binds = $this->binds;

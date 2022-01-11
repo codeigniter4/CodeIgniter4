@@ -352,11 +352,11 @@ class Exceptions
             return $bytes . 'B';
         }
 
-        if ($bytes < 1048576) {
+        if ($bytes < 1_048_576) {
             return round($bytes / 1024, 2) . 'KB';
         }
 
-        return round($bytes / 1048576, 2) . 'MB';
+        return round($bytes / 1_048_576, 2) . 'MB';
     }
 
     /**

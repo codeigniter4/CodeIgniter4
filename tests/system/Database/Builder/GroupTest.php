@@ -86,9 +86,7 @@ final class GroupTest extends CIUnitTestCase
 
         $builder->select('name')->groupBy('name');
 
-        $builder->havingIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
+        $builder->havingIn('id', static fn (BaseBuilder $builder) => $builder->select('user_id')->from('users_jobs')->where('group_id', 3));
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
@@ -115,12 +113,8 @@ final class GroupTest extends CIUnitTestCase
 
         $builder->select('name')->groupBy('name');
 
-        $builder->havingIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        $builder->orHavingIn('group_id', static function (BaseBuilder $builder) {
-            return $builder->select('group_id')->from('groups')->where('group_id', 6);
-        });
+        $builder->havingIn('id', static fn (BaseBuilder $builder) => $builder->select('user_id')->from('users_jobs')->where('group_id', 3));
+        $builder->orHavingIn('group_id', static fn (BaseBuilder $builder) => $builder->select('group_id')->from('groups')->where('group_id', 6));
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 
@@ -146,9 +140,7 @@ final class GroupTest extends CIUnitTestCase
 
         $builder->select('name')->groupBy('name');
 
-        $builder->havingNotIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
+        $builder->havingNotIn('id', static fn (BaseBuilder $builder) => $builder->select('user_id')->from('users_jobs')->where('group_id', 3));
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)';
 
@@ -175,12 +167,8 @@ final class GroupTest extends CIUnitTestCase
 
         $builder->select('name')->groupBy('name');
 
-        $builder->havingNotIn('id', static function (BaseBuilder $builder) {
-            return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-        });
-        $builder->orHavingNotIn('group_id', static function (BaseBuilder $builder) {
-            return $builder->select('group_id')->from('groups')->where('group_id', 6);
-        });
+        $builder->havingNotIn('id', static fn (BaseBuilder $builder) => $builder->select('user_id')->from('users_jobs')->where('group_id', 3));
+        $builder->orHavingNotIn('group_id', static fn (BaseBuilder $builder) => $builder->select('group_id')->from('groups')->where('group_id', 6));
 
         $expectedSQL = 'SELECT "name" FROM "user" GROUP BY "name" HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3) OR "group_id" NOT IN (SELECT "group_id" FROM "groups" WHERE "group_id" = 6)';
 

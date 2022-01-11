@@ -58,7 +58,7 @@ final class FiltersTest extends CIUnitTestCase
 
     private function createFilters(FiltersConfig $config, $request = null): Filters
     {
-        $request = $request ?? Services::request();
+        $request ??= Services::request();
 
         return new Filters($config, $request, $this->response);
     }

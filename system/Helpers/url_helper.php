@@ -30,7 +30,7 @@ if (! function_exists('_get_uri')) {
      */
     function _get_uri(string $relativePath = '', ?App $config = null): URI
     {
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         if ($config->baseURL === '') {
             throw new InvalidArgumentException('_get_uri() requires a valid baseURL.');
@@ -119,8 +119,8 @@ if (! function_exists('current_url')) {
      */
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
-        $request = $request ?? Services::request();
-        $path    = $request->getPath();
+        $request ??= Services::request();
+        $path = $request->getPath();
 
         // Append queries and fragments
         if ($query = $request->getUri()->getQuery()) {
@@ -152,7 +152,7 @@ if (! function_exists('previous_url')) {
         // Otherwise, grab a sanitized version from $_SERVER.
         $referer = $_SESSION['_ci_previous_url'] ?? Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
-        $referer = $referer ?? site_url('/');
+        $referer ??= site_url('/');
 
         return $returnObject ? new URI($referer) : $referer;
     }

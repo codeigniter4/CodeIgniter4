@@ -70,7 +70,7 @@ class Entity implements JsonSerializable
      *
      * @var array<string, string>
      */
-    private $defaultCastHandlers = [
+    private array $defaultCastHandlers = [
         'array'     => ArrayCast::class,
         'bool'      => BooleanCast::class,
         'boolean'   => BooleanCast::class,
@@ -105,10 +105,8 @@ class Entity implements JsonSerializable
 
     /**
      * Holds info whenever properties have to be casted
-     *
-     * @var bool
      */
-    private $_cast = true;
+    private bool $_cast = true;
 
     /**
      * Allows filling in Entity parameters during construction.
@@ -155,13 +153,11 @@ class Entity implements JsonSerializable
     {
         $this->_cast = $cast;
 
-        $keys = array_filter(array_keys($this->attributes), static function ($key) {
-            return strpos($key, '_') !== 0;
-        });
+        $keys = array_filter(array_keys($this->attributes), static fn ($key) => strpos($key, '_') !== 0);
 
         if (is_array($this->datamap)) {
             $keys = array_unique(
-                array_merge(array_diff($keys, $this->datamap), array_keys($this->datamap))
+                [...array_diff($keys, $this->datamap), ...array_keys($this->datamap)]
             );
         }
 

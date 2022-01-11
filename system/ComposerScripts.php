@@ -30,10 +30,8 @@ final class ComposerScripts
 {
     /**
      * Path to the ThirdParty directory.
-     *
-     * @var string
      */
-    private static $path = __DIR__ . '/ThirdParty/';
+    private static string $path = __DIR__ . '/ThirdParty/';
 
     /**
      * Direct dependencies of CodeIgniter to copy
@@ -41,7 +39,7 @@ final class ComposerScripts
      *
      * @var array<string, array<string, string>>
      */
-    private static $dependencies = [
+    private static array $dependencies = [
         'kint-src' => [
             'license' => __DIR__ . '/../vendor/kint-php/kint/LICENSE',
             'from'    => __DIR__ . '/../vendor/kint-php/kint/src/',

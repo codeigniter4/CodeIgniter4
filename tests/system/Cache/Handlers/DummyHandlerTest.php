@@ -18,7 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class DummyHandlerTest extends CIUnitTestCase
 {
-    private $handler;
+    private DummyHandler $handler;
 
     protected function setUp(): void
     {
@@ -38,9 +38,7 @@ final class DummyHandlerTest extends CIUnitTestCase
 
     public function testRemember()
     {
-        $dummyHandler = $this->handler->remember('key', 2, static function () {
-            return 'value';
-        });
+        $dummyHandler = $this->handler->remember('key', 2, static fn () => 'value');
 
         $this->assertNull($dummyHandler);
     }

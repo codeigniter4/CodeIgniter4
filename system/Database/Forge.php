@@ -804,9 +804,7 @@ class Forge
                 $fields = explode(',', $fields);
             }
 
-            $fields = array_map(function ($field) {
-                return 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field));
-            }, $fields);
+            $fields = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $fields);
 
             return $sql . implode(', ', $fields);
         }

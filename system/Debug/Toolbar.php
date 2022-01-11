@@ -348,14 +348,14 @@ class Toolbar
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         /**
-         * @var IncomingRequest $request
-         * @var Response        $response
+         * @var IncomingRequest|null $request
+         * @var Response|null        $response
          */
         if (CI_DEBUG && ! is_cli()) {
             global $app;
 
-            $request  = $request ?? Services::request();
-            $response = $response ?? Services::response();
+            $request ??= Services::request();
+            $response ??= Services::response();
 
             // Disable the toolbar for downloads
             if ($response instanceof DownloadResponse) {

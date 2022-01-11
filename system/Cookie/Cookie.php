@@ -95,7 +95,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @var array<string, mixed>
      */
-    private static $defaults = [
+    private static array $defaults = [
         'prefix'   => '',
         'expires'  => 0,
         'path'     => '/',
@@ -110,12 +110,10 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * A cookie name can be any US-ASCII characters, except control characters,
      * spaces, tabs, or separator characters.
      *
-     * @var string
-     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */
-    private static $reservedCharsList = "=,; \t\r\n\v\f()<>@:\\\"/[]?{}";
+    private static string $reservedCharsList = "=,; \t\r\n\v\f()<>@:\\\"/[]?{}";
 
     /**
      * Set the default attributes to a Cookie instance by injecting
@@ -491,7 +489,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function withDomain(?string $domain)
     {
-        $domain = $domain ?? self::$defaults['domain'];
+        $domain ??= self::$defaults['domain'];
         $this->validatePrefix($this->prefix, $this->secure, $this->path, $domain);
 
         $cookie = clone $this;

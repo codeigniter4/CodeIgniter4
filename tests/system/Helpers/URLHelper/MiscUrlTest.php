@@ -25,10 +25,7 @@ use Config\App;
  */
 final class MiscUrlTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
+    private App $config;
 
     public static function setUpBeforeClass(): void
     {

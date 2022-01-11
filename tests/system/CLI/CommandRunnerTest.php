@@ -26,15 +26,8 @@ final class CommandRunnerTest extends CIUnitTestCase
      */
     private $streamFilter;
 
-    /**
-     * @var Logger
-     */
-    private static $logger;
-
-    /**
-     * @var CommandRunner
-     */
-    private static $runner;
+    private static Logger $logger;
+    private static CommandRunner $runner;
 
     public static function setUpBeforeClass(): void
     {

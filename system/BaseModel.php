@@ -293,9 +293,9 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation $validation
+         * @var Validation|null $validation
          */
-        $validation       = $validation ?? Services::validation(null, false);
+        $validation ??= Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();

@@ -167,7 +167,7 @@ class View implements RendererInterface
         // Store the results here so even if
         // multiple views are called in a view, it won't
         // clean it unless we mean it to.
-        $saveData                    = $saveData ?? $this->saveData;
+        $saveData ??= $this->saveData;
         $fileExt                     = pathinfo($view, PATHINFO_EXTENSION);
         $realPath                    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
         $this->renderVars['view']    = $realPath;
@@ -271,8 +271,8 @@ class View implements RendererInterface
      */
     public function renderString(string $view, ?array $options = null, ?bool $saveData = null): string
     {
-        $start    = microtime(true);
-        $saveData = $saveData ?? $this->saveData;
+        $start = microtime(true);
+        $saveData ??= $this->saveData;
         $this->prepareTemplateData($saveData);
 
         $output = (function (string $view): string {
@@ -309,7 +309,7 @@ class View implements RendererInterface
             $data = \esc($data, $context);
         }
 
-        $this->tempData = $this->tempData ?? $this->data;
+        $this->tempData ??= $this->data;
         $this->tempData = array_merge($this->tempData, $data);
 
         return $this;
@@ -328,7 +328,7 @@ class View implements RendererInterface
             $value = esc($value, $context);
         }
 
-        $this->tempData        = $this->tempData ?? $this->data;
+        $this->tempData ??= $this->data;
         $this->tempData[$name] = $value;
 
         return $this;
@@ -449,7 +449,7 @@ class View implements RendererInterface
 
     protected function prepareTemplateData(bool $saveData): void
     {
-        $this->tempData = $this->tempData ?? $this->data;
+        $this->tempData ??= $this->data;
 
         if ($saveData) {
             $this->data = $this->tempData;
