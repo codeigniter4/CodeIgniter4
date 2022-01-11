@@ -802,4 +802,60 @@ class Model extends BaseModel
 
         return $properties;
     }
+
+    /**
+     * Compiles an insert query and returns the sql
+     *
+     * @throws DatabaseException
+     *
+     * @return bool|string
+     */
+    public function getCompiledInsert(bool $reset = true)
+    {
+        $builder = $this->builder();
+
+        if (empty($this->tempData['data'])) {
+            return $builder->getCompiledInsert($reset);
+        }
+
+        $data   = $this->tempData['data'];
+        $escape = $this->tempData['escape'];
+
+        if ($reset) {
+            $this->tempData = [];
+        }
+
+        foreach ($data as $key => $value) {
+            $builder->set($key, $value, $escape[$key]);
+        }
+
+        return $builder->getCompiledInsert($reset);
+    }
+
+    /**
+     * Compiles an update query and returns the sql
+     *
+     * @return bool|string
+     */
+    public function getCompiledUpdate(bool $reset = true)
+    {
+        $builder = $this->builder();
+
+        if (empty($this->tempData['data'])) {
+            return $builder->getCompiledUpdate($reset);
+        }
+
+        $data   = $this->tempData['data'];
+        $escape = $this->tempData['escape'];
+
+        if ($reset) {
+            $this->tempData = [];
+        }
+
+        foreach ($data as $key => $value) {
+            $builder->set($key, $value, $escape[$key]);
+        }
+
+        return $builder->getCompiledUpdate($reset);
+    }
 }
