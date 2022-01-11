@@ -89,6 +89,17 @@ class Model extends BaseModel
      */
     protected $escape = [];
 
+    /**
+     * Builder method names that are not used in the Model.
+     *
+     * @var string[] method name
+     */
+    private array $builderMethodsNotAvailable = [
+        'getCompiledInsert',
+        'getCompiledSelect',
+        'getCompiledUpdate',
+    ];
+
     public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
     {
         /**
@@ -725,6 +736,8 @@ class Model extends BaseModel
         if (method_exists($this->db, $name)) {
             $result = $this->db->{$name}(...$params);
         } elseif (method_exists($builder, $name)) {
+            $this->checkBuilderMethod($name);
+
             $result = $builder->{$name}(...$params);
         } else {
             throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
@@ -735,6 +748,13 @@ class Model extends BaseModel
         }
 
         return $result;
+    }
+
+    private function checkBuilderMethod(string $name): void
+    {
+        if (in_array($name, $this->builderMethodsNotAvailable, true)) {
+            throw ModelException::forMethodNotAvailable(static::class, $name . '()');
+        }
     }
 
     /**
