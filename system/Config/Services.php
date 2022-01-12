@@ -166,7 +166,7 @@ class Services extends BaseService
             return static::getSharedInstance('csp', $config);
         }
 
-        $config = $config ?? config('ContentSecurityPolicy');
+        $config ??= config('ContentSecurityPolicy');
 
         return new ContentSecurityPolicy($config);
     }
