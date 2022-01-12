@@ -50,7 +50,7 @@ Problems with it can be raised on our forum, or as issues in the main repository
 
 ## Server Requirements
 
-PHP version 7.3 or higher is required, with the following extensions installed:
+PHP version 7.4 or higher is required, with the following extensions installed:
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
