@@ -90,7 +90,7 @@ class Model extends BaseModel
     protected $escape = [];
 
     /**
-     * Builder method names that are not used in the Model.
+     * Builder method names that should not be used in the Model.
      *
      * @var string[] method name
      */
@@ -750,6 +750,9 @@ class Model extends BaseModel
         return $result;
     }
 
+    /**
+     * Checks the Builder method name that should not be used in the Model.
+     */
     private function checkBuilderMethod(string $name): void
     {
         if (in_array($name, $this->builderMethodsNotAvailable, true)) {
