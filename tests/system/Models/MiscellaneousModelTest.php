@@ -12,6 +12,7 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\I18n\Time;
 use InvalidArgumentException;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
@@ -50,8 +51,11 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
         $this->assertTrue($this->model->save($entity));
 
-        $result = $this->model->where('name', 'Senior Developer')->get()->getFirstRow();
-        $this->assertSame(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
+        $result = $this->model->where('name', 'Senior Developer')->first();
+        $this->assertSame(
+            Time::createFromTimestamp($time)->toDateTimeString(),
+            $result->created_at->toDateTimeString()
+        );
     }
 
     /**
