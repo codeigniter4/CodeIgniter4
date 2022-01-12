@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\ContentSecurityPolicy as CSPConfig;
 
 /**
  * Test the CSP policy directive creation.
@@ -27,7 +28,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)
     {
-        $config             = new App();
+        $this->resetServices();
+
+        $config             = config('App');
         $config->CSPEnabled = $CSPEnabled;
         $this->response     = new Response($config);
         $this->response->pretend(false);
@@ -463,6 +466,54 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce-', $result);
     }
 
+    public function testBodyScriptNonceCustomScriptTag()
+    {
+        $config                 = new CSPConfig();
+        $config->scriptNonceTag = '{custom-script-nonce-tag}';
+        $csp                    = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {custom-script-nonce-tag} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('nonce=', $response->getBody());
+    }
+
+    public function testBodyScriptNonceDisableAutoNonce()
+    {
+        $config            = new CSPConfig();
+        $config->autoNonce = false;
+        $csp               = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {csp-script-nonce} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('{csp-script-nonce}', $response->getBody());
+    }
+
+    public function testBodyStyleNonceDisableAutoNonce()
+    {
+        $config            = new CSPConfig();
+        $config->autoNonce = false;
+        $csp               = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {csp-style-nonce} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('{csp-style-nonce}', $response->getBody());
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -479,6 +530,22 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->assertStringContainsString('nonce=', $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('nonce-', $result);
+    }
+
+    public function testBodyStyleNonceCustomStyleTag()
+    {
+        $config                = new CSPConfig();
+        $config->styleNonceTag = '{custom-style-nonce-tag}';
+        $csp                   = new ContentSecurityPolicy($config);
+
+        $response = new Response(new App());
+        $response->pretend(true);
+        $body = 'Blah blah {custom-style-nonce-tag} blah blah';
+        $response->setBody($body);
+
+        $csp->finalize($response);
+
+        $this->assertStringContainsString('nonce=', $response->getBody());
     }
 
     /**
@@ -518,5 +585,38 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->response->CSP->addStyleSrc('https://example.com');
 
         $this->assertHeaderNotEmitted('content-security-policy', true);
+    }
+
+    public function testGetScriptNonce()
+    {
+        $this->prepare();
+
+        $nonce = $this->csp->getScriptNonce();
+
+        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
+    }
+
+    public function testGetStyleNonce()
+    {
+        $this->prepare();
+
+        $nonce = $this->csp->getStyleNonce();
+
+        $this->assertMatchesRegularExpression('/\A[0-9a-z]{24}\z/', $nonce);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled()
+    {
+        $this->prepare();
+
+        $this->csp->getScriptNonce();
+        $this->work();
+
+        $result = $this->getHeaderEmitted('Content-Security-Policy');
+        $this->assertStringContainsString("script-src 'self' 'nonce-", $result);
     }
 }

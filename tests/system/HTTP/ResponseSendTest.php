@@ -79,7 +79,10 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     public function testHeadersWithCSP()
     {
-        $config             = new App();
+        $this->resetFactories();
+        $this->resetServices();
+
+        $config             = config('App');
         $config->CSPEnabled = true;
         $response           = new Response($config);
         $response->pretend(false);

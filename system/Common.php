@@ -288,6 +288,38 @@ if (! function_exists('csrf_meta')) {
     }
 }
 
+if (! function_exists('csp_style_nonce')) {
+    /**
+     * Generates a nonce attribute for style tag.
+     */
+    function csp_style_nonce(): string
+    {
+        $csp = Services::csp();
+
+        if (! $csp->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $csp->getStyleNonce() . '"';
+    }
+}
+
+if (! function_exists('csp_script_nonce')) {
+    /**
+     * Generates a nonce attribute for script tag.
+     */
+    function csp_script_nonce(): string
+    {
+        $csp = Services::csp();
+
+        if (! $csp->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $csp->getScriptNonce() . '"';
+    }
+}
+
 if (! function_exists('db_connect')) {
     /**
      * Grabs a database connection and returns it to the user.

@@ -76,6 +76,8 @@ class View extends BaseConfig
      * @var array
      */
     protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
         'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
         'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
         'mailto'            => '\CodeIgniter\View\Plugins::mailto',

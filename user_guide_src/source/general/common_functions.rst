@@ -217,6 +217,22 @@ Miscellaneous Functions
 
     Returns the timezone the application has been set to display dates in.
 
+.. php:function:: csp_script_nonce ()
+
+    :returns: The CSP nonce attribute for script tag.
+    :rtype: string
+
+    Returns the nonce attribute for a script tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
+    See :ref:`content-security-policy`.
+
+.. php:function:: csp_style_nonce ()
+
+    :returns: The CSP nonce attribute for style tag.
+    :rtype: string
+
+    Returns the nonce attribute for a style tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
+    See :ref:`content-security-policy`.
+
 .. php:function:: csrf_token ()
 
     :returns: The name of the current CSRF token.

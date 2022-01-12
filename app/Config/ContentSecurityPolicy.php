@@ -164,4 +164,25 @@ class ContentSecurityPolicy extends BaseConfig
      * @var string|string[]|null
      */
     public $sandbox;
+
+    /**
+     * Nonce tag for style
+     *
+     * @var string
+     */
+    public $styleNonceTag = '{csp-style-nonce}';
+
+    /**
+     * Nonce tag for script
+     *
+     * @var string
+     */
+    public $scriptNonceTag = '{csp-script-nonce}';
+
+    /**
+     * Replace nonce tag automatically
+     *
+     * @var bool
+     */
+    public $autoNonce = true;
 }

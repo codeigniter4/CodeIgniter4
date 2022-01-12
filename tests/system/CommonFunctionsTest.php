@@ -519,19 +519,19 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testDWithCSP()
     {
+        $this->resetServices();
+
         /** @var App $config */
-        $config       = config(App::class);
-        $CSPEnabled   = $config->CSPEnabled;
+        $config       = config('App');
         $cliDetection = Kint::$cli_detection;
 
         $config->CSPEnabled  = true;
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<script {csp-script-nonce} class="kint-rich-script">/u');
+        $this->expectOutputRegex('/<script nonce="[0-9a-z]{24}" class="kint-rich-script">/u');
         d('string');
 
         // Restore settings
-        $config->CSPEnabled  = $CSPEnabled;
         Kint::$cli_detection = $cliDetection;
     }
 
@@ -541,12 +541,34 @@ final class CommonFunctionsTest extends CIUnitTestCase
      */
     public function testTraceWithCSP()
     {
+        $this->resetServices();
+
         /** @var App $config */
-        $config              = config(App::class);
+        $config              = config('App');
         $config->CSPEnabled  = true;
         Kint::$cli_detection = false;
 
-        $this->expectOutputRegex('/<style {csp-style-nonce} class="kint-rich-style">/u');
+        $this->expectOutputRegex('/<style nonce="[0-9a-z]{24}" class="kint-rich-style">/u');
         trace();
+    }
+
+    public function testCspStyleNonce()
+    {
+        $this->resetServices();
+
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $this->assertStringStartsWith('nonce="', csp_style_nonce());
+    }
+
+    public function testCspScriptNonce()
+    {
+        $this->resetServices();
+
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $this->assertStringStartsWith('nonce="', csp_script_nonce());
     }
 }
