@@ -626,6 +626,36 @@ libraries like Twig.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="csp_script_nonce">
+<code class="sig-name descname">csp_script_nonce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_script_nonce" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The CSP nonce attribute for script tag.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+<p>Returns the nonce attribute for a script tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
+See <a class="reference internal" href="../outgoing/response.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="csp_style_nonce">
+<code class="sig-name descname">csp_style_nonce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_style_nonce" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The CSP nonce attribute for style tag.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+<p>Returns the nonce attribute for a style tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
+See <a class="reference internal" href="../outgoing/response.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a>.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="csrf_token">
 <code class="sig-name descname">csrf_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_token" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -1068,7 +1098,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 10, 2022.
+      <span class="lastupdated">Last updated on Jan 12, 2022.
       </span></p>
   </div>
 
