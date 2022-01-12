@@ -531,6 +531,11 @@ class BaseBuilder
                 $this->from(explode(',', $table));
             } else {
                 $table = trim($table);
+
+                if ($table === '') {
+                    continue;
+                }
+
                 $this->trackAliases($table);
                 $this->QBFrom[] = $this->db->protectIdentifiers($table, true, null, false);
             }

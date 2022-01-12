@@ -859,7 +859,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function newQuery(): BaseBuilder
     {
-        return $this->table(uniqid())->from([], true);
+        return $this->table(',')->from([], true);
     }
 
     /**
