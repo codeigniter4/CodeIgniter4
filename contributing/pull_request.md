@@ -119,7 +119,7 @@ See [Contribution CSS](./css.md).
 
 ### Compatibility
 
-CodeIgniter4 requires [PHP 7.3](https://php.net/releases/7_3_0.php).
+CodeIgniter4 requires [PHP 7.4](https://php.net/releases/7_4_0.php).
 
 ### Backwards Compatibility
 
