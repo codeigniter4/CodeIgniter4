@@ -209,7 +209,7 @@ Config for Validation
 Traditional and Strict Rules
 ============================
 
-CI4 has two kind of Validation rule classes.
+CI4 has two kinds of Validation rule classes.
 The default rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
 and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
 
