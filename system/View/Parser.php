@@ -12,6 +12,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
+use CodeIgniter\View\Traits\DecoratesViews;
 use Config\View as ViewConfig;
 use ParseError;
 use Psr\Log\LoggerInterface;
@@ -21,6 +22,8 @@ use Psr\Log\LoggerInterface;
  */
 class Parser extends View
 {
+    use DecoratesViews;
+
     /**
      * Left delimiter character for pseudo vars
      *
@@ -124,6 +127,9 @@ class Parser extends View
         if ($saveData) {
             $this->data = $this->tempData;
         }
+
+        $output = $this->decorateOutput($output);
+
         // Should we cache?
         if (isset($options['cache'])) {
             cache()->save($cacheName, $output, (int) $options['cache']);

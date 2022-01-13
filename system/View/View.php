@@ -14,6 +14,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\View\Exceptions\ViewException;
+use CodeIgniter\View\Traits\DecoratesViews;
 use Config\Services;
 use Config\Toolbar;
 use Config\View as ViewConfig;
@@ -25,6 +26,8 @@ use RuntimeException;
  */
 class View implements RendererInterface
 {
+    use DecoratesViews;
+
     /**
      * Data that is made available to the Views.
      *
@@ -134,6 +137,17 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
+    /**
+     * View Decorators are class methods that will be run in sequence to
+     * have a chance to alter the generated output just prior to caching
+     * the results.
+     *
+     * All classes must implement CodeIgniter\View\ViewDecorator
+     *
+     * @var array
+     */
+    public $decorators = [];
+
     public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         $this->config   = $config;
@@ -227,6 +241,8 @@ class View implements RendererInterface
             // Get back current vars
             $this->renderVars = $renderVars;
         }
+
+        $output = $this->decorateOutput($output);
 
         $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
