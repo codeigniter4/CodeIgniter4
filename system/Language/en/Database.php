@@ -27,5 +27,5 @@ return [
     'fieldNotExists'                   => 'Field `{0}` not found.',
     'forEmptyInputGiven'               => 'Empty statement is given for the field `{0}`',
     'forFindColumnHaveMultipleColumns' => 'Only single column allowed in Column name.',
-    'methodNotAvailable'               => 'You cannot use `{1}` in `{0}`. The CodeIgniter\Model is not the Query Builder.',
+    'methodNotAvailable'               => 'You cannot use `{1}` in `{0}`. This is a method of the `Query Builder` class.',
 ];
