@@ -228,7 +228,7 @@ The **Strict Rules** don't use implicit type conversion.
 Using Strict Rules
 ------------------
 
-If you want to use this, you need to change the rule classes in **app/Config/Validation.php**::
+If you want to use these rules, you need to change the rule classes in **app/Config/Validation.php**::
 
         public $ruleSets = [
             \CodeIgniter\Validation\StrictRules\CreditCardRules::class,
