@@ -155,3 +155,7 @@ Upgrading Libraries
 
 .. note::
     More upgrade guides coming soon
+    
+.. note::
+    To get a much faster and easier way to upgrade your CI3 project to CI4, you can check out the `CI-Upgrader <https://github.com/FlorianNelles/CI-Upgrader>`_.
+    This tool is able to run the CI4 installation, copy the most important files and directories from your old CI3 project to the new one and also to transfer most of the Code into CI4 syntax.
