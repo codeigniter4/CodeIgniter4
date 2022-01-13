@@ -21,12 +21,8 @@ use Tests\Support\Validation\TestRules;
  */
 final class FileRulesTest extends CIUnitTestCase
 {
-    /**
-     * @var Validation
-     */
-    private $validation;
-
-    private $config = [
+    private Validation $validation;
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -63,7 +59,7 @@ final class FileRulesTest extends CIUnitTestCase
             'bigfile' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 'name'     => 'my-big-file.png',
-                'size'     => 1024000,
+                'size'     => 1_024_000,
                 'type'     => 'image/png',
                 'error'    => UPLOAD_ERR_OK,
                 'width'    => 640,
@@ -89,7 +85,7 @@ final class FileRulesTest extends CIUnitTestCase
                 ],
                 'size' => [
                     4614,
-                    1024000,
+                    1_024_000,
                 ],
                 'type' => [
                     'image/png',
@@ -119,7 +115,7 @@ final class FileRulesTest extends CIUnitTestCase
                 ],
                 'size' => [
                     4614,
-                    1024000,
+                    1_024_000,
                 ],
                 'type' => [
                     'image/png',

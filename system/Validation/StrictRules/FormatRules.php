@@ -20,10 +20,7 @@ use CodeIgniter\Validation\FormatRules as NonStrictFormatRules;
  */
 class FormatRules
 {
-    /**
-     * @var NonStrictFormatRules
-     */
-    private $nonStrictFormatRules;
+    private NonStrictFormatRules $nonStrictFormatRules;
 
     public function __construct()
     {

@@ -21,10 +21,7 @@ use Config\Database;
  */
 class Rules
 {
-    /**
-     * @var NonStrictRules
-     */
-    private $nonStrictRules;
+    private NonStrictRules $nonStrictRules;
 
     public function __construct()
     {
