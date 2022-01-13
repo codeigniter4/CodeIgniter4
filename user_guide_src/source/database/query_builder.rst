@@ -210,6 +210,28 @@ Permits you to write the FROM portion of your query::
     in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
     to the FROM portion of your query.
 
+**$builder->fromSubquery()**
+
+Permits you to write part of a FROM query as a subquery.
+
+This is where we add a subquery to an existing table.::
+
+    $subquery = $db->table('users');
+    $builder  = $db->table('jobs')->fromSubquery($subquery, 'alias');
+    $query = $builder->get();
+
+    // Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS alias
+
+Use the ``$db->newQuery()`` method to make a subquery the main table.::
+
+    $subquery = $db->table('users')->select('id, name');
+    $builder  = $db->newQuery()->fromSubquery($subquery, 't');
+    $query = $builder->get();
+
+    // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
+
+.. note:: Only one subquery can be passed to a method.
+
 **$builder->join()**
 
 Permits you to write the JOIN portion of your query::
@@ -1400,6 +1422,15 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Specifies the ``FROM`` clause of a query.
+
+    .. php:method:: fromSubquery($from, $alias)
+
+        :param BaseBuilder $from: Instance of the BaseBuilder class
+        :param string      $alias: Subquery alias
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Specifies the ``FROM`` clause of a query using a subquery.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 

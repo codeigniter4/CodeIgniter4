@@ -519,31 +519,43 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function from($from, bool $overwrite = false)
+    public function from($from, bool $overwrite = false): self
     {
         if ($overwrite === true) {
             $this->QBFrom = [];
             $this->db->setAliasedTables([]);
         }
 
-        foreach ((array) $from as $val) {
-            if (strpos($val, ',') !== false) {
-                foreach (explode(',', $val) as $v) {
-                    $v = trim($v);
-                    $this->trackAliases($v);
-
-                    $this->QBFrom[] = $this->db->protectIdentifiers($v, true, null, false);
-                }
+        foreach ((array) $from as $table) {
+            if (strpos($table, ',') !== false) {
+                $this->from(explode(',', $table));
             } else {
-                $val = trim($val);
+                $table = trim($table);
 
-                // Extract any aliases that might exist. We use this information
-                // in the protectIdentifiers to know whether to add a table prefix
-                $this->trackAliases($val);
+                if ($table === '') {
+                    continue;
+                }
 
-                $this->QBFrom[] = $this->db->protectIdentifiers($val, true, null, false);
+                $this->trackAliases($table);
+                $this->QBFrom[] = $this->db->protectIdentifiers($table, true, null, false);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @param BaseBuilder $from  Expected subquery
+     * @param string      $alias Subquery alias
+     *
+     * @return $this
+     */
+    public function fromSubquery(BaseBuilder $from, string $alias): self
+    {
+        $table = $this->buildSubquery($from, true, $alias);
+
+        $this->trackAliases($table);
+        $this->QBFrom[] = $table;
 
         return $this;
     }
@@ -2743,16 +2755,24 @@ class BaseBuilder
     /**
      * @param BaseBuilder|Closure $builder
      * @param bool                $wrapped Wrap the subquery in brackets
+     * @param string              $alias   Subquery alias
      */
-    protected function buildSubquery($builder, bool $wrapped = false): string
+    protected function buildSubquery($builder, bool $wrapped = false, string $alias = ''): string
     {
         if ($builder instanceof Closure) {
-            $instance = (clone $this)->from([], true)->resetQuery();
-            $builder  = $builder($instance);
+            $builder($builder = $this->db->newQuery());
         }
 
         $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
 
-        return $wrapped ? '(' . $subquery . ')' : $subquery;
+        if ($wrapped) {
+            $subquery = '(' . $subquery . ')';
+
+            if ($alias !== '') {
+                $subquery .= " AS {$alias}";
+            }
+        }
+
+        return $subquery;
     }
 }
