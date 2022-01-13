@@ -213,8 +213,8 @@ CI4 has two kinds of Validation rule classes.
 The default rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
 and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
 
-The **Traditional Rules** implicitly assume that string values are validated.
-And the input value may be converted implicitly to a string value.
+The **Traditional Rules** implicitly assume that string values are validated,
+and the input value may be converted implicitly to a string value.
 It works for most basic cases like validating POST data.
 
 However, for example, if you use JSON input data, it may be a type of bool/null/array.
