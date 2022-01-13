@@ -217,9 +217,9 @@ The **Traditional Rules** implicitly assume that string values are validated.
 And the input value may be converted implicitly to a string value.
 It works for most basic cases like validating POST data.
 
-But, for example, if you use JSON input data, it may be type of bool/null/array.
-When you validate the bool ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
-And if you validate it with the ``integer`` rule, ``'1'`` passes the validation.
+However, for example, if you use JSON input data, it may be a type of bool/null/array.
+When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
+If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
 The **Strict Rules** don't use implicit type conversion.
 
