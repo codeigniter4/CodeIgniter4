@@ -317,7 +317,8 @@ class FormatRules
             return false;
         }
 
-        $scheme       = strtolower(parse_url($str, PHP_URL_SCHEME) ?? ''); // absent scheme gives null
+        // parse_url() may return null and false
+        $scheme       = strtolower((string) parse_url($str, PHP_URL_SCHEME));
         $validSchemes = explode(
             ',',
             strtolower($validSchemes ?? 'http,https')

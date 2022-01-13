@@ -9,13 +9,14 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Validation;
+namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
+use CodeIgniter\Validation\Validation;
 use Config\App;
 use Config\Services;
 use Generator;
@@ -115,7 +116,7 @@ final class ValidationTest extends CIUnitTestCase
     {
         yield 'list array' => [
             [1, 2, 3, 4, 5],
-            true,
+            true,   // false in Traditional Rule
         ];
 
         yield 'associative array' => [
@@ -124,7 +125,7 @@ final class ValidationTest extends CIUnitTestCase
                 'role'     => 'administrator',
                 'usepass'  => 0,
             ],
-            true,
+            true,   // false in Traditional Rule
         ];
 
         yield 'int' => [
@@ -167,7 +168,7 @@ final class ValidationTest extends CIUnitTestCase
     {
         yield 'array with int' => [
             [555],
-            false,
+            false,  // true in Traditional Rule
         ];
 
         yield 'empty array' => [
