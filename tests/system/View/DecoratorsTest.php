@@ -99,8 +99,6 @@ final class DecoratorsTest extends CIUnitTestCase
         $config->decorators = [WorldDecorator::class];
         Factories::injectMock('config', 'View', $config);
 
-        $view = new View($this->config, $this->viewsDir, $this->loader);
-
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
         $parser->setVar('teststring', 'Hello World');
 

@@ -11,7 +11,7 @@
 
 namespace Tests\Support\View;
 
-use CodeIgniter\View\Interfaces\ViewDecorator;
+use CodeIgniter\View\ViewDecoratorInterface;
 
 /**
  * Class WorldDecorator
@@ -19,9 +19,9 @@ use CodeIgniter\View\Interfaces\ViewDecorator;
  * This class is only used to provide a reference point
  * during tests to make sure that things work as expected.
  */
-class WorldDecorator implements ViewDecorator
+class WorldDecorator implements ViewDecoratorInterface
 {
-    public function decorate(string $html): string
+    public static function decorate(string $html): string
     {
         $html = str_ireplace('World', 'Galaxy', $html);
 

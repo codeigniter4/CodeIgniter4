@@ -89,6 +89,17 @@ class View extends BaseConfig
     ];
 
     /**
+     * View Decorators are class methods that will be run in sequence to
+     * have a chance to alter the generated output just prior to caching
+     * the results.
+     *
+     * All classes must implement CodeIgniter\View\ViewDecorator
+     *
+     * @var array
+     */
+    public $decorators = [];
+
+    /**
      * Merge the built-in and developer-configured filters and plugins,
      * with preference to the developer ones.
      */

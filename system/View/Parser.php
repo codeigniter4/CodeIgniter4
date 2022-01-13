@@ -12,7 +12,6 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
-use CodeIgniter\View\Traits\DecoratesViews;
 use Config\View as ViewConfig;
 use ParseError;
 use Psr\Log\LoggerInterface;
@@ -22,7 +21,7 @@ use Psr\Log\LoggerInterface;
  */
 class Parser extends View
 {
-    use DecoratesViews;
+    use ViewDecoratorTrait;
 
     /**
      * Left delimiter character for pseudo vars

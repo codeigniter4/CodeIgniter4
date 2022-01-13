@@ -19,7 +19,7 @@ namespace Tests\Support\View;
  */
 class BadDecorator
 {
-    public function decorate(string $html): string
+    public static function decorate(string $html): string
     {
         return $html;
     }
