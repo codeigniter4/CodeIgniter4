@@ -25,4 +25,9 @@ class ModelException extends FrameworkException
     {
         return new static(lang('Database.noDateFormat', [$modelName]));
     }
+
+    public static function forMethodNotAvailable(string $modelName, string $methodName)
+    {
+        return new static(lang('Database.methodNotAvailable', [$modelName, $methodName]));
+    }
 }
