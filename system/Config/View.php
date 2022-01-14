@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\View\ViewDecoratorInterface;
+
 /**
  * View configuration
  */
@@ -95,7 +97,7 @@ class View extends BaseConfig
      *
      * All classes must implement CodeIgniter\View\ViewDecoratorInterface
      *
-     * @var class-string<\CodeIgniter\View\ViewDecoratorInterface>[]
+     * @var class-string<ViewDecoratorInterface>[]
      */
     public $decorators = [];
 

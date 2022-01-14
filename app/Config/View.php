@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\View as BaseView;
+use CodeIgniter\View\ViewDecoratorInterface;
 
 class View extends BaseView
 {
@@ -49,7 +50,7 @@ class View extends BaseView
      *
      * All classes must implement CodeIgniter\View\ViewDecoratorInterface
      *
-     * @var class-string<\CodeIgniter\View\ViewDecoratorInterface>[]
+     * @var class-string<ViewDecoratorInterface>[]
      */
     public $decorators = [];
 }
