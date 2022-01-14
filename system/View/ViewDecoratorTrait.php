@@ -18,7 +18,7 @@ use function config;
 trait ViewDecoratorTrait
 {
     /**
-     * Runs the generated output through and declared
+     * Runs the generated output through any declared
      * view decorators.
      */
     protected function decorateOutput(string $html): string
