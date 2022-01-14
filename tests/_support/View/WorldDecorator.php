@@ -23,8 +23,6 @@ class WorldDecorator implements ViewDecoratorInterface
 {
     public static function decorate(string $html): string
     {
-        $html = str_ireplace('World', 'Galaxy', $html);
-
-        return $html;
+        return str_ireplace('World', 'Galaxy', $html);
     }
 }

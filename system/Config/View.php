@@ -93,9 +93,9 @@ class View extends BaseConfig
      * have a chance to alter the generated output just prior to caching
      * the results.
      *
-     * All classes must implement CodeIgniter\View\ViewDecorator
+     * All classes must implement CodeIgniter\View\ViewDecoratorInterface
      *
-     * @var array
+     * @var class-string<\CodeIgniter\View\ViewDecoratorInterface>[]
      */
     public $decorators = [];
 

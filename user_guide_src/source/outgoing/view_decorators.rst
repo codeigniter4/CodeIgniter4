@@ -19,9 +19,9 @@ the resulting HTML.
 
     namespace App\Views\Decorators;
 
-    use CodeIgniter\Views\Interfaces\ViewDecorator;
+    use CodeIgniter\Views\ViewDecoratorInterface;
 
-    class MyDecorator implements ViewDecorator
+    class MyDecorator implements ViewDecoratorInterface
     {
         public static function decorate(string $html): string
         {

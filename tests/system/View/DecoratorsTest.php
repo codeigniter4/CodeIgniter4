@@ -38,7 +38,7 @@ final class DecoratorsTest extends CIUnitTestCase
 
     public function testNoDecoratorsDoesntAlter()
     {
-        $config = $this->config;
+        $config             = $this->config;
         $config->decorators = [];
         Factories::injectMock('config', 'View', $config);
 
@@ -55,7 +55,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->expectException(ViewException::class);
         $this->expectExceptionMessage(lang('View.invalidDecoratorClass', ['Tests\Support\View\BadDecorator']));
 
-        $config = $this->config;
+        $config             = $this->config;
         $config->decorators = [BadDecorator::class];
         Factories::injectMock('config', 'View', $config);
 
@@ -69,7 +69,7 @@ final class DecoratorsTest extends CIUnitTestCase
 
     public function testDecoratorAltersOutput()
     {
-        $config = $this->config;
+        $config             = $this->config;
         $config->decorators = [WorldDecorator::class];
         Factories::injectMock('config', 'View', $config);
 
@@ -83,7 +83,7 @@ final class DecoratorsTest extends CIUnitTestCase
 
     public function testParserNoDecoratorsDoesntAlter()
     {
-        $config = $this->config;
+        $config             = $this->config;
         $config->decorators = [];
         Factories::injectMock('config', 'View', $config);
 
@@ -95,7 +95,7 @@ final class DecoratorsTest extends CIUnitTestCase
 
     public function testParserDecoratorAltersOutput()
     {
-        $config = $this->config;
+        $config             = $this->config;
         $config->decorators = [WorldDecorator::class];
         Factories::injectMock('config', 'View', $config);
 
