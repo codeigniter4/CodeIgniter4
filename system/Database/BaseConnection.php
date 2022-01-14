@@ -855,6 +855,14 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Returns a new instance of the BaseBuilder class with a cleared FROM clause.
+     */
+    public function newQuery(): BaseBuilder
+    {
+        return $this->table(',')->from([], true);
+    }
+
+    /**
      * Creates a prepared statement with the database that can then
      * be used to execute multiple statements against. Within the
      * closure, you would build the query in any normal way, though
