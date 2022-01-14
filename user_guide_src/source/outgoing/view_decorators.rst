@@ -33,7 +33,7 @@ the resulting HTML.
 
 Once created, the class must be registered in ``app/Config/View.php``::
 
-    public $decorators = [
+    public array $decorators = [
         'App\Views\Decorators\MyDecorator',
     ];
 
