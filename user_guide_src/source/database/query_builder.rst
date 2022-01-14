@@ -230,8 +230,6 @@ Use the ``$db->newQuery()`` method to make a subquery the main table.::
 
     // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
 
-.. note:: Only one subquery can be passed to a method.
-
 **$builder->join()**
 
 Permits you to write the JOIN portion of your query::
