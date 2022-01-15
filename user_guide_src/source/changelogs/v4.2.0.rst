@@ -27,7 +27,7 @@ Enhancements
 - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
-    - You to access Oracle Database. They support SQL and PL/SQL statements.
+    - It can access Oracle Database and supports SQL and PL/SQL statements.
 
 Changes
 *******
