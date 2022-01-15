@@ -99,7 +99,7 @@ class View extends BaseConfig
      *
      * @var class-string<ViewDecoratorInterface>[]
      */
-    public $decorators = [];
+    public array $decorators = [];
 
     /**
      * Merge the built-in and developer-configured filters and plugins,

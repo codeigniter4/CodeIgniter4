@@ -9,8 +9,8 @@ prior to being cached, and allows you to apply custom functionality to your view
 Creating Decorators
 *******************
 
-Implementing your own view decorators requires creating a new class that implements ``CodeIgniter\Views\ViewDecoratorInterface``.
-This requires implementing a single method that takes the generated HTML, performs any modifications on it, and returns
+Creating your own view decorators requires creating a new class that implements ``CodeIgniter\Views\ViewDecoratorInterface``.
+This requires a single method that takes the generated HTML string, performs any modifications on it, and returns
 the resulting HTML.
 
 ::
@@ -33,7 +33,7 @@ the resulting HTML.
 
 Once created, the class must be registered in ``app/Config/View.php``::
 
-    public $decorators = [
+    public array $decorators = [
         'App\Views\Decorators\MyDecorator',
     ];
 
