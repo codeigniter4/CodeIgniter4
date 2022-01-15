@@ -875,7 +875,7 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // going through request
-        $this->assertSame('http://example.com/ci/v4/controller/method', (string) $request->uri);
+        $this->assertSame('http://example.com/ci/v4/controller/method', (string) $request->getUri());
         $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
 
         // standalone

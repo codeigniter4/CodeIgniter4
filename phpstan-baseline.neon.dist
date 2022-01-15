@@ -941,11 +941,6 @@ parameters:
 			path: system/Test/Fabricator.php
 
 		-
-			message: "#^Access to protected property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$uri\\.$#"
-			count: 1
-			path: system/Test/FeatureTestCase.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$bodyFormat \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Test/FeatureTestCase.php
