@@ -568,19 +568,29 @@ will use the <code class="docutils literal notranslate"><span class="pre">setRul
 methods.</p>
 <section id="setrule">
 <h3><a class="toc-backref" href="#id15">setRule()</a><a class="headerlink" href="#setrule" title="Permalink to this headline"></a></h3>
-<p>This method sets a single rule. It takes the name of the field as
-the first parameter, an optional label and a string with a pipe-delimited list of rules
-that should be applied:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>The <strong>field name</strong> must match the key of any data array that is sent in. If
+<p>This method sets a single rule. It has the method signature</p>
+<blockquote>
+<div><p>setRule(string $field, ?string $label, array|string $rules[, array $errors = []])</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> either takes in a pipe-delimited list of rules or an array collection of rules.</p>
+<blockquote>
+<div><p>$validation-&gt;setRule(‘username’, ‘Username’, ‘required|min_length[3]’);
+$validation-&gt;setRule(‘password’, ‘Password’, [‘required’, ‘min_length[8]’, ‘alpha_numeric_punct’]);</p>
+</div></blockquote>
+<p>The value you pass to <code class="docutils literal notranslate"><span class="pre">$field</span></code> must match the key of any data array that is sent in. If
 the data is taken directly from <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, then it must be an exact match for
 the form input name.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Prior to v4.2.0, this method’s third parameter, <code class="docutils literal notranslate"><span class="pre">$rules</span></code>, was typehinted to accept
+<code class="docutils literal notranslate"><span class="pre">string</span></code>. In v4.2.0 and after, the typehint was removed to allow arrays, too. To avoid LSP being
+broken in extending classes overriding this method, the child class’s method should also be modified
+to remove the typehint.</p>
+</div>
 </section>
 <section id="setrules">
 <h3><a class="toc-backref" href="#id16">setRules()</a><a class="headerlink" href="#setrules" title="Permalink to this headline"></a></h3>
-<p>Like, <code class="docutils literal notranslate"><span class="pre">setRule()</span></code>, but accepts an array of field names and their rules:</p>
+<p>Like <code class="docutils literal notranslate"><span class="pre">setRule()</span></code>, but accepts an array of field names and their rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
