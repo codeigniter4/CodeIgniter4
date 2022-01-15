@@ -23,11 +23,12 @@ Enhancements
     - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement
     - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
     - See :ref:`content-security-policy` for details.
-- New View Decorators allow modifying the generated HTML prior to caching. 
+- New View Decorators allow modifying the generated HTML prior to caching.
 
 Changes
 *******
 
+- Update minimal PHP requirement to 7.4.
 - The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.
 
 Deprecations
