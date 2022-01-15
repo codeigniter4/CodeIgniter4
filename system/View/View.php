@@ -25,6 +25,8 @@ use RuntimeException;
  */
 class View implements RendererInterface
 {
+    use ViewDecoratorTrait;
+
     /**
      * Data that is made available to the Views.
      *
@@ -227,6 +229,8 @@ class View implements RendererInterface
             // Get back current vars
             $this->renderVars = $renderVars;
         }
+
+        $output = $this->decorateOutput($output);
 
         $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 

@@ -22,6 +22,7 @@ Enhancements
     - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement
     - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
     - See :ref:`content-security-policy` for details.
+- New View Decorators allow modifying the generated HTML prior to caching. 
 
 Changes
 *******

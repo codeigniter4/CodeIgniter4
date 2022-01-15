@@ -21,6 +21,8 @@ use Psr\Log\LoggerInterface;
  */
 class Parser extends View
 {
+    use ViewDecoratorTrait;
+
     /**
      * Left delimiter character for pseudo vars
      *
@@ -124,6 +126,9 @@ class Parser extends View
         if ($saveData) {
             $this->data = $this->tempData;
         }
+
+        $output = $this->decorateOutput($output);
+
         // Should we cache?
         if (isset($options['cache'])) {
             cache()->save($cacheName, $output, (int) $options['cache']);

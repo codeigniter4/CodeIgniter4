@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\View\ViewDecoratorInterface;
+
 /**
  * View configuration
  */
@@ -87,6 +89,17 @@ class View extends BaseConfig
         'route'             => '\CodeIgniter\View\Plugins::route',
         'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
     ];
+
+    /**
+     * View Decorators are class methods that will be run in sequence to
+     * have a chance to alter the generated output just prior to caching
+     * the results.
+     *
+     * All classes must implement CodeIgniter\View\ViewDecoratorInterface
+     *
+     * @var class-string<ViewDecoratorInterface>[]
+     */
+    public array $decorators = [];
 
     /**
      * Merge the built-in and developer-configured filters and plugins,
