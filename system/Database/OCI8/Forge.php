@@ -93,7 +93,7 @@ class Forge extends \CodeIgniter\Database\Forge
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
         if ($alterType === 'DROP') {
-            $fields = array_map(fn($field) => $this->db->escapeIdentifiers(trim($field)), is_string($field) ? explode(',', $field) : $field);
+            $fields = array_map(fn ($field) => $this->db->escapeIdentifiers(trim($field)), is_string($field) ? explode(',', $field) : $field);
 
             return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
         }
@@ -228,7 +228,7 @@ class Forge extends \CodeIgniter\Database\Forge
                 return;
 
             case 'DOUBLE':
-                $attributes['TYPE']       = 'FLOAT';
+                $attributes['TYPE'] = 'FLOAT';
                 $attributes['CONSTRAINT'] ??= 126;
 
                 return;
@@ -247,7 +247,7 @@ class Forge extends \CodeIgniter\Database\Forge
             case 'TEXT':
             case 'MEDIUMTEXT':
                 $attributes['CONSTRAINT'] ??= 4000;
-                $attributes['TYPE']       = 'VARCHAR2';
+                $attributes['TYPE'] = 'VARCHAR2';
         }
     }
 
