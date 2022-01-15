@@ -39,6 +39,9 @@ Selecting Data
 
 The following functions allow you to build SQL **SELECT** statements.
 
+Get
+===
+
 **$builder->get()**
 
 Runs the selection query and returns the result. Can be used by itself
@@ -106,6 +109,9 @@ function::
     $query = $builder->getWhere(['id' => $id], $limit, $offset);
 
 Please read about the `where` function below for more information.
+
+Select
+======
 
 **$builder->select()**
 
@@ -196,6 +202,9 @@ the resulting field.
     $query = $builder->get();
     // Produces: SELECT COUNT(age) as age FROM mytable
 
+From
+====
+
 **$builder->from()**
 
 Permits you to write the FROM portion of your query::
@@ -209,6 +218,11 @@ Permits you to write the FROM portion of your query::
 .. note:: As shown earlier, the FROM portion of your query can is specified
     in the ``$db->table()`` function. Additional calls to ``from()`` will add more tables
     to the FROM portion of your query.
+
+.. _query-builder-from-subquery:
+
+Subqueries
+==========
 
 **$builder->fromSubquery()**
 
@@ -229,6 +243,9 @@ Use the ``$db->newQuery()`` method to make a subquery the main table.::
     $query = $builder->get();
 
     // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
+
+Join
+====
 
 **$builder->join()**
 
