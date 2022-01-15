@@ -93,9 +93,7 @@ class Forge extends \CodeIgniter\Database\Forge
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
         if ($alterType === 'DROP') {
-            $fields = array_map(function ($field) {
-                return $this->db->escapeIdentifiers(trim($field));
-            }, is_string($field) ? explode(',', $field) : $field);
+            $fields = array_map(fn($field) => $this->db->escapeIdentifiers(trim($field)), is_string($field) ? explode(',', $field) : $field);
 
             return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
         }
@@ -201,20 +199,20 @@ class Forge extends \CodeIgniter\Database\Forge
         // Usually overridden by drivers
         switch (strtoupper($attributes['TYPE'])) {
             case 'TINYINT':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 3;
+                $attributes['CONSTRAINT'] ??= 3;
                 // no break
             case 'SMALLINT':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 5;
+                $attributes['CONSTRAINT'] ??= 5;
                 // no break
             case 'MEDIUMINT':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 7;
+                $attributes['CONSTRAINT'] ??= 7;
                 // no break
             case 'INT':
             case 'INTEGER':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 11;
+                $attributes['CONSTRAINT'] ??= 11;
                 // no break
             case 'BIGINT':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 19;
+                $attributes['CONSTRAINT'] ??= 19;
                 // no break
             case 'NUMERIC':
                 $attributes['TYPE'] = 'NUMBER';
@@ -231,7 +229,7 @@ class Forge extends \CodeIgniter\Database\Forge
 
             case 'DOUBLE':
                 $attributes['TYPE']       = 'FLOAT';
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 126;
+                $attributes['CONSTRAINT'] ??= 126;
 
                 return;
 
@@ -244,11 +242,11 @@ class Forge extends \CodeIgniter\Database\Forge
             case 'SET':
             case 'ENUM':
             case 'VARCHAR':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 255;
+                $attributes['CONSTRAINT'] ??= 255;
                 // no break
             case 'TEXT':
             case 'MEDIUMTEXT':
-                $attributes['CONSTRAINT'] = $attributes['CONSTRAINT'] ?? 4000;
+                $attributes['CONSTRAINT'] ??= 4000;
                 $attributes['TYPE']       = 'VARCHAR2';
         }
     }

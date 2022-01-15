@@ -29,10 +29,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Latest inserted table name.
-     *
-     * @var string|null
      */
-    private $lastInsertTableName;
+    private ?string $lastInsertTableName = null;
 
     /**
      * Prepares the query against the database, and saves the connection

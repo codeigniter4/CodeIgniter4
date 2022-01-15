@@ -76,9 +76,7 @@ class Builder extends BaseBuilder
             $selectQueryValues = [];
 
             foreach ($values as $value) {
-                $selectValues = implode(',', array_map(static function ($value, $key) {
-                    return $value . ' as ' . $key;
-                }, explode(',', substr(substr($value, 1), 0, -1)), $keys));
+                $selectValues = implode(',', array_map(static fn($value, $key) => $value . ' as ' . $key, explode(',', substr(substr($value, 1), 0, -1)), $keys));
                 $selectQueryValues[] = 'SELECT ' . $selectValues . ' FROM DUAL';
             }
 
@@ -99,9 +97,7 @@ class Builder extends BaseBuilder
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
-        $fieldNames = array_map(static function ($columnName) {
-            return trim($columnName, '"');
-        }, $keys);
+        $fieldNames = array_map(static fn($columnName) => trim($columnName, '"'), $keys);
 
         $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
             $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
@@ -120,9 +116,7 @@ class Builder extends BaseBuilder
 
         $sql = 'MERGE INTO ' . $table . "\n USING (SELECT ";
 
-        $sql .= implode(', ', array_map(static function ($columnName, $value) {
-            return $value . ' ' . $columnName;
-        }, $keys, $values));
+        $sql .= implode(', ', array_map(static fn($columnName, $value) => $value . ' ' . $columnName, $keys, $values));
 
         $sql .= ' FROM DUAL) "_replace" ON ( ';
 
@@ -130,21 +124,15 @@ class Builder extends BaseBuilder
         $onList[] = '1 != 1';
 
         foreach ($uniqueIndexes as $index) {
-            $onList[] = '(' . implode(' AND ', array_map(static function ($columnName) use ($table) {
-                return $table . '."' . $columnName . '" = "_replace"."' . $columnName . '"';
-            }, $index->fields)) . ')';
+            $onList[] = '(' . implode(' AND ', array_map(static fn($columnName) => $table . '."' . $columnName . '" = "_replace"."' . $columnName . '"', $index->fields)) . ')';
         }
 
         $sql .= implode(' OR ', $onList) . ') WHEN MATCHED THEN UPDATE SET ';
 
-        $sql .= implode(', ', array_map(static function ($columnName) {
-            return $columnName . ' = "_replace".' . $columnName;
-        }, $replaceableFields));
+        $sql .= implode(', ', array_map(static fn($columnName) => $columnName . ' = "_replace".' . $columnName, $replaceableFields));
 
         $sql .= ' WHEN NOT MATCHED THEN INSERT (' . implode(', ', $replaceableFields) . ') VALUES ';
-        $sql .= ' (' . implode(', ', array_map(static function ($columnName) {
-            return '"_replace".' . $columnName;
-        }, $replaceableFields)) . ')';
+        $sql .= ' (' . implode(', ', array_map(static fn($columnName) => '"_replace".' . $columnName, $replaceableFields)) . ')';
 
         return $sql;
     }

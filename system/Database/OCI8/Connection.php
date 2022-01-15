@@ -303,7 +303,7 @@ class Connection extends BaseConnection implements ConnectionInterface
             $retval[$i]->type = $query[$i]->DATA_TYPE;
 
             $length = $query[$i]->CHAR_LENGTH > 0 ? $query[$i]->CHAR_LENGTH : $query[$i]->DATA_PRECISION;
-            $length = $length ?? $query[$i]->DATA_LENGTH;
+            $length ??= $query[$i]->DATA_LENGTH;
 
             $retval[$i]->max_length = $length;
 

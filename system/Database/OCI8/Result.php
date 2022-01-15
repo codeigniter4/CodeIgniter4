@@ -34,9 +34,7 @@ class Result extends BaseResult implements ResultInterface
      */
     public function getFieldNames(): array
     {
-        return array_map(function ($fieldIndex) {
-            return oci_field_name($this->resultID, $fieldIndex);
-        }, range(1, $this->getFieldCount()));
+        return array_map(fn($fieldIndex) => oci_field_name($this->resultID, $fieldIndex), range(1, $this->getFieldCount()));
     }
 
     /**
@@ -44,13 +42,11 @@ class Result extends BaseResult implements ResultInterface
      */
     public function getFieldData(): array
     {
-        return array_map(function ($fieldIndex) {
-            return (object) [
-                'name'       => oci_field_name($this->resultID, $fieldIndex),
-                'type'       => oci_field_type($this->resultID, $fieldIndex),
-                'max_length' => oci_field_size($this->resultID, $fieldIndex),
-            ];
-        }, range(1, $this->getFieldCount()));
+        return array_map(fn($fieldIndex) => (object) [
+            'name'       => oci_field_name($this->resultID, $fieldIndex),
+            'type'       => oci_field_type($this->resultID, $fieldIndex),
+            'max_length' => oci_field_size($this->resultID, $fieldIndex),
+        ], range(1, $this->getFieldCount()));
     }
 
     /**
