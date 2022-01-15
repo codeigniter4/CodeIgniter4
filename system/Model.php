@@ -358,6 +358,8 @@ class Model extends BaseModel
                 return false; // @codeCoverageIgnore
             }
 
+            $builder->where($this->deletedField, null);
+
             $set[$this->deletedField] = $this->setDate();
 
             if ($this->useTimestamps && $this->updatedField) {
