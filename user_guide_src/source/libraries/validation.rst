@@ -261,20 +261,28 @@ methods.
 setRule()
 =========
 
-This method sets a single rule. It takes the name of the field as
-the first parameter, an optional label and a string with a pipe-delimited list of rules
-that should be applied::
+This method sets a single rule. It has the method signature
 
-    $validation->setRule('username', 'Username', 'required');
+    setRule(string $field, ?string $label, array|string $rules[, array $errors = []])
 
-The **field name** must match the key of any data array that is sent in. If
+The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules.
+
+    $validation->setRule('username', 'Username', 'required|min_length[3]');
+    $validation->setRule('password', 'Password', ['required', 'min_length[8]', 'alpha_numeric_punct']);
+
+The value you pass to ``$field`` must match the key of any data array that is sent in. If
 the data is taken directly from ``$_POST``, then it must be an exact match for
 the form input name.
+
+.. warning:: Prior to v4.2.0, this method's third parameter, ``$rules``, was typehinted to accept
+    ``string``. In v4.2.0 and after, the typehint was removed to allow arrays, too. To avoid LSP being
+    broken in extending classes overriding this method, the child class's method should also be modified
+    to remove the typehint.
 
 setRules()
 ==========
 
-Like, ``setRule()``, but accepts an array of field names and their rules::
+Like ``setRule()``, but accepts an array of field names and their rules::
 
     $validation->setRules([
         'username' => 'required',

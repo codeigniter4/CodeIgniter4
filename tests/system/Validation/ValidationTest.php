@@ -19,7 +19,9 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 use Generator;
+use PHPUnit\Framework\ExpectationFailedException;
 use Tests\Support\Validation\TestRules;
+use TypeError;
 
 /**
  * @internal
@@ -83,7 +85,109 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($rules, $this->validation->getRules());
     }
 
-    public function testRunReturnsFalseWithNothingToDo(): void
+    public function testSetRuleStoresRule()
+    {
+        $this->validation->setRules([]);
+        $this->validation->setRule('foo', null, 'bar|baz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    public function testSetRuleAddsRule()
+    {
+        $this->validation->setRules([
+            'bar' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ]);
+        $this->validation->setRule('foo', null, 'foo|foz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'foo|foz',
+            ],
+            'bar' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    public function testSetRuleOverwritesRule()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ]);
+        $this->validation->setRule('foo', null, 'foo|foz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'foo|foz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    /**
+     * @dataProvider setRuleRulesFormatCaseProvider
+     *
+     * @param mixed $rules
+     */
+    public function testSetRuleRulesFormat(bool $expected, $rules): void
+    {
+        if (! $expected) {
+            $this->expectException(TypeError::class);
+            $this->expectExceptionMessage('$rules must be of type string|array');
+        }
+
+        $this->validation->setRule('foo', null, $rules);
+        $this->addToAssertionCount(1);
+    }
+
+    public function setRuleRulesFormatCaseProvider(): iterable
+    {
+        yield 'fail-simple-object' => [
+            false,
+            (object) ['required'],
+        ];
+
+        yield 'pass-single-string' => [
+            true,
+            'required',
+        ];
+
+        yield 'pass-single-array' => [
+            true,
+            ['required'],
+        ];
+
+        yield 'fail-deep-object' => [
+            false,
+            new Validation((object) $this->config, Services::renderer()),
+        ];
+
+        yield 'pass-multiple-string' => [
+            true,
+            'required|alpha',
+        ];
+
+        yield 'pass-multiple-array' => [
+            true,
+            ['required', 'alpha'],
+        ];
+    }
+
+    public function testRunReturnsFalseWithNothingToDo()
     {
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
@@ -1007,5 +1111,103 @@ final class ValidationTest extends CIUnitTestCase
             'required|regex_match[/^(01|2689|09)[0-9]{8}$/]|numeric',
             ['required', 'regex_match[/^(01|2689|09)[0-9]{8}$/]', 'numeric'],
         ];
+    }
+
+    /**
+     * internal method to simplify placeholder replacement test
+     * REQUIRES THE RULES TO BE SET FOR THE FIELD "foo"
+     *
+     * @param array|null $data optional POST data, needs to contain the key $placeholderField to pass
+     *
+     * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
+     */
+    private function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
+    {
+        if ($data === null) {
+            $data = [$placeholder => 'placeholder-value'];
+        }
+
+        $validationRules = $this->getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
+        $fieldRules      = $validationRules['foo']['rules'] ?? $validationRules['foo'];
+        if (is_string($fieldRules)) {
+            $fieldRules = $this->getPrivateMethodInvoker($this->validation, 'splitRules')($fieldRules);
+        }
+
+        // loop all rules for this field
+        foreach ($fieldRules as $rule) {
+            // only string type rules are supported
+            if (is_string($rule)) {
+                $this->assertStringNotContainsString('{' . $placeholder . '}', $rule);
+            }
+        }
+    }
+
+    /**
+     * @see ValidationTest::placeholderReplacementResultDetermination()
+     */
+    public function testPlaceholderReplacementTestFails()
+    {
+        // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage('Failed asserting that \'filter[{id}]\' does not contain "{id}".');
+
+        $this->validation->setRule('foo', 'foo-label', 'required|filter[{id}]');
+
+        // calling with empty $data should produce an exception since {id} can't be replaced
+        $this->placeholderReplacementResultDetermination('id', []);
+    }
+
+    public function testPlaceholderReplacementSetSingleRuleString()
+    {
+        $this->validation->setRule('foo', null, 'required|filter[{id}]');
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetSingleRuleArray()
+    {
+        $this->validation->setRule('foo', null, ['required', 'filter[{id}]']);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesSimpleString()
+    {
+        $this->validation->setRules([
+            'foo' => 'required|filter[{id}]',
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesSimpleArray()
+    {
+        $this->validation->setRules([
+            'foo' => ['required', 'filter[{id}]'],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesComplexString()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'rules' => 'required|filter[{id}]',
+            ],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesComplexArray()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'rules' => ['required', 'filter[{id}]'],
+            ],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
     }
 }
