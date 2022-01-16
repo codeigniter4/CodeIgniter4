@@ -53,6 +53,10 @@ final class AlterTableTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        if (! extension_loaded('sqlite3')) {
+            $this->markTestSkipped('sqlite3 extension not loaded.');
+        }
+
         $config = [
             'DBDriver' => 'SQLite3',
             'database' => 'database.db',
