@@ -39,7 +39,7 @@ if (is_file($file)) {
             if ($dev) {
                 $array['minimum-stability'] = 'dev';
                 $array['prefer-stable']     = true;
-                $array['repositories']      = $array['repositories'] ?? [];
+                $array['repositories'] ??= [];
 
                 $found = false;
 
