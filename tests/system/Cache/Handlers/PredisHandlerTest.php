@@ -41,6 +41,8 @@ final class PredisHandlerTest extends AbstractHandlerTest
         $this->handler = new PredisHandler($this->config);
 
         $this->handler->initialize();
+
+        $this->handler->clean();
     }
 
     protected function tearDown(): void
@@ -176,5 +178,27 @@ final class PredisHandlerTest extends AbstractHandlerTest
     public function testIsSupported()
     {
         $this->assertTrue($this->handler->isSupported());
+    }
+
+    public function testIncrement()
+    {
+        $key = 'keyToIncrement';
+        $this->handler->delete($key);
+        $this->assertSame(1, $this->handler->increment($key));
+        $this->assertSame(1, (int) $this->handler->get($key));
+        $this->assertSame(11, $this->handler->increment($key, 10));
+        $this->assertSame(11, (int) $this->handler->get($key));
+    }
+
+    public function testDecrement()
+    {
+        $key = 'keyToDecrement';
+        $this->handler->delete($key);
+        // Set an initial value to decrement from
+        $this->assertSame(10, $this->handler->increment($key, 10));
+        $this->assertSame(9, $this->handler->decrement($key));
+        $this->assertSame(9, (int) $this->handler->get($key));
+        $this->assertSame(4, $this->handler->decrement($key, 5));
+        $this->assertSame(4, (int) $this->handler->get($key));
     }
 }

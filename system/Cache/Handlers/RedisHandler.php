@@ -211,13 +211,7 @@ class RedisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        if ($ttl > 0) {
-            $rtnVal = $this->redis->setEx($key, $ttl, $value);
-        } else {
-            $rtnVal = $this->redis->set($key, $value);
-        }
-
-        return $rtnVal;
+        return $ttl > 0 ? $this->redis->setEx($key, $ttl, $value) : $this->redis->set($key, $value);
     }
 
     /**
@@ -236,19 +230,38 @@ class RedisHandler extends BaseHandler
     public function deleteMatching(string $pattern)
     {
         $matchedKeys = [];
-        $iterator    = null;
 
-        do {
-            // Scan for some keys
-            $keys = $this->redis->scan($iterator, $pattern);
+        if ($this->config['isCluster']) {
+            // scan() is a directed-node command in redis cluster so we need to scan all nodes.
+            foreach ($this->redis->_masters() as $m) {
+                $iterator = null;
 
-            // Redis may return empty results, so protect against that
-            if ($keys !== false) {
-                foreach ($keys as $key) {
-                    $matchedKeys[] = $key;
-                }
+                do {
+                    // @phpstan-ignore-next-line
+                    $keys = $this->redis->scan($iterator, $m, $pattern);
+
+                    // Redis may return empty results, so protect against that
+                    if ($keys !== false) {
+                        foreach ($keys as $key) {
+                            $matchedKeys[] = $key;
+                        }
+                    }
+                } while ($iterator > 0);
             }
-        } while ($iterator > 0);
+        } else {
+            $iterator = null;
+
+            do {
+                $keys = $this->redis->scan($iterator, $pattern);
+
+                // Redis may return empty results, so protect against that
+                if ($keys !== false) {
+                    foreach ($keys as $key) {
+                        $matchedKeys[] = $key;
+                    }
+                }
+            } while ($iterator > 0);
+        }
 
         return $this->redis->del($matchedKeys);
     }
@@ -260,7 +273,7 @@ class RedisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hIncrBy($key, 'data', $offset);
+        return $this->redis->incrBy($key, $offset);
     }
 
     /**
@@ -270,7 +283,7 @@ class RedisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hIncrBy($key, 'data', -$offset);
+        return $this->redis->incrBy($key, -$offset);
     }
 
     /**
@@ -278,7 +291,15 @@ class RedisHandler extends BaseHandler
      */
     public function clean()
     {
-        return $this->redis->flushDB();
+        if ($this->config['isCluster']) {
+            foreach ($this->redis->_masters() as $m) {
+                $this->redis->flushAll($m);
+            }
+        } else {
+            $this->redis->flushAll();
+        }
+
+        return true;
     }
 
     /**
@@ -286,7 +307,40 @@ class RedisHandler extends BaseHandler
      */
     public function getCacheInfo()
     {
-        return $this->redis->info();
+        $rtnVal = [];
+        if ($this->config['isCluster']) {
+            $nodeCount = 0;
+
+            foreach ($this->redis->_masters() as $m) {
+                $nodeCount++;
+
+                foreach ($this->redis->info($m) as $key => $value) {
+                    $rtnVal[$key][] = $value;
+                }
+            }
+            // Summarize the keyspace counts for backwards compatibility with tests.
+            // if we have other stats we need to combine, that can be done here as well.
+            $db   = "db{$this->config['database']}";
+            $sums = ['keys' => 0, 'expires' => 0, 'avg_ttl' => 0];
+
+            foreach ($rtnVal[$db] as $ks) {
+                foreach (explode(',', $ks) as $stat) {
+                    [$key, $value] = explode('=', $stat);
+                    $sums[$key] += $value;
+                }
+            }
+            $sums['avg_ttl'] = (int) ($sums['avg_ttl'] / $nodeCount);
+            $finalData       = [];
+
+            foreach ($sums as $k => $v) {
+                $finalData[] = "{$k}={$v}";
+            }
+            $rtnVal[$db] = implode(',', $finalData);
+        } else {
+            $rtnVal = $this->redis->info();
+        }
+
+        return $rtnVal;
     }
 
     /**

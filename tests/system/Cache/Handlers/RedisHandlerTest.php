@@ -45,6 +45,8 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->handler = new RedisHandler($this->config);
 
         $this->handler->initialize();
+
+        $this->handler->clean();
     }
 
     protected function tearDown(): void
@@ -133,7 +135,6 @@ final class RedisHandlerTest extends AbstractHandlerTest
             $this->handler->save('key_' . $i, 'value' . $i);
         }
 
-        // check that there are 101 items is cache store
         $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
         $this->assertSame('keys=101', $dbInfo[0]);
 
@@ -148,12 +149,12 @@ final class RedisHandlerTest extends AbstractHandlerTest
 
     public function testDeleteMatchingSuffix()
     {
+        $this->handler->clean();
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
             $this->handler->save('key_' . $i, 'value' . $i);
         }
 
-        // check that there are 101 items is cache store
         $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
         $this->assertSame('keys=101', $dbInfo[0]);
 
@@ -161,19 +162,32 @@ final class RedisHandlerTest extends AbstractHandlerTest
         // (key_1, key_11, key_21, key_31, key_41, key_51, key_61, key_71, key_81, key_91, key_101)
         $this->assertSame(11, $this->handler->deleteMatching('*1'));
 
-        // check that there remains (101 - 13) = 88 items is cache store
+        // check that there remains (101 - 11) = 90 items is cache store
         $dbInfo = explode(',', $this->handler->getCacheInfo()['db0']);
         $this->assertSame('keys=90', $dbInfo[0]);
     }
 
-    // FIXME: I don't like all Hash logic very much. It's wasting memory.
-    // public function testIncrement()
-    // {
-    // }
+    public function testIncrement()
+    {
+        $key = 'keyToIncrement';
+        $this->handler->delete($key);
+        $this->assertSame(1, $this->handler->increment($key));
+        $this->assertSame(1, (int) $this->handler->get($key));
+        $this->assertSame(11, $this->handler->increment($key, 10));
+        $this->assertSame(11, (int) $this->handler->get($key));
+    }
 
-    // public function testDecrement()
-    // {
-    // }
+    public function testDecrement()
+    {
+        $key = 'keyToDecrement';
+        $this->handler->delete($key);
+        // Set an initial value to decrement from
+        $this->assertSame(10, $this->handler->increment($key, 10));
+        $this->assertSame(9, $this->handler->decrement($key));
+        $this->assertSame(9, (int) $this->handler->get($key));
+        $this->assertSame(4, $this->handler->decrement($key, 5));
+        $this->assertSame(4, (int) $this->handler->get($key));
+    }
 
     public function testClean()
     {

@@ -16,6 +16,9 @@ use Config\Cache;
 use Exception;
 use Predis\Client;
 use Predis\Collection\Iterator\Keyspace;
+use Predis\Connection\StreamConnection;
+use Predis\Response\Error;
+use Predis\Response\Status;
 use Throwable;
 
 /**
@@ -133,7 +136,7 @@ class PredisHandler extends BaseHandler
         $key = static::validateKey($key);
 
         if (! (null === ($data = $this->redis->get($key)))) {
-            $data = unserialize($data);
+            $data = $this->tryUnserialize($data);
         }
 
         return $data;
@@ -148,12 +151,9 @@ class PredisHandler extends BaseHandler
 
         $value = serialize($value);
 
-        if ($ttl > 0) {
-            $rtnVal = $this->redis->setex($key, $ttl, $value);
-        } else {
-            $rtnVal = $this->redis->set($key, $value);
-        }
-        if ($rtnVal instanceof \Predis\Response\Status) {
+        $rtnVal = $ttl > 0 ? $this->redis->setex($key, $ttl, $value) : $this->redis->set($key, $value);
+
+        if ($rtnVal instanceof Status) {
             $rtnVal = $rtnVal->getPayload() === 'OK';
         }
 
@@ -176,12 +176,47 @@ class PredisHandler extends BaseHandler
     public function deleteMatching(string $pattern)
     {
         $matchedKeys = [];
+        $rtnVal      = 0;
 
-        foreach (new Keyspace($this->redis, $pattern) as $key) {
-            $matchedKeys[] = $key;
+        if ($this->config['isCluster']) {
+            // @phpstan-ignore-next-line
+            foreach ($this->redis->getConnection() as $c) {
+                $matchedKeys = [];
+                // Predis doesn't natively support 'Keyspace'/SCAN, so we have to do it ourselves.
+                $i = 0;
+
+                do {
+                    $cmd = $this->redis->createCommand('SCAN', [(string) $i, 'MATCH', $pattern]);
+                    if ($result = $c->executeCommand($cmd)) {
+                        $i           = (int) $result[0];
+                        $matchedKeys = array_merge($matchedKeys, $result[1]);
+                    } else {
+                        $i = 0;
+                    }
+                } while ($i !== 0);
+
+                if ($matchedKeys) {
+                    // Predis can't run del() for multiple keys in cluster mode, since they can map to different nodes
+                    // or slots. We also can't do a MULTI since it expects everything to hash to the same slot. So we
+                    // will run atomic deletes to get around those errors. Not optimal at all, but our hands are tied.
+                    foreach ($matchedKeys as $k) {
+                        $cmd    = $this->redis->createCommand('DEL', [$k]);
+                        $result = $c->executeCommand($cmd);
+                        if ($result instanceof Error) {
+                            throw new Exception("Predis cluster: Could not delete '{$k}': {$result->getMessage()}");
+                        }
+                        $rtnVal++;
+                    }
+                }
+            }
+        } else {
+            foreach (new Keyspace($this->redis, $pattern) as $key) {
+                $matchedKeys[] = $key;
+            }
+            $rtnVal = $this->redis->del($matchedKeys);
         }
 
-        return $this->redis->del($matchedKeys);
+        return $rtnVal;
     }
 
     /**
@@ -191,7 +226,7 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hincrby($key, 'data', $offset);
+        return $this->redis->incrby($key, $offset);
     }
 
     /**
@@ -201,7 +236,7 @@ class PredisHandler extends BaseHandler
     {
         $key = static::validateKey($key);
 
-        return $this->redis->hincrby($key, 'data', -$offset);
+        return $this->redis->incrby($key, -$offset);
     }
 
     /**
@@ -209,7 +244,18 @@ class PredisHandler extends BaseHandler
      */
     public function clean()
     {
-        return $this->redis->flushdb()->getPayload() === 'OK';
+        $rtnVal = true;
+        if ($this->config['isCluster']) {
+            $cmd = $this->redis->createCommand('flushall');
+            // @phpstan-ignore-next-line
+            foreach ($this->redis->getConnection() as $c) {
+                $rtnVal = $rtnVal && $c->executeCommand($cmd)->getPayload() === 'OK';
+            }
+        } else {
+            $rtnVal = $this->redis->flushdb()->getPayload() === 'OK';
+        }
+
+        return $rtnVal;
     }
 
     /**
@@ -217,7 +263,79 @@ class PredisHandler extends BaseHandler
      */
     public function getCacheInfo()
     {
-        return $this->redis->info();
+        if ($this->config['isCluster']) {
+            // predis blocks the 'info()' function with a 'NotSupportedException', so let's build out the data manually
+            $rtnVal = [];
+            // Create a raw command to execute
+            $cmd = $this->redis->createCommand('info');
+            // @phpstan-ignore-next-line
+            foreach ($this->redis->getConnection() as $c) {
+                /** @var StreamConnection $c */
+                $info = $c->executeCommand($cmd);
+                // Bust up the result by newline
+                $info = explode("\n", $info);
+                $ptr  = &$rtnVal;
+
+                foreach ($info as $i) {
+                    if (empty($i = trim($i))) {
+                        continue;
+                    }
+                    // Grab section header
+                    if (preg_match('/^#\s(\w+)/', $i, $matches)) {
+                        $ptr = &$rtnVal[$matches[1]];
+
+                        continue;
+                    }
+                    // Put key/value pairs in each section.
+                    [$key, $value] = explode(':', $i);
+                    $ptr[$key][]   = $value;
+                }
+            }
+            $sums = ['keys' => 0, 'expires' => 0, 'avg_ttl' => 0];
+            $db   = "db{$this->config['database']}";
+            // @phpstan-ignore-next-line
+            if (isset($rtnVal['Keyspace'][$db])) {
+                $nodeCnt = count($rtnVal['Keyspace'][$db]);
+                // Summarize all of the keyspace stats into a single line for backwards compatibility with tests.
+                // If other stats are needed we could do that here as well.
+                foreach ($rtnVal['Keyspace'][$db] as $ks) {
+                    foreach (explode(',', $ks) as $stat) {
+                        [$key, $value] = explode('=', $stat);
+                        $sums[$key] += $value;
+                    }
+                }
+                $rtnVal['Keyspace']['db0']            = $sums;
+                $avgttl                               = $rtnVal['Keyspace']['db0']['avg_ttl'];
+                $rtnVal['Keyspace']['db0']['avg_ttl'] = (int) ($avgttl / $nodeCnt);
+                // Tests expect string values, so let's handle that.
+                foreach ($rtnVal['Keyspace']['db0'] as &$value) {
+                    $value = (string) $value;
+                }
+            }
+        } else {
+            $rtnVal = $this->redis->info();
+        }
+
+        return $rtnVal;
+    }
+
+    /**
+     * Attempt to unserialize data. Sometimes data can't be unserialized successfully (e.g., data set by incrby), in
+     * those cases, just return the raw data.
+     *
+     * @param string $data
+     *
+     * @return mixed
+     */
+    private function tryUnserialize($data)
+    {
+        try {
+            $data = unserialize($data);
+        } catch (\Throwable $t) {
+            // nothing to do about this, $data was unmodified
+        }
+
+        return $data;
     }
 
     /**
@@ -229,7 +347,7 @@ class PredisHandler extends BaseHandler
         $rtnVal = null;
 
         if (null !== ($data = $this->redis->get($key))) {
-            $data = unserialize($data);
+            $data = $this->tryUnserialize($data);
             $time = time();
             $ttl  = $this->redis->ttl($key);
 
