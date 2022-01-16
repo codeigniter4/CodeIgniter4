@@ -24,6 +24,8 @@ Enhancements
     - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
     - See :ref:`content-security-policy` for details.
 - New View Decorators allow modifying the generated HTML prior to caching.
+- Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
+- Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 
 Changes
 *******
