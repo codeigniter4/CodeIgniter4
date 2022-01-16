@@ -39,7 +39,7 @@ abstract class RedisHandlerTest extends CIUnitTestCase
         $defaults = [
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
-            'sessionSavePath'          => 'tcp://172.18.0.2:6379?timeout=3&isCluster=true',
+            'sessionSavePath'          => 'tcp://127.0.0.1:6379?timeout=3',
             'sessionMatchIP'           => false,
             'sessionTimeToUpdate'      => 300,
             'sessionRegenerateDestroy' => false,
