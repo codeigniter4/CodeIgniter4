@@ -497,18 +497,11 @@ class Connection extends BaseConnection implements ConnectionInterface
         }
 
         // Build the query string
-        $sql = 'BEGIN ' . $procedureName . '(';
-
-        $haveCursor = false;
-
-        foreach ($params as $param) {
-            $sql .= $param['name'] . ',';
-
-            if (isset($param['type']) && $param['type'] === OCI_B_CURSOR) {
-                $haveCursor = true;
-            }
-        }
-        $sql = trim($sql, ',') . '); END;';
+        $sql = sprintf(
+            'BEGIN %s (' . substr(str_repeat(',%s', count($params)), 1) . '); END;',
+            $procedureName,
+            ...array_map(static fn ($row) => $row['name'], $params)
+        );
 
         $this->resetStmtId = false;
         $this->stmtId      = oci_parse($this->connID, $sql);
