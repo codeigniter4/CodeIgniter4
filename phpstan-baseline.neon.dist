@@ -1,12 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClass'\\} given\\.$#"
+			message: "#^Parameter \\#1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\)\\: void, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClass'\\} given\\.$#"
 			count: 1
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClassmap'\\} given\\.$#"
+			message: "#^Parameter \\#1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\)\\: void, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClassmap'\\} given\\.$#"
 			count: 1
 			path: system/Autoloader/Autoloader.php
 
@@ -649,11 +649,6 @@ parameters:
 			message: "#^Variable \\$mockService in empty\\(\\) always exists and is always falsy\\.$#"
 			count: 1
 			path: system/Helpers/test_helper.php
-
-		-
-			message: "#^Parameter \\#2 \\$times of function str_repeat expects int, float given\\.$#"
-			count: 1
-			path: system/Helpers/text_helper.php
 
 		-
 			message: "#^Variable \\$pool might not be defined\\.$#"

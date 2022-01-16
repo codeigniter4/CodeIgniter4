@@ -34,7 +34,7 @@ class FatalLocator extends FileLocator
      */
     public function locateFile(string $file, ?string $folder = null, string $ext = 'php')
     {
-        $folder = $folder ?? 'null';
+        $folder ??= 'null';
 
         throw new RuntimeException("locateFile({$file}, {$folder}, {$ext})");
     }
