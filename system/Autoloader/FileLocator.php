@@ -108,7 +108,7 @@ class FileLocator
     }
 
     /**
-     * Examines a file and returns the fully qualified domain name.
+     * Examines a file and returns the fully qualified class name.
      */
     public function getClassname(string $file): string
     {
@@ -319,7 +319,7 @@ class FileLocator
 
     /**
      * Scans the provided namespace, returning a list of all files
-     * that are contained within the subpath specified by $path.
+     * that are contained within the sub path specified by $path.
      */
     public function listNamespaceFiles(string $prefix, string $path): array
     {

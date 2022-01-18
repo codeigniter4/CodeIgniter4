@@ -240,7 +240,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromTimestamp()
     {
-        // Se the timezone temporarily to UTC to make sure the test timestamp is correct
+        // Set the timezone temporarily to UTC to make sure the test timestamp is correct
         $tz = date_default_timezone_get();
         date_default_timezone_set('UTC');
 

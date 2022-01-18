@@ -1489,9 +1489,9 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
-     * This method use objectToRawArray internally and does conversion
+     * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
      * @param object|string $data        Data
@@ -1521,7 +1521,7 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data        Data
