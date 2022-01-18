@@ -1,12 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\)\\: void, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClass'\\} given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClass'\\} given\\.$#"
 			count: 1
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Parameter \\#1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\)\\: void, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClassmap'\\} given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), 'loadClassmap'\\} given\\.$#"
 			count: 1
 			path: system/Autoloader/Autoloader.php
 
