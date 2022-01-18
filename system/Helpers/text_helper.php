@@ -564,7 +564,7 @@ if (! function_exists('random_string')) {
                         break;
                 }
 
-                return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
+                return substr(str_shuffle(str_repeat($pool, (int) ceil($len / strlen($pool)))), 0, $len);
 
             case 'md5':
                 return md5(uniqid((string) mt_rand(), true));

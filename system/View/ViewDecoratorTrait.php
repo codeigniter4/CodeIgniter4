@@ -13,8 +13,6 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\View\Exceptions\ViewException;
 
-use function config;
-
 trait ViewDecoratorTrait
 {
     /**
@@ -23,7 +21,7 @@ trait ViewDecoratorTrait
      */
     protected function decorateOutput(string $html): string
     {
-        $decorators = config('View')->decorators;
+        $decorators = \config('View')->decorators;
 
         foreach ($decorators as $decorator) {
             if (! is_subclass_of($decorator, ViewDecoratorInterface::class)) {

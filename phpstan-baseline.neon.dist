@@ -651,11 +651,6 @@ parameters:
 			path: system/Helpers/test_helper.php
 
 		-
-			message: "#^Parameter \\#2 \\$times of function str_repeat expects int, float given\\.$#"
-			count: 1
-			path: system/Helpers/text_helper.php
-
-		-
 			message: "#^Variable \\$pool might not be defined\\.$#"
 			count: 2
 			path: system/Helpers/text_helper.php
