@@ -256,10 +256,10 @@ class Time extends DateTime
      */
     public static function createFromTimestamp(int $timestamp, $timezone = null, ?string $locale = null)
     {
+        $time = new self(gmdate('Y-m-d H:i:s', $timestamp), 'UTC', $locale);
         $timezone ??= 'UTC';
-        $date = new DateTime('now', new DateTimeZone($timezone));
 
-        return new self($date->setTimestamp($timestamp)->format('Y-m-d H:i:s'), $timezone, $locale);
+        return $time->setTimezone($timezone);
     }
 
     /**
