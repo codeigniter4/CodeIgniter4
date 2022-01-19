@@ -60,12 +60,24 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! self::$loaded) {
-            Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-            self::$loaded = true;
-        }
+        $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
+    }
+
+    protected function setUpAddNamespace()
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
     }
 
     public function testMultipleSeeders()

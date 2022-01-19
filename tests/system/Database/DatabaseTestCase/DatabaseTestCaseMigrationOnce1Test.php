@@ -56,9 +56,24 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
+        $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
+    }
+
+    protected function setUpAddNamespace()
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
     }
 
     public function testMigrationDone()
