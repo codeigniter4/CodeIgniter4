@@ -288,6 +288,7 @@ class BaseService
      */
     public static function resetSingle(string $name)
     {
+        $name = strtolower($name);
         unset(static::$mocks[$name], static::$instances[$name]);
     }
 

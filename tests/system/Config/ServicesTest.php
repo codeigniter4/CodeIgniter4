@@ -343,6 +343,17 @@ final class ServicesTest extends CIUnitTestCase
         $this->assertSame($security, $security2);
     }
 
+    public function testResetSingleCaseInsensitive()
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+
+        Services::resetSingle('Response');
+        $someService = service('response');
+        $this->assertNotInstanceOf(MockResponse::class, $someService);
+    }
+
     public function testFilters()
     {
         $result = Services::filters();
