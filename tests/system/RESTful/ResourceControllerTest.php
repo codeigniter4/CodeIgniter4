@@ -293,7 +293,7 @@ final class ResourceControllerTest extends CIUnitTestCase
             'foo' => 'bar',
         ];
 
-        $theResponse = $resource->respond($data);
+        $theResponse = $this->invoke($resource, 'respond', [$data]);
         $result      = $theResponse->getBody();
 
         $JSONFormatter = new JSONFormatter();
@@ -321,12 +321,19 @@ final class ResourceControllerTest extends CIUnitTestCase
             'foo' => 'bar',
         ];
 
-        $theResponse = $resource->respond($data);
+        $theResponse = $this->invoke($resource, 'respond', [$data]);
         $result      = $theResponse->getBody();
 
         $XMLFormatter = new XMLFormatter();
         $expected     = $XMLFormatter->format($data);
 
         $this->assertSame($expected, $result);
+    }
+
+    private function invoke(object $controller, string $method, array $args = [])
+    {
+        $method = $this->getPrivateMethodInvoker($controller, $method);
+
+        return $method(...$args);
     }
 }
