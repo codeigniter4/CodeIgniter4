@@ -530,7 +530,7 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span>       <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// Represents a username</span>
+        <span class="s1">&#39;full_name&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// In the $attributes, the key is the column name</span>
         <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
@@ -549,8 +549,8 @@ name of the column in the database.</p>
 <p>In this example, when the model sets the <code class="docutils literal notranslate"><span class="pre">full_name</span></code> field on the User class, it actually assigns that value to the
 class’ <code class="docutils literal notranslate"><span class="pre">$name</span></code> property, so it can be set and retrieved through <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>. The value will still be accessible
 through the original <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>, also, as this is needed for the model to get the data back out and save it
-to the database. However, <code class="docutils literal notranslate"><span class="pre">unset</span></code> and <code class="docutils literal notranslate"><span class="pre">isset</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$name</span></code>, not on the original name,
-<code class="docutils literal notranslate"><span class="pre">full_name</span></code>.</p>
+to the database. However, <code class="docutils literal notranslate"><span class="pre">unset()</span></code> and <code class="docutils literal notranslate"><span class="pre">isset()</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>, not on the database column name,
+<code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>.</p>
 </section>
 <section id="mutators">
 <h2><a class="toc-backref" href="#id9">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline"></a></h2>
@@ -816,7 +816,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 16, 2022.
+      <span class="lastupdated">Last updated on Jan 19, 2022.
       </span></p>
   </div>
 
