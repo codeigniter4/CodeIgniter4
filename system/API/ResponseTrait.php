@@ -85,7 +85,7 @@ trait ResponseTrait
      *
      * @param array|string|null $data
      *
-     * @return mixed
+     * @return Response
      */
     protected function respond($data = null, ?int $status = null, string $message = '')
     {
@@ -119,7 +119,7 @@ trait ResponseTrait
      * @param int          $status   HTTP status code
      * @param string|null  $code     Custom, API-specific, error code
      *
-     * @return mixed
+     * @return Response
      */
     protected function fail($messages, int $status = 400, ?string $code = null, string $customMessage = '')
     {
@@ -145,7 +145,7 @@ trait ResponseTrait
      *
      * @param mixed $data
      *
-     * @return mixed
+     * @return Response
      */
     protected function respondCreated($data = null, string $message = '')
     {
@@ -157,7 +157,7 @@ trait ResponseTrait
      *
      * @param mixed $data
      *
-     * @return mixed
+     * @return Response
      */
     protected function respondDeleted($data = null, string $message = '')
     {
@@ -169,7 +169,7 @@ trait ResponseTrait
      *
      * @param mixed $data
      *
-     * @return mixed
+     * @return Response
      */
     protected function respondUpdated($data = null, string $message = '')
     {
@@ -180,7 +180,7 @@ trait ResponseTrait
      * Used after a command has been successfully executed but there is no
      * meaningful reply to send back to the client.
      *
-     * @return mixed
+     * @return Response
      */
     protected function respondNoContent(string $message = 'No Content')
     {
@@ -192,7 +192,7 @@ trait ResponseTrait
      * or had bad authorization credentials. User is encouraged to try again
      * with the proper information.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failUnauthorized(string $description = 'Unauthorized', ?string $code = null, string $message = '')
     {
@@ -203,7 +203,7 @@ trait ResponseTrait
      * Used when access is always denied to this resource and no amount
      * of trying again will help.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failForbidden(string $description = 'Forbidden', ?string $code = null, string $message = '')
     {
@@ -213,7 +213,7 @@ trait ResponseTrait
     /**
      * Used when a specified resource cannot be found.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failNotFound(string $description = 'Not Found', ?string $code = null, string $message = '')
     {
@@ -223,7 +223,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated.
      *
-     * @return mixed
+     * @return Response
      *
      * @deprecated Use failValidationErrors instead
      */
@@ -237,7 +237,7 @@ trait ResponseTrait
      *
      * @param string|string[] $errors
      *
-     * @return mixed
+     * @return Response
      */
     protected function failValidationErrors($errors, ?string $code = null, string $message = '')
     {
@@ -247,7 +247,7 @@ trait ResponseTrait
     /**
      * Use when trying to create a new resource and it already exists.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failResourceExists(string $description = 'Conflict', ?string $code = null, string $message = '')
     {
@@ -259,7 +259,7 @@ trait ResponseTrait
      * Not Found, because here we know the data previously existed, but is now gone,
      * where Not Found means we simply cannot find any information about it.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failResourceGone(string $description = 'Gone', ?string $code = null, string $message = '')
     {
@@ -269,7 +269,7 @@ trait ResponseTrait
     /**
      * Used when the user has made too many requests for the resource recently.
      *
-     * @return mixed
+     * @return Response
      */
     protected function failTooManyRequests(string $description = 'Too Many Requests', ?string $code = null, string $message = '')
     {
