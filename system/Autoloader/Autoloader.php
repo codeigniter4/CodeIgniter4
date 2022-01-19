@@ -82,6 +82,10 @@ class Autoloader
      */
     public function initialize(Autoload $config, Modules $modules)
     {
+        $this->prefixes = [];
+        $this->classmap = [];
+        $this->files    = [];
+
         // We have to have one or the other, though we don't enforce the need
         // to have both present in order to work.
         if (empty($config->psr4) && empty($config->classmap)) {

@@ -39,6 +39,8 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->setUpMethods[] = 'setUpAddNamespace';
+
         parent::setUp();
 
         $this->root   = vfsStream::setup('root');
@@ -46,8 +48,21 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->config = new Migrations();
 
         $this->config->enabled = true;
+    }
 
-        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', TESTPATH . '_support/MigrationTestMigrations');
+    protected function setUpAddNamespace()
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
     }
 
     public function testLoadsDefaultDatabaseWhenNoneSpecified()
