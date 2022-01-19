@@ -13,6 +13,9 @@ namespace CodeIgniter\Commands\Utilities;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Commands\Utilities\Routes\ControllerFinder;
+use CodeIgniter\Commands\Utilities\Routes\ControllerMethodReader;
+use CodeIgniter\Router\RouteCollection;
 use Config\Services;
 
 /**
@@ -101,6 +104,10 @@ class Routes extends BaseCommand
             }
         }
 
+        if ($collection->shouldAutoRoute()) {
+            $tbody = array_merge($tbody, $this->getAutoRoutes($collection));
+        }
+
         $thead = [
             'Method',
             'Route',
@@ -108,5 +115,32 @@ class Routes extends BaseCommand
         ];
 
         CLI::table($tbody, $thead);
+    }
+
+    private function getAutoRoutes(RouteCollection $collection): array
+    {
+        $defaultNamespace = $collection->getDefaultNamespace();
+        $finder           = new ControllerFinder($defaultNamespace);
+        $reader           = new ControllerMethodReader($defaultNamespace);
+
+        $tbody = [];
+
+        foreach ($finder->find() as $class) {
+            $output = $reader->read(
+                $class,
+                $collection->getDefaultController(),
+                $collection->getDefaultMethod()
+            );
+
+            foreach ($output as $item) {
+                $tbody[] = [
+                    'auto',
+                    $item['route'],
+                    $item['handler'],
+                ];
+            }
+        }
+
+        return $tbody;
     }
 }
