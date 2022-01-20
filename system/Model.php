@@ -358,7 +358,7 @@ class Model extends BaseModel
                 return false; // @codeCoverageIgnore
             }
 
-            $builder->where($this->deletedField, null);
+            $builder->where($this->deletedField);
 
             $set[$this->deletedField] = $this->setDate();
 
