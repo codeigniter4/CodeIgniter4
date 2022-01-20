@@ -47,12 +47,12 @@ Placeholders
 
 A typical route might look something like this::
 
-    $routes->add('product/(:num)', 'App\Catalog::productLookup');
+    $routes->add('product/(:num)', 'Catalog::productLookup');
 
 In a route, the first parameter contains the URI to be matched, while the second parameter
-contains the destination it should be re-routed to. In the above example, if the literal word
-"product" is found in the first segment of the URL, and a number is found in the second segment,
-the "App\Catalog" class and the "productLookup" method are used instead.
+contains the destination it should be routed to. In the above example, if the literal word
+"product" is found in the first segment of the URL path, and a number is found in the second segment,
+the ``Catalog`` class and the ``productLookup`` method are used instead.
 
 Placeholders are simply strings that represent a Regular Expression pattern. During the routing
 process, these placeholders are replaced with the value of the Regular Expression. They are primarily
@@ -79,23 +79,23 @@ Examples
 
 Here are a few basic routing examples.
 
-A URL containing the word "journals" in the first segment will be remapped to the "App\Blogs" class,
+A URL containing the word **journals** in the first segment will be remapped to the ``\App\Controllers\Blogs`` class,
 and the default method, which is usually ``index()``::
 
-    $routes->add('journals', 'App\Blogs');
+    $routes->add('journals', 'Blogs');
 
-A URL containing the segments "blog/joe" will be remapped to the “\Blogs” class and the “users” method.
-The ID will be set to “34”::
+A URL containing the segments **blog/joe** will be remapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
+The ID will be set to ``34``::
 
     $routes->add('blog/joe', 'Blogs::users/34');
 
-A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
-and the “productLookup” method::
+A URL with **product** as the first segment, and anything in the second will be remapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookup`` method::
 
     $routes->add('product/(:any)', 'Catalog::productLookup');
 
-A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
-and the “productLookupByID” method passing in the match as a variable to the method::
+A URL with **product** as the first segment, and a number in the second will be remapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookupByID`` method passing in the match as a variable to the method::
 
     $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
 
@@ -505,7 +505,9 @@ Default Namespace
 -----------------
 
 When matching a controller to a route, the router will add the default namespace value to the front of the controller
-specified by the route. By default, this value is empty, which leaves each route to specify the fully namespaced
+specified by the route. By default, this value is ``App\Controllers``.
+
+If you set the value empty string (``''``), it leaves each route to specify the fully namespaced
 controller::
 
     $routes->setDefaultNamespace('');
