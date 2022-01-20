@@ -253,8 +253,9 @@ It is possible to nest groups within groups for finer organization if you need i
         });
     });
 
-This would handle the URL at ``admin/users/list``. Note that options passed to the outer ``group()`` (for example
-``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+This would handle the URL at **admin/users/list**.
+
+.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
 At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
