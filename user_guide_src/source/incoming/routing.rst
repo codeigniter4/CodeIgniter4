@@ -64,14 +64,14 @@ The following placeholders are available for you to use in your routes:
 Placeholders Description
 ============ ===========================================================================================================
 (:any)       will match all characters from that point to the end of the URI. This may include multiple URI segments.
-(:segment)   will match any character except for a forward slash (/) restricting the result to a single segment.
+(:segment)   will match any character except for a forward slash (``/``) restricting the result to a single segment.
 (:num)       will match any integer.
 (:alpha)     will match any string of alphabetic characters
 (:alphanum)  will match any string of alphabetic characters or integers, or any combination of the two.
-(:hash)      is the same as **(:segment)**, but can be used to easily see which routes use hashed ids.
+(:hash)      is the same as ``(:segment)``, but can be used to easily see which routes use hashed ids.
 ============ ===========================================================================================================
 
-.. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
+.. note:: ``{locale}`` cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
 
 Examples
@@ -103,7 +103,7 @@ Note that a single ``(:any)`` will match multiple segments in the URL if present
 
     $routes->add('product/(:any)', 'Catalog::productLookup/$1');
 
-will match product/123, product/123/456, product/123/456/789 and so on. The implementation in the
+will match **product/123**, **product/123/456**, **product/123/456/789** and so on. The implementation in the
 Controller should take into account the maximum parameters::
 
     public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
@@ -117,7 +117,7 @@ routes. With the examples URLs from above::
 
     $routes->add('product/(:segment)', 'Catalog::productLookup/$1');
 
-will only match product/123 and generate 404 errors for other example.
+will only match **product/123** and generate 404 errors for other example.
 
 .. warning:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
     routes, described below, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
@@ -134,7 +134,7 @@ Custom Placeholders
 You can create your own placeholders that can be used in your routes file to fully customize the experience
 and readability.
 
-You add new placeholders with the ``addPlaceholder`` method. The first parameter is the string to be used as
+You add new placeholders with the ``addPlaceholder()`` method. The first parameter is the string to be used as
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
 This must be called before you add the route::
 
@@ -152,10 +152,10 @@ is allowed, as are back-references.
 
     $routes->add('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
 
-In the above example, a URI similar to products/shirts/123 would instead call the ``show`` method
+In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
 
-With regular expressions, you can also catch a segment containing a forward slash (‘/’), which would usually
+With regular expressions, you can also catch a segment containing a forward slash (``/``), which would usually
 represent the delimiter between multiple segments.
 
 For example, if a user accesses a password protected area of your web application and you wish to be able to
@@ -184,7 +184,7 @@ a simple view::
 Mapping multiple routes
 =======================
 
-While the add() method is simple to use, it is often handier to work with multiple routes at once, using
+While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method::
 
@@ -226,7 +226,7 @@ extensive set of routes that all share the opening string, like when building an
         $routes->add('blog', 'Admin\Blog::index');
     });
 
-This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
+This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
 
 If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback::
 
@@ -234,7 +234,7 @@ If you need to assign options to a group, like a :ref:`assigning-namespace`, do 
         $routes->resource('users');
     });
 
-This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
+This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
 
 You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging::
@@ -289,7 +289,7 @@ to update your application code. This is typically used within views to create l
 
 For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
 function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
-separated by a double colon (::), much like you would use when writing the initial route itself. Any parameters that
+separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next::
 
     // The route is defined as:
@@ -303,7 +303,7 @@ Using Named Routes
 ==================
 
 You can name routes to make your application less fragile. This applies a name to a route that can be called
-later, and even if the route definition changes, all of the links in your application built with ``route_to``
+later, and even if the route definition changes, all of the links in your application built with ``route_to()``
 will still work without you having to make any changes. A route is named by passing in the ``as`` option
 with the name of the route::
 
@@ -328,7 +328,7 @@ Each verb has its own method you can use::
     $routes->put('products/(:num)', 'Product::feature');
     $routes->delete('products/(:num)', 'Product::feature');
 
-You can supply multiple verbs that a route should match by passing them in as an array to the ``match`` method::
+You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method::
 
     $routes->match(['get', 'put'], 'products', 'Product::feature');
 
@@ -336,7 +336,7 @@ Command-Line only Routes
 ========================
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
-``cli()`` method. This is great for building cronjobs or CLI-only tools. Any route created by any of the HTTP-verb-based
+``cli()`` method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line::
 
@@ -429,8 +429,8 @@ by passing the "hostname" option along with the desired domain to allow it on as
 
     $routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
 
-This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
-It would not work under the main site at "example.com".
+This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
+It would not work under the main site at **example.com**.
 
 Limit to Subdomains
 -------------------
@@ -441,7 +441,7 @@ sub-domain. The route will only be matched if the subdomain is the one the appli
     // Limit to media.example.com
     $routes->add('from', 'to', ['subdomain' => 'media']);
 
-You can restrict it to any subdomain by setting the value to an asterisk, (*). If you are viewing from a URL
+You can restrict it to any subdomain by setting the value to an asterisk, (``*``). If you are viewing from a URL
 that does not have any subdomain present, this will not be matched::
 
     // Limit to any sub-domain
@@ -473,7 +473,7 @@ Route processing queue
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
 You can solve this problem by lowering the priority of route processing using the ``priority`` option. The parameter
-accepts positive integers and zero. The higher the number specified in the "priority", the lower
+accepts positive integers and zero. The higher the number specified in the ``priority``, the lower
 route priority in the processing queue::
 
     // First you need to enable sorting.
@@ -535,14 +535,14 @@ Default Controller
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at ``/app/Controllers/Home.php``::
+which matches the controller at **app/Controllers/Home.php**::
 
     // example.com routes to app/Controllers/Welcome.php
     $routes->setDefaultController('Welcome');
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits ``example.com/admin``, if a controller was found at
-``/app/Controllers/admin/Home.php`` it would be used.
+in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+**app/Controllers/Admin/Home.php**, it would be used.
 
 Default Method
 --------------
@@ -551,7 +551,7 @@ This works similar to the default controller setting, but is used to determine t
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 ``index``.
 
-In this example, if the user were to visit example.com/products, and a Products controller existed, the
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
 ``Products::listAll()`` method would be executed::
 
     $routes->setDefaultMethod('listAll');
@@ -559,7 +559,7 @@ In this example, if the user were to visit example.com/products, and a Products 
 Translate URI Dashes
 --------------------
 
-This option enables you to automatically replace dashes (‘-‘) with underscores in the controller and method
+This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it::
 
