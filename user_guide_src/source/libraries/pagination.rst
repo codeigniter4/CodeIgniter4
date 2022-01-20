@@ -62,7 +62,7 @@ that and assign it to the $pager variable in the view.
 
 To define conditions for pagination in a model, you can::
 
-    //You can specify conditions directly.
+    // You can specify conditions directly.
     $model = new \App\Models\UserModel();
 
     $data = [
