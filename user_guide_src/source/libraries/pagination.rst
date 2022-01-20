@@ -56,6 +56,33 @@ The first element is the results from the database, **users**, which is retrieve
 the Model will hold on to the instance it used and store it in the public class variable, **$pager**. So, we grab
 that and assign it to the $pager variable in the view.
 
+.. important:: It is important to understand that the Model::paginate() method uses the Model and QueryBuilder methods.
+Therefore, trying to use ``$db->query()`` and Model::paginate() **will not work** because ``$db->query()`` executes
+the query immediately and is not associated with a QueryBuilder.
+
+To define conditions for pagination in a model, you can::
+
+    //You can specify conditions directly.
+    $model = new \App\Models\UserModel();
+
+    $data = [
+        'users' => $model->where('ban', 1)->paginate(10),
+        'pager' => $model->pager,
+    ];
+
+    // You can move the conditions to a separate method.
+    // Model method
+    public function banned()
+    {
+        $this->builder()->where('ban', 1);
+        return $this; // This will allow the call chain to be used.
+    }
+
+    $data = [
+        'users' => $model->banned()->paginate(10),
+        'pager' => $model->pager,
+    ];
+
 Within the view, we then need to tell it where to display the resulting links::
 
     <?= $pager->links() ?>
