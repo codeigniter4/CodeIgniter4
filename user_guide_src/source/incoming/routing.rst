@@ -21,7 +21,7 @@ For example, let’s say you want your URLs to have this prototype::
     example.com/product/3/
     example.com/product/4/
 
-Normally the second segment of the URL is reserved for the method name, but in the example
+Normally the second segment of the URL path is reserved for the method name, but in the example
 above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.
 
 Setting your own routing rules
@@ -31,7 +31,7 @@ Routing rules are defined in the **app/Config/Routes.php** file. In it you'll se
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
-A route simply takes the URI on the left, and maps it to the controller and method on the right,
+A route simply takes the URI path on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the fully-namespaced class
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
@@ -582,7 +582,7 @@ to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 ------------
 
 When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
-what happens by specifying an action to happen with the ``set404Override()`` option. The value can be either
+what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure::
 
     // Would execute the show404 method of the App\Errors class
