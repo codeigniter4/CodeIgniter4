@@ -122,7 +122,7 @@ like **https://domain.tld/model/[pageNumber]** instead of **https://domain.tld/m
 
 ::
 
-    $users = $userModel->paginate(10, 'group1', null, 3);
+    $users = $userModel->paginate(10, 'group1', null, $segment);
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
