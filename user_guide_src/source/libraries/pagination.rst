@@ -53,8 +53,8 @@ To provide a paginated list of users in your application, your controller's meth
 In this example, we first create a new instance of our UserModel. Then we populate the data to send to the view.
 The first element is the results from the database, **users**, which is retrieved for the correct page, returning
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
-the Model will hold on to the instance it used and store it in the public class variable, **$pager**. So, we grab
-that and assign it to the $pager variable in the view.
+the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
+that and assign it to the ``$pager`` variable in the view.
 
 Within the view, we then need to tell it where to display the resulting links::
 
