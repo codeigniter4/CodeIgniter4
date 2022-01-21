@@ -354,7 +354,7 @@ class CURLRequest extends Request
 
         // Do we need to delay this request?
         if ($this->delay > 0) {
-            sleep($this->delay);
+            usleep((int) $this->delay * 1_000_000);
         }
 
         $output = $this->sendRequest($curlOptions);
