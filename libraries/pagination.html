@@ -328,6 +328,35 @@ The first element is the results from the database, <strong>users</strong>, whic
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
 the Model will hold on to the instance it used and store it in the public class variable, <strong>$pager</strong>. So, we grab
 that and assign it to the $pager variable in the view.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>It is important to understand that the Model::paginate() method uses the Model and QueryBuilder methods.
+Therefore, trying to use <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> and Model::paginate() <strong>will not work</strong> because <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> executes
+the query immediately and is not associated with a QueryBuilder.</p>
+</div>
+<p>To define conditions for pagination in a model, you can:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// You can specify conditions directly.</span>
+<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="c1">// You can move the conditions to a separate method.</span>
+<span class="c1">// Model method</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">banned</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span> <span class="c1">// This will allow the call chain to be used.</span>
+<span class="p">}</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">banned</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
 <p>Within the view, we then need to tell it where to display the resulting links:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -622,7 +651,7 @@ result set.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 19, 2022.
+      <span class="lastupdated">Last updated on Jan 21, 2022.
       </span></p>
   </div>
 
