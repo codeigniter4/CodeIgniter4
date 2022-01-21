@@ -126,8 +126,15 @@ jobs:
         if: matrix.php-versions == '8.0'
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
+      - name: Compute coverage option
+        uses: actions/github-script@v3
+        id: phpunit-coverage-option
+        with:
+          script: 'return "${{ matrix.php-versions }}" == "8.0" ? "" : "--no-coverage"'
+          result-encoding: string
+
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review"
+        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
