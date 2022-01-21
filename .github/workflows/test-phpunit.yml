@@ -126,7 +126,15 @@ jobs:
         if: matrix.php-versions == '8.0'
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
-      - name: Test with PHPUnit
+      - name: Test with PHPUnit w/o Coverage
+        if: matrix.php-versions != '8.0'
+        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review --no-coverage"
+        env:
+          DB: ${{ matrix.db-platforms }}
+          TERM: xterm-256color
+
+      - name: Test with PHPUnit with Coverage
+        if: matrix.php-versions == '8.0'
         run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review"
         env:
           DB: ${{ matrix.db-platforms }}
