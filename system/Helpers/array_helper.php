@@ -203,7 +203,7 @@ if (! function_exists('array_flatten_with_dots')) {
         foreach ($array as $key => $value) {
             $newKey = $id . $key;
 
-            if (is_array($value)) {
+            if (is_array($value) && $value !== []) {
                 $flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
             } else {
                 $flattened[$newKey] = $value;
