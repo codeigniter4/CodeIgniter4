@@ -391,11 +391,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider arrayFlattenProvider
-     *
-     * @param iterable $input
-     * @param iterable $expected
      */
-    public function testArrayFlattening($input, $expected): void
+    public function testArrayFlattening(array $input, array $expected): void
     {
         $this->assertSame($expected, array_flatten_with_dots($input));
     }
@@ -452,24 +449,22 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
             [
                 'foo'      => 'bar',
+                'baz'      => [],
                 'bar.fizz' => 'buzz',
                 'bar.nope' => 'yeah',
+                'bar.why'  => [],
             ],
         ];
 
-        yield 'with-mixed-empty' => [
+        yield 'with-empty-string-index' => [
             [
                 'foo' => 1,
                 ''    => [
                     'bar' => 2,
                     'baz' => 3,
                 ],
-                0 => [
-                    'fizz' => 4,
-                ],
-                1 => [
-                    'buzz' => 5,
-                ],
+                ['fizz' => 4],
+                ['buzz' => 5],
             ],
             [
                 'foo'    => 1,
@@ -477,6 +472,19 @@ final class ArrayHelperTest extends CIUnitTestCase
                 '.baz'   => 3,
                 '0.fizz' => 4,
                 '1.buzz' => 5,
+            ],
+        ];
+
+        yield 'empty-array-and-lists' => [
+            [
+                'bar' => [
+                    ['foo' => 'baz'],
+                    ['foo' => []],
+                ],
+            ],
+            [
+                'bar.0.foo' => 'baz',
+                'bar.1.foo' => [],
             ],
         ];
     }
