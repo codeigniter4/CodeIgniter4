@@ -779,9 +779,6 @@ be ignored, unless you specify a numeric seed value.
     $builder->orderBy(42, 'RANDOM');
     // Produces: ORDER BY RAND(42)
 
-.. note:: Random ordering is not currently supported in Oracle and
-    will default to ASC instead.
-
 ****************************
 Limiting or Counting Results
 ****************************
