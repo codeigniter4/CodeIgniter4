@@ -87,14 +87,14 @@ final class CallStoredProcedureTest extends CIUnitTestCase
         $this->db->storedProcedure('one', [
             [
                 'name'  => ':cursor',
-                'type' => OCI_B_CURSOR,
+                'type'  => OCI_B_CURSOR,
                 'value' => &$result,
             ],
 
         ]);
 
         oci_execute($result);
-        $row = oci_fetch_array($result, OCI_ASSOC+OCI_RETURN_NULLS);
+        $row = oci_fetch_array($result, OCI_ASSOC + OCI_RETURN_NULLS);
 
         $this->assertSame($row, ['ONE' => '1']);
     }
