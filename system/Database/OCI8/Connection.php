@@ -478,17 +478,16 @@ class Connection extends BaseConnection implements ConnectionInterface
      * Executes a stored procedure
      *
      * @param string $procedureName procedure name to execute
-     *
-     * @return mixed
-     *
-     * params array keys
-     *
+     * @param array $params params array keys
      * KEY      OPTIONAL  NOTES
      * name     no        the name of the parameter should be in :<param_name> format
      * value    no        the value of the parameter.  If this is an OUT or IN OUT parameter,
      *                    this should be a reference to a variable
      * type     yes       the type of the parameter
      * length   yes       the max size of the parameter
+     *
+     * @return Result|bool|CodeIgniter\Database\Query
+     *
      */
     public function storedProcedure(string $procedureName, array $params)
     {
