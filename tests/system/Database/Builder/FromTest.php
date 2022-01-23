@@ -103,19 +103,19 @@ final class FromTest extends CIUnitTestCase
 
     public function testFromSubquery()
     {
-        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") AS alias';
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") AS "alias"';
         $subquery    = new BaseBuilder('users', $this->db);
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias');
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
-        $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") AS users_1';
+        $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") AS "users_1"';
         $subquery    = (new BaseBuilder('users', $this->db))->select('id, name');
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
-        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") AS alias, "some_table"';
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") AS "alias", "some_table"';
         $subquery    = new BaseBuilder('users', $this->db);
         $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias')->from('some_table');
 
@@ -145,7 +145,7 @@ final class FromTest extends CIUnitTestCase
 
         $builder->fromSubquery($subquery, 'users_1');
 
-        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") AS users_1';
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") AS "users_1"';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }

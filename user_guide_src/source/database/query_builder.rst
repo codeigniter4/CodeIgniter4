@@ -234,7 +234,7 @@ This is where we add a subquery to an existing table.::
     $builder  = $db->table('jobs')->fromSubquery($subquery, 'alias');
     $query = $builder->get();
 
-    // Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS alias
+    // Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS `alias`
 
 Use the ``$db->newQuery()`` method to make a subquery the main table.::
 
@@ -242,7 +242,7 @@ Use the ``$db->newQuery()`` method to make a subquery the main table.::
     $builder  = $db->newQuery()->fromSubquery($subquery, 't');
     $query = $builder->get();
 
-    // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS t
+    // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS `t`
 
 Join
 ====

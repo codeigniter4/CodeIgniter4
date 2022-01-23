@@ -2767,9 +2767,10 @@ class BaseBuilder
 
         if ($wrapped) {
             $subquery = '(' . $subquery . ')';
+            $alias    = trim($alias);
 
             if ($alias !== '') {
-                $subquery .= " AS {$alias}";
+                $subquery .= ' AS ' . ($this->db->protectIdentifiers ? $this->db->escapeIdentifiers($alias) : $alias);
             }
         }
 
