@@ -709,4 +709,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 
         return $this->query('SELECT DEFAULT_TABLESPACE FROM USER_USERS')->getRow()->DEFAULT_TABLESPACE ?? '';
     }
+
+    /**
+     * Get the prefix of the function to access the DB.
+     */
+    protected function getDriverFunctionPrefix(): string
+    {
+        return 'oci_';
+    }
 }
