@@ -156,6 +156,7 @@ class Migration_Create_test_tables extends Migration
             $this->db->query('CREATE OR REPLACE PACKAGE calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER); END;');
             $this->db->query('CREATE OR REPLACE PACKAGE BODY calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER) IS BEGIN result := left + right; END plus; END calculator;');
             $this->db->query('CREATE OR REPLACE PROCEDURE plus(left IN NUMBER, right IN NUMBER, output OUT NUMBER) IS BEGIN output := left  + right; END;');
+            $this->db->query('CREATE OR REPLACE PROCEDURE one(cursor OUT SYS_REFCURSOR) IS BEGIN open cursor for select 1 AS ONE from DUAL; END;');
         }
     }
 
@@ -176,6 +177,7 @@ class Migration_Create_test_tables extends Migration
         }
 
         if ($this->db->DBDriver === 'OCI8') {
+            $this->db->query('DROP PROCEDURE one');
             $this->db->query('DROP PROCEDURE plus');
             $this->db->query('DROP PACKAGE BODY calculator');
         }
