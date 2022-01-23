@@ -618,6 +618,26 @@ If you need to retrieve all error messages for failed fields, you can use the ``
 
 If no errors exist, an empty array will be returned.
 
+When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys.::
+
+    // for data
+    'contacts' => [
+        'friends' => [
+            [
+                'name' => 'Fred Flinstone',
+            ],
+            [
+                'name' => '',
+            ],
+        ]
+    ]
+
+    //rule
+    contacts.*.name => 'required'
+
+    // error will be
+    'contacts.friends.1.name' => 'The contacts.*.name field is required.',
+
 Getting a Single Error
 ======================
 

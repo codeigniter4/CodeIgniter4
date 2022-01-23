@@ -139,7 +139,12 @@ class Validation implements ValidationInterface
                 $rules = $this->splitRules($rules);
             }
 
-            $values = dot_array_search($field, $data);
+            $values = strpos($field, '*') !== false
+                ? array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
+                    '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+                    $key
+                ), ARRAY_FILTER_USE_KEY)
+                : dot_array_search($field, $data);
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
@@ -148,10 +153,10 @@ class Validation implements ValidationInterface
                 continue;
             }
 
-            if (strpos($field, '*') !== false && is_array($values)) {
+            if (strpos($field, '*') !== false) {
                 // Process multiple fields
-                foreach ($values as $value) {
-                    $this->processRules($field, $setup['label'] ?? $field, $value, $rules, $data);
+                foreach ($values as $dotField => $value) {
+                    $this->processRules($dotField, $setup['label'] ?? $field, $value, $rules, $data);
                 }
             } else {
                 // Process single field

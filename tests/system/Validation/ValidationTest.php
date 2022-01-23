@@ -825,21 +825,31 @@ final class ValidationTest extends CIUnitTestCase
             ],
             'name_user' => [
                 123,
+                'alpha',
                 'xyz098',
+            ],
+            'contacts' => [
+                'friends' => [
+                    ['name' => ''],
+                    ['name' => 'John'],
+                ],
             ],
         ];
 
         $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
 
         $this->validation->setRules([
-            'id_user.*'   => 'numeric',
-            'name_user.*' => 'alpha',
+            'id_user.*'       => 'numeric',
+            'name_user.*'     => 'alpha',
+            'contacts.*.name' => 'required',
         ]);
 
         $this->validation->withRequest($request->withMethod('post'))->run();
         $this->assertSame([
-            'id_user.*'   => 'The id_user.* field must contain only numbers.',
-            'name_user.*' => 'The name_user.* field may only contain alphabetical characters.',
+            'id_user.0'               => 'The id_user.* field must contain only numbers.',
+            'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
+            'name_user.2'             => 'The name_user.* field may only contain alphabetical characters.',
+            'contacts.friends.0.name' => 'The contacts.*.name field is required.',
         ], $this->validation->getErrors());
     }
 
