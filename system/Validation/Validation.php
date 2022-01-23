@@ -197,19 +197,17 @@ class Validation implements ValidationInterface
             $ifExistField  = $field;
 
             if (strpos($field, '.*') !== false) {
-                // We'll change the dot notation into a PCRE pattern
-                // that can be used later
-                $ifExistField = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
+                // We'll change the dot notation into a PCRE pattern that can be used later
+                $ifExistField   = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
+                $dataIsExisting = false;
+                $pattern        = sprintf('/%s/u', $ifExistField);
 
-                $dataIsExisting = array_reduce(
-                    array_keys($flattenedData),
-                    static function ($carry, $item) use ($ifExistField) {
-                        $pattern = sprintf('/%s/u', $ifExistField);
-
-                        return $carry || preg_match($pattern, $item) === 1;
-                    },
-                    false
-                );
+                foreach (array_keys($flattenedData) as $item) {
+                    if (preg_match($pattern, $item) === 1) {
+                        $dataIsExisting = true;
+                        break;
+                    }
+                }
             } else {
                 $dataIsExisting = array_key_exists($ifExistField, $flattenedData);
             }
