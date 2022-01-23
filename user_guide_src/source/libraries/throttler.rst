@@ -32,7 +32,7 @@ more readable. This says that the bucket allows 60 actions every minute, or 1 ac
 
 Let's say that a third-party script was trying to hit a URL repeatedly. At first, it would be able to use all 60
 of those tokens in less than a second. However, after that the Throttler would only allow one action per second,
-potentially slowing down the requests enough that they attack is no longer worth it.
+potentially slowing down the requests enough that the attack is no longer worth it.
 
 .. note:: For the Throttler class to work, the Cache library must be set up to use a handler other than dummy.
             For best performance, an in-memory cache, like Redis or Memcached, is recommended.
