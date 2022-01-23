@@ -486,7 +486,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      * type     yes       the type of the parameter
      * length   yes       the max size of the parameter
      *
-     * @return Result|bool|CodeIgniter\Database\Query
+     * @return Result|bool|\CodeIgniter\Database\Query
      *
      */
     public function storedProcedure(string $procedureName, array $params)
