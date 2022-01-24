@@ -86,16 +86,6 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$redis \\(array\\<string, int\\|string\\|null\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/PredisHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/RedisHandler.php
-
-		-
 			message: "#^Variable \\$config in empty\\(\\) always exists and is not falsy\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
@@ -814,31 +804,6 @@ parameters:
 			message: "#^Access to an undefined property Config\\\\App\\:\\:\\$sessionDBGroup\\.$#"
 			count: 1
 			path: system/Session/Handlers/DatabaseHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/DatabaseHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/FileHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/MemcachedHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/RedisHandler.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
-			count: 1
-			path: system/Session/Handlers/RedisHandler.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"

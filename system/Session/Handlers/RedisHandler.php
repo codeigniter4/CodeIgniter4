@@ -70,7 +70,7 @@ class RedisHandler extends BaseHandler
     {
         $redis = new Redis();
 
-        if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout'])) {
+        if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout'] ?? 0)) {
             throw new Exception('Unable to connect to Redis with the configured settings.');
         }
         if (isset($this->savePath['password'])) {
@@ -144,7 +144,7 @@ class RedisHandler extends BaseHandler
                 'password' => preg_match('#(password|auth)=([^\s&]+)#', $matches[3], $match) ? $match[2] : null,
                 'username' => preg_match('#username=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
                 'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : 0,
                 // Accept a value of 'true' or > 0 to enable cluster mode.
                 'isCluster'  => preg_match('#isCluster=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,
                 'persistent' => preg_match('#persistent=([^\s&]+)#', $matches[3], $match) ? ($match[1] === 'true' || $match[1] > 0) : null,

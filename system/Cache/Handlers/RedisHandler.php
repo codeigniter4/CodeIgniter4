@@ -53,6 +53,10 @@ class RedisHandler extends BaseHandler
         if (! empty($config)) {
             $this->config = array_merge($this->config, $config->redis);
         }
+        if (null === $this->config['timeout']) {
+            // As of php8.1, redis::connect doesn't allow a null timeout value.
+            $this->config['timeout'] = 0;
+        }
     }
 
     /**

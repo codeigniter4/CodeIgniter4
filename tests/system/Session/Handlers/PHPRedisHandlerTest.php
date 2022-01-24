@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Test\TestLogger;
+use Config\Logger as LoggerConfig;
+
 /**
  * @internal
  */
@@ -20,7 +23,9 @@ final class PHPRedisHandlerTest extends RedisHandlerTest
     {
         parent::getInstance($options);
         $this->config->{'sessionDriver'} = 'CodeIgniter\Session\Handlers\RedisHandler';
+        $handler                         = new RedisHandler($this->config, $this->config->ip);
+        $handler->setLogger(new TestLogger(new LoggerConfig()));
 
-        return new RedisHandler($this->config, $this->config->ip);
+        return $handler;
     }
 }
