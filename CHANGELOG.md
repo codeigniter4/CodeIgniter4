@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.1.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.8) (2022-01-24)
+
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.7...v4.1.8)
+
+**SECURITY**
+
+* *XSS Vulnerability* in the `API\ResponseTrait` was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7528-7jg5-6g62) for more information.
+
 ## [v4.1.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.7) (2022-01-09)
 
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.6...v4.1.7)
