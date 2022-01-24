@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\OCI8;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Query;
 use ErrorException;
 use stdClass;
 
