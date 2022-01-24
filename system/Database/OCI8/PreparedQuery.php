@@ -46,11 +46,6 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
      */
     public function _prepare(string $sql, array $options = [])
     {
-        $sql = rtrim($sql, ';');
-        if (strpos('BEGIN', ltrim($sql)) === 0) {
-            $sql .= ';';
-        }
-
         if (! $this->statement = oci_parse($this->db->connID, $this->parameterize($sql))) {
             $error             = oci_error($this->db->connID);
             $this->errorCode   = $error['code'] ?? 0;
