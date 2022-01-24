@@ -119,17 +119,20 @@ class Routes extends BaseCommand
 
     private function getAutoRoutes(RouteCollection $collection): array
     {
-        $defaultNamespace = $collection->getDefaultNamespace();
-        $finder           = new ControllerFinder($defaultNamespace);
-        $reader           = new ControllerMethodReader($defaultNamespace);
+        $defaultNamespace  = $collection->getDefaultNamespace();
+        $defaultController = $collection->getDefaultController();
+        $defaultMethod     = $collection->getDefaultMethod();
+
+        $finder = new ControllerFinder($defaultNamespace);
+        $reader = new ControllerMethodReader($defaultNamespace);
 
         $tbody = [];
 
         foreach ($finder->find() as $class) {
             $output = $reader->read(
                 $class,
-                $collection->getDefaultController(),
-                $collection->getDefaultMethod()
+                $defaultController,
+                $defaultMethod
             );
 
             foreach ($output as $item) {
