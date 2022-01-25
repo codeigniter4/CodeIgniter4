@@ -18,8 +18,8 @@ Which is right for you?
     installing_composer
     installing_manual
     running
-    upgrading
     ../changelogs/index
+    upgrading
     troubleshooting
     repositories
 
