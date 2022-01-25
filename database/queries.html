@@ -313,6 +313,11 @@ this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY HERE&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using OCI8 Driver, SQL statements should not end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).
+PL/SQL statements should end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p>
+</div>
 </section>
 <section id="simplified-queries">
 <h3><a class="toc-backref" href="#id3">Simplified Queries</a><a class="headerlink" href="#simplified-queries" title="Permalink to this headline"></a></h3>
