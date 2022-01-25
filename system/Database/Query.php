@@ -263,7 +263,7 @@ class Query implements QueryInterface
     {
         $sql = $this->swappedQueryString ?? $this->originalQueryString;
 
-        $from = '/(\W)' . $orig . '(\S+?)/';
+        $from = '/(\W)' . $orig . '(\S)/';
         $to   = '\\1' . $swap . '\\2';
 
         $this->swappedQueryString = preg_replace($from, $to, $sql);
