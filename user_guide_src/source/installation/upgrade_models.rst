@@ -38,7 +38,7 @@ You can find more information to those methods :doc:`here </models/model>`.
 Code Example
 ============
 
-CodeIgniter Version 3.11
+CodeIgniter Version 3.x
 ------------------------
 
 Path: **application/models**::
