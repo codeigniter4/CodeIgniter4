@@ -36,6 +36,7 @@ Changes
 - Update minimal PHP requirement to 7.4.
 - The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.
 - The process of sending cookies has been moved to the ``Response`` class. Now the ``Session`` class doesn't send cookies, set them to the Response.
+- Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See :ref:`validation-getting-all-errors`.
 
 Deprecations
 ************
