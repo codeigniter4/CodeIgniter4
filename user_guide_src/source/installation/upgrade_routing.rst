@@ -28,7 +28,7 @@ Upgrade Guide
 Code Example
 ============
 
-CodeIgniter Version 3.11
+CodeIgniter Version 3.x
 ------------------------
 Path: **application/config/routes.php**::
 
