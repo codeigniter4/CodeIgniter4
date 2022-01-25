@@ -17,9 +17,9 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use Config\Services;
 
 /**
- * Lists all of the user-defined routes. This will include any Routes files
- * that can be discovered, but will NOT include any routes that are not defined
- * in a routes file, but are instead discovered through auto-routing.
+ * Lists all the routes. This will include any Routes files
+ * that can be discovered, and will include routes that are not defined
+ * in routes files, but are instead discovered through auto-routing.
  */
 class Routes extends BaseCommand
 {
