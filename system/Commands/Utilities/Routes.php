@@ -108,7 +108,7 @@ class Routes extends BaseCommand
                 $collection->getDefaultController(),
                 $collection->getDefaultMethod()
             );
-            $tbody = array_merge($tbody, $autoRouteCollector->get());
+            $tbody = [...$tbody, ...$autoRouteCollector->get()];
         }
 
         $thead = [
