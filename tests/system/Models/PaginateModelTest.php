@@ -46,7 +46,7 @@ final class PaginateModelTest extends LiveModelTestCase
     public function testPaginateForQueryWithGroupBy(): void
     {
         $this->createModel(ValidModel::class);
-        $this->model->groupBy('id');
+        $this->model->select('id')->groupBy('id');
         $this->model->paginate();
         $this->assertSame(4, $this->model->pager->getDetails()['total']);
     }

@@ -83,6 +83,8 @@ final class OrderTest extends CIUnitTestCase
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $key   = 'NEWID()';
             $table = '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '".' . $table;
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $key = '"DBMS_RANDOM"."RANDOM"';
         }
 
         $expected = 'SELECT * FROM ' . $table . ' ORDER BY ' . $key;

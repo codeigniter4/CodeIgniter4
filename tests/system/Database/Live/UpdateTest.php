@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 
 /**
  * @group DatabaseLive
@@ -202,7 +203,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testSetWithoutEscape()
     {
         $this->db->table('job')
-            ->set('description', 'name', false)
+            ->set('description', $this->db->escapeIdentifiers('name'), false)
             ->update();
 
         $this->seeInDatabase('job', [

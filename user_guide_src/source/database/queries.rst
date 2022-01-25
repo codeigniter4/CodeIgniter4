@@ -27,6 +27,9 @@ this::
 
     $query = $db->query('YOUR QUERY HERE');
 
+.. note:: If you are using OCI8 Driver, SQL statements should not end with a semi-colon (``;``).
+    PL/SQL statements should end with a semi-colon (``;``).
+
 Simplified Queries
 ==================
 

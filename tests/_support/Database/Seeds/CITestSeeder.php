@@ -166,6 +166,16 @@ class CITestSeeder extends Seeder
             ];
         }
 
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->db->query('alter session set NLS_DATE_FORMAT=?', ['YYYY/MM/DD HH24:MI:SS']);
+            $data['type_test'][0]['type_time']      = '2020-07-18 15:22:00';
+            $data['type_test'][0]['type_date']      = '2020-01-11 22:11:00';
+            $data['type_test'][0]['type_time']      = '2020-07-18 15:22:00';
+            $data['type_test'][0]['type_datetime']  = '2020-06-18 05:12:24';
+            $data['type_test'][0]['type_timestamp'] = '2020-06-18 21:53:21';
+            unset($data['type_test'][0]['type_blob']);
+        }
+
         foreach ($data as $table => $dummy_data) {
             $this->db->table($table)->truncate();
 

@@ -76,7 +76,7 @@ final class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $databases = $util->listDatabases();
 
             $this->assertContains($this->db->getDatabase(), $databases);
@@ -92,7 +92,7 @@ final class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $exist = $util->databaseExists($this->db->getDatabase());
 
             $this->assertTrue($exist);
@@ -107,6 +107,12 @@ final class DbUtilsTest extends CIUnitTestCase
     public function testUtilsOptimizeDatabase()
     {
         $util = (new Database())->loadUtils($this->db);
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
 
         $d = $util->optimizeDatabase();
 
@@ -146,6 +152,12 @@ final class DbUtilsTest extends CIUnitTestCase
     public function testUtilsOptimizeTable()
     {
         $util = (new Database())->loadUtils($this->db);
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
 
         $d = $util->optimizeTable('db_job');
 

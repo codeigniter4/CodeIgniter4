@@ -19,12 +19,13 @@ Currently supported databases are:
   - PostgreSQL via the *Postgre* driver
   - SQLite3 via the *SQLite3* driver
   - MSSQL via the *SQLSRV* driver (version 2005 and above only)
+  - Oracle via the *OCI8* driver (version 12.1 and above only)
 
 Not all of the drivers have been converted/rewritten for CodeIgniter4.
 The list below shows the outstanding ones.
 
   - MySQL (5.1+) via the *pdo* driver
-  - Oracle via the *oci8* and *pdo* drivers
+  - Oracle via the *pdo* drivers
   - PostgreSQL via the *pdo* driver
   - MSSQL via the *pdo* driver
   - SQLite via the *sqlite* (version 2) and *pdo* drivers
