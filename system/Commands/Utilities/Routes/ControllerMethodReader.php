@@ -17,7 +17,7 @@ use ReflectionMethod;
 /**
  * Reads a controller and returns a list of auto route listing.
  */
-class ControllerMethodReader
+final class ControllerMethodReader
 {
     /**
      * @var string the default namespace
