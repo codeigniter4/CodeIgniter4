@@ -100,6 +100,13 @@ the User Guide repo to **public/userguide4** and browse to the website to make s
 * Make a new topic in the "News & Discussion" forums: https://forum.codeigniter.com/forum-2.html
 * The content is somewhat organic, but should include any major features and changes as well as a link to the User Guide's changelog
 
+## After Publishing Security Advisory
+
+* Send a PR to [PHP Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
+    * E.g. https://github.com/FriendsOfPHP/security-advisories/pull/606
+    * See https://github.com/FriendsOfPHP/security-advisories#contributing
+    * Don't forget to run `php -d memory_limit=-1 validator.php`, before submitting the PR
+
 ## Appendix
 
 ### Sphinx Installation
