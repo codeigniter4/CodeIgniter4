@@ -276,14 +276,15 @@ one and place your controller classes within them.
 
 .. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
-.. note:: When using this feature the first segment of your URI must
-    specify the folder. For example, let's say you have a controller located here::
+When using this feature the first segment of your URI must
+specify the folder. For example, let's say you have a controller located here::
 
-        app/Controllers/Products/Shoes.php
+    app/Controllers/Products/Shoes.php
 
-    To call the above controller your URI will look something like this::
+To call the above controller your URI will look something like this::
 
-        example.com/index.php/products/shoes/show/123
+    example.com/index.php/products/shoes/show/123
+
 
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
