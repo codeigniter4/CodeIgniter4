@@ -110,6 +110,11 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 1 => 'popcorn/echoJson[/...]',
                 2 => '\\Tests\\Support\\Controllers\\Popcorn::echoJson',
             ],
+            16 => [
+                0 => 'auto',
+                1 => 'remap[/...]',
+                2 => '\\Tests\\Support\\Controllers\\Remap::_remap',
+            ],
         ];
         $this->assertSame($expected, $routes);
     }
