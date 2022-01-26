@@ -646,7 +646,12 @@ class Validation implements ValidationInterface
             $field = array_key_first($this->rules);
         }
 
-        return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
+        $errors = array_filter($this->getErrors(), static fn ($key) => preg_match(
+            '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+            $key
+        ), ARRAY_FILTER_USE_KEY);
+
+        return $errors === [] ? '' : implode("\n", $errors);
     }
 
     /**

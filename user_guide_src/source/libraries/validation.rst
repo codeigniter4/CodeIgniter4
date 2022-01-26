@@ -650,6 +650,8 @@ name::
 
 If no error exists, an empty string will be returned.
 
+.. note:: When using a wildcard, all found errors that match the mask will be combined into one line separated by the EOL character.
+
 Check If Error Exists
 =====================
 

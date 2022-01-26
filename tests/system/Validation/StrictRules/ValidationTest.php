@@ -762,6 +762,16 @@ final class ValidationTest extends CIUnitTestCase
             'name_user.2'             => 'The name_user.* field may only contain alphabetical characters.',
             'contacts.friends.0.name' => 'The contacts.*.name field is required.',
         ], $this->validation->getErrors());
+
+        $this->assertSame(
+            "The name_user.* field may only contain alphabetical characters.\n"
+            . 'The name_user.* field may only contain alphabetical characters.',
+            $this->validation->getError('name_user.*')
+        );
+        $this->assertSame(
+            'The contacts.*.name field is required.',
+            $this->validation->getError('contacts.*.name')
+        );
     }
 
     public function testRulesForSingleRuleWithSingleValue(): void
