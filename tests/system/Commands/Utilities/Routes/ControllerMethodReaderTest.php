@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Controllers\Popcorn;
+use Tests\Support\Controllers\Remap;
 
 /**
  * @internal
@@ -82,6 +83,22 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
             13 => [
                 'route'   => 'popcorn/echoJson[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::echoJson',
+            ],
+        ];
+        $this->assertSame($expected, $routes);
+    }
+
+    public function testReadControllerWithRemap()
+    {
+        $namespace = 'Tests\Support\Controllers';
+        $reader    = new ControllerMethodReader($namespace);
+
+        $routes = $reader->read(Remap::class);
+
+        $expected = [
+            0 => [
+                'route'   => 'remap[/...]',
+                'handler' => '\\Tests\\Support\\Controllers\\Remap::_remap',
             ],
         ];
         $this->assertSame($expected, $routes);

@@ -43,10 +43,30 @@ final class ControllerMethodReader
         $classname      = $reflection->getName();
         $classShortname = $reflection->getShortName();
 
-        $output = [];
+        $output     = [];
+        $uriByClass = $this->getUriByClass($classname);
+
+        if ($this->hasRemap($reflection)) {
+            $methodName = '_remap';
+
+            $routeWithoutController = $this->getRouteWithoutController(
+                $classShortname,
+                $defaultController,
+                $uriByClass,
+                $classname,
+                $methodName
+            );
+            $output = [...$output, ...$routeWithoutController];
+
+            $output[] = [
+                'route'   => $uriByClass . '[/...]',
+                'handler' => '\\' . $classname . '::' . $methodName,
+            ];
+
+            return $output;
+        }
 
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            $uriByClass = $this->getUriByClass($classname);
             $methodName = $method->getName();
 
             $route = $uriByClass . '/' . $methodName;
@@ -60,16 +80,14 @@ final class ControllerMethodReader
                 continue;
             }
 
-            if ($classShortname === $defaultController) {
-                $pattern         = '#' . preg_quote(lcfirst($defaultController), '#') . '\z#';
-                $routeController = preg_replace($pattern, '', $uriByClass);
-                $routeController = $routeController ? '' : '/';
-
-                $output[] = [
-                    'route'   => $routeController,
-                    'handler' => '\\' . $classname . '::' . $methodName,
-                ];
-            }
+            $routeWithoutController = $this->getRouteWithoutController(
+                $classShortname,
+                $defaultController,
+                $uriByClass,
+                $classname,
+                $methodName
+            );
+            $output = [...$output, ...$routeWithoutController];
 
             if ($methodName === $defaultMethod) {
                 $output[] = [
@@ -88,7 +106,23 @@ final class ControllerMethodReader
     }
 
     /**
-     * @param class-string $classname URI path part from the controller
+     * Whether the class has a _remap() method.
+     */
+    private function hasRemap(ReflectionClass $class): bool
+    {
+        if ($class->hasMethod('_remap')) {
+            $remap = $class->getMethod('_remap');
+
+            return $remap->isPublic();
+        }
+
+        return false;
+    }
+
+    /**
+     * @param class-string $classname
+     *
+     * @return string URI path part from the folder(s) and controller
      */
     private function getUriByClass(string $classname): string
     {
@@ -106,5 +140,31 @@ final class ControllerMethodReader
         }
 
         return rtrim($classPath, '/');
+    }
+
+    /**
+     * Gets a route without default controller.
+     */
+    private function getRouteWithoutController(
+        string $classShortname,
+        string $defaultController,
+        string $uriByClass,
+        string $classname,
+        string $methodName
+    ): array {
+        $output = [];
+
+        if ($classShortname === $defaultController) {
+            $pattern                = '#' . preg_quote(lcfirst($defaultController), '#') . '\z#';
+            $routeWithoutController = preg_replace($pattern, '', $uriByClass);
+            $routeWithoutController = $routeWithoutController ?: '/';
+
+            $output[] = [
+                'route'   => $routeWithoutController,
+                'handler' => '\\' . $classname . '::' . $methodName,
+            ];
+        }
+
+        return $output;
     }
 }
