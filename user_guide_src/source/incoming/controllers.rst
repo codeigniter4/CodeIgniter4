@@ -18,21 +18,21 @@ Consider this URI::
 
     example.com/index.php/helloworld/
 
-In the above example, CodeIgniter would attempt to find a controller named Helloworld.php and load it.
+In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php** and load it.
 
 **When a controller's name matches the first segment of a URI, it will be loaded.**
 
 Let's try it: Hello World!
 ==========================
 
-Let's create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
-and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController. you can
-also extend the CodeIgniter\\Controller if you do not need the functionality of the BaseController.
+Let's create a simple controller so you can see it in action. Using your text editor, create a file called **Helloworld.php**,
+and put the following code in it. You will notice that the ``Helloworld`` Controller is extending the ``BaseController``. you can
+also extend the ``CodeIgniter\Controller`` if you do not need the functionality of the BaseController.
 
 The BaseController provides a convenient place for loading components and performing functions that are needed by all your
 controllers. You can extend this class in any new controller.
 
-For security reasons be sure to declare any new utility methods as protected or private.::
+For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.::
 
     <?php
 
@@ -48,7 +48,7 @@ For security reasons be sure to declare any new utility methods as protected or 
 
 Then save the file to your **/app/Controllers/** directory.
 
-.. important:: The file must be called 'Helloworld.php', with a capital 'H'.
+.. important:: The file must be called **Helloworld.php**, with a capital ``H``.
 
 Now visit your site using a URL similar to this::
 
@@ -65,7 +65,6 @@ This is valid::
     <?php
 
     namespace App\Controllers;
-
 
     class Helloworld extends BaseController
     {
@@ -99,12 +98,12 @@ class so that it can inherit all its methods.
 
 .. note::
     The system will attempt to match the URI against Controllers by matching each segment against
-    folders/files in APPPATH/Controllers, when a match wasn't found against defined routes.
+    folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
     If you want another naming convention you need to manually define it using the
     :doc:`URI Routing <routing>` feature.
 
-    Here is an example based on PSR-4: Autoloader::
+    Here is an example based on PSR-4 Autoloader::
 
         \<NamespaceName>(\<SubNamespaceNames>)*\<ClassName>
 
@@ -113,7 +112,7 @@ class so that it can inherit all its methods.
 Methods
 =======
 
-In the above example, the method name is ``index()``. The "index" method
+In the above example, the method name is ``index()``. The ``index()`` method
 is always loaded by default if the **second segment** of the URI is
 empty. Another way to show your "Hello World" message would be this::
 
@@ -157,7 +156,7 @@ For example, let's say you have a URI like this::
 
     example.com/index.php/products/shoes/sandals/123
 
-Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
+Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``)::
 
     <?php
 
@@ -181,18 +180,18 @@ Defining a Default Controller
 
 CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested. Let's try it
-with the Helloworld controller.
+with the ``Helloworld`` controller.
 
 To specify a default controller open your **app/Config/Routes.php**
 file and set this variable::
 
     $routes->setDefaultController('Helloworld');
 
-Where 'Helloworld' is the name of the controller class you want to be used.
+Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section comment out the line::
+A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line::
 
-$routes->get('/', 'Home::index');
+    $routes->get('/', 'Home::index');
 
 If you now browse to your site without specifying any URI segments you'll
 see the “Hello World” message.
@@ -214,7 +213,7 @@ this behavior through the use of the ``_remap()`` method::
         // Some code here...
     }
 
-.. important:: If your controller contains a method named _remap(),
+.. important:: If your controller contains a method named ``_remap()``,
     it will **always** get called regardless of what your URI contains. It
     overrides the normal behavior in which the URI determines which method
     is called, allowing you to define your own method routing rules.
@@ -251,9 +250,9 @@ Private methods
 ===============
 
 In some cases, you may want certain methods hidden from public access.
-To achieve this, simply declare the method as private or protected.
+To achieve this, simply declare the method as ``private`` or ``protected``.
 That will prevent it from being served by a URL request. For example,
-if you were to define a method like this for the `Helloworld` controller::
+if you were to define a method like this for the ``Helloworld`` controller::
 
     protected function utility()
     {
@@ -271,8 +270,8 @@ If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.
 
-Simply create sub-directories under the main *app/Controllers/*
-one and place your controller classes within them.
+Simply create sub-directories under the main **app/Controllers/**,
+and place your controller classes within them.
 
 .. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
@@ -291,7 +290,7 @@ To call the above controller your URI will look something like this::
 
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
-in there that matches the name of your 'default_controller' as specified in
+in there that matches the name of your default controller as specified in
 your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
@@ -335,7 +334,7 @@ modify this by passing the duration (in seconds) as the first parameter::
         $this->forceHTTPS(31536000); // one year
     }
 
-.. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including YEAR, MONTH, and more.
+.. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
 
 Helpers
 -------
@@ -358,7 +357,7 @@ To simplify data checking, the controller also provides the convenience method `
 The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller's
-**$this->request** instance to get the data to be validated.
+``$this->request`` instance to get the data to be validated.
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules.::
 
@@ -377,7 +376,7 @@ rule and message array formats, as well as available rules.::
     }
 
 If you find it simpler to keep the rules in the configuration file, you can replace
-the $rules array with the name of the group as defined in ``Config\Validation.php``::
+the ``$rules`` array with the name of the group as defined in ``Config\Validation.php``::
 
     public function updateUser(int $userID)
     {
