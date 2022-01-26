@@ -39,7 +39,12 @@ final class ControllerMethodReader
      */
     public function read(string $class, string $defaultController = 'Home', string $defaultMethod = 'index'): array
     {
-        $reflection     = new ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
+
+        if ($reflection->isAbstract()) {
+            return [];
+        }
+
         $classname      = $reflection->getName();
         $classShortname = $reflection->getShortName();
 
