@@ -285,6 +285,9 @@ To call the above controller your URI will look something like this::
 
     example.com/index.php/products/shoes/show/123
 
+.. note:: You cannot have directories with the same name in **app/Controllers/** and **public/**.
+    This is because if there is a directory, the web server will search for it and
+    it will not be routed to CodeIgniter.
 
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
