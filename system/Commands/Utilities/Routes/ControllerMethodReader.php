@@ -85,16 +85,16 @@ final class ControllerMethodReader
                 continue;
             }
 
-            $routeWithoutController = $this->getRouteWithoutController(
-                $classShortname,
-                $defaultController,
-                $uriByClass,
-                $classname,
-                $methodName
-            );
-            $output = [...$output, ...$routeWithoutController];
-
             if ($methodName === $defaultMethod) {
+                $routeWithoutController = $this->getRouteWithoutController(
+                    $classShortname,
+                    $defaultController,
+                    $uriByClass,
+                    $classname,
+                    $methodName
+                );
+                $output = [...$output, ...$routeWithoutController];
+
                 $output[] = [
                     'route'   => $uriByClass,
                     'handler' => '\\' . $classname . '::' . $methodName,
