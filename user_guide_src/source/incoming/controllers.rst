@@ -108,7 +108,7 @@ class so that it can inherit all its methods.
 
         \<NamespaceName>(\<SubNamespaceNames>)*\<ClassName>
 
-        $routes->get('helloworld', 'App\Controllers\HelloWorld::index');
+        $routes->get('helloworld', '\App\Controllers\HelloWorld::index');
 
 Methods
 =======
