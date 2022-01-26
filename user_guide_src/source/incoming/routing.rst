@@ -495,6 +495,7 @@ To disable this functionality, you must call the method with the parameter ``fal
 .. note:: By default, all routes have a priority of 0.
     Negative integers will be cast to the absolute value.
 
+.. _routes-configuration-options:
 
 Routes Configuration Options
 ============================

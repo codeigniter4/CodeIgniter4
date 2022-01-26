@@ -199,7 +199,7 @@ see the “Hello World” message.
 
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
-For more information, please refer to the "Routes Configuration Options" section of the
+For more information, please refer to the :ref:`routes-configuration-options` section of the
 :doc:`URI Routing <routing>` documentation.
 
 Remapping Method Calls
