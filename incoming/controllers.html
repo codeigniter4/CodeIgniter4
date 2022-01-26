@@ -291,17 +291,17 @@
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span>
 </pre></div>
 </div>
-<p>In the above example, CodeIgniter would attempt to find a controller named Helloworld.php and load it.</p>
+<p>In the above example, CodeIgniter would attempt to find a controller named <strong>Helloworld.php</strong> and load it.</p>
 <p><strong>When a controller’s name matches the first segment of a URI, it will be loaded.</strong></p>
 </section>
 <section id="let-s-try-it-hello-world">
 <h2><a class="toc-backref" href="#id2">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this headline"></a></h2>
-<p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called Helloworld.php,
-and put the following code in it. You will notice that the Helloworld Controller is extending the BaseController. you can
-also extend the CodeIgniter\Controller if you do not need the functionality of the BaseController.</p>
+<p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called <strong>Helloworld.php</strong>,
+and put the following code in it. You will notice that the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>. you can
+also extend the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality of the BaseController.</p>
 <p>The BaseController provides a convenient place for loading components and performing functions that are needed by all your
 controllers. You can extend this class in any new controller.</p>
-<p>For security reasons be sure to declare any new utility methods as protected or private.:</p>
+<p>For security reasons be sure to declare any new utility methods as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code>.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -318,7 +318,7 @@ controllers. You can extend this class in any new controller.</p>
 <p>Then save the file to your <strong>/app/Controllers/</strong> directory.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The file must be called ‘Helloworld.php’, with a capital ‘H’.</p>
+<p>The file must be called <strong>Helloworld.php</strong>, with a capital <code class="docutils literal notranslate"><span class="pre">H</span></code>.</p>
 </div>
 <p>Now visit your site using a URL similar to this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span>
@@ -336,7 +336,6 @@ controllers. You can extend this class in any new controller.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
-
 
 <span class="k">class</span> <span class="nc">Helloworld</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -371,21 +370,21 @@ class so that it can inherit all its methods.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The system will attempt to match the URI against Controllers by matching each segment against
-folders/files in APPPATH/Controllers, when a match wasn’t found against defined routes.
+folders/files in <strong>app/Controllers/</strong>, when a match wasn’t found against defined routes.
 That’s why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 If you want another naming convention you need to manually define it using the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
-<p>Here is an example based on PSR-4: Autoloader:</p>
+<p>Here is an example based on PSR-4 Autoloader:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">NamespaceName</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">SubNamespaceNames</span><span class="o">&gt;</span><span class="p">)</span><span class="o">*</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">ClassName</span><span class="o">&gt;</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;\App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="methods">
 <h2><a class="toc-backref" href="#id3">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h2>
-<p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">index()</span></code>. The “index” method
+<p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">index()</span></code>. The <code class="docutils literal notranslate"><span class="pre">index()</span></code> method
 is always loaded by default if the <strong>second segment</strong> of the URI is
 empty. Another way to show your “Hello World” message would be this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span><span class="nx">index</span><span class="o">/</span>
@@ -426,7 +425,7 @@ method as parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">sandals</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
-<p>Your method will be passed URI segments 3 and 4 (“sandals” and “123”):</p>
+<p>Your method will be passed URI segments 3 and 4 (<code class="docutils literal notranslate"><span class="pre">'sandals'</span></code> and <code class="docutils literal notranslate"><span class="pre">'123'</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
@@ -452,14 +451,14 @@ ones.</p>
 <h2><a class="toc-backref" href="#id5">Defining a Default Controller</a><a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested. Let’s try it
-with the Helloworld controller.</p>
+with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
 <p>To specify a default controller open your <strong>app/Config/Routes.php</strong>
 file and set this variable:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Helloworld&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Where ‘Helloworld’ is the name of the controller class you want to be used.</p>
-<p>A few lines further down <strong>Routes.php</strong> in the “Route Definitions” section comment out the line:</p>
+<p>Where <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> is the name of the controller class you want to be used.</p>
+<p>A few lines further down <strong>Routes.php</strong> in the “Route Definitions” section, comment out the line:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -469,7 +468,7 @@ see the “Hello World” message.</p>
 <p class="admonition-title">Note</p>
 <p>The line <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code> is an optimization that you will want to use in a “real-world” app. But for demonstration purposes we don’t want to use that feature. <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get()</span></code> is explained in <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a></p>
 </div>
-<p>For more information, please refer to the “Routes Configuration Options” section of the
+<p>For more information, please refer to the <a class="reference internal" href="routing.html#routes-configuration-options"><span class="std std-ref">Routes Configuration Options</span></a> section of the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> documentation.</p>
 </section>
 <section id="remapping-method-calls">
@@ -485,7 +484,7 @@ this behavior through the use of the <code class="docutils literal notranslate">
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If your controller contains a method named _remap(),
+<p>If your controller contains a method named <code class="docutils literal notranslate"><span class="pre">_remap()</span></code>,
 it will <strong>always</strong> get called regardless of what your URI contains. It
 overrides the normal behavior in which the URI determines which method
 is called, allowing you to define your own method routing rules.</p>
@@ -521,9 +520,9 @@ to emulate CodeIgniter’s default behavior.</p>
 <section id="private-methods">
 <h2><a class="toc-backref" href="#id7">Private methods</a><a class="headerlink" href="#private-methods" title="Permalink to this headline"></a></h2>
 <p>In some cases, you may want certain methods hidden from public access.
-To achieve this, simply declare the method as private or protected.
+To achieve this, simply declare the method as <code class="docutils literal notranslate"><span class="pre">private</span></code> or <code class="docutils literal notranslate"><span class="pre">protected</span></code>.
 That will prevent it from being served by a URL request. For example,
-if you were to define a method like this for the <cite>Helloworld</cite> controller:</p>
+if you were to define a method like this for the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">utility</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">// some code</span>
@@ -540,14 +539,12 @@ if you were to define a method like this for the <cite>Helloworld</cite> control
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
-<p>Simply create sub-directories under the main <em>app/Controllers/</em>
-one and place your controller classes within them.</p>
+<p>Simply create sub-directories under the main <strong>app/Controllers/</strong>,
+and place your controller classes within them.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>When using this feature the first segment of your URI must
 specify the folder. For example, let’s say you have a controller located here:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">/</span><span class="nx">Controllers</span><span class="o">/</span><span class="nx">Products</span><span class="o">/</span><span class="nx">Shoes</span><span class="o">.</span><span class="nx">php</span>
@@ -557,10 +554,15 @@ specify the folder. For example, let’s say you have a controller located here:
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">products</span><span class="o">/</span><span class="nx">shoes</span><span class="o">/</span><span class="nx">show</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You cannot have directories with the same name in <strong>app/Controllers/</strong> and <strong>public/</strong>.
+This is because if there is a directory, the web server will search for it and
+it will not be routed to CodeIgniter.</p>
 </div>
 <p>Each of your sub-directories may contain a default controller which will be
 called if the URL contains <em>only</em> the sub-directory. Simply put a controller
-in there that matches the name of your ‘default_controller’ as specified in
+in there that matches the name of your default controller as specified in
 your <strong>app/Config/Routes.php</strong> file.</p>
 <p>CodeIgniter also permits you to remap your URIs using its <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
 </section>
@@ -595,7 +597,7 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including YEAR, MONTH, and more.</p>
+<p>A number of <a class="reference internal" href="../general/common_functions.html"><span class="doc">time-based constants</span></a> are always available for you to use, including <code class="docutils literal notranslate"><span class="pre">YEAR</span></code>, <code class="docutils literal notranslate"><span class="pre">MONTH</span></code>, and more.</p>
 </div>
 <section id="helpers">
 <h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
@@ -618,7 +620,7 @@ inside the controller:</p>
 The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller’s
-<strong>$this-&gt;request</strong> instance to get the data to be validated.
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code> instance to get the data to be validated.
 The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a> have details on
 rule and message array formats, as well as available rules.:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
@@ -637,7 +639,7 @@ rule and message array formats, as well as available rules.:</p>
 </pre></div>
 </div>
 <p>If you find it simpler to keep the rules in the configuration file, you can replace
-the $rules array with the name of the group as defined in <code class="docutils literal notranslate"><span class="pre">Config\Validation.php</span></code>:</p>
+the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> array with the name of the group as defined in <code class="docutils literal notranslate"><span class="pre">Config\Validation.php</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span> <span class="p">{</span>
@@ -673,7 +675,7 @@ the $rules array with the name of the group as defined in <code class="docutils 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 25, 2022.
+      <span class="lastupdated">Last updated on Jan 26, 2022.
       </span></p>
   </div>
 
