@@ -631,7 +631,9 @@ class Validation implements ValidationInterface
      */
     public function hasError(string $field): bool
     {
-        return array_key_exists($field, $this->getErrors());
+        $pattern = '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/';
+
+        return (bool) preg_grep($pattern, array_keys($this->getErrors()));
     }
 
     /**

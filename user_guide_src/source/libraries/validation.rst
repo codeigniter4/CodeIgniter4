@@ -634,7 +634,7 @@ When using a wildcard, the error will point to a specific field, replacing the a
         ]
     ]
 
-    //rule
+    // rule
     contacts.*.name => 'required'
 
     // error will be
@@ -658,6 +658,16 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     if ($validation->hasError('username')) {
         echo $validation->getError('username');
     }
+
+When specifying a field with a wildcard, all errors matching the mask will be checked.::
+
+    // for errors
+    [
+        'foo.0.bar'   => 'Error',
+        'foo.baz.bar' => 'Error',
+    ]
+
+    $validation->hasError('foo.*.bar'); // return true
 
 Customizing Error Display
 *************************

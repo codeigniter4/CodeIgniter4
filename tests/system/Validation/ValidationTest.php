@@ -633,10 +633,24 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testHasError(): void
     {
-        $data = ['foo' => 'notanumber'];
-        $this->validation->setRules(['foo' => 'is_numeric']);
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => [
+                ['baz' => 'string'],
+                ['baz' => ''],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'foo'       => 'is_numeric',
+            'bar.*.baz' => 'required',
+        ]);
+
         $this->validation->run($data);
         $this->assertTrue($this->validation->hasError('foo'));
+        $this->assertTrue($this->validation->hasError('bar.*.baz'));
+        $this->assertFalse($this->validation->hasError('bar.0.baz'));
+        $this->assertTrue($this->validation->hasError('bar.1.baz'));
     }
 
     public function testSplitRulesTrue(): void
