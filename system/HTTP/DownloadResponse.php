@@ -306,6 +306,7 @@ class DownloadResponse extends Response
         // Flush 1MB chunks of data
         while (! $splFileObject->eof() && ($data = $splFileObject->fread(1_048_576)) !== false) {
             echo $data;
+            unset($data);
         }
 
         return $this;
