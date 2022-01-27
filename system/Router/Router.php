@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
@@ -39,7 +40,7 @@ class Router implements RouterInterface
     /**
      * The name of the controller class.
      *
-     * @var string
+     * @var Closure|string
      */
     protected $controller;
 
@@ -203,7 +204,7 @@ class Router implements RouterInterface
     /**
      * Returns the name of the matched controller.
      *
-     * @return mixed
+     * @return Closure|string
      */
     public function controllerName()
     {
