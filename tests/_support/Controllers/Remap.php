@@ -13,10 +13,24 @@ namespace Tests\Support\Controllers;
 
 use CodeIgniter\Controller;
 
-class Hello extends Controller
+class Remap extends Controller
 {
+    public function _remap($method, ...$params)
+    {
+        if ($method === 'xyz') {
+            return $this->abc();
+        }
+
+        return $this->index();
+    }
+
     public function index()
     {
-        return 'Hello';
+        return 'index';
+    }
+
+    public function abc()
+    {
+        return 'abc';
     }
 }
