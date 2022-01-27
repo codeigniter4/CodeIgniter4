@@ -176,8 +176,8 @@ trait FilterTestTrait
 
         $this->filters->reset();
 
-        if ($routeFilter = $this->collection->getFilterForRoute($route)) {
-            $this->filters->enableFilter($routeFilter, $position);
+        if ($routeFilters = $this->collection->getFiltersForRoute($route)) {
+            $this->filters->enableFilters($routeFilters, $position);
         }
 
         $aliases = $this->filters->initialize($route)->getFilters();
