@@ -44,7 +44,7 @@ class Routes extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Displays all of user-defined routes. Does NOT display auto-detected routes.';
+    protected $description = 'Displays all routes.';
 
     /**
      * the Command's usage
