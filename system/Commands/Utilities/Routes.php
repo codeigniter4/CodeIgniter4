@@ -15,6 +15,8 @@ use Closure;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
+use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
+use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use Config\Services;
 
 /**
@@ -86,7 +88,9 @@ class Routes extends BaseCommand
             'cli',
         ];
 
-        $tbody = [];
+        $tbody           = [];
+        $uriGenerator    = new SampleURIGenerator();
+        $filterCollector = new FilterCollector();
 
         foreach ($methods as $method) {
             $routes = $collection->getRoutes($method);
@@ -94,10 +98,15 @@ class Routes extends BaseCommand
             foreach ($routes as $route => $handler) {
                 // filter for strings, as callbacks aren't displayable
                 if (is_string($handler) || $handler instanceof Closure) {
+                    $sampleUri = $uriGenerator->get($route);
+                    $filters   = $filterCollector->get($method, $sampleUri);
+
                     $tbody[] = [
                         strtoupper($method),
                         $route,
                         is_string($handler) ? $handler : '(Closure)',
+                        implode(' ', array_map('class_basename', $filters['before'])),
+                        implode(' ', array_map('class_basename', $filters['after'])),
                     ];
                 }
             }
@@ -109,13 +118,23 @@ class Routes extends BaseCommand
                 $collection->getDefaultController(),
                 $collection->getDefaultMethod()
             );
-            $tbody = [...$tbody, ...$autoRouteCollector->get()];
+            $autoRoutes = $autoRouteCollector->get();
+
+            foreach ($autoRoutes as &$routes) {
+                $filters  = $filterCollector->get('get', $uriGenerator->get($routes[1]));
+                $routes[] = implode(' ', array_map('class_basename', $filters['before']));
+                $routes[] = implode(' ', array_map('class_basename', $filters['after']));
+            }
+
+            $tbody = [...$tbody, ...$autoRoutes];
         }
 
         $thead = [
             'Method',
             'Route',
             'Handler',
+            'Filters:before',
+            'Filters:after',
         ];
 
         CLI::table($tbody, $thead);
