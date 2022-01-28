@@ -16,9 +16,9 @@ use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ConfigFromArrayTrait;
 use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Filters as FiltersConfig;
-use LogicException;
 
 require_once __DIR__ . '/fixtures/GoogleMe.php';
 require_once __DIR__ . '/fixtures/GoogleYou.php';
@@ -36,6 +36,8 @@ require_once __DIR__ . '/fixtures/Role.php';
  */
 final class FiltersTest extends CIUnitTestCase
 {
+    use ConfigFromArrayTrait;
+
     protected $response;
 
     protected function setUp(): void
@@ -61,32 +63,6 @@ final class FiltersTest extends CIUnitTestCase
         $request ??= Services::request();
 
         return new Filters($config, $request, $this->response);
-    }
-
-    /**
-     * @template T
-     *
-     * @param class-string<T> $classname
-     *
-     * @return T
-     */
-    private function createConfigFromArray(string $classname, array $config)
-    {
-        $configObj = new $classname();
-
-        foreach ($config as $key => $value) {
-            if (property_exists($configObj, $key)) {
-                $configObj->{$key} = $value;
-
-                continue;
-            }
-
-            throw new LogicException(
-                'No such property: ' . $classname . '::$' . $key
-            );
-        }
-
-        return $configObj;
     }
 
     public function testProcessMethodDetectsCLI()
