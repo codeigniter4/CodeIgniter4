@@ -286,7 +286,7 @@ class CodeIgniter
      * @throws Exception
      * @throws RedirectException
      *
-     * @return bool|mixed|RequestInterface|ResponseInterface
+     * @return bool|mixed|RequestInterface|ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
