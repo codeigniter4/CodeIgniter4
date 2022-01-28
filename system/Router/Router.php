@@ -182,7 +182,7 @@ class Router implements RouterInterface
     /**
      * Returns the filter info for the matched route, if any.
      *
-     * @return string
+     * @return string|null
      *
      * @deprecated Use getFilters()
      */
