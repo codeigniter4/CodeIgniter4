@@ -1096,18 +1096,18 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2831
      */
-    public function testFilterAlitasMultiple()
+    public function testFilterAliasMultiple()
     {
         $config = [
             'aliases' => [
-                'multipeTest' => [
+                'multipleTest' => [
                     'CodeIgniter\Filters\fixtures\Multiple1',
                     'CodeIgniter\Filters\fixtures\Multiple2',
                 ],
             ],
             'globals' => [
                 'before' => [
-                    'multipeTest',
+                    'multipleTest',
                 ],
             ],
         ];
