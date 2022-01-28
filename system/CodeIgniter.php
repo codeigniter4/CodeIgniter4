@@ -703,7 +703,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|string[]|null
+     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
