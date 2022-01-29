@@ -35,7 +35,7 @@ final class AutoRouteCollector
     }
 
     /**
-     * @return list<list<string>>
+     * @return array<int, array<int, string>>
      */
     public function get(): array
     {
