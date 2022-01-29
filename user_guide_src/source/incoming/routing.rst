@@ -24,8 +24,9 @@ For example, let’s say you want your URLs to have this prototype::
 Normally the second segment of the URL path is reserved for the method name, but in the example
 above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.
 
+******************************
 Setting your own routing rules
-==============================
+******************************
 
 Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
@@ -497,14 +498,15 @@ To disable this functionality, you must call the method with the parameter ``fal
 
 .. _routes-configuration-options:
 
+****************************
 Routes Configuration Options
-============================
+****************************
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application's needs. These options are available at the top of **app/Config/Routes.php**.
 
 Default Namespace
------------------
+=================
 
 When matching a controller to a route, the router will add the default namespace value to the front of the controller
 specified by the route. By default, this value is ``App\Controllers``.
@@ -532,7 +534,7 @@ then you can change this value to save typing::
     $routes->add('users', 'Admin\Users::index');
 
 Default Controller
-------------------
+==================
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
@@ -546,7 +548,7 @@ in the controllers directory. For example, if the user visits **example.com/admi
 **app/Controllers/Admin/Home.php**, it would be used.
 
 Default Method
---------------
+==============
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
@@ -558,7 +560,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
     $routes->setDefaultMethod('listAll');
 
 Translate URI Dashes
---------------------
+====================
 
 This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
@@ -569,7 +571,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 .. _use-defined-routes-only:
 
 Use Defined Routes Only
------------------------
+=======================
 
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
@@ -581,7 +583,7 @@ to only those defined by you, by setting the ``setAutoRoute()`` option to false:
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
 404 Override
-------------
+============
 
 When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
@@ -598,7 +600,7 @@ a valid class/method pair, just like you would show in any route, or a Closure::
 
 
 Route processing by priority
-----------------------------
+============================
 
 Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
@@ -609,3 +611,43 @@ For an example use of lowering the priority see :ref:`routing-priority`::
 
     // to disable
     $routes->setPrioritize(false);
+
+*****************
+Confirming Routes
+*****************
+
+CodeIgniter has the following :doc:`command </cli/cli_commands>` to display all routes.
+
+.. _spark-routes:
+
+**routes**
+
+Displays all routes and filters::
+
+    > php spark routes
+
+The output is like the following:
+
+.. code-block:: none
+
+    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
+    | Method | Route                      | Handler                                        | Filters:before | Filters:after         |
+    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
+    | GET    | /                          | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
+    | CLI    | migrations/([^/]+)/([^/]+) | \CodeIgniter\Commands\MigrationsCommand::$1/$2 |                |                       |
+    | CLI    | migrations/([^/]+)         | \CodeIgniter\Commands\MigrationsCommand::$1    |                |                       |
+    | CLI    | migrations                 | \CodeIgniter\Commands\MigrationsCommand::index |                |                       |
+    | CLI    | ci(.*)                     | \CodeIgniter\CLI\CommandRunner::index/$1       |                |                       |
+    | auto   | /                          | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
+    | auto   | home                       | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
+    | auto   | home/index[/...]           | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
+    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
+
+The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by auto routing, so it is not defined in **app/Config/Routes.php**.
+
+The *Route* column shows the URI path to match. The route of a defined route is expressed as a regular expression.
+But ``[/...]`` in the route of an auto route is indicates any number of segments.
+
+.. note:: When auto routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
+
+.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. But the filters defined in **app/Config/Routes.php** are always displayed correctly.
