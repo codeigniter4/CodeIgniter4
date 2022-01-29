@@ -111,6 +111,25 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
+    public function testFindGlobalsFiltersWithRedirectRoute()
+    {
+        $collection = $this->createRouteCollection();
+        $collection->addRedirect('users/about', 'profile');
+
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('users/about');
+
+        $expected = [
+            'before' => [],
+            'after'  => [],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
     public function testFindGlobalsAndRouteFilters()
     {
         $collection = $this->createRouteCollection();

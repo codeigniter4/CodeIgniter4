@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Filters\Filters;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Router;
 use Config\Services;
 
@@ -53,12 +54,19 @@ final class FilterFinder
         $this->filters->reset();
 
         // Add route filters
-        $routeFilters = $this->getRouteFilters($uri);
-        $this->filters->enableFilters($routeFilters, 'before');
-        $this->filters->enableFilters($routeFilters, 'after');
+        try {
+            $routeFilters = $this->getRouteFilters($uri);
+            $this->filters->enableFilters($routeFilters, 'before');
+            $this->filters->enableFilters($routeFilters, 'after');
 
-        $this->filters->initialize($uri);
+            $this->filters->initialize($uri);
 
-        return $this->filters->getFilters();
+            return $this->filters->getFilters();
+        } catch (RedirectException $e) {
+            return [
+                'before' => [],
+                'after'  => [],
+            ];
+        }
     }
 }
