@@ -25,7 +25,7 @@ final class FilterCollector
      * @param string $method HTTP method
      * @param string $uri    URI path to find filters for
      *
-     * @return array{before: array<class-string>, after: array<class-string>} Filter classnames
+     * @return array{before: list<string>, after: list<string>} array of filter alias or classname
      */
     public function get(string $method, string $uri): array
     {

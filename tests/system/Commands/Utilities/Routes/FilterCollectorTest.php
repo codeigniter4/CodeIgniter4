@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -29,7 +28,7 @@ final class FilterCollectorTest extends CIUnitTestCase
             'before' => [
             ],
             'after' => [
-                DebugToolbar::class,
+                'toolbar',
             ],
         ];
         $this->assertSame($expected, $filters);

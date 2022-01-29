@@ -46,7 +46,7 @@ final class FilterFinder
     /**
      * @param string $uri URI path to find filters for
      *
-     * @return array{before: array<class-string>, after: array<class-string>} Filter classnames
+     * @return array{before: list<string>, after: list<string>} array of filter alias or classname
      */
     public function find(string $uri): array
     {
@@ -59,6 +59,6 @@ final class FilterFinder
 
         $this->filters->initialize($uri);
 
-        return $this->filters->getFiltersClass();
+        return $this->filters->getFilters();
     }
 }

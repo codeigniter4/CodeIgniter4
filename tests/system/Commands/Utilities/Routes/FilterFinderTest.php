@@ -16,6 +16,7 @@ use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Filters\Honeypot;
+use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
@@ -104,8 +105,8 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('users');
 
         $expected = [
-            'before' => [CSRF::class],
-            'after'  => [DebugToolbar::class],
+            'before' => ['csrf'],
+            'after'  => ['toolbar'],
         ];
         $this->assertSame($expected, $filters);
     }
@@ -122,9 +123,49 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => [Honeypot::class, CSRF::class],
-            'after'  => [Honeypot::class, DebugToolbar::class],
+            'before' => ['honeypot', 'csrf'],
+            'after'  => ['honeypot', 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
+    }
+
+    public function testFindGlobalsAndRouteClassnameFilters()
+    {
+        $collection = $this->createRouteCollection();
+        $collection->get('admin', ' AdminController::index', ['filter' => InvalidChars::class]);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('admin');
+
+        $expected = [
+            'before' => [InvalidChars::class, 'csrf'],
+            'after'  => [InvalidChars::class, 'toolbar'],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
+    public function testFindGlobalsAndRouteMultipleFilters()
+    {
+        config('Feature')->multipleFilters = true;
+
+        $collection = $this->createRouteCollection();
+        $collection->get('admin', ' AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+
+        $finder = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('admin');
+
+        $expected = [
+            'before' => ['honeypot', InvalidChars::class, 'csrf'],
+            'after'  => ['honeypot', InvalidChars::class, 'toolbar'],
+        ];
+        $this->assertSame($expected, $filters);
+
+        config('Feature')->multipleFilters = false;
     }
 }
