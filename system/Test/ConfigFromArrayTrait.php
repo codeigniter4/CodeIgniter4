@@ -20,8 +20,8 @@ trait ConfigFromArrayTrait
      *
      * @template T of \CodeIgniter\Config\BaseConfig
      *
-     * @param array<string, mixed> $config
      * @param class-string<T>      $classname Config classname
+     * @param array<string, mixed> $config
      *
      * @return T
      */
