@@ -23,10 +23,6 @@ use Config\Modules;
  */
 final class RouteCollectionTest extends CIUnitTestCase
 {
-    protected function tearDown(): void
-    {
-    }
-
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
     {
         $defaults = [
