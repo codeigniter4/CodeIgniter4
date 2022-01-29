@@ -149,7 +149,8 @@ class Router implements RouterInterface
         $uri = urldecode($uri);
 
         // Restart filterInfo
-        $this->filterInfo = null;
+        $this->filterInfo  = null;
+        $this->filtersInfo = [];
 
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
