@@ -1250,8 +1250,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertSame('role', $routes->getFilterForRoute('admin/users'));
-        $this->assertSame('', $routes->getFilterForRoute('admin/bosses'));
+        $this->assertSame(['role'], $routes->getFiltersForRoute('admin/users'));
+        $this->assertSame([], $routes->getFiltersForRoute('admin/bosses'));
     }
 
     public function testRouteGroupWithFilterWithParams()
@@ -1269,7 +1269,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertSame('role:admin,manager', $routes->getFilterForRoute('admin/users'));
+        $this->assertSame(['role:admin,manager'], $routes->getFiltersForRoute('admin/users'));
     }
 
     public function test404OverrideNot()
