@@ -8,7 +8,7 @@ but you would then be responsible for telling other developers that they
 need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
-The database table **migration** tracks which migrations have already been
+The database table **migrations** tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
 call ``$migration->latest()`` to bring the database up to the most recent
 state. You can also use ``$migration->setNamespace(null)->latest()`` to
