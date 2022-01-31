@@ -86,7 +86,7 @@ Class Reference
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
+        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``)::
 
             $request->getServer('some_data');
 
