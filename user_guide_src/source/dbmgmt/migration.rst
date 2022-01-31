@@ -24,16 +24,16 @@ Migration file names
 
 Each Migration is run in numeric order forward or backwards depending on the
 method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYYMMDDHHIISS** format (e.g., **20121031100537**). This
+was created, in **YYYY-MM-DD-HHIISS** format (e.g., **2012-10-31-100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
 and a descriptive name for the migration. The year, month, and date can be separated
 from each other by dashes, underscores, or not at all. For example:
 
-* 20121031100537_add_blog.php
-* 2012-10-31-100538_alter_blog_track_views.php
-* 2012_10_31_100539_alter_blog_add_translations.php
+* 2012-10-31-100538_AlterBlogTrackViews.php
+* 2012_10_31_100539_AlterBlogAddTranslations.php
+* 20121031100537_AddBlog.php
 
 ******************
 Create a Migration
@@ -41,7 +41,7 @@ Create a Migration
 
 This will be the first migration for a new site which has a blog. All
 migrations go in the **app/Database/Migrations/** directory and have names such
-as *20121031100537_add_blog.php*.
+as **2022-01-31-013057_AddBlog.php**.
 ::
 
     <?php
