@@ -83,8 +83,8 @@ as **2022-01-31-013057_AddBlog.php**.
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
 
-Alternatively, you can use a command-line call to generate a skeleton migration file. See
-below for more details.
+Alternatively, you can use a command-line call to generate a skeleton migration file.
+See **make:migration** in :ref:`command-line-tools` for more details.
 
 .. note:: Since the migration class is a PHP class, the classname must be unique in every migration file.
 
@@ -184,6 +184,8 @@ to update the schema::
             }
         }
     }
+
+.. _command-line-tools:
 
 *******************
 Command-Line Tools
