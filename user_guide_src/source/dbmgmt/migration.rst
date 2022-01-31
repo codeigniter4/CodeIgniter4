@@ -86,6 +86,8 @@ The database connection and the database Forge class are both available to you t
 Alternatively, you can use a command-line call to generate a skeleton migration file. See
 below for more details.
 
+.. note:: Since the migration class is a PHP class, the classname must be unique in every migration file.
+
 Foreign Keys
 ============
 
