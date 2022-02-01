@@ -31,10 +31,8 @@ class Request extends Message implements MessageInterface, RequestInterface
 
     /**
      * Request method.
-     *
-     * @var string
      */
-    protected $method;
+    protected string $method;
 
     /**
      * A URI instance.
@@ -56,10 +54,6 @@ class Request extends Message implements MessageInterface, RequestInterface
          * @deprecated $this->proxyIps property will be removed in the future
          */
         $this->proxyIPs = $config->proxyIPs;
-
-        if (empty($this->method)) {
-            $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
-        }
 
         if (empty($this->uri)) {
             $this->uri = new URI();
@@ -92,7 +86,17 @@ class Request extends Message implements MessageInterface, RequestInterface
      */
     public function getMethod(bool $upper = false): string
     {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
+        if (empty($this->method)) {
+            $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+
+            if ($this->method === 'POST'
+                && in_array(strtoupper($_POST['_method'] ?? ''), ['PUT', 'PATCH', 'DELETE'], true)
+            ) {
+                $this->method = strtoupper($_POST['_method']);
+            }
+        }
+
+        return $upper ? strtoupper($this->method) : strtolower($this->method);
     }
 
     /**

@@ -75,7 +75,7 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
     which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
-You can check the HTTP method that this request represents with the ``method()`` method::
+You can get the HTTP method that this request represents with the ``getMethod()`` method::
 
     // Returns 'post'
     $method = $request->getMethod();
@@ -85,6 +85,13 @@ uppercase version by wrapping the call in ``str_to_upper()``::
 
     // Returns 'GET'
     $method = str_to_upper($request->getMethod());
+
+
+You can check the HTTP method that this request represents with the ``isMethod()`` method::
+
+    // Returns true for a POST request.
+    $request->isMethod('post');
+
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 
@@ -341,6 +348,7 @@ The methods provided by the parent classes that are available are:
 
 * :meth:`CodeIgniter\\HTTP\\Request::getIPAddress`
 * :meth:`CodeIgniter\\HTTP\\Request::isValidIP`
+* :meth:`CodeIgniter\\HTTP\\Request::isMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::setMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`

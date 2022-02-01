@@ -679,4 +679,22 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('get', $this->request->getMethod());
         $this->assertSame('GET', $this->request->getMethod(true));
     }
+
+    public function testIsMethod()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $request = new Request(new App());
+        $this->assertTrue($request->isMethod('post'));
+
+        $_POST['_method'] = 'TEST';
+        $request          = new Request(new App());
+
+        $this->assertFalse($request->isMethod('test'));
+
+        $_POST['_method'] = 'PUT';
+        $request          = new Request(new App());
+
+        $this->assertTrue($request->isMethod('PUT'));
+    }
 }

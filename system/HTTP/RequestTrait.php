@@ -332,4 +332,9 @@ trait RequestTrait
                 break;
         }
     }
+
+    public function isMethod(string $method): bool
+    {
+        return $this->getMethod(true) === strtoupper($method);
+    }
 }

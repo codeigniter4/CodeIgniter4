@@ -297,8 +297,6 @@ class CodeIgniter
 
         $this->forceSecureAccess();
 
-        $this->spoofRequestMethod();
-
         Events::trigger('pre_system');
 
         // Check for a cached page. Execution will stop
@@ -972,6 +970,8 @@ class CodeIgniter
     /**
      * Modifies the Request Object to use a different method if a POST
      * variable called _method is found.
+     *
+     * @deprecated 4.2
      */
     public function spoofRequestMethod()
     {

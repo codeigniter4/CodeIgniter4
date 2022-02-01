@@ -63,13 +63,20 @@ Class Reference
         :returns: HTTP request method
         :rtype: string
 
-        Returns the ``$_SERVER['REQUEST_METHOD']``, with the option to set it
-        in uppercase or lowercase.
+        Returns the ``$_SERVER['REQUEST_METHOD']`` considering the spoofing method,
+        with the option to set it in uppercase or lowercase.
         ::
 
             echo $request->getMethod(true); // Outputs: POST
             echo $request->getMethod(false); // Outputs: post
             echo $request->getMethod(); // Outputs: post
+
+    .. php:method:: isMethod(string $method)
+
+        :param string $method: The name of the HTTP method. Case-insensitive.
+        :rtype: boolean
+
+        Checks if the passed method is an HTTP request method considering the spoofing method.
 
     .. php:method:: setMethod($method)
 
