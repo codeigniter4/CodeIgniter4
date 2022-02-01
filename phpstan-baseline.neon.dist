@@ -641,11 +641,6 @@ parameters:
 			path: system/Helpers/number_helper.php
 
 		-
-			message: "#^Variable \\$mockService in empty\\(\\) always exists and is always falsy\\.$#"
-			count: 1
-			path: system/Helpers/test_helper.php
-
-		-
 			message: "#^Variable \\$pool might not be defined\\.$#"
 			count: 2
 			path: system/Helpers/text_helper.php
@@ -980,3 +975,8 @@ parameters:
 			count: 1
 			path: system/View/Parser.php
 
+		-
+			message: "#^Result of \\|\\| is always false\\.$#"
+			paths:
+				- system/Cache/CacheFactory.php
+				- system/Filters/Filters.php
