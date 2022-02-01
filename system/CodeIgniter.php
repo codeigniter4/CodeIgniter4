@@ -316,6 +316,11 @@ class CodeIgniter
             return;
         }
 
+        // spark command has nothing to do with HTTP redirect and 404
+        if (defined('SPARKED')) {
+            return $this->handleRequest($routes, $cacheConfig, $returnResponse);
+        }
+
         try {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         } catch (RedirectException $e) {
