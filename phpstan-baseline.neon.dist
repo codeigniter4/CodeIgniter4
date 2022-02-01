@@ -731,11 +731,6 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
 			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 2
 			path: system/Router/Router.php
