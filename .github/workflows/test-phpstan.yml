@@ -12,6 +12,7 @@ on:
       - 'system/**'
       - composer.json
       - phpstan.neon.dist
+      - phpstan-baseline.neon.dist
   push:
     branches:
       - 'develop'
@@ -21,6 +22,7 @@ on:
       - 'system/**'
       - composer.json
       - phpstan.neon.dist
+      - phpstan-baseline.neon.dist
 
 jobs:
   build:
