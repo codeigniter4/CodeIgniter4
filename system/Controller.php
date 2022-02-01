@@ -128,13 +128,36 @@ class Controller
     }
 
     /**
-     * A shortcut to performing validation on input data. If validation
-     * is not successful, a $errors property will be set on this class.
+     * A shortcut to performing validation on Request data.
      *
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
      */
     protected function validate($rules, array $messages = []): bool
+    {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->withRequest($this->request)->run();
+    }
+
+    /**
+     * A shortcut to performing validation on any input data.
+     *
+     * @param array        $data     The data to validate
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
+     */
+    protected function validateData(array $data, $rules, array $messages = []): bool
+    {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->run($data);
+    }
+
+    /**
+     * @param array|string $rules
+     */
+    private function setValidator($rules, array $messages): void
     {
         $this->validator = Services::validation();
 
@@ -157,6 +180,6 @@ class Controller
             $rules = $validation->{$rules};
         }
 
-        return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();
+        $this->validator->setRules($rules, $messages);
     }
 }
