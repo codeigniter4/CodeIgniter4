@@ -374,7 +374,7 @@ class Toolbar
             helper('filesystem');
 
             // Updated to time() so we can get history
-            $time = time();
+            $time = number_format(microtime(true), 4, ".", "");
 
             if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
