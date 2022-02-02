@@ -97,7 +97,7 @@ class History extends BaseCollector
                 $files[] = [
                     'time'        => $time,
                     'datetime'    => $dateTime,
-                    'active'      => $time === $current,
+                    'active'      => (float) $time === $current,
                     'status'      => $contents->vars->response->statusCode,
                     'method'      => $contents->method,
                     'url'         => $contents->url,
