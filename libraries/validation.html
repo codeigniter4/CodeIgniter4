@@ -568,15 +568,15 @@ will use the <code class="docutils literal notranslate"><span class="pre">setRul
 methods.</p>
 <section id="setrule">
 <h3><a class="toc-backref" href="#id15">setRule()</a><a class="headerlink" href="#setrule" title="Permalink to this headline"></a></h3>
-<p>This method sets a single rule. It has the method signature</p>
-<blockquote>
-<div><p>setRule(string $field, ?string $label, array|string $rules[, array $errors = []])</p>
-</div></blockquote>
-<p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> either takes in a pipe-delimited list of rules or an array collection of rules.</p>
-<blockquote>
-<div><p>$validation-&gt;setRule(‘username’, ‘Username’, ‘required|min_length[3]’);
-$validation-&gt;setRule(‘password’, ‘Password’, [‘required’, ‘min_length[8]’, ‘alpha_numeric_punct’]);</p>
-</div></blockquote>
+<p>This method sets a single rule. It has the method signature:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">setRule</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$field</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$label</span><span class="p">,</span> <span class="k">array</span><span class="o">|</span><span class="nx">string</span> <span class="nv">$rules</span><span class="p">[,</span> <span class="k">array</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="p">[]])</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> either takes in a pipe-delimited list of rules or an array collection of rules:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required|min_length[3]&#39;</span><span class="p">);</span>
+<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[8]&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha_numeric_punct&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
 <p>The value you pass to <code class="docutils literal notranslate"><span class="pre">$field</span></code> must match the key of any data array that is sent in. If
 the data is taken directly from <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, then it must be an exact match for
 the form input name.</p>
@@ -1512,7 +1512,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 01, 2022.
+      <span class="lastupdated">Last updated on Feb 02, 2022.
       </span></p>
   </div>
 
