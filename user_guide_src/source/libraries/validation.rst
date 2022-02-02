@@ -261,11 +261,11 @@ methods.
 setRule()
 =========
 
-This method sets a single rule. It has the method signature
+This method sets a single rule. It has the method signature::
 
     setRule(string $field, ?string $label, array|string $rules[, array $errors = []])
 
-The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules.
+The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules::
 
     $validation->setRule('username', 'Username', 'required|min_length[3]');
     $validation->setRule('password', 'Password', ['required', 'min_length[8]', 'alpha_numeric_punct']);
