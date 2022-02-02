@@ -299,6 +299,12 @@ class CodeIgniter
 
         $this->spoofRequestMethod();
 
+        if ($this->request instanceof IncomingRequest && $this->request->getMethod() === 'cli') {
+            $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+
+            return $this->sendResponse();
+        }
+
         Events::trigger('pre_system');
 
         // Check for a cached page. Execution will stop
@@ -352,6 +358,7 @@ class CodeIgniter
     /**
      * Handles the main request logic and fires the controller.
      *
+     * @throws PageNotFoundException
      * @throws RedirectException
      *
      * @return mixed|RequestInterface|ResponseInterface

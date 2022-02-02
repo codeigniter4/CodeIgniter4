@@ -425,4 +425,23 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
+
+    public function testRunCLIRoute()
+    {
+        $_SERVER['argv'] = ['index.php', 'cli'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI']     = '/cli';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'CLI';
+
+        $routes = Services::routes();
+        $routes->cli('cli', '\Tests\Support\Controllers\Popcorn::index');
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('Method Not Allowed', $output);
+    }
 }
