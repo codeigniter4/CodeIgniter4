@@ -59,7 +59,7 @@ class History extends BaseCollector
      * Specify time limit & file count for debug history.
      *
      * @param float $current Current history time
-     * @param int $limit   Max history files
+     * @param int   $limit   Max history files
      */
     public function setFiles(float $current, int $limit = 20)
     {
@@ -83,16 +83,14 @@ class History extends BaseCollector
 
             $contents = @json_decode($contents);
             if (json_last_error() === JSON_ERROR_NONE) {
-
                 preg_match_all('/debugbar_(.*)\.json/s', $filename, $time, PREG_SET_ORDER);
-                $time = number_format((float) end($time[0]), 4, ".", "");
-
+                $time = (float) number_format(end($time[0]), 4, '.', '');
 
                 // Prevent throw exception is old debugbar time format
-                if($dateTime = DateTime::createFromFormat('U.u', $time)) {
+                if ($dateTime = DateTime::createFromFormat('U.u', $time)) {
                     $dateTime = $dateTime->format('Y-m-d H:i:s.u');
                 } else {
-                    $dateTime = date('Y-m-d H:i:s.u', (int)$time);
+                    $dateTime = date('Y-m-d H:i:s.u', (int) $time);
                 }
 
                 // Debugbar files shown in History Collector
