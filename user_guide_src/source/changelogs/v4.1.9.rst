@@ -1,0 +1,15 @@
+Version 4.1.9
+#############
+
+Release Date: February xx, 2022
+
+**4.1.9 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+SECURITY
+********
+
+- *Remote CLI Command Execution Vulnerability* was fixed. See the `Security advisory <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-xjp4-6w75-qrj7>`_ for more information.
