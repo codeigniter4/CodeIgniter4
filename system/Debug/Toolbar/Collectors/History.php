@@ -93,6 +93,7 @@ class History extends BaseCollector
                     $dateTime = date('Y-m-d H:i:s.u', (int) $time);
                 }
 
+
                 // Debugbar files shown in History Collector
                 $files[] = [
                     'time'        => $time,
