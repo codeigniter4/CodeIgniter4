@@ -63,7 +63,7 @@ Logging Exceptions
 ------------------
 
 By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
-by setting the **$log** value of ``Config\Exceptions``::
+by setting the ``$log`` value of **app/Config/Exceptions.php**::
 
     class Exceptions extends BaseConfig
     {
@@ -89,8 +89,8 @@ PageNotFoundException
 ---------------------
 
 This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
-``/app/views/errors/html/error_404.php``. You should customize all of the error views for your site.
-If, in ``Config/Routes.php``, you have specified a 404 Override, that will be called instead of the standard
+**app/Views/errors/html/error_404.php**. You should customize all of the error views for your site.
+If, in **app/Config/Routes.php**, you have specified a 404 Override, that will be called instead of the standard
 404 page::
 
     if (! $page = $pageModel->find($id)) {
