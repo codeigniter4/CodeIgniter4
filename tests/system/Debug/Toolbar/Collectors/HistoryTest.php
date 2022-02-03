@@ -21,7 +21,7 @@ final class HistoryTest extends CIUnitTestCase
 {
     private const STEP = 0.0001;
 
-    protected float $time;
+    private float $time;
 
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ final class HistoryTest extends CIUnitTestCase
         $this->time = (float) sprintf('%.4f', microtime(true));
     }
 
-    protected function createDummyDebugbarJson()
+    private function createDummyDebugbarJson()
     {
         $time = $this->time;
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
@@ -47,9 +47,9 @@ final class HistoryTest extends CIUnitTestCase
         ];
         // create 20 dummy debugbar json files
         for ($i = 0; $i < 20; $i++) {
-            $path = str_replace($time, number_format($time - self::STEP, 4, '.', ''), $path);
+            $path = str_replace($time, sprintf('%.4f', $time - self::STEP), $path);
             file_put_contents($path, json_encode($dummyData));
-            $time = number_format($time - self::STEP, 4, '.', '');
+            $time = sprintf('%.4f', $time - self::STEP);
         }
     }
 
@@ -68,16 +68,15 @@ final class HistoryTest extends CIUnitTestCase
 
         $history = new History();
         $history->setFiles($time, 20);
-        $this->assertIsArray($history->display());
         $this->assertArrayHasKey('files', $history->display());
-        $this->assertNotEmpty($history->display(), 'Dummy Debugbar data is empty');
+        $this->assertNotEmpty($history->display()['files'], 'Dummy Debugbar data is empty');
 
         foreach ($history->display()['files'] as $request) {
-            $this->assertSame((float) $request['time'], (float) $time, 'Microtime fail');
-            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'), 'DateTime fail');
-            $this->assertSame($request['active'], ($time === $activeRowTime), 'Active row fail');
+            $this->assertSame($request['time'], sprintf('%.4f', $time));
+            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', (string) $time)->format('Y-m-d H:i:s.u'));
+            $this->assertSame($request['active'], ($time === $activeRowTime));
 
-            $time = number_format($time - self::STEP, 4, '.', '');
+            $time = (float) sprintf('%.4f', $time - self::STEP);
         }
     }
 }
