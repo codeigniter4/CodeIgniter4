@@ -65,6 +65,7 @@ final class ResourceControllerTest extends CIUnitTestCase
 
         $config            = new App();
         $this->codeigniter = new MockCodeIgniter($config);
+        $this->codeigniter->setContext('web');
     }
 
     protected function tearDown(): void

@@ -142,6 +142,11 @@ class CodeIgniter
     protected $useSafeOutput = false;
 
     /**
+     * Context: 'web', 'php-cli', 'spark'
+     */
+    protected string $context;
+
+    /**
      * Constructor.
      */
     public function __construct(App $config)
@@ -294,6 +299,8 @@ class CodeIgniter
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
+        assert($this->context !== null, 'Context must be set before run() is called');
+
         $this->startBenchmark();
 
         $this->getRequestObject();
@@ -321,7 +328,7 @@ class CodeIgniter
         }
 
         // spark command has nothing to do with HTTP redirect and 404
-        if (defined('SPARKED')) {
+        if ($this->isSparked()) {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         }
 
@@ -359,6 +366,30 @@ class CodeIgniter
     }
 
     /**
+     * Invoked via spark command?
+     */
+    private function isSparked(): bool
+    {
+        return $this->context === 'spark';
+    }
+
+    /**
+     * Invoked via php-cli command?
+     */
+    private function isPhpCli(): bool
+    {
+        return $this->context === 'php-cli';
+    }
+
+    /**
+     * Web access?
+     */
+    private function isWeb(): bool
+    {
+        return $this->context === 'web';
+    }
+
+    /**
      * Handles the main request logic and fires the controller.
      *
      * @throws RedirectException
@@ -389,7 +420,7 @@ class CodeIgniter
         }
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             // Run "before" filters
             $this->benchmark->start('before_filters');
             $possibleResponse = $filters->run($uri, 'before');
@@ -430,7 +461,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             $filters->setResponse($this->response);
 
             // Run "after" filters
@@ -548,10 +579,8 @@ class CodeIgniter
             return;
         }
 
-        if (is_cli() && ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
+        if ($this->isSparked() || $this->isPhpCli()) {
             $this->request = Services::clirequest($this->config);
-        // @codeCoverageIgnoreEnd
         } else {
             $this->request = Services::request($this->config);
             // guess at protocol if needed
@@ -567,7 +596,7 @@ class CodeIgniter
     {
         $this->response = Services::response($this->config);
 
-        if (! is_cli() || ENVIRONMENT === 'testing') {
+        if ($this->isWeb()) {
             $this->response->setProtocolVersion($this->request->getProtocolVersion());
         }
 
@@ -826,7 +855,7 @@ class CodeIgniter
     protected function runController($class)
     {
         // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+        $params = $this->isSparked() ? $this->request->getSegments() : $this->router->params();
 
         if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
@@ -884,7 +913,9 @@ class CodeIgniter
             ob_end_flush(); // @codeCoverageIgnore
         }
 
-        throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
+        throw PageNotFoundException::forPageNotFound(
+            ENVIRONMENT !== 'production' || ! $this->isWeb() ? $e->getMessage() : ''
+        );
     }
 
     /**
@@ -950,8 +981,8 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli() && ENVIRONMENT !== 'testing') {
-            return; // @codeCoverageIgnore
+        if (! $this->isWeb()) {
+            return;
         }
         // Ignore AJAX requests
         if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
@@ -1014,5 +1045,17 @@ class CodeIgniter
     protected function callExit($code)
     {
         exit($code); // @codeCoverageIgnore
+    }
+
+    /**
+     * Sets the app context.
+     *
+     * @return $this
+     */
+    public function setContext(string $context)
+    {
+        $this->context = $context;
+
+        return $this;
     }
 }
