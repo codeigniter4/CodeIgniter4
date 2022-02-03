@@ -21,11 +21,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
  * already loaded up and ready for us to use.
  */
 
-// Prevent access to BaseController
-$routes->add('BaseController(:any)', static function () {
-    throw PageNotFoundException::forPageNotFound();
-});
-
 // Prevent access to initController method
 $routes->add('(:any)/initController', static function () {
     throw PageNotFoundException::forPageNotFound();
