@@ -335,15 +335,15 @@ in the <strong>.env</strong> file.</p>
 <section id="logging-exceptions">
 <h3><a class="toc-backref" href="#id3">Logging Exceptions</a><a class="headerlink" href="#logging-exceptions" title="Permalink to this headline"></a></h3>
 <p>By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
-by setting the <strong>$log</strong> value of <code class="docutils literal notranslate"><span class="pre">Config\Exceptions</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span>
+by setting the <code class="docutils literal notranslate"><span class="pre">$log</span></code> value of <strong>app/Config/Exceptions.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$log</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>To ignore logging on other status codes, you can set the status code to ignore in the same file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$ignoredCodes</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">404</span> <span class="p">];</span>
 <span class="p">}</span>
@@ -362,8 +362,8 @@ are not set up to log <strong>critical</strong> errors, which all exceptions are
 <section id="pagenotfoundexception">
 <h3><a class="toc-backref" href="#id5">PageNotFoundException</a><a class="headerlink" href="#pagenotfoundexception" title="Permalink to this headline"></a></h3>
 <p>This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
-<code class="docutils literal notranslate"><span class="pre">/app/views/errors/html/error_404.php</span></code>. You should customize all of the error views for your site.
-If, in <code class="docutils literal notranslate"><span class="pre">Config/Routes.php</span></code>, you have specified a 404 Override, that will be called instead of the standard
+<strong>app/Views/errors/html/error_404.php</strong>. You should customize all of the error views for your site.
+If, in <strong>app/Config/Routes.php</strong>, you have specified a 404 Override, that will be called instead of the standard
 404 page:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="o">::</span><span class="na">forPageNotFound</span><span class="p">();</span>
@@ -418,7 +418,7 @@ redirect code to use instead of the default (<code class="docutils literal notra
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 02, 2022.
+      <span class="lastupdated">Last updated on Feb 03, 2022.
       </span></p>
   </div>
 
