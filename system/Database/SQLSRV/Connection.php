@@ -465,6 +465,8 @@ class Connection extends BaseConnection
      * Returns the last error encountered by this connection.
      *
      * @return mixed
+     *
+     * @deprecated Use `error()` instead.
      */
     public function getError()
     {
