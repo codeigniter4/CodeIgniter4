@@ -439,8 +439,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testIsCLI()
     {
-        // this should be the case in unit testing
-        $this->assertTrue($this->request->isCLI());
+        $this->assertFalse($this->request->isCLI());
     }
 
     public function testIsAJAX()
