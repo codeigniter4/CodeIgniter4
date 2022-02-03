@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities;
 
+use Closure;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
@@ -92,11 +93,11 @@ class Routes extends BaseCommand
 
             foreach ($routes as $route => $handler) {
                 // filter for strings, as callbacks aren't displayable
-                if (is_string($handler)) {
+                if (is_string($handler) || $handler instanceof Closure) {
                     $tbody[] = [
                         strtoupper($method),
                         $route,
-                        $handler,
+                        is_string($handler) ? $handler : 'Closure',
                     ];
                 }
             }
