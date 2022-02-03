@@ -95,6 +95,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         static $services = [];
         static $excl     = [
             '__callStatic',
+            'createRequest',
             'serviceExists',
             'reset',
             'resetSingle',
