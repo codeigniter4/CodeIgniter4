@@ -49,6 +49,13 @@ class CLIRequest extends Request
     protected $method = 'cli';
 
     /**
+     * Invoked via spark command?
+     *
+     * @var bool
+     */
+    protected $sparked = false;
+
+    /**
      * Constructor
      */
     public function __construct(App $config)
@@ -196,5 +203,21 @@ class CLIRequest extends Request
     public function isCLI(): bool
     {
         return true;
+    }
+
+    /**
+     * Set sparked true.
+     */
+    public function sparked(): void
+    {
+        $this->sparked = true;
+    }
+
+    /**
+     * Invoked via spark command?
+     */
+    public function isSparked(): bool
+    {
+        return $this->sparked;
     }
 }

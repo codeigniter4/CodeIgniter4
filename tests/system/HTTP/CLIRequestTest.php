@@ -641,4 +641,13 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertTrue($this->request->isCLI());
     }
+
+    public function testIsSparked()
+    {
+        $this->assertFalse($this->request->isSparked());
+
+        $this->request->sparked();
+
+        $this->assertTrue($this->request->isCLI());
+    }
 }
