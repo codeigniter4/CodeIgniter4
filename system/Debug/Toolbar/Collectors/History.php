@@ -83,20 +83,13 @@ class History extends BaseCollector
 
             $contents = @json_decode($contents);
             if (json_last_error() === JSON_ERROR_NONE) {
-                preg_match_all('/debugbar_(.*)\.json/s', $filename, $time, PREG_SET_ORDER);
-                $time = number_format((float) end($time[0]), 4, '.', '');
-
-                // Prevent throw exception is old debugbar time format
-                if ($dateTime = DateTime::createFromFormat('U.u', $time)) {
-                    $dateTime = $dateTime->format('Y-m-d H:i:s.u');
-                } else {
-                    $dateTime = date('Y-m-d H:i:s.u', (int) $time);
-                }
+                preg_match('/debugbar_(.*)\.json$/s', $filename, $time);
+                $time = sprintf('%.4f', $time[1] ?? 0);
 
                 // Debugbar files shown in History Collector
                 $files[] = [
                     'time'        => $time,
-                    'datetime'    => $dateTime,
+                    'datetime'    => DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'),
                     'active'      => (float) $time === $current,
                     'status'      => $contents->vars->response->statusCode,
                     'method'      => $contents->method,

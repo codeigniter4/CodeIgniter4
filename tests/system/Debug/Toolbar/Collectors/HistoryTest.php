@@ -26,7 +26,7 @@ final class HistoryTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->time = number_format(microtime(true), 4, '.', '');
+        $this->time = (float) sprintf('%.4f', microtime(true));
     }
 
     protected function createDummyDebugbarJson()
@@ -45,7 +45,7 @@ final class HistoryTest extends CIUnitTestCase
             'url'    => 'localhost',
             'isAJAX' => false,
         ];
-        // create 10 dummy debugbar json files
+        // create 20 dummy debugbar json files
         for ($i = 0; $i < 20; $i++) {
             $path = str_replace($time, number_format($time - self::STEP, 4, '.', ''), $path);
             file_put_contents($path, json_encode($dummyData));
@@ -64,26 +64,19 @@ final class HistoryTest extends CIUnitTestCase
         // test dir is now populated with json
         $this->createDummyDebugbarJson();
 
+        $activeRowTime = $time = (float) sprintf('%.4f', $time - self::STEP);
+
         $history = new History();
-        $history->setFiles($this->time, 20);
+        $history->setFiles($time, 20);
         $this->assertIsArray($history->display());
         $this->assertArrayHasKey('files', $history->display());
         $this->assertNotEmpty($history->display(), 'Dummy Debugbar data is empty');
 
-        $time = number_format($time - self::STEP, 4, '.', '');
-
         foreach ($history->display()['files'] as $request) {
-            $this->assertSame($request, [
-                'time'        => $time,
-                'datetime'    => DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'),
-                'active'      => false,
-                'status'      => 200,
-                'method'      => 'get',
-                'url'         => 'localhost',
-                'isAJAX'      => 'No',
-                'contentType' => 'text/html; charset=UTF-8',
+            $this->assertSame((float) $request['time'], (float) $time, 'Microtime fail');
+            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'), 'DateTime fail');
+            $this->assertSame($request['active'], ($time === $activeRowTime), 'Active row fail');
 
-            ], 'Date format fail');
             $time = number_format($time - self::STEP, 4, '.', '');
         }
     }
