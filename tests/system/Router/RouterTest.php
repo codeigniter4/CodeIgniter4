@@ -362,6 +362,16 @@ final class RouterTest extends CIUnitTestCase
         $router->autoRoute('Foo.bar');
     }
 
+    public function testAutoRouteRejectsInitController()
+    {
+        $router = new Router($this->collection, $this->request);
+        $router->setTranslateURIDashes(true);
+
+        $this->expectException(PageNotFoundException::class);
+
+        $router->autoRoute('home/initController');
+    }
+
     public function testDetectsLocales()
     {
         $router = new Router($this->collection, $this->request);

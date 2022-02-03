@@ -485,6 +485,11 @@ class Router implements RouterInterface
             $this->method = array_shift($segments) ?: $this->method;
         }
 
+        // Prevent access to initController method
+        if (strtolower($this->method) === 'initcontroller') {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
         if (! empty($segments)) {
             $this->params = $segments;
         }
