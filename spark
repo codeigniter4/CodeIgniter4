@@ -12,6 +12,7 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
+// @TODO want to make deprecated. Use CLIRequest::isSparked() instead.
 define('SPARKED', true);
 
 /*
@@ -42,7 +43,14 @@ $paths = new Config\Paths();
 chdir(FCPATH);
 
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-$app       = require realpath($bootstrap) ?: $bootstrap;
+
+/** @var CodeIgniter\CodeIgniter $app */
+$app = require realpath($bootstrap) ?: $bootstrap;
+
+// Set sparked CLIRequest in CodeIgniter
+$clirequest = Config\Services::clirequest();
+$clirequest->sparked();
+$app->setRequest($clirequest);
 
 // Grab our Console
 $console = new CodeIgniter\CLI\Console($app);

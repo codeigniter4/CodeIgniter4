@@ -317,7 +317,7 @@ class CodeIgniter
         }
 
         // spark command has nothing to do with HTTP redirect and 404
-        if (defined('SPARKED')) {
+        if ($this->isSparked()) {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         }
 
@@ -338,6 +338,11 @@ class CodeIgniter
         } catch (PageNotFoundException $e) {
             $this->display404errors($e);
         }
+    }
+
+    private function isSparked(): bool
+    {
+        return $this->request instanceof CLIRequest && $this->request->isSparked();
     }
 
     /**
@@ -385,7 +390,7 @@ class CodeIgniter
         }
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             // Run "before" filters
             $this->benchmark->start('before_filters');
             $possibleResponse = $filters->run($uri, 'before');
@@ -426,7 +431,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             $filters->setResponse($this->response);
 
             // Run "after" filters
@@ -822,7 +827,7 @@ class CodeIgniter
     protected function runController($class)
     {
         // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+        $params = $this->isSparked() ? $this->request->getSegments() : $this->router->params();
 
         if (method_exists($class, '_remap')) {
             $output = $class->_remap($this->method, ...$params);
