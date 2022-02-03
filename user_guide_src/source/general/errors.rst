@@ -65,14 +65,14 @@ Logging Exceptions
 By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
 by setting the **$log** value of ``Config\Exceptions``::
 
-    class Exceptions
+    class Exceptions extends BaseConfig
     {
         public $log = true;
     }
 
 To ignore logging on other status codes, you can set the status code to ignore in the same file::
 
-    class Exceptions
+    class Exceptions extends BaseConfig
     {
         public $ignoredCodes = [ 404 ];
     }
