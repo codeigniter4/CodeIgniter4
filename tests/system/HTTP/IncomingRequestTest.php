@@ -753,5 +753,5 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('192.168.5.21', $this->request->getIPAddress());
     }
 
-    // FIXME getIPAddress should have more testing, to 100% code coverage
+    // @TODO getIPAddress should have more testing, to 100% code coverage
 }
