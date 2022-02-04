@@ -97,7 +97,7 @@ class Routes extends BaseCommand
                     $tbody[] = [
                         strtoupper($method),
                         $route,
-                        is_string($handler) ? $handler : 'Closure',
+                        is_string($handler) ? $handler : '(Closure)',
                     ];
                 }
             }
