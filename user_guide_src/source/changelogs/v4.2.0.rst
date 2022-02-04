@@ -13,6 +13,7 @@ BREAKING
 ********
 
 - The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
+- There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
 
 
 Enhancements
@@ -28,6 +29,8 @@ Enhancements
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
+- Debugbar enhancements
+    - Debug toolbar is now using ``microtime()`` instead of ``time()``.
 
 Changes
 *******
