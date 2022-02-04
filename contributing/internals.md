@@ -17,11 +17,9 @@ other core packages, you can create that in the constructor using the
 override that:
 
 ```php
-    public function __construct(Foo $foo=null)
+    public function __construct(?Foo $foo = null)
     {
-        $this->foo = $foo instanceOf Foo
-            ? $foo
-            : \Config\Services::foo();
+        $this->foo = $foo ?? \Config\Services::foo();
     }
 ```
 
