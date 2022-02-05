@@ -21,6 +21,7 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
@@ -526,10 +527,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->resetServices();
 
         /** @var App $config */
-        $config       = config('App');
-        $cliDetection = Kint::$cli_detection;
+        $config             = config('App');
+        $config->CSPEnabled = true;
 
-        $config->CSPEnabled  = true;
+        // Initialize Kint
+        $app = new MockCodeIgniter($config);
+        $app->initialize();
+
+        $cliDetection        = Kint::$cli_detection;
         Kint::$cli_detection = false;
 
         $this->expectOutputRegex('/<script class="kint-rich-script" nonce="[0-9a-z]{24}">/u');
@@ -548,8 +553,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->resetServices();
 
         /** @var App $config */
-        $config              = config('App');
-        $config->CSPEnabled  = true;
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        // Initialize Kint
+        $app = new MockCodeIgniter($config);
+        $app->initialize();
+
         Kint::$cli_detection = false;
 
         $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
