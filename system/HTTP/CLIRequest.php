@@ -43,8 +43,10 @@ class CLIRequest extends Request
 
     /**
      * Set the expected HTTP verb
+     *
+     * @var string
      */
-    protected string $method = 'cli';
+    protected $method = 'cli';
 
     /**
      * Constructor

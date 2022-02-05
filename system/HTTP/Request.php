@@ -31,8 +31,10 @@ class Request extends Message implements MessageInterface, RequestInterface
 
     /**
      * Request method.
+     *
+     * @var string
      */
-    protected string $method;
+    protected $method;
 
     /**
      * A URI instance.
