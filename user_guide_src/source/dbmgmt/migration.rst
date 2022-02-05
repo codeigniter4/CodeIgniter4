@@ -8,7 +8,7 @@ but you would then be responsible for telling other developers that they
 need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
-The database table **migration** tracks which migrations have already been
+The database table **migrations** tracks which migrations have already been
 run so all you have to do is make sure your migrations are in place and
 call ``$migration->latest()`` to bring the database up to the most recent
 state. You can also use ``$migration->setNamespace(null)->latest()`` to
@@ -24,16 +24,16 @@ Migration file names
 
 Each Migration is run in numeric order forward or backwards depending on the
 method taken. Each migration is numbered using the timestamp when the migration
-was created, in **YYYYMMDDHHIISS** format (e.g., **20121031100537**). This
+was created, in **YYYY-MM-DD-HHIISS** format (e.g., **2012-10-31-100537**). This
 helps prevent numbering conflicts when working in a team environment.
 
 Prefix your migration files with the migration number followed by an underscore
 and a descriptive name for the migration. The year, month, and date can be separated
 from each other by dashes, underscores, or not at all. For example:
 
-* 20121031100537_add_blog.php
-* 2012-10-31-100538_alter_blog_track_views.php
-* 2012_10_31_100539_alter_blog_add_translations.php
+* 2012-10-31-100538_AlterBlogTrackViews.php
+* 2012_10_31_100539_AlterBlogAddTranslations.php
+* 20121031100537_AddBlog.php
 
 ******************
 Create a Migration
@@ -41,7 +41,7 @@ Create a Migration
 
 This will be the first migration for a new site which has a blog. All
 migrations go in the **app/Database/Migrations/** directory and have names such
-as *20121031100537_add_blog.php*.
+as **2022-01-31-013057_AddBlog.php**.
 ::
 
     <?php
@@ -83,8 +83,10 @@ as *20121031100537_add_blog.php*.
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
 
-Alternatively, you can use a command-line call to generate a skeleton migration file. See
-below for more details.
+Alternatively, you can use a command-line call to generate a skeleton migration file.
+See **make:migration** in :ref:`command-line-tools` for more details.
+
+.. note:: Since the migration class is a PHP class, the classname must be unique in every migration file.
 
 Foreign Keys
 ============
@@ -182,6 +184,8 @@ to update the schema::
             }
         }
     }
+
+.. _command-line-tools:
 
 *******************
 Command-Line Tools
