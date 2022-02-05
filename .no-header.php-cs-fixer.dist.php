@@ -24,6 +24,7 @@ $finder = Finder::create()
         __DIR__ . '/admin',
         __DIR__ . '/app',
         __DIR__ . '/public',
+        __DIR__ . '/user_guide_src',
     ])
     ->notName('#Logger\.php$#')
     ->append([

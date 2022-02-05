@@ -45,13 +45,8 @@ such as INSERT, DELETE or UPDATE statements (which is what it really
 should be used for) and a resource/object on success for queries with
 fetchable results.
 
-::
-
-    if ($db->simpleQuery('YOUR QUERY')) {
-        echo "Success!";
-    } else {
-        echo "Query failed!";
-    }
+.. literalinclude:: snippets/queries-simple-query.php
+   :lines: 2-
 
 .. note:: PostgreSQL's ``pg_exec()`` function (for example) always
     returns a resource on success even for write type queries.
@@ -187,11 +182,10 @@ Handling Errors
 
 If you need to get the last error that has occurred, the ``error()`` method
 will return an array containing its code and message. Here's a quick
-example::
+example
 
-    if (! $db->simpleQuery('SELECT `example_field` FROM `example_table`')) {
-        $error = $db->error(); // Has keys 'code' and 'message'
-    }
+ .. literalinclude:: snippets/queries-handling-errors.php
+    :lines: 2-
 
 ****************
 Prepared Queries
