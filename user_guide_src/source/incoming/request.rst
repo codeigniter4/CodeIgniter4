@@ -46,7 +46,7 @@ Class Reference
 
             ::
 
-                if ( ! $request->isValidIP($ip)) {
+                if (! $request->isValidIP($ip)) {
                     echo 'Not Valid';
                 } else {
                     echo 'Valid';

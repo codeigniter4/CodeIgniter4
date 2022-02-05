@@ -189,7 +189,7 @@ If you need to get the last error that has occurred, the ``error()`` method
 will return an array containing its code and message. Here's a quick
 example::
 
-    if ( ! $db->simpleQuery('SELECT `example_field` FROM `example_table`')) {
+    if (! $db->simpleQuery('SELECT `example_field` FROM `example_table`')) {
         $error = $db->error(); // Has keys 'code' and 'message'
     }
 

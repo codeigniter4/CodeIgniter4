@@ -122,8 +122,7 @@ Service Accessors
     Example::
 
         // in controller, checking form submittal
-        if (! $model->save($user))
-        {
+        if (! $model->save($user)) {
             // 'withInput' is what specifies "old data"
             // should be saved.
             return redirect()->back()->withInput();
