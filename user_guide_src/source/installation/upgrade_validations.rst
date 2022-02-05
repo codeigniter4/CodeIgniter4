@@ -91,12 +91,9 @@ Path: **application/controllers**::
 
             // Set validation rules
 
-            if ($this->form_validation->run() == FALSE)
-            {
+            if ($this->form_validation->run() == FALSE) {
                     $this->load->view('myform');
-            }
-            else
-            {
+            } else {
                     $this->load->view('formsuccess');
             }
         }
