@@ -12,12 +12,12 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Debug\Kint\RichRenderer;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\ContentSecurityPolicy;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
@@ -34,6 +34,7 @@ use Config\Services;
 use Exception;
 use Kint;
 use Kint\Renderer\CliRenderer;
+use Kint\Renderer\RichRenderer;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -257,7 +258,12 @@ class CodeIgniter
             Kint::$plugins = $config->plugins;
         }
 
-        Kint::$renderers[Kint::MODE_RICH] = RichRenderer::class;
+        /** @var ContentSecurityPolicy $csp */
+        $csp = Services::csp();
+        if ($csp->enabled()) {
+            RichRenderer::$js_nonce  = $csp->getScriptNonce();
+            RichRenderer::$css_nonce = $csp->getStyleNonce();
+        }
 
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
