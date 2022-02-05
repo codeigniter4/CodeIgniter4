@@ -473,7 +473,7 @@ placeholders in the query:</p>
 <p>If you need to get the last error that has occurred, the <code class="docutils literal notranslate"><span class="pre">error()</span></code> method
 will return an array containing its code and message. Here’s a quick
 example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">&#39;SELECT `example_field` FROM `example_table`&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">&#39;SELECT `example_field` FROM `example_table`&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">error</span><span class="p">();</span> <span class="c1">// Has keys &#39;code&#39; and &#39;message&#39;</span>
 <span class="p">}</span>
 </pre></div>
@@ -655,7 +655,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 03, 2022.
+      <span class="lastupdated">Last updated on Feb 05, 2022.
       </span></p>
   </div>
 

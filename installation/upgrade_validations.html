@@ -374,12 +374,9 @@
 
         <span class="c1">// Set validation rules</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">()</span> <span class="o">==</span> <span class="k">FALSE</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">()</span> <span class="o">==</span> <span class="k">FALSE</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
                 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;formsuccess&#39;</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -462,7 +459,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 03, 2022.
+      <span class="lastupdated">Last updated on Feb 05, 2022.
       </span></p>
   </div>
 

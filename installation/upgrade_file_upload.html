@@ -327,14 +327,11 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">))</span>
-        <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">))</span> <span class="p">{</span>
             <span class="nv">$error</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">());</span>
 
             <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$error</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
             <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;upload_data&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">());</span>
 
             <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -394,7 +391,7 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 03, 2022.
+      <span class="lastupdated">Last updated on Feb 05, 2022.
       </span></p>
   </div>
 

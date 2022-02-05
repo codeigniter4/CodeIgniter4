@@ -364,8 +364,7 @@ the powerful <code class="docutils literal notranslate"><span class="pre">Autolo
 <span class="p">{</span>
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">();</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span>
-    <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$publisher</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; failed to publish!&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -675,7 +674,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 03, 2022.
+      <span class="lastupdated">Last updated on Feb 05, 2022.
       </span></p>
   </div>
 

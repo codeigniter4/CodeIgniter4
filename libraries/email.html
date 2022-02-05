@@ -812,16 +812,14 @@ well:</p>
 </dl>
 <p>The e-mail sending method. Returns boolean true or false based on
 success or failure, enabling it to be used conditionally:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
     <span class="c1">// Generate error</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This method will automatically clear all parameters if the request was
 successful. To stop this behaviour pass false:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">))</span>
-<span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// Parameters won&#39;t be cleared</span>
 <span class="p">}</span>
 </pre></div>
@@ -977,7 +975,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 03, 2022.
+      <span class="lastupdated">Last updated on Feb 05, 2022.
       </span></p>
   </div>
 
