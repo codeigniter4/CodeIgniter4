@@ -135,7 +135,7 @@ Class Reference
 
             echo $view->renderString('<div>My Sharona</div>');
 
-        This could be used for displaying content that might have been stored in a database,
+    .. warning:: This could be used for displaying content that might have been stored in a database,
         but you need to be aware that this is a potential security vulnerability,
         and that you **must** validate any such data, and probably escape it
         appropriately!
