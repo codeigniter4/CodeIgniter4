@@ -58,10 +58,10 @@ class History extends BaseCollector
     /**
      * Specify time limit & file count for debug history.
      *
-     * @param float $current Current history time
-     * @param int   $limit   Max history files
+     * @param string $current Current history time
+     * @param int    $limit   Max history files
      */
-    public function setFiles(float $current, int $limit = 20)
+    public function setFiles(string $current, int $limit = 20)
     {
         $filenames = glob(WRITEPATH . 'debugbar/debugbar_*.json');
 
@@ -90,7 +90,7 @@ class History extends BaseCollector
                 $files[] = [
                     'time'        => $time,
                     'datetime'    => DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'),
-                    'active'      => (float) $time === $current,
+                    'active'      => $time === $current,
                     'status'      => $contents->vars->response->statusCode,
                     'method'      => $contents->method,
                     'url'         => $contents->url,

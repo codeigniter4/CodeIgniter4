@@ -64,7 +64,7 @@ final class HistoryTest extends CIUnitTestCase
         // test dir is now populated with json
         $this->createDummyDebugbarJson();
 
-        $activeRowTime = $time = (float) sprintf('%.4f', $time - self::STEP);
+        $activeRowTime = $time = sprintf('%.4f', $time - self::STEP);
 
         $history = new History();
         $history->setFiles($time, 20);
@@ -73,10 +73,10 @@ final class HistoryTest extends CIUnitTestCase
 
         foreach ($history->display()['files'] as $request) {
             $this->assertSame($request['time'], sprintf('%.4f', $time));
-            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', (string) $time)->format('Y-m-d H:i:s.u'));
+            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'));
             $this->assertSame($request['active'], ($time === $activeRowTime));
 
-            $time = (float) sprintf('%.4f', $time - self::STEP);
+            $time = sprintf('%.4f', $time - self::STEP);
         }
     }
 }

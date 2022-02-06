@@ -480,10 +480,10 @@ class Toolbar
     {
         $data = json_decode($data, true);
 
-        if ($this->config->maxHistory !== 0) {
+        if ($this->config->maxHistory !== 0 && preg_match('/[0-9]+\.[0-9]{4}/s', (string) Services::request()->getGet('debugbar_time'), $debugbarTime)) {
             $history = new History();
             $history->setFiles(
-                (int) Services::request()->getGet('debugbar_time'),
+                $debugbarTime[0],
                 $this->config->maxHistory
             );
 
