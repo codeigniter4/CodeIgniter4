@@ -630,18 +630,16 @@ The output is like the following:
 
 .. code-block:: none
 
-    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
-    | Method | Route                      | Handler                                        | Filters:before | Filters:after         |
-    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
-    | GET    | /                          | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
-    | CLI    | migrations/([^/]+)/([^/]+) | \CodeIgniter\Commands\MigrationsCommand::$1/$2 |                |                       |
-    | CLI    | migrations/([^/]+)         | \CodeIgniter\Commands\MigrationsCommand::$1    |                |                       |
-    | CLI    | migrations                 | \CodeIgniter\Commands\MigrationsCommand::index |                |                       |
-    | CLI    | ci(.*)                     | \CodeIgniter\CLI\CommandRunner::index/$1       |                |                       |
-    | auto   | /                          | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
-    | auto   | home                       | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
-    | auto   | home/index[/...]           | \App\Controllers\Home::index                   | csrf           | secureheaders toolbar |
-    +--------+----------------------------+------------------------------------------------+----------------+-----------------------+
+    +--------+------------------+------------------------------------------+----------------+-----------------------+
+    | Method | Route            | Handler                                  | Before Filters | After Filters         |
+    +--------+------------------+------------------------------------------+----------------+-----------------------+
+    | GET    | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
+    | GET    | feed             | (Closure)                                | invalidchars   | secureheaders toolbar |
+    | CLI    | ci(.*)           | \CodeIgniter\CLI\CommandRunner::index/$1 |                |                       |
+    | auto   | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
+    | auto   | home             | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
+    | auto   | home/index[/...] | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
+    +--------+------------------+------------------------------------------+----------------+-----------------------+
 
 The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by auto routing, so it is not defined in **app/Config/Routes.php**.
 

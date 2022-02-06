@@ -28,6 +28,7 @@ Enhancements
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
+- The ``spark routes`` command now shows closure routes, auto routtes, and filters. See :ref:`URI Routing <spark-routes>`.
 
 Changes
 *******
