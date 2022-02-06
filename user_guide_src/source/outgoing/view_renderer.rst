@@ -98,8 +98,7 @@ View Renderer Options
 Several options can be passed to the ``render()`` or ``renderString()`` methods:
 
 -   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
--   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
-        ignored for renderString()
+-   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath; ignored for ``renderString()``
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
 
 .. note:: ``saveData`` as defined by the interface must be a boolean, but implementing
