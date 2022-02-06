@@ -142,7 +142,12 @@ class CodeIgniter
     protected $useSafeOutput = false;
 
     /**
-     * Context: 'web', 'php-cli', 'spark'
+     * Context
+     *  web:     Invoked by HTTP request
+     *  php-cli: Invoked by CLI via `php public/index.php`
+     *  spark:   Invoked by CLI via the `spark` command
+     *
+     * @phpstan-var 'php-cli'|'spark'|'web'
      */
     protected string $context;
 
@@ -1049,6 +1054,8 @@ class CodeIgniter
 
     /**
      * Sets the app context.
+     *
+     * @phpstan-param 'php-cli'|'spark'|'web' $context
      *
      * @return $this
      */
