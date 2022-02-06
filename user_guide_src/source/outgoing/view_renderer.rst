@@ -109,7 +109,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\View
 
-    .. php:method:: render($view[, $options[, $saveData=false]])
+    .. php:method:: render($view[, $options[, $saveData = false]])
         :noindex:
 
         :param  string       $view: File name of the view source
@@ -122,7 +122,7 @@ Class Reference
 
             echo $view->render('myview');
 
-    .. php:method:: renderString($view[, $options[, $saveData=false]])
+    .. php:method:: renderString($view[, $options[, $saveData = false]])
         :noindex:
 
         :param  string       $view: Contents of the view to render, for instance content retrieved from a database
@@ -140,7 +140,7 @@ Class Reference
         and that you **must** validate any such data, and probably escape it
         appropriately!
 
-    .. php:method:: setData([$data[, $context=null]])
+    .. php:method:: setData([$data[, $context = null]])
         :noindex:
 
         :param  array   $data: Array of view data strings, as key/value pairs
@@ -158,7 +158,7 @@ Class Reference
         Each call adds to the array of data that the object is accumulating,
         until the view is rendered.
 
-    .. php:method:: setVar($name[, $value=null[, $context=null]])
+    .. php:method:: setVar($name[, $value = null[, $context = null]])
         :noindex:
 
         :param  string  $name: Name of the view data variable
