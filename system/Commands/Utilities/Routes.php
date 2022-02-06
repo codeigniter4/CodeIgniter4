@@ -96,7 +96,6 @@ class Routes extends BaseCommand
             $routes = $collection->getRoutes($method);
 
             foreach ($routes as $route => $handler) {
-                // filter for strings, as callbacks aren't displayable
                 if (is_string($handler) || $handler instanceof Closure) {
                     $sampleUri = $uriGenerator->get($route);
                     $filters   = $filterCollector->get($method, $sampleUri);
