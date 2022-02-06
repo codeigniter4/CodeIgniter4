@@ -132,8 +132,8 @@ class Routes extends BaseCommand
             'Method',
             'Route',
             'Handler',
-            'Filters:before',
-            'Filters:after',
+            'Before Filters',
+            'After Filters',
         ];
 
         CLI::table($tbody, $thead);
