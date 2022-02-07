@@ -196,6 +196,13 @@ When configuring filters, additional arguments may be passed to a filter when se
 
 In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments`` to the filter's ``before()`` and ``after()`` implementation methods.
 
+******************
+Confirming Filters
+******************
+
+You can see the routes and filters by the ``spark routes`` command.
+See :ref:`URI Routing <spark-routes>`.
+
 ****************
 Provided Filters
 ****************
