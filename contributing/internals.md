@@ -122,17 +122,9 @@ scans and keep performance high.
 
 ## Command-Line Support
 
-CodeIgniter has never been known for it's strong CLI support. However,
+CodeIgniter has never been known for its strong CLI support. However,
 if your package could benefit from it, create a new file under
-**system/Commands**. The class contained within is simply a controller
-that is intended for CLI usage only. The `index()` method should provide
-a list of available commands provided by that package.
-
-Routes must be added to **system/Config/Routes.php** using the `cli()`
-method to ensure it is not accessible through the browser, but is
-restricted to the CLI only.
-
-See the **MigrationsCommand** file for an example.
+**system/Commands**.
 
 ## Documentation
 

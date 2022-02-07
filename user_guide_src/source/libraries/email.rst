@@ -336,16 +336,14 @@ Class Reference
         The e-mail sending method. Returns boolean true or false based on
         success or failure, enabling it to be used conditionally::
 
-            if (! $email->send())
-            {
+            if (! $email->send()) {
                 // Generate error
             }
 
         This method will automatically clear all parameters if the request was
         successful. To stop this behaviour pass false::
 
-            if ($email->send(false))
-            {
+            if ($email->send(false)) {
                 // Parameters won't be cleared
             }
 

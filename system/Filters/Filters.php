@@ -355,7 +355,7 @@ class Filters
     }
 
     /**
-     * Ensures that specific filters is on and enabled for the current request.
+     * Ensures that specific filters are on and enabled for the current request.
      *
      * Filters can have "arguments". This is done by placing a colon immediately
      * after the filter name, followed by a comma-separated list of arguments that

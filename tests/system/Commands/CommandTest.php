@@ -110,6 +110,7 @@ final class CommandTest extends CIUnitTestCase
     {
         command('routes');
 
+        $this->assertStringContainsString('| (Closure)', $this->getBuffer());
         $this->assertStringContainsString('| Route', $this->getBuffer());
         $this->assertStringContainsString('| testing', $this->getBuffer());
         $this->assertStringContainsString('\\TestController::index', $this->getBuffer());

@@ -286,7 +286,7 @@ class CodeIgniter
      * @throws Exception
      * @throws RedirectException
      *
-     * @return bool|mixed|RequestInterface|ResponseInterface
+     * @return bool|mixed|RequestInterface|ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -314,6 +314,11 @@ class CodeIgniter
             $this->callExit(EXIT_SUCCESS);
 
             return;
+        }
+
+        // spark command has nothing to do with HTTP redirect and 404
+        if (defined('SPARKED')) {
+            return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         }
 
         try {
@@ -698,7 +703,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|string[]|null
+     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {

@@ -31,6 +31,8 @@ Enhancements
     - It can access Oracle Database and supports SQL and PL/SQL statements.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
+- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
+
 
 Changes
 *******
@@ -41,7 +43,7 @@ Changes
 Deprecations
 ************
 
-
+- ``CodeIgniter\Database\SQLSRV\Connection::getError()`` is deprecated. Use ``CodeIgniter\Database\SQLSRV\Connection::error()`` instead.
 
 Bugs Fixed
 **********

@@ -89,8 +89,7 @@ the powerful ``Autoloader`` to locate any child classes primed for publication::
     {
         $result = $publisher->publish();
 
-        if ($result === false)
-        {
+        if ($result === false) {
             CLI::error(get_class($publisher) . ' failed to publish!', 'red');
         }
     }

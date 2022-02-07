@@ -1526,7 +1526,8 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Must return an array with keys 'code' and 'message':
      *
-     *  return ['code' => null, 'message' => null);
+     * @return array<string, int|string|null>
+     * @phpstan-return array{code: int|string|null, message: string|null}
      */
     abstract public function error(): array;
 
