@@ -117,8 +117,12 @@ filter::
 Next, we assign it to all POST requests made on the site::
 
     public $methods = [
-        'post' => ['throttle', 'csrf'],
+        'post' => ['throttle'],
     ];
+
+.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`.
+    Because auto-routing permits any HTTP method to access a controller.
+    Accessing the controller with a method you don't expect could bypass the filter.
 
 And that's all there is to it. Now all POST requests made on the site will have to be rate limited.
 
