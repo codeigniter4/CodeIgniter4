@@ -52,38 +52,37 @@ it creates an instance of the RouteCollection class (``$routes``) that permits y
 Routes can be specified using placeholders or Regular Expressions.
 
 When you specify a route, you choose a method to corresponding to HTTP verbs (request method).
-If you expect a GET request, you use the ``get()`` method::
+If you expect a GET request, you use the ``get()`` method:
 
-    $routes->get('/', 'Home::index');
+.. literalinclude:: routing/000.php
+   :lines: 2-
 
 A route simply takes the URI path on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the class
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
-passed to it, then they would be listed after the method name, separated by forward-slashes::
+passed to it, then they would be listed after the method name, separated by forward-slashes:
 
-    // Calls $Users->list()
-    $routes->get('users', 'Users::list');
+.. literalinclude:: routing/001.php
+   :lines: 2-
 
-    // Calls $Users->list(1, 23)
-    $routes->get('users/1/23', 'Users::list/1/23');
+You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc):
 
-You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc)::
+.. literalinclude:: routing/024.php
+   :lines: 2-
 
-    $routes->post('products', 'Product::feature');
-    $routes->put('products/1', 'Product::feature');
-    $routes->delete('products/1', 'Product::feature');
+You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method:
 
-You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method::
-
-    $routes->match(['get', 'put'], 'products', 'Product::feature');
+.. literalinclude:: routing/025.php
+   :lines: 2-
 
 Placeholders
 ============
 
-A typical route might look something like this::
+A typical route might look something like this:
 
-    $routes->get('product/(:num)', 'Catalog::productLookup');
+.. literalinclude:: routing/002.php
+   :lines: 2-
 
 In a route, the first parameter contains the URI to be matched, while the second parameter
 contains the destination it should be routed to. In the above example, if the literal word
@@ -116,42 +115,45 @@ Examples
 Here are a few basic routing examples.
 
 A URL containing the word **journals** in the first segment will be remapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``::
+and the default method, which is usually ``index()``:
 
-    $routes->get('journals', 'Blogs');
+.. literalinclude:: routing/003.php
+   :lines: 2-
 
 A URL containing the segments **blog/joe** will be remapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
-The ID will be set to ``34``::
+The ID will be set to ``34``:
 
-    $routes->get('blog/joe', 'Blogs::users/34');
+.. literalinclude:: routing/004.php
+   :lines: 2-
 
 A URL with **product** as the first segment, and anything in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup`` method::
+and the ``productLookup`` method:
 
-    $routes->get('product/(:any)', 'Catalog::productLookup');
+.. literalinclude:: routing/005.php
+   :lines: 2-
 
 A URL with **product** as the first segment, and a number in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID`` method passing in the match as a variable to the method::
+and the ``productLookupByID`` method passing in the match as a variable to the method:
 
-    $routes->get('product/(:num)', 'Catalog::productLookupByID/$1');
+.. literalinclude:: routing/006.php
+   :lines: 2-
 
-Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
+Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route:
 
-    $routes->get('product/(:any)', 'Catalog::productLookup/$1');
+.. literalinclude:: routing/007.php
+   :lines: 2-
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on. The implementation in the
-Controller should take into account the maximum parameters::
+Controller should take into account the maximum parameters:
 
-    public function productLookup($seg1 = false, $seg2 = false, $seg3 = false) {
-        echo $seg1; // Will be 123 in all examples
-        echo $seg2; // false in first, 456 in second and third example
-        echo $seg3; // false in first and second, 789 in third
-    }
+.. literalinclude:: routing/008.php
+   :lines: 2-
 
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
-routes. With the examples URLs from above::
+routes. With the examples URLs from above:
 
-    $routes->get('product/(:segment)', 'Catalog::productLookup/$1');
+.. literalinclude:: routing/009.php
+   :lines: 2-
 
 will only match **product/123** and generate 404 errors for other example.
 
@@ -163,10 +165,10 @@ and readability.
 
 You add new placeholders with the ``addPlaceholder()`` method. The first parameter is the string to be used as
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
-This must be called before you add the route::
+This must be called before you add the route:
 
-    $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-    $routes->get('users/(:uuid)', 'Users::show/$1');
+.. literalinclude:: routing/010.php
+   :lines: 2-
 
 Regular Expressions
 ===================
@@ -175,9 +177,10 @@ If you prefer you can use regular expressions to define your routing rules. Any 
 is allowed, as are back-references.
 
 .. important:: Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
-    A typical RegEx route might look something like this::
+    A typical RegEx route might look something like this:
 
-    $routes->get('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
+    .. literalinclude:: routing/011.php
+       :lines: 2-
 
 In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
@@ -186,9 +189,10 @@ With regular expressions, you can also catch a segment containing a forward slas
 represent the delimiter between multiple segments.
 
 For example, if a user accesses a password protected area of your web application and you wish to be able to
-redirect them back to the same page after they log in, you may find this example useful::
+redirect them back to the same page after they log in, you may find this example useful:
 
-    $routes->get('login/(.+)', 'Auth::login/$1');
+.. literalinclude:: routing/012.php
+   :lines: 2-
 
 For those of you who don’t know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -200,27 +204,20 @@ Closures
 
 You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
-a simple view::
+a simple view:
 
-    $routes->get('feed', function () {
-        $rss = new RSSFeeder();
-
-        return $rss->feed('general');
-    });
+.. literalinclude:: routing/013.php
+   :lines: 2-
 
 Mapping multiple routes
 =======================
 
 While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
-define an array of routes and then pass it as the first parameter to the ``map()`` method::
+define an array of routes and then pass it as the first parameter to the ``map()`` method:
 
-    $multipleRoutes = [
-        'product/(:num)'      => 'Catalog::productLookupById',
-        'product/(:alphanum)' => 'Catalog::productLookupByName',
-    ];
-
-    $routes->map($multipleRoutes);
+.. literalinclude:: routing/014.php
+   :lines: 2-
 
 Redirecting Routes
 ==================
@@ -229,14 +226,10 @@ Any site that lives long enough is bound to have pages that move. You can specif
 to other routes with the ``addRedirect()`` method. The first parameter is the URI pattern for the old route. The
 second parameter is either the new URI to redirect to, or the name of a named route. The third parameter is
 the HTTP status code that should be sent along with the redirect. The default value is ``302`` which is a temporary
-redirect and is recommended in most cases::
+redirect and is recommended in most cases:
 
-    $routes->get('users/profile', 'Users::profile', ['as' => 'profile']);
-
-    // Redirect to a named route
-    $routes->addRedirect('users/about', 'profile');
-    // Redirect to a URI
-    $routes->addRedirect('users/about', 'users/profile');
+.. literalinclude:: routing/015.php
+   :lines: 2-
 
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
@@ -246,39 +239,32 @@ Grouping Routes
 
 You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
-extensive set of routes that all share the opening string, like when building an admin area::
+extensive set of routes that all share the opening string, like when building an admin area:
 
-    $routes->group('admin', function ($routes) {
-        $routes->get('users', 'Admin\Users::index');
-        $routes->get('blog', 'Admin\Blog::index');
-    });
+.. literalinclude:: routing/016.php
+   :lines: 2-
 
 This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
 
-If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback::
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
 
-    $routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
-        $routes->resource('users');
-    });
+.. literalinclude:: routing/017.php
+   :lines: 2-
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
 
 You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
-run the filter before or after the controller. This is especially handy during authentication or api logging::
+run the filter before or after the controller. This is especially handy during authentication or api logging:
 
-    $routes->group('api', ['filter' => 'api-auth'], function ($routes) {
-        $routes->resource('users');
-    });
+.. literalinclude:: routing/018.php
+   :lines: 2-
 
 The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
-It is possible to nest groups within groups for finer organization if you need it::
+It is possible to nest groups within groups for finer organization if you need it:
 
-    $routes->group('admin', function ($routes) {
-        $routes->group('users', function ($routes) {
-            $routes->get('list', 'Admin\Users::list');
-        });
-    });
+.. literalinclude:: routing/019.php
+   :lines: 2-
 
 This would handle the URL at **admin/users/list**.
 
@@ -287,13 +273,10 @@ This would handle the URL at **admin/users/list**.
 At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options::
+given route config options:
 
-    $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
-        $routes->get('login', 'AuthController::login', ['as' => 'login']);
-        $routes->post('login', 'AuthController::attemptLogin');
-        $routes->get('logout', 'AuthController::logout');
-    });
+.. literalinclude:: routing/020.php
+   :lines: 2-
 
 Environment Restrictions
 ========================
@@ -301,11 +284,10 @@ Environment Restrictions
 You can create a set of routes that will only be viewable in a certain environment. This allows you to create
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
-routes defined within this closure are only accessible from the given environment::
+routes defined within this closure are only accessible from the given environment:
 
-    $routes->environment('development', function ($routes) {
-        $routes->get('builder', 'Tools\Builder::index');
-    });
+.. literalinclude:: routing/021.php
+   :lines: 2-
 
 Reverse Routing
 ===============
@@ -317,14 +299,10 @@ to update your application code. This is typically used within views to create l
 For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
 function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
 separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
-should be passed to the route are passed in next::
+should be passed to the route are passed in next:
 
-    // The route is defined as:
-    $routes->get('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
-
-    // Generate the relative URL to link to user ID 15, gallery 12
-    // Generates: /users/15/gallery/12
-    <a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+.. literalinclude:: routing/022.php
+   :lines: 2-
 
 Using Named Routes
 ==================
@@ -332,14 +310,10 @@ Using Named Routes
 You can name routes to make your application less fragile. This applies a name to a route that can be called
 later, and even if the route definition changes, all of the links in your application built with ``route_to()``
 will still work without you having to make any changes. A route is named by passing in the ``as`` option
-with the name of the route::
+with the name of the route:
 
-    // The route is defined as:
-    $routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery']);
-
-    // Generate the relative URL to link to user ID 15, gallery 12
-    // Generates: /users/15/gallery/12
-    <a href="<?= route_to('user_gallery', 15, 12) ?>">View Gallery</a>
+.. literalinclude:: routing/023.php
+   :lines: 2-
 
 This has the added benefit of making the views more readable, too.
 
@@ -347,9 +321,10 @@ Routes with any HTTP verbs
 ==========================
 
 It is possible to define a route with any HTTP verbs.
-You can use the ``add()`` method::
+You can use the ``add()`` method:
 
-    $routes->add('products', 'Product::feature');
+.. literalinclude:: routing/023-2.php
+   :lines: 2-
 
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
@@ -366,28 +341,19 @@ Command-Line only Routes
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
-available from the command line::
+available from the command line:
 
-    $routes->cli('migrate', 'App\Database::migrate');
+.. literalinclude:: routing/026.php
+   :lines: 2-
 
 Global Options
 ==============
 
 All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
-can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
+can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter:
 
-    $routes->add('from', 'to', $options);
-    $routes->get('from', 'to', $options);
-    $routes->post('from', 'to', $options);
-    $routes->put('from', 'to', $options);
-    $routes->head('from', 'to', $options);
-    $routes->options('from', 'to', $options);
-    $routes->delete('from', 'to', $options);
-    $routes->patch('from', 'to', $options);
-    $routes->match(['get', 'put'], 'from', 'to', $options);
-    $routes->resource('photos', $options);
-    $routes->map($array, $options);
-    $routes->group('name', $options, function ());
+.. literalinclude:: routing/027.php
+   :lines: 2-
 
 .. _applying-filters:
 
@@ -411,27 +377,31 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
 
 **Alias filter**
 
-You specify an alias defined in **app/Config/Filters.php** for the filter value::
+You specify an alias defined in **app/Config/Filters.php** for the filter value:
 
-    $routes->get('admin',' AdminController::index', ['filter' => 'admin-auth']);
+.. literalinclude:: routing/028.php
+   :lines: 2-
 
-You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods::
+You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods:
 
-    $routes->post('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
+.. literalinclude:: routing/029.php
+   :lines: 2-
 
 **Classname filter**
 
-You specify a filter classname for the filter value::
+You specify a filter classname for the filter value:
 
-    $routes->get('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+.. literalinclude:: routing/030.php
+   :lines: 2-
 
 **Multiple filters**
 
 .. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
 
-You specify an array for the filter value::
+You specify an array for the filter value:
 
-    $routes->get('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+.. literalinclude:: routing/031.php
+   :lines: 2-
 
 .. _assigning-namespace:
 
@@ -440,10 +410,10 @@ Assigning Namespace
 
 While a default namespace will be prepended to the generated controllers (see below), you can also specify
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
-namespace you want modified::
+namespace you want modified:
 
-    // Routes to \Admin\Users::index()
-    $routes->get('admin/users', 'Users::index', ['namespace' => 'Admin']);
+.. literalinclude:: routing/032.php
+   :lines: 2-
 
 The new namespace is only applied during that call for any methods that create a single route, like get, post, etc.
 For any methods that create multiple routes, the new namespace is attached to all routes generated by that function
@@ -453,9 +423,10 @@ Limit to Hostname
 -----------------
 
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
-by passing the "hostname" option along with the desired domain to allow it on as part of the options array::
+by passing the "hostname" option along with the desired domain to allow it on as part of the options array:
 
-    $routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
+.. literalinclude:: routing/033.php
+   :lines: 2-
 
 This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
 It would not work under the main site at **example.com**.
@@ -464,16 +435,16 @@ Limit to Subdomains
 -------------------
 
 When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
-sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through::
+sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:
 
-    // Limit to media.example.com
-    $routes->get('from', 'to', ['subdomain' => 'media']);
+.. literalinclude:: routing/034.php
+   :lines: 2-
 
 You can restrict it to any subdomain by setting the value to an asterisk, (``*``). If you are viewing from a URL
-that does not have any subdomain present, this will not be matched::
+that does not have any subdomain present, this will not be matched:
 
-    // Limit to any sub-domain
-    $routes->get('from', 'to', ['subdomain' => '*']);
+.. literalinclude:: routing/035.php
+   :lines: 2-
 
 .. important:: The system is not perfect and should be tested for your specific domain before being used in production.
     Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
@@ -486,12 +457,10 @@ You can offset the matched parameters in your route by any numeric value with th
 value being the number of segments to offset.
 
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
-be used when the first parameter is a language string::
+be used when the first parameter is a language string:
 
-    $routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
-
-    // Creates:
-    $routes['users/(:num)'] = 'users/show/$2';
+.. literalinclude:: routing/036.php
+   :lines: 2-
 
 .. _routing-priority:
 
@@ -502,23 +471,15 @@ When working with modules, it can be a problem if the routes in the application 
 Then the module routes will not be processed correctly.
 You can solve this problem by lowering the priority of route processing using the ``priority`` option. The parameter
 accepts positive integers and zero. The higher the number specified in the ``priority``, the lower
-route priority in the processing queue::
+route priority in the processing queue:
 
-    // First you need to enable sorting.
-    $routes->setPrioritize();
+.. literalinclude:: routing/037.php
+   :lines: 2-
 
-    // App\Config\Routes
-    $routes->get('(.*)', 'Posts::index', ['priority' => 1]);
+To disable this functionality, you must call the method with the parameter ``false``:
 
-    // Modules\Acme\Config\Routes
-    $routes->get('admin', 'Admin::index');
-
-    // The "admin" route will now be processed before the wildcard router.
-
-
-To disable this functionality, you must call the method with the parameter ``false``::
-
-    $routes->setPrioritize(false);
+.. literalinclude:: routing/038.php
+   :lines: 2-
 
 .. note:: By default, all routes have a priority of 0.
     Negative integers will be cast to the absolute value.
@@ -539,36 +500,26 @@ When matching a controller to a route, the router will add the default namespace
 specified by the route. By default, this value is ``App\Controllers``.
 
 If you set the value empty string (``''``), it leaves each route to specify the fully namespaced
-controller::
+controller:
 
-    $routes->setDefaultNamespace('');
-
-    // Controller is \Users
-    $routes->get('users', 'Users::index');
-
-    // Controller is \Admin\Users
-    $routes->get('users', 'Admin\Users::index');
+.. literalinclude:: routing/039.php
+   :lines: 2-
 
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
-then you can change this value to save typing::
+then you can change this value to save typing:
 
-    $routes->setDefaultNamespace('App');
-
-    // Controller is \App\Users
-    $routes->get('users', 'Users::index');
-
-    // Controller is \App\Admin\Users
-    $routes->get('users', 'Admin\Users::index');
+.. literalinclude:: routing/040.php
+   :lines: 2-
 
 Default Controller
 ==================
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**::
+which matches the controller at **app/Controllers/Home.php**:
 
-    // example.com routes to app/Controllers/Welcome.php
-    $routes->setDefaultController('Welcome');
+.. literalinclude:: routing/041.php
+   :lines: 2-
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
@@ -582,18 +533,20 @@ when a controller is found that matches the URI, but no segment exists for the m
 ``index``.
 
 In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed::
+``Products::listAll()`` method would be executed:
 
-    $routes->setDefaultMethod('listAll');
+.. literalinclude:: routing/042.php
+   :lines: 2-
 
 Translate URI Dashes
 ====================
 
 This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
-dash isn’t a valid class or method name character and would cause a fatal error if you try to use it::
+dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:
 
-    $routes->setTranslateURIDashes(true);
+.. literalinclude:: routing/043.php
+   :lines: 2-
 
 .. _use-defined-routes-only:
 
@@ -602,9 +555,10 @@ Use Defined Routes Only
 
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
-to only those defined by you, by setting the ``setAutoRoute()`` option to false::
+to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
-    $routes->setAutoRoute(false);
+.. literalinclude:: routing/044.php
+   :lines: 2-
 
 .. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
@@ -614,30 +568,20 @@ to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
 When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
-a valid class/method pair, just like you would show in any route, or a Closure::
+a valid class/method pair, just like you would show in any route, or a Closure:
 
-    // Would execute the show404 method of the App\Errors class
-    $routes->set404Override('App\Errors::show404');
-
-    // Will display a custom view
-    $routes->set404Override(function ()
-    {
-        echo view('my_errors/not_found.html');
-    });
-
+.. literalinclude:: routing/045.php
+   :lines: 2-
 
 Route processing by priority
 ============================
 
 Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
-For an example use of lowering the priority see :ref:`routing-priority`::
+For an example use of lowering the priority see :ref:`routing-priority`:
 
-    // to enable
-    $routes->setPrioritize();
-
-    // to disable
-    $routes->setPrioritize(false);
+.. literalinclude:: routing/046.php
+   :lines: 2-
 
 *****************
 Confirming Routes

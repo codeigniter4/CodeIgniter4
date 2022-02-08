@@ -162,7 +162,6 @@ The list of changed files follows, with PR numbers shown.
         - news_section #2221
         - static_pages #2221
 
-
 PRs merged:
 --------------------------
 

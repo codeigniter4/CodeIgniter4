@@ -14,18 +14,10 @@ Get XML FROM Result
 
 **getXMLFromResult()**
 
-This method returns the xml result from database result. You can do like this::
+This method returns the xml result from database result. You can do like this:
 
-    $model = new class extends \CodeIgniter\Model {
-        protected $table      = 'foo';
-        protected $primaryKey = 'id';
-    };
-    $db = \Closure::bind(function ($model) {
-        return $model->db;
-    }, null, $model)($model);
-
-    $util = (new \CodeIgniter\Database\Database())->loadUtils($db);
-    echo $util->getXMLFromResult($model->get());
+.. literalinclude:: utilities/001.php
+   :lines: 2-
 
 and it will get the following xml result::
 

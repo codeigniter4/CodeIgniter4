@@ -1,0 +1,3 @@
+<?php
+
+$session->get('item');

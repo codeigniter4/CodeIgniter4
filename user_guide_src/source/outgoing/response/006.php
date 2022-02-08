@@ -1,0 +1,3 @@
+<?php
+
+$response->removeHeader('Location');

@@ -5,13 +5,11 @@ Upgrade Database
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Database Reference Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/database/index.html>`_
 - :doc:`Working with Databases Documentation CodeIgniter 4.X </database/index>`
-
 
 What has been changed
 =====================
@@ -42,26 +40,17 @@ Upgrade Guide
     - ``$this->db->join('comments', 'comments.id = blogs.id');`` to ``$builder->join('comments', 'comments.id = blogs.id');``
     - ``$this->db->having('user_id',  45);`` to ``$builder->having('user_id',  45);``
 
-
 Code Example
 ============
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-   $query = $this->db->select('title')
-                ->where('id', $id)
-                ->limit(10, 20)
-                ->get('mytable');
+.. literalinclude:: upgrade_database/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $builder = $db->table('mytable');
-
-    $query = $builder->select('title')
-                 ->where('id', $id)
-                 ->limit(10, 20)
-                 ->get();
+.. literalinclude:: upgrade_database/002.php
+   :lines: 2-

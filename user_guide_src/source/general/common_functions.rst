@@ -9,7 +9,6 @@ These do not require loading any additional libraries or helpers.
     :local:
     :depth: 2
 
-
 ================
 Global Functions
 ================
@@ -27,10 +26,10 @@ Service Accessors
     is provided, will return the value of $key as stored in the cache currently,
     or null if no value is found.
 
-    Examples::
+    Examples:
 
-        $foo = cache('foo');
-        $cache = cache();
+    .. literalinclude:: common_functions/001.php
+       :lines: 2-
 
 .. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
 
@@ -119,19 +118,10 @@ Service Accessors
 
     Provides a simple way to access "old input data" from submitting a form.
 
-    Example::
+    Example:
 
-        // in controller, checking form submittal
-        if (! $model->save($user)) {
-            // 'withInput' is what specifies "old data"
-            // should be saved.
-            return redirect()->back()->withInput();
-        }
-
-        // In the view
-        <input type="email" name="email" value="<?= old('email') ?>">
-        // Or with arrays
-        <input type="email" name="user[email]" value="<?= old('user.email') ?>">
+    .. literalinclude:: common_functions/002.php
+       :lines: 2-
 
 .. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
         need to use this function when not using the form helper.
@@ -155,15 +145,10 @@ Service Accessors
     of a benchmark point as the only parameter. This will start timing from this point, or stop
     timing if a timer with this name is already running.
 
-    Example::
+    Example:
 
-        // Get an instance
-        $timer = timer();
-
-        // Set timer start and stop points
-        timer('controller_loading');    // Will start the timer
-        . . .
-        timer('controller_loading');    // Will stop the running timer
+    .. literalinclude:: common_functions/003.php
+       :lines: 2-
 
 .. php:function:: view ($name [, $data [, $options ]])
 
@@ -187,11 +172,10 @@ Service Accessors
     The ``$option`` array is provided primarily to facilitate third-party integrations with
     libraries like Twig.
 
-    Example::
+    Example:
 
-        $data = ['user' => $user];
-
-        echo view('user_profile', $data);
+    .. literalinclude:: common_functions/004.php
+       :lines: 2-
 
     For more details, see the :doc:`Views </outgoing/views>` page.
 
@@ -319,34 +303,16 @@ Miscellaneous Functions
 
     :param  string  $route: The reverse-routed or named route to redirect the user to.
 
-    Returns a RedirectResponse instance allowing you to easily create redirects::
+    Returns a RedirectResponse instance allowing you to easily create redirects:
 
-        // Go back to the previous page
-        return redirect()->back();
-
-        // Go to specific URI
-        return redirect()->to('/admin');
-
-        // Go to a named route
-        return redirect()->route('named_route');
-
-        // Keep the old input values upon redirect so they can be used by the `old()` function
-        return redirect()->back()->withInput();
-
-        // Set a flash message
-        return redirect()->back()->with('foo', 'message');
-
-        // Copies all cookies from global response instance
-        return redirect()->back()->withCookies();
-
-        // Copies all headers from the global response instance
-        return redirect()->back()->withHeaders();
+    .. literalinclude:: common_functions/005.php
+       :lines: 2-
 
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using ``redirect()->route()``::
+    treating it the same as using ``redirect()->route()``:
 
-        // Go to a named/reverse-routed URI
-        return redirect('named_route');
+    .. literalinclude:: common_functions/006.php
+       :lines: 2-
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
@@ -358,10 +324,10 @@ Miscellaneous Functions
     This function prevents inserting null characters between ASCII
     characters, like Java\\0script.
 
-    Example::
+    Example:
 
-        remove_invisible_characters('Java\\0script');
-        // Returns: 'Javascript'
+    .. literalinclude:: common_functions/007.php
+       :lines: 2-
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -384,10 +350,10 @@ Miscellaneous Functions
     This will always return a shared instance of the class, so no matter how many times this is called
     during a single request, only one class instance will be created.
 
-    Example::
+    Example:
 
-        $logger = service('logger');
-        $renderer = service('renderer', APPPATH.'views/');
+    .. literalinclude:: common_functions/008.php
+       :lines: 2-
 
 .. php:function:: single_service ( $name [, ...$params] )
 

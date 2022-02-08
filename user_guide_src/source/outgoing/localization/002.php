@@ -1,0 +1,3 @@
+<?php
+
+public $negotiateLocale = true;

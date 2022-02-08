@@ -11,11 +11,10 @@ Enable CSRF Filter
 
 Before creating a form, let's enable the CSRF protection.
 
-Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following::
+Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
 
-    public $methods = [
-        'post' => ['csrf'],
-    ];
+.. literalinclude:: create_news_items/001.php
+   :lines: 2-
 
 It configures the CSRF filter to be enabled for all **POST** requests.
 You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
@@ -67,29 +66,8 @@ check whether the form was submitted and whether the submitted data
 passed the validation rules. You'll use the :doc:`form
 validation <../libraries/validation>` library to do this.
 
-::
-
-    public function create()
-    {
-        $model = model(NewsModel::class);
-
-        if ($this->request->getMethod() === 'post' && $this->validate([
-            'title' => 'required|min_length[3]|max_length[255]',
-            'body'  => 'required',
-        ])) {
-            $model->save([
-                'title' => $this->request->getPost('title'),
-                'slug'  => url_title($this->request->getPost('title'), '-', true),
-                'body'  => $this->request->getPost('body'),
-            ]);
-
-            echo view('news/success');
-        } else {
-            echo view('templates/header', ['title' => 'Create a news item']);
-            echo view('news/create');
-            echo view('templates/footer');
-        }
-    }
+.. literalinclude:: create_news_items/002.php
+   :lines: 2-
 
 The code above adds a lot of functionality. First we load the NewsModel.
 After that, we check if we deal with the **POST** request and then
@@ -134,20 +112,7 @@ not actually save any data because it doesn't know what fields are
 safe to be updated. Edit the **NewsModel** to provide it a list of updatable
 fields in the ``$allowedFields`` property.
 
-::
-
-    <?php
-
-    namespace App\Models;
-
-    use CodeIgniter\Model;
-
-    class NewsModel extends Model
-    {
-        protected $table = 'news';
-
-        protected $allowedFields = ['title', 'slug', 'body'];
-    }
+.. literalinclude:: create_news_items/003.php
 
 This new property now contains the fields that we allow to be saved to the
 database. Notice that we leave out the ``id``? That's because you will almost
@@ -164,12 +129,8 @@ file contains the following. This makes sure CodeIgniter sees ``create``
 as a method instead of a news item's slug. You can read more about different
 routing types :doc:`here </incoming/routing>`.
 
-::
-
-    $routes->match(['get', 'post'], 'news/create', 'News::create');
-    $routes->get('news/(:segment)', 'News::view/$1');
-    $routes->get('news', 'News::index');
-    $routes->get('(:any)', 'Pages::view/$1');
+.. literalinclude:: create_news_items/004.php
+   :lines: 2-
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add ``/news/create`` to the URL.

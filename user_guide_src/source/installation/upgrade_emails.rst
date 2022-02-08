@@ -5,13 +5,11 @@ Upgrade Emails
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Email Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/email.html>`_
 - :doc:`Email Documentation CodeIgniter 4.X </libraries/email>`
-
 
 What has been changed
 =====================
@@ -29,32 +27,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('email');
-
-    $this->email->from('your@example.com', 'Your Name');
-    $this->email->to('someone@example.com');
-    $this->email->cc('another@another-example.com');
-    $this->email->bcc('them@their-example.com');
-
-    $this->email->subject('Email Test');
-    $this->email->message('Testing the email class.');
-
-    $this->email->send();
+.. literalinclude:: upgrade_emails/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $email = service('email');
-
-    $email->setFrom('your@example.com', 'Your Name');
-    $email->setTo('someone@example.com');
-    $email->setCC('another@another-example.com');
-    $email->setBCC('them@their-example.com');
-
-    $email->setSubject('Email Test');
-    $email->setMessage('Testing the email class.');
-
-    $email->send();
+.. literalinclude:: upgrade_emails/002.php
+   :lines: 2-

@@ -36,17 +36,18 @@ The following functions are available:
     changes.
 
     Segments can be optionally passed to the function as a string or an
-    array. Here is a string example::
+    array. Here is a string example:
 
-        echo site_url('news/local/123');
+    .. literalinclude:: url_helper/001.php
+       :lines: 2-
 
     The above example would return something like:
     *http://example.com/index.php/news/local/123*
 
-    Here is an example of segments passed as an array::
+    Here is an example of segments passed as an array:
 
-        $segments = ['news', 'local', '123'];
-        echo site_url($segments);
+    .. literalinclude:: url_helper/002.php
+       :lines: 2-
 
     You may find the alternate configuration useful if generating URLs for a
     different site than yours, which contains different configuration preferences.
@@ -59,25 +60,28 @@ The following functions are available:
     :returns: Base URL
     :rtype: string
 
-    Returns your site base URL, as specified in your config file. Example::
+    Returns your site base URL, as specified in your config file. Example:
 
-        echo base_url();
+    .. literalinclude:: url_helper/002-2.php
+       :lines: 2-
 
     This function returns the same thing as :php:func:`site_url()`, without
     the *indexPage* being appended.
 
     Also like :php:func:`site_url()`, you can supply segments as a string or
-    an array. Here is a string example::
+    an array. Here is a string example:
 
-        echo base_url('blog/post/123');
+    .. literalinclude:: url_helper/002-3.php
+       :lines: 2-
 
     The above example would return something like:
     *http://example.com/blog/post/123*
 
     This is useful because unlike :php:func:`site_url()`, you can supply a
-    string to a file, such as an image or stylesheet. For example::
+    string to a file, such as an image or stylesheet. For example:
 
-        echo base_url('images/icons/edit.png');
+    .. literalinclude:: url_helper/002-4.php
+       :lines: 2-
 
     This would give you something like:
     *http://example.com/images/icons/edit.png*
@@ -93,9 +97,9 @@ The following functions are available:
     viewed.
 
     .. note:: Calling this function is the same as doing this:
-        ::
 
-            site_url(uri_string());
+        .. literalinclude:: url_helper/003.php
+           :lines: 2-
 
 .. important:: Prior to **4.1.2** this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
 
@@ -141,9 +145,10 @@ The following functions are available:
     :rtype:    string
 
     Returns your site **indexPage**, as specified in your config file.
-    Example::
+    Example:
 
-        echo index_page();
+    .. literalinclude:: url_helper/004.php
+       :lines: 2-
 
     As with :php:func:`site_url()`, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating URLs for a
@@ -177,16 +182,10 @@ The following functions are available:
     added to the link. The attributes can be a simple string or an
     associative array.
 
-    Here are some examples::
+    Here are some examples:
 
-        echo anchor('news/local/123', 'My News', 'title="News title"');
-        // Prints: <a href="http://example.com/index.php/news/local/123" title="News title">My News</a>
-
-        echo anchor('news/local/123', 'My News', ['title' => 'The best news!']);
-        // Prints: <a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>
-
-        echo anchor('', 'Click here');
-        // Prints: <a href="http://example.com/index.php">Click here</a>
+    .. literalinclude:: url_helper/005.php
+       :lines: 2-
 
     As above, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating links for a
@@ -210,20 +209,10 @@ The following functions are available:
     If the third parameter is not set it will simply open a new window with
     your own browser settings.
 
-    Here is an example with attributes::
+    Here is an example with attributes:
 
-        $atts = [
-            'width'       => 800,
-            'height'      => 600,
-            'scrollbars'  => 'yes',
-            'status'      => 'yes',
-            'resizable'   => 'yes',
-            'screenx'     => 0,
-            'screeny'     => 0,
-            'window_name' => '_blank',
-        ];
-
-        echo anchor_popup('news/local/123', 'Click Me!', $atts);
+    .. literalinclude:: url_helper/006.php
+       :lines: 2-
 
     As above, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating links for a
@@ -233,9 +222,10 @@ The following functions are available:
     .. note:: The above attributes are the function defaults so you only need to
         set the ones that are different from what you need. If you want the
         function to use all of its defaults simply pass an empty array in the
-        third parameter::
+        third parameter:
 
-            echo anchor_popup('news/local/123', 'Click Me!', []);
+        .. literalinclude:: url_helper/007.php
+           :lines: 2-
 
     .. note:: The **window_name** is not really an attribute, but an argument to
         the JavaScript `window.open() <https://www.w3schools.com/jsref/met_win_open.asp>`_
@@ -254,15 +244,16 @@ The following functions are available:
     :returns: A "mail to" hyperlink
     :rtype: string
 
-    Creates a standard HTML e-mail link. Usage example::
+    Creates a standard HTML e-mail link. Usage example:
 
-        echo mailto('me@my-site.com', 'Click Here to Contact Me');
+    .. literalinclude:: url_helper/008.php
+       :lines: 2-
 
     As with the :php:func:`anchor()` tab above, you can set attributes using the
-    third parameter::
+    third parameter:
 
-        $attributes = ['title' => 'Mail me'];
-        echo mailto('me@my-site.com', 'Contact Me', $attributes);
+    .. literalinclude:: url_helper/009.php
+       :lines: 2-
 
     .. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
 
@@ -287,27 +278,31 @@ The following functions are available:
     :rtype: string
 
     Automatically turns URLs and e-mail addresses contained in a string into
-    links. Example::
+    links. Example:
 
-        $string = auto_link($string);
+    .. literalinclude:: url_helper/010.php
+       :lines: 2-
 
     The second parameter determines whether URLs and e-mails are converted or
     just one or the other. The default behavior is both if the parameter is not
     specified. E-mail links are encoded as :php:func:`safe_mailto()` as shown
     above.
 
-    Converts only URLs::
+    Converts only URLs:
 
-        $string = auto_link($string, 'url');
+    .. literalinclude:: url_helper/011.php
+       :lines: 2-
 
-    Converts only e-mail addresses::
+    Converts only e-mail addresses:
 
-        $string = auto_link($string, 'email');
+    .. literalinclude:: url_helper/012.php
+       :lines: 2-
 
     The third parameter determines whether links are shown in a new window.
-    The value can be true or false (boolean)::
+    The value can be true or false (boolean):
 
-        $string = auto_link($string, 'both', true);
+    .. literalinclude:: url_helper/013.php
+       :lines: 2-
 
     .. note:: The only URLs recognized are those that start with "www." or with "://".
 
@@ -321,29 +316,26 @@ The following functions are available:
 
     Takes a string as input and creates a human-friendly URL string. This is
     useful if, for example, you have a blog in which you'd like to use the
-    title of your entries in the URL. Example::
+    title of your entries in the URL. Example:
 
-        $title     = "What's wrong with CSS?";
-        $url_title = url_title($title);
-        // Produces: Whats-wrong-with-CSS
+    .. literalinclude:: url_helper/014.php
+       :lines: 2-
 
     The second parameter determines the word delimiter. By default dashes
     are used. Preferred options are: **-** (dash) or **_** (underscore).
 
-    Example::
+    Example:
 
-        $title     = "What's wrong with CSS?";
-        $url_title = url_title($title, '_');
-        // Produces: Whats_wrong_with_CSS
+    .. literalinclude:: url_helper/015.php
+       :lines: 2-
 
     The third parameter determines whether or not lowercase characters are
     forced. By default they are not. Options are boolean true/false.
 
-    Example::
+    Example:
 
-        $title     = "What's wrong with CSS?";
-        $url_title = url_title($title, '-', true);
-        // Produces: whats-wrong-with-css
+    .. literalinclude:: url_helper/016.php
+       :lines: 2-
 
 .. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = false]])
 
@@ -366,9 +358,10 @@ The following functions are available:
     This function will add *http://* or *https://* in the event that a protocol prefix
     is missing from a URL.
 
-    Pass the URL string to the function like this::
+    Pass the URL string to the function like this:
 
-        $url = prep_url('example.com');
+    .. literalinclude:: url_helper/017.php
+       :lines: 2-
 
 .. php:function:: url_to($controller[, ...$args])
 
@@ -377,14 +370,16 @@ The following functions are available:
     :returns: Absolute URL
     :rtype: string
 
-    Builds an absolute URL to a controller method in your app. Example::
+    Builds an absolute URL to a controller method in your app. Example:
 
-        echo url_to('Home::index');
+    .. literalinclude:: url_helper/018.php
+       :lines: 2-
 
     You can also add arguments to the route.
-    Here is an example::
+    Here is an example:
 
-        echo url_to('Page::index', 'home');
+    .. literalinclude:: url_helper/019.php
+       :lines: 2-
 
     The above example would return something like:
     *http://example.com/page/home*
@@ -397,14 +392,16 @@ The following functions are available:
     :param string $path: The path to check the current URI path against.
     :rtype: boolean
 
-    Compares the current URL's path against the given path to see if they match. Example::
+    Compares the current URL's path against the given path to see if they match. Example:
 
-        if (url_is('admin')) { ... }
+    .. literalinclude:: url_helper/020.php
+       :lines: 2-
 
     This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
-    any other applicable characters in the URL::
+    any other applicable characters in the URL:
 
-        if (url_is('admin*')) { ... }
+    .. literalinclude:: url_helper/021.php
+       :lines: 2-
 
     This would match any of the following:
 

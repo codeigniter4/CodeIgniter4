@@ -1,0 +1,3 @@
+<?php
+
+public $shareOptions = false;

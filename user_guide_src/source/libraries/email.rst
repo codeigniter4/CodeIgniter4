@@ -30,19 +30,10 @@ Sending Email
 Sending email is not only simple, but you can configure it on the fly or
 set your preferences in the **app/Config/Email.php** file.
 
-Here is a basic example demonstrating how you might send email::
+Here is a basic example demonstrating how you might send email:
 
-    $email = \Config\Services::email();
-
-    $email->setFrom('your@example.com', 'Your Name');
-    $email->setTo('someone@example.com');
-    $email->setCC('another@another-example.com');
-    $email->setBCC('them@their-example.com');
-
-    $email->setSubject('Email Test');
-    $email->setMessage('Testing the email class.');
-
-    $email->send();
+.. literalinclude:: email/001.php
+   :lines: 2-
 
 .. _setting-email-preferences:
 
@@ -56,14 +47,10 @@ below:
 
 Preferences are set by passing an array of preference values to the
 email initialize method. Here is an example of how you might set some
-preferences::
+preferences:
 
-    $config['protocol'] = 'sendmail';
-    $config['mailPath'] = '/usr/sbin/sendmail';
-    $config['charset']  = 'iso-8859-1';
-    $config['wordWrap'] = true;
-
-    $email->initialize($config);
+.. literalinclude:: email/002.php
+   :lines: 2-
 
 .. note:: Most of the preferences have default values that will be used
     if you do not set them.
@@ -167,7 +154,6 @@ message like this::
     More text that will be
     wrapped normally.
 
-
 Place the item you do not want word-wrapped between: {unwrap} {/unwrap}
 
 ***************
@@ -184,13 +170,15 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the email address and name of the person sending the email::
+        Sets the email address and name of the person sending the email:
 
-            $email->setFrom('you@example.com', 'Your Name');
+        .. literalinclude:: email/003.php
+           :lines: 2-
 
-        You can also set a Return-Path, to help redirect undelivered mail::
+        You can also set a Return-Path, to help redirect undelivered mail:
 
-            $email->setFrom('you@example.com', 'Your Name', 'returned_emails@example.com');
+        .. literalinclude:: email/004.php
+           :lines: 2-
 
         .. note:: Return-Path can't be used if you've configured 'smtp' as
             your protocol.
@@ -203,9 +191,10 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the reply-to address. If the information is not provided the
-        information in the `setFrom <#setFrom>`_ method is used. Example::
+        information in the `setFrom <#setFrom>`_ method is used. Example:
 
-            $email->setReplyTo('you@example.com', 'Your Name');
+        .. literalinclude:: email/005.php
+           :lines: 2-
 
     .. php:method:: setTo($to)
 
@@ -214,17 +203,16 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the email address(s) of the recipient(s). Can be a single e-mail,
-        a comma-delimited list or an array::
+        a comma-delimited list or an array:
 
-            $email->setTo('someone@example.com');
+        .. literalinclude:: email/006.php
+           :lines: 2-
 
-        ::
+        .. literalinclude:: email/007.php
+           :lines: 2-
 
-            $email->setTo('one@example.com, two@example.com, three@example.com');
-
-        ::
-
-            $email->setTo(['one@example.com', 'two@example.com', 'three@example.com']);
+        .. literalinclude:: email/008.php
+           :lines: 2-
 
     .. php:method:: setCC($cc)
 
@@ -255,9 +243,10 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the email subject::
+        Sets the email subject:
 
-            $email->setSubject('This is my subject');
+        .. literalinclude:: email/009.php
+           :lines: 2-
 
     .. php:method:: setMessage($body)
 
@@ -265,9 +254,10 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the e-mail message body::
+        Sets the e-mail message body:
 
-            $email->setMessage('This is my message');
+        .. literalinclude:: email/010.php
+           :lines: 2-
 
     .. php:method:: setAltMessage($str)
 
@@ -275,9 +265,10 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the alternative e-mail message body::
+        Sets the alternative e-mail message body:
 
-            $email->setAltMessage('This is the alternative message');
+        .. literalinclude:: email/011.php
+           :lines: 2-
 
         This is an optional message string which can be used if you send
         HTML formatted email. It lets you specify an alternative message
@@ -294,10 +285,10 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype: CodeIgniter\\Email\\Email
 
-        Appends additional headers to the e-mail::
+        Appends additional headers to the e-mail:
 
-            $email->setHeader('Header1', 'Value1');
-            $email->setHeader('Header2', 'Value2');
+        .. literalinclude:: email/012.php
+           :lines: 2-
 
     .. php:method:: clear($clearAttachments = false)
 
@@ -309,23 +300,14 @@ Class Reference
         is intended for use if you run the email sending method in a loop,
         permitting the data to be reset between cycles.
 
-        ::
-
-            foreach ($list as $name => $address)
-            {
-                $email->clear();
-
-                $email->setTo($address);
-                $email->setFrom('your@example.com');
-                $email->setSubject('Here is your info '.$name);
-                $email->setMessage('Hi ' . $name . ' Here is the info you requested.');
-                $email->send();
-            }
+        .. literalinclude:: email/013.php
+           :lines: 2-
 
         If you set the parameter to true any attachments will be cleared as
-        well::
+        well:
 
-            $email->clear(true);
+        .. literalinclude:: email/014.php
+           :lines: 2-
 
     .. php:method:: send($autoClear = true)
 
@@ -334,18 +316,16 @@ Class Reference
         :rtype:    bool
 
         The e-mail sending method. Returns boolean true or false based on
-        success or failure, enabling it to be used conditionally::
+        success or failure, enabling it to be used conditionally:
 
-            if (! $email->send()) {
-                // Generate error
-            }
+        .. literalinclude:: email/015.php
+           :lines: 2-
 
         This method will automatically clear all parameters if the request was
-        successful. To stop this behaviour pass false::
+        successful. To stop this behaviour pass false:
 
-            if ($email->send(false)) {
-                // Parameters won't be cleared
-            }
+        .. literalinclude:: email/016.php
+           :lines: 2-
 
         .. note:: In order to use the ``printDebugger()`` method, you need
             to avoid clearing the email parameters.
@@ -367,30 +347,33 @@ Class Reference
 
         Enables you to send an attachment. Put the file path/name in the first
         parameter. For multiple attachments use the method multiple times.
-        For example::
+        For example:
 
-            $email->attach('/path/to/photo1.jpg');
-            $email->attach('/path/to/photo2.jpg');
-            $email->attach('/path/to/photo3.jpg');
+        .. literalinclude:: email/017.php
+           :lines: 2-
 
         To use the default disposition (attachment), leave the second parameter blank,
-        otherwise use a custom disposition::
+        otherwise use a custom disposition:
 
-            $email->attach('image.jpg', 'inline');
+        .. literalinclude:: email/018.php
+           :lines: 2-
 
-        You can also use a URL::
+        You can also use a URL:
 
-            $email->attach('http://example.com/filename.pdf');
+        .. literalinclude:: email/019.php
+           :lines: 2-
 
-        If you'd like to use a custom file name, you can use the third parameter::
+        If you'd like to use a custom file name, you can use the third parameter:
 
-            $email->attach('filename.pdf', 'attachment', 'report.pdf');
+        .. literalinclude:: email/020.php
+           :lines: 2-
 
         If you need to use a buffer string instead of a real - physical - file you can
         use the first parameter as buffer, the third parameter as file name and the fourth
-        parameter as mime-type::
+        parameter as mime-type:
 
-            $email->attach($buffer, 'attachment', 'report.pdf', 'application/pdf');
+        .. literalinclude:: email/021.php
+           :lines: 2-
 
     .. php:method:: setAttachmentCID($filename)
 
@@ -400,17 +383,9 @@ Class Reference
 
         Sets and returns an attachment's Content-ID, which enables your to embed an inline
         (picture) attachment into HTML. First parameter must be the already attached file name.
-        ::
 
-            $filename = '/img/photo1.jpg';
-            $email->attach($filename);
-
-            foreach ($list as $address) {
-                $email->setTo($address);
-                $cid = $email->setAttachmentCID($filename);
-                $email->setMessage('<img src="cid:'. $cid .'" alt="photo1" />');
-                $email->send();
-            }
+        .. literalinclude:: email/022.php
+           :lines: 2-
 
         .. note:: Content-ID for each e-mail must be re-created for it to be unique.
 
@@ -426,14 +401,9 @@ Class Reference
         You can optionally specify which parts of the message should be printed.
         Valid options are: **headers**, **subject**, **body**.
 
-        Example::
+        Example:
 
-            // You need to pass false while sending in order for the email data
-            // to not be cleared - if that happens, printDebugger() would have
-            // nothing to output.
-            $email->send(false);
-
-            // Will only print the email headers, excluding the message subject and body
-            $email->printDebugger(['headers']);
+        .. literalinclude:: email/023.php
+           :lines: 2-
 
         .. note:: By default, all of the raw data will be printed.

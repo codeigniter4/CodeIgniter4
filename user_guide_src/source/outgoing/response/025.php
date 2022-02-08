@@ -1,0 +1,3 @@
+<?php
+
+$response->deleteCookie($name);

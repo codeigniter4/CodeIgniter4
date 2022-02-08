@@ -47,9 +47,8 @@ Calling Commands
 Commands can also be ran from within your own code. This is most often done within a controller for cronjob tasks,
 but they can be used at any time. You do this by using the ``command()`` function. This function is always available.
 
-::
-
-    echo command('migrate:create TestMigration');
+.. literalinclude:: cli_commands/001.php
+   :lines: 2-
 
 The only argument is string that is the command called and any parameters. This appears exactly as you would call
 it from the command line.
@@ -101,26 +100,9 @@ An Example Command
 
 Let's step through an example command whose only function is to report basic information about the application
 itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
-should contain the following code::
+should contain the following code:
 
-    <?php
-
-    namespace App\Commands;
-
-    use CodeIgniter\CLI\BaseCommand;
-    use CodeIgniter\CLI\CLI;
-
-    class AppInfo extends BaseCommand
-    {
-        protected $group       = 'demo';
-        protected $name        = 'app:info';
-        protected $description = 'Displays basic application information.';
-
-        public function run(array $params)
-        {
-            // ...
-        }
-    }
+.. literalinclude:: cli_commands/002.php
 
 If you run the **list** command, you will see the new command listed under its own ``demo`` group. If you take
 a close look, you should see how this works fairly easily. The ``$group`` property simply tells it how to organize
@@ -142,24 +124,18 @@ any CLI arguments after the command name for your use. If the CLI string was::
 
     > php spark foo bar baz
 
-Then **foo** is the command name, and the ``$params`` array would be::
+Then **foo** is the command name, and the ``$params`` array would be:
 
-    $params = ['bar', 'baz'];
+.. literalinclude:: cli_commands/003.php
+   :lines: 2-
 
 This can also be accessed through the :doc:`CLI </cli/cli_library>` library, but this already has your command removed
 from the string. These parameters can be used to customize how your scripts behave.
 
-Our demo command might have a ``run`` method something like::
+Our demo command might have a ``run`` method something like:
 
-    public function run(array $params)
-    {
-        CLI::write('PHP Version: '. CLI::color(phpversion(), 'yellow'));
-        CLI::write('CI Version: '. CLI::color(\CodeIgniter\CodeIgniter::CI_VERSION, 'yellow'));
-        CLI::write('APPPATH: '. CLI::color(APPPATH, 'yellow'));
-        CLI::write('SYSTEMPATH: '. CLI::color(SYSTEMPATH, 'yellow'));
-        CLI::write('ROOTPATH: '. CLI::color(ROOTPATH, 'yellow'));
-        CLI::write('Included files: '. CLI::color(count(get_included_files()), 'yellow'));
-    }
+.. literalinclude:: cli_commands/004.php
+   :lines: 2-
 
 ***********
 BaseCommand
@@ -176,22 +152,19 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         :param string $command: The name of another command to call.
         :param array $params: Additional CLI arguments to make available to that command.
 
-        This method allows you to run other commands during the execution of your current command::
+        This method allows you to run other commands during the execution of your current command:
 
-        $this->call('command_one');
-        $this->call('command_two', $params);
+        .. literalinclude:: cli_commands/005.php
+           :lines: 2-
 
     .. php:method:: showError(Throwable $e)
 
         :param Throwable $e: The exception to use for error reporting.
 
-        A convenience method to maintain a consistent and clear error output to the CLI::
+        A convenience method to maintain a consistent and clear error output to the CLI:
 
-            try {
-                . . .
-            } catch (\Exception $e) {
-                $this->showError($e);
-            }
+        .. literalinclude:: cli_commands/006.php
+           :lines: 2-
 
     .. php:method:: showHelp()
 
@@ -202,14 +175,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         :param array    $array: The  $key => $value array.
         :param integer  $pad: The pad spaces.
 
-        A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI::
+        A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI:
 
-            $pad = $this->getPad($this->options, 6);
-
-            foreach ($this->options as $option => $description) {
-                CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
-            }
-
-            // Output will be
-            -n                  Set migration namespace
-            -r                  override file
+        .. literalinclude:: cli_commands/007.php
+           :lines: 2-

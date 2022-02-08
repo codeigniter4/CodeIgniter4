@@ -5,7 +5,6 @@ Release Date: November 30, 2018
 
 **Next alpha release of CodeIgniter4**
 
-
 The list of changed files follows, with PR numbers shown.
 
 - admin/

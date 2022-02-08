@@ -22,14 +22,16 @@ Initializing the Class
 **********************
 
 Like most other classes in CodeIgniter, the image class is initialized
-in your controller by calling the Services class::
+in your controller by calling the Services class:
 
-    $image = \Config\Services::image();
+.. literalinclude:: images/001.php
+   :lines: 2-
 
 You can pass the alias for the image library you wish to use into the
-Service function::
+Service function:
 
-    $image = Config\Services::image('imagick');
+.. literalinclude:: images/002.php
+   :lines: 2-
 
 The available Handlers are as follows:
 
@@ -50,12 +52,10 @@ Regardless of the type of processing you would like to perform
 (resizing, cropping, rotation, or watermarking), the general process is
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
-For example, to create an image thumbnail you'll do this::
+For example, to create an image thumbnail you'll do this:
 
-    $image = \Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->fit(100, 100, 'center')
-        ->save('/path/to/image/mypic_thumb.jpg');
+.. literalinclude:: images/003.php
+   :lines: 2-
 
 The above code tells the library to look for an image
 called *mypic.jpg* located in the source_image folder, then create a
@@ -67,14 +67,10 @@ desired aspect ratio, and then crop and resize the result.
 An image can be processed through as many of the available methods as
 needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
-previous results::
+previous results:
 
-    $image = \Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->reorient()
-        ->rotate(90)
-        ->crop(100, 100, 0, 0)
-        ->save('/path/to/image/mypic_thumb.jpg');
+.. literalinclude:: images/004.php
+   :lines: 2-
 
 This example would take the same image and first fix any mobile phone orientation issues,
 rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
@@ -94,22 +90,18 @@ Image Quality
 
 ``save()`` can take an additional parameter ``$quality`` to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG images and will be ignored otherwise::
+only applies to JPEG images and will be ignored otherwise:
 
-    $image = \Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        // processing methods
-        ->save('/path/to/image/my_low_quality_pic.jpg', 10);
+.. literalinclude:: images/005.php
+   :lines: 2-
 
 .. note:: Higher quality will result in larger file sizes. See also https://www.php.net/manual/en/function.imagejpeg.php
 
 If you are only interested in changing the image quality without doing any processing.
-You will need to include the image resource or you will end up with an exact copy::
+You will need to include the image resource or you will end up with an exact copy:
 
-    $image = \Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->withResource()
-        ->save('/path/to/image/my_low_quality_pic.jpg', 10);
+.. literalinclude:: images/006.php
+   :lines: 2-
 
 Processing Methods
 ==================
@@ -128,16 +120,10 @@ There are seven available processing methods:
 These methods return the class instance so they can be chained together, as shown above.
 If they fail they will throw a ``CodeIgniter\Images\ImageException`` that contains
 the error message. A good practice is to catch the exceptions, showing an
-error upon failure, like this::
+error upon failure, like this:
 
-    try {
-        $image = \Config\Services::image()
-            ->withFile('/path/to/image/mypic.jpg')
-            ->fit(100, 100, 'center')
-            ->save('/path/to/image/mypic_thumb.jpg');
-    } catch (CodeIgniter\Images\ImageException $e) {
-        echo $e->getMessage();
-    }
+.. literalinclude:: images/007.php
+   :lines: 2-
 
 Cropping Images
 ---------------
@@ -155,20 +141,10 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 - **$masterDim** specifies which dimension should be left untouched when $maintainRatio is true. Values can be: 'width', 'height', or 'auto'.
 
 To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
-offset values::
+offset values:
 
-    $info = \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->getFile()
-        ->getProperties(true);
-
-    $xOffset = ($info['width'] / 2) - 25;
-    $yOffset = ($info['height'] / 2) - 25;
-
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->crop(50, 50, $xOffset, $yOffset)
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/008.php
+   :lines: 2-
 
 Converting Images
 -----------------
@@ -177,12 +153,10 @@ The ``convert()`` method changes the library's internal indicator for the desire
 
     convert(int $imageType)
 
-- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php)::
+- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php):
 
-    \Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->convert(IMAGETYPE_PNG)
-        ->save('/path/to/new/image.png');
+  .. literalinclude:: images/009.php
+     :lines: 2-
 
 .. note:: ImageMagick already saves files in the type
     indicated by their extension, ignoring **$imageType**
@@ -204,12 +178,10 @@ The ``fit()`` method aims to help simplify cropping a portion of an image in a "
 - **$height** is the desired final height of the image.
 - **$position** determines the portion of the image to crop out. Allowed positions: 'top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'.
 
-This provides a much simpler way to crop that will always maintain the aspect ratio::
+This provides a much simpler way to crop that will always maintain the aspect ratio:
 
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->fit(100, 150, 'left')
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/010.php
+   :lines: 2-
 
 Flattening Images
 -----------------
@@ -226,17 +198,8 @@ The ``flatten()`` method aims to add a background color behind transparent image
 - **$green** is the green value of the background.
 - **$blue** is the blue value of the background.
 
-::
-
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.png')
-        ->flatten()
-        ->save('/path/to/new/image.jpg');
-
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.png')
-        ->flatten(25,25,112)
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/011.php
+   :lines: 2-
 
 Flipping Images
 ---------------
@@ -247,12 +210,8 @@ Images can be flipped along either their horizontal or vertical axis::
 
 - **$dir** specifies the axis to flip along. Can be either 'vertical' or 'horizontal'.
 
-::
-
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->flip('horizontal')
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/012.php
+   :lines: 2-
 
 Resizing Images
 ---------------
@@ -270,12 +229,8 @@ When resizing images you can choose whether to maintain the ratio of the origina
 image to fit the desired dimensions. If $maintainRatio is true, the dimension specified by $masterDim will stay the same,
 while the other dimension will be altered to match the original image's aspect ratio.
 
-::
-
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->resize(200, 100, true, 'height')
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/013.php
+   :lines: 2-
 
 Rotating Images
 ---------------
@@ -301,19 +256,10 @@ products.
     text(string $text, array $options = [])
 
 The first parameter is the string of text that you wish to display. The second parameter is an array of options
-that allow you to specify how the text should be displayed::
+that allow you to specify how the text should be displayed:
 
-    \Config\Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->text('Copyright 2017 My Photo Co', [
-            'color'      => '#fff',
-            'opacity'    => 0.5,
-            'withShadow' => true,
-            'hAlign'     => 'center',
-            'vAlign'     => 'bottom',
-            'fontSize'   => 20
-        ])
-        ->save('/path/to/new/image.jpg');
+.. literalinclude:: images/014.php
+   :lines: 2-
 
 The possible options that are recognized are as follows:
 

@@ -12,42 +12,40 @@ Additional Accessors
 
 **getSegments()**
 
-Returns an array of the command line arguments deemed to be part of a path::
+Returns an array of the command line arguments deemed to be part of a path:
 
-    // command line: php index.php users 21 profile --foo bar
-    echo $request->getSegments();  // ['users', '21', 'profile']
+.. literalinclude:: cli_request/001.php
+   :lines: 2-
 
 **getPath()**
 
-Returns the reconstructed path as a string::
+Returns the reconstructed path as a string:
 
-    // command line: php index.php users 21 profile --foo bar
-    echo $request->getPath();  // users/21/profile
+.. literalinclude:: cli_request/002.php
+   :lines: 2-
 
 **getOptions()**
 
-Returns an array of the command line arguments deemed to be options::
+Returns an array of the command line arguments deemed to be options:
 
-    // command line: php index.php users 21 profile --foo bar
-    echo $request->getOptions();  // ['foo' => 'bar']
+.. literalinclude:: cli_request/003.php
+   :lines: 2-
 
 **getOption($which)**
 
-Returns the value of a specific command line argument deemed to be an option::
+Returns the value of a specific command line argument deemed to be an option:
 
-    // command line: php index.php users 21 profile --foo bar
-    echo $request->getOption('foo');  // bar
-    echo $request->getOption('notthere'); // null
+.. literalinclude:: cli_request/004.php
+   :lines: 2-
 
 **getOptionString()**
 
-Returns the reconstructed command line string for the options::
+Returns the reconstructed command line string for the options:
 
-    // command line: php index.php users 21 profile --foo bar
-    echo $request->getOptionString();  // -foo bar
+.. literalinclude:: cli_request/005.php
+   :lines: 2-
 
-Passing ``true`` to the first argument will try to write long options using two dashes::
+Passing ``true`` to the first argument will try to write long options using two dashes:
 
-    // php index.php user 21 --foo bar -f
-    echo $request->getOptionString(); // -foo bar -f
-    echo $request->getOptionString(true); // --foo bar -f
+.. literalinclude:: cli_request/006.php
+   :lines: 2-

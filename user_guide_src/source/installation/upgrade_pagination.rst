@@ -5,13 +5,11 @@ Upgrade Pagination
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Pagination Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/pagination.html>`_
 - :doc:`Pagination Documentation CodeIgniter 4.X </libraries/pagination>`
-
 
 What has been changed
 =====================
@@ -30,35 +28,17 @@ Upgrade Guide
 
     - You can use the built-in ``paginate()`` method on every Model. Have a look at the code example below to see how you setup the pagination on a specific model.
 
-
 Code Example
 ============
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('pagination');
-    $config['base_url']    = base_url().'users/index/';
-    $config['total_rows']  = $this->db->count_all('users');
-    $config['per_page']    = 10;
-    $config['uri_segment'] = 3;
-    $config['attributes']  = array('class' => 'pagination-link');
-    $this->pagination->initialize($config);
-
-    $data['users'] = $this->user_model->get_users(FALSE, $config['per_page'], $offset);
-
-    $this->load->view('posts/index', $data);
+.. literalinclude:: upgrade_pagination/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $model = new \App\Models\UserModel();
-
-    $data = [
-        'users' => $model->paginate(10),
-        'pager' => $model->pager,
-    ];
-
-    echo view('users/index', $data);
+.. literalinclude:: upgrade_pagination/002.php
+   :lines: 2-

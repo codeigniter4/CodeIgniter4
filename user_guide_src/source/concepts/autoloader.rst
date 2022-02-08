@@ -37,12 +37,10 @@ Namespaces
 The recommended method for organizing your classes is to create one or more namespaces for your
 application's files. This is most important for any business-logic related classes, entity classes,
 etc. The ``psr4`` array in the configuration file allows you to map the namespace to the directory
-those classes can be found in::
+those classes can be found in:
 
-    $psr4 = [
-        'App'         => APPPATH,
-        'CodeIgniter' => SYSTEMPATH,
-    ];
+.. literalinclude:: autoloader/001.php
+   :lines: 2-
 
 The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
 to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
@@ -52,9 +50,10 @@ have a trailing slash.
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
 You may change this namespace by editing the **/app/Config/Constants.php** file and setting the
-new namespace value under the ``APP_NAMESPACE`` setting::
+new namespace value under the ``APP_NAMESPACE`` setting:
 
-    define('APP_NAMESPACE', 'App');
+.. literalinclude:: autoloader/002.php
+   :lines: 2-
 
 You will need to modify any existing files that are referencing the current namespace.
 
@@ -67,11 +66,10 @@ Classmap
 
 The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
-third-party libraries that are not namespaced::
+third-party libraries that are not namespaced:
 
-    $classmap = [
-        'Markdown' => APPPATH . 'third_party/markdown.php'
-    ];
+.. literalinclude:: autoloader/003.php
+   :lines: 2-
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 

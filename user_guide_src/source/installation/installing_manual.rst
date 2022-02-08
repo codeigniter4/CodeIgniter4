@@ -52,7 +52,6 @@ Structure
 Folders in your project after set up:
 app, public, system, writable
 
-
 Translations Installation
 =========================
 

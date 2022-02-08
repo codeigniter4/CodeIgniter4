@@ -1,0 +1,3 @@
+<?php
+
+$logger = service('logger');

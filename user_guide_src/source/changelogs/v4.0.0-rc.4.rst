@@ -12,7 +12,6 @@ Enhancements:
 - Add validation function `is_not_unique`
 - Various improvements and cleanup to the Email class
 
-
 PRs merged:
 -----------
 - #2527 Update manual.rst

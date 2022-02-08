@@ -5,7 +5,6 @@ Upgrade HTTP Responses
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 - `Output Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/output.html>`_
@@ -25,22 +24,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->output->set_status_header(404);
-
-    ...
-
-    $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('foo' => 'bar')));
+.. literalinclude:: upgrade_responses/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $this->response->setStatusCode(404);
-
-    ...
-
-    return $this->response->setJSON(['foo' => 'bar']);
+.. literalinclude:: upgrade_responses/002.php
+   :lines: 2-

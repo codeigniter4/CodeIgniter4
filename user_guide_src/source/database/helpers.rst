@@ -38,31 +38,31 @@ Information About Your Database
 
 Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
-Example::
+Example:
 
-    echo $db->table('my_table')->countAll();
-
-    // Produces an integer, like 25
+.. literalinclude:: helpers/001.php
+   :lines: 2-
 
 **$db->countAllResults()**
 
 Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
-Example::
+Example:
 
-    echo $db->table('my_table')->like('title', 'match')->countAllResults();
-
-    // Produces an integer, like 5
+.. literalinclude:: helpers/002.php
+   :lines: 2-
 
 **$db->getPlatform()**
 
 Outputs the database platform you are running (MySQL, MS SQL, Postgres,
-etc...)::
+etc...):
 
-    echo $db->getPlatform();
+.. literalinclude:: helpers/003.php
+   :lines: 2-
 
 **$db->getVersion()**
 
-Outputs the database version you are running::
+Outputs the database version you are running:
 
-    echo $db->getVersion();
+.. literalinclude:: helpers/004.php
+   :lines: 2-

@@ -12,9 +12,10 @@ dates.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('date');
+.. literalinclude:: date_helper/001.php
+   :lines: 2-
 
 Available Functions
 ===================
@@ -33,9 +34,9 @@ The following functions are available:
     any other PHP supported timezone (which you'll typically do if you run a site
     that lets each user set their own timezone settings) there is no benefit to using
     this function over PHP's ``time()`` function.
-    ::
 
-        echo now('Australia/Victoria');
+    .. literalinclude:: date_helper/002.php
+       :lines: 2-
 
     If a timezone is not provided, it will return ``time()`` based on the
     **time_reference** setting.
@@ -52,9 +53,9 @@ The following functions are available:
     Generates a `select` form field of available timezones (optionally filtered by `$what` and `$country`).
     You can supply an option class to apply to the field to make formatting easier, as well as a default
     selected value.
-    ::
 
-        echo timezone_select('custom-select', 'America/New_York');
+    .. literalinclude:: date_helper/003.php
+       :lines: 2-
 
 Many functions previously found in the CodeIgniter 3 ``date_helper`` have been moved to the ``I18n``
 module in CodeIgniter 4.

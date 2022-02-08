@@ -15,9 +15,10 @@ Loading the Library
 If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
 as it runs as a filter and has no manual interaction.
 
-If you find a case where you do need direct access though, you may load it through the Services file::
+If you find a case where you do need direct access though, you may load it through the Services file:
 
-    $security = \Config\Services::security();
+.. literalinclude:: security/001.php
+   :lines: 2-
 
 .. _cross-site-request-forgery:
 
@@ -44,9 +45,10 @@ You can also use Session based CSRF Protection. It is
 `Synchronizer Token Pattern <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern>`_.
 
 You can set to use the Session based CSRF protection by editing the following config parameter value in
-**app/Config/Security.php**::
+**app/Config/Security.php**:
 
-    public $csrfProtection = 'session';
+.. literalinclude:: security/002.php
+   :lines: 2-
 
 Token Randomization
 -------------------
@@ -58,9 +60,10 @@ If you enable it, a random mask is added to the token and used to scramble it.
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
 
 You can enable it by editing the following config parameter value in
-**app/Config/Security.php**::
+**app/Config/Security.php**:
 
-    public $tokenRandomize = true;
+.. literalinclude:: security/003.php
+   :lines: 2-
 
 Token Regeneration
 ------------------
@@ -71,9 +74,10 @@ regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
 may alter this behavior by editing the following config parameter value in
-**app/Config/Security.php**::
+**app/Config/Security.php**:
 
-    public $regenerate  = true;
+.. literalinclude:: security/004.php
+   :lines: 2-
 
 Redirection on Failure
 ----------------------
@@ -85,9 +89,10 @@ setting an ``error`` flash message that you can display to the end user with the
 
 This provides a nicer experience
 than simply crashing. This can be turned off by editing the following config parameter value in
-**app/Config/Security.php**::
+**app/Config/Security.php**:
 
-    public $redirect = false;
+.. literalinclude:: security/005.php
+   :lines: 2-
 
 Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
 
@@ -95,39 +100,27 @@ Enable CSRF Protection
 ======================
 
 You can enable CSRF protection by altering your **app/Config/Filters.php**
-and enabling the `csrf` filter globally::
+and enabling the `csrf` filter globally:
 
-    public $globals = [
-        'before' => [
-            // 'honeypot',
-            'csrf',
-        ],
-    ];
+.. literalinclude:: security/006.php
+   :lines: 2-
 
 Select URIs can be whitelisted from CSRF protection (for example API
 endpoints expecting externally POSTed content). You can add these URIs
-by adding them as exceptions in the filter::
+by adding them as exceptions in the filter:
 
-    public $globals = [
-        'before' => [
-            'csrf' => ['except' => ['api/record/save']],
-        ],
-    ];
+.. literalinclude:: security/007.php
+   :lines: 2-
 
-Regular expressions are also supported (case-insensitive)::
+Regular expressions are also supported (case-insensitive):
 
-    public $globals = [
-        'before' => [
-            'csrf' => ['except' => ['api/record/[0-9]+']],
-        ],
-    ];
+.. literalinclude:: security/008.php
+   :lines: 2-
 
-It is also possible to enable the CSRF filter only for specific methods::
+It is also possible to enable the CSRF filter only for specific methods:
 
-    public $methods = [
-        'get'  => ['csrf'],
-        'post' => ['csrf'],
-    ];
+.. literalinclude:: security/009.php
+   :lines: 2-
 
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
     because auto-routing permits any HTTP method to access a controller.
@@ -188,6 +181,6 @@ particularly useful for files that were supplied via user input. The first param
 
 If it is acceptable for the user input to include relative paths, e.g., **file/in/some/approved/folder.txt**, you can set
 the second optional parameter, ``$relativePath`` to ``true``.
-::
 
-    $path = $security->sanitizeFilename($request->getVar('filepath'));
+.. literalinclude:: security/010.php
+   :lines: 2-

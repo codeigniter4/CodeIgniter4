@@ -17,66 +17,13 @@ Example Usage
 
 The following example shows a common usage pattern within your controllers.
 
-::
-
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\API\ResponseTrait;
-
-    class Users extends \CodeIgniter\Controller
-    {
-        use ResponseTrait;
-
-        public function createUser()
-        {
-            $model = new UserModel();
-            $user  = $model->save($this->request->getPost());
-
-            // Respond with 201 status code
-            return $this->respondCreated();
-        }
-    }
+.. literalinclude:: api_responses/001.php
 
 In this example, an HTTP status code of 201 is returned, with the generic status message, 'Created'. Methods
-exist for the most common use cases::
+exist for the most common use cases:
 
-    // Generic response method
-    $this->respond($data, 200);
-
-    // Generic failure response
-    $this->fail($errors, 400);
-
-    // Item created response
-    $this->respondCreated($data);
-
-    // Item successfully deleted
-    $this->respondDeleted($data);
-
-    // Command executed by no response required
-    $this->respondNoContent($message);
-
-    // Client isn't authorized
-    $this->failUnauthorized($description);
-
-    // Forbidden action
-    $this->failForbidden($description);
-
-    // Resource Not Found
-    $this->failNotFound($description);
-
-    // Data did not validate
-    $this->failValidationError($description);
-
-    // Resource already exists
-    $this->failResourceExists($description);
-
-    // Resource previously deleted
-    $this->failResourceGone($description);
-
-    // Client made too many requests
-    $this->failTooManyRequests($description);
+.. literalinclude:: api_responses/002.php
+   :lines: 2-
 
 ***********************
 Handling Response Types
@@ -92,12 +39,10 @@ the following criteria:
 
 To define the formatter that is used, edit **Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
-format both XML and JSON responses::
+format both XML and JSON responses:
 
-        public $supportedResponseFormats = [
-            'application/json',
-            'application/xml',
-        ];
+.. literalinclude:: api_responses/003.php
+   :lines: 2-
 
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
@@ -105,12 +50,10 @@ format in this array is what will be returned.
 
 Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
 name, and the class must implement ``CodeIgniter\Format\FormatterInterface``. Formatters come out of the box that
-support both JSON and XML::
+support both JSON and XML:
 
-    public $formatters = [
-        'application/json' => \CodeIgniter\Format\JSONFormatter::class,
-        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
-    ];
+.. literalinclude:: api_responses/004.php
+   :lines: 2-
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
 ``respond*`` or ``fail*`` methods will be formatted by the ``CodeIgniter\Format\JSONFormatter`` class. The resulting
@@ -125,10 +68,8 @@ Class Reference
     This defines the format to be used when formatting arrays in responses. If you provide a ``null`` value for
     ``$format``, it will be automatically determined through content negotiation.
 
-::
-
-    return $this->setResponseFormat('json')->respond(['error' => false]);
-
+.. literalinclude:: api_responses/005.php
+   :lines: 2-
 
 .. php:method:: respond($data[, $statusCode = 200[, $message = '']])
 
@@ -171,16 +112,10 @@ Class Reference
     that match the status code.
 
     The response is an array with two elements: ``error`` and ``messages``. The ``error`` element contains the status
-    code of the error. The ``messages`` element contains an array of error messages. It would look something like::
+    code of the error. The ``messages`` element contains an array of error messages. It would look something like:
 
-        $response = [
-            'status'   => 400,
-            'code'     => '321a',
-            'messages' => [
-                'Error message 1',
-                'Error message 2',
-            ],
-        ];
+    .. literalinclude:: api_responses/006.php
+       :lines: 2-
 
 .. php:method:: respondCreated($data = null[, string $message = ''])
 
@@ -188,10 +123,10 @@ Class Reference
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
 
-    Sets the appropriate status code to use when a new resource was created, typically 201.::
+    Sets the appropriate status code to use when a new resource was created, typically 201.:
 
-        $user = $userModel->insert($data);
-        return $this->respondCreated($user);
+    .. literalinclude:: api_responses/007.php
+       :lines: 2-
 
 .. php:method:: respondDeleted($data = null[, string $message = ''])
 
@@ -201,10 +136,8 @@ Class Reference
 
     Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.
 
-    ::
-
-        $user = $userModel->delete($id);
-        return $this->respondDeleted(['id' => $id]);
+    .. literalinclude:: api_responses/008.php
+       :lines: 2-
 
 .. php:method:: respondNoContent(string $message = 'No Content')
 
@@ -214,10 +147,8 @@ Class Reference
     Sets the appropriate status code to use when a command was successfully executed by the server but there is no
     meaningful reply to send back to the client, typically 204.
 
-    ::
-
-        sleep(1);
-        return $this->respondNoContent();
+    .. literalinclude:: api_responses/009.php
+       :lines: 2-
 
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code = null[, string $message = '']])
 
@@ -229,9 +160,8 @@ Class Reference
     Sets the appropriate status code to use when the user either has not been authorized,
     or has incorrect authorization. Status code is 401.
 
-    ::
-
-        return $this->failUnauthorized('Invalid Auth token');
+    .. literalinclude:: api_responses/010.php
+       :lines: 2-
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
@@ -244,9 +174,8 @@ Class Reference
     Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
     the client should not try again because it won't help. Status code is 403.
 
-    ::
-
-        return $this->failForbidden('Invalid API endpoint.');
+    .. literalinclude:: api_responses/011.php
+       :lines: 2-
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
@@ -257,9 +186,8 @@ Class Reference
 
     Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
 
-    ::
-
-        return $this->failNotFound('User 13 cannot be found.');
+    .. literalinclude:: api_responses/012.php
+       :lines: 2-
 
 .. php:method:: failValidationErrors($errors[, string $code=null[, string $message = '']])
 
@@ -270,9 +198,8 @@ Class Reference
 
     Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.
 
-    ::
-
-        return $this->failValidationErrors($validation->getErrors());
+    .. literalinclude:: api_responses/013.php
+       :lines: 2-
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -284,9 +211,8 @@ Class Reference
     Sets the appropriate status code to use when the resource the client is trying to create already exists.
     Status code is typically 409.
 
-    ::
-
-        return $this->failResourceExists('A user already exists with that email.');
+    .. literalinclude:: api_responses/014.php
+       :lines: 2-
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
@@ -298,9 +224,8 @@ Class Reference
     Sets the appropriate status code to use when the requested resource was previously deleted and
     is no longer available. Status code is typically 410.
 
-    ::
-
-        return $this->failResourceGone('That user has been previously deleted.');
+    .. literalinclude:: api_responses/015.php
+       :lines: 2-
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
@@ -312,9 +237,8 @@ Class Reference
     Sets the appropriate status code to use when the client has called an API endpoint too many times.
     This might be due to some form of throttling or rate limiting. Status code is typically 400.
 
-    ::
-
-        return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
+    .. literalinclude:: api_responses/016.php
+       :lines: 2-
 
 .. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
@@ -325,6 +249,5 @@ Class Reference
 
     Sets the appropriate status code to use when there is a server error.
 
-    ::
-
-        return $this->failServerError('Server error.');
+    .. literalinclude:: api_responses/017.php
+       :lines: 2-
