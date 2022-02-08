@@ -136,7 +136,7 @@ class Security implements SecurityInterface
      *
      * @var string
      *
-     * @deprecated
+     * @deprecated `Config\Cookie` $samesite property is used.
      */
     protected $samesite = Cookie::SAMESITE_LAX;
 
