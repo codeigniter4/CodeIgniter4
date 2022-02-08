@@ -71,7 +71,6 @@ final class ControllerTest extends CIUnitTestCase
         $this->response    = new Response($this->config);
         $this->logger      = \Config\Services::logger();
         $this->codeigniter = new MockCodeIgniter($this->config);
-        $this->codeigniter->setContext('web');
     }
 
     public function testConstructor()

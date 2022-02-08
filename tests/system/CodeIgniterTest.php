@@ -41,7 +41,6 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         $this->codeigniter = new MockCodeIgniter(new App());
-        $this->codeigniter->setContext('web');
     }
 
     protected function tearDown(): void
