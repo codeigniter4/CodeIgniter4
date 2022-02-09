@@ -40,7 +40,7 @@ example, if your project uses the Session Library heavily you may want to initia
 Additional Methods
 ==================
 
-The base controller is not routable (system config routes it to 404 Page Not Found). As an added security
+The base controller is not routable. As an added security
 measure **all** new methods you create should be declared as ``protected`` or ``private`` and only be accessed through the
 controllers you create that extend ``BaseController``.
 
