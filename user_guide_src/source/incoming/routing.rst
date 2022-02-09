@@ -18,7 +18,7 @@ controller class/method. The segments in a URI normally follow this pattern::
 
     example.com/class/method/id/
 
-We call this "**Auto Routes**". CodeIgniter automatically routes a HTTP request,
+We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
 and executes the corresponding controller method. The auto-routing is enabled by default.
 
 .. note:: To prevent misconfiguration and miscoding, we recommend that you disable
