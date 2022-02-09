@@ -7,6 +7,7 @@
 **SECURITY**
 
 * *Remote CLI Command Execution Vulnerability* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-xjp4-6w75-qrj7) for more information.
+* *Cross-Site Request Forgery (CSRF) Protection Bypass Vulnerability* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4v37-24gm-h554) for more information.
 
 ## [v4.1.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.1.8) (2022-01-24)
 
