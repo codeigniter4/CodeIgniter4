@@ -983,7 +983,10 @@ class CodeIgniter
             return;
         }
 
-        $this->request = $this->request->setMethod($method);
+        // Only allows PUT, PATCH, DELETE
+        if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE'], true)) {
+            $this->request = $this->request->setMethod($method);
+        }
     }
 
     /**
