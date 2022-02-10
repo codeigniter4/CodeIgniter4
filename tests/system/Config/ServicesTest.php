@@ -43,7 +43,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
-use Tests\Support\Config\Services as Services;
+use Tests\Support\Config\Services;
 
 /**
  * @internal
