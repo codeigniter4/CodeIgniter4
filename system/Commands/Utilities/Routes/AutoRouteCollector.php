@@ -36,6 +36,7 @@ final class AutoRouteCollector
 
     /**
      * @return array<int, array<int, string>>
+     * @phpstan-return list<list<string>>
      */
     public function get(): array
     {
