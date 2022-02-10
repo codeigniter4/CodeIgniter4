@@ -100,6 +100,43 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5671
+     */
+    public function testInsertBatchIgnore()
+    {
+        $builder = $this->db->table('jobs');
+
+        $insertData = [
+            [
+                'id'          => 2,
+                'name'        => 'Commedian',
+                'description' => 'There\'s something in your teeth',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Cab Driver',
+                'description' => 'I am yellow',
+            ],
+        ];
+
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->ignore()->insertBatch($insertData, true, 1);
+
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(Query::class, $query);
+
+        $raw = <<<'SQL'
+            INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
+            SQL;
+        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
+
+        $expected = <<<'SQL'
+            INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
+            SQL;
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+    }
+
     public function testInsertBatchWithoutEscape()
     {
         $builder = $this->db->table('jobs');

@@ -1662,7 +1662,10 @@ class BaseBuilder
             }
 
             if (! $hasQBSet) {
-                $this->resetWrite();
+                $this->resetRun([
+                    'QBSet'  => [],
+                    'QBKeys' => [],
+                ]);
             }
         }
 
