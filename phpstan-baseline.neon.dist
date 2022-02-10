@@ -483,12 +483,12 @@ parameters:
 		-
 			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
-			path: system/Debug/Exceptions.php
+			path: system/Debug/BaseExceptionHandler.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Debug\\\\Exceptions\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
+			message: "#^Property CodeIgniter\\\\Debug\\\\BaseExceptionHandler\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
-			path: system/Debug/Exceptions.php
+			path: system/Debug/BaseExceptionHandler.php
 
 		-
 			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"

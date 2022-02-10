@@ -26,15 +26,17 @@ final class ExceptionsTest extends CIUnitTestCase
     use ReflectionHelper;
 
     private \CodeIgniter\Debug\Exceptions $exception;
+    private ExceptionHandler $handler;
 
     protected function setUp(): void
     {
         $this->exception = new Exceptions(new ExceptionsConfig(), Services::request(), Services::response());
+        $this->handler   = new ExceptionHandler();
     }
 
     public function testDetermineViews(): void
     {
-        $determineView = $this->getPrivateMethodInvoker($this->exception, 'determineView');
+        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
 
         $this->assertSame('error_404.php', $determineView(PageNotFoundException::forControllerNotFound('Foo', 'bar'), ''));
         $this->assertSame('error_exception.php', $determineView(new RuntimeException('Exception'), ''));
@@ -43,7 +45,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     public function testCollectVars(): void
     {
-        $vars = $this->getPrivateMethodInvoker($this->exception, 'collectVars')(new RuntimeException('This.'), 404);
+        $vars = $this->getPrivateMethodInvoker($this->handler, 'collectVars')(new RuntimeException('This.'), 404);
 
         $this->assertIsArray($vars);
         $this->assertCount(7, $vars);
@@ -67,7 +69,7 @@ final class ExceptionsTest extends CIUnitTestCase
      */
     public function testCleanPaths(string $file, string $expected): void
     {
-        $this->assertSame($expected, Exceptions::cleanPath($file));
+        $this->assertSame($expected, BaseExceptionHandler::cleanPath($file));
     }
 
     public function dirtyPathsProvider()

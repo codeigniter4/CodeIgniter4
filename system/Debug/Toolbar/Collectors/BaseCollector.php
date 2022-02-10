@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use CodeIgniter\Debug\Exceptions;
+use CodeIgniter\Debug\BaseExceptionHandler;
 
 /**
  * Base Toolbar collector
@@ -180,7 +180,7 @@ class BaseCollector
      */
     public function cleanPath(string $file): string
     {
-        return Exceptions::cleanPath($file);
+        return BaseExceptionHandler::cleanPath($file);
     }
 
     /**

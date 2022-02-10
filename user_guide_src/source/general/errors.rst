@@ -131,3 +131,68 @@ forcing a redirect to a specific route or URL::
 redirect code to use instead of the default (``302``, "temporary redirect")::
 
     throw new \CodeIgniter\Router\Exceptions\RedirectException($route, 301);
+
+.. _custom-exception-handlers:
+
+Custom Exception Handlers
+=========================
+
+If you need more control over how exceptions are displayed you can now define your own handlers and
+specify when they apply.
+
+Defining the New Handler
+------------------------
+
+The first step is to create a new class which must extend ``CodeIgniter\Debug\BaseExceptionHandler``.
+This class includes a number of utility methods that are used by the default exception handler.
+The new handler must implement a single method: ``handle()``::
+
+    use CodeIgniter\Debug\BaseExceptionHandler;
+
+    class MyExceptionHandler extends BaseExceptionHandler
+    {
+        // These are available and do not need to be specified
+        protected int $statusCode;
+        protected Throwable $exception;
+        protected RequestInterface $request;
+        protected ResponseInterface $response;
+        protected string $viewPath;
+        protected int $exitCode;
+
+        public function handle()
+        {
+            $this->render($this->viewPath ."errors/new_error_{$this->statusCode}.php");
+
+            exit($this->exitCode);
+        }
+    }
+
+This example defines the minimum amount of code typically needed - display a view and exit with the proper
+exit code. However, the ``BaseExceptionHandler`` provides a number of other helper functions and objects.
+
+Configuring the New Handler
+---------------------------
+
+Telling CodeIgniter to use your new exception handler class is done in the ``app/Config/Exceptions.php``
+configuration file's ``handler()`` method::
+
+    public function handler(int $statusCode, \Throwable $exception)
+    {
+        return new \CodeIgniter\Debug\ExceptionHandler();
+    }
+
+You can use any logic your application needs to determine whether it should handle the exception, but the
+two most common are checking on the HTTP status code or the type of exception. If your class should handle
+it then return a new instance of that class::
+
+    public function handler(int $statusCode, \Throwable $exception)
+    {
+        if (in_array($statusCode, [400, 404, 500])) {
+            return new \App\Libraries\MyExceptionHandler();
+        }
+        if ($exception instanceOf PageNotFoundException) {
+            return new \App\Libraries\MyExceptionHandler();
+        }
+
+        return new \CodeIgniter\Debug\ExceptionHandler();
+    }
