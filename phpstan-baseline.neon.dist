@@ -741,63 +741,13 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRFCookieName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
+			message: "#^Property Config\\\\App\\:\\:\\$CSRF[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
+			count: 6
 			path: system/Security/Security.php
 
 		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRFExpire \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRFHeaderName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRFRegenerate \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRFTokenName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$cookieName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$csrfProtection \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$expires \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$headerName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$regenerate \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$tokenName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$tokenRandomize \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
+			message: "#^Property Config\\\\Security\\:\\:\\$[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
+			count: 8
 			path: system/Security/Security.php
 
 		-
