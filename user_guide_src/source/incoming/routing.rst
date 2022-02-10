@@ -6,10 +6,28 @@ URI Routing
     :local:
     :depth: 2
 
+******************************
+Auto Routes and Defined Routes
+******************************
+
+Auto Routes
+===========
+
 Typically there is a one-to-one relationship between a URL string and its corresponding
 controller class/method. The segments in a URI normally follow this pattern::
 
     example.com/class/method/id/
+
+We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
+and executes the corresponding controller method. The auto-routing is enabled by default.
+
+.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
+    the auto-routing feature. See :ref:`use-defined-routes-only`.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
+Defined Routes
+==============
 
 In some instances, however, you may want to remap this relationship so that a different
 class/method can be called instead of the one corresponding to the URL.
@@ -23,9 +41,10 @@ For example, let’s say you want your URLs to have this prototype::
 
 Normally the second segment of the URL path is reserved for the method name, but in the example
 above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.
+We call this "**Defined Routes**".
 
 ******************************
-Setting your own routing rules
+Setting Your Own Routing Rules
 ******************************
 
 Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
