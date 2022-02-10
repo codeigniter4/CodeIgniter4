@@ -17,7 +17,6 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\ContentSecurityPolicy;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
@@ -258,7 +257,6 @@ class CodeIgniter
             Kint::$plugins = $config->plugins;
         }
 
-        /** @var ContentSecurityPolicy $csp */
         $csp = Services::csp();
         if ($csp->enabled()) {
             RichRenderer::$js_nonce  = $csp->getScriptNonce();
