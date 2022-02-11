@@ -40,8 +40,9 @@ class ExceptionHandler extends BaseExceptionHandler
         $path    = $this->viewPath;
         $altPath = rtrim((new Paths())->viewDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'errors' . DIRECTORY_SEPARATOR;
 
-        $path    .= (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
-        $altPath .= (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
+        $addPath  = (is_cli() ? 'cli' : 'html') . DIRECTORY_SEPARATOR;
+        $path    .= $addPath;
+        $altPath .= $addPath;
 
         // Determine the views
         $view    = $this->determineView($this->exception, $path);
