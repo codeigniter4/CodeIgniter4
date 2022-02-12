@@ -452,6 +452,12 @@ specify the method name in lowercase. It’s value would be an array of filters 
 </div>
 <p>In addition to the standard HTTP methods, this also supports one special case: ‘cli’. The ‘cli’ method would apply to
 all requests that were run from the command line.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
+because auto-routing permits any HTTP method to access a controller.
+Accessing the controller with a method you don’t expect could bypass the filter.</p>
+</div>
 </section>
 <section id="filters">
 <h3><a class="toc-backref" href="#id8">$filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>

@@ -338,6 +338,12 @@ for such requests if you don’t need CSRF protection for them.</p>
 </pre></div>
 </div>
 <p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
+because auto-routing permits any HTTP method to access a controller.
+Accessing the controller with a method you don’t expect could bypass the filter.</p>
+</div>
 </section>
 <section id="curlrequest-header-change">
 <h3><a class="toc-backref" href="#id5">CURLRequest header change</a><a class="headerlink" href="#curlrequest-header-change" title="Permalink to this headline"></a></h3>

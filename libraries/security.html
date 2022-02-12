@@ -393,6 +393,12 @@ by adding them as exceptions in the filter:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
+because auto-routing permits any HTTP method to access a controller.
+Accessing the controller with a method you don’t expect could bypass the filter.</p>
+</div>
 </section>
 <section id="html-forms">
 <h3><a class="toc-backref" href="#id10">HTML Forms</a><a class="headerlink" href="#html-forms" title="Permalink to this headline"></a></h3>
