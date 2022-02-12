@@ -176,8 +176,8 @@ specify the method name in lowercase. It's value would be an array of filters to
 In addition to the standard HTTP methods, this also supports one special case: 'cli'. The 'cli' method would apply to
 all requests that were run from the command line.
 
-.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`.
-    Because auto-routing permits any HTTP method to access a controller.
+.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
+    because auto-routing permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 $filters
