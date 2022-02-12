@@ -398,7 +398,7 @@ class Logger implements LoggerInterface
         // Find the first reference to a Logger class method
         foreach ($stackFrames as $frame) {
             if (\in_array($frame['function'], $logFunctions, true)) {
-                $file = isset($frame['file']) ? $this->cleanFileNames($frame['file']) : 'unknown';
+                $file = isset($frame['file']) ? clean_path($frame['file']) : 'unknown';
                 $line = $frame['line'] ?? 'unknown';
 
                 return [
@@ -421,12 +421,11 @@ class Logger implements LoggerInterface
      *  /var/www/site/app/Controllers/Home.php
      *      becomes:
      *  APPPATH/Controllers/Home.php
+     *
+     * @deprecated Use dedicated `clean_path()` function.
      */
     protected function cleanFileNames(string $file): string
     {
-        $file = str_replace(APPPATH, 'APPPATH/', $file);
-        $file = str_replace(SYSTEMPATH, 'SYSTEMPATH/', $file);
-
-        return str_replace(FCPATH, 'FCPATH/', $file);
+        return clean_path($file);
     }
 }
