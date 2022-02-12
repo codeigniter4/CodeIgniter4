@@ -109,7 +109,9 @@ class Exceptions
 
         if (! is_cli()) {
             $this->response->setStatusCode($statusCode);
-            header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
+            if (! headers_sent()) {
+                header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
+            }
 
             if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
