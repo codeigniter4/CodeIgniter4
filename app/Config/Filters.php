@@ -51,7 +51,7 @@ class Filters extends BaseConfig
      * Example:
      * 'post' => ['foo', 'bar']
      *
-     * If you use this, you should disable auto-routing. Because auto-routing
+     * If you use this, you should disable auto-routing because auto-routing
      * permits any HTTP method to access a controller. Accessing the controller
      * with a method you don’t expect could bypass the filter.
      *
