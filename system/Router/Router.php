@@ -459,15 +459,12 @@ class Router implements RouterInterface
     {
         $segments = explode('/', $uri);
 
+        // WARNING: Directories get shifted out of the segments array.
         $segments = $this->scanControllers($segments);
 
-        // If we don't have any segments left - try the default controller;
-        // WARNING: Directories get shifted out of the segments array.
-        if (empty($segments)) {
-            $this->setDefaultController();
-        }
+        // If we don't have any segments left - use the default controller;
         // If not empty, then the first segment should be the controller
-        else {
+        if (! empty($segments)) {
             $this->controller = ucfirst(array_shift($segments));
         }
 
@@ -643,8 +640,6 @@ class Router implements RouterInterface
     {
         // If we don't have any segments - try the default controller;
         if (empty($segments)) {
-            $this->setDefaultController();
-
             return;
         }
 
@@ -665,6 +660,8 @@ class Router implements RouterInterface
 
     /**
      * Sets the default controller based on the info set in the RouteCollection.
+     *
+     * @deprecated This was an unnecessary method, so it is no longer used.
      */
     protected function setDefaultController()
     {
