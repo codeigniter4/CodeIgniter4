@@ -675,10 +675,7 @@ class Router implements RouterInterface
             throw RouterException::forMissingDefaultRoute();
         }
 
-        // Is the method being specified?
-        if (sscanf($this->controller, '%[^/]/%s', $class, $this->method) !== 2) {
-            $this->method = 'index';
-        }
+        sscanf($this->controller, '%[^/]/%s', $class, $this->method);
 
         if (! is_file(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php')) {
             return;

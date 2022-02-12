@@ -199,6 +199,18 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame($expects, '123-alpha');
     }
 
+    public function testAutoRouteFindsDefaultControllerAndMethod()
+    {
+        $this->collection->setDefaultController('Test');
+        $this->collection->setDefaultMethod('test');
+        $router = new Router($this->collection, $this->request);
+
+        $router->autoRoute('/');
+
+        $this->assertSame('Test', $router->controllerName());
+        $this->assertSame('test', $router->methodName());
+    }
+
     public function testAutoRouteFindsControllerWithFileAndMethod()
     {
         $router = new Router($this->collection, $this->request);
