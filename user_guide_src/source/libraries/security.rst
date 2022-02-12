@@ -129,8 +129,8 @@ It is also possible to enable the CSRF filter only for specific methods::
         'post' => ['csrf'],
     ];
 
-.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`.
-    Because auto-routing permits any HTTP method to access a controller.
+.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
+    because auto-routing permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 HTML Forms
