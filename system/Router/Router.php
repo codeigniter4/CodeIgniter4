@@ -427,10 +427,7 @@ class Router implements RouterInterface
                 } elseif (strpos($val, '$') !== false && strpos($key, '(') !== false) {
                     $val = preg_replace('#^' . $key . '$#u', $val, $uri);
                 } elseif (strpos($val, '/') !== false) {
-                    [
-                        $controller,
-                        $method,
-                    ] = explode('::', $val);
+                    [$controller, $method] = explode('::', $val);
 
                     // Only replace slashes in the controller, not in the method.
                     $controller = str_replace('/', '\\', $controller);
