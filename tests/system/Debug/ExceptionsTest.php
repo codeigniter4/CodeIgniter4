@@ -61,36 +61,4 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([500, 1], $determineCodes(new RuntimeException('That.', 600)));
         $this->assertSame([404, 1], $determineCodes(new RuntimeException('There.', 404)));
     }
-
-    /**
-     * @dataProvider dirtyPathsProvider
-     */
-    public function testCleanPaths(string $file, string $expected): void
-    {
-        $this->assertSame($expected, Exceptions::cleanPath($file));
-    }
-
-    public function dirtyPathsProvider()
-    {
-        $ds = DIRECTORY_SEPARATOR;
-
-        yield from [
-            [
-                APPPATH . 'Config' . $ds . 'App.php',
-                'APPPATH' . $ds . 'Config' . $ds . 'App.php',
-            ],
-            [
-                SYSTEMPATH . 'CodeIgniter.php',
-                'SYSTEMPATH' . $ds . 'CodeIgniter.php',
-            ],
-            [
-                VENDORPATH . 'autoload.php',
-                'VENDORPATH' . $ds . 'autoload.php',
-            ],
-            [
-                FCPATH . 'index.php',
-                'FCPATH' . $ds . 'index.php',
-            ],
-        ];
-    }
 }

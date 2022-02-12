@@ -318,6 +318,8 @@ class Exceptions
 
     /**
      * This makes nicer looking paths for the error output.
+     *
+     * @deprecated Use dedicated `clean_path()` function.
      */
     public static function cleanPath(string $file): string
     {
