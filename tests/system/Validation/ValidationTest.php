@@ -674,14 +674,14 @@ final class ValidationTest extends CIUnitTestCase
      */
     public function testSplitNotRegex(): void
     {
-        $method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+        $method = self::getPrivateMethodInvoker($this->validation, 'splitRules');
         $result = $method('uploaded[avatar]|max_size[avatar,1024]');
         $this->assertSame('uploaded[avatar]', $result[0]);
     }
 
     public function testSplitRegex(): void
     {
-        $method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+        $method = self::getPrivateMethodInvoker($this->validation, 'splitRules');
         $result = $method('required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]');
         $this->assertSame('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
     }
@@ -1095,7 +1095,7 @@ final class ValidationTest extends CIUnitTestCase
      */
     public function testSplittingOfComplexStringRules(string $input, array $expected): void
     {
-        $splitter = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+        $splitter = self::getPrivateMethodInvoker($this->validation, 'splitRules');
         $this->assertSame($expected, $splitter($input));
     }
 
@@ -1161,10 +1161,10 @@ final class ValidationTest extends CIUnitTestCase
             $data = [$placeholder => 'placeholder-value'];
         }
 
-        $validationRules = $this->getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
+        $validationRules = self::getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
         $fieldRules      = $validationRules['foo']['rules'] ?? $validationRules['foo'];
         if (is_string($fieldRules)) {
-            $fieldRules = $this->getPrivateMethodInvoker($this->validation, 'splitRules')($fieldRules);
+            $fieldRules = self::getPrivateMethodInvoker($this->validation, 'splitRules')($fieldRules);
         }
 
         // loop all rules for this field

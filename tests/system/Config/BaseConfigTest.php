@@ -216,7 +216,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $config              = new RegistrarConfig();
         $config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
         $this->setPrivateProperty($config, 'didDiscovery', true);
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method = self::getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
         // no change to unmodified property
@@ -237,7 +237,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->setPrivateProperty($config, 'didDiscovery', true);
 
         $this->expectException(RuntimeException::class);
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method = self::getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
         $this->assertSame('bar', $config->foo);
@@ -252,7 +252,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $config::$registrars = [];
         $expected            = $config::$registrars;
 
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method = self::getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
         $this->assertSame($expected, $config::$registrars);
@@ -267,7 +267,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $config::$registrars = [];
         $this->setPrivateProperty($config, 'didDiscovery', false);
 
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+        $method = self::getPrivateMethodInvoker($config, 'registerProperties');
         $method();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));

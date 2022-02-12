@@ -59,7 +59,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
         $request = $this->getRequest(['base_uri' => 'http://example.com/v1/']);
 
-        $method = $this->getPrivateMethodInvoker($request, 'prepareURL');
+        $method = self::getPrivateMethodInvoker($request, 'prepareURL');
 
         $this->assertSame('http://example.com/v1/bananas', $method('bananas'));
     }

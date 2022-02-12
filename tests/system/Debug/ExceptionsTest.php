@@ -34,7 +34,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     public function testDetermineViews(): void
     {
-        $determineView = $this->getPrivateMethodInvoker($this->exception, 'determineView');
+        $determineView = self::getPrivateMethodInvoker($this->exception, 'determineView');
 
         $this->assertSame('error_404.php', $determineView(PageNotFoundException::forControllerNotFound('Foo', 'bar'), ''));
         $this->assertSame('error_exception.php', $determineView(new RuntimeException('Exception'), ''));
@@ -43,7 +43,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     public function testCollectVars(): void
     {
-        $vars = $this->getPrivateMethodInvoker($this->exception, 'collectVars')(new RuntimeException('This.'), 404);
+        $vars = self::getPrivateMethodInvoker($this->exception, 'collectVars')(new RuntimeException('This.'), 404);
 
         $this->assertIsArray($vars);
         $this->assertCount(7, $vars);
@@ -55,7 +55,7 @@ final class ExceptionsTest extends CIUnitTestCase
 
     public function testDetermineCodes(): void
     {
-        $determineCodes = $this->getPrivateMethodInvoker($this->exception, 'determineCodes');
+        $determineCodes = self::getPrivateMethodInvoker($this->exception, 'determineCodes');
 
         $this->assertSame([500, 9], $determineCodes(new RuntimeException('This.')));
         $this->assertSame([500, 1], $determineCodes(new RuntimeException('That.', 600)));

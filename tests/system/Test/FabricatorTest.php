@@ -151,7 +151,7 @@ final class FabricatorTest extends CIUnitTestCase
         $formatters = ['boo' => 'hiss'];
         $fabricator = new Fabricator(UserModel::class, $formatters);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'detectFormatters');
+        $method = self::getPrivateMethodInvoker($fabricator, 'detectFormatters');
 
         $method();
 
@@ -194,7 +194,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $method = self::getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
         $field     = 'catchPhrase';
         $formatter = $method($field);
@@ -206,7 +206,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $method = self::getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
         $field     = 'created_at';
         $formatter = $method($field);
@@ -218,7 +218,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $method = self::getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
         $field     = 'id';
         $formatter = $method($field);
@@ -230,7 +230,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $method = self::getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
         $field     = 'business_email';
         $formatter = $method($field);
@@ -242,7 +242,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         $fabricator = new Fabricator(UserModel::class);
 
-        $method = $this->getPrivateMethodInvoker($fabricator, 'guessFormatter');
+        $method = self::getPrivateMethodInvoker($fabricator, 'guessFormatter');
 
         $field     = 'zaboomafoo';
         $formatter = $method($field);

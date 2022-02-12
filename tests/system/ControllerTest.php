@@ -100,7 +100,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'cachePage');
+        $method = self::getPrivateMethodInvoker($this->controller, 'cachePage');
         $this->assertNull($method(10));
     }
 
@@ -111,7 +111,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller->initController($this->request, $this->response, $this->logger);
 
         // and that we can attempt validation, with no rules
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method([]));
     }
 
@@ -123,7 +123,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
     }
 
@@ -143,7 +143,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
         $this->assertSame('You must choose a username.', Services::validation()->getError());
     }
@@ -159,7 +159,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
 
-        $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
+        $method = self::getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup', [
             'username' => [
                 'required' => 'You must choose a username.',

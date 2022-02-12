@@ -332,7 +332,7 @@ final class ResourceControllerTest extends CIUnitTestCase
 
     private function invoke(object $controller, string $method, array $args = [])
     {
-        $method = $this->getPrivateMethodInvoker($controller, $method);
+        $method = self::getPrivateMethodInvoker($controller, $method);
 
         return $method(...$args);
     }

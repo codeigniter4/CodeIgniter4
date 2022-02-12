@@ -258,8 +258,8 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $codeigniter = new MockCodeIgniter($config);
 
-        $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
-        $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
+        self::getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
 
         $response = $this->getPrivateProperty($codeigniter, 'response');
         $this->assertNull($response->header('Location'));

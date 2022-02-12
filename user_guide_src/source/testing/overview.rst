@@ -273,7 +273,7 @@ parameter is an instance of the class to test. The second parameter is the name 
     $obj = new Foo();
 
     // Get the invoker for the 'privateMethod' method.
-    $method = $this->getPrivateMethodInvoker($obj, 'privateMethod');
+    $method = self::getPrivateMethodInvoker($obj, 'privateMethod');
 
     // Test the results
     $this->assertEquals('bar', $method('param1', 'param2'));
