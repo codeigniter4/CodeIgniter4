@@ -200,4 +200,29 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame('22222:22#2^{', getenv('SPVAR4'));
         $this->assertSame('test some escaped characters like a quote " or maybe a backslash \\', getenv('SPVAR5'));
     }
+
+    public function testInt()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
+        $dotenv->load();
+
+        $this->assertSame('0', getenv('SimpleConfig.QZERO'));
+        $this->assertSame('0', getenv('SimpleConfig.QZEROSTR'));
+    }
+
+    public function testFalse()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
+        $dotenv->load();
+
+        $this->assertSame('false', getenv('SimpleConfig.QFALSE'));
+    }
+
+    public function testEmptyString()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
+        $dotenv->load();
+
+        $this->assertSame(' ', getenv('SimpleConfig.QEMPTYSTR'));
+    }
 }
