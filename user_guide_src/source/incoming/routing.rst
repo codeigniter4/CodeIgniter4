@@ -53,7 +53,7 @@ Routes can be specified using placeholders or Regular Expressions.
 
 A route simply takes the URI path on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
-be listed in the same way that you would use a static method, by separating the fully-namespaced class
+be listed in the same way that you would use a static method, by separating the class
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes::
 
