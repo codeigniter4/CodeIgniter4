@@ -170,10 +170,10 @@ class Session implements SessionInterface
 
         $this->sessionDriverName        = $config->sessionDriver;
         $this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
-        $this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;
+        $this->sessionExpiration        = (int) ($config->sessionExpiration ?? $this->sessionExpiration);
         $this->sessionSavePath          = $config->sessionSavePath;
         $this->sessionMatchIP           = $config->sessionMatchIP ?? $this->sessionMatchIP;
-        $this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
+        $this->sessionTimeToUpdate      = (int) ($config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate);
         $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
 
         // DEPRECATED COOKIE MANAGEMENT
