@@ -51,6 +51,11 @@ Routing rules are defined in the **app/Config/Routes.php** file. In it you'll se
 it creates an instance of the RouteCollection class (``$routes``) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
+When you specify a route, you choose a method to corresponding to HTTP verbs (request method).
+If you expect a GET request, you use the ``get()`` method::
+
+    $routes->get('/', 'Home::index');
+
 A route simply takes the URI path on the left, and maps it to the controller and method on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the class
@@ -63,12 +68,22 @@ passed to it, then they would be listed after the method name, separated by forw
     // Calls $Users->list(1, 23)
     $routes->get('users/1/23', 'Users::list/1/23');
 
+You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc)::
+
+    $routes->post('products', 'Product::feature');
+    $routes->put('products/1', 'Product::feature');
+    $routes->delete('products/1', 'Product::feature');
+
+You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method::
+
+    $routes->match(['get', 'put'], 'products', 'Product::feature');
+
 Placeholders
 ============
 
 A typical route might look something like this::
 
-    $routes->add('product/(:num)', 'Catalog::productLookup');
+    $routes->get('product/(:num)', 'Catalog::productLookup');
 
 In a route, the first parameter contains the URI to be matched, while the second parameter
 contains the destination it should be routed to. In the above example, if the literal word
@@ -103,26 +118,26 @@ Here are a few basic routing examples.
 A URL containing the word **journals** in the first segment will be remapped to the ``\App\Controllers\Blogs`` class,
 and the default method, which is usually ``index()``::
 
-    $routes->add('journals', 'Blogs');
+    $routes->get('journals', 'Blogs');
 
 A URL containing the segments **blog/joe** will be remapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
 The ID will be set to ``34``::
 
-    $routes->add('blog/joe', 'Blogs::users/34');
+    $routes->get('blog/joe', 'Blogs::users/34');
 
 A URL with **product** as the first segment, and anything in the second will be remapped to the ``\App\Controllers\Catalog`` class
 and the ``productLookup`` method::
 
-    $routes->add('product/(:any)', 'Catalog::productLookup');
+    $routes->get('product/(:any)', 'Catalog::productLookup');
 
 A URL with **product** as the first segment, and a number in the second will be remapped to the ``\App\Controllers\Catalog`` class
 and the ``productLookupByID`` method passing in the match as a variable to the method::
 
-    $routes->add('product/(:num)', 'Catalog::productLookupByID/$1');
+    $routes->get('product/(:num)', 'Catalog::productLookupByID/$1');
 
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route::
 
-    $routes->add('product/(:any)', 'Catalog::productLookup/$1');
+    $routes->get('product/(:any)', 'Catalog::productLookup/$1');
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on. The implementation in the
 Controller should take into account the maximum parameters::
@@ -136,18 +151,9 @@ Controller should take into account the maximum parameters::
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above::
 
-    $routes->add('product/(:segment)', 'Catalog::productLookup/$1');
+    $routes->get('product/(:segment)', 'Catalog::productLookup/$1');
 
 will only match **product/123** and generate 404 errors for other example.
-
-.. warning:: While the ``add()`` method is convenient, it is recommended to always use the HTTP-verb-based
-    routes, described below, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
-    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
-    will not work.
-
-.. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
-    only routes that match the current request method are stored, resulting in fewer routes to scan through
-    when trying to find a match.
 
 Custom Placeholders
 ===================
@@ -160,7 +166,7 @@ the placeholder. The second parameter is the Regular Expression pattern it shoul
 This must be called before you add the route::
 
     $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-    $routes->add('users/(:uuid)', 'Users::show/$1');
+    $routes->get('users/(:uuid)', 'Users::show/$1');
 
 Regular Expressions
 ===================
@@ -171,7 +177,7 @@ is allowed, as are back-references.
 .. important:: Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
     A typical RegEx route might look something like this::
 
-    $routes->add('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
+    $routes->get('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');
 
 In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
@@ -182,7 +188,7 @@ represent the delimiter between multiple segments.
 For example, if a user accesses a password protected area of your web application and you wish to be able to
 redirect them back to the same page after they log in, you may find this example useful::
 
-    $routes->add('login/(.+)', 'Auth::login/$1');
+    $routes->get('login/(.+)', 'Auth::login/$1');
 
 For those of you who don’t know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -196,7 +202,7 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view::
 
-    $routes->add('feed', function () {
+    $routes->get('feed', function () {
         $rss = new RSSFeeder();
 
         return $rss->feed('general');
@@ -225,7 +231,7 @@ second parameter is either the new URI to redirect to, or the name of a named ro
 the HTTP status code that should be sent along with the redirect. The default value is ``302`` which is a temporary
 redirect and is recommended in most cases::
 
-    $routes->add('users/profile', 'Users::profile', ['as' => 'profile']);
+    $routes->get('users/profile', 'Users::profile', ['as' => 'profile']);
 
     // Redirect to a named route
     $routes->addRedirect('users/about', 'profile');
@@ -243,8 +249,8 @@ appears prior to the routes defined inside of the group. This allows you to redu
 extensive set of routes that all share the opening string, like when building an admin area::
 
     $routes->group('admin', function ($routes) {
-        $routes->add('users', 'Admin\Users::index');
-        $routes->add('blog', 'Admin\Blog::index');
+        $routes->get('users', 'Admin\Users::index');
+        $routes->get('blog', 'Admin\Blog::index');
     });
 
 This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
@@ -270,7 +276,7 @@ It is possible to nest groups within groups for finer organization if you need i
 
     $routes->group('admin', function ($routes) {
         $routes->group('users', function ($routes) {
-            $routes->add('list', 'Admin\Users::list');
+            $routes->get('list', 'Admin\Users::list');
         });
     });
 
@@ -298,7 +304,7 @@ This can be done with the ``environment()`` method. The first parameter is the n
 routes defined within this closure are only accessible from the given environment::
 
     $routes->environment('development', function ($routes) {
-        $routes->add('builder', 'Tools\Builder::index');
+        $routes->get('builder', 'Tools\Builder::index');
     });
 
 Reverse Routing
@@ -314,7 +320,7 @@ separated by a double colon (``::``), much like you would use when writing the i
 should be passed to the route are passed in next::
 
     // The route is defined as:
-    $routes->add('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
+    $routes->get('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
 
     // Generate the relative URL to link to user ID 15, gallery 12
     // Generates: /users/15/gallery/12
@@ -329,7 +335,7 @@ will still work without you having to make any changes. A route is named by pass
 with the name of the route::
 
     // The route is defined as:
-    $routes->add('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery']);
+    $routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery']);
 
     // Generate the relative URL to link to user ID 15, gallery 12
     // Generates: /users/15/gallery/12
@@ -337,21 +343,22 @@ with the name of the route::
 
 This has the added benefit of making the views more readable, too.
 
-Using HTTP verbs in routes
+Routes with any HTTP verbs
 ==========================
 
-It is possible to use HTTP verbs (request method) to define your routing rules. This is particularly
-useful when building RESTFUL applications. You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc).
-Each verb has its own method you can use::
+It is possible to define a route with any HTTP verbs.
+You can use the ``add()`` method::
 
-    $routes->get('products', 'Product::feature');
-    $routes->post('products', 'Product::feature');
-    $routes->put('products/(:num)', 'Product::feature');
-    $routes->delete('products/(:num)', 'Product::feature');
+    $routes->add('products', 'Product::feature');
 
-You can supply multiple verbs that a route should match by passing them in as an array to the ``match()`` method::
+.. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
+    routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
+    requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
+    will not work.
 
-    $routes->match(['get', 'put'], 'products', 'Product::feature');
+.. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
+    only routes that match the current request method are stored, resulting in fewer routes to scan through
+    when trying to find a match.
 
 Command-Line only Routes
 ========================
@@ -406,17 +413,17 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value::
 
-    $routes->add('admin',' AdminController::index', ['filter' => 'admin-auth']);
+    $routes->get('admin',' AdminController::index', ['filter' => 'admin-auth']);
 
 You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods::
 
-    $routes->add('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
+    $routes->post('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);
 
 **Classname filter**
 
 You specify a filter classname for the filter value::
 
-    $routes->add('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+    $routes->get('admin',' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
 
 **Multiple filters**
 
@@ -424,7 +431,7 @@ You specify a filter classname for the filter value::
 
 You specify an array for the filter value::
 
-    $routes->add('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
+    $routes->get('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);
 
 .. _assigning-namespace:
 
@@ -436,7 +443,7 @@ a different namespace to be used in any options array, with the ``namespace`` op
 namespace you want modified::
 
     // Routes to \Admin\Users::index()
-    $routes->add('admin/users', 'Users::index', ['namespace' => 'Admin']);
+    $routes->get('admin/users', 'Users::index', ['namespace' => 'Admin']);
 
 The new namespace is only applied during that call for any methods that create a single route, like get, post, etc.
 For any methods that create multiple routes, the new namespace is attached to all routes generated by that function
@@ -460,13 +467,13 @@ When the ``subdomain`` option is present, the system will restrict the routes to
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through::
 
     // Limit to media.example.com
-    $routes->add('from', 'to', ['subdomain' => 'media']);
+    $routes->get('from', 'to', ['subdomain' => 'media']);
 
 You can restrict it to any subdomain by setting the value to an asterisk, (``*``). If you are viewing from a URL
 that does not have any subdomain present, this will not be matched::
 
     // Limit to any sub-domain
-    $routes->add('from', 'to', ['subdomain' => '*']);
+    $routes->get('from', 'to', ['subdomain' => '*']);
 
 .. important:: The system is not perfect and should be tested for your specific domain before being used in production.
     Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
@@ -501,10 +508,10 @@ route priority in the processing queue::
     $routes->setPrioritize();
 
     // App\Config\Routes
-    $routes->add('(.*)', 'Posts::index', ['priority' => 1]);
+    $routes->get('(.*)', 'Posts::index', ['priority' => 1]);
 
     // Modules\Acme\Config\Routes
-    $routes->add('admin', 'Admin::index');
+    $routes->get('admin', 'Admin::index');
 
     // The "admin" route will now be processed before the wildcard router.
 
@@ -537,10 +544,10 @@ controller::
     $routes->setDefaultNamespace('');
 
     // Controller is \Users
-    $routes->add('users', 'Users::index');
+    $routes->get('users', 'Users::index');
 
     // Controller is \Admin\Users
-    $routes->add('users', 'Admin\Users::index');
+    $routes->get('users', 'Admin\Users::index');
 
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
 then you can change this value to save typing::
@@ -548,10 +555,10 @@ then you can change this value to save typing::
     $routes->setDefaultNamespace('App');
 
     // Controller is \App\Users
-    $routes->add('users', 'Users::index');
+    $routes->get('users', 'Users::index');
 
     // Controller is \App\Admin\Users
-    $routes->add('users', 'Admin\Users::index');
+    $routes->get('users', 'Admin\Users::index');
 
 Default Controller
 ==================
