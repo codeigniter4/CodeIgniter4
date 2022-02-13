@@ -48,7 +48,7 @@ Setting Your Own Routing Rules
 ******************************
 
 Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
-it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
+it creates an instance of the RouteCollection class (``$routes``) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
 A route simply takes the URI path on the left, and maps it to the controller and method on the right,
@@ -57,10 +57,11 @@ be listed in the same way that you would use a static method, by separating the 
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes::
 
-    // Calls the $Users->list()
-    Users::list
+    // Calls $Users->list()
+    $routes->get('users', 'Users::list');
+
     // Calls $Users->list(1, 23)
-    Users::list/1/23
+    $routes->get('users/1/23', 'Users::list/1/23');
 
 Placeholders
 ============
