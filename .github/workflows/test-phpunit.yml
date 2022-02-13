@@ -166,7 +166,6 @@ jobs:
       - name: Test with PHPUnit
         run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
         env:
-          DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
       - name: Run Coveralls
