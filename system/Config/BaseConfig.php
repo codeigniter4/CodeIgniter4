@@ -103,6 +103,9 @@ class BaseConfig
                 $value = true;
             }
             $property = is_bool($value) ? $value : trim($value, '\'"');
+            if (preg_match("/^[0-9]+$/", $property)) {
+                $property = (int) $property;
+            }
         }
 
         return $property;
