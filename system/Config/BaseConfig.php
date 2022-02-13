@@ -102,9 +102,17 @@ class BaseConfig
             } elseif ($value === 'true') {
                 $value = true;
             }
-            $property = is_bool($value) ? $value : trim($value, '\'"');
-            if (preg_match("/^[0-9]+$/", $property)) {
-                $property = (int) $property;
+            if (is_bool($value)) {
+                $property = $value;
+            } elseif(is_numeric($value)) {
+                // assume it's a float number if passed is_numeric and has ".", "e" or "E" in it
+                if(preg_match('/\.|[eE]/', $value)) {
+                    $property = (float) $value;
+                } else {
+                    $property = (int) $value;
+                }
+            } else {
+                $property = trim($value, '\'"');
             }
         }
 
