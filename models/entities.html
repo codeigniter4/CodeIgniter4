@@ -384,6 +384,10 @@ instances of our User Entity class instead of an object or array like normal.</p
 access them as if they were public properties. The base class, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Entity\Entity</span></code>, takes care of this for you, as
 well as providing the ability to check the properties with <code class="docutils literal notranslate"><span class="pre">isset()</span></code>, or <code class="docutils literal notranslate"><span class="pre">unset()</span></code> the property, and keep track
 of what columns have changed since the object was created or pulled from the database.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Entity class stores the data in the property <code class="docutils literal notranslate"><span class="pre">$attributes</span></code>.</p>
+</div>
 <p>When the User is passed to the model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model’s <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property. It also knows whether to create
 a new row, or update an existing one.</p>
