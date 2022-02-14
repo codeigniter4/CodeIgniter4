@@ -9,7 +9,10 @@ Using CodeIgniter's Model
 Models
 ======
 
-Models provide a way to interact with a specific **table** in your database. They come out of the box with helper
+The CodeIgniter's Model provides convenience features and additional functionality
+that people commonly use to make working with a **single table** in your database more convenient.
+
+It comes out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
@@ -704,6 +707,11 @@ very elegant use::
     $users = $userModel->where('status', 'active')
                        ->orderBy('last_login', 'asc')
                        ->findAll();
+
+.. important:: The Model does not provide a perfect interface to the Query Builder.
+    The Model and the Query Builder are separate classes with different purposes.
+    They should not be expected to return the same data.
+    For example, if you need to get the compiledInsert you should do so directly on the builder instance.
 
 .. note:: You can also access the model's database connection seamlessly::
 
