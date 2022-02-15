@@ -42,7 +42,7 @@ Deprecations
 - ``CodeIgniter\Database\SQLSRV\Connection::getError()`` is deprecated. Use ``CodeIgniter\Database\SQLSRV\Connection::error()`` instead.
 - ``CodeIgniter\Debug\Exceptions::cleanPath()`` and ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` are deprecated. Use the ``clean_path()`` function instead.
 - ``CodeIgniter\Log\Logger::cleanFilenames()`` and ``CodeIgniter\Test\TestLogger::cleanup()`` are both deprecated. Use the ``clean_path()`` function instead.
-- ``CodeIgniter\Router\setDefaultController()`` is deprecated.
+- ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
 
 Bugs Fixed
 **********
