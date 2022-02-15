@@ -146,12 +146,13 @@ class Controller
      * @param array        $data     The data to validate
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
+     * @param string|null  $dbGroup  The database group to use
      */
-    protected function validateData(array $data, $rules, array $messages = []): bool
+    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null): bool
     {
         $this->setValidator($rules, $messages);
 
-        return $this->validator->run($data);
+        return $this->validator->run($data, null, $dbGroup);
     }
 
     /**
