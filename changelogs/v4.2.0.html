@@ -313,6 +313,7 @@
 <ul class="simple">
 <li><p>Update minimal PHP requirement to 7.4.</p></li>
 <li><p>The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.</p></li>
+<li><p>The process of sending cookies has been moved to the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class. Now the <code class="docutils literal notranslate"><span class="pre">Session</span></code> class doesn’t send cookies, set them to the Response.</p></li>
 </ul>
 </section>
 <section id="deprecations">
@@ -341,7 +342,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 14, 2022.
+      <span class="lastupdated">Last updated on Feb 15, 2022.
       </span></p>
   </div>
 
