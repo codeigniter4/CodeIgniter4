@@ -152,7 +152,7 @@ If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules in ``$this->validate()`` yet.
 
 The ``validate()`` method is a method in the Controller. It uses
-the **Validation class** inside. See *Validating data* in :doc:`/incoming/controllers`.
+the **Validation class** inside. See :ref:`controllers-validating-data`.
 
 .. note:: Since you haven't told the ``validate()`` method to validate anything
     yet, it **returns false** (boolean false) **by default**. The ``validate()``

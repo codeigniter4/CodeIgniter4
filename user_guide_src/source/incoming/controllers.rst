@@ -350,8 +350,13 @@ inside the controller::
         protected $helpers = ['url', 'form'];
     }
 
+.. _controllers-validating-data:
+
 Validating data
-======================
+===============
+
+$this->validate()
+-----------------
 
 To simplify data checking, the controller also provides the convenience method ``validate()``.
 The method accepts an array of rules in the first parameter,
@@ -390,6 +395,31 @@ the ``$rules`` array with the name of the group as defined in ``Config\Validatio
     }
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
+
+$this->validateData()
+---------------------
+
+Sometimes you may want to check the controller method parameters or other custom data.
+In that case, you can use the ``$this->validateData()`` method.
+The method accepts an array of data to validate in the first parameter::
+
+    public function product(int $id)
+    {
+        $data = [
+            'id'   => $id,
+            'name' => $this->request->getVar('name'),
+        ];
+        $rule = [
+            'id'   => 'integer',
+            'name' => 'required|max_length[255]',
+        ];
+
+        if (! $this->validateData($data, $rule) {
+            // ...
+        }
+
+        // ...
+    }
 
 That's it!
 ==========
