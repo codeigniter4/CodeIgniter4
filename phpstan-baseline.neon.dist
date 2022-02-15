@@ -746,26 +746,6 @@ parameters:
 			path: system/Session/Handlers/DatabaseHandler.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/DatabaseHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/FileHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/MemcachedHandler.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$sessionID \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Handlers/RedisHandler.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
 			count: 1
 			path: system/Session/Handlers/RedisHandler.php

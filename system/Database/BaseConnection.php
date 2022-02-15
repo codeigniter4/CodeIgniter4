@@ -508,7 +508,7 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * The name of the platform in use (MySQLi, mssql, etc)
+     * The name of the platform in use (MySQLi, Postgre, SQLite3, OCI8, etc)
      */
     public function getPlatform(): string
     {
