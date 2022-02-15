@@ -603,6 +603,8 @@ We can simply use the language lines defined in this file, like this::
         ]
     );
 
+.. _validation-getting-all-errors:
+
 Getting All Errors
 ==================
 
@@ -618,6 +620,26 @@ If you need to retrieve all error messages for failed fields, you can use the ``
 
 If no errors exist, an empty array will be returned.
 
+When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys.::
+
+    // for data
+    'contacts' => [
+        'friends' => [
+            [
+                'name' => 'Fred Flinstone',
+            ],
+            [
+                'name' => '',
+            ],
+        ]
+    ]
+
+    // rule
+    contacts.*.name => 'required'
+
+    // error will be
+    'contacts.friends.1.name' => 'The contacts.*.name field is required.',
+
 Getting a Single Error
 ======================
 
@@ -628,6 +650,8 @@ name::
 
 If no error exists, an empty string will be returned.
 
+.. note:: When using a wildcard, all found errors that match the mask will be combined into one line separated by the EOL character.
+
 Check If Error Exists
 =====================
 
@@ -636,6 +660,16 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     if ($validation->hasError('username')) {
         echo $validation->getError('username');
     }
+
+When specifying a field with a wildcard, all errors matching the mask will be checked.::
+
+    // for errors
+    [
+        'foo.0.bar'   => 'Error',
+        'foo.baz.bar' => 'Error',
+    ]
+
+    $validation->hasError('foo.*.bar'); // return true
 
 Customizing Error Display
 *************************
