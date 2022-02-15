@@ -198,6 +198,7 @@ ruleset:
     - HTTP
   Session:
     - Cookie
+    - HTTP
     - Database
   Throttle:
     - Cache
