@@ -427,10 +427,7 @@ class Router implements RouterInterface
                 } elseif (strpos($val, '$') !== false && strpos($key, '(') !== false) {
                     $val = preg_replace('#^' . $key . '$#u', $val, $uri);
                 } elseif (strpos($val, '/') !== false) {
-                    [
-                        $controller,
-                        $method,
-                    ] = explode('::', $val);
+                    [$controller, $method] = explode('::', $val);
 
                     // Only replace slashes in the controller, not in the method.
                     $controller = str_replace('/', '\\', $controller);
@@ -462,15 +459,12 @@ class Router implements RouterInterface
     {
         $segments = explode('/', $uri);
 
+        // WARNING: Directories get shifted out of the segments array.
         $segments = $this->scanControllers($segments);
 
-        // If we don't have any segments left - try the default controller;
-        // WARNING: Directories get shifted out of the segments array.
-        if (empty($segments)) {
-            $this->setDefaultController();
-        }
+        // If we don't have any segments left - use the default controller;
         // If not empty, then the first segment should be the controller
-        else {
+        if (! empty($segments)) {
             $this->controller = ucfirst(array_shift($segments));
         }
 
@@ -644,10 +638,8 @@ class Router implements RouterInterface
      */
     protected function setRequest(array $segments = [])
     {
-        // If we don't have any segments - try the default controller;
+        // If we don't have any segments - use the default controller;
         if (empty($segments)) {
-            $this->setDefaultController();
-
             return;
         }
 
@@ -668,6 +660,8 @@ class Router implements RouterInterface
 
     /**
      * Sets the default controller based on the info set in the RouteCollection.
+     *
+     * @deprecated This was an unnecessary method, so it is no longer used.
      */
     protected function setDefaultController()
     {
@@ -675,10 +669,7 @@ class Router implements RouterInterface
             throw RouterException::forMissingDefaultRoute();
         }
 
-        // Is the method being specified?
-        if (sscanf($this->controller, '%[^/]/%s', $class, $this->method) !== 2) {
-            $this->method = 'index';
-        }
+        sscanf($this->controller, '%[^/]/%s', $class, $this->method);
 
         if (! is_file(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php')) {
             return;
