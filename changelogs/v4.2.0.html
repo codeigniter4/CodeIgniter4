@@ -314,6 +314,8 @@
 <li><p>Update minimal PHP requirement to 7.4.</p></li>
 <li><p>The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.</p></li>
 <li><p>The process of sending cookies has been moved to the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class. Now the <code class="docutils literal notranslate"><span class="pre">Session</span></code> class doesn’t send cookies, set them to the Response.</p></li>
+<li><p>Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See <a class="reference internal" href="../libraries/validation.html#validation-getting-all-errors"><span class="std std-ref">Getting All Errors</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Validation::getError()</span></code> when using a wildcard will return all found errors matching the mask as a string.</p></li>
 </ul>
 </section>
 <section id="deprecations">
