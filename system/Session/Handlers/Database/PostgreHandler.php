@@ -69,58 +69,11 @@ class PostgreHandler extends DatabaseHandler
     }
 
     /**
-     * Writes the session data to the session storage.
-     *
-     * @param string $id   The session ID
-     * @param string $data The encoded session data
+     * Prepare data to insert/update
      */
-    public function write($id, $data): bool
+    protected function prepareData(string $data): string
     {
-        if ($this->lock === false) {
-            return $this->fail();
-        }
-
-        if ($this->sessionID !== $id) {
-            $this->rowExists = false;
-            $this->sessionID = $id;
-        }
-
-        if ($this->rowExists === false) {
-            $insertData = [
-                'id'         => $id,
-                'ip_address' => $this->ipAddress,
-                'data'       => '\x' . bin2hex($data),
-            ];
-
-            if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
-                return $this->fail();
-            }
-
-            $this->fingerprint = md5($data);
-            $this->rowExists   = true;
-
-            return true;
-        }
-
-        $builder = $this->db->table($this->table)->where('id', $id);
-
-        if ($this->matchIP) {
-            $builder = $builder->where('ip_address', $this->ipAddress);
-        }
-
-        $updateData = [];
-
-        if ($this->fingerprint !== md5($data)) {
-            $updateData['data'] = '\x' . bin2hex($data);
-        }
-
-        if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
-            return $this->fail();
-        }
-
-        $this->fingerprint = md5($data);
-
-        return true;
+        return '\x' . bin2hex($data);
     }
 
     /**

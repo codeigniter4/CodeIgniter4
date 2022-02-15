@@ -163,7 +163,7 @@ class DatabaseHandler extends BaseHandler
             $insertData = [
                 'id'         => $id,
                 'ip_address' => $this->ipAddress,
-                'data'       => $data,
+                'data'       => $this->prepareData($data),
             ];
 
             if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
@@ -185,7 +185,7 @@ class DatabaseHandler extends BaseHandler
         $updateData = [];
 
         if ($this->fingerprint !== md5($data)) {
-            $updateData['data'] = $data;
+            $updateData['data'] = $this->prepareData($data);
         }
 
         if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
@@ -195,6 +195,14 @@ class DatabaseHandler extends BaseHandler
         $this->fingerprint = md5($data);
 
         return true;
+    }
+
+    /**
+     * Prepare data to insert/update
+     */
+    protected function prepareData(string $data): string
+    {
+        return $data;
     }
 
     /**
