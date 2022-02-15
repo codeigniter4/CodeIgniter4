@@ -9,90 +9,16 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Session\Handlers;
+namespace CodeIgniter\Session\Handlers\Database;
 
-use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
-use Config\Database;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use ReturnTypeWillChange;
 
 /**
- * Base database session handler
- *
- * Do not use this class. Use database specific handler class.
+ * Session handler for Postgre
  */
-class DatabaseHandler extends BaseHandler
+class PostgreHandler extends DatabaseHandler
 {
-    /**
-     * The database group to use for storage.
-     *
-     * @var string
-     */
-    protected $DBGroup;
-
-    /**
-     * The name of the table to store session info.
-     *
-     * @var string
-     */
-    protected $table;
-
-    /**
-     * The DB Connection instance.
-     *
-     * @var BaseConnection
-     */
-    protected $db;
-
-    /**
-     * The database type
-     *
-     * @var string
-     */
-    protected $platform;
-
-    /**
-     * Row exists flag
-     *
-     * @var bool
-     */
-    protected $rowExists = false;
-
-    /**
-     * @throws SessionException
-     */
-    public function __construct(AppConfig $config, string $ipAddress)
-    {
-        parent::__construct($config, $ipAddress);
-        $this->table = $config->sessionSavePath;
-
-        if (empty($this->table)) {
-            throw SessionException::forMissingDatabaseTable();
-        }
-
-        $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
-
-        $this->db = Database::connect($this->DBGroup);
-
-        $this->platform = $this->db->getPlatform();
-    }
-
-    /**
-     * Re-initialize existing session, or creates a new one.
-     *
-     * @param string $path The path where to store/retrieve the session
-     * @param string $name The session name
-     */
-    public function open($path, $name): bool
-    {
-        if (empty($this->db->connID)) {
-            $this->db->initialize();
-        }
-
-        return true;
-    }
-
     /**
      * Reads the session data from the session storage, and returns the results.
      *
@@ -115,7 +41,7 @@ class DatabaseHandler extends BaseHandler
         }
 
         $builder = $this->db->table($this->table)
-            ->select('data')
+            ->select("encode(data, 'base64') AS data")
             ->where('id', $id);
 
         if ($this->matchIP) {
@@ -134,7 +60,7 @@ class DatabaseHandler extends BaseHandler
             return '';
         }
 
-        $result = is_bool($result) ? '' : $result->data;
+        $result = is_bool($result) ? '' : base64_decode(rtrim($result->data), true);
 
         $this->fingerprint = md5($result);
         $this->rowExists   = true;
@@ -163,7 +89,7 @@ class DatabaseHandler extends BaseHandler
             $insertData = [
                 'id'         => $id,
                 'ip_address' => $this->ipAddress,
-                'data'       => $data,
+                'data'       => '\x' . bin2hex($data),
             ];
 
             if (! $this->db->table($this->table)->set('timestamp', 'now()', false)->insert($insertData)) {
@@ -185,7 +111,7 @@ class DatabaseHandler extends BaseHandler
         $updateData = [];
 
         if ($this->fingerprint !== md5($data)) {
-            $updateData['data'] = $data;
+            $updateData['data'] = '\x' . bin2hex($data);
         }
 
         if (! $builder->set('timestamp', 'now()', false)->update($updateData)) {
@@ -195,42 +121,6 @@ class DatabaseHandler extends BaseHandler
         $this->fingerprint = md5($data);
 
         return true;
-    }
-
-    /**
-     * Closes the current session.
-     */
-    public function close(): bool
-    {
-        return ($this->lock && ! $this->releaseLock()) ? $this->fail() : true;
-    }
-
-    /**
-     * Destroys a session
-     *
-     * @param string $id The session ID being destroyed
-     */
-    public function destroy($id): bool
-    {
-        if ($this->lock) {
-            $builder = $this->db->table($this->table)->where('id', $id);
-
-            if ($this->matchIP) {
-                $builder = $builder->where('ip_address', $this->ipAddress);
-            }
-
-            if (! $builder->delete()) {
-                return $this->fail();
-            }
-        }
-
-        if ($this->close()) {
-            $this->destroyCookie();
-
-            return true;
-        }
-
-        return $this->fail();
     }
 
     /**
@@ -244,10 +134,25 @@ class DatabaseHandler extends BaseHandler
     #[ReturnTypeWillChange]
     public function gc($max_lifetime)
     {
-        $separator = ' ';
+        $separator = '\'';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
         return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
+    }
+
+    /**
+     * Lock the session.
+     */
+    protected function lockSession(string $sessionID): bool
+    {
+        $arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
+        if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})")) {
+            $this->lock = $arg;
+
+            return true;
+        }
+
+        return $this->fail();
     }
 
     /**
@@ -259,7 +164,12 @@ class DatabaseHandler extends BaseHandler
             return true;
         }
 
-        // Unsupported DB? Let the parent handle the simple version.
-        return parent::releaseLock();
+        if ($this->db->simpleQuery("SELECT pg_advisory_unlock({$this->lock})")) {
+            $this->lock = false;
+
+            return true;
+        }
+
+        return $this->fail();
     }
 }
