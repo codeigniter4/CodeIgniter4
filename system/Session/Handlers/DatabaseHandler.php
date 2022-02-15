@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
@@ -114,13 +115,13 @@ class DatabaseHandler extends BaseHandler
             $this->sessionID = $id;
         }
 
-        $builder = $this->db->table($this->table)
-            ->select('data')
-            ->where('id', $id);
+        $builder = $this->db->table($this->table)->where('id', $id);
 
         if ($this->matchIP) {
             $builder = $builder->where('ip_address', $this->ipAddress);
         }
+
+        $this->setSelect($builder);
 
         $result = $builder->get()->getRow();
 
@@ -134,12 +135,32 @@ class DatabaseHandler extends BaseHandler
             return '';
         }
 
-        $result = is_bool($result) ? '' : $result->data;
+        $result = is_bool($result) ? '' : $this->decodeData($result->data);
 
         $this->fingerprint = md5($result);
         $this->rowExists   = true;
 
         return $result;
+    }
+
+    /**
+     * Sets SELECT clause
+     */
+    protected function setSelect(BaseBuilder $builder)
+    {
+        $builder->select('data');
+    }
+
+    /**
+     * Decodes column data
+     *
+     * @param mixed $data
+     *
+     * @return false|string
+     */
+    protected function decodeData($data)
+    {
+        return $data;
     }
 
     /**

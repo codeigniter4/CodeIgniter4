@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
 use ReturnTypeWillChange;
 
@@ -20,52 +21,23 @@ use ReturnTypeWillChange;
 class PostgreHandler extends DatabaseHandler
 {
     /**
-     * Reads the session data from the session storage, and returns the results.
-     *
-     * @param string $id The session ID
-     *
-     * @return false|string Returns an encoded string of the read data.
-     *                      If nothing was read, it must return false.
+     * Sets SELECT clause
      */
-    #[ReturnTypeWillChange]
-    public function read($id)
+    protected function setSelect(BaseBuilder $builder)
     {
-        if ($this->lockSession($id) === false) {
-            $this->fingerprint = md5('');
+        $builder->select("encode(data, 'base64') AS data");
+    }
 
-            return '';
-        }
-
-        if (! isset($this->sessionID)) {
-            $this->sessionID = $id;
-        }
-
-        $builder = $this->db->table($this->table)
-            ->select("encode(data, 'base64') AS data")
-            ->where('id', $id);
-
-        if ($this->matchIP) {
-            $builder = $builder->where('ip_address', $this->ipAddress);
-        }
-
-        $result = $builder->get()->getRow();
-
-        if ($result === null) {
-            // PHP7 will reuse the same SessionHandler object after
-            // ID regeneration, so we need to explicitly set this to
-            // FALSE instead of relying on the default ...
-            $this->rowExists   = false;
-            $this->fingerprint = md5('');
-
-            return '';
-        }
-
-        $result = is_bool($result) ? '' : base64_decode(rtrim($result->data), true);
-
-        $this->fingerprint = md5($result);
-        $this->rowExists   = true;
-
-        return $result;
+    /**
+     * Decodes column data
+     *
+     * @param mixed $data
+     *
+     * @return false|string
+     */
+    protected function decodeData($data)
+    {
+        return base64_decode(rtrim($data), true);
     }
 
     /**
