@@ -271,10 +271,9 @@ classes that your project is using. Keeping track of where every single file is,
 hard-coding that location into your files in a series of <code class="docutils literal notranslate"><span class="pre">requires()</span></code> is a massive
 headache and very error-prone. That’s where autoloaders come in.</p>
 <p>CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
-It can locate individual non-namespaced classes, namespaced classes that adhere to
+It can locate individual namespaced classes that adhere to
 <a class="reference external" href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> autoloading
-directory structures, and will even attempt to locate classes in common directories (like Controllers,
-Models, etc).</p>
+directory structures.</p>
 <p>For performance improvement, the core CodeIgniter components have been added to the classmap.</p>
 <p>The autoloader works great by itself, but can also work with other autoloaders, like
 <a class="reference external" href="https://getcomposer.org">Composer</a>, or even your own custom autoloaders, if needed.
