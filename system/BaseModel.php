@@ -1076,7 +1076,7 @@ abstract class BaseModel
         $pager = Services::pager(null, null, false);
 
         if ($segment) {
-            $pager->setSegment($segment);
+            $pager->setSegment($segment, $group);
         }
 
         $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
