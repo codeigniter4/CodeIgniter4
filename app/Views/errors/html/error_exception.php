@@ -314,7 +314,7 @@
 				<table>
 					<tr>
 						<td style="width: 15em">Response Status</td>
-						<td><?= esc($response->getStatusCode() . ' - ' . $response->getReason()) ?></td>
+						<td><?= esc($response->getStatusCode() . ' - ' . $response->getReasonPhrase()) ?></td>
 					</tr>
 				</table>
 
