@@ -239,7 +239,7 @@
 			<span>( <?= $vars['response']['statusCode'] . ' - ' . $vars['response']['reason'] ?> )</span>
 		</h2>
 
-		<?php if (isset($vars['headers']) && $headers = $vars['headers']) : ?>
+		<?php if (isset($vars['response']['headers']) && $headers = $vars['response']['headers']) : ?>
 			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('response_headers'); return false;">
 				<h3>Headers</h3>
 			</a>
