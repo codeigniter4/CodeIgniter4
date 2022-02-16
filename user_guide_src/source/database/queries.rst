@@ -359,7 +359,7 @@ INSERT, UPDATE, DELETE, etc)::
 
 **swapPrefix()**
 
-Replaces one table prefix with another value in the final SQL. The first
+Replaces one table prefix with another value in the SQL. The first
 parameter is the original prefix that you want replaced, and the second
 parameter is the value you want it replaced with::
 

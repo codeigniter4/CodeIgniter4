@@ -420,6 +420,163 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
+    public function testGetQueryMultipleTimes()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name:', ['name' => 'placeholder :name: in value']);
+
+        $expected = "SELECT * FROM users WHERE name = 'placeholder :name: in value'";
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetBindsMultipleTimes()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name:', ['name' => 'John']);
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $query->setBinds(['name' => 'Jane']);
+
+        $expected = "SELECT * FROM users WHERE name = 'Jane'";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetQueryMultipleTimesKeepingBinds()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name:', ['name' => 'John']);
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name: OR id = 1');
+
+        $expected = "SELECT * FROM users WHERE name = 'John' OR id = 1";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetQueryMultipleTimesReplacingBinds()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name:', ['name' => 'John']);
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name: OR id = 1', ['name' => 'Jane']);
+
+        $expected = "SELECT * FROM users WHERE name = 'Jane' OR id = 1";
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSetQueryMultipleTimesRemovingBinds()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name:', ['name' => 'John']);
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $query->setQuery('SELECT * FROM users WHERE name = :name: OR id = 1', []);
+
+        $expected = 'SELECT * FROM users WHERE name = :name: OR id = 1';
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
+    public function testSwapPrefixMultipleTimes()
+    {
+        $query = new Query($this->db);
+
+        $origPrefix = 'db_';
+        $newPrefix1 = 'ci_';
+        $newPrefix2 = 'zz_';
+
+        $origSQL = 'SELECT * FROM db_users WHERE db_users.id = 1';
+        $newSQL  = 'SELECT * FROM zz_users WHERE zz_users.id = 1';
+
+        $query->setQuery($origSQL);
+        $query->swapPrefix($origPrefix, $newPrefix1);
+        $query->swapPrefix($newPrefix1, $newPrefix2);
+
+        $this->assertSame($newSQL, $query->getQuery());
+    }
+
+    public function testSwapPrefixBeforeSetBinds()
+    {
+        $query = new Query($this->db);
+
+        $origSQL = 'SELECT * FROM db_users WHERE db_users.name = ?';
+        $newSQL  = "SELECT * FROM ci_users WHERE ci_users.name = 'John'";
+
+        $query->setQuery($origSQL);
+
+        $query->swapPrefix('db_', 'ci_');
+        $query->setBinds(['John']);
+
+        $this->assertSame($newSQL, $query->getQuery());
+    }
+
+    public function testSwapPrefixAfterSetBinds()
+    {
+        $query = new Query($this->db);
+
+        $origSQL = 'SELECT * FROM db_users WHERE db_users.name = ?';
+        $newSQL  = "SELECT * FROM ci_users WHERE ci_users.name = 'John'";
+
+        $query->setQuery($origSQL);
+
+        $query->setBinds(['John']);
+        $query->swapPrefix('db_', 'ci_');
+
+        $this->assertSame($newSQL, $query->getQuery());
+    }
+
+    public function testSwapPrefixIsAppliedBeforeBinds()
+    {
+        $query = new Query($this->db);
+
+        $origSQL = 'SELECT * FROM db_users WHERE db_users.name = ?';
+        $newSQL  = "SELECT * FROM ci_users WHERE ci_users.name = 'John db_foobar John'";
+
+        $query->setQuery($origSQL);
+
+        $query->setBinds(['John db_foobar John']);
+        $query->swapPrefix('db_', 'ci_');
+
+        $this->assertSame($newSQL, $query->getQuery());
+    }
+
+    public function testSwapPrefixAfterGetQuery()
+    {
+        $query = new Query($this->db);
+
+        $query->setQuery('SELECT * FROM db_users WHERE db_users.id = 1');
+
+        // Triggers compileBinds()
+        $query->getQuery();
+
+        $query->swapPrefix('db_', 'ci_');
+
+        $expected = 'SELECT * FROM ci_users WHERE ci_users.id = 1';
+
+        $this->assertSame($expected, $query->getQuery());
+    }
+
     public function queryKeywords()
     {
         return [
@@ -448,7 +605,6 @@ final class BaseQueryTest extends CIUnitTestCase
     {
         $query = new Query($this->db);
         $query->setQuery($sql);
-        $query->getQuery();
 
         $this->assertSame($expected, $query->debugToolbarDisplay());
     }
