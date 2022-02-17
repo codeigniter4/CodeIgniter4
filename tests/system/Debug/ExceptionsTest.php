@@ -61,4 +61,20 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->assertSame([500, 1], $determineCodes(new RuntimeException('That.', 600)));
         $this->assertSame([404, 1], $determineCodes(new RuntimeException('There.', 404)));
     }
+
+    public function testRenderBacktrace(): void
+    {
+        $renderer  = self::getPrivateMethodInvoker(Exceptions::class, 'renderBacktrace');
+        $exception = new RuntimeException('This.');
+
+        $renderedBacktrace = $renderer($exception->getTrace());
+        $renderedBacktrace = explode("\n", $renderedBacktrace);
+
+        foreach ($renderedBacktrace as $trace) {
+            $this->assertMatchesRegularExpression(
+                '/^\s*\d* .+(?:\(\d+\))?: \S+(?:(?:\->|::)\S+)?\(.*\)$/',
+                $trace
+            );
+        }
+    }
 }
