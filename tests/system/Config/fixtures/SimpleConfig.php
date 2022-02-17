@@ -12,7 +12,6 @@
 class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 {
     public $QZERO;
-    public $QZEROSTR;
     public $QEMPTYSTR;
     public $QFALSE;
     public $first  = 'foo';
@@ -41,6 +40,8 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
         'science' => 'Spock',
         'doctor'  => 'Bones',
         'comms'   => 'Uhuru',
+        'ranger'  => 'Red',
+        'poacher' => 'Nice',
     ];
     public $shortie;
     public $longie;

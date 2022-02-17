@@ -62,15 +62,15 @@ final class BaseConfigTest extends CIUnitTestCase
     public function testServerValues()
     {
         $_SERVER = [
-            'simpleconfig.shortie' => 123,
-            'SimpleConfig.longie'  => 456,
+            'simpleconfig.shortie' => '123',
+            'simpleconfig.longie'  => '456',
         ];
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
         $config = new SimpleConfig();
 
-        $this->assertSame('123', $config->shortie);
-        $this->assertSame('456', $config->longie);
+        $this->assertSame(123, $config->shortie);
+        $this->assertSame(456, $config->longie);
     }
 
     public function testEnvironmentOverrides()
@@ -123,6 +123,10 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('pilot', $config->crew);
         $this->assertTrue($config->crew['comms']);
         $this->assertFalse($config->crew['doctor']);
+        $this->assertNull($config->crew['ranger']);
+        $this->assertSame('', $config->crew['poacher']);
+        $this->assertSame(12.45, $config->shortie);
+        $this->assertSame(250, $config->longie);
     }
 
     public function testArrayValues()
@@ -205,8 +209,7 @@ final class BaseConfigTest extends CIUnitTestCase
 
         $config = new SimpleConfig();
 
-        $this->assertSame(0, (int) $config->QZERO);
-        $this->assertSame('0', $config->QZEROSTR);
+        $this->assertSame(0, $config->QZERO);
         $this->assertSame(' ', $config->QEMPTYSTR);
         $this->assertFalse($config->QFALSE);
     }
