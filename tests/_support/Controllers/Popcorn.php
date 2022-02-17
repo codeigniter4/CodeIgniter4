@@ -30,7 +30,7 @@ class Popcorn extends Controller
 
     public function pop()
     {
-        $this->respond('Oops', 567, 'Surprise');
+        return $this->respond('Oops', 567, 'Surprise');
     }
 
     public function popper()
@@ -40,12 +40,12 @@ class Popcorn extends Controller
 
     public function weasel()
     {
-        $this->respond('', 200);
+        return $this->respond('', 200);
     }
 
     public function oops()
     {
-        $this->failUnauthorized();
+        return $this->failUnauthorized();
     }
 
     public function goaway()
@@ -72,12 +72,12 @@ class Popcorn extends Controller
 
     public function json()
     {
-        $this->respond(['answer' => 42]);
+        return $this->respond(['answer' => 42]);
     }
 
     public function xml()
     {
-        $this->respond('<my><pet>cat</pet></my>');
+        return $this->respond('<my><pet>cat</pet></my>');
     }
 
     public function toindex()
