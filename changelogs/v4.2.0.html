@@ -306,6 +306,13 @@
 </dl>
 </li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command now shows closure routes, auto routtes, and filters. See <a class="reference internal" href="../incoming/routing.html#spark-routes"><span class="std std-ref">URI Routing</span></a>.</p></li>
+<li><dl class="simple">
+<dt>Exception information logged through <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.</dt><dd><ul>
+<li><p>The log format has also changed. If users are depending on the log format in their apps, the new log format is “&lt;1-based count&gt; &lt;cleaned filepath&gt;(&lt;line&gt;): &lt;class&gt;&lt;function&gt;&lt;args&gt;”</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 <section id="changes">
@@ -345,7 +352,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 16, 2022.
+      <span class="lastupdated">Last updated on Feb 17, 2022.
       </span></p>
   </div>
 
