@@ -96,13 +96,39 @@ class BaseConfig
             foreach (array_keys($property) as $key) {
                 $this->initEnvValue($property[$key], "{$name}.{$key}", $prefix, $shortPrefix);
             }
-        } elseif (($value = $this->getEnvValue($name, $prefix, $shortPrefix)) !== false && $value !== null) {
-            if ($value === 'false') {
-                $value = false;
-            } elseif ($value === 'true') {
-                $value = true;
+        } else {
+            $value = $this->getEnvValue($name, $prefix, $shortPrefix);
+
+            if ($value !== null) {
+                $lowered = strtolower($value);
+
+                switch (true) {
+                    case $lowered === 'false':
+                        $value = false;
+                        break;
+
+                    case $lowered === 'true':
+                        $value = true;
+                        break;
+
+                    case $lowered === 'empty':
+                        $value = '';
+                        break;
+
+                    case $lowered === 'null':
+                        $value = null;
+                        break;
+
+                    default:
+                        $value = trim($value, '\'"');
+                }
+
+                if (is_numeric($value)) {
+                    $value = strpos($value, '.') !== false ? (float) $value : (int) $value;
+                }
+
+                $property = $value;
             }
-            $property = is_bool($value) ? $value : trim($value, '\'"');
         }
 
         return $property;
@@ -111,7 +137,7 @@ class BaseConfig
     /**
      * Retrieve an environment-specific configuration setting
      *
-     * @return mixed
+     * @return string|null
      */
     protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
     {
