@@ -151,9 +151,9 @@ class Toolbar
             'statusCode'  => $response->getStatusCode(),
             'reason'      => esc($response->getReasonPhrase()),
             'contentType' => esc($response->getHeaderLine('content-type')),
-            'headers' => [],
+            'headers'     => [],
         ];
-        
+
         foreach ($response->headers() as $header) {
             $data['vars']['response']['headers'][esc($header->getName())] = esc($header->getValueLine());
         }
