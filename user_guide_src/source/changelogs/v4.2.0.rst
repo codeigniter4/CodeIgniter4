@@ -31,6 +31,7 @@ Enhancements
 - The ``spark routes`` command now shows closure routes, auto routtes, and filters. See :ref:`URI Routing <spark-routes>`.
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
+- BaseConfig's ability to convert ``.env`` values has improved. Numeric strings will be converted to either integers or floats. String "null" will be changed to ``null``. String "empty" will be changed to ``''``.
 
 Changes
 *******
