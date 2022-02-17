@@ -847,6 +847,8 @@ class CodeIgniter
     {
         // Is there a 404 Override available?
         if ($override = $this->router->get404Override()) {
+            $returned = null;
+
             if ($override instanceof Closure) {
                 echo $override($e->getMessage());
             } elseif (is_array($override)) {
@@ -857,13 +859,13 @@ class CodeIgniter
                 $this->method     = $override[1];
 
                 $controller = $this->createController();
-                $this->runController($controller);
+                $returned   = $this->runController($controller);
             }
 
             unset($override);
 
             $cacheConfig = new Cache();
-            $this->gatherOutput($cacheConfig);
+            $this->gatherOutput($cacheConfig, $returned);
             $this->sendResponse();
 
             return;
