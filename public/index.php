@@ -25,7 +25,10 @@ $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-$app       = require realpath($bootstrap) ?: $bootstrap;
+/** @var CodeIgniter\CodeIgniter $app */
+$app     = require realpath($bootstrap) ?: $bootstrap;
+$context = is_cli() ? 'php-cli' : 'web';
+$app->setContext($context);
 
 /*
  *---------------------------------------------------------------

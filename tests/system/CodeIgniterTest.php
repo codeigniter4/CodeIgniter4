@@ -276,6 +276,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $config->forceGlobalSecureRequests = true;
 
         $codeigniter = new MockCodeIgniter($config);
+        $codeigniter->setContext('web');
 
         $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
         $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();
