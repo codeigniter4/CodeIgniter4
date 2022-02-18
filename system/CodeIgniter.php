@@ -777,6 +777,8 @@ class CodeIgniter
      * Now that everything has been setup, this method attempts to run the
      * controller method and make the script go. If it's not able to, will
      * show the appropriate Page Not Found error.
+     *
+     * @return ResponseInterface|string|void
      */
     protected function startController()
     {
@@ -804,7 +806,7 @@ class CodeIgniter
     /**
      * Instantiates the controller class.
      *
-     * @return mixed
+     * @return Controller
      */
     protected function createController()
     {
@@ -821,7 +823,7 @@ class CodeIgniter
      *
      * @param mixed $class
      *
-     * @return mixed
+     * @return false|ResponseInterface|string|void
      */
     protected function runController($class)
     {
@@ -847,6 +849,8 @@ class CodeIgniter
     {
         // Is there a 404 Override available?
         if ($override = $this->router->get404Override()) {
+            $returned = null;
+
             if ($override instanceof Closure) {
                 echo $override($e->getMessage());
             } elseif (is_array($override)) {
@@ -857,13 +861,13 @@ class CodeIgniter
                 $this->method     = $override[1];
 
                 $controller = $this->createController();
-                $this->runController($controller);
+                $returned   = $this->runController($controller);
             }
 
             unset($override);
 
             $cacheConfig = new Cache();
-            $this->gatherOutput($cacheConfig);
+            $this->gatherOutput($cacheConfig, $returned);
             $this->sendResponse();
 
             return;
@@ -891,7 +895,7 @@ class CodeIgniter
      * Gathers the script output from the buffer, replaces some execution
      * time tag in the output and displays the debug toolbar, if required.
      *
-     * @param mixed|null $returned
+     * @param ResponseInterface|string|null $returned
      */
     protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
