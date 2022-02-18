@@ -15,7 +15,7 @@ use CodeIgniter\CodeIgniter;
 
 class MockCodeIgniter extends CodeIgniter
 {
-    protected string $context = 'web';
+    protected ?string $context = 'web';
 
     protected function callExit($code)
     {

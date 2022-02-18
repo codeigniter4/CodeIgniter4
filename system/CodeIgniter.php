@@ -149,7 +149,7 @@ class CodeIgniter
      *
      * @phpstan-var 'php-cli'|'spark'|'web'
      */
-    protected string $context;
+    protected ?string $context = null;
 
     /**
      * Constructor.
