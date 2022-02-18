@@ -168,6 +168,29 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertSame('You must choose a username.', Services::validation()->getError());
     }
 
+    public function testValidateData()
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
+
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+
+        $data = [
+            'username' => 'mike',
+            'password' => '123',
+        ];
+        $rule = [
+            'username' => 'required',
+            'password' => 'required|min_length[10]',
+        ];
+        $this->assertFalse($method($data, $rule));
+        $this->assertSame(
+            'The password field must be at least 10 characters in length.',
+            Services::validation()->getError('password')
+        );
+    }
+
     public function testHelpers()
     {
         $this->controller      = new class () extends Controller {
