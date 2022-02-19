@@ -119,7 +119,7 @@ Retrieving Session Data
 Any piece of information from the session array is available through the
 ``$_SESSION`` superglobal:
 
-.. literalinclude:: sessions/005.php
+.. literalinclude:: sessions/005-2.php
    :lines: 2-
 
 Or through the conventional accessor method:
@@ -335,7 +335,7 @@ You can also pass an array to ``setTempdata()``:
 To read a tempdata variable, again you can just access it through the
 ``$_SESSION`` superglobal array:
 
-.. literalinclude:: sessions/005.php
+.. literalinclude:: sessions/005-1.php
    :lines: 2-
 
 .. important:: The ``get()`` method WILL return tempdata items when

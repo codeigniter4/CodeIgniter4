@@ -608,7 +608,7 @@ Class Reference
 
         Builds the output based upon a provided template source and any data that has already been set:
 
-        .. literalinclude:: view_parser/021.php
+        .. literalinclude:: view_parser/021-1.php
            :lines: 2-
 
         Options supported, and behavior, as above.

@@ -39,7 +39,7 @@ On Demand
 
 Access ``Publisher`` directly by instantiating a new instance of the class:
 
-.. literalinclude:: publisher/001.php
+.. literalinclude:: publisher/002.php
    :lines: 2-
 
 By default the source and destination will be set to ``ROOTPATH`` and ``FCPATH`` respectively, giving ``Publisher``

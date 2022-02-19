@@ -178,7 +178,7 @@ values of the elements. Instead, they simply check that the elements exist on th
 
 You can use **seeLink()** to ensure that a link appears on the page with the specified text:
 
-.. literalinclude:: response/021.php
+.. literalinclude:: response/021-2.php
    :lines: 2-
 
 The **seeInField()** method checks for any input tags exist with the name and value:
