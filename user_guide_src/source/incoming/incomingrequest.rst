@@ -285,27 +285,14 @@ functions use, so this is a helpful way to "spoof" an incoming request for testi
 Uploaded Files
 --------------
 
-Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns a
-:doc:`FileCollection </libraries/uploaded_files>` instance. This helps to ease the pain of working with uploaded files,
+Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns an array of
+``CodeIgniter\HTTP\Files\UploadedFile`` instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.
 ::
 
     $files = $request->getFiles();
 
-    // Grab the file by name given in HTML form
-    if ($files->hasFile('userfile')) {
-        $file = $files->getFile('userfile');
-
-        // Generate a new secure name
-        $name = $file->getRandomName();
-
-        // Move the file to it's new home
-        $file->move('/path/to/dir', $name);
-
-        echo $file->getSize('mb'); // 1.23
-        echo $file->getExtension(); // jpg
-        echo $file->getType(); // image/jpg
-    }
+See :ref:`Working with Uploaded Files <uploaded-files-accessing-files>` for the details.
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input::
 

@@ -166,6 +166,8 @@ You should see an upload form. Try uploading an image file (either a
 **jpg**, **gif**, **png**, or **webp**). If the path in your controller is correct it should
 work.
 
+.. _uploaded-files-accessing-files:
+
 ***************
 Accessing Files
 ***************
