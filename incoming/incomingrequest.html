@@ -547,27 +547,13 @@ functions use, so this is a helpful way to “spoof” an incoming request for t
 </section>
 <section id="uploaded-files">
 <h2><a class="toc-backref" href="#id6">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline"></a></h2>
-<p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns a
-<a class="reference internal" href="../libraries/uploaded_files.html"><span class="doc">FileCollection</span></a> instance. This helps to ease the pain of working with uploaded files,
+<p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns an array of
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">();</span>
-
-<span class="c1">// Grab the file by name given in HTML form</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$files</span><span class="o">-&gt;</span><span class="na">hasFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
-
-    <span class="c1">// Generate a new secure name</span>
-    <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
-
-    <span class="c1">// Move the file to it&#39;s new home</span>
-    <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="s1">&#39;/path/to/dir&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
-
-    <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span> <span class="c1">// 1.23</span>
-    <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getExtension</span><span class="p">();</span> <span class="c1">// jpg</span>
-    <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getType</span><span class="p">();</span> <span class="c1">// image/jpg</span>
-<span class="p">}</span>
 </pre></div>
 </div>
+<p>See <a class="reference internal" href="../libraries/uploaded_files.html#uploaded-files-accessing-files"><span class="std std-ref">Working with Uploaded Files</span></a> for the details.</p>
 <p>You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 </pre></div>
@@ -966,7 +952,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 18, 2022.
+      <span class="lastupdated">Last updated on Feb 19, 2022.
       </span></p>
   </div>
 
