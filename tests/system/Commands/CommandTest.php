@@ -106,16 +106,6 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('| Yes', $this->getBuffer());
     }
 
-    public function testRoutesCommand()
-    {
-        command('routes');
-
-        $this->assertStringContainsString('| (Closure)', $this->getBuffer());
-        $this->assertStringContainsString('| Route', $this->getBuffer());
-        $this->assertStringContainsString('| testing', $this->getBuffer());
-        $this->assertStringContainsString('\\TestController::index', $this->getBuffer());
-    }
-
     public function testInexistentCommandWithNoAlternatives()
     {
         command('app:oops');
