@@ -157,6 +157,31 @@ routes. With the examples URLs from above:
 
 will only match **product/123** and generate 404 errors for other example.
 
+
+Array Callable Syntax
+=====================
+
+Since v4.2.0, you can use array callable syntax to specify the controller:
+
+.. literalinclude:: routing/004_1.php
+   :lines: 2-
+
+Or using ``use`` keyword:
+
+.. literalinclude:: routing/004_2.php
+   :lines: 2-
+
+If there are placeholders, it will automatically set the parameters in the specified order:
+
+.. literalinclude:: routing/004_3.php
+   :lines: 2-
+
+But the auto-configured parameters may not be correct if you use regular expressions in routes.
+In such a case, you can specify the parameters manually:
+
+.. literalinclude:: routing/004_4.php
+   :lines: 2-
+
 Custom Placeholders
 ===================
 

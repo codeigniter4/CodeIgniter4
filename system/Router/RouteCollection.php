@@ -1137,6 +1137,10 @@ class RouteCollection implements RouteCollectionInterface
             $from = trim($from, '/');
         }
 
+        if (is_array($to)) {
+            $to = $this->processArrayCallableSyntax($from, $to);
+        }
+
         $options = array_merge($this->currentOptions ?? [], $options ?? []);
 
         // Route priority detect
@@ -1225,6 +1229,52 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($options['redirect']) && is_numeric($options['redirect'])) {
             $this->routes['*'][$name]['redirect'] = $options['redirect'];
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function processArrayCallableSyntax(string $from, array $to)
+    {
+        // [classname, method]
+        // eg, [Home::class, 'index']
+        if (is_callable($to, true, $callableName)) {
+            // If the route has placeholders, add params automatically.
+            $params = $this->getMethodParams($from);
+
+            return '\\' . $callableName . $params;
+        }
+
+        // [[classname, method], params]
+        // eg, [[Home::class, 'index'], '$1/$2']
+        if (
+            isset($to[0], $to[1])
+            && is_callable($to[0], true, $callableName)
+            && is_string($to[1])
+        ) {
+            $to = '\\' . $callableName . '/' . $to[1];
+        }
+
+        return $to;
+    }
+
+    /**
+     * Returns the method param string like `/$1/$2` for placeholders
+     */
+    private function getMethodParams(string $from): string
+    {
+        preg_match_all('/\(.+?\)/', $from, $matches);
+        $count = is_countable($matches[0]) ? count($matches[0]) : 0;
+
+        $params = '';
+
+        if ($count > 0) {
+            for ($i = 1; $i <= $count; $i++) {
+                $params .= '/$' . $i;
+            }
+        }
+
+        return $params;
     }
 
     /**
