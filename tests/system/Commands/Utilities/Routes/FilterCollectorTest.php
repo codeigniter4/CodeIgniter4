@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
 
 /**
  * @internal
@@ -20,6 +21,9 @@ final class FilterCollectorTest extends CIUnitTestCase
 {
     public function testGet()
     {
+        $routes = Services::routes();
+        $routes->resetRoutes();
+
         $collector = new FilterCollector();
 
         $filters = $collector->get('get', '/');
