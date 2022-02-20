@@ -1,5 +1,8 @@
 <?php
 
-$routes->group('api', ['namespace' => 'App\API\v1'], function ($routes) {
-    $routes->resource('users');
-});
+$multipleRoutes = [
+    'product/(:num)'      => 'Catalog::productLookupById',
+    'product/(:alphanum)' => 'Catalog::productLookupByName',
+];
+
+$routes->map($multipleRoutes);

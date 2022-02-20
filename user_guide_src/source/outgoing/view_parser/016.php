@@ -1,7 +1,8 @@
 <?php
 
 public $plugins = [
-    'foo' => ['\Some\Class::methodName']
+    'foo' => '\Some\Class::methodName'
 ];
 
-{+ foo +} inner content {+ /foo +}
+// Tag is replaced by the return value of Some\Class::methodName static function.
+{+ foo +}

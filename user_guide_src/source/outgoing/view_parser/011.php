@@ -1,6 +1,3 @@
-<?php
-
-public $filters = [
-    'abs'        => '\CodeIgniter\View\Filters::abs',
-    'capitalize' => '\CodeIgniter\View\Filters::capitalize',
-];
+<?php if ($role=='admin'): ?>
+    <h1>Welcome, Admin!</h1>
+<?php endif ?>

@@ -1,7 +1,6 @@
 <?php
 
 $routes->group('admin', function ($routes) {
-    $routes->group('users', function ($routes) {
-        $routes->get('list', 'Admin\Users::list');
-    });
+    $routes->get('users', 'Admin\Users::index');
+    $routes->get('blog', 'Admin\Blog::index');
 });

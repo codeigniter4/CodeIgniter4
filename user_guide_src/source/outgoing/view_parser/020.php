@@ -1,19 +1,16 @@
 <?php
 
-$temp = '';
-$template1 = '<li><a href="{link}">{title}</a></li>';
-$data1 = [
-    ['title' => 'First Link', 'link' => '/first'],
-    ['title' => 'Second Link', 'link' => '/second'],
-];
-
-foreach ($data1 as $menuItem),{
-    $temp .= $parser->setData($menuItem)->renderString($template1);
-}
-
-$template2 = '<ul>{menuitems}</ul>';
+$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
 $data = [
-    'menuitems' => $temp,
+    'degrees'   => 'Mr',
+    'firstname' => 'John',
+    'lastname'  => 'Doe',
+    'titles'    => [
+        ['degree' => 'BSc'],
+        ['degree' => 'PhD'],
+    ],
 ];
 echo $parser->setData($data)
-            ->renderString($template2);
+            ->renderString($template);
+
+// Result: Hello, John Doe (Mr{degree} {/degrees})

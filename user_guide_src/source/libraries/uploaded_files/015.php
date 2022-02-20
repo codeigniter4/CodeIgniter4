@@ -1,3 +1,3 @@
 <?php
 
-$tempfile = $file->getTempName();
+$originalName = $file->getClientName();

@@ -1,5 +1,4 @@
 <?php
 
-if ($file->isValid() && ! $file->hasMoved()) {
-    $file->move($path);
-}
+$newName = $file->getRandomName();
+$file->move(WRITEPATH . 'uploads', $newName);

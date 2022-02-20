@@ -1,48 +1,23 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload Form</title>
+</head>
+<body>
 
-namespace App\Controllers;
+<?php foreach ($errors as $error): ?>
+    <li><?= esc($error) ?></li>
+<?php endforeach ?>
 
-use CodeIgniter\Files\File;
+<?= form_open_multipart('upload/upload') ?>
 
-class Upload extends BaseController
-{
-    protected $helpers = ['form'];
+<input type="file" name="userfile" size="20" />
 
-    public function index()
-    {
-        return view('upload_form', ['errors' => []]);
-    }
+<br /><br />
 
-    public function upload()
-    {
-        $validationRule = [
-            'userfile' => [
-                'label' => 'Image File',
-                'rules' => 'uploaded[userfile]'
-                    . '|is_image[userfile]'
-                    . '|mime_in[userfile,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
-                    . '|max_size[userfile,100]'
-                    . '|max_dims[userfile,1024,768]',
-            ],
-        ];
-        if (! $this->validate($validationRule)) {
-            $data = ['errors' => $this->validator->getErrors()];
+<input type="submit" value="upload" />
 
-            return view('upload_form', $data);
-        }
+</form>
 
-        $img = $this->request->getFile('userfile');
-
-        if (! $img->hasMoved()) {
-            $filepath = WRITEPATH . 'uploads/' . $img->store();
-
-            $data = ['uploaded_flleinfo' => new File($filepath)];
-
-            return view('upload_success', $data);
-        } else {
-            $data = ['errors' => 'The file has already been moved.'];
-
-            return view('upload_form', $data);
-        }
-    }
-}
+</body>
+</html>

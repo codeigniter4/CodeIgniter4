@@ -1,4 +1,10 @@
 <?php
 
-$file1 = $this->request->getFile('images.0');
-$file2 = $this->request->getFile('images.1');
+if ($imagefile = $this->request->getFiles()) {
+    foreach($imagefile['images'] as $img) {
+        if ($img->isValid() && ! $img->hasMoved()) {
+            $newName = $img->getRandomName();
+            $img->move(WRITEPATH . 'uploads', $newName);
+        }
+    }
+}

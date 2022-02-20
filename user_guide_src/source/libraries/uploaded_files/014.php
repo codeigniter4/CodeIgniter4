@@ -1,3 +1,3 @@
 <?php
 
-$originalName = $file->getClientName();
+$name = $file->getName();

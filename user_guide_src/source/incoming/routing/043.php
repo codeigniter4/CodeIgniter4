@@ -1,3 +1,4 @@
 <?php
 
-$routes->setTranslateURIDashes(true);
+// example.com routes to app/Controllers/Welcome.php
+$routes->setDefaultController('Welcome');

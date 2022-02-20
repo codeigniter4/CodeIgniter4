@@ -1,3 +1,3 @@
 <?php
 
-echo index_page();
+echo base_url('blog/post/123');

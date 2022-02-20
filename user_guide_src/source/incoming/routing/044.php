@@ -1,3 +1,3 @@
 <?php
 
-$routes->setAutoRoute(false);
+$routes->setDefaultMethod('listAll');

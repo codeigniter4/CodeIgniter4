@@ -1,8 +1,3 @@
 <?php
 
-$multipleRoutes = [
-    'product/(:num)'      => 'Catalog::productLookupById',
-    'product/(:alphanum)' => 'Catalog::productLookupByName',
-];
-
-$routes->map($multipleRoutes);
+$routes->get('products/([a-z]+)/(\d+)', 'Products::show/$1/id_$2');

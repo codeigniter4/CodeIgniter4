@@ -1,12 +1,12 @@
 <?php
 
-$template = 'Hello, {firstname} {initials} {lastname}';
+$template = 'Hello, {firstname} {lastname}';
 $data = [
     'title'     => 'Mr',
     'firstname' => 'John',
-    'lastname'  => 'Doe',
+    'lastname'  => 'Doe'
 ];
 echo $parser->setData($data)
             ->renderString($template);
 
-// Result: Hello, John {initials} Doe
+// Result: Hello, John Doe

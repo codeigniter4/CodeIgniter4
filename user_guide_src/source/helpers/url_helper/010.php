@@ -1,3 +1,3 @@
 <?php
 
-$string = auto_link($string);
+echo anchor_popup('news/local/123', 'Click Me!', []);

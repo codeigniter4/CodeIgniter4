@@ -1,3 +1,5 @@
 <?php
 
-$path = $this->request->getFile('userfile')->store();
+if ($file->isValid() && ! $file->hasMoved()) {
+    $file->move($path);
+}

@@ -1,3 +1,3 @@
 <?php
 
-if (url_is('admin*')) { ... }
+echo url_to('Home::index');

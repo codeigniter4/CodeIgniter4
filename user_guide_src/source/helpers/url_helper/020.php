@@ -1,3 +1,3 @@
 <?php
 
-if (url_is('admin')) { ... }
+$url = prep_url('example.com');

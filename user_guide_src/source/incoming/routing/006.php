@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('product/(:num)', 'Catalog::productLookupByID/$1');
+$routes->get('journals', 'Blogs');

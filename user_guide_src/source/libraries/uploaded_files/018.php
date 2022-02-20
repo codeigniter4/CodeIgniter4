@@ -1,3 +1,5 @@
 <?php
 
-$file->move(WRITEPATH . 'uploads');
+$type = $file->getClientMimeType();
+
+echo $type; // image/png

@@ -1,5 +1,3 @@
 <?php
 
-[
-    'avatar' => // UploadedFile instance
-]
+$files = $this->request->getFiles();

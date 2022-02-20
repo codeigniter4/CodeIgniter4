@@ -1,5 +1,6 @@
 <?php
 
 public $filters = [
-    'str_repeat' => '\str_repeat',
+    'abs'        => '\CodeIgniter\View\Filters::abs',
+    'capitalize' => '\CodeIgniter\View\Filters::capitalize',
 ];

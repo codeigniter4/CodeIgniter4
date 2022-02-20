@@ -1,4 +1,9 @@
 <?php
 
-// example.com routes to app/Controllers/Welcome.php
-$routes->setDefaultController('Welcome');
+$routes->setDefaultNamespace('');
+
+// Controller is \Users
+$routes->get('users', 'Users::index');
+
+// Controller is \Admin\Users
+$routes->get('users', 'Admin\Users::index');

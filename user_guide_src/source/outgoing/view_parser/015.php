@@ -1,8 +1,15 @@
 <?php
 
-public $plugins = [
-    'foo' => '\Some\Class::methodName'
-];
+class View extends \CodeIgniter\Config\View
+{
+    public $plugins = [];
 
-// Tag is replaced by the return value of Some\Class::methodName static function.
-{+ foo +}
+    public function __construct()
+    {
+        $this->plugins['bar'] = function (array $params=[]) {
+            return $params[0] ?? '';
+        };
+
+        parent::__construct();
+    }
+}

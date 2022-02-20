@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('product/(:any)', 'Catalog::productLookup/$1');
+$routes->get('blog/joe', 'Blogs::users/34');

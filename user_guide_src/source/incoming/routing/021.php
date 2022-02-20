@@ -1,5 +1,5 @@
 <?php
 
-$routes->environment('development', function ($routes) {
-    $routes->get('builder', 'Tools\Builder::index');
+$routes->group('api', ['filter' => 'api-auth'], function ($routes) {
+    $routes->resource('users');
 });

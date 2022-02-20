@@ -1,4 +1,3 @@
 <?php
 
-// Limit to any sub-domain
-$routes->get('from', 'to', ['subdomain' => '*']);
+$routes->get('from', 'to', ['hostname' => 'accounts.example.com']);

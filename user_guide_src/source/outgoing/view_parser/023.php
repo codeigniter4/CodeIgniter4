@@ -1,3 +1,3 @@
 <?php
 
-$renderer->setData(['name' => 'George', 'position' => 'Boss']);
+echo $parser->render('myview');

@@ -1,16 +1,12 @@
 <?php
 
-$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
+$template = 'Hello, {firstname} {initials} {lastname}';
 $data = [
-    'degrees'   => 'Mr',
+    'title'     => 'Mr',
     'firstname' => 'John',
     'lastname'  => 'Doe',
-    'titles'    => [
-        ['degree' => 'BSc'],
-        ['degree' => 'PhD'],
-    ],
 ];
 echo $parser->setData($data)
             ->renderString($template);
 
-// Result: Hello, John Doe (Mr{degree} {/degrees})
+// Result: Hello, John {initials} Doe

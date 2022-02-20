@@ -1,3 +1,3 @@
 <?php
 
-$ext = $file->getClientExtension();
+$tempfile = $file->getTempName();

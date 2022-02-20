@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('blog/joe', 'Blogs::users/34');
+$routes->match(['get', 'put'], 'products', 'Product::feature');

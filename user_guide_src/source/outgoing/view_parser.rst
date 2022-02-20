@@ -281,7 +281,7 @@ blocks must be closed with an ``endif`` tag::
 
 This simple block is converted to the following during parsing:
 
-.. literalinclude:: view_parser/010-2.php
+.. literalinclude:: view_parser/011.php
 
 All variables used within if statements must have been previously set with the same name. Other than that, it is
 treated exactly like a standard PHP conditional, and all standard PHP rules would apply here. You can use any
@@ -413,7 +413,7 @@ You can easily create your own filters by editing **app/Config/View.php** and ad
 ``$filters`` array. Each key is the name of the filter is called by in the view, and its value is any valid PHP
 callable:
 
-.. literalinclude:: view_parser/011.php
+.. literalinclude:: view_parser/012.php
    :lines: 2-
 
 PHP Native functions as Filters
@@ -423,7 +423,7 @@ You can use native php function as filters by editing **app/Config/View.php** an
 ``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
 function prefixed with:
 
-.. literalinclude:: view_parser/012.php
+.. literalinclude:: view_parser/013.php
    :lines: 2-
 
 Parser Plugins
@@ -481,24 +481,24 @@ At its simplest, all you need to do to register a new plugin and make it ready f
 **app/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
 used within the template file. The value is any valid PHP callable, including static class methods, and closures:
 
-.. literalinclude:: view_parser/013.php
+.. literalinclude:: view_parser/014.php
    :lines: 2-
 
 Any closures that are being used must be defined in the config file's constructor:
 
-.. literalinclude:: view_parser/014.php
+.. literalinclude:: view_parser/015.php
    :lines: 2-
 
 If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
 the return value from the plugin:
 
-.. literalinclude:: view_parser/015.php
+.. literalinclude:: view_parser/016.php
    :lines: 2-
 
 If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of
 the content between its tags:
 
-.. literalinclude:: view_parser/016.php
+.. literalinclude:: view_parser/017.php
    :lines: 2-
 
 ***********
@@ -508,20 +508,20 @@ Usage Notes
 If you include substitution parameters that are not referenced in your
 template, they are ignored:
 
-.. literalinclude:: view_parser/017.php
+.. literalinclude:: view_parser/018.php
    :lines: 2-
 
 If you do not include a substitution parameter that is referenced in your
 template, the original pseudo-variable is shown in the result:
 
-.. literalinclude:: view_parser/018.php
+.. literalinclude:: view_parser/019.php
    :lines: 2-
 
 If you provide a string substitution parameter when an array is expected,
 i.e., for a variable pair, the substitution is done for the opening variable
 pair tag, but the closing variable pair tag is not rendered properly:
 
-.. literalinclude:: view_parser/019.php
+.. literalinclude:: view_parser/020.php
    :lines: 2-
 
 View Fragments
@@ -557,7 +557,7 @@ Result::
 An example with the iteration controlled in the controller,
 using a view fragment:
 
-.. literalinclude:: view_parser/020.php
+.. literalinclude:: view_parser/021.php
    :lines: 2-
 
 Result::
@@ -583,7 +583,7 @@ Class Reference
 
         Builds the output based upon a file name and any data that has already been set:
 
-        .. literalinclude:: view_parser/021.php
+        .. literalinclude:: view_parser/022.php
            :lines: 2-
 
         Options supported:
@@ -608,7 +608,7 @@ Class Reference
 
         Builds the output based upon a provided template source and any data that has already been set:
 
-        .. literalinclude:: view_parser/021-1.php
+        .. literalinclude:: view_parser/023.php
            :lines: 2-
 
         Options supported, and behavior, as above.
@@ -622,7 +622,7 @@ Class Reference
 
         Sets several pieces of view data at once:
 
-        .. literalinclude:: view_parser/023.php
+        .. literalinclude:: view_parser/024.php
            :lines: 2-
 
         Supported escape contexts: html, css, js, url, or attr or raw.
@@ -638,7 +638,7 @@ Class Reference
 
         Sets a single piece of view data:
 
-        .. literalinclude:: view_parser/024.php
+        .. literalinclude:: view_parser/025.php
            :lines: 2-
 
         Supported escape contexts: html, css, js, url, attr or raw.
@@ -653,5 +653,5 @@ Class Reference
 
         Override the substitution field delimiters:
 
-        .. literalinclude:: view_parser/025.php
+        .. literalinclude:: view_parser/026.php
            :lines: 2-

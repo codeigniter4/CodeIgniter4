@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
+$routes->get('admin',' AdminController::index', ['filter' => ['admin-auth', \App\Filters\SomeFilter::class]]);

@@ -1,15 +1,8 @@
 <?php
 
-class View extends \CodeIgniter\Config\View
-{
-    public $plugins = [];
-
-    public function __construct()
-    {
-        $this->plugins['bar'] = function (array $params=[]) {
-            return $params[0] ?? '';
-        };
-
-        parent::__construct();
-    }
-}
+public $plugins = [
+    'foo' => '\Some\Class::methodName',
+    'bar' => function ($str, array $params=[]) {
+        return $str;
+    },
+];

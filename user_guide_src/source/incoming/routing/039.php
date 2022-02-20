@@ -1,9 +1,12 @@
 <?php
 
-$routes->setDefaultNamespace('');
+// First you need to enable sorting.
+$routes->setPrioritize();
 
-// Controller is \Users
-$routes->get('users', 'Users::index');
+// App\Config\Routes
+$routes->get('(.*)', 'Posts::index', ['priority' => 1]);
 
-// Controller is \Admin\Users
-$routes->get('users', 'Admin\Users::index');
+// Modules\Acme\Config\Routes
+$routes->get('admin', 'Admin::index');
+
+// The "admin" route will now be processed before the wildcard router.

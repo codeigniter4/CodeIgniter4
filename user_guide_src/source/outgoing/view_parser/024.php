@@ -1,3 +1,3 @@
 <?php
 
-$renderer->setVar('name','Joe','html');
+$renderer->setData(['name' => 'George', 'position' => 'Boss']);

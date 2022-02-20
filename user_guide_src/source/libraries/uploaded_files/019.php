@@ -1,4 +1,3 @@
 <?php
 
-$newName = $file->getRandomName();
-$file->move(WRITEPATH . 'uploads', $newName);
+$file->move(WRITEPATH . 'uploads');

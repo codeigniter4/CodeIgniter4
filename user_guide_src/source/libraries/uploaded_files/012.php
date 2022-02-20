@@ -1,5 +1,4 @@
 <?php
 
-if (! $file->isValid()) {
-    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
-}
+$file1 = $this->request->getFile('my-form.details.avatars.0');
+$file2 = $this->request->getFile('my-form.details.avatars.1');

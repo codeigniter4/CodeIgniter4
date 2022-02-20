@@ -1,4 +1,4 @@
 <?php
 
-// Limit to media.example.com
-$routes->get('from', 'to', ['subdomain' => 'media']);
+// Routes to \Admin\Users::index()
+$routes->get('admin/users', 'Users::index', ['namespace' => 'Admin']);

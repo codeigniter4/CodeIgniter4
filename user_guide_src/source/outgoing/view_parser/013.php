@@ -1,8 +1,5 @@
 <?php
 
-public $plugins = [
-    'foo' => '\Some\Class::methodName',
-    'bar' => function ($str, array $params=[]) {
-        return $str;
-    },
+public $filters = [
+    'str_repeat' => '\str_repeat',
 ];

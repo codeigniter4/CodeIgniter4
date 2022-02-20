@@ -35,7 +35,7 @@ Creating the Upload Form
 Using a text editor, create a form called upload_form.php. In it, place
 this code and save it to your **app/Views/** directory:
 
-.. literalinclude:: uploaded_files/000.php
+.. literalinclude:: uploaded_files/001.php
 
 You'll notice we are using a form helper to create the opening form tag.
 File uploads require a multipart form, so the helper creates the proper
@@ -75,7 +75,7 @@ The Controller
 Using a text editor, create a controller called Upload.php. In it, place
 this code and save it to your **app/Controllers/** directory:
 
-.. literalinclude:: uploaded_files/001.php
+.. literalinclude:: uploaded_files/002.php
 
 .. note:: Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global,
     only :ref:`rules-for-file-uploads` can be used to validate upload file with :doc:`validation`.
@@ -114,7 +114,7 @@ common interface.
 Files are accessed through the current ``IncomingRequest`` instance. To retrieve all files that were uploaded with this
 request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
-.. literalinclude:: uploaded_files/002.php
+.. literalinclude:: uploaded_files/003.php
    :lines: 2-
 
 Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
@@ -124,7 +124,7 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 
 Which would return a simple array like:
 
-.. literalinclude:: uploaded_files/003.php
+.. literalinclude:: uploaded_files/004.php
    :lines: 2-
 
 .. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
@@ -135,7 +135,7 @@ If you used an array notation for the name, the input would look something like:
 
 The array returned by ``getFiles()`` would look more like this:
 
-.. literalinclude:: uploaded_files/004.php
+.. literalinclude:: uploaded_files/005.php
    :lines: 2-
 
 In some cases, you may specify an array of files to upload::
@@ -145,7 +145,7 @@ In some cases, you may specify an array of files to upload::
 
 In this case, the returned array of files would be more like:
 
-.. literalinclude:: uploaded_files/005.php
+.. literalinclude:: uploaded_files/006.php
    :lines: 2-
 
 Single File
@@ -162,7 +162,7 @@ With the simplest usage, a single file might be submitted like::
 
 Which would return a simple file instance like:
 
-.. literalinclude:: uploaded_files/006.php
+.. literalinclude:: uploaded_files/007.php
    :lines: 2-
 
 Array notation
@@ -174,7 +174,7 @@ If you used an array notation for the name, the input would look something like:
 
 For get the file instance:
 
-.. literalinclude:: uploaded_files/007.php
+.. literalinclude:: uploaded_files/008.php
    :lines: 2-
 
 Multiple files
@@ -186,7 +186,7 @@ Multiple files
 
 In controller:
 
-.. literalinclude:: uploaded_files/008.php
+.. literalinclude:: uploaded_files/009.php
    :lines: 2-
 
 where the ``images`` is a loop from the form field name.
@@ -195,12 +195,12 @@ If there are multiple files with the same name you can use ``getFile()`` to retr
 
 In controller:
 
-.. literalinclude:: uploaded_files/009.php
+.. literalinclude:: uploaded_files/010.php
    :lines: 2-
 
 You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name:
 
-.. literalinclude:: uploaded_files/010.php
+.. literalinclude:: uploaded_files/011.php
    :lines: 2-
 
 Another example::
@@ -210,7 +210,7 @@ Another example::
 
 In controller:
 
-.. literalinclude:: uploaded_files/011.php
+.. literalinclude:: uploaded_files/012.php
    :lines: 2-
 
 .. note:: Using ``getFiles()`` is more appropriate.
@@ -229,7 +229,7 @@ Verify a File
 
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method:
 
-.. literalinclude:: uploaded_files/012.php
+.. literalinclude:: uploaded_files/013.php
    :lines: 2-
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
@@ -253,21 +253,21 @@ You can retrieve the original filename provided by the client with the ``getName
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
 the moved file:
 
-.. literalinclude:: uploaded_files/013.php
+.. literalinclude:: uploaded_files/014.php
    :lines: 2-
 
 **getClientName()**
 
 Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:
 
-.. literalinclude:: uploaded_files/014.php
+.. literalinclude:: uploaded_files/015.php
    :lines: 2-
 
 **getTempName()**
 
 To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method:
 
-.. literalinclude:: uploaded_files/015.php
+.. literalinclude:: uploaded_files/016.php
    :lines: 2-
 
 Other File Info
@@ -277,7 +277,7 @@ Other File Info
 
 Returns the original file extension, based on the file name that was uploaded:
 
-.. literalinclude:: uploaded_files/016.php
+.. literalinclude:: uploaded_files/017.php
    :lines: 2-
 
 .. warning:: This is NOT a trusted source. For a trusted version, use ``guessExtension()`` instead.
@@ -287,7 +287,7 @@ Returns the original file extension, based on the file name that was uploaded:
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
 version, use ``getMimeType()`` instead:
 
-.. literalinclude:: uploaded_files/017.php
+.. literalinclude:: uploaded_files/018.php
    :lines: 2-
 
 Moving Files
@@ -296,18 +296,18 @@ Moving Files
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter:
 
-.. literalinclude:: uploaded_files/018.php
+.. literalinclude:: uploaded_files/019.php
    :lines: 2-
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
-.. literalinclude:: uploaded_files/019.php
+.. literalinclude:: uploaded_files/020.php
    :lines: 2-
 
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean:
 
-.. literalinclude:: uploaded_files/020.php
+.. literalinclude:: uploaded_files/021.php
    :lines: 2-
 
 Moving an uploaded file can fail, with an HTTPException, under several circumstances:
@@ -328,13 +328,13 @@ With the simplest usage, a single file might be submitted like::
 By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
 and random file name will be created. Returns a file path:
 
-.. literalinclude:: uploaded_files/021.php
+.. literalinclude:: uploaded_files/022.php
    :lines: 2-
 
 You can specify a directory to move the file to as the first parameter. A new filename by
 passing it as the second parameter:
 
-.. literalinclude:: uploaded_files/022.php
+.. literalinclude:: uploaded_files/023.php
    :lines: 2-
 
 Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:

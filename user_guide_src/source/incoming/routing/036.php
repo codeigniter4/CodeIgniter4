@@ -1,6 +1,4 @@
 <?php
 
-$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
-
-// Creates:
-$routes['users/(:num)'] = 'users/show/$2';
+// Limit to media.example.com
+$routes->get('from', 'to', ['subdomain' => 'media']);

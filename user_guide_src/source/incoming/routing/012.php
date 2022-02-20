@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('login/(.+)', 'Auth::login/$1');
+$routes->get('product/(:segment)', 'Catalog::productLookup/$1');

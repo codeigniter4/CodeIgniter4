@@ -1,3 +1,4 @@
 <?php
 
-$string = auto_link($string, 'email');
+$attributes = ['title' => 'Mail me'];
+echo mailto('me@my-site.com', 'Contact Me', $attributes);
