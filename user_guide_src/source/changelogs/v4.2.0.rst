@@ -48,6 +48,7 @@ Deprecations
 - ``CodeIgniter\Debug\Exceptions::cleanPath()`` and ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` are deprecated. Use the ``clean_path()`` function instead.
 - ``CodeIgniter\Log\Logger::cleanFilenames()`` and ``CodeIgniter\Test\TestLogger::cleanup()`` are both deprecated. Use the ``clean_path()`` function instead.
 - ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
+- The constant ``SPARKED`` in **spark** is deprecated. Use the ``$context`` property in ``CodeIgniter\CodeIgniter`` instead.
 
 Bugs Fixed
 **********
