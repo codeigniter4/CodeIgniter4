@@ -235,7 +235,7 @@ class FileCollection
     }
 
     /**
-     * Navigate through a array looking for a particular index
+     * Navigate through an array looking for a particular index
      *
      * @param array $index The index sequence we are navigating down
      * @param array $value The portion of the array to process
