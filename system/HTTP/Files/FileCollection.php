@@ -220,6 +220,10 @@ class FileCollection
                     $pointer = &$stack[count($stack) - 1];
                     $pointer = &$pointer[$key];
                     $stack[] = &$pointer;
+
+                    // RecursiveIteratorIterator::hasChildren() can be used. RecursiveIteratorIterator
+                    // forwards all unknown method calls to the underlying RecursiveIterator internally.
+                    // See https://github.com/php/doc-en/issues/787#issuecomment-881446121
                     if (! $iterator->hasChildren()) {
                         $pointer[$field] = $val;
                     }
