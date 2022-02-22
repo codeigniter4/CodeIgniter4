@@ -1,5 +1,6 @@
 <?php
 
-if ($request->hasHeader('DNT')) {
-    // Don't track something...
-}
+// these are all equivalent
+$host = $request->header('host');
+$host = $request->header('Host');
+$host = $request->header('HOST');

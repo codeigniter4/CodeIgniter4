@@ -1,3 +1,3 @@
 <?php
 
-$file = $request->getFile('userfile');
+$files = $request->getFiles();

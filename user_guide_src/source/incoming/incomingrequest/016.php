@@ -1,6 +1,9 @@
 <?php
 
-// these are all equivalent
-$host = $request->header('host');
-$host = $request->header('Host');
-$host = $request->header('HOST');
+var_dump($request->headers());
+
+[
+    'Host'          => CodeIgniter\HTTP\Header,
+    'Cache-Control' => CodeIgniter\HTTP\Header,
+    'Accept'        => CodeIgniter\HTTP\Header,
+];

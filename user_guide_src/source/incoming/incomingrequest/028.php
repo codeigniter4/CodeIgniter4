@@ -1,3 +1,3 @@
 <?php
 
-$request->getVar('some_data', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$request->getVar('some_data');

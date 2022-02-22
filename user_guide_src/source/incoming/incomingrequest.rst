@@ -46,11 +46,11 @@ You can check the HTTP method that this request represents with the ``method()``
 By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
 uppercase version by wrapping the call in ``str_to_upper()``::
 
-.. literalinclude:: incomingrequest/x.php
+.. literalinclude:: incomingrequest/006.php
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method:
 
-.. literalinclude:: incomingrequest/006.php
+.. literalinclude:: incomingrequest/007.php
 
 Retrieving Input
 ----------------
@@ -62,11 +62,11 @@ will return null if the item doesn't exist, and you can have the data filtered. 
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this:
 
-.. literalinclude:: incomingrequest/007.php
+.. literalinclude:: incomingrequest/008.php
 
 With CodeIgniter�s built in methods you can simply do this:
 
-.. literalinclude:: incomingrequest/008.php
+.. literalinclude:: incomingrequest/009.php
 
 The ``getVar()`` method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
 is convenient, you will often need to use a more specific method, like:
@@ -89,7 +89,7 @@ You can grab the contents of php://input as a JSON stream with ``getJSON()``.
 .. note::  This has no way of checking if the incoming data is valid JSON or not, you should only use this
     method if you know that you're expecting JSON.
 
-.. literalinclude:: incomingrequest/009.php
+.. literalinclude:: incomingrequest/010.php
 
 By default, this will return any objects in the JSON data as objects. If you want that converted to associative
 arrays, pass in ``true`` as the first parameter.
@@ -105,13 +105,13 @@ the JSON stream. Using ``getVar()`` in this way will always return an object.
 You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
 data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
 
-.. literalinclude:: incomingrequest/010.php
+.. literalinclude:: incomingrequest/011.php
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
 true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
 correct ``CONTENT_TYPE`` header.
 
-.. literalinclude:: incomingrequest/011.php
+.. literalinclude:: incomingrequest/012.php
 
 .. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
 
@@ -119,11 +119,11 @@ correct ``CONTENT_TYPE`` header.
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``:
 
-.. literalinclude:: incomingrequest/012.php
+.. literalinclude:: incomingrequest/013.php
 
 This will retrieve data and convert it to an array. Like this:
 
-.. literalinclude:: incomingrequest/013.php
+.. literalinclude:: incomingrequest/014.php
 
 **Filtering Input Data**
 
@@ -134,7 +134,7 @@ filter types <https://www.php.net/manual/en/filter.filters.php>`_.
 
 Filtering a POST variable would look like this:
 
-.. literalinclude:: incomingrequest/014.php
+.. literalinclude:: incomingrequest/015.php
 
 All of the methods mentioned above support the filter type passed in as the second parameter, with the
 exception of ``getJSON()``.
@@ -146,24 +146,24 @@ You can get access to any header that was sent with the request with the ``heade
 an array of all headers, with the key as the name of the header, and the value is an instance of
 ``CodeIgniter\HTTP\Header``:
 
-.. literalinclude:: incomingrequest/015.php
+.. literalinclude:: incomingrequest/016.php
 
 If you only need a single header, you can pass the name into the ``header()`` method. This will grab the
 specified header object in a case-insensitive manner if it exists. If not, then it will return ``null``:
 
-.. literalinclude:: incomingrequest/016.php
+.. literalinclude:: incomingrequest/017.php
 
 You can always use ``hasHeader()`` to see if the header existed in this request:
 
-.. literalinclude:: incomingrequest/017.php
+.. literalinclude:: incomingrequest/018.php
 
 If you need the value of header as a string with all values on one line, you can use the ``getHeaderLine()`` method:
 
-.. literalinclude:: incomingrequest/018.php
+.. literalinclude:: incomingrequest/019.php
 
 If you need the entire header, with the name and values in a single string, simply cast the header as a string:
 
-.. literalinclude:: incomingrequest/019.php
+.. literalinclude:: incomingrequest/020.php
 
 The Request URL
 ---------------
@@ -171,17 +171,17 @@ The Request URL
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->getUri()`` method. You can cast this object as a string to get a full URL for the current request:
 
-.. literalinclude:: incomingrequest/020.php
+.. literalinclude:: incomingrequest/021.php
 
 The object gives you full abilities to grab any part of the request on it's own:
 
-.. literalinclude:: incomingrequest/021.php
+.. literalinclude:: incomingrequest/022.php
 
 You can work with the current URI string (the path relative to your baseURL) using the ``getPath()`` and ``setPath()`` methods.
 Note that this relative path on the shared instance of ``IncomingRequest`` is what the :doc:`URL Helper </helpers/url_helper>`
 functions use, so this is a helpful way to "spoof" an incoming request for testing:
 
-.. literalinclude:: incomingrequest/022.php
+.. literalinclude:: incomingrequest/023.php
 
 Uploaded Files
 --------------
@@ -190,18 +190,18 @@ Information about all uploaded files can be retrieved through ``$request->getFil
 ``CodeIgniter\HTTP\Files\UploadedFile`` instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.
 
-.. literalinclude:: incomingrequest/023.php
+.. literalinclude:: incomingrequest/024.php
 
 See :ref:`Working with Uploaded Files <uploaded-files-accessing-files>` for the details.
 
 You can retrieve a single file uploaded on its own, based on the filename given in the HTML file input:
 
-.. literalinclude:: incomingrequest/024.php
+.. literalinclude:: incomingrequest/025.php
 
 You can retrieve an array of same-named files uploaded as part of a
 multi-file upload, based on the filename given in the HTML file input:
 
-.. literalinclude:: incomingrequest/025.php
+.. literalinclude:: incomingrequest/026.php
 
 .. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
 
@@ -210,7 +210,7 @@ Content Negotiation
 
 You can easily negotiate content types with the request through the ``negotiate()`` method:
 
-.. literalinclude:: incomingrequest/026.php
+.. literalinclude:: incomingrequest/027.php
 
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
@@ -274,7 +274,7 @@ The methods provided by the parent classes that are available are:
 
         The first parameter will contain the name of the REQUEST item you are looking for:
 
-        .. literalinclude:: incomingrequest/027.php
+        .. literalinclude:: incomingrequest/028.php
 
         The method returns null if the item you are attempting to retrieve
         does not exist.
@@ -282,7 +282,7 @@ The methods provided by the parent classes that are available are:
         The second optional parameter lets you run the data through the PHP's
         filters. Pass in the desired filter type as the second parameter:
 
-        .. literalinclude:: incomingrequest/028.php
+        .. literalinclude:: incomingrequest/029.php
 
         To return an array of all POST items call without any parameters.
 
@@ -290,16 +290,16 @@ The methods provided by the parent classes that are available are:
         first parameter to null while setting the second parameter to the filter
         you want to use:
 
-        .. literalinclude:: incomingrequest/029.php
+        .. literalinclude:: incomingrequest/030.php
 
         To return an array of multiple POST parameters, pass all the required keys as an array:
 
-        .. literalinclude:: incomingrequest/030.php
+        .. literalinclude:: incomingrequest/031.php
 
         Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
         the filter type to apply:
 
-        .. literalinclude:: incomingrequest/031.php
+        .. literalinclude:: incomingrequest/032.php
 
     .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
@@ -339,7 +339,7 @@ The methods provided by the parent classes that are available are:
         It will search through both POST and GET streams for data, looking first in POST, and
         then in GET:
 
-        .. literalinclude:: incomingrequest/032.php
+        .. literalinclude:: incomingrequest/033.php
 
     .. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
 
@@ -355,7 +355,7 @@ The methods provided by the parent classes that are available are:
         It will search through both POST and GET streams for data, looking first in GET, and
         then in POST:
 
-        .. literalinclude:: incomingrequest/033.php
+        .. literalinclude:: incomingrequest/034.php
 
     .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
         :noindex:
@@ -370,11 +370,11 @@ The methods provided by the parent classes that are available are:
 
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data:
 
-        .. literalinclude:: incomingrequest/034.php
+        .. literalinclude:: incomingrequest/035.php
 
         To return an array of multiple cookie values, pass all the required keys as an array:
 
-        .. literalinclude:: incomingrequest/035.php
+        .. literalinclude:: incomingrequest/036.php
 
         .. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
             function :php:func:`get_cookie()`, this method does NOT prepend
@@ -394,12 +394,12 @@ The methods provided by the parent classes that are available are:
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
         methods, only it fetches getServer data (``$_SERVER``):
 
-        .. literalinclude:: incomingrequest/036.php
+        .. literalinclude:: incomingrequest/037.php
 
         To return an array of multiple ``$_SERVER`` values, pass all the required keys
         as an array.
 
-        .. literalinclude:: incomingrequest/037.php
+        .. literalinclude:: incomingrequest/038.php
 
     .. php:method:: getUserAgent([$filter = null])
 
@@ -410,7 +410,7 @@ The methods provided by the parent classes that are available are:
 
         This method returns the User Agent string from the SERVER data:
 
-        .. literalinclude:: incomingrequest/038.php
+        .. literalinclude:: incomingrequest/039.php
 
     .. php:method:: getPath()
 

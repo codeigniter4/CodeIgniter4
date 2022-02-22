@@ -1,3 +1,3 @@
 <?php
 
-$uri = (string) $request->getUri();
+echo (string)$header;

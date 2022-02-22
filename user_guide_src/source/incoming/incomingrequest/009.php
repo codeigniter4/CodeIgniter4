@@ -1,3 +1,3 @@
 <?php
 
-$json = $request->getJSON();
+$something = $request->getVar('foo');

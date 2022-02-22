@@ -1,3 +1,3 @@
 <?php
 
-$request->getUserAgent();
+$request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);

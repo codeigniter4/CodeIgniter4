@@ -1,3 +1,4 @@
 <?php
 
-$request->getVar(['field1', 'field2']);
+$request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// returns all POST items with string sanitation

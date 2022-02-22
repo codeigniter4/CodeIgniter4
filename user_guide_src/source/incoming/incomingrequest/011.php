@@ -1,8 +1,17 @@
 <?php
 
-// With the same request as above
-$data = $request->getJsonVar('fizz');
-// $data->buzz = "baz"
+/*
+     With a request body of:
+    {
+        "foo": "bar",
+        "fizz": {
+            "buzz": "baz"
+        }
+    }
+*/
 
-$data = $request->getJsonVar('fizz', true);
-// $data = ["buzz" => "baz"]
+$data = $request->getVar('foo');
+// $data = "bar"
+
+$data = $request->getVar('fizz.buzz');
+// $data = "baz"

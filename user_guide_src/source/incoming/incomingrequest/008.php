@@ -1,3 +1,3 @@
 <?php
 
-$something = $request->getVar('foo');
+$something = isset($_POST['foo']) ? $_POST['foo'] : null;

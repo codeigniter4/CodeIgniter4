@@ -1,3 +1,3 @@
 <?php
 
-$files = $request->getFileMultiple('userfile');
+$file = $request->getFile('userfile');

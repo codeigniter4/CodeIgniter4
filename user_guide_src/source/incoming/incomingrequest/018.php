@@ -1,4 +1,5 @@
 <?php
 
-// Accept-Encoding: gzip, deflate, sdch
-echo 'Accept-Encoding: '.$request->getHeaderLine('accept-encoding');
+if ($request->hasHeader('DNT')) {
+    // Don't track something...
+}
