@@ -48,7 +48,7 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 
 .. literalinclude:: cli_library/005.php
 
-Validation rules can also be written in the array syntax.:
+Validation rules can also be written in the array syntax:
 
 .. literalinclude:: cli_library/006.php
 
