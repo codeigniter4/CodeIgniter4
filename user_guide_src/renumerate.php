@@ -39,7 +39,7 @@ foreach ($srcIterator as $chapterInfo) {
                 $sectionContent = file_get_contents($sectionInfo->getPathname());
 
                 // Match all includes
-                preg_match_all("~\\.\\. literalinclude:: {$sectionName}\\/(.+)\\.php(\n[ ]*:lines: 2\\-)?~", $sectionContent, $matches);
+                preg_match_all("~\\.\\. literalinclude:: {$sectionName}\\/(.+)\\.php~", $sectionContent, $matches);
                 $includeStrings = $matches[0];
                 $exampleNames   = $matches[1];
 
