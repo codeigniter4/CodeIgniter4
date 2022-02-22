@@ -1125,7 +1125,7 @@ if (! function_exists('view_cell')) {
      * View cells are used within views to insert HTML chunks that are managed
      * by other classes.
      *
-     * @param null $params
+     * @param array|string|null $params
      *
      * @throws ReflectionException
      */
