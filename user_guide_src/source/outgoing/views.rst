@@ -35,27 +35,18 @@ Then save the file in your **app/Views** directory.
 Displaying a View
 =================
 
-To load and display a particular view file you will use the following function::
+To load and display a particular view file you will use the following function:
 
-    echo view('name');
+.. literalinclude:: views/001.php
+   :lines: 2-
 
 Where *name* is the name of your view file.
 
 .. important:: If the file extension is omitted, then the views are expected to end with the .php extension.
 
-Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function::
+Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function:
 
-    <?php
-
-    namespace App\Controllers;
-
-    class Blog extends \CodeIgniter\Controller
-    {
-        public function index()
-        {
-            echo view('blog_view');
-        }
-    }
+.. literalinclude:: views/002.php
 
 If you visit your site using the URL you did earlier you should see your new view. The URL was similar to this::
 
@@ -69,26 +60,9 @@ Loading Multiple Views
 
 CodeIgniter will intelligently handle multiple calls to ``view()`` from within a controller. If more than one
 call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
-content view, and a footer view. That might look something like this::
+content view, and a footer view. That might look something like this:
 
-    <?php
-
-    namespace App\Controllers;
-
-    class Page extends \CodeIgniter\Controller
-    {
-        public function index()
-        {
-            $data = [
-                'page_title' => 'Your title',
-            ];
-
-            echo view('header');
-            echo view('menu');
-            echo view('content', $data);
-            echo view('footer');
-        }
-    }
+.. literalinclude:: views/003.php
 
 In the example above, we are using "dynamically added data", which you will see below.
 
@@ -96,9 +70,10 @@ Storing Views within Sub-directories
 ====================================
 
 Your view files can also be stored within sub-directories if you prefer that type of organization.
-When doing so you will need to include the directory name loading the view. Example::
+When doing so you will need to include the directory name loading the view. Example:
 
-    echo view('directory_name/file_name');
+.. literalinclude:: views/004.php
+   :lines: 2-
 
 Namespaced Views
 ================
@@ -109,9 +84,10 @@ to package your views together in a module-like fashion for easy re-use or distr
 
 If you have ``example/blog`` directory that has a PSR-4 mapping set up in the :doc:`Autoloader </concepts/autoloader>` living
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
-example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name::
+example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name:
 
-    echo view('Example\Blog\Views\blog_view');
+.. literalinclude:: views/005.php
+   :lines: 2-
 
 .. _caching-views:
 
@@ -119,47 +95,29 @@ Caching Views
 =============
 
 You can cache a view with the ``view`` command by passing a ``cache`` option with the number of seconds to cache
-the view for, in the third parameter::
+the view for, in the third parameter:
 
-    // Cache the view for 60 seconds
-    echo view('file_name', $data, ['cache' => 60]);
+.. literalinclude:: views/006.php
+   :lines: 2-
 
 By default, the view will be cached using the same name as the view file itself. You can customize this by passing
-along ``cache_name`` and the cache ID you wish to use::
+along ``cache_name`` and the cache ID you wish to use:
 
-    // Cache the view for 60 seconds
-    echo view('file_name', $data, ['cache' => 60, 'cache_name' => 'my_cached_view']);
+.. literalinclude:: views/007.php
+   :lines: 2-
 
 Adding Dynamic Data to the View
 ===============================
 
 Data is passed from the controller to the view by way of an array in the second parameter of the view function.
-Here's an example::
+Here's an example:
 
-    $data = [
-        'title'   => 'My title',
-        'heading' => 'My Heading',
-        'message' => 'My Message',
-    ];
+.. literalinclude:: views/008.php
+   :lines: 2-
 
-    echo view('blog_view', $data);
+Let's try it with your controller file. Open it and add this code:
 
-Let's try it with your controller file. Open it and add this code::
-
-    <?php
-
-    namespace App\Controllers;
-
-    class Blog extends \CodeIgniter\Controller
-    {
-        public function index()
-        {
-            $data['title']   = "My Real Title";
-            $data['heading'] = "My Real Heading";
-
-            echo view('blog_view', $data);
-        }
-    }
+.. literalinclude:: views/009.php
 
 Now open your view file and change the text to variables that correspond to the array keys in your data::
 
@@ -178,15 +136,9 @@ The data passed in is only available during one call to `view`. If you call the 
 in a single request, you will have to pass the desired data to each view. This keeps any data from "bleeding" into
 other views, potentially causing issues. If you would prefer the data to persist, you can pass the `saveData` option
 into the `$option` array in the third parameter.
-::
 
-    $data = [
-        'title'   => 'My title',
-        'heading' => 'My Heading',
-        'message' => 'My Message',
-    ];
-
-    echo view('blog_view', $data, ['saveData' => true]);
+.. literalinclude:: views/010.php
+   :lines: 2-
 
 Additionally, if you would like the default functionality of the view function to be that it does save the data
 between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
@@ -198,44 +150,10 @@ The data array you pass to your view files is not limited to simple variables. Y
 arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
 typically be in the form of a multi-dimensional array.
 
-Here’s a simple example. Add this to your controller::
+Here’s a simple example. Add this to your controller:
 
-    <?php
+.. literalinclude:: views/011.php
 
-    namespace App\Controllers;
+Now open your view file and create a loop:
 
-    class Blog extends \CodeIgniter\Controller
-    {
-        public function index()
-        {
-            $data = [
-                'todo_list' => ['Clean House', 'Call Mom', 'Run Errands'],
-                'title'     => 'My Real Title',
-                'heading'   => 'My Real Heading',
-            ];
-
-            echo view('blog_view', $data);
-        }
-    }
-
-Now open your view file and create a loop::
-
-    <html>
-    <head>
-        <title><?= esc($title) ?></title>
-    </head>
-    <body>
-        <h1><?= esc($heading) ?></h1>
-
-        <h3>My Todo List</h3>
-
-        <ul>
-        <?php foreach ($todo_list as $item): ?>
-
-            <li><?= esc($item) ?></li>
-
-        <?php endforeach ?>
-        </ul>
-
-    </body>
-    </html>
+.. literalinclude:: views/012.php

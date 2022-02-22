@@ -15,14 +15,16 @@ Initializing the Forge Class
 .. important:: In order to initialize the Forge class, your database
     driver must already be running, since the Forge class relies on it.
 
-Load the Forge Class as follows::
+Load the Forge Class as follows:
 
-    $forge = \Config\Database::forge();
+.. literalinclude:: forge/001.php
+   :lines: 2-
 
 You can also pass another database group name to the DB Forge loader, in case
-the database you want to manage isn't the default one::
+the database you want to manage isn't the default one:
 
-    $this->myforge = \Config\Database::forge('other_db');
+.. literalinclude:: forge/002.php
+   :lines: 2-
 
 In the above example, we're passing the name of a different database group
 to connect to as the first parameter.
@@ -34,29 +36,24 @@ Creating and Dropping Databases
 **$forge->createDatabase('db_name')**
 
 Permits you to create the database specified in the first parameter.
-Returns true/false based on success or failure::
+Returns true/false based on success or failure:
 
-    if ($forge->createDatabase('my_db')) {
-        echo 'Database created!';
-    }
+.. literalinclude:: forge/003.php
+   :lines: 2-
 
 An optional second parameter set to true will add ``IF EXISTS`` statement
 or will check if a database exists before create it (depending on DBMS).
 
-::
-
-    $forge->createDatabase('my_db', true);
-    // gives CREATE DATABASE IF NOT EXISTS `my_db`
-    // or will check if a database exists
+.. literalinclude:: forge/004.php
+   :lines: 2-
 
 **$forge->dropDatabase('db_name')**
 
 Permits you to drop the database specified in the first parameter.
-Returns true/false based on success or failure::
+Returns true/false based on success or failure:
 
-    if ($forge->dropDatabase('my_db')) {
-        echo 'Database deleted!';
-    }
+.. literalinclude:: forge/005.php
+   :lines: 2-
 
 Creating Databases in the Command Line
 ======================================
@@ -99,15 +96,8 @@ include a ``type`` key that relates to the datatype of the field. For
 example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a ``constraint`` key.
 
-::
-
-    $fields = [
-        'users' => [
-            'type'       => 'VARCHAR',
-            'constraint' => 100,
-        ],
-    ];
-    // will translate to "users VARCHAR(100)" when the field is added.
+.. literalinclude:: forge/006.php
+   :lines: 2-
 
 Additionally, the following key/values can be used:
 
@@ -120,35 +110,8 @@ Additionally, the following key/values can be used:
    such as integer.
 -  ``unique``/true : to generate a unique key for the field definition.
 
-::
-
-    $fields = [
-        'id'          => [
-            'type'           => 'INT',
-            'constraint'     => 5,
-            'unsigned'       => true,
-            'auto_increment' => true
-        ],
-        'title'       => [
-            'type'           => 'VARCHAR',
-            'constraint'     => '100',
-            'unique'         => true,
-        ],
-        'author'      => [
-            'type'           =>'VARCHAR',
-            'constraint'     => 100,
-            'default'        => 'King of Town',
-        ],
-        'description' => [
-            'type'           => 'TEXT',
-            'null'           => true,
-        ],
-        'status'      => [
-            'type'           => 'ENUM',
-            'constraint'     => ['publish', 'pending', 'draft'],
-            'default'        => 'pending',
-        ],
-    ];
+.. literalinclude:: forge/007.php
+   :lines: 2-
 
 After the fields have been defined, they can be added using
 ``$forge->addField($fields)`` followed by a call to the
@@ -162,9 +125,10 @@ Passing strings as fields
 -------------------------
 
 If you know exactly how you want a field to be created, you can pass the
-string into the field definitions with ``addField()``::
+string into the field definitions with ``addField()``:
 
-    $forge->addField("label varchar(100) NOT NULL DEFAULT 'default label'");
+.. literalinclude:: forge/008.php
+   :lines: 2-
 
 .. note:: Passing raw strings as fields cannot be followed by ``addKey()`` calls on those fields.
 
@@ -177,10 +141,8 @@ There is a special exception for creating id fields. A field with type
 id will automatically be assigned as an INT(9) auto_incrementing
 Primary Key.
 
-::
-
-    $forge->addField('id');
-    // gives `id` INT(9) NOT NULL AUTO_INCREMENT
+.. literalinclude:: forge/009.php
+   :lines: 2-
 
 Adding Keys
 ===========
@@ -194,32 +156,14 @@ must be followed by a call to ``createTable()``.
 Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
 
-::
-
-    $forge->addKey('blog_id', true);
-    // gives PRIMARY KEY `blog_id` (`blog_id`)
-
-    $forge->addKey('blog_id', true);
-    $forge->addKey('site_id', true);
-    // gives PRIMARY KEY `blog_id_site_id` (`blog_id`, `site_id`)
-
-    $forge->addKey('blog_name');
-    // gives KEY `blog_name` (`blog_name`)
-
-    $forge->addKey(['blog_name', 'blog_label']);
-    // gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
-
-    $forge->addKey(['blog_id', 'uri'], false, true);
-    // gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
+.. literalinclude:: forge/010.php
+   :lines: 2-
 
 To make code reading more objective it is also possible to add primary
-and unique keys with specific methods::
+and unique keys with specific methods:
 
-    $forge->addPrimaryKey('blog_id');
-    // gives PRIMARY KEY `blog_id` (`blog_id`)
-
-    $forge->addUniqueKey(['blog_id', 'uri']);
-    // gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
+.. literalinclude:: forge/011.php
+   :lines: 2-
 
 .. _adding-foreign-keys:
 
@@ -227,21 +171,15 @@ Adding Foreign Keys
 ===================
 
 Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
-you may add them directly in forge::
+you may add them directly in forge:
 
-    $forge->addForeignKey('users_id', 'users', 'id');
-    // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
+.. literalinclude:: forge/012.php
+   :lines: 2-
 
-    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name']);
-    // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`)
+You can specify the desired action for the "on delete" and "on update" properties of the constraint:
 
-You can specify the desired action for the "on delete" and "on update" properties of the constraint::
-
-    $forge->addForeignKey('users_id', 'users', 'id', 'CASCADE', 'CASCADE');
-    // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-
-    $forge->addForeignKey(['users_id', 'users_name'], 'users', ['id', 'name'], 'CASCADE', 'CASCADE');
-    // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`) ON DELETE CASCADE ON UPDATE CASCADE
+.. literalinclude:: forge/013.php
+   :lines: 2-
 
 Creating a Table
 ================
@@ -249,24 +187,19 @@ Creating a Table
 After fields and keys have been declared, you can create a new table
 with
 
-::
-
-    $forge->createTable('table_name');
-    // gives CREATE TABLE table_name
+.. literalinclude:: forge/014.php
+   :lines: 2-
 
 An optional second parameter set to true adds an ``IF NOT EXISTS`` clause
 into the definition
 
-::
+.. literalinclude:: forge/015.php
+   :lines: 2-
 
-    $forge->createTable('table_name', true);
-    // gives CREATE TABLE IF NOT EXISTS table_name
+You could also pass optional table attributes, such as MySQL's ``ENGINE``:
 
-You could also pass optional table attributes, such as MySQL's ``ENGINE``::
-
-    $attributes = ['ENGINE' => 'InnoDB'];
-    $forge->createTable('table_name', false, $attributes);
-    // produces: CREATE TABLE `table_name` (...) ENGINE = InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+.. literalinclude:: forge/016.php
+   :lines: 2-
 
 .. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes,
     ``createTable()`` will always add them with your configured *charset*
@@ -277,52 +210,38 @@ Dropping a Table
 
 Execute a ``DROP TABLE`` statement and optionally add an ``IF EXISTS`` clause.
 
-::
-
-    // Produces: DROP TABLE `table_name`
-    $forge->dropTable('table_name');
-
-    // Produces: DROP TABLE IF EXISTS `table_name`
-    $forge->dropTable('table_name', true);
+.. literalinclude:: forge/017.php
+   :lines: 2-
 
 A third parameter can be passed to add a ``CASCADE`` option, which might be required for some
 drivers to handle removal of tables with foreign keys.
 
-::
-
-    // Produces: DROP TABLE `table_name` CASCADE
-    $forge->dropTable('table_name', false, true);
+.. literalinclude:: forge/018.php
+   :lines: 2-
 
 Dropping a Foreign Key
 ======================
 
 Execute a DROP FOREIGN KEY.
 
-::
-
-    // Produces: ALTER TABLE `tablename` DROP FOREIGN KEY `users_foreign`
-    $forge->dropForeignKey('tablename', 'users_foreign');
-
+.. literalinclude:: forge/019.php
+   :lines: 2-
 
 Dropping a Key
 ======================
 
 Execute a DROP KEY.
 
-::
-
-    // Produces: DROP INDEX `users_index` ON `tablename`
-    $forge->dropKey('tablename', 'users_index');
+.. literalinclude:: forge/020.php
+   :lines: 2-
 
 Renaming a Table
 ================
 
 Executes a TABLE rename
 
-::
-
-    $forge->renameTable('old_table_name', 'new_table_name');
-    // gives ALTER TABLE `old_table_name` RENAME TO `new_table_name`
+.. literalinclude:: forge/021.php
+   :lines: 2-
 
 ****************
 Modifying Tables
@@ -337,28 +256,16 @@ The ``addColumn()`` method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
 number of additional fields.
 
-::
-
-    $fields = [
-        'preferences' => ['type' => 'TEXT']
-    ];
-    $forge->addColumn('table_name', $fields);
-    // Executes: ALTER TABLE `table_name` ADD `preferences` TEXT
+.. literalinclude:: forge/022.php
+   :lines: 2-
 
 If you are using MySQL or CUBIRD, then you can take advantage of their
 ``AFTER`` and ``FIRST`` clauses to position the new column.
 
-Examples::
+Examples:
 
-    // Will place the new column after the `another_field` column:
-    $fields = [
-        'preferences' => ['type' => 'TEXT', 'after' => 'another_field']
-    ];
-
-    // Will place the new column at the start of the table definition:
-    $fields = [
-        'preferences' => ['type' => 'TEXT', 'first' => true]
-    ];
+.. literalinclude:: forge/023.php
+   :lines: 2-
 
 Dropping Columns From a Table
 ==============================
@@ -367,16 +274,13 @@ Dropping Columns From a Table
 
 Used to remove a column from a table.
 
-::
-
-    $forge->dropColumn('table_name', 'column_to_drop'); // to drop one single column
+.. literalinclude:: forge/024.php
+   :lines: 2-
 
 Used to remove multiple columns from a table.
 
-::
-
-    $forge->dropColumn('table_name', 'column_1,column_2'); // by proving comma separated column names
-    $forge->dropColumn('table_name', ['column_1', 'column_2']); // by proving array of column names
+.. literalinclude:: forge/025.php
+   :lines: 2-
 
 Modifying a Column in a Table
 =============================
@@ -387,16 +291,8 @@ The usage of this method is identical to ``addColumn()``, except it
 alters an existing column rather than adding a new one. In order to
 change the name, you can add a "name" key into the field defining array.
 
-::
-
-    $fields = [
-        'old_name' => [
-            'name' => 'new_name',
-            'type' => 'TEXT',
-        ],
-    ];
-    $forge->modifyColumn('table_name', $fields);
-    // gives ALTER TABLE `table_name` CHANGE `old_name` `new_name` TEXT
+.. literalinclude:: forge/026.php
+   :lines: 2-
 
 ***************
 Class Reference

@@ -12,9 +12,10 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('array');
+.. literalinclude:: array_helper/001.php
+   :lines: 2-
 
 Available Functions
 ===================
@@ -29,51 +30,28 @@ The following functions are available:
     :rtype: mixed
 
     This method allows you to use dot-notation to search through an array for a specific-key,
-    and allows the use of a the '*' wildcard. Given the following array::
+    and allows the use of a the '*' wildcard. Given the following array:
 
-        $data = [
-            'foo' => [
-                'buzz' => [
-                    'fizz' => 11,
-                ],
-                'bar' => [
-                    'baz' => 23,
-                ]
-            ]
-        ]
+    .. literalinclude:: array_helper/002.php
+       :lines: 2-
 
     We can locate the value of 'fizz' by using the search string "foo.buzz.fizz". Likewise, the value
-    of baz can be found with "foo.bar.baz"::
+    of baz can be found with "foo.bar.baz":
 
-        // Returns: 11
-        $fizz = dot_array_search('foo.buzz.fizz', $data);
-
-        // Returns: 23
-        $baz = dot_array_search('foo.bar.baz', $data);
+    .. literalinclude:: array_helper/003.php
+       :lines: 2-
 
     You can use the asterisk as a wildcard to replace any of the segments. When found, it will search through all
     of the child nodes until it finds it. This is handy if you don't know the values, or if your values
-    have a numeric index::
+    have a numeric index:
 
-        // Returns: 23
-        $baz = dot_array_search('foo.*.baz', $data);
+    .. literalinclude:: array_helper/004.php
+       :lines: 2-
 
-    If the array key contains a dot, then the key can be escaped with a backslash::
+    If the array key contains a dot, then the key can be escaped with a backslash:
 
-        $data = [
-            'foo' => [
-                'bar.baz' => 23,
-            ],
-            'foo.bar' => [
-                'baz' => 43,
-            ],
-        ];
-
-        // Returns: 23
-        $barBaz = dot_array_search('foo.bar\.baz', $data);
-        // Returns: 43
-        $fooBar = dot_array_search('foo\.bar.baz', $data);
-
+    .. literalinclude:: array_helper/005.php
+       :lines: 2-
 
 ..  php:function:: array_deep_search($key, array $array)
 
@@ -94,79 +72,23 @@ The following functions are available:
 
     This method sorts the elements of a multidimensional array by the values of one or
     more keys in a hierarchical way. Take the following array, that might be returned
-    from, e.g., the ``find()`` function of a model::
+    from, e.g., the ``find()`` function of a model:
 
-        $players = [
-            0 => [
-                'name'     => 'John',
-                'team_id'  => 2,
-                'position' => 3,
-                'team'     => [
-                    'id'    => 1,
-                    'order' => 2,
-                ],
-            ],
-            1 => [
-                'name'     => 'Maria',
-                'team_id'  => 5,
-                'position' => 4,
-                'team'     => [
-                    'id'    => 5,
-                    'order' => 1,
-                ],
-            ],
-            2 => [
-                'name'     => 'Frank',
-                'team_id'  => 5,
-                'position' => 1,
-                'team'     => [
-                    'id'    => 5,
-                    'order' => 1,
-                ],
-            ],
-        ];
+    .. literalinclude:: array_helper/006.php
+       :lines: 2-
 
     Now sort this array by two keys. Note that the method supports the dot-notation
-    to access values in deeper array levels, but does not support wildcards::
+    to access values in deeper array levels, but does not support wildcards:
 
-        array_sort_by_multiple_keys($players, [
-            'team.order' => SORT_ASC,
-            'position'   => SORT_ASC,
-        ]);
+    .. literalinclude:: array_helper/007.php
+       :lines: 2-
 
     The ``$players`` array is now sorted by the 'order' value in each players'
     'team' subarray. If this value is equal for several players, these players
-    will be ordered by their 'position'. The resulting array is::
+    will be ordered by their 'position'. The resulting array is:
 
-        $players = [
-            0 => [
-                'name'     => 'Frank',
-                'team_id'  => 5,
-                'position' => 1,
-                'team'     => [
-                    'id' => 5,
-                    'order' => 1,
-                ],
-            ],
-            1 => [
-                'name'     => 'Maria',
-                'team_id'  => 5,
-                'position' => 4,
-                'team'     => [
-                    'id' => 5,
-                    'order' => 1,
-                ],
-            ],
-            2 => [
-                'name'     => 'John',
-                'team_id'  => 2,
-                'position' => 3,
-                'team'     => [
-                    'id' => 1,
-                    'order' => 2,
-                ],
-            ],
-        ];
+    .. literalinclude:: array_helper/008.php
+       :lines: 2-
 
     In the same way, the method can also handle an array of objects. In the example
     above it is further possible that each 'player' is represented by an array,
@@ -183,44 +105,17 @@ The following functions are available:
     This function flattens a multidimensional array to a single key-value array by using dots
     as separators for the keys.
 
-    ::
+    .. literalinclude:: array_helper/009.php
+       :lines: 2-
 
-        $arrayToFlatten = [
-            'personal' => [
-                'first_name' => 'john',
-                'last_name'  => 'smith',
-                'age'        => '26',
-                'address'    => 'US',
-            ],
-            'other_details' => 'marines officer',
-        ];
+    On inspection, ``$flattened`` is equal to:
 
-        $flattened = array_flatten_with_dots($arrayToFlatten);
-
-    On inspection, ``$flattened`` is equal to::
-
-        [
-            'personal.first_name' => 'john',
-            'personal.last_name'  => 'smith',
-            'personal.age'        => '26',
-            'personal.address'    => 'US',
-            'other_details'       => 'marines officer',
-        ];
+    .. literalinclude:: array_helper/010.php
+       :lines: 2-
 
     Users may use the ``$id`` parameter on their own, but are not required to do so.
     The function uses this parameter internally to track the flattened keys. If users
     will be supplying an initial ``$id``, it will be prepended to all keys.
 
-    ::
-
-        // using the same data from above
-        $flattened = array_flatten_with_dots($arrayToFlatten, 'foo_');
-
-        // $flattened is now:
-        [
-            'foo_personal.first_name' => 'john',
-            'foo_personal.last_name'  => 'smith',
-            'foo_personal.age'        => '26',
-            'foo_personal.address'    => 'US',
-            'foo_other_details'       => 'marines officer',
-        ];
+    .. literalinclude:: array_helper/011.php
+       :lines: 2-

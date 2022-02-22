@@ -14,9 +14,8 @@ Loading this Helper
 
 This helper is loaded using the following code:
 
-::
-
-    helper('filesystem');
+.. literalinclude:: filesystem_helper/001.php
+   :lines: 2-
 
 Available Functions
 ===================
@@ -31,23 +30,26 @@ The following functions are available:
     :returns:    An array of files
     :rtype:    array
 
-    Examples::
+    Examples:
 
-        $map = directory_map('./mydirectory/');
+    .. literalinclude:: filesystem_helper/002.php
+       :lines: 2-
 
     .. note:: Paths are almost always relative to your main index.php file.
 
     Sub-folders contained within the directory will be mapped as well. If
     you wish to control the recursion depth, you can do so using the second
-    parameter (integer). A depth of 1 will only map the top level directory::
+    parameter (integer). A depth of 1 will only map the top level directory:
 
-        $map = directory_map('./mydirectory/', 1);
+    .. literalinclude:: filesystem_helper/003.php
+       :lines: 2-
 
     By default, hidden files will not be included in the returned array and
     hidden directories will be skipped. To override this behavior, you may
-    set a third parameter to true (boolean)::
+    set a third parameter to true (boolean):
 
-        $map = directory_map('./mydirectory/', false, true);
+    .. literalinclude:: filesystem_helper/004.php
+       :lines: 2-
 
     Each folder name will be an array index, while its contained files will
     be numerically indexed. Here is an example of a typical array::
@@ -90,13 +92,10 @@ The following functions are available:
     Recursively copies the files and directories of the origin directory
     into the target directory, i.e. "mirror" its contents.
 
-    Example::
+    Example:
 
-        try {     
-            directory_mirror($uploadedImages, FCPATH . 'images/');
-        } catch (Throwable $e) {     
-            echo 'Failed to export uploads!';
-        }
+    .. literalinclude:: filesystem_helper/005.php
+       :lines: 2-
 
     You can optionally change the overwrite behavior via the third parameter.
 
@@ -111,19 +110,15 @@ The following functions are available:
     Writes data to the file specified in the path. If the file does not exist then the
     function will create it.
 
-    Example::
+    Example:
 
-        $data = 'Some file data';
+    .. literalinclude:: filesystem_helper/006.php
+       :lines: 2-
 
-        if (! write_file('./path/to/file.php', $data)) {     
-            echo 'Unable to write the file';
-        } else {     
-            echo 'File written!';
-        }
+    You can optionally set the write mode via the third parameter:
 
-    You can optionally set the write mode via the third parameter::
-
-        write_file('./path/to/file.php', $data, 'r+');
+    .. literalinclude:: filesystem_helper/007.php
+       :lines: 2-
 
     The default mode is 'wb'. Please see the `PHP user guide <https://www.php.net/manual/en/function.fopen.php>`_
     for mode options.
@@ -149,16 +144,18 @@ The following functions are available:
 
     Deletes ALL files contained in the supplied path.
 
-    Example::
+    Example:
 
-        delete_files('./path/to/directory/');
+    .. literalinclude:: filesystem_helper/008.php
+       :lines: 2-
 
     If the second parameter is set to true, any directories contained within the supplied
     root path will be deleted as well.
 
-    Example::
+    Example:
 
-        delete_files('./path/to/directory/', true);
+    .. literalinclude:: filesystem_helper/009.php
+       :lines: 2-
 
     .. note:: The files must be writable or owned by the system in order to be deleted.
 
@@ -175,9 +172,10 @@ The following functions are available:
     the second parameter to 'relative' for relative paths or any other non-empty value for
     a full file path.
 
-    Example::
+    Example:
 
-        $controllers = get_filenames(APPPATH.'controllers/');
+    .. literalinclude:: filesystem_helper/010.php
+       :lines: 2-
 
 .. php:function:: get_dir_file_info($source_dir, $top_level_only)
 
@@ -191,9 +189,10 @@ The following functions are available:
     if forced by sending the second parameter to false, as this can be an intensive
     operation.
 
-    Example::
+    Example:
 
-        $models_info = get_dir_file_info(APPPATH.'models/');
+    .. literalinclude:: filesystem_helper/011.php
+       :lines: 2-
 
 .. php:function:: get_file_info($file[, $returned_values = ['name', 'server_path', 'size', 'date']])
 
@@ -218,9 +217,8 @@ The following functions are available:
     Takes numeric permissions (such as is returned by ``fileperms()``) and returns
     standard symbolic notation of file permissions.
 
-    ::
-
-        echo symbolic_permissions(fileperms('./index.php'));  // -rw-r--r--
+    .. literalinclude:: filesystem_helper/012.php
+       :lines: 2-
 
 .. php:function:: octal_permissions($perms)
 
@@ -231,9 +229,8 @@ The following functions are available:
     Takes numeric permissions (such as is returned by ``fileperms()``) and returns
     a three character octal notation of file permissions.
 
-    ::
-
-        echo octal_permissions(fileperms('./index.php')); // 644
+    .. literalinclude:: filesystem_helper/013.php
+       :lines: 2-
 
 .. php:function:: same_file($file1, $file2)
 
@@ -244,9 +241,8 @@ The following functions are available:
 
     Compares two files to see if they are the same (based on their MD5 hash).
 
-    ::
-
-        echo same_file($newFile, $oldFile) ? 'Same!' : 'Different!';
+    .. literalinclude:: filesystem_helper/014.php
+       :lines: 2-
 
 .. php:function:: set_realpath($path[, $check_existence = false])
 
@@ -259,18 +255,7 @@ The following functions are available:
     relative directory structures. An optional second argument will
     cause an error to be triggered if the path cannot be resolved.
 
-    Examples::
+    Examples:
 
-        $file = '/etc/php5/apache2/php.ini';
-        echo set_realpath($file); // Prints '/etc/php5/apache2/php.ini'
-
-        $non_existent_file = '/path/to/non-exist-file.txt';
-        echo set_realpath($non_existent_file, true);    // Shows an error, as the path cannot be resolved
-        echo set_realpath($non_existent_file, false);   // Prints '/path/to/non-exist-file.txt'
-
-        $directory = '/etc/php5';
-        echo set_realpath($directory);  // Prints '/etc/php5/'
-
-        $non_existent_directory = '/path/to/nowhere';
-        echo set_realpath($non_existent_directory, true);   // Shows an error, as the path cannot be resolved
-        echo set_realpath($non_existent_directory, false);  // Prints '/path/to/nowhere'
+    .. literalinclude:: filesystem_helper/015.php
+       :lines: 2-

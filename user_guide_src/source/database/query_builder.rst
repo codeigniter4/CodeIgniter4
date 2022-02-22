@@ -25,10 +25,10 @@ Loading the Query Builder
 
 The Query Builder is loaded through the ``table()`` method on the
 database connection. This sets the **FROM** portion of the query for you
-and returns a new instance of the Query Builder class::
+and returns a new instance of the Query Builder class:
 
-    $db      = \Config\Database::connect();
-    $builder = $db->table('users');
+.. literalinclude:: query_builder/001.php
+   :lines: 2-
 
 The Query Builder is only loaded into memory when you specifically request
 the class, so no resources are used by default.
@@ -45,27 +45,22 @@ Get
 **$builder->get()**
 
 Runs the selection query and returns the result. Can be used by itself
-to retrieve all records from a table::
+to retrieve all records from a table:
 
-    $builder = $db->table('mytable');
-    $query   = $builder->get();  // Produces: SELECT * FROM mytable
+.. literalinclude:: query_builder/002.php
+   :lines: 2-
 
 The first and second parameters enable you to set a limit and offset
-clause::
+clause:
 
-    $query = $builder->get(10, 20);
-
-    // Executes: SELECT * FROM mytable LIMIT 20, 10
-    // (in MySQL. Other databases have slightly different syntax)
+.. literalinclude:: query_builder/003.php
+   :lines: 2-
 
 You'll notice that the above method is assigned to a variable named
-$query, which can be used to show the results::
+$query, which can be used to show the results:
 
-    $query = $builder->get();
-
-    foreach ($query->getResult() as $row) {
-        echo $row->title;
-    }
+.. literalinclude:: query_builder/004.php
+   :lines: 2-
 
 Please visit the :doc:`getResult*() method <results>` page for a full
 discussion regarding result generation.
@@ -75,24 +70,16 @@ discussion regarding result generation.
 Compiles the selection query just like ``$builder->get()`` but does not *run*
 the query. This method simply returns the SQL query as a string.
 
-Example::
+Example:
 
-    $sql = $builder->getCompiledSelect();
-    echo $sql;
-
-    // Prints string: SELECT * FROM mytable
+.. literalinclude:: query_builder/005.php
+   :lines: 2-
 
 The first parameter enables you to set whether or not the query builder query
-will be reset (by default it will be reset, just like when using ``$builder->get()``)::
+will be reset (by default it will be reset, just like when using ``$builder->get()``):
 
-    echo $builder->limit(10,20)->getCompiledSelect(false);
-
-    // Prints string: SELECT * FROM mytable LIMIT 20, 10
-    // (in MySQL. Other databases have slightly different syntax)
-
-    echo $builder->select('title, content, date')->getCompiledSelect();
-
-    // Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10
+.. literalinclude:: query_builder/006.php
+   :lines: 2-
 
 The key thing to notice in the above example is that the second query did not
 utilize ``$builder->from()`` and did not pass a table name into the first
@@ -104,9 +91,10 @@ using ``$builder->resetQuery()``.
 
 Identical to the ``get()`` method except that it permits you to add a
 "where" clause in the first parameter, instead of using the ``$builder->where()``
-method::
+method:
 
-    $query = $builder->getWhere(['id' => $id], $limit, $offset);
+.. literalinclude:: query_builder/007.php
+   :lines: 2-
 
 Please read about the ``where()`` method below for more information.
 
@@ -115,12 +103,10 @@ Select
 
 **$builder->select()**
 
-Permits you to write the **SELECT** portion of your query::
+Permits you to write the **SELECT** portion of your query:
 
-    $builder->select('title, content, date');
-    $query = $builder->get();
-
-    // Executes: SELECT title, content, date FROM mytable
+.. literalinclude:: query_builder/008.php
+   :lines: 2-
 
 .. note:: If you are selecting all (``*``) from a table you do not need to
     use this method. When omitted, CodeIgniter assumes that you wish
@@ -131,25 +117,16 @@ to ``false``, CodeIgniter will not try to protect your field or table names.
 This is useful if you need a compound select statement where automatic
 escaping of fields may break them.
 
-::
-
-    $builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', false);
-    $query = $builder->get();
+.. literalinclude:: query_builder/009.php
+   :lines: 2-
 
 **$builder->selectMax()**
 
 Writes a **SELECT MAX(field)** portion for your query. You can optionally
 include a second parameter to rename the resulting field.
 
-::
-
-    $builder->selectMax('age');
-    $query = $builder->get();
-    // Produces: SELECT MAX(age) as age FROM mytable
-
-    $builder->selectMax('age', 'member_age');
-    $query = $builder->get();
-    // Produces: SELECT MAX(age) as member_age FROM mytable
+.. literalinclude:: query_builder/010.php
+   :lines: 2-
 
 **$builder->selectMin()**
 
@@ -157,11 +134,8 @@ Writes a **SELECT MIN(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
 the resulting field.
 
-::
-
-    $builder->selectMin('age');
-    $query = $builder->get();
-    // Produces: SELECT MIN(age) as age FROM mytable
+.. literalinclude:: query_builder/011.php
+   :lines: 2-
 
 **$builder->selectAvg()**
 
@@ -169,11 +143,8 @@ Writes a **SELECT AVG(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
 the resulting field.
 
-::
-
-    $builder->selectAvg('age');
-    $query = $builder->get();
-    // Produces: SELECT AVG(age) as age FROM mytable
+.. literalinclude:: query_builder/012.php
+   :lines: 2-
 
 **$builder->selectSum()**
 
@@ -181,11 +152,8 @@ Writes a **SELECT SUM(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
 the resulting field.
 
-::
-
-    $builder->selectSum('age');
-    $query = $builder->get();
-    // Produces: SELECT SUM(age) as age FROM mytable
+.. literalinclude:: query_builder/013.php
+   :lines: 2-
 
 **$builder->selectCount()**
 
@@ -196,24 +164,18 @@ the resulting field.
 .. note:: This method is particularly helpful when used with ``groupBy()``. For
         counting results generally see ``countAll()`` or ``countAllResults()``.
 
-::
-
-    $builder->selectCount('age');
-    $query = $builder->get();
-    // Produces: SELECT COUNT(age) as age FROM mytable
+.. literalinclude:: query_builder/014.php
+   :lines: 2-
 
 From
 ====
 
 **$builder->from()**
 
-Permits you to write the **FROM** portion of your query::
+Permits you to write the **FROM** portion of your query:
 
-    $builder = $db->table('users');
-    $builder->select('title, content, date');
-    $builder->from('mytable');
-    $query = $builder->get();
-    // Produces: SELECT title, content, date FROM users, mytable
+.. literalinclude:: query_builder/015.php
+   :lines: 2-
 
 .. note:: As shown earlier, the **FROM** portion of your query can be specified
     in the ``$db->table()`` method. Additional calls to ``from()`` will add more tables
@@ -228,36 +190,25 @@ Subqueries
 
 Permits you to write part of a **FROM** query as a subquery.
 
-This is where we add a subquery to an existing table.::
+This is where we add a subquery to an existing table.:
 
-    $subquery = $db->table('users');
-    $builder  = $db->table('jobs')->fromSubquery($subquery, 'alias');
-    $query = $builder->get();
+.. literalinclude:: query_builder/016.php
+   :lines: 2-
 
-    // Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS `alias`
+Use the ``$db->newQuery()`` method to make a subquery the main table.:
 
-Use the ``$db->newQuery()`` method to make a subquery the main table.::
-
-    $subquery = $db->table('users')->select('id, name');
-    $builder  = $db->newQuery()->fromSubquery($subquery, 't');
-    $query = $builder->get();
-
-    // Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS `t`
+.. literalinclude:: query_builder/017.php
+   :lines: 2-
 
 Join
 ====
 
 **$builder->join()**
 
-Permits you to write the **JOIN** portion of your query::
+Permits you to write the **JOIN** portion of your query:
 
-    $builder = $db->table('blogs');
-    $builder->select('*');
-    $builder->join('comments', 'comments.id = blogs.id');
-    $query = $builder->get();
-
-    // Produces:
-    // SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
+.. literalinclude:: query_builder/018.php
+   :lines: 2-
 
 Multiple method calls can be made if you need several joins in one
 query.
@@ -266,10 +217,8 @@ If you need a specific type of **JOIN** you can specify it via the third
 parameter of the method. Options are: ``left``, ``right``, ``outer``, ``inner``, ``left
 outer``, and ``right outer``.
 
-::
-
-    $builder->join('comments', 'comments.id = blogs.id', 'left');
-    // Produces: LEFT JOIN comments ON comments.id = blogs.id
+.. literalinclude:: query_builder/019.php
+   :lines: 2-
 
 *************************
 Looking for Specific Data
@@ -288,172 +237,114 @@ methods:
 
 #. **Simple key/value method:**
 
-    ::
-
-        $builder->where('name', $name);
-        // Produces: WHERE name = 'Joe'
+    .. literalinclude:: query_builder/020.php
+       :lines: 2-
 
     Notice that the equal sign is added for you.
 
     If you use multiple method calls they will be chained together with
-    **AND** between them::
+    **AND** between them:
 
-        $builder->where('name', $name);
-        $builder->where('title', $title);
-        $builder->where('status', $status);
-        // WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
+    .. literalinclude:: query_builder/021.php
+       :lines: 2-
 
 #. **Custom key/value method:**
 
     You can include an operator in the first parameter in order to
-    control the comparison::
+    control the comparison:
 
-        $builder->where('name !=', $name);
-        $builder->where('id <', $id);
-        // Produces: WHERE name != 'Joe' AND id < 45
+    .. literalinclude:: query_builder/022.php
+       :lines: 2-
 
 #. **Associative array method:**
 
-    ::
+    .. literalinclude:: query_builder/023.php
+       :lines: 2-
 
-        $array = ['name' => $name, 'title' => $title, 'status' => $status];
-        $builder->where($array);
-        // Produces: WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
+    You can include your own operators using this method as well:
 
-    You can include your own operators using this method as well::
-
-        $array = ['name !=' => $name, 'id <' => $id, 'date >' => $date];
-        $builder->where($array);
+    .. literalinclude:: query_builder/024.php
+       :lines: 2-
 
 #. **Custom string:**
 
-    You can write your own clauses manually::
+    You can write your own clauses manually:
 
-        $where = "name='Joe' AND status='boss' OR status='active'";
-        $builder->where($where);
+    .. literalinclude:: query_builder/025.php
+       :lines: 2-
 
     .. warning:: If you are using user-supplied data within the string, you MUST escape the
         data manually. Failure to do so could result in SQL injections.
 
-        ::
-
-        $name = $builder->db->escape('Joe');
-        $where = "name={$name} AND status='boss' OR status='active'";
-        $builder->where($where);
+        .. literalinclude:: query_builder/026.php
+           :lines: 2-
 
 .. _query-builder-where-subquery:
 
 5. **Subqueries:**
 
-    ::
-
-        // With closure
-
-        $builder->where('advance_amount <', function (BaseBuilder $builder) {
-            return $builder->select('MAX(advance_amount)', false)->from('orders')->where('id >', 2);
-        });
-
-        // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
-
-        // With builder directly
-        $subQuery = $db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2)
-        $builder->where('advance_amount <', $subQuery);
+    .. literalinclude:: query_builder/027.php
+       :lines: 2-
 
 **$builder->orWhere()**
 
 This method is identical to the one above, except that multiple
-instances are joined by **OR**::
+instances are joined by **OR**:
 
-    $builder->where('name !=', $name);
-    $builder->orWhere('id >', $id);
-    // Produces: WHERE name != 'Joe' OR id > 50
+.. literalinclude:: query_builder/028.php
+   :lines: 2-
 
 **$builder->whereIn()**
 
 Generates a **WHERE** field IN ('item', 'item') SQL query joined with **AND** if
-appropriate::
+appropriate:
 
-    $names = ['Frank', 'Todd', 'James'];
-    $builder->whereIn('username', $names);
-    // Produces: WHERE username IN ('Frank', 'Todd', 'James')
+.. literalinclude:: query_builder/029.php
+   :lines: 2-
 
-You can use subqueries instead of an array of values::
+You can use subqueries instead of an array of values:
 
-    // With closure
-    $builder->whereIn('id', function (BaseBuilder $builder) {
-        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-    });
-    // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-    $builder->whereIn('id', $subQuery);
+.. literalinclude:: query_builder/030.php
+   :lines: 2-
 
 **$builder->orWhereIn()**
 
 Generates a **WHERE field IN ('item', 'item')** SQL query joined with **OR** if
-appropriate::
+appropriate:
 
-        $names = ['Frank', 'Todd', 'James'];
-        $builder->orWhereIn('username', $names);
-        // Produces: OR username IN ('Frank', 'Todd', 'James')
+.. literalinclude:: query_builder/031.php
+   :lines: 2-
 
-You can use subqueries instead of an array of values::
+You can use subqueries instead of an array of values:
 
-        // With closure
-        $builder->orWhereIn('id', function (BaseBuilder $builder) {
-            return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-        });
-
-        // Produces: OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-        // With builder directly
-        $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-        $builder->orWhereIn('id', $subQuery);
+.. literalinclude:: query_builder/032.php
+   :lines: 2-
 
 **$builder->whereNotIn()**
 
 Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with
-**AND** if appropriate::
+**AND** if appropriate:
 
-    $names = ['Frank', 'Todd', 'James'];
-    $builder->whereNotIn('username', $names);
-    // Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
+.. literalinclude:: query_builder/033.php
+   :lines: 2-
 
-You can use subqueries instead of an array of values::
+You can use subqueries instead of an array of values:
 
-    // With closure
-    $builder->whereNotIn('id', function (BaseBuilder $builder) {
-        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-    });
-
-    // Produces: WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-    $builder->whereNotIn('id', $subQuery);
+.. literalinclude:: query_builder/034.php
+   :lines: 2-
 
 **$builder->orWhereNotIn()**
 
 Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with **OR**
-if appropriate::
+if appropriate:
 
-    $names = ['Frank', 'Todd', 'James'];
-    $builder->orWhereNotIn('username', $names);
-    // Produces: OR username NOT IN ('Frank', 'Todd', 'James')
+.. literalinclude:: query_builder/035.php
+   :lines: 2-
 
-You can use subqueries instead of an array of values::
+You can use subqueries instead of an array of values:
 
-    // With closure
-    $builder->orWhereNotIn('id', function (BaseBuilder $builder) {
-        return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-    });
-
-    // Produces: OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('job_id')->where('user_id', 3);
-    $builder->orWhereNotIn('id', $subQuery);
+.. literalinclude:: query_builder/036.php
+   :lines: 2-
 
 ************************
 Looking for Similar Data
@@ -473,103 +364,89 @@ searches.
 
 #. **Simple key/value method:**
 
-    ::
-
-        $builder->like('title', 'match');
-        // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
+    .. literalinclude:: query_builder/037.php
+       :lines: 2-
 
     If you use multiple method calls they will be chained together with
-    **AND** between them::
+    **AND** between them:
 
-        $builder->like('title', 'match');
-        $builder->like('body', 'match');
-        // WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match%' ESCAPE '!'
+    .. literalinclude:: query_builder/038.php
+       :lines: 2-
 
     If you want to control where the wildcard (**%**) is placed, you can use
     an optional third argument. Your options are ``before``, ``after`` and
     ``both`` (which is the default).
 
-    ::
-
-        $builder->like('title', 'match', 'before'); // Produces: WHERE `title` LIKE '%match' ESCAPE '!'
-        $builder->like('title', 'match', 'after');  // Produces: WHERE `title` LIKE 'match%' ESCAPE '!'
-        $builder->like('title', 'match', 'both');   // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
+    .. literalinclude:: query_builder/039.php
+       :lines: 2-
 
 #. **Associative array method:**
 
-    ::
-
-        $array = ['title' => $match, 'page1' => $match, 'page2' => $match];
-        $builder->like($array);
-        // WHERE `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
+       .. literalinclude:: query_builder/040.php
+          :lines: 2-
 
 **$builder->orLike()**
 
 This method is identical to the one above, except that multiple
-instances are joined by **OR**::
+instances are joined by **OR**:
 
-    $builder->like('title', 'match'); $builder->orLike('body', $match);
-    // WHERE `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
+.. literalinclude:: query_builder/041.php
+   :lines: 2-
 
 **$builder->notLike()**
 
 This method is identical to ``like()``, except that it generates
-**NOT LIKE** statements::
+**NOT LIKE** statements:
 
-    $builder->notLike('title', 'match'); // WHERE `title` NOT LIKE '%match% ESCAPE '!'
+.. literalinclude:: query_builder/042.php
+   :lines: 2-
 
 **$builder->orNotLike()**
 
 This method is identical to ``notLike()``, except that multiple
-instances are joined by **OR**::
+instances are joined by **OR**:
 
-    $builder->like('title', 'match');
-    $builder->orNotLike('body', 'match');
-    // WHERE `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
+.. literalinclude:: query_builder/043.php
+   :lines: 2-
 
 **$builder->groupBy()**
 
-Permits you to write the **GROUP BY** portion of your query::
+Permits you to write the **GROUP BY** portion of your query:
 
-    $builder->groupBy("title");
-    // Produces: GROUP BY title
+.. literalinclude:: query_builder/044.php
+   :lines: 2-
 
-You can also pass an array of multiple values as well::
+You can also pass an array of multiple values as well:
 
-    $builder->groupBy(["title", "date"]);
-    // Produces: GROUP BY title, date
+.. literalinclude:: query_builder/045.php
+   :lines: 2-
 
 **$builder->distinct()**
 
 Adds the **DISTINCT** keyword to a query
 
-::
-
-    $builder->distinct();
-    $builder->get();
-    // Produces: SELECT DISTINCT * FROM mytable
+.. literalinclude:: query_builder/046.php
+   :lines: 2-
 
 **$builder->having()**
 
 Permits you to write the **HAVING** portion of your query. There are 2
-possible syntaxes, 1 argument or 2::
+possible syntaxes, 1 argument or 2:
 
-    $builder->having('user_id = 45'); // Produces: HAVING user_id = 45
-    $builder->having('user_id',  45); // Produces: HAVING user_id = 45
+.. literalinclude:: query_builder/047.php
+   :lines: 2-
 
-You can also pass an array of multiple values as well::
+You can also pass an array of multiple values as well:
 
-    $builder->having(['title =' => 'My Title', 'id <' => $id]);
-    // Produces: HAVING title = 'My Title', id < 45
+.. literalinclude:: query_builder/048.php
+   :lines: 2-
 
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to ``false``.
 
-::
-
-    $builder->having('user_id',  45); // Produces: HAVING `user_id` = 45 in some databases such as MySQL
-    $builder->having('user_id',  45, false); // Produces: HAVING user_id = 45
+.. literalinclude:: query_builder/049.php
+   :lines: 2-
 
 **$builder->orHaving()**
 
@@ -578,95 +455,54 @@ Identical to ``having()``, only separates multiple clauses with **OR**.
 **$builder->havingIn()**
 
 Generates a **HAVING field IN ('item', 'item')** SQL query joined with **AND** if
-appropriate::
+appropriate:
 
-    $groups = [1, 2, 3];
-    $builder->havingIn('group_id', $groups);
-    // Produces: HAVING group_id IN (1, 2, 3)
+.. literalinclude:: query_builder/050.php
+   :lines: 2-
 
-You can use subqueries instead of an array of values.::
+You can use subqueries instead of an array of values.:
 
-    // With closure
-    $builder->havingIn('id', function (BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
-    // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-    $builder->havingIn('id', $subQuery);
+.. literalinclude:: query_builder/051.php
+   :lines: 2-
 
 **$builder->orHavingIn()**
 
 Generates a **HAVING field IN ('item', 'item')** SQL query joined with **OR** if
 appropriate
 
-::
+.. literalinclude:: query_builder/052.php
+   :lines: 2-
 
-    $groups = [1, 2, 3];
-    $builder->orHavingIn('group_id', $groups);
-    // Produces: OR group_id IN (1, 2, 3)
+You can use subqueries instead of an array of values.:
 
-You can use subqueries instead of an array of values.::
-
-    //With closure
-    $builder->orHavingIn('id', function (BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
-
-    // Produces: OR "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-    $builder->orHavingIn('id', $subQuery);
+.. literalinclude:: query_builder/053.php
+   :lines: 2-
 
 **$builder->havingNotIn()**
 
 Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with
 **AND** if appropriate
 
-::
+.. literalinclude:: query_builder/054.php
+   :lines: 2-
 
-    $groups = [1, 2, 3];
-    $builder->havingNotIn('group_id', $groups);
-    // Produces: HAVING group_id NOT IN (1, 2, 3)
+You can use subqueries instead of an array of values.:
 
-You can use subqueries instead of an array of values.::
-
-    //With closure
-    $builder->havingNotIn('id', function (BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
-
-    // Produces: HAVING "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-    $builder->havingNotIn('id', $subQuery);
+.. literalinclude:: query_builder/055.php
+   :lines: 2-
 
 **$builder->orHavingNotIn()**
 
 Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with **OR**
 if appropriate
 
-::
+.. literalinclude:: query_builder/056.php
+   :lines: 2-
 
-    $groups = [1, 2, 3];
-    $builder->havingNotIn('group_id', $groups);
-    // Produces: OR group_id NOT IN (1, 2, 3)
+You can use subqueries instead of an array of values.:
 
-You can use subqueries instead of an array of values.::
-
-    //With closure
-    $builder->orHavingNotIn('id', function (BaseBuilder $builder) {
-        return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-    });
-
-    // Produces: OR "id" NOT IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
-
-    // With builder directly
-    $subQuery = $db->table('users_jobs')->select('user_id')->where('group_id', 3);
-    $builder->orHavingNotIn('id', $subQuery);
+.. literalinclude:: query_builder/057.php
+   :lines: 2-
 
 **$builder->havingLike()**
 
@@ -682,60 +518,50 @@ searches.
 
 #. **Simple key/value method:**
 
-    ::
-
-        $builder->havingLike('title', 'match');
-        // Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
+    .. literalinclude:: query_builder/058.php
+       :lines: 2-
 
     If you use multiple method calls they will be chained together with
-    **AND** between them::
+    **AND** between them:
 
-        $builder->havingLike('title', 'match');
-        $builder->havingLike('body', 'match');
-        // HAVING `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match% ESCAPE '!'
+    .. literalinclude:: query_builder/059.php
+       :lines: 2-
 
     If you want to control where the wildcard (**%**) is placed, you can use
     an optional third argument. Your options are ``before``, ``after`` and
     ``both`` (which is the default).
 
-    ::
-
-        $builder->havingLike('title', 'match', 'before'); // Produces: HAVING `title` LIKE '%match' ESCAPE '!'
-        $builder->havingLike('title', 'match', 'after');  // Produces: HAVING `title` LIKE 'match%' ESCAPE '!'
-        $builder->havingLike('title', 'match', 'both');   // Produces: HAVING `title` LIKE '%match%' ESCAPE '!'
+    .. literalinclude:: query_builder/060.php
+       :lines: 2-
 
 #. **Associative array method:**
 
-    ::
-
-        $array = ['title' => $match, 'page1' => $match, 'page2' => $match];
-        $builder->havingLike($array);
-        // HAVING `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
+       .. literalinclude:: query_builder/061.php
+          :lines: 2-
 
 **$builder->orHavingLike()**
 
 This method is identical to the one above, except that multiple
-instances are joined by **OR**::
+instances are joined by **OR**:
 
-    $builder->havingLike('title', 'match'); $builder->orHavingLike('body', $match);
-    // HAVING `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
+.. literalinclude:: query_builder/062.php
+   :lines: 2-
 
 **$builder->notHavingLike()**
 
 This method is identical to ``havingLike()``, except that it generates
-**NOT LIKE** statements::
+**NOT LIKE** statements:
 
-    $builder->notHavingLike('title', 'match');
-    // HAVING `title` NOT LIKE '%match% ESCAPE '!'
+.. literalinclude:: query_builder/063.php
+   :lines: 2-
 
 **$builder->orNotHavingLike()**
 
 This method is identical to ``notHavingLike()``, except that multiple
-instances are joined by **OR**::
+instances are joined by **OR**:
 
-    $builder->havingLike('title', 'match');
-    $builder->orNotHavingLike('body', 'match');
-    // HAVING `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'
+.. literalinclude:: query_builder/064.php
+   :lines: 2-
 
 ****************
 Ordering Results
@@ -750,34 +576,24 @@ The first parameter contains the name of the column you would like to order by.
 The second parameter lets you set the direction of the result.
 Options are ``ASC``, ``DESC`` AND ``RANDOM``.
 
-::
+.. literalinclude:: query_builder/065.php
+   :lines: 2-
 
-    $builder->orderBy('title', 'DESC');
-    // Produces: ORDER BY `title` DESC
+You can also pass your own string in the first parameter:
 
-You can also pass your own string in the first parameter::
-
-    $builder->orderBy('title DESC, name ASC');
-    // Produces: ORDER BY `title` DESC, `name` ASC
+.. literalinclude:: query_builder/066.php
+   :lines: 2-
 
 Or multiple method calls can be made if you need multiple fields.
 
-::
-
-    $builder->orderBy('title', 'DESC');
-    $builder->orderBy('name', 'ASC');
-    // Produces: ORDER BY `title` DESC, `name` ASC
+.. literalinclude:: query_builder/067.php
+   :lines: 2-
 
 If you choose the ``RANDOM`` direction option, then the first parameters will
 be ignored, unless you specify a numeric seed value.
 
-::
-
-    $builder->orderBy('title', 'RANDOM');
-    // Produces: ORDER BY RAND()
-
-    $builder->orderBy(42, 'RANDOM');
-    // Produces: ORDER BY RAND(42)
+.. literalinclude:: query_builder/068.php
+   :lines: 2-
 
 ****************************
 Limiting or Counting Results
@@ -785,44 +601,39 @@ Limiting or Counting Results
 
 **$builder->limit()**
 
-Lets you limit the number of rows you would like returned by the query::
+Lets you limit the number of rows you would like returned by the query:
 
-    $builder->limit(10);
-    // Produces: LIMIT 10
+.. literalinclude:: query_builder/069.php
+   :lines: 2-
 
 The second parameter lets you set a result offset.
 
-::
-
-    $builder->limit(10, 20);
-    // Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)
-
+.. literalinclude:: query_builder/070.php
+   :lines: 2-
 
 **$builder->countAllResults()**
 
 Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
-``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example::
+``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example:
 
-    echo $builder->countAllResults(); // Produces an integer, like 25
-    $builder->like('title', 'match');
-    $builder->from('my_table');
-    echo $builder->countAllResults(); // Produces an integer, like 17
+.. literalinclude:: query_builder/071.php
+   :lines: 2-
 
 However, this method also resets any field values that you may have passed
 to ``select()``. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
-::
-
-    echo $builder->countAllResults(false); // Produces an integer, like 17
+.. literalinclude:: query_builder/072.php
+   :lines: 2-
 
 **$builder->countAll()**
 
 Permits you to determine the number of rows in a particular table.
-Example::
+Example:
 
-    echo $builder->countAll(); // Produces an integer, like 25
+.. literalinclude:: query_builder/073.php
+   :lines: 2-
 
 As is in ``countAllResult()`` method, this method resets any field values that you may have passed
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
@@ -833,21 +644,10 @@ Query grouping
 **************
 
 Query grouping allows you to create groups of **WHERE** clauses by enclosing them in parentheses. This will allow
-you to create queries with complex **WHERE** clauses. Nested groups are supported. Example::
+you to create queries with complex **WHERE** clauses. Nested groups are supported. Example:
 
-    $builder->select('*')->from('my_table')
-        ->groupStart()
-            ->where('a', 'a')
-            ->orGroupStart()
-                ->where('b', 'b')
-                ->where('c', 'c')
-            ->groupEnd()
-        ->groupEnd()
-        ->where('d', 'd')
-    ->get();
-
-    // Generates:
-    // SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
+.. literalinclude:: query_builder/074.php
+   :lines: 2-
 
 .. note:: Groups need to be balanced, make sure every ``groupStart()`` is matched by a ``groupEnd()``.
 
@@ -899,31 +699,17 @@ Inserting Data
 
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
-method. Here is an example using an array::
+method. Here is an example using an array:
 
-    $data = [
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-    ];
-
-    $builder->insert($data);
-    // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+.. literalinclude:: query_builder/075.php
+   :lines: 2-
 
 The first parameter is an associative array of values.
 
-Here is an example using an object::
+Here is an example using an object:
 
-    class Myclass
-    {
-        public $title   = 'My Title';
-        public $content = 'My Content';
-        public $date    = 'My Date';
-    }
-
-    $object = new Myclass;
-    $builder->insert($object);
-    // Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')
+.. literalinclude:: query_builder/076.php
+   :lines: 2-
 
 The first parameter is an object.
 
@@ -933,46 +719,26 @@ The first parameter is an object.
 
 Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won't be inserted.
-You can optionally pass an **boolean** to the method. Here is an example using the array of the above example::
+You can optionally pass an **boolean** to the method. Here is an example using the array of the above example:
 
-    $data = [
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-    ];
-
-    $builder->ignore(true)->insert($data);
-    // Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
-
+.. literalinclude:: query_builder/077.php
+   :lines: 2-
 
 **$builder->getCompiledInsert()**
 
 Compiles the insertion query just like ``$builder->insert()`` but does not
 *run* the query. This method simply returns the SQL query as a string.
 
-Example::
+Example:
 
-    $data = [
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-    ];
-
-    $sql = $builder->set($data)->getCompiledInsert();
-    echo $sql;
-
-    // Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')
+.. literalinclude:: query_builder/078.php
+   :lines: 2-
 
 The first parameter enables you to set whether or not the query builder query
-will be reset (by default it will be--just like ``$builder->insert()``)::
+will be reset (by default it will be--just like ``$builder->insert()``):
 
-    echo $builder->set('title', 'My Title')->getCompiledInsert(false);
-
-    // Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
-
-    echo $builder->set('content', 'My Content')->getCompiledInsert();
-
-    // Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
+.. literalinclude:: query_builder/079.php
+   :lines: 2-
 
 The reason the second query worked is that the query has not been executed
 using ``$builder->insert()`` which resets values or reset directly using
@@ -984,23 +750,10 @@ using ``$builder->insert()`` which resets values or reset directly using
 
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
-method. Here is an example using an array::
+method. Here is an example using an array:
 
-    $data = [
-        [
-            'title' => 'My title',
-            'name'  => 'My Name',
-            'date'  => 'My date',
-        ],
-        [
-            'title' => 'Another title',
-            'name'  => 'Another Name',
-            'date'  => 'Another date',
-        ],
-    ];
-
-    $builder->insertBatch($data);
-    // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
+.. literalinclude:: query_builder/080.php
+   :lines: 2-
 
 The first parameter is an associative array of values.
 
@@ -1019,17 +772,10 @@ In our case, it will save you from the need to implement complex
 logics with different combinations of  ``select()``, ``update()``,
 ``delete()`` and ``insert()`` calls.
 
-Example::
+Example:
 
-    $data = [
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-    ];
-
-    $builder->replace($data);
-
-    // Executes: REPLACE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+.. literalinclude:: query_builder/081.php
+   :lines: 2-
 
 In the above example, if we assume that the ``title`` field is our primary
 key, then if a row containing ``My title`` as the ``title`` value, that row
@@ -1045,110 +791,60 @@ This method enables you to set values for inserts or updates.
 **It can be used instead of passing a data array directly to the insert()
 or update() methods:**
 
-::
-
-    $builder->set('name', $name);
-    $builder->insert();
-    // Produces: INSERT INTO mytable (`name`) VALUES ('{$name}')
+.. literalinclude:: query_builder/082.php
+   :lines: 2-
 
 If you use multiple method called they will be assembled properly
-based on whether you are doing an insert or an update::
+based on whether you are doing an insert or an update:
 
-    $builder->set('name', $name);
-    $builder->set('title', $title);
-    $builder->set('status', $status);
-    $builder->insert();
+.. literalinclude:: query_builder/083.php
+   :lines: 2-
 
 ``set()`` will also accept an optional third parameter (``$escape``), that
 will prevent data from being escaped if set to ``false``. To illustrate the
 difference, here is ``set()`` used both with and without the escape
 parameter.
 
-::
+.. literalinclude:: query_builder/084.php
+   :lines: 2-
 
-    $builder->set('field', 'field+1', false);
-    $builder->where('id', 2);
-    $builder->update();
-    // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
+You can also pass an associative array to this method:
 
-    $builder->set('field', 'field+1');
-    $builder->where('id', 2);
-    $builder->update();
-    // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+.. literalinclude:: query_builder/085.php
+   :lines: 2-
 
-You can also pass an associative array to this method::
+Or an object:
 
-    $array = [
-        'name'   => $name,
-        'title'  => $title,
-        'status' => $status,
-    ];
-
-    $builder->set($array);
-    $builder->insert();
-
-Or an object::
-
-    class Myclass
-    {
-        public $title   = 'My Title';
-        public $content = 'My Content';
-        public $date    = 'My Date';
-    }
-
-    $object = new Myclass;
-    $builder->set($object);
-    $builder->insert();
+.. literalinclude:: query_builder/086.php
+   :lines: 2-
 
 **$builder->update()**
 
 Generates an update string and runs the query based on the data you
 supply. You can pass an **array** or an **object** to the method. Here
-is an example using an array::
+is an example using an array:
 
-    $data = [
-        'title' => $title,
-        'name'  => $name,
-        'date'  => $date,
-    ];
+.. literalinclude:: query_builder/087.php
+   :lines: 2-
 
-    $builder->where('id', $id);
-    $builder->update($data);
-    // Produces:
-    //
-    // UPDATE mytable
-    // SET title = '{$title}', name = '{$name}', date = '{$date}'
-    // WHERE id = $id
+Or you can supply an object:
 
-Or you can supply an object::
-
-    class Myclass
-    {
-        public $title   = 'My Title';
-        public $content = 'My Content';
-        public $date    = 'My Date';
-    }
-
-    $object = new Myclass;
-    $builder->where('id', $id);
-    $builder->update($object);
-    // Produces:
-    //
-    // UPDATE `mytable`
-    // SET `title` = '{$title}', `name` = '{$name}', `date` = '{$date}'
-    // WHERE id = `$id`
+.. literalinclude:: query_builder/088.php
+   :lines: 2-
 
 .. note:: All values are escaped automatically producing safer queries.
 
 You'll notice the use of the ``$builder->where()`` method, enabling you
 to set the **WHERE** clause. You can optionally pass this information
-directly into the ``update()`` method as a string::
+directly into the ``update()`` method as a string:
 
-    $builder->update($data, "id = 4");
+.. literalinclude:: query_builder/089.php
+   :lines: 2-
 
-Or as an array::
+Or as an array:
 
-    $builder->update($data, ['id' => $id]);
+.. literalinclude:: query_builder/090.php
+   :lines: 2-
 
 You may also use the ``$builder->set()`` method described above when
 performing updates.
@@ -1157,33 +853,10 @@ performing updates.
 
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
-Here is an example using an array::
+Here is an example using an array:
 
-    $data = [
-       [
-          'title' => 'My title' ,
-          'name'  => 'My Name 2' ,
-          'date'  => 'My date 2',
-       ],
-       [
-          'title' => 'Another title' ,
-          'name'  => 'Another Name 2' ,
-          'date'  => 'Another date 2',
-       ],
-    ];
-
-    $builder->updateBatch($data, 'title');
-
-    // Produces:
-    // UPDATE `mytable` SET `name` = CASE
-    // WHEN `title` = 'My title' THEN 'My Name 2'
-    // WHEN `title` = 'Another title' THEN 'Another Name 2'
-    // ELSE `name` END,
-    // `date` = CASE
-    // WHEN `title` = 'My title' THEN 'My date 2'
-    // WHEN `title` = 'Another title' THEN 'Another date 2'
-    // ELSE `date` END
-    // WHERE `title` IN ('My title','Another title')
+.. literalinclude:: query_builder/091.php
+   :lines: 2-
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
@@ -1210,21 +883,15 @@ Deleting Data
 
 Generates a **DELETE** SQL string and runs the query.
 
-::
-
-    $builder->delete(['id' => $id]);
-    // Produces: // DELETE FROM mytable  // WHERE id = $id
+.. literalinclude:: query_builder/092.php
+   :lines: 2-
 
 The first parameter is the where clause.
 You can also use the ``where()`` or ``or_where()`` methods instead of passing
-the data to the first parameter of the method::
+the data to the first parameter of the method:
 
-    $builder->where('id', $id);
-    $builder->delete();
-
-    // Produces:
-    // DELETE FROM mytable
-    // WHERE id = $id
+.. literalinclude:: query_builder/093.php
+   :lines: 2-
 
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
@@ -1232,21 +899,17 @@ method, or ``emptyTable()``.
 **$builder->emptyTable()**
 
 Generates a **DELETE** SQL string and runs the
-query::
+query:
 
-      $builder->emptyTable('mytable');
-      // Produces: DELETE FROM mytable
+.. literalinclude:: query_builder/094.php
+   :lines: 2-
 
 **$builder->truncate()**
 
 Generates a **TRUNCATE** SQL string and runs the query.
 
-::
-
-    $builder->truncate();
-
-    // Produce:
-    // TRUNCATE mytable
+.. literalinclude:: query_builder/095.php
+   :lines: 2-
 
 .. note:: If the TRUNCATE command isn't available, ``truncate()`` will
     execute as "DELETE FROM table".
@@ -1263,12 +926,10 @@ Method Chaining
 ***************
 
 Method chaining allows you to simplify your syntax by connecting
-multiple methods. Consider this example::
+multiple methods. Consider this example:
 
-    $query = $builder->select('title')
-                     ->where('id', $id)
-                     ->limit(10, 20)
-                     ->get();
+.. literalinclude:: query_builder/096.php
+   :lines: 2-
 
 .. _ar-caching:
 
@@ -1283,22 +944,10 @@ executing it first using a method like ``$builder->get()`` or ``$builder->insert
 
 This is useful in situations where you are using Query Builder to generate SQL
 (e.g., ``$builder->getCompiledSelect()``) but then choose to, for instance,
-run the query::
+run the query:
 
-    // Note that the second parameter of the ``get_compiled_select`` method is false
-    $sql = $builder->select(['field1','field2'])
-                   ->where('field3',5)
-                   ->getCompiledSelect(false);
-
-    // ...
-    // Do something crazy with the SQL code... like add it to a cron script for
-    // later execution or something...
-    // ...
-
-    $data = $builder->get()->getResultArray();
-
-    // Would execute and return an array of results of the following query:
-    // SELECT field1, field1 from mytable where field3 = 5;
+.. literalinclude:: query_builder/097.php
+   :lines: 2-
 
 ***************
 Class Reference

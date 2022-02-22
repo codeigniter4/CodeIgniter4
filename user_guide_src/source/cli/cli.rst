@@ -36,21 +36,9 @@ Let's try it: Hello World!
 
 Let's create a simple controller so you can see it in action. Using your
 text editor, create a file called Tools.php, and put the following code
-in it::
+in it:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\Controller;
-
-    class Tools extends Controller
-    {
-        public function message($to = 'World')
-        {
-            echo "Hello {$to}!" . PHP_EOL;
-        }
-    }
+.. literalinclude:: cli/001.php
 
 Then save the file to your **app/Controllers/** directory.
 
@@ -94,9 +82,10 @@ CLI-Only Routing
 In your **Routes.php** file you can create routes that are only accessible from
 the CLI as easily as you would create any other route. Instead of using the ``get()``,
 ``post()``, or similar method, you would use the ``cli()`` method. Everything else
-works exactly like a normal route definition::
+works exactly like a normal route definition:
 
-    $routes->cli('tools/message/(:segment)', 'Tools::message/$1');
+.. literalinclude:: cli/002.php
+   :lines: 2-
 
 For more information, see the :doc:`Routes </incoming/routing>` page.
 

@@ -18,25 +18,24 @@ Renaming or Relocating the Application Directory
 If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main **app/Config/Paths.php** and set a *full server path* in the
-``$appDirectory`` variable (at about line 44)::
+``$appDirectory`` variable (at about line 44):
 
-    public $appDirectory = '/path/to/your/app';
+.. literalinclude:: managing_apps/001.php
+   :lines: 2-
 
 You will need to modify two additional files in your project root, so that
 they can find the **Paths** configuration file:
 
-- **/spark** runs command line apps; the path is specified on or about line 35::
+- **/spark** runs command line apps; the path is specified on or about line 35:
 
-    $pathsConfig = 'app/Config/Paths.php';
-    // ^^^ Change this line if you move your application folder
-
+  .. literalinclude:: managing_apps/002.php
+     :lines: 2-
 
 - **/public/index.php** is the front controller for your webapp; the config
-  path is specified on or about line 20::
+  path is specified on or about line 20:
 
-    $pathsConfig = FCPATH . '../app/Config/Paths.php';
-    // ^^^ Change this if you move your application folder
-
+  .. literalinclude:: managing_apps/003.php
+     :lines: 2-
 
 Running Multiple Applications with one CodeIgniter Installation
 ===============================================================
@@ -76,6 +75,7 @@ If either of the applications had a command-line component, then you would also
 modify **spark** inside each application's project folder, as directed above.
 
 When you use Composer autoloader, fix the ``COMPOSER_PATH`` constant in **app/Config/Constants.php** inside each
-of those::
+of those:
 
-    defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . '../vendor/autoload.php');
+.. literalinclude:: managing_apps/004.php
+   :lines: 2-

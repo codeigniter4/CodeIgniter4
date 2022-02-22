@@ -17,23 +17,13 @@ Example Usage
 
 The following example shows a common usage pattern within your controllers.
 
-::
+.. literalinclude:: caching/001.php
+   :lines: 2-
 
-    if (! $foo = cache('foo')) {
-        echo 'Saving to the cache!<br />';
-        $foo = 'foobarbaz!';
+You can grab an instance of the cache engine directly through the Services class:
 
-        // Save into the cache for 5 minutes
-        cache()->save('foo', $foo, 300);
-    }
-
-    echo $foo;
-
-You can grab an instance of the cache engine directly through the Services class::
-
-    $cache = \Config\Services::cache();
-
-    $foo = $cache->get('foo');
+.. literalinclude:: caching/002.php
+   :lines: 2-
 
 =====================
 Configuring the Cache
@@ -94,9 +84,10 @@ Class Reference
     This method will attempt to fetch an item from the cache store. If the
     item does not exist, the method will return null.
 
-    Example::
+    Example:
 
-        $foo = $cache->get('my_cached_item');
+    .. literalinclude:: caching/003.php
+       :lines: 2-
 
 .. php:method:: remember(string $key, int $ttl, Closure $callback)
 
@@ -121,9 +112,10 @@ Class Reference
     This method will save an item to the cache store. If saving fails, the
     method will return ``false``.
 
-    Example::
+    Example:
 
-        $cache->save('cache_item_id', 'data_to_cache');
+    .. literalinclude:: caching/004.php
+       :lines: 2-
 
 .. note:: The ``$raw`` parameter is only utilized by Memcache,
     in order to allow usage of ``increment()`` and ``decrement()``.
@@ -137,9 +129,10 @@ Class Reference
     This method will delete a specific item from the cache store. If item
     deletion fails, the method will return false.
 
-    Example::
+    Example:
 
-        $cache->delete('cache_item_id');
+    .. literalinclude:: caching/005.php
+       :lines: 2-
 
 .. php:method:: deleteMatching($pattern): integer
 
@@ -153,10 +146,10 @@ Class Reference
     .. important:: This method is only implemented for File, Redis and Predis handlers.
         Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
 
-    Example::
+    Example:
 
-        $cache->deleteMatching('prefix_*'); // deletes all items of which keys start with "prefix_"
-        $cache->deleteMatching('*_suffix'); // deletes all items of which keys end with "_suffix"
+    .. literalinclude:: caching/006.php
+       :lines: 2-
 
     For more information on glob-style syntax, please see
     `Glob (programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
@@ -170,11 +163,10 @@ Class Reference
 
     Performs atomic incrementation of a raw stored value.
 
-    Example::
+    Example:
 
-        // 'iterator' has a value of 2
-        $cache->increment('iterator'); // 'iterator' is now 3
-        $cache->increment('iterator', 3); // 'iterator' is now 6
+    .. literalinclude:: caching/007.php
+       :lines: 2-
 
 .. php:method:: decrement($key[, $offset = 1]): mixed
 
@@ -185,11 +177,10 @@ Class Reference
 
     Performs atomic decrementation of a raw stored value.
 
-    Example::
+    Example:
 
-        // 'iterator' has a value of 6
-        $cache->decrement('iterator'); // 'iterator' is now 5
-        $cache->decrement('iterator', 2); // 'iterator' is now 3
+    .. literalinclude:: caching/008.php
+       :lines: 2-
 
 .. php:method:: clean()
 
@@ -199,9 +190,10 @@ Class Reference
     This method will 'clean' the entire cache. If the deletion of the
     cache files fails, the method will return false.
 
-    Example::
+    Example:
 
-        $cache->clean();
+    .. literalinclude:: caching/009.php
+       :lines: 2-
 
 .. php:method:: getCacheInfo()
 
@@ -210,9 +202,10 @@ Class Reference
 
     This method will return information on the entire cache.
 
-    Example::
+    Example:
 
-        var_dump($cache->getCacheInfo());
+    .. literalinclude:: caching/010.php
+       :lines: 2-
 
 .. note:: The information returned and the structure of the data is dependent
     on which adapter is being used.
@@ -226,9 +219,10 @@ Class Reference
     This method will return detailed information on a specific item in the
     cache.
 
-    Example::
+    Example:
 
-        var_dump($cache->getMetadata('my_cached_item'));
+    .. literalinclude:: caching/011.php
+       :lines: 2-
 
 .. note:: The information returned and the structure of the data is dependent
           on which adapter is being used. Some adapters (File, Memcached, Wincache)
@@ -244,10 +238,10 @@ Class Reference
     This method is used by handler methods to check that keys are valid. It will throw
     an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
 
-    Example::
+    Example:
 
-        $prefixedKey = BaseHandler::validateKey($key, $prefix);
-
+    .. literalinclude:: caching/012.php
+       :lines: 2-
 
 *******
 Drivers
@@ -267,14 +261,10 @@ directory to be really writable by the application.
 Memcached Caching
 =================
 
-Memcached servers can be specified in the cache configuration file. Available options are::
+Memcached servers can be specified in the cache configuration file. Available options are:
 
-    public $memcached = [
-        'host'   => '127.0.0.1',
-        'port'   => 11211,
-        'weight' => 1,
-        'raw'    => false,
-    ];
+.. literalinclude:: caching/013.php
+   :lines: 2-
 
 For more information on Memcached, please see
 `https://www.php.net/memcached <https://www.php.net/memcached>`_.
@@ -295,15 +285,10 @@ Redis Caching
 Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need `Redis server and phpredis PHP extension <https://github.com/phpredis/phpredis>`_.
 
-Config options to connect to redis server stored in the cache configuration file. Available options are::
+Config options to connect to redis server stored in the cache configuration file. Available options are:
 
-    public $redis = [
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-        'database' => 0,
-    ];
+.. literalinclude:: caching/014.php
+   :lines: 2-
 
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.

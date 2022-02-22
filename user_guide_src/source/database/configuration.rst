@@ -12,26 +12,10 @@ file is located at **app/Config/Database.php**. You can also set
 database connection values in the **.env** file. See below for more details.
 
 The config settings are stored in a class property that is an array with this
-prototype::
+prototype:
 
-    public $default = [
-        'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'database_name',
-        'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
-        'pConnect' => true,
-        'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
-        'swapPre'  => '',
-        'encrypt'  => false,
-        'compress' => false,
-        'strictOn' => false,
-        'failover' => [],
-    ];
+.. literalinclude:: configuration/001.php
+   :lines: 2-
 
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
@@ -42,70 +26,34 @@ while connecting to specify a group name.
 Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you
 should use the 'DSN' configuration setting, as if you're using the
-driver's underlying native PHP extension, like this::
+driver's underlying native PHP extension, like this:
 
-    // PDO
-    $default['DSN'] = 'pgsql:host=localhost;port=5432;dbname=database_name';
-
-    // Oracle
-    $default['DSN'] = '//localhost/XE';
+.. literalinclude:: configuration/002.php
+   :lines: 2-
 
 .. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
     will try to build it with the rest of the provided settings.
 
-You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype::
+You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 
-    $default['DSN'] = 'DBDriver://username:password@hostname:port/database';
+.. literalinclude:: configuration/003.php
+   :lines: 2-
 
 To override default config values when connecting with a universal version of the DSN string,
-add the config variables as a query string::
+add the config variables as a query string:
 
-    // MySQLi
-    $default['DSN'] = 'MySQLi://username:password@hostname:3306/database?charset=utf8&DBCollat=utf8_general_ci';
-    // Postgre
-    $default['DSN'] = 'Postgre://username:password@hostname:5432/database?charset=utf8&connect_timeout=5&sslmode=1';
+.. literalinclude:: configuration/004.php
+   :lines: 2-
 
 .. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
     database character set), which are present in the rest of the configuration
     fields, CodeIgniter will append them.
 
 You can also specify failovers for the situation when the main connection cannot connect for some reason.
-These failovers can be specified by setting the failover for a connection like this::
+These failovers can be specified by setting the failover for a connection like this:
 
-    $default['failover'] = [
-        [
-            'hostname' => 'localhost1',
-            'username' => '',
-            'password' => '',
-            'database' => '',
-            'DBDriver' => 'MySQLi',
-            'DBPrefix' => '',
-            'pConnect' => true,
-            'DBDebug'  => true,
-            'charset'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
-            'swapPre'  => '',
-            'encrypt'  => false,
-            'compress' => false,
-            'strictOn' => false,
-        ],
-        [
-            'hostname' => 'localhost2',
-            'username' => '',
-            'password' => '',
-            'database' => '',
-            'DBDriver' => 'MySQLi',
-            'DBPrefix' => '',
-            'pConnect' => true,
-            'DBDebug'  => true,
-            'charset'  => 'utf8',
-            'DBCollat' => 'utf8_general_ci',
-            'swapPre'  => '',
-            'encrypt'  => false,
-            'compress' => false,
-            'strictOn' => false,
-        ]
-    ];
+.. literalinclude:: configuration/005.php
+   :lines: 2-
 
 You can specify as many failovers as you like.
 
@@ -113,31 +61,16 @@ You may optionally store multiple sets of connection
 values. If, for example, you run multiple environments (development,
 production, test, etc.) under a single installation, you can set up a
 connection group for each, then switch between groups as needed. For
-example, to set up a "test" environment you would do this::
+example, to set up a "test" environment you would do this:
 
-    public $test = [
-        'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'database_name',
-        'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
-        'pConnect' => true,
-        'DBDebug'  => true,
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
-        'swapPre'  => '',
-        'compress' => false,
-        'encrypt'  => false,
-        'strictOn' => false,
-        'failover' => []
-    );
+.. literalinclude:: configuration/006.php
+   :lines: 2-
 
 Then, to globally tell the system to use that group you would set this
-variable located in the config file::
+variable located in the config file:
 
-    $defaultGroup = 'test';
+.. literalinclude:: configuration/007.php
+   :lines: 2-
 
 .. note:: The name 'test' is arbitrary. It can be anything you want. By
     default we've used the word "default" for the primary connection,
@@ -145,19 +78,10 @@ variable located in the config file::
 
 You could modify the config file to detect the environment and automatically
 update the `defaultGroup` value to the correct one by adding the required logic
-within the class' constructor::
+within the class' constructor:
 
-    class Database
-    {
-        public $development = [...];
-        public $test        = [...];
-        public $production  = [...];
-
-        public function __construct()
-        {
-            $this->defaultGroup = ENVIRONMENT;
-        }
-    }
+.. literalinclude:: configuration/008.php
+   :lines: 2-
 
 Configuring With .env File
 --------------------------
@@ -215,9 +139,9 @@ Explanation of Values:
 **strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
                 while developing an application.
 **port**        The database port number. To use this value you have to add a line to the database config array.
-                ::
 
-                    $default['port'] = 5432;
+                .. literalinclude:: configuration/009.php
+                    :lines: 2-
 
 ==============  ===========================================================================================================
 

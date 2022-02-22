@@ -4,38 +4,25 @@ Extending the Controller
 
 CodeIgniter's core Controller should not be changed, but a default class extension is provided for you at
 **app/Controllers/BaseController.php**. Any new controllers you make should extend ``BaseController`` to take
-advantage of preloaded components and any additional functionality you provide::
+advantage of preloaded components and any additional functionality you provide:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\Controller;
-
-    class Home extends BaseController
-    {
-        // ...
-    }
+.. literalinclude:: basecontroller/001.php
 
 Preloading Components
 =====================
 
 The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
 use every time your project runs. Helpers should be added to the pre-defined ``$helpers`` array. For example, if
-you want the HTML and Text helpers universally available::
+you want the HTML and Text helpers universally available:
 
-    protected $helpers = ['html', 'text'];
+.. literalinclude:: basecontroller/002.php
+   :lines: 2-
 
 Any other components to load or data to process should be added to the constructor ``initController()``. For
-example, if your project uses the Session Library heavily you may want to initiate it here::
+example, if your project uses the Session Library heavily you may want to initiate it here:
 
-    public function initController(...)
-    {
-        // Do Not Edit This Line
-        parent::initController($request, $response, $logger);
-        
-        $this->session = \Config\Services::session();
-    }
+.. literalinclude:: basecontroller/003.php
+   :lines: 2-
 
 Additional Methods
 ==================
@@ -52,9 +39,7 @@ has an involved public interface and a simple administrative portal you may want
 the public controllers and make ``AdminController`` for any administrative controllers.
 
 If you do not want to use the base controller you may bypass it by having your controllers extend the system
-Controller instead::
+Controller instead:
 
-    class Home extends \CodeIgniter\Controller
-    {
-    
-    }
+.. literalinclude:: basecontroller/004.php
+   :lines: 2-

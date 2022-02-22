@@ -173,7 +173,6 @@ Folders in your project after set up:
 - app, public, writable (when using ``--prefer-source``)
 - vendor/codeigniter4/framework/system
 
-
 Translations Installation
 =========================
 

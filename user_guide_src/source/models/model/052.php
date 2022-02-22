@@ -1,0 +1,3 @@
+<?php
+
+protected $allowCallbacks = false;

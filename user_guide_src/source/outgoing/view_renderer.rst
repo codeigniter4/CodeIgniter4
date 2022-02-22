@@ -12,14 +12,16 @@ Using the View Renderer
 The ``view()`` function is a convenience function that grabs an instance of the
 ``renderer`` service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.
-In that case you can access the View service directly::
+In that case you can access the View service directly:
 
-    $view = \Config\Services::renderer();
+.. literalinclude:: view_renderer/001.php
+   :lines: 2-
 
 Alternately, if you are not using the ``View`` class as your default renderer, you
-can instantiate it directly::
+can instantiate it directly:
 
-    $view = new \CodeIgniter\View\View();
+.. literalinclude:: view_renderer/002.php
+   :lines: 2-
 
 .. important:: You should create services only within controllers. If you need
     access to the View class from a library, you should set that as a dependency
@@ -49,11 +51,10 @@ Method Chaining
 ===============
 
 The ``setVar()`` and ``setData()`` methods are chainable, allowing you to combine a
-number of different calls together in a chain::
+number of different calls together in a chain:
 
-    $view->setVar('one', $one)
-         ->setVar('two', $two)
-         ->render('myView');
+.. literalinclude:: view_renderer/003.php
+   :lines: 2-
 
 Escaping Data
 =============
@@ -62,9 +63,10 @@ When you pass data to the ``setVar()`` and ``setData()`` functions you have the 
 against cross-site scripting attacks. As the last parameter in either method, you can pass the desired context to
 escape the data for. See below for context descriptions.
 
-If you don't want the data to be escaped, you can pass ``null`` or ``'raw'`` as the final parameter to each function::
+If you don't want the data to be escaped, you can pass ``null`` or ``'raw'`` as the final parameter to each function:
 
-    $view->setVar('one', $one, 'raw');
+.. literalinclude:: view_renderer/004.php
+   :lines: 2-
 
 If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
@@ -118,9 +120,10 @@ Class Reference
         :returns: The rendered text for the chosen view
         :rtype: string
 
-        Builds the output based upon a file name and any data that has already been set::
+        Builds the output based upon a file name and any data that has already been set:
 
-            echo $view->render('myview');
+        .. literalinclude:: view_renderer/005.php
+           :lines: 2-
 
     .. php:method:: renderString($view[, $options[, $saveData = false]])
         :noindex:
@@ -131,9 +134,10 @@ Class Reference
         :returns: The rendered text for the chosen view
         :rtype: string
 
-        Builds the output based upon a view fragment and any data that has already been set::
+        Builds the output based upon a view fragment and any data that has already been set:
 
-            echo $view->renderString('<div>My Sharona</div>');
+        .. literalinclude:: view_renderer/006.php
+           :lines: 2-
 
     .. warning:: This could be used for displaying content that might have been stored in a database,
         but you need to be aware that this is a potential security vulnerability,
@@ -148,9 +152,10 @@ Class Reference
         :returns: The Renderer, for method chaining
         :rtype: CodeIgniter\\View\\RendererInterface.
 
-        Sets several pieces of view data at once::
+        Sets several pieces of view data at once:
 
-            $view->setData(['name'=>'George', 'position'=>'Boss']);
+        .. literalinclude:: view_renderer/007.php
+           :lines: 2-
 
         Supported escape contexts: ``html``, ``css``, ``js``, ``url``, or ``attr`` or ``raw``.
         If ``'raw'``, no escaping will happen.
@@ -167,9 +172,10 @@ Class Reference
         :returns: The Renderer, for method chaining
         :rtype: CodeIgniter\\View\\RendererInterface.
 
-        Sets a single piece of view data::
+        Sets a single piece of view data:
 
-            $view->setVar('name','Joe','html');
+        .. literalinclude:: view_renderer/008.php
+           :lines: 2-
 
         Supported escape contexts: ``html``, ``css``, ``js``, ``url``, ``attr`` or ``raw``.
         If ``'raw'``, no escaping will happen.

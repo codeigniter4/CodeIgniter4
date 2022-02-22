@@ -34,13 +34,15 @@ first step, open your **app/Config/App.php** file and look for
 the URI Protocol information. It will recommend that you try a couple of
 alternate settings. If it still doesn't work after you've tried this
 you'll need to force CodeIgniter to add a question mark to your URLs. To
-do this open your **app/Config/App.php** file and change this::
+do this open your **app/Config/App.php** file and change this:
 
-    public $indexPage = 'index.php';
+.. literalinclude:: troubleshooting/001.php
+   :lines: 2-
 
-To this::
+To this:
 
-    public $indexPage = 'index.php?';
+.. literalinclude:: troubleshooting/002.php
+   :lines: 2-
 
 The tutorial gives 404 errors everywhere :(
 -------------------------------------------

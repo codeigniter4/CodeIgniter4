@@ -23,26 +23,22 @@ Setting the Output
 
 When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the ``setBody`` method. This is usually used in conjunction with setting the status code of
-the response::
+the response:
 
-    $this->response->setStatusCode(404)->setBody($body);
+.. literalinclude:: response/001.php
+   :lines: 2-
 
 The reason phrase ('OK', 'Created', 'Moved Permanently') will be automatically added, but you can add custom reasons
-as the second parameter of the ``setStatusCode()`` method::
+as the second parameter of the ``setStatusCode()`` method:
 
-    $this->response->setStatusCode(404, 'Nope. Not here.');
+.. literalinclude:: response/002.php
+   :lines: 2-
 
 You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
-``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted::
+``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted:
 
-    $data = [
-        'success' => true,
-        'id' => 123,
-    ];
-
-    return $this->response->setJSON($data);
-    // or
-    return $this->response->setXML($data);
+.. literalinclude:: response/003.php
+   :lines: 2-
 
 Setting Headers
 ---------------
@@ -52,24 +48,22 @@ with the ``setHeader()`` method. The first parameter is the name of the header. 
 which can be either a string or an array of values that will be combined correctly when sent to the client.
 Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.
-::
 
-    $response->setHeader('Location', 'http://example.com')
-             ->setHeader('WWW-Authenticate', 'Negotiate');
+.. literalinclude:: response/004.php
+   :lines: 2-
 
 If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.
-::
 
-    $response->setHeader('Cache-Control', 'no-cache')
-             ->appendHeader('Cache-Control', 'must-revalidate');
+.. literalinclude:: response/005.php
+   :lines: 2-
 
 Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
 parameter. This is not case-sensitive.
-::
 
-    $response->removeHeader('Location');
+.. literalinclude:: response/006.php
+   :lines: 2-
 
 Force File Download
 ===================
@@ -87,21 +81,21 @@ If you set the third parameter to boolean true, then the actual file MIME type
 (based on the filename extension) will be sent, so that if your browser has a
 handler for that type - it can use it.
 
-Example::
+Example:
 
-    $data = 'Here is some text!';
-    $name = 'mytext.txt';
-    return $response->download($name, $data);
+.. literalinclude:: response/007.php
+   :lines: 2-
 
 If you want to download an existing file from your server you'll need to
-pass ``null`` explicitly for the second parameter::
+pass ``null`` explicitly for the second parameter:
 
-    // Contents of photo.jpg will be automatically read
-    return $response->download('/path/to/photo.jpg', null);
+.. literalinclude:: response/008.php
+   :lines: 2-
 
-Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser::
+Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser:
 
-    return $response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv');
+.. literalinclude:: response/009.php
+   :lines: 2-
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
@@ -119,14 +113,10 @@ introduction to all of the cache headers power, but you can get a good understan
 
 By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
 circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
-to set the Cache values to what you need, through the ``setCache()`` method::
+to set the Cache values to what you need, through the ``setCache()`` method:
 
-    $options = [
-        'max-age'  => 300,
-        's-maxage' => 900,
-        'etag'     => 'abcde'
-    ];
-    $this->response->setCache($options);
+.. literalinclude:: response/010.php
+   :lines: 2-
 
 The ``$options`` array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
 to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for your specific
@@ -159,9 +149,10 @@ Turning CSP On
 --------------
 
 By default, support for this is off. To enable support in your application, edit the ``CSPEnabled`` value in
-**app/Config/App.php**::
+**app/Config/App.php**:
 
-    public $CSPEnabled = true;
+.. literalinclude:: response/011.php
+   :lines: 2-
 
 When enabled, the response object will contain an instance of ``CodeIgniter\HTTP\ContentSecurityPolicy``. The
 values set in **app/Config/ContentSecurityPolicy.php** are applied to that instance, and if no changes are
@@ -184,48 +175,20 @@ Runtime Configuration
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or an array of them.::
+name or an array of them.:
 
-    // specify the default directive treatment
-    $response->CSP->reportOnly(false);
-
-    // specify the origin to use if none provided for a directive
-    $response->CSP->setDefaultSrc('cdn.example.com');
-
-    // specify the URL that "report-only" reports get sent to
-    $response->CSP->setReportURI('http://example.com/csp/reports');
-
-    // specify that HTTP requests be upgraded to HTTPS
-    $response->CSP->upgradeInsecureRequests(true);
-
-    // add types or origins to CSP directives
-    // assuming that the default treatment is to block rather than just report
-    $response->CSP->addBaseURI('example.com', true); // report only
-    $response->CSP->addChildSrc('https://youtube.com'); // blocked
-    $response->CSP->addConnectSrc('https://*.facebook.com', false); // blocked
-    $response->CSP->addFontSrc('fonts.example.com');
-    $response->CSP->addFormAction('self');
-    $response->CSP->addFrameAncestor('none', true); // report this one
-    $response->CSP->addImageSrc('cdn.example.com');
-    $response->CSP->addMediaSrc('cdn.example.com');
-    $response->CSP->addManifestSrc('cdn.example.com');
-    $response->CSP->addObjectSrc('cdn.example.com', false); // reject from here
-    $response->CSP->addPluginType('application/pdf', false); // reject this media type
-    $response->CSP->addScriptSrc('scripts.example.com', true); // allow but report requests from here
-    $response->CSP->addStyleSrc('css.example.com');
-    $response->CSP->addSandbox(['allow-forms', 'allow-scripts']);
+.. literalinclude:: response/012.php
+   :lines: 2-
 
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
 The ``reportOnly`` method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
-that youtube.com was allowed, and then provide several allowed but reported sources::
+that youtube.com was allowed, and then provide several allowed but reported sources:
 
-    $response->addChildSrc('https://youtube.com'); // allowed
-    $response->reportOnly(true);
-    $response->addChildSrc('https://metube.com'); // allowed but reported
-    $response->addChildSrc('https://ourtube.com',false); // allowed
+.. literalinclude:: response/013.php
+   :lines: 2-
 
 Inline Content
 --------------
@@ -305,9 +268,10 @@ The methods provided by the parent class that are available are:
         :rtype: int
 
         Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
-        will be thrown::
+        will be thrown:
 
-            echo $response->getStatusCode();
+        .. literalinclude:: response/014.php
+           :lines: 2-
 
     .. php:method:: setStatusCode($code[, $reason=''])
 
@@ -316,23 +280,26 @@ The methods provided by the parent class that are available are:
         :returns: The current Response instance
         :rtype: ``CodeIgniter\HTTP\Response``
 
-        Sets the HTTP status code that should be sent with this response::
+        Sets the HTTP status code that should be sent with this response:
 
-            $response->setStatusCode(404);
+        .. literalinclude:: response/015.php
+           :lines: 2-
 
         The reason phrase will be automatically generated based upon the official lists. If you need to set your own
-        for a custom status code, you can pass the reason phrase as the second parameter::
+        for a custom status code, you can pass the reason phrase as the second parameter:
 
-            $response->setStatusCode(230, "Tardis initiated");
+        .. literalinclude:: response/016.php
+           :lines: 2-
 
     .. php:method:: getReasonPhrase()
 
         :returns: The current reason phrase.
         :rtype: string
 
-        Returns the current status code for this response. If not status has been set, will return an empty string::
+        Returns the current status code for this response. If not status has been set, will return an empty string:
 
-            echo $response->getReasonPhrase();
+        .. literalinclude:: response/017.php
+           :lines: 2-
 
     .. php:method:: setDate($date)
 
@@ -340,10 +307,10 @@ The methods provided by the parent class that are available are:
         :returns: The current response instance.
         :rtype: ``CodeIgniter\HTTP\Response``
 
-        Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``::
+        Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``:
 
-            $date = DateTime::createFromFormat('j-M-Y', '15-Feb-2016');
-            $response->setDate($date);
+        .. literalinclude:: response/018.php
+           :lines: 2-
 
     .. php:method:: setContentType($mime[, $charset='UTF-8'])
 
@@ -352,16 +319,16 @@ The methods provided by the parent class that are available are:
         :returns: The current response instance.
         :rtype: ``CodeIgniter\HTTP\Response``
 
-        Sets the content type this response represents::
+        Sets the content type this response represents:
 
-            $response->setContentType('text/plain');
-            $response->setContentType('text/html');
-            $response->setContentType('application/json');
+        .. literalinclude:: response/019.php
+           :lines: 2-
 
         By default, the method sets the character set to ``UTF-8``. If you need to change this, you can
-        pass the character set as the second parameter::
+        pass the character set as the second parameter:
 
-            $response->setContentType('text/plain', 'x-pig-latin');
+        .. literalinclude:: response/020.php
+           :lines: 2-
 
     .. php:method:: noCache()
 
@@ -369,12 +336,10 @@ The methods provided by the parent class that are available are:
         :rtype: ``CodeIgniter\HTTP\Response``
 
         Sets the ``Cache-Control`` header to turn off all HTTP caching. This is the default setting
-        of all response messages::
+        of all response messages:
 
-            $response->noCache();
-
-            // Sets the following header:
-            Cache-Control: no-store, max-age=0, no-cache
+        .. literalinclude:: response/021.php
+           :lines: 2-
 
     .. php:method:: setCache($options)
 
@@ -403,10 +368,10 @@ The methods provided by the parent class that are available are:
         :rtype: ``CodeIgniter\HTTP\Response``
 
         Sets the ``Last-Modified`` header. The ``$date`` object can be either a string or a ``DateTime``
-        instance::
+        instance:
 
-            $response->setLastModified(date('D, d M Y H:i:s'));
-            $response->setLastModified(DateTime::createFromFormat('u', $time));
+        .. literalinclude:: response/022.php
+           :lines: 2-
 
     .. php:method:: send(): Response
 
@@ -437,21 +402,10 @@ The methods provided by the parent class that are available are:
         **Array Method**
 
         Using this method, an associative array is passed as the first
-        parameter::
+        parameter:
 
-            $cookie = [
-                'name'   => 'The Cookie Name',
-                'value'  => 'The Value',
-                'expire' => '86500',
-                'domain' => '.some-domain.com',
-                'path'   => '/',
-                'prefix' => 'myprefix_',
-                'secure' => true,
-                'httponly' => false,
-                'samesite' => 'Lax'
-            ];
-
-            $response->setCookie($cookie);
+        .. literalinclude:: response/023.php
+           :lines: 2-
 
         **Notes**
 
@@ -482,9 +436,10 @@ The methods provided by the parent class that are available are:
         **Discrete Parameters**
 
         If you prefer, you can set the cookie by passing data using individual
-        parameters::
+        parameters:
 
-            $response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly, $samesite);
+        .. literalinclude:: response/024.php
+           :lines: 2-
 
     .. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
@@ -510,9 +465,10 @@ The methods provided by the parent class that are available are:
         If any of the optional parameters are empty, then the same-named
         cookie will be deleted across all that apply.
 
-        Example::
+        Example:
 
-            $response->deleteCookie($name);
+        .. literalinclude:: response/025.php
+           :lines: 2-
 
     .. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
 
@@ -531,9 +487,10 @@ The methods provided by the parent class that are available are:
         If a value is given, then the method checks that the cookie exists, and that it
         has the prescribed value.
 
-        Example::
+        Example:
 
-            if ($response->hasCookie($name)) ...
+        .. literalinclude:: response/026.php
+           :lines: 2-
 
     .. php:method:: getCookie($name = ''[, $prefix = ''])
 
@@ -544,9 +501,10 @@ The methods provided by the parent class that are available are:
         Returns the named cookie, if found, or ``null``.
         If no name is given, returns the array of ``Cookie`` objects.
 
-        Example::
+        Example:
 
-            $cookie = $response->getCookie($name);
+        .. literalinclude:: response/027.php
+           :lines: 2-
 
     .. php:method:: getCookies()
 

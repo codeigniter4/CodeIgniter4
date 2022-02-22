@@ -1,0 +1,3 @@
+<?php
+
+public $redirect = false;

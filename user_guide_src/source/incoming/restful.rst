@@ -28,19 +28,10 @@ Resource Routes
 You can quickly create a handful of RESTful routes for a single resource with the ``resource()`` method. This
 creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
 list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
-name::
+name:
 
-    $routes->resource('photos');
-
-    // Equivalent to the following:
-    $routes->get('photos/new',             'Photos::new');
-    $routes->post('photos',                'Photos::create');
-    $routes->get('photos',                 'Photos::index');
-    $routes->get('photos/(:segment)',      'Photos::show/$1');
-    $routes->get('photos/(:segment)/edit', 'Photos::edit/$1');
-    $routes->put('photos/(:segment)',      'Photos::update/$1');
-    $routes->patch('photos/(:segment)',    'Photos::update/$1');
-    $routes->delete('photos/(:segment)',   'Photos::delete/$1');
+.. literalinclude:: restful/001.php
+   :lines: 2-
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
@@ -48,47 +39,42 @@ name::
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the ``websafe`` option to have it
-generate update and delete methods that work with HTML forms::
+generate update and delete methods that work with HTML forms:
 
-    $routes->resource('photos', ['websafe' => 1]);
-
-    // The following equivalent routes are created:
-    $routes->post('photos/(:segment)/delete', 'Photos::delete/$1');
-    $routes->post('photos/(:segment)',        'Photos::update/$1');
+.. literalinclude:: restful/002.php
+   :lines: 2-
 
 Change the Controller Used
 --------------------------
 
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
-the controller that should be used::
+the controller that should be used:
 
-    $routes->resource('photos', ['controller' =>'App\Gallery']);
-
-    // Would create routes like:
-    $routes->get('photos', 'App\Gallery::index');
+.. literalinclude:: restful/003.php
+   :lines: 2-
 
 Change the Placeholder Used
 ---------------------------
 
 By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
-in the ``placeholder`` option with the new string to use::
+in the ``placeholder`` option with the new string to use:
 
-    $routes->resource('photos', ['placeholder' => '(:num)']);
-
-    // Generates routes like:
-    $routes->get('photos/(:num)', 'Photos::show/$1');
+.. literalinclude:: restful/004.php
+   :lines: 2-
 
 Limit the Routes Made
 ---------------------
 
 You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
-be created. Only routes that match one of these methods will be created. The rest will be ignored::
+be created. Only routes that match one of these methods will be created. The rest will be ignored:
 
-    $routes->resource('photos', ['only' => ['index', 'show']]);
+.. literalinclude:: restful/005.php
+   :lines: 2-
 
-Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``::
+Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``:
 
-    $routes->resource('photos', ['except' => 'new,edit']);
+.. literalinclude:: restful/006.php
+   :lines: 2-
 
 Valid methods are: ``index``, ``show``, ``create``, ``update``, ``new``, ``edit`` and ``delete``.
 
@@ -99,30 +85,14 @@ The ``ResourceController`` provides a convenient starting point for your RESTful
 with methods that correspond to the resource routes above.
 
 Extend it, over-riding the ``modelName`` and ``format`` properties, and then
-implement those methods that you want handled.::
+implement those methods that you want handled.:
 
-    <?php
+.. literalinclude:: restful/007.php
 
-    namespace App\Controllers;
+The routing for this would be:
 
-    use CodeIgniter\RESTful\ResourceController;
-
-    class Photos extends ResourceController
-    {
-        protected $modelName = 'App\Models\Photos';
-        protected $format    = 'json';
-
-        public function index()
-        {
-            return $this->respond($this->model->findAll());
-        }
-
-        // ...
-    }
-
-The routing for this would be::
-
-    $routes->resource('photos');
+.. literalinclude:: restful/008.php
+   :lines: 2-
 
 Presenter Routes
 ============================================================
@@ -134,30 +104,18 @@ for your resource, or process forms submitted from those views.
 
 It is not needed, since the presentation can be handled with
 a conventional controller - it is a convenience.
-Its usage is similar to the resource routing::
+Its usage is similar to the resource routing:
 
-    $routes->presenter('photos');
-
-    // Equivalent to the following:
-    $routes->get('photos/new',                'Photos::new');
-    $routes->post('photos/create',            'Photos::create');
-    $routes->post('photos',                   'Photos::create');   // alias
-    $routes->get('photos',                    'Photos::index');
-    $routes->get('photos/show/(:segment)',    'Photos::show/$1');
-    $routes->get('photos/(:segment)',         'Photos::show/$1');  // alias
-    $routes->get('photos/edit/(:segment)',    'Photos::edit/$1');
-    $routes->post('photos/update/(:segment)', 'Photos::update/$1');
-    $routes->get('photos/remove/(:segment)',  'Photos::remove/$1');
-    $routes->post('photos/delete/(:segment)', 'Photos::delete/$1');
+.. literalinclude:: restful/009.php
+   :lines: 2-
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
 You would not have routes for `photos` for both a resource and a presenter
-controller. You need to distinguish them, for instance::
+controller. You need to distinguish them, for instance:
 
-    $routes->resource('api/photo');
-    $routes->presenter('admin/photos');
-
+.. literalinclude:: restful/010.php
+   :lines: 2-
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated.
 
@@ -165,35 +123,33 @@ Change the Controller Used
 --------------------------
 
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
-the controller that should be used::
+the controller that should be used:
 
-    $routes->presenter('photos', ['controller' =>'App\Gallery']);
-
-    // Would create routes like:
-    $routes->get('photos', 'App\Gallery::index');
+.. literalinclude:: restful/011.php
+   :lines: 2-
 
 Change the Placeholder Used
 ---------------------------
 
 By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
-in the ``placeholder`` option with the new string to use::
+in the ``placeholder`` option with the new string to use:
 
-    $routes->presenter('photos', ['placeholder' => '(:num)']);
-
-    // Generates routes like:
-    $routes->get('photos/(:num)', 'Photos::show/$1');
+.. literalinclude:: restful/012.php
+   :lines: 2-
 
 Limit the Routes Made
 ---------------------
 
 You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
-be created. Only routes that match one of these methods will be created. The rest will be ignored::
+be created. Only routes that match one of these methods will be created. The rest will be ignored:
 
-    $routes->presenter('photos', ['only' => ['index', 'show']]);
+.. literalinclude:: restful/013.php
+   :lines: 2-
 
-Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``::
+Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``:
 
-    $routes->presenter('photos', ['except' => 'new,edit']);
+.. literalinclude:: restful/014.php
+   :lines: 2-
 
 Valid methods are: ``index``, ``show``, ``new``, ``create``, ``edit``, ``update``, ``remove`` and ``delete``.
 
@@ -205,30 +161,14 @@ of your resource, and processing data from forms in those views,
 with methods that align to the resource routes above.
 
 Extend it, over-riding the ``modelName`` property, and then
-implement those methods that you want handled.::
+implement those methods that you want handled.:
 
-    <?php
+.. literalinclude:: restful/015.php
 
-    namespace App\Controllers;
+The routing for this would be:
 
-    use CodeIgniter\RESTful\ResourcePresenter;
-
-    class Photos extends ResourcePresenter
-    {
-
-        protected $modelName = 'App\Models\Photos';
-
-        public function index()
-        {
-            return view('templates/list', $this->model->findAll());
-        }
-
-        // ...
-    }
-
-The routing for this would be::
-
-    $routes->presenter('photos');
+.. literalinclude:: restful/016.php
+   :lines: 2-
 
 Presenter/Controller Comparison
 =============================================================

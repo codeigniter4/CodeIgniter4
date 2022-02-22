@@ -40,19 +40,17 @@ A more comprehensive package like `Halite <https://github.com/paragonie/halite>`
 Using the Encryption Library
 ****************************
 
-Like all services in CodeIgniter, it can be loaded via ``Config\Services``::
+Like all services in CodeIgniter, it can be loaded via ``Config\Services``:
 
-    $encrypter = \Config\Services::encrypter();
+.. literalinclude:: encryption/001.php
+   :lines: 2-
 
 Assuming you have set your starting key (see :ref:`configuration`),
 encrypting and decrypting data is simple - pass the appropriate string to ``encrypt()``
-and/or ``decrypt()`` methods::
+and/or ``decrypt()`` methods:
 
-    $plainText = 'This is a plain-text message!';
-    $ciphertext = $encrypter->encrypt($plainText);
-
-    // Outputs: This is a plain-text message!
-    echo $encrypter->decrypt($ciphertext);
+.. literalinclude:: encryption/002.php
+   :lines: 2-
 
 And that's it! The Encryption library will do everything necessary
 for the whole process to be cryptographically secure out-of-the-box.
@@ -77,13 +75,9 @@ digest     Message digest algorithm (``SHA512``)
 You can replace the config file's settings by passing a configuration
 object of your own to the ``Services`` call. The ``$config`` variable must be
 an instance of the ``Config\Encryption`` class.
-::
 
-    $config         = new \Config\Encryption();
-    $config->key    = 'aBigsecret_ofAtleast32Characters';
-    $config->driver = 'OpenSSL';
-
-    $encrypter = \Config\Services::encrypter($config);
+.. literalinclude:: encryption/003.php
+   :lines: 2-
 
 Default Behavior
 ================
@@ -100,22 +94,18 @@ For AES-256, that's 256 bits or 32 bytes (characters) long.
 The key should be as random as possible, and it **must not** be a regular text string,
 nor the output of a hashing function, etc. To create a proper key,
 you can use the Encryption library's ``createKey()`` method.
-::
 
-    // $key will be assigned a 32-byte (256-bit) random key
-    $key = \CodeIgniter\Encryption\Encryption::createKey();
-
-    // for the SodiumHandler, you can use either:
-    $key = sodium_crypto_secretbox_keygen();
-    $key = \CodeIgniter\Encryption\Encryption::createKey(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+.. literalinclude:: encryption/004.php
+   :lines: 2-
 
 The key can be stored in **app/Config/Encryption.php**, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
 
 To save your key to your **app/Config/Encryption.php**, open the file
-and set::
+and set:
 
-    public $key = 'YOUR KEY';
+.. literalinclude:: encryption/005.php
+   :lines: 2-
 
 Encoding Keys or Results
 ------------------------
@@ -123,20 +113,16 @@ Encoding Keys or Results
 You'll notice that the ``createKey()`` method outputs binary data, which
 is hard to deal with (i.e., a copy-paste may damage it), so you may use
 ``bin2hex()``, or ``base64_encode`` to work with the key in
-a more friendly manner. For example::
+a more friendly manner. For example:
 
-    // Get a hex-encoded representation of the key:
-    $encoded = bin2hex(\CodeIgniter\Encryption\Encryption::createKey(32));
-
-    // Put the same value with hex2bin(),
-    // so that it is still passed as binary to the library:
-    $key = hex2bin('your-hex-encoded-key');
+.. literalinclude:: encryption/006.php
+   :lines: 2-
 
 You might find the same technique useful for the results
-of encryption::
+of encryption:
 
-    // Encrypt some text & make the results text
-    $encoded = base64_encode($encrypter->encrypt($plaintext));
+.. literalinclude:: encryption/007.php
+   :lines: 2-
 
 Using Prefixes in Storing Keys
 ------------------------------
@@ -146,13 +132,9 @@ encryption keys: ``hex2bin:`` and ``base64:``. When these prefixes
 immediately precede the value of your key, ``Encryption`` will
 intelligently parse the key and still pass a binary string to
 the library.
-::
 
-    // In Encryption, you may use
-    public $key = 'hex2bin:<your-hex-encoded-key>'
-
-    // or
-    public $key = 'base64:<your-base64-encoded-key>'
+.. literalinclude:: encryption/008.php
+   :lines: 2-
 
 Similarly, you can use these prefixes in your **.env** file, too!
 ::
@@ -231,13 +213,9 @@ Using the Encryption Service Directly
 
 Instead of (or in addition to) using ``Services`` as described in :ref:`usage`,
 you can create an "Encrypter" directly, or change the settings of an existing instance.
-::
 
-    // create an Encryption instance
-    $encryption = new \CodeIgniter\Encryption\Encryption();
-
-    // reconfigure an instance with different settings
-    $encrypter = $encryption->initialize($config);
+.. literalinclude:: encryption/009.php
+   :lines: 2-
 
 Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
 
@@ -265,9 +243,10 @@ Class Reference
 
         Initializes (configures) the library to use different settings.
 
-        Example::
+        Example:
 
-            $encrypter = $encryption->initialize(['cipher' => '3des']);
+        .. literalinclude:: encryption/010.php
+           :lines: 2-
 
         Please refer to the :ref:`configuration` section for detailed info.
 
@@ -290,13 +269,10 @@ Class Reference
         If you are using the SodiumHandler and want to pass a different ``blockSize``
         on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
-        Examples::
+        Examples:
 
-            $ciphertext = $encrypter->encrypt('My secret message');
-            $ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key']);
-            $ciphertext = $encrypter->encrypt('My secret message', ['key' => 'New secret key', 'blockSize' => 32]);
-            $ciphertext = $encrypter->encrypt('My secret message', 'New secret key');
-            $ciphertext = $encrypter->encrypt('My secret message', ['blockSize' => 32]);
+        .. literalinclude:: encryption/011.php
+           :lines: 2-
 
     .. php:method:: decrypt($data[, $params = null])
 
@@ -315,10 +291,7 @@ Class Reference
         If you are using the SodiumHandler and want to pass a different ``blockSize``
         on runtime, pass the ``blockSize`` key in the ``$params`` array.
 
-        Examples::
+        Examples:
 
-            echo $encrypter->decrypt($ciphertext);
-            echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key']);
-            echo $encrypter->decrypt($ciphertext, ['key' => 'New secret key', 'blockSize' => 32]);
-            echo $encrypter->decrypt($ciphertext, 'New secret key');
-            echo $encrypter->decrypt($ciphertext, ['blockSize' => 32]);
+        .. literalinclude:: encryption/012.php
+           :lines: 2-

@@ -32,6 +32,7 @@ $finder = Finder::create()
         __DIR__ . '/.no-header.php-cs-fixer.dist.php',
         __DIR__ . '/rector.php',
         __DIR__ . '/spark',
+        __DIR__ . '/user_guide_src/renumerate.php',
     ]);
 
 $overrides = [];

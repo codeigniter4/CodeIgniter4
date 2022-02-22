@@ -34,7 +34,6 @@ If you relied on any of these methods being public (highly unlikely) adjust your
 * ``CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()``
 * ``CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()``
 
-
 Project Files
 =============
 

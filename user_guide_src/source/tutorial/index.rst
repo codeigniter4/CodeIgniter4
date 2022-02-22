@@ -84,7 +84,6 @@ command line from the root of your project::
 
     > php spark serve
 
-
 The Welcome Page
 ****************
 
@@ -126,7 +125,6 @@ There are a couple of things to note here:
    the arguments that were passed into that function call.
 
 Everything else should be clear when you see it.
-
 
 Now that we know how to get started and how to debug a little, let's get started building this
 small news application.

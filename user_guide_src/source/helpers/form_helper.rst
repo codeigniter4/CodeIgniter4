@@ -12,9 +12,10 @@ forms.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('form');
+.. literalinclude:: form_helper/001.php
+   :lines: 2-
 
 Escaping field values
 =====================
@@ -24,11 +25,10 @@ elements. In order to do that safely, you'll need to use
 :doc:`common function <../general/common_functions>`
 :func:`esc()`.
 
-Consider the following example::
+Consider the following example:
 
-    $string = 'Here is a string containing "quoted" text.';
-
-    <input type="text" name="myfield" value="<?= $string ?>" />
+.. literalinclude:: form_helper/002.php
+   :lines: 2-
 
 Since the above string contains a set of quotes, it will cause the form
 to break. The :php:func:`esc()` function converts HTML special
@@ -63,18 +63,20 @@ The following functions are available:
     The main benefit of using this tag rather than hard coding your own HTML is that
     it permits your site to be more portable in the event your URLs ever change.
 
-    Here's a simple example::
+    Here's a simple example:
 
-        echo form_open('email/send');
+    .. literalinclude:: form_helper/003.php
+       :lines: 2-
 
     The above example would create a form that points to your site URL plus the
     "email/send" URI segments, like this::
 
         <form action="http://example.com/index.php/email/send" method="post" accept-charset="utf-8">
 
-    You can also add {locale} like the following::
+    You can also add {locale} like the following:
 
-        echo form_open('{locale}/email/send');
+    .. literalinclude:: form_helper/004.php
+       :lines: 2-
 
     The above example would create a form that points to your site URL plus the current request locale with
     "email/send" URI segments, like this::
@@ -84,22 +86,24 @@ The following functions are available:
     **Adding Attributes**
 
         Attributes can be added by passing an associative array to the second
-        parameter, like this::
+        parameter, like this:
 
-            $attributes = ['class' => 'email', 'id' => 'myform'];
-            echo form_open('email/send', $attributes);
+        .. literalinclude:: form_helper/005.php
+           :lines: 2-
 
-        Alternatively, you can specify the second parameter as a string::
+        Alternatively, you can specify the second parameter as a string:
 
-            echo form_open('email/send', 'class="email" id="myform"');
+        .. literalinclude:: form_helper/006.php
+           :lines: 2-
 
         The above examples would create a form similar to this::
 
             <form action="http://example.com/index.php/email/send" class="email" id="myform" method="post" accept-charset="utf-8">
 
-        If CSRF filter is turned on `form_open()` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array::
+        If CSRF filter is turned on `form_open()` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
 
-            echo form_open('/u/sign-up', ['csrf_id' => 'my-id']);
+        .. literalinclude:: form_helper/007.php
+           :lines: 2-
 
         will return::
 
@@ -111,10 +115,10 @@ The following functions are available:
     **Adding Hidden Input Fields**
 
         Hidden fields can be added by passing an associative array to the
-        third parameter, like this::
+        third parameter, like this:
 
-            $hidden = ['username' => 'Joe', 'member_id' => '234'];
-            echo form_open('email/send', '', $hidden);
+        .. literalinclude:: form_helper/008.php
+           :lines: 2-
 
         You can skip the second parameter by passing any false value to it.
 
@@ -144,64 +148,25 @@ The following functions are available:
     :rtype:    string
 
     Lets you generate hidden input fields. You can either submit a
-    name/value string to create one field::
+    name/value string to create one field:
 
-        form_hidden('username', 'johndoe');
-        // Would produce: <input type="hidden" name="username" value="johndoe" />
+    .. literalinclude:: form_helper/009.php
+       :lines: 2-
 
-    ... or you can submit an associative array to create multiple fields::
+    ... or you can submit an associative array to create multiple fields:
 
-        $data = [
-            'name'  => 'John Doe',
-            'email' => 'john@example.com',
-            'url'   => 'http://example.com',
-        ];
+    .. literalinclude:: form_helper/010.php
+       :lines: 2-
 
-        echo form_hidden($data);
+    You can also pass an associative array to the value field:
 
-        /*
-            Would produce:
+    .. literalinclude:: form_helper/011.php
+       :lines: 2-
 
-            <input type="hidden" name="name" value="John Doe" />
-            <input type="hidden" name="email" value="john@example.com" />
-            <input type="hidden" name="url" value="http://example.com" />
-        */
+    If you want to create hidden input fields with extra attributes:
 
-    You can also pass an associative array to the value field::
-
-        $data = [
-            'name'  => 'John Doe',
-            'email' => 'john@example.com',
-            'url'   => 'http://example.com',
-        ];
-
-        echo form_hidden('my_array', $data);
-
-        /*
-            Would produce:
-
-            <input type="hidden" name="my_array[name]" value="John Doe" />
-            <input type="hidden" name="my_array[email]" value="john@example.com" />
-            <input type="hidden" name="my_array[url]" value="http://example.com" />
-        */
-
-    If you want to create hidden input fields with extra attributes::
-
-        $data = [
-            'type'  => 'hidden',
-            'name'  => 'email',
-            'id'    => 'hiddenemail',
-            'value' => 'john@example.com',
-            'class' => 'hiddenemail',
-        ];
-
-        echo form_input($data);
-
-        /*
-            Would produce:
-
-            <input type="hidden" name="email" value="john@example.com" id="hiddenemail" class="hiddenemail" />
-        */
+    .. literalinclude:: form_helper/012.php
+       :lines: 2-
 
 .. php:function:: form_input([$data = ''[, $value = ''[, $extra = ''[, $type = 'text']]]])
 
@@ -213,50 +178,32 @@ The following functions are available:
     :rtype:    string
 
     Lets you generate a standard text input field. You can minimally pass
-    the field name and value in the first and second parameter::
+    the field name and value in the first and second parameter:
 
-        echo form_input('username', 'johndoe');
+    .. literalinclude:: form_helper/013.php
+       :lines: 2-
 
     Or you can pass an associative array containing any data you wish your
-    form to contain::
+    form to contain:
 
-        $data = [
-            'name'      => 'username',
-            'id'        => 'username',
-            'value'     => 'johndoe',
-            'maxlength' => '100',
-            'size'      => '50',
-            'style'     => 'width:50%',
-        ];
-
-        echo form_input($data);
-
-        /*
-            Would produce:
-
-            <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />
-        */
+    .. literalinclude:: form_helper/014.php
+       :lines: 2-
 
     If you would like your form to contain some additional data, like
-    JavaScript, you can pass it as a string in the third parameter::
+    JavaScript, you can pass it as a string in the third parameter:
 
-        $js = 'onClick="some_function ()"';
-        echo form_input('username', 'johndoe', $js);
+    .. literalinclude:: form_helper/015.php
+       :lines: 2-
 
-    Or you can pass it as an array::
+    Or you can pass it as an array:
 
-        $js = ['onClick' => 'some_function ();'];
-        echo form_input('username', 'johndoe', $js);
+    .. literalinclude:: form_helper/016.php
+       :lines: 2-
 
-    To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter::
+    To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter:
 
-        echo form_input('email', 'joe@example.com', ['placeholder' => 'Email Address...'], 'email');
-
-        /*
-             Would produce:
-
-            <input type="email" name="email" value="joe@example.com" placeholder="Email Address..." />
-        */
+    .. literalinclude:: form_helper/017.php
+       :lines: 2-
 
 .. php:function:: form_password([$data = ''[, $value = ''[, $extra = '']]])
 
@@ -311,56 +258,22 @@ The following functions are available:
     items through the third parameter, and the helper will create a
     multiple select for you.
 
-    Example::
+    Example:
 
-        $options = [
-            'small'  => 'Small Shirt',
-            'med'    => 'Medium Shirt',
-            'large'  => 'Large Shirt',
-            'xlarge' => 'Extra Large Shirt',
-        ];
-
-        $shirts_on_sale = ['small', 'large'];
-        echo form_dropdown('shirts', $options, 'large');
-
-        /*
-            Would produce:
-
-            <select name="shirts">
-                <option value="small">Small Shirt</option>
-                <option value="med">Medium Shirt</option>
-                <option value="large" selected="selected">Large Shirt</option>
-                <option value="xlarge">Extra Large Shirt</option>
-            </select>
-        */
-
-        echo form_dropdown('shirts', $options, $shirts_on_sale);
-
-        /*
-            Would produce:
-
-            <select name="shirts" multiple="multiple">
-                <option value="small" selected="selected">Small Shirt</option>
-                <option value="med">Medium Shirt</option>
-                <option value="large" selected="selected">Large Shirt</option>
-                <option value="xlarge">Extra Large Shirt</option>
-            </select>
-        */
+    .. literalinclude:: form_helper/018.php
+       :lines: 2-
 
     If you would like the opening <select> to contain additional data, like
     an id attribute or JavaScript, you can pass it as a string in the fourth
-    parameter::
+    parameter:
 
-        $js = 'id="shirts" onChange="some_function();"';
-        echo form_dropdown('shirts', $options, 'large', $js);
+    .. literalinclude:: form_helper/019.php
+       :lines: 2-
 
-    Or you can pass it as an array::
+    Or you can pass it as an array:
 
-        $js = [
-            'id'       => 'shirts',
-            'onChange' => 'some_function();'
-        ];
-        echo form_dropdown('shirts', $options, 'large', $js);
+    .. literalinclude:: form_helper/020.php
+       :lines: 2-
 
     If the array passed as ``$options`` is a multidimensional array, then
     ``form_dropdown()`` will produce an <optgroup> with the array key as the
@@ -393,41 +306,16 @@ The following functions are available:
 
     Lets you generate fieldset/legend fields.
 
-    Example::
+    Example:
 
-        echo form_fieldset('Address Information');
-        echo "<p>fieldset content here</p>\n";
-        echo form_fieldset_close();
-
-        /*
-            Produces:
-
-            <fieldset>
-                <legend>Address Information</legend>
-                <p>form content here</p>
-            </fieldset>
-        */
+    .. literalinclude:: form_helper/021.php
+       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
-    second parameter if you prefer to set additional attributes::
+    second parameter if you prefer to set additional attributes:
 
-        $attributes = [
-            'id'    => 'address_info',
-            'class' => 'address_info'
-        ];
-
-        echo form_fieldset('Address Information', $attributes);
-        echo "<p>fieldset content here</p>\n";
-        echo form_fieldset_close();
-
-        /*
-            Produces:
-
-            <fieldset id="address_info" class="address_info">
-                <legend>Address Information</legend>
-                <p>form content here</p>
-            </fieldset>
-        */
+    .. literalinclude:: form_helper/022.php
+       :lines: 2-
 
 .. php:function:: form_fieldset_close([$extra = ''])
 
@@ -439,11 +327,8 @@ The following functions are available:
     function is it permits you to pass data to it which will be added below
     the tag. For example
 
-    ::
-
-        $string = '</div></div>';
-        echo form_fieldset_close($string);
-        // Would produce: </fieldset></div></div>
+    .. literalinclude:: form_helper/023.php
+       :lines: 2-
 
 .. php:function:: form_checkbox([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
@@ -454,39 +339,31 @@ The following functions are available:
     :returns:    An HTML checkbox input tag
     :rtype:    string
 
-    Lets you generate a checkbox field. Simple example::
+    Lets you generate a checkbox field. Simple example:
 
-        echo form_checkbox('newsletter', 'accept', true);
-        // Would produce:  <input type="checkbox" name="newsletter" value="accept" checked="checked" />
+    .. literalinclude:: form_helper/024.php
+       :lines: 2-
 
     The third parameter contains a boolean true/false to determine whether
     the box should be checked or not.
 
     Similar to the other form functions in this helper, you can also pass an
-    array of attributes to the function::
+    array of attributes to the function:
 
-        $data = [
-            'name'    => 'newsletter',
-            'id'      => 'newsletter',
-            'value'   => 'accept',
-            'checked' => true,
-            'style'   => 'margin:10px'
-        ];
-
-        echo form_checkbox($data);
-        // Would produce: <input type="checkbox" name="newsletter" id="newsletter" value="accept" checked="checked" style="margin:10px" />
+    .. literalinclude:: form_helper/025.php
+       :lines: 2-
 
     Also as with other functions, if you would like the tag to contain
     additional data like JavaScript, you can pass it as a string in the
-    fourth parameter::
+    fourth parameter:
 
-        $js = 'onClick="some_function()"';
-        echo form_checkbox('newsletter', 'accept', true, $js);
+    .. literalinclude:: form_helper/026.php
+       :lines: 2-
 
-    Or you can pass it as an array::
+    Or you can pass it as an array:
 
-        $js = ['onClick' => 'some_function();'];
-        echo form_checkbox('newsletter', 'accept', true, $js);
+    .. literalinclude:: form_helper/027.php
+       :lines: 2-
 
 .. php:function:: form_radio([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
@@ -508,23 +385,18 @@ The following functions are available:
     :returns:    An HTML field label tag
     :rtype:    string
 
-    Lets you generate a <label>. Simple example::
+    Lets you generate a <label>. Simple example:
 
-        echo form_label('What is your Name', 'username');
-        // Would produce:  <label for="username">What is your Name</label>
+    .. literalinclude:: form_helper/028.php
+       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
     third parameter if you prefer to set additional attributes.
 
-    Example::
+    Example:
 
-        $attributes = [
-            'class' => 'mycustomclass',
-            'style' => 'color: #000;'
-        ];
-
-        echo form_label('What is your Name', 'username', $attributes);
-        // Would produce:  <label for="username" class="mycustomclass" style="color: #000;">What is your Name</label>
+    .. literalinclude:: form_helper/029.php
+       :lines: 2-
 
 .. php:function:: form_submit([$data = ''[, $value = ''[, $extra = '']]])
 
@@ -534,10 +406,10 @@ The following functions are available:
     :returns:    An HTML input submit tag
     :rtype:    string
 
-    Lets you generate a standard submit button. Simple example::
+    Lets you generate a standard submit button. Simple example:
 
-        echo form_submit('mysubmit', 'Submit Post!');
-        // Would produce:  <input type="submit" name="mysubmit" value="Submit Post!" />
+    .. literalinclude:: form_helper/030.php
+       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
     first parameter if you prefer to set your own attributes. The third
@@ -563,30 +435,22 @@ The following functions are available:
     :rtype:    string
 
     Lets you generate a standard button element. You can minimally pass the
-    button name and content in the first and second parameter::
+    button name and content in the first and second parameter:
 
-        echo form_button('name','content');
-        // Would produce: <button name="name" type="button">Content</button>
+    .. literalinclude:: form_helper/031.php
+       :lines: 2-
 
     Or you can pass an associative array containing any data you wish your
-    form to contain::
+    form to contain:
 
-        $data = [
-            'name'    => 'button',
-            'id'      => 'button',
-            'value'   => 'true',
-            'type'    => 'reset',
-            'content' => 'Reset',
-        ];
-
-        echo form_button($data);
-        // Would produce: <button name="button" id="button" value="true" type="reset">Reset</button>
+    .. literalinclude:: form_helper/032.php
+       :lines: 2-
 
     If you would like your form to contain some additional data, like
-    JavaScript, you can pass it as a string in the third parameter::
+    JavaScript, you can pass it as a string in the third parameter:
 
-        $js = 'onClick="some_function()"';
-        echo form_button('mybutton', 'Click Me', $js);
+    .. literalinclude:: form_helper/033.php
+       :lines: 2-
 
 .. php:function:: form_close([$extra = ''])
 
@@ -596,11 +460,10 @@ The following functions are available:
 
     Produces a closing </form> tag. The only advantage to using this
     function is it permits you to pass data to it which will be added below
-    the tag. For example::
+    the tag. For example:
 
-        $string = '</div></div>';
-        echo form_close($string);
-        // Would produce:  </form> </div></div>
+    .. literalinclude:: form_helper/034.php
+       :lines: 2-
 
 .. php:function:: set_value($field[, $default = ''[, $html_escape = true]])
 

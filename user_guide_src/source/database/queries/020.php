@@ -1,0 +1,3 @@
+<?php
+
+$pQuery->close();

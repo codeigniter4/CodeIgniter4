@@ -12,9 +12,10 @@ cookies.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('cookie');
+.. literalinclude:: cookie_helper/001.php
+   :lines: 2-
 
 Available Functions
 ===================
@@ -65,17 +66,17 @@ The following functions are available:
 
     Lets you delete a cookie. Unless you've set a custom path or other
     values, only the name of the cookie is needed.
-    ::
 
-        delete_cookie('name');
+    .. literalinclude:: cookie_helper/002.php
+       :lines: 2-
 
     This function is otherwise identical to ``set_cookie()``, except that it
     does not have the value and expiration parameters. You can submit an
     array of values in the first parameter or you can set discrete
     parameters.
-    ::
 
-        delete_cookie($name, $domain, $path, $prefix);
+    .. literalinclude:: cookie_helper/003.php
+       :lines: 2-
 
 .. php:function:: has_cookie(string $name[, ?string $value = null[, string $prefix = '']])
 

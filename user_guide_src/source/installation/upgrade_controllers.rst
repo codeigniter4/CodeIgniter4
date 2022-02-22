@@ -17,7 +17,7 @@ What has been changed
 - Since namespaces have been added to CodeIgniter 4, the controllers must be changed to support namespaces.
 - Controllers don’t use constructors any more (to invoke CI “magic”) unless those are part of base controllers you make.
 - CI provides Request and Response objects for you to work with - more powerful than the CI3-way.
-- If you want a base controller (``MY_Controller`` in CI3), make it where you like, 
+- If you want a base controller (``MY_Controller`` in CI3), make it where you like,
   e.g., BaseController extends Controller, and then have your controllers extend it
 
 Upgrade Guide
@@ -29,7 +29,7 @@ Upgrade Guide
 
 | If you use sub-directories in your controller structure, you have to change the namespace according to that.
 | For example, you have a version 3 controller located in **application/controllers/users/auth/Register.php**,
-    the namespace has to be ``namespace App\Controllers\Users\Auth;`` and the controller path in the version 4 
+    the namespace has to be ``namespace App\Controllers\Users\Auth;`` and the controller path in the version 4
     should look like this: **app/Controllers/Users/Auth/Register.php**. Make sure to have the first letters of
     the sub-directories as capitalized.
 | After that you have to insert a ``use`` statement below the namespace definition in order to extend the ``BaseController``:
@@ -41,31 +41,13 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/controllers**::
+Path: **application/controllers**:
 
-    <?php
-
-    class Helloworld extends CI_Controller
-    {
-        public function index($name)
-        {
-            echo "Hello $name! ";
-        }
-    }
+.. literalinclude:: upgrade_controllers/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Controllers**::
+Path: **app/Controllers**:
 
-    <?php
-
-    namespace App\Controllers;
-
-    class Helloworld extends BaseController
-    {
-        public function index($name)
-        {
-            echo 'Hello ' . esc($name) . '!';
-        }
-    }
+.. literalinclude:: upgrade_controllers/002.php

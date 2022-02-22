@@ -33,25 +33,7 @@ Let's make our first controller
 Create a file at **app/Controllers/Pages.php** with the following
 code.
 
-::
-
-    <?php
-
-    namespace App\Controllers;
-
-    class Pages extends BaseController
-    {
-        public function index()
-        {
-            return view('welcome_message');
-        }
-
-        public function view($page = 'home')
-        {
-            // ...
-        }
-    }
-
+.. literalinclude:: static_pages/001.php
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
@@ -78,9 +60,7 @@ templates. We will be creating two "views" (page templates) that act as
 our page footer and header.
 
 Create the header at **app/Views/templates/header.php** and add
-the following code:
-
-::
+the following code::
 
     <!doctype html>
     <html>
@@ -95,9 +75,7 @@ The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
 output the ``$title`` variable, which we'll define later in the controller.
 Now, create a footer at **app/Views/templates/footer.php** that
-includes the following code:
-
-::
+includes the following code::
 
         <em>&copy; 2021</em>
     </body>
@@ -123,21 +101,8 @@ In order to load those pages, you'll have to check whether the requested
 page actually exists. This will be the body of the ``view()`` method
 in the ``Pages`` controller created above:
 
-::
-
-    public function view($page = 'home')
-    {
-        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
-            // Whoops, we don't have a page for that!
-            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-        }
-
-        $data['title'] = ucfirst($page); // Capitalize the first letter
-
-        echo view('templates/header', $data);
-        echo view('pages/' . $page, $data);
-        echo view('templates/footer', $data);
-    }
+.. literalinclude:: static_pages/002.php
+   :lines: 2-
 
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and displayed to the user. If the requested page doesn't exist, a "404
@@ -212,7 +177,6 @@ controller you made above produces...
     |                                 | `app/Views/pages/shop.php`                                      |
     +---------------------------------+-----------------------------------------------------------------+
 
-
 Routing
 -------------------------------------------------------
 
@@ -231,18 +195,16 @@ section of the configuration file.
 
 The only uncommented line there to start with should be:
 
-::
-
-    $routes->get('/', 'Home::index');
+.. literalinclude:: static_pages/003.php
+   :lines: 2-
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index()`` method inside the ``Home`` controller.
 
 Add the following line, **after** the route directive for '/'.
 
-::
-
-    $routes->get('(:any)', 'Pages::view/$1');
+.. literalinclude:: static_pages/004.php
+   :lines: 2-
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression

@@ -11,9 +11,10 @@ The Text Helper file contains functions that assist in working with Text.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('text');
+.. literalinclude:: text_helper/001.php
+   :lines: 2-
 
 Available Functions
 ===================
@@ -42,9 +43,10 @@ The following functions are available:
     - **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
     - **crypto**: A random string based on ``random_bytes()``.
 
-    Usage example::
+    Usage example:
 
-        echo random_string('alnum', 16);
+    .. literalinclude:: text_helper/002.php
+       :lines: 2-
 
 .. php:function:: increment_string($str[, $separator = '_'[, $first = 1]])
 
@@ -58,11 +60,10 @@ The following functions are available:
     number. Useful for creating "copies" or a file or duplicating database
     content which has unique titles or slugs.
 
-    Usage example::
+    Usage example:
 
-        echo increment_string('file', '_'); // "file_1"
-        echo increment_string('file', '-', 2); // "file-2"
-        echo increment_string('file_4'); // "file_5"
+    .. literalinclude:: text_helper/003.php
+       :lines: 2-
 
 .. php:function:: alternator($args)
 
@@ -71,20 +72,16 @@ The following functions are available:
     :rtype:    mixed
 
     Allows two or more items to be alternated between, when cycling through
-    a loop. Example::
+    a loop. Example:
 
-        for ($i = 0; $i < 10; $i++) {     
-            echo alternator('string one', 'string two');
-        }
+    .. literalinclude:: text_helper/004.php
+       :lines: 2-
 
     You can add as many parameters as you want, and with each iteration of
     your loop the next item will be returned.
 
-    ::
-
-        for ($i = 0; $i < 10; $i++) {     
-            echo alternator('one', 'two', 'three', 'four', 'five');
-        }
+    .. literalinclude:: text_helper/005.php
+       :lines: 2-
 
     .. note:: To use multiple separate calls to this function simply call the
         function with no arguments to re-initialize.
@@ -98,10 +95,10 @@ The following functions are available:
     Converts double slashes in a string to a single slash, except those
     found in URL protocol prefixes (e.g., http&#58;//).
 
-    Example::
+    Example:
 
-        $string = "http://example.com//index.php";
-        echo reduce_double_slashes($string); // results in "http://example.com/index.php"
+    .. literalinclude:: text_helper/006.php
+       :lines: 2-
 
 .. php:function:: strip_slashes($data)
 
@@ -111,21 +108,15 @@ The following functions are available:
 
     Removes any slashes from an array of strings.
 
-    Example::
+    Example:
 
-        $str = [
-            'question' => "Is your name O\'reilly?",
-            'answer'   => "No, my name is O\'connor."
-        ];
+    .. literalinclude:: text_helper/007.php
+       :lines: 2-
 
-        $str = strip_slashes($str);
+    The above will return the following array:
 
-    The above will return the following array::
-
-        [
-            'question' => "Is your name O'reilly?",
-            'answer'   => "No, my name is O'connor."
-        ];
+    .. literalinclude:: text_helper/008.php
+       :lines: 2-
 
     .. note:: For historical reasons, this function will also accept
         and handle string inputs. This however makes it just an
@@ -140,16 +131,16 @@ The following functions are available:
     :rtype:    string
 
     Reduces multiple instances of a particular character occurring directly
-    after each other. Example::
+    after each other. Example:
 
-        $string = "Fred, Bill,, Joe, Jimmy";
-        $string = reduce_multiples($string, ","); // results in "Fred, Bill, Joe, Jimmy"
+    .. literalinclude:: text_helper/009.php
+       :lines: 2-
 
     If the third parameter is set to true it will remove occurrences of the
-    character at the beginning and the end of the string. Example::
+    character at the beginning and the end of the string. Example:
 
-        $string = ",Fred, Bill,, Joe, Jimmy,";
-        $string = reduce_multiples($string, ", ", true); // results in "Fred, Bill, Joe, Jimmy"
+    .. literalinclude:: text_helper/010.php
+       :lines: 2-
 
 .. php:function:: quotes_to_entities($str)
 
@@ -158,10 +149,10 @@ The following functions are available:
     :rtype:    string
 
     Converts single and double quotes in a string to the corresponding HTML
-    entities. Example::
+    entities. Example:
 
-        $string = "Joe's \"dinner\"";
-        $string = quotes_to_entities($string); //results in "Joe&#39;s &quot;dinner&quot;"
+    .. literalinclude:: text_helper/011.php
+       :lines: 2-
 
 .. php:function:: strip_quotes($str)
 
@@ -169,10 +160,10 @@ The following functions are available:
     :returns:    String with quotes stripped
     :rtype:    string
 
-    Removes single and double quotes from a string. Example::
+    Removes single and double quotes from a string. Example:
 
-        $string = "Joe's \"dinner\"";
-        $string = strip_quotes($string); //results in "Joes dinner"
+    .. literalinclude:: text_helper/012.php
+       :lines: 2-
 
 .. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
 
@@ -182,11 +173,10 @@ The following functions are available:
     :returns:    Word-limited string
     :rtype:    string
 
-    Truncates a string to the number of *words* specified. Example::
+    Truncates a string to the number of *words* specified. Example:
 
-        $string = "Here is a nice text string consisting of eleven words.";
-        $string = word_limiter($string, 4);
-        // Returns:  Here is a nice
+    .. literalinclude:: text_helper/013.php
+       :lines: 2-
 
     The third parameter is an optional suffix added to the string. By
     default it adds an ellipsis.
@@ -203,11 +193,10 @@ The following functions are available:
     maintains the integrity of words so the character count may be slightly
     more or less than what you specify.
 
-    Example::
+    Example:
 
-        $string = "Here is a nice text string consisting of eleven words.";
-        $string = character_limiter($string, 20);
-        // Returns:  Here is a nice text string
+    .. literalinclude:: text_helper/014.php
+       :lines: 2-
 
     The third parameter is an optional suffix added to the string, if
     undeclared this helper uses an ellipsis.
@@ -229,9 +218,10 @@ The following functions are available:
     but for the most part, it should correctly identify characters outside
     the normal range (like accented characters).
 
-    Example::
+    Example:
 
-        $string = ascii_to_entities($string);
+    .. literalinclude:: text_helper/015.php
+       :lines: 2-
 
 .. php:function:: entities_to_ascii($str[, $all = true])
 
@@ -253,9 +243,10 @@ The following functions are available:
     when non-English characters need to be used where only standard ASCII
     characters are safely used, for instance, in URLs.
 
-    Example::
+    Example:
 
-        $string = convert_accented_characters($string);
+    .. literalinclude:: text_helper/016.php
+       :lines: 2-
 
     .. note:: This function uses a companion config file
         **app/Config/ForeignCharacters.php** to define the to and
@@ -275,10 +266,10 @@ The following functions are available:
     a replacement value for the words. If not specified they are replaced
     with pound signs: ####.
 
-    Example::
+    Example:
 
-        $disallowed = ['darn', 'shucks', 'golly', 'phooey'];
-        $string     = word_censor($string, $disallowed, 'Beep!');
+    .. literalinclude:: text_helper/017.php
+       :lines: 2-
 
 .. php:function:: highlight_code($str)
 
@@ -286,9 +277,10 @@ The following functions are available:
     :returns:    String with code highlighted via HTML
     :rtype:    string
 
-    Colorizes a string of code (PHP, HTML, etc.). Example::
+    Colorizes a string of code (PHP, HTML, etc.). Example:
 
-        $string = highlight_code($string);
+    .. literalinclude:: text_helper/018.php
+       :lines: 2-
 
     The function uses PHP's ``highlight_string()`` function, so the
     colors used are the ones specified in your php.ini file.
@@ -307,10 +299,10 @@ The following functions are available:
     to highlight. The third and fourth parameters will contain the
     opening/closing HTML tags you would like the phrase wrapped in.
 
-    Example::
+    Example:
 
-        $string = "Here is a nice text string about nothing in particular.";
-        echo highlight_phrase($string, "nice text", '<span style="color:#990000;">', '</span>');
+    .. literalinclude:: text_helper/019.php
+       :lines: 2-
 
     The above code prints::
 
@@ -336,18 +328,10 @@ The following functions are available:
     Wraps text at the specified *character* count while maintaining
     complete words.
 
-    Example::
+    Example:
 
-        $string = "Here is a simple string of text that will help us demonstrate this function.";
-        echo word_wrap($string, 25);
-
-        // Would produce:
-        // Here is a simple string
-        // of text that will help us
-        // demonstrate this
-        // function.
-
-        Excessively long words will be split, but URLs will not be.
+    .. literalinclude:: text_helper/020.php
+       :lines: 2-
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 
@@ -370,10 +354,10 @@ The following functions are available:
     An optional fourth parameter is the kind of ellipsis. By default,
     &hellip; will be inserted.
 
-    Example::
+    Example:
 
-        $str = 'this_string_is_entirely_too_long_and_might_break_my_design.jpg';
-        echo ellipsize($str, 32, .5);
+    .. literalinclude:: text_helper/021.php
+       :lines: 2-
 
     Produces::
 
@@ -397,18 +381,10 @@ The following functions are available:
     passed, the excerpt will include the first $radius characters with the ellipsis
     at the end.
 
-    Example::
+    Example:
 
-        $text = 'Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida
-        eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget
-        mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam.
-        Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus
-        ac enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed
-        vitae nisl. Cras sed auctor mauris, non dictum tortor. Nulla vel scelerisque
-        arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus.
-        Sed ut tortor diam.';
-
-        echo excerpt($text, 'Donec');
+    .. literalinclude:: text_helper/022.php
+       :lines: 2-
 
     Produces::
 

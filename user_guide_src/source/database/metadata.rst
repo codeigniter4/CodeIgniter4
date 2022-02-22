@@ -18,13 +18,10 @@ List the Tables in Your Database
 **$db->listTables();**
 
 Returns an array containing the names of all the tables in the database
-you are currently connected to. Example::
+you are currently connected to. Example:
 
-    $tables = $db->listTables();
-
-    foreach ($tables as $table) {
-        echo $table;
-    }
+.. literalinclude:: metadata/001.php
+   :lines: 2-
 
 .. note:: Some drivers have additional system tables that are excluded from this return.
 
@@ -34,11 +31,10 @@ Determine If a Table Exists
 **$db->tableExists();**
 
 Sometimes it's helpful to know whether a particular table exists before
-running an operation on it. Returns a boolean true/false. Usage example::
+running an operation on it. Returns a boolean true/false. Usage example:
 
-    if ($db->tableExists('table_name')) {
-        // some code...
-    }
+.. literalinclude:: metadata/002.php
+   :lines: 2-
 
 .. note:: Replace *table_name* with the name of the table you are looking for.
 
@@ -54,22 +50,16 @@ List the Fields in a Table
 Returns an array containing the field names. This query can be called
 two ways:
 
-1. You can supply the table name and call it from the ``$db->object``::
+1. You can supply the table name and call it from the ``$db->object``:
 
-    $fields = $db->getFieldNames('table_name');
-
-    foreach ($fields as $field) {
-        echo $field;
-    }
+   .. literalinclude:: metadata/003.php
+       :lines: 2-
 
 2. You can gather the field names associated with any query you run by
-calling the function from your query result object::
+calling the function from your query result object:
 
-    $query = $db->query('SELECT * FROM some_table');
-
-    foreach ($query->getFieldNames() as $field) {
-        echo $field;
-    }
+.. literalinclude:: metadata/004.php
+    :lines: 2-
 
 Determine If a Field is Present in a Table
 ==========================================
@@ -77,11 +67,10 @@ Determine If a Field is Present in a Table
 **$db->fieldExists()**
 
 Sometimes it's helpful to know whether a particular field exists before
-performing an action. Returns a boolean true/false. Usage example::
+performing an action. Returns a boolean true/false. Usage example:
 
-    if ($db->fieldExists('field_name', 'table_name')) {
-        // some code...
-    }
+.. literalinclude:: metadata/005.php
+   :lines: 2-
 
 .. note:: Replace *field_name* with the name of the column you are looking
     for, and replace *table_name* with the name of the table you are
@@ -99,22 +88,16 @@ the column type, max length, etc.
 
 .. note:: Not all databases provide meta-data.
 
-Usage example::
+Usage example:
 
-    $fields = $db->getFieldData('table_name');
-
-    foreach ($fields as $field) {
-        echo $field->name;
-        echo $field->type;
-        echo $field->max_length;
-        echo $field->primary_key;
-    }
+.. literalinclude:: metadata/006.php
+   :lines: 2-
 
 If you have run a query already you can use the result object instead of
-supplying the table name::
+supplying the table name:
 
-    $query  = $db->query("YOUR QUERY");
-    $fields = $query->fieldData();
+.. literalinclude:: metadata/007.php
+   :lines: 2-
 
 The following data is available from this function if supported by your
 database:
@@ -131,15 +114,10 @@ List the Indexes in a Table
 
 Returns an array of objects containing index information.
 
-Usage example::
+Usage example:
 
-    $keys = $db->getIndexData('table_name');
-
-    foreach ($keys as $key) {
-        echo $key->name;
-        echo $key->type;
-        echo $key->fields; // array of field names
-    }
+.. literalinclude:: metadata/008.php
+   :lines: 2-
 
 The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
@@ -149,17 +127,10 @@ for each key associated with a table.
 
 Returns an array of objects containing foreign key information.
 
-Usage example::
+Usage example:
 
-    $keys = $db->getForeignKeyData('table_name');
-
-    foreach ($keys as $key) {
-        echo $key->constraint_name;
-        echo $key->table_name;
-        echo $key->column_name;
-        echo $key->foreign_table_name;
-        echo $key->foreign_column_name;
-    }
+.. literalinclude:: metadata/009.php
+   :lines: 2-
 
 The object fields may be unique to the database you are using. For instance, SQLite3 does
 not return data on column names, but has the additional *sequence* field for compound

@@ -34,9 +34,10 @@ Enabling Caching
 ================
 
 To enable caching, put the following tag in any of your controller
-methods::
+methods:
 
-    $this->cachePage($n);
+.. literalinclude:: caching/001.php
+   :lines: 2-
 
 Where ``$n`` is the number of **seconds** you wish the page to remain
 cached between refreshes.
