@@ -348,6 +348,9 @@ available from the command line:
 .. literalinclude:: routing/028.php
    :lines: 2-
 
+.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+    anyone could access the command with the help of auto-routing via HTTP.
+
 Global Options
 ==============
 

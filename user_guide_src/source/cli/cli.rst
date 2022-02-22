@@ -89,6 +89,9 @@ works exactly like a normal route definition:
 
 For more information, see the :ref:`Routes <command-line-only-routes>` page.
 
+.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+    anyone could access the command with the help of auto-routing via HTTP.
+
 The CLI Library
 ---------------
 
