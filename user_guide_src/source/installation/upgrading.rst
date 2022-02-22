@@ -5,6 +5,10 @@ Upgrading From a Previous Version
 Please read the upgrade notes corresponding to the version you are
 upgrading from.
 
+.. note:: If you don't know what version of CodeIgniter you are currently running,
+    you can get it from :ref:`the Debug Toolbar <the-debug-toolbar>`,
+    or simply echo the constant ``\CodeIgniter\CodeIgniter::CI_VERSION``.
+
 .. toctree::
     :titlesonly:
 
