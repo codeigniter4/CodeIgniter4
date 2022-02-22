@@ -31,7 +31,7 @@ also extend the ``CodeIgniter\Controller`` if you do not need the functionality 
 The BaseController provides a convenient place for loading components and performing functions that are needed by all your
 controllers. You can extend this class in any new controller.
 
-For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.:
+For security reasons be sure to declare any new utility methods as ``protected`` or ``private``:
 
 .. literalinclude:: controllers/001.php
 
@@ -282,7 +282,7 @@ and in the optional second parameter, an array of custom error messages to displ
 if the items are not valid. Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
 The :doc:`Validation Library docs </libraries/validation>` have details on
-rule and message array formats, as well as available rules.:
+rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/017.php
    :lines: 2-

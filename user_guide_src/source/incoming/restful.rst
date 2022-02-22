@@ -85,7 +85,7 @@ The ``ResourceController`` provides a convenient starting point for your RESTful
 with methods that correspond to the resource routes above.
 
 Extend it, over-riding the ``modelName`` and ``format`` properties, and then
-implement those methods that you want handled.:
+implement those methods that you want handled:
 
 .. literalinclude:: restful/007.php
 
@@ -161,7 +161,7 @@ of your resource, and processing data from forms in those views,
 with methods that align to the resource routes above.
 
 Extend it, over-riding the ``modelName`` property, and then
-implement those methods that you want handled.:
+implement those methods that you want handled:
 
 .. literalinclude:: restful/015.php
 

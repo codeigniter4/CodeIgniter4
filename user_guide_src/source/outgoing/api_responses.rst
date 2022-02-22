@@ -123,7 +123,7 @@ Class Reference
     :param string $message: A custom "reason" message to return.
     :returns: The value of the Response object's send() method.
 
-    Sets the appropriate status code to use when a new resource was created, typically 201.:
+    Sets the appropriate status code to use when a new resource was created, typically 201:
 
     .. literalinclude:: api_responses/007.php
        :lines: 2-

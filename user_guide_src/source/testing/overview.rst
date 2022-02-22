@@ -161,7 +161,7 @@ in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparate
 **assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)**
 
 For extended execution time testing, tests that the absolute difference
-between expected and actual time is within the prescribed tolerance.:
+between expected and actual time is within the prescribed tolerance:
 
 .. literalinclude:: overview/012.php
    :lines: 2-
@@ -171,7 +171,7 @@ The above test will allow the actual time to be either 660 or 661 seconds.
 **assertCloseEnoughString($expected, $actual, $message = '', $tolerance = 1)**
 
 For extended execution time testing, tests that the absolute difference
-between expected and actual time, formatted as strings, is within the prescribed tolerance.:
+between expected and actual time, formatted as strings, is within the prescribed tolerance:
 
 .. literalinclude:: overview/013.php
    :lines: 2-

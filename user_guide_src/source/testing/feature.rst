@@ -66,7 +66,7 @@ Setting Headers
 ---------------
 
 You can set header values with the ``withHeaders()`` method. This takes an array of key/value pairs that would be
-passed as a header into the call.:
+passed as a header into the call:
 
 .. literalinclude:: feature/006.php
    :lines: 2-

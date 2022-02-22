@@ -460,7 +460,7 @@ method directly, with options:
 
 The ``$options`` parameter is an associative array with one element,
 whose key is either ``'except'`` or ``'only'``, and which has as its
-value an array of fieldnames of interest.:
+value an array of fieldnames of interest:
 
 .. literalinclude:: model/037.php
    :lines: 2-

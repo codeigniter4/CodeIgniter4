@@ -55,7 +55,7 @@ The default file location (recommended for most cases) is **/app/Config**.
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
-Define the class and fill it with public properties that represent your settings.:
+Define the class and fill it with public properties that represent your settings:
 
 .. literalinclude:: configuration/004.php
 
@@ -263,7 +263,7 @@ Explicit Registrars
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
-holding an array of the names of candidate registrars.:
+holding an array of the names of candidate registrars:
 
 .. literalinclude:: configuration/008.php
    :lines: 2-
