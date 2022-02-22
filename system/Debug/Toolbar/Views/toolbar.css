@@ -315,7 +315,7 @@
   #debug-bar .ci-label:hover {
     background-color: #DFDFDF; }
   #debug-bar .ci-label .badge {
-    background-color: #DD7359;
+    background-color: #DD4814;
     color: #FFFFFF; }
   #debug-bar .tab {
     background-color: #FFFFFF;
@@ -406,7 +406,7 @@
     #debug-bar .ci-label:hover {
       background-color: #252525; }
     #debug-bar .ci-label .badge {
-      background-color: #DD7359;
+      background-color: #DD4814;
       color: #FFFFFF; }
     #debug-bar .tab {
       background-color: #252525;
@@ -495,7 +495,7 @@
   #toolbarContainer.dark #debug-bar .ci-label:hover {
     background-color: #252525; }
   #toolbarContainer.dark #debug-bar .ci-label .badge {
-    background-color: #DD7359;
+    background-color: #DD4814;
     color: #FFFFFF; }
   #toolbarContainer.dark #debug-bar .tab {
     background-color: #252525;
@@ -588,7 +588,7 @@
   #toolbarContainer.light #debug-bar .ci-label:hover {
     background-color: #DFDFDF; }
   #toolbarContainer.light #debug-bar .ci-label .badge {
-    background-color: #DD7359;
+    background-color: #DD4814;
     color: #FFFFFF; }
   #toolbarContainer.light #debug-bar .tab {
     background-color: #FFFFFF;
