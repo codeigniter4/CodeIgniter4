@@ -1,12 +1,13 @@
 <?php
 
-public function even(string $str, string &$error = null): bool
-{
-    if ((int) $str % 2 !== 0) {
-        $error = lang('myerrors.evenError');
+use CodeIgniter\Validation\CreditCardRules;
+use CodeIgniter\Validation\FileRules;
+use CodeIgniter\Validation\FormatRules;
+use CodeIgniter\Validation\Rules;
 
-        return false;
-    }
-
-    return true;
-}
+public $ruleSets = [
+    Rules::class,
+    FormatRules::class,
+    FileRules::class,
+    CreditCardRules::class,
+];

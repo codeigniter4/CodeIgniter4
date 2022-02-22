@@ -1,6 +1,9 @@
 <?php
 
-$errors = [
-    'username' => 'The username field must be unique.',
-    'email'    => 'You must provide a valid email address.'
+// for errors
+[
+    'foo.0.bar'   => 'Error',
+    'foo.baz.bar' => 'Error',
 ];
+
+$validation->hasError('foo.*.bar'); // return true

@@ -1,13 +1,6 @@
 <?php
 
-use CodeIgniter\Validation\CreditCardRules;
-use CodeIgniter\Validation\FileRules;
-use CodeIgniter\Validation\FormatRules;
-use CodeIgniter\Validation\Rules;
-
-public $ruleSets = [
-    Rules::class,
-    FormatRules::class,
-    FileRules::class,
-    CreditCardRules::class,
+$errors = [
+    'username' => 'The username field must be unique.',
+    'email'    => 'You must provide a valid email address.'
 ];

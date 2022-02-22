@@ -1,9 +1,7 @@
 <?php
 
-class MyRules
-{
-    public function even(string $str): bool
-    {
-        return (int) $str % 2 == 0;
-    }
-}
+public $templates = [
+    'list'    => 'CodeIgniter\Validation\Views\list',
+    'single'  => 'CodeIgniter\Validation\Views\single',
+    'my_list' => '_errors_list',
+];
