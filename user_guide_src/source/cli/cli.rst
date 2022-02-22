@@ -87,7 +87,7 @@ works exactly like a normal route definition:
 .. literalinclude:: cli/002.php
    :lines: 2-
 
-For more information, see the :doc:`Routes </incoming/routing>` page.
+For more information, see the :ref:`Routes <command-line-only-routes>` page.
 
 The CLI Library
 ---------------
