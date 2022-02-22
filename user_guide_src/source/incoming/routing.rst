@@ -335,7 +335,9 @@ You can use the ``add()`` method:
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
 
-Command-Line only Routes
+.. _command-line-only-routes:
+
+Command-Line Only Routes
 ========================
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
@@ -345,6 +347,9 @@ available from the command line:
 
 .. literalinclude:: routing/028.php
    :lines: 2-
+
+.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+    anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
 ==============
