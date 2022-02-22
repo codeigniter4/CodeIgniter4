@@ -79,7 +79,7 @@ you with CLI-only tools.
 CLI-Only Routing
 ----------------
 
-In your **Routes.php** file you can create routes that are only accessible from
+In your **app/Config/Routes.php** file you can create routes that are only accessible from
 the CLI as easily as you would create any other route. Instead of using the ``get()``,
 ``post()``, or similar method, you would use the ``cli()`` method. Everything else
 works exactly like a normal route definition:
