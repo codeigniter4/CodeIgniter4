@@ -92,7 +92,7 @@ class Seeder
 
         $db ??= Database::connect($this->DBGroup);
 
-        $this->db    = &$db;
+        $this->db    = $db;
         $this->forge = Database::forge($this->DBGroup);
     }
 

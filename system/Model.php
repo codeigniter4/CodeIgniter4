@@ -100,14 +100,14 @@ class Model extends BaseModel
         'getCompiledUpdate',
     ];
 
-    public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
+    public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
     {
         /**
          * @var BaseConnection|null $db
          */
         $db ??= Database::connect($this->DBGroup);
 
-        $this->db = &$db;
+        $this->db = $db;
 
         parent::__construct($validation);
     }
