@@ -14,7 +14,6 @@ Before creating a form, let's enable the CSRF protection.
 Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
 
 .. literalinclude:: create_news_items/001.php
-   :lines: 2-
 
 It configures the CSRF filter to be enabled for all **POST** requests.
 You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
@@ -67,7 +66,6 @@ passed the validation rules. You'll use the :doc:`form
 validation <../libraries/validation>` library to do this.
 
 .. literalinclude:: create_news_items/002.php
-   :lines: 2-
 
 The code above adds a lot of functionality. First we load the NewsModel.
 After that, we check if we deal with the **POST** request and then
@@ -130,7 +128,6 @@ as a method instead of a news item's slug. You can read more about different
 routing types :doc:`here </incoming/routing>`.
 
 .. literalinclude:: create_news_items/004.php
-   :lines: 2-
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add ``/news/create`` to the URL.

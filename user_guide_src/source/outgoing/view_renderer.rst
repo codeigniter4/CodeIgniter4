@@ -15,13 +15,11 @@ exactly what you want, you may find times where you want to work with it more di
 In that case you can access the View service directly:
 
 .. literalinclude:: view_renderer/001.php
-   :lines: 2-
 
 Alternately, if you are not using the ``View`` class as your default renderer, you
 can instantiate it directly:
 
 .. literalinclude:: view_renderer/002.php
-   :lines: 2-
 
 .. important:: You should create services only within controllers. If you need
     access to the View class from a library, you should set that as a dependency
@@ -54,7 +52,6 @@ The ``setVar()`` and ``setData()`` methods are chainable, allowing you to combin
 number of different calls together in a chain:
 
 .. literalinclude:: view_renderer/003.php
-   :lines: 2-
 
 Escaping Data
 =============
@@ -66,7 +63,6 @@ escape the data for. See below for context descriptions.
 If you don't want the data to be escaped, you can pass ``null`` or ``'raw'`` as the final parameter to each function:
 
 .. literalinclude:: view_renderer/004.php
-   :lines: 2-
 
 If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
@@ -123,7 +119,6 @@ Class Reference
         Builds the output based upon a file name and any data that has already been set:
 
         .. literalinclude:: view_renderer/005.php
-           :lines: 2-
 
     .. php:method:: renderString($view[, $options[, $saveData = false]])
         :noindex:
@@ -137,7 +132,6 @@ Class Reference
         Builds the output based upon a view fragment and any data that has already been set:
 
         .. literalinclude:: view_renderer/006.php
-           :lines: 2-
 
     .. warning:: This could be used for displaying content that might have been stored in a database,
         but you need to be aware that this is a potential security vulnerability,
@@ -155,7 +149,6 @@ Class Reference
         Sets several pieces of view data at once:
 
         .. literalinclude:: view_renderer/007.php
-           :lines: 2-
 
         Supported escape contexts: ``html``, ``css``, ``js``, ``url``, or ``attr`` or ``raw``.
         If ``'raw'``, no escaping will happen.
@@ -175,7 +168,6 @@ Class Reference
         Sets a single piece of view data:
 
         .. literalinclude:: view_renderer/008.php
-           :lines: 2-
 
         Supported escape contexts: ``html``, ``css``, ``js``, ``url``, ``attr`` or ``raw``.
         If ``'raw'``, no escaping will happen.

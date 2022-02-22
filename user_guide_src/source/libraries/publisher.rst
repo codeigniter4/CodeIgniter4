@@ -16,7 +16,6 @@ Because Publisher instances are specific to their source and destination this li
 through ``Services`` but should be instantiated or extended directly. E.g.:
 
 .. literalinclude:: publisher/001.php
-   :lines: 2-
 
 *****************
 Concept and Usage
@@ -40,20 +39,17 @@ On Demand
 Access ``Publisher`` directly by instantiating a new instance of the class:
 
 .. literalinclude:: publisher/002.php
-   :lines: 2-
 
 By default the source and destination will be set to ``ROOTPATH`` and ``FCPATH`` respectively, giving ``Publisher``
 easy access to take any file from your project and make it web-accessible. Alternatively you may pass a new source
 or source and destination into the constructor:
 
 .. literalinclude:: publisher/003.php
-   :lines: 2-
 
 Once all the files are staged use one of the output commands (**copy()** or **merge()**) to process the staged files
 to their destination(s):
 
 .. literalinclude:: publisher/004.php
-   :lines: 2-
 
 See the :ref:`reference` for a full description of available methods.
 
@@ -64,13 +60,11 @@ You may have regular publication tasks embedded as part of your application depl
 the powerful ``Autoloader`` to locate any child classes primed for publication:
 
 .. literalinclude:: publisher/005.php
-   :lines: 2-
 
 By default ``discover()`` will search for the "Publishers" directory across all namespaces, but you may specify a
 different directory and it will return any child classes found:
 
 .. literalinclude:: publisher/006.php
-   :lines: 2-
 
 Most of the time you will not need to handle your own discovery, just use the provided "publish" command::
 
@@ -113,7 +107,6 @@ coming from an external API? You can use ``addUri()`` in place of ``addPath()`` 
 resource and publish it out instead:
 
 .. literalinclude:: publisher/008.php
-   :lines: 2-
 
 Asset Dependencies Example
 ==========================
@@ -238,7 +231,6 @@ and ``getErrors()`` to troubleshoot failures.
 Be mindful of duplicate basename collisions, for example:
 
 .. literalinclude:: publisher/011.php
-   :lines: 2-
 
 **merge(bool $replace = true): bool**
 
@@ -252,4 +244,3 @@ affect other files in the destination. Returns success or failure, use ``getPubl
 Example:
 
 .. literalinclude:: publisher/012.php
-   :lines: 2-

@@ -1,11 +1,11 @@
 <?php
-
-$csrf = array(
+$csrf = [
     'name' => $this->security->get_csrf_token_name(),
-    'hash' => $this->security->get_csrf_hash()
-);
+    'hash' => $this->security->get_csrf_hash(),
+];
 
 // ...
+?>
 
 <form>
     <input name="name" type="text">
@@ -15,3 +15,4 @@ $csrf = array(
     <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" />
     <input type="submit" value="Save">
 </form>
+

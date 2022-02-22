@@ -29,7 +29,6 @@ Creating Cookies
 There are currently four (4) ways to create a new ``Cookie`` value object.
 
 .. literalinclude:: cookies/001.php
-   :lines: 2-
 
 When constructing the ``Cookie`` object, only the ``name`` attribute is required. All other else are optional.
 If the optional attributes are not modified, their values will be filled up by the default values saved in
@@ -37,7 +36,6 @@ the ``Cookie`` class. To override the defaults currently stored in the class, yo
 instance or an array of defaults to the static ``Cookie::setDefaults()`` method.
 
 .. literalinclude:: cookies/002.php
-   :lines: 2-
 
 Passing the ``Config\Cookie`` instance or an array to ``Cookie::setDefaults()`` will effectively
 overwrite your defaults and will persist until new defaults are passed. If you do not want this
@@ -45,7 +43,6 @@ behavior but only want to change defaults for a limited time, you can take advan
 ``Cookie::setDefaults()`` return which returns the old defaults array.
 
 .. literalinclude:: cookies/003.php
-   :lines: 2-
 
 *****************************
 Accessing Cookie's Attributes
@@ -54,7 +51,6 @@ Accessing Cookie's Attributes
 Once instantiated, you can easily access a ``Cookie``'s attribute by using one of its getter methods.
 
 .. literalinclude:: cookies/004.php
-   :lines: 2-
 
 *****************
 Immutable Cookies
@@ -65,7 +61,6 @@ modifying any of the instance's attributes will not affect the original instance
 returns a new instance. You need to retain this new instance in order to use it.
 
 .. literalinclude:: cookies/005.php
-   :lines: 2-
 
 ********************************
 Validating a Cookie's Attributes
@@ -123,7 +118,6 @@ When writing the SameSite attribute, the ``Cookie`` class accepts any of the val
 also take advantage of the class's constants to make it not a hassle.
 
 .. literalinclude:: cookies/006.php
-   :lines: 2-
 
 **********************
 Using the Cookie Store
@@ -133,12 +127,10 @@ The ``CookieStore`` class represents an immutable collection of ``Cookie`` objec
 instance can be accessed from the current ``Response`` object.
 
 .. literalinclude:: cookies/007.php
-   :lines: 2-
 
 CodeIgniter provides three (3) other ways to create a new instance of the ``CookieStore``.
 
 .. literalinclude:: cookies/008.php
-   :lines: 2-
 
 .. note:: When using the global ``cookies()`` function, the passed ``Cookie`` array will only be considered
     if the second argument, ``$getGlobal``, is set to ``false``.
@@ -149,7 +141,6 @@ Checking Cookies in Store
 To check whether a ``Cookie`` object exists in the ``CookieStore`` instance, you can use several ways:
 
 .. literalinclude:: cookies/009.php
-   :lines: 2-
 
 Getting Cookies in Store
 ========================
@@ -157,25 +148,21 @@ Getting Cookies in Store
 Retrieving a ``Cookie`` instance in a cookie collection is very easy:
 
 .. literalinclude:: cookies/010.php
-   :lines: 2-
 
 When getting a ``Cookie`` instance directly from a ``CookieStore``, an invalid name
 will throw a ``CookieException``.
 
 .. literalinclude:: cookies/011.php
-   :lines: 2-
 
 When getting a ``Cookie`` instance from the current ``Response``'s cookie collection,
 an invalid name will just return ``null``.
 
 .. literalinclude:: cookies/012.php
-   :lines: 2-
 
 If no arguments are supplied in when getting cookies from the ``Response``, all ``Cookie`` objects
 in store will be displayed.
 
 .. literalinclude:: cookies/013.php
-   :lines: 2-
 
 .. note:: The helper function ``get_cookie()`` gets the cookie from the current ``Request`` object, not
     from ``Response``. This function checks the `$_COOKIE` array if that cookie is set and fetches it
@@ -188,7 +175,6 @@ As previously mentioned, ``CookieStore`` objects are immutable. You need to save
 in order to work on it. The original instance is left unchanged.
 
 .. literalinclude:: cookies/014.php
-   :lines: 2-
 
 .. note:: Removing a cookie from the store **DOES NOT** delete it from the browser.
     If you intend to delete a cookie *from the browser*, you must put an empty value
@@ -199,7 +185,6 @@ cookies without worrying the immutable nature of the cookie collection. The ``Re
 the instance with the modified instance.
 
 .. literalinclude:: cookies/015.php
-   :lines: 2-
 
 Dispatching Cookies in Store
 ============================
@@ -210,7 +195,6 @@ in sending other headers, you need to make sure the headers are not yet sent by 
 of ``headers_sent()``.
 
 .. literalinclude:: cookies/016.php
-   :lines: 2-
 
 **********************
 Cookie Personalization

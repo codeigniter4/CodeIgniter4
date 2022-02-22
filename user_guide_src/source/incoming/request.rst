@@ -25,7 +25,6 @@ Class Reference
         will return '0.0.0.0':
 
         .. literalinclude:: request/001.php
-           :lines: 2-
 
         .. important:: This method takes into account the ``App->proxyIPs`` setting and will
             return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
@@ -46,7 +45,6 @@ Class Reference
         .. note:: The $request->getIPAddress() method above automatically validates the IP address.
 
             .. literalinclude:: request/002.php
-               :lines: 2-
 
         Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
         an IP format. The default checks for both formats.
@@ -63,7 +61,6 @@ Class Reference
         in uppercase or lowercase.
 
         .. literalinclude:: request/003.php
-           :lines: 2-
 
     .. php:method:: setMethod($method)
 
@@ -83,13 +80,11 @@ Class Reference
         :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``):
 
         .. literalinclude:: request/004.php
-           :lines: 2-
 
         To return an array of multiple ``$_SERVER`` values, pass all the required keys
         as an array.
 
         .. literalinclude:: request/005.php
-           :lines: 2-
 
     .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
 
@@ -103,13 +98,11 @@ Class Reference
         :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getEnv data (``$_ENV``):
 
         .. literalinclude:: request/006.php
-           :lines: 2-
 
         To return an array of multiple ``$_ENV`` values, pass all the required keys
         as an array.
 
         .. literalinclude:: request/007.php
-           :lines: 2-
 
     .. php:method:: setGlobal($method, $value)
 

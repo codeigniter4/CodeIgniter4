@@ -21,7 +21,6 @@ By default, you will have a request instance in your controller that you can ret
 User Agent class from:
 
 .. literalinclude:: user_agent/001.php
-   :lines: 2-
 
 User Agent Definitions
 ======================
@@ -39,7 +38,6 @@ device, or a robot. It will also gather the platform information if it
 is available:
 
 .. literalinclude:: user_agent/002.php
-   :lines: 2-
 
 ***************
 Class Reference
@@ -56,7 +54,6 @@ Class Reference
         Returns true/false (boolean) if the user agent is a known web browser.
 
         .. literalinclude:: user_agent/003.php
-           :lines: 2-
 
         .. note:: The string "Safari" in this example is an array key in the list of browser definitions.
                   You can find this list in **app/Config/UserAgents.php** if you want to add new
@@ -71,7 +68,6 @@ Class Reference
         Returns true/false (boolean) if the user agent is a known mobile device.
 
         .. literalinclude:: user_agent/004.php
-           :lines: 2-
 
     .. php:method:: isRobot([$key = null])
 
@@ -136,7 +132,6 @@ Class Reference
         The referrer, if the user agent was referred from another site. Typically you'll test for this as follows:
 
         .. literalinclude:: user_agent/005.php
-           :lines: 2-
 
     .. php:method:: getAgentString()
 

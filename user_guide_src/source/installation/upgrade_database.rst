@@ -47,10 +47,8 @@ CodeIgniter Version 3.x
 ------------------------
 
 .. literalinclude:: upgrade_database/001.php
-   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
 
 .. literalinclude:: upgrade_database/002.php
-   :lines: 2-

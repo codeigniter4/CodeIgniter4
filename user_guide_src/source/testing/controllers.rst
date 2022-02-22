@@ -37,14 +37,12 @@ Specifies the class name of the controller to test. The first parameter must be 
 (i.e., include the namespace):
 
 .. literalinclude:: controllers/003.php
-   :lines: 2-
 
 **execute(string $method, ...$params)**
 
 Executes the specified method within the controller. The first parameter is the name of the method to run:
 
 .. literalinclude:: controllers/004.php
-   :lines: 2-
 
 By specifying the second and subsequent parameters, you can pass them to the controller method.
 
@@ -56,7 +54,6 @@ for details.
 Allows you to pass in a modified version of **Config\App.php** to test with different settings:
 
 .. literalinclude:: controllers/005.php
-   :lines: 2-
 
 If you do not provide one, the application's App config file will be used.
 
@@ -65,7 +62,6 @@ If you do not provide one, the application's App config file will be used.
 Allows you to provide an **IncomingRequest** instance tailored to your testing needs:
 
 .. literalinclude:: controllers/006.php
-   :lines: 2-
 
 If you do not provide one, a new IncomingRequest instance with the default application values will be passed
 into your controller.
@@ -75,7 +71,6 @@ into your controller.
 Allows you to provide a **Response** instance:
 
 .. literalinclude:: controllers/007.php
-   :lines: 2-
 
 If you do not provide one, a new Response instance with the default application values will be passed
 into your controller.
@@ -85,7 +80,6 @@ into your controller.
 Allows you to provide a **Logger** instance:
 
 .. literalinclude:: controllers/008.php
-   :lines: 2-
 
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
@@ -97,7 +91,6 @@ This is helpful if you need to check URI segments within your controller. The on
 representing a valid URI:
 
 .. literalinclude:: controllers/009.php
-   :lines: 2-
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
@@ -107,7 +100,6 @@ Allows you to provide a custom body for the request. This can be helpful when te
 you need to set a JSON value as the body. The only parameter is a string that represents the body of the request:
 
 .. literalinclude:: controllers/010.php
-   :lines: 2-
 
 Checking the Response
 =====================
@@ -149,7 +141,6 @@ a "live" project, but (for example) if you wanted to simulate a filter triggerin
 on an unfiltered route you could add it to the Config:
 
 .. literalinclude:: controllers/012.php
-   :lines: 2-
 
 Checking Routes
 ---------------
@@ -169,7 +160,6 @@ a large performance advantage over Controller and HTTP Testing.
     Usage example:
 
     .. literalinclude:: controllers/013.php
-       :lines: 2-
 
 Calling Filter Methods
 ----------------------
@@ -188,7 +178,6 @@ method using these properties to test your Filter code safely and check the resu
     Usage example:
 
     .. literalinclude:: controllers/014.php
-       :lines: 2-
 
     Notice how the ``Closure`` can take input parameters which are passed to your filter method.
 
@@ -201,19 +190,15 @@ to streamline your test methods.
 The **assertFilter()** method checks that the given route at position uses the filter (by its alias):
 
 .. literalinclude:: controllers/015.php
-   :lines: 2-
 
 The **assertNotFilter()** method checks that the given route at position does not use the filter (by its alias):
 
 .. literalinclude:: controllers/016.php
-   :lines: 2-
 
 The **assertHasFilters()** method checks that the given route at position has at least one filter set:
 
 .. literalinclude:: controllers/017.php
-   :lines: 2-
 
 The **assertNotHasFilters()** method checks that the given route at position has no filters set:
 
 .. literalinclude:: controllers/018.php
-   :lines: 2-

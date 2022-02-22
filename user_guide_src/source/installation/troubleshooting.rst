@@ -37,12 +37,10 @@ you'll need to force CodeIgniter to add a question mark to your URLs. To
 do this open your **app/Config/App.php** file and change this:
 
 .. literalinclude:: troubleshooting/001.php
-   :lines: 2-
 
 To this:
 
 .. literalinclude:: troubleshooting/002.php
-   :lines: 2-
 
 The tutorial gives 404 errors everywhere :(
 -------------------------------------------

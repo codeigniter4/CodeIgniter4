@@ -11,9 +11,7 @@ The method signatures for ``after()`` and ``before()`` must be updated to includ
 definitions should be changed from:
 
 .. literalinclude:: upgrade_404/001.php
-   :lines: 2-
 
 to:
 
 .. literalinclude:: upgrade_404/002.php
-   :lines: 2-

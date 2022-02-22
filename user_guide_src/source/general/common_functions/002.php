@@ -1,5 +1,4 @@
 <?php
-
 // in controller, checking form submittal
 if (! $model->save($user)) {
     // 'withInput' is what specifies "old data"
@@ -8,6 +7,8 @@ if (! $model->save($user)) {
 }
 
 // In the view
+?>
+
 <input type="email" name="email" value="<?= old('email') ?>">
-// Or with arrays
+<?php // Or with arrays?>
 <input type="email" name="user[email]" value="<?= old('user.email') ?>">

@@ -15,7 +15,6 @@ The config settings are stored in a class property that is an array with this
 prototype:
 
 .. literalinclude:: configuration/001.php
-   :lines: 2-
 
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
@@ -29,7 +28,6 @@ should use the 'DSN' configuration setting, as if you're using the
 driver's underlying native PHP extension, like this:
 
 .. literalinclude:: configuration/002.php
-   :lines: 2-
 
 .. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
     will try to build it with the rest of the provided settings.
@@ -37,13 +35,11 @@ driver's underlying native PHP extension, like this:
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 
 .. literalinclude:: configuration/003.php
-   :lines: 2-
 
 To override default config values when connecting with a universal version of the DSN string,
 add the config variables as a query string:
 
 .. literalinclude:: configuration/004.php
-   :lines: 2-
 
 .. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
     database character set), which are present in the rest of the configuration
@@ -53,7 +49,6 @@ You can also specify failovers for the situation when the main connection cannot
 These failovers can be specified by setting the failover for a connection like this:
 
 .. literalinclude:: configuration/005.php
-   :lines: 2-
 
 You can specify as many failovers as you like.
 
@@ -64,13 +59,11 @@ connection group for each, then switch between groups as needed. For
 example, to set up a "test" environment you would do this:
 
 .. literalinclude:: configuration/006.php
-   :lines: 2-
 
 Then, to globally tell the system to use that group you would set this
 variable located in the config file:
 
 .. literalinclude:: configuration/007.php
-   :lines: 2-
 
 .. note:: The name 'test' is arbitrary. It can be anything you want. By
     default we've used the word "default" for the primary connection,
@@ -81,7 +74,6 @@ update the `defaultGroup` value to the correct one by adding the required logic
 within the class' constructor:
 
 .. literalinclude:: configuration/008.php
-   :lines: 2-
 
 Configuring With .env File
 --------------------------
@@ -141,7 +133,6 @@ Explanation of Values:
 **port**        The database port number. To use this value you have to add a line to the database config array.
 
                 .. literalinclude:: configuration/009.php
-                    :lines: 2-
 
 ==============  ===========================================================================================================
 

@@ -14,7 +14,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: text_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -46,7 +45,6 @@ The following functions are available:
     Usage example:
 
     .. literalinclude:: text_helper/002.php
-       :lines: 2-
 
 .. php:function:: increment_string($str[, $separator = '_'[, $first = 1]])
 
@@ -63,7 +61,6 @@ The following functions are available:
     Usage example:
 
     .. literalinclude:: text_helper/003.php
-       :lines: 2-
 
 .. php:function:: alternator($args)
 
@@ -75,13 +72,11 @@ The following functions are available:
     a loop. Example:
 
     .. literalinclude:: text_helper/004.php
-       :lines: 2-
 
     You can add as many parameters as you want, and with each iteration of
     your loop the next item will be returned.
 
     .. literalinclude:: text_helper/005.php
-       :lines: 2-
 
     .. note:: To use multiple separate calls to this function simply call the
         function with no arguments to re-initialize.
@@ -98,7 +93,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/006.php
-       :lines: 2-
 
 .. php:function:: strip_slashes($data)
 
@@ -111,12 +105,10 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/007.php
-       :lines: 2-
 
     The above will return the following array:
 
     .. literalinclude:: text_helper/008.php
-       :lines: 2-
 
     .. note:: For historical reasons, this function will also accept
         and handle string inputs. This however makes it just an
@@ -134,13 +126,11 @@ The following functions are available:
     after each other. Example:
 
     .. literalinclude:: text_helper/009.php
-       :lines: 2-
 
     If the third parameter is set to true it will remove occurrences of the
     character at the beginning and the end of the string. Example:
 
     .. literalinclude:: text_helper/010.php
-       :lines: 2-
 
 .. php:function:: quotes_to_entities($str)
 
@@ -152,7 +142,6 @@ The following functions are available:
     entities. Example:
 
     .. literalinclude:: text_helper/011.php
-       :lines: 2-
 
 .. php:function:: strip_quotes($str)
 
@@ -163,7 +152,6 @@ The following functions are available:
     Removes single and double quotes from a string. Example:
 
     .. literalinclude:: text_helper/012.php
-       :lines: 2-
 
 .. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
 
@@ -176,7 +164,6 @@ The following functions are available:
     Truncates a string to the number of *words* specified. Example:
 
     .. literalinclude:: text_helper/013.php
-       :lines: 2-
 
     The third parameter is an optional suffix added to the string. By
     default it adds an ellipsis.
@@ -196,7 +183,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/014.php
-       :lines: 2-
 
     The third parameter is an optional suffix added to the string, if
     undeclared this helper uses an ellipsis.
@@ -221,7 +207,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/015.php
-       :lines: 2-
 
 .. php:function:: entities_to_ascii($str[, $all = true])
 
@@ -246,7 +231,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/016.php
-       :lines: 2-
 
     .. note:: This function uses a companion config file
         **app/Config/ForeignCharacters.php** to define the to and
@@ -269,7 +253,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/017.php
-       :lines: 2-
 
 .. php:function:: highlight_code($str)
 
@@ -280,7 +263,6 @@ The following functions are available:
     Colorizes a string of code (PHP, HTML, etc.). Example:
 
     .. literalinclude:: text_helper/018.php
-       :lines: 2-
 
     The function uses PHP's ``highlight_string()`` function, so the
     colors used are the ones specified in your php.ini file.
@@ -302,7 +284,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/019.php
-       :lines: 2-
 
     The above code prints::
 
@@ -331,7 +312,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/020.php
-       :lines: 2-
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 
@@ -357,7 +337,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/021.php
-       :lines: 2-
 
     Produces::
 
@@ -384,7 +363,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: text_helper/022.php
-       :lines: 2-
 
     Produces::
 

@@ -47,7 +47,6 @@ for such requests if you don't need CSRF protection for them.
 If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**:
 
 .. literalinclude:: upgrade_415/001.php
-   :lines: 2-
 
 Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
 

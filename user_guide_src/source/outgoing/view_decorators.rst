@@ -18,7 +18,6 @@ the resulting HTML.
 Once created, the class must be registered in ``app/Config/View.php``:
 
 .. literalinclude:: view_decorators/002.php
-   :lines: 2-
 
 Now that it's registered the decorator will be called for every view that is rendered or parsed.
 Decorators are called in the order specified in this configuration setting.

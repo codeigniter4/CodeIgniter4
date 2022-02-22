@@ -16,7 +16,6 @@ Loading the Class
 You can load an instance of the class manually through the Service class:
 
 .. literalinclude:: content_negotiation/001.php
-   :lines: 2-
 
 This will grab the current request instance and automatically inject it into the Negotiator class.
 
@@ -25,7 +24,6 @@ instance. While you cannot access it directly this way, you can easily access al
 method:
 
 .. literalinclude:: content_negotiation/002.php
-   :lines: 2-
 
 When accessed this way, the first parameter is the type of content you're trying to find a match for, while the
 second is an array of supported values.
@@ -52,7 +50,6 @@ The server now needs to provide a list of what type of content it can provide. I
 be able to return data as raw HTML, JSON, or XML. This list should be provided in order of preference:
 
 .. literalinclude:: content_negotiation/003.php
-   :lines: 2-
 
 In this case, both the client and the server can agree on formatting the data as JSON so 'json' is returned from
 the negotiate method. By default, if no match is found, the first element in the ``$supported`` array would be returned.
@@ -60,7 +57,6 @@ In some cases, though, you might need to enforce the format to be a strict match
 final value, it will return an empty string if no match is found:
 
 .. literalinclude:: content_negotiation/004.php
-   :lines: 2-
 
 Language
 ========
@@ -77,7 +73,6 @@ In this example, the browser would prefer French, with a second choice of Englis
 and German you would do something like:
 
 .. literalinclude:: content_negotiation/005.php
-   :lines: 2-
 
 In this example, 'en' would be returned as the current language. If no match is found, it will return the first element
 in the ``$supported`` array, so that should always be the preferred language.
@@ -94,7 +89,6 @@ specify the type of compression the client supports::
 Your web server will define what types of compression you can use. Some, like Apache, only support **gzip**:
 
 .. literalinclude:: content_negotiation/006.php
-   :lines: 2-
 
 See more at `Wikipedia <https://en.wikipedia.org/wiki/HTTP_compression>`_.
 
@@ -109,4 +103,3 @@ The desired character set is passed through the ``Accept-Charset`` header::
 By default, if no matches are found, **utf-8** will be returned:
 
 .. literalinclude:: content_negotiation/007.php
-   :lines: 2-

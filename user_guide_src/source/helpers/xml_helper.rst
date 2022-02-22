@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code
 
 .. literalinclude:: xml_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -41,7 +40,6 @@ The following functions are available:
     character entities, e.g., &#123;. Example:
 
     .. literalinclude:: xml_helper/002.php
-       :lines: 2-
 
     outputs:
 

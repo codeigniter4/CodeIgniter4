@@ -25,7 +25,6 @@ The first parameter is the bucket name, the second parameter the number of token
 the third being the amount of time it takes the bucket to refill:
 
 .. literalinclude:: throttler/001.php
-   :lines: 2-
 
 Here we're using one of the :doc:`global constants </general/common_functions>` for the time, to make it a little
 more readable. This says that the bucket allows 60 actions every minute, or 1 action every second.
@@ -69,12 +68,10 @@ this to incoming requests, you need to edit **/app/Config/Filters.php** and firs
 filter:
 
 .. literalinclude:: throttler/003.php
-   :lines: 2-
 
 Next, we assign it to all POST requests made on the site:
 
 .. literalinclude:: throttler/004.php
-   :lines: 2-
 
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
     because auto-routing permits any HTTP method to access a controller.

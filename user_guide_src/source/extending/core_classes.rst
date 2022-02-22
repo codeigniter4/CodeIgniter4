@@ -54,7 +54,6 @@ the core system class, you would create your class like this:
 Then you would add the ``routes`` service in **app/Config/Services.php** to load your class instead:
 
 .. literalinclude:: core_classes/002.php
-   :lines: 2-
 
 Extending Core Classes
 ======================

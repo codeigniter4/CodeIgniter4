@@ -45,7 +45,6 @@ Returning it in the before filter will not stop the execution but only replace t
 This is typically used to perform redirects, like in this example:
 
 .. literalinclude:: filters/002.php
-   :lines: 2-
 
 If a ``Response`` instance is returned, the Response will be sent back to the client and script execution will stop.
 This can be useful for implementing rate limiting for APIs. See :doc:`Throttler </libraries/throttler>` for an
@@ -80,7 +79,6 @@ The ``$aliases`` array is used to associate a simple name with one or more fully
 filters to run:
 
 .. literalinclude:: filters/003.php
-   :lines: 2-
 
 Aliases are mandatory and if you try to use a full class name later, the system will throw an error. Defining them
 in this way makes it simple to switch out the class used. Great for when you decided you need to change to a
@@ -89,7 +87,6 @@ different authentication system since you only change the filter's class and you
 You can combine multiple filters into one alias, making complex sets of filters simple to apply:
 
 .. literalinclude:: filters/004.php
-   :lines: 2-
 
 You should define as many aliases as you need.
 
@@ -101,7 +98,6 @@ You should take care with how many you use here, since it could have performance
 run on every request. Filters can be specified by adding their alias to either the before or after array:
 
 .. literalinclude:: filters/005.php
-   :lines: 2-
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
@@ -109,7 +105,6 @@ third-party websites to hit one or two specific URI's, while keeping the rest of
 an array with the 'except' key and a URI to match as the value alongside the alias:
 
 .. literalinclude:: filters/006.php
-   :lines: 2-
 
 Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
 an asterisk for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
@@ -117,7 +112,6 @@ would be exempted from CSRF protection, but the site's forms would all be protec
 URI's you can use an array of URI patterns:
 
 .. literalinclude:: filters/007.php
-   :lines: 2-
 
 $methods
 ========
@@ -127,7 +121,6 @@ specify the method name in lowercase. It's value would be an array of filters to
 ``$filters`` properties, these will only run as before filters:
 
 .. literalinclude:: filters/008.php
-   :lines: 2-
 
 In addition to the standard HTTP methods, this also supports one special case: 'cli'. The 'cli' method would apply to
 all requests that were run from the command line.
@@ -143,7 +136,6 @@ This property is an array of filter aliases. For each alias, you can specify bef
 a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
-   :lines: 2-
 
 Filter arguments
 =================
@@ -151,7 +143,6 @@ Filter arguments
 When configuring filters, additional arguments may be passed to a filter when setting up the route:
 
 .. literalinclude:: filters/010.php
-   :lines: 2-
 
 In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments`` to the filter's ``before()`` and ``after()`` implementation methods.
 
@@ -186,6 +177,5 @@ This filter adds HTTP response headers that your application can use to increase
 If you want to customize the headers, extend ``CodeIgniter\Filters\SecureHeaders`` and override the ``$headers`` property. And change the ``$aliases`` property in **app/Config/Filters.php**:
 
 .. literalinclude:: filters/011.php
-   :lines: 2-
 
 If you want to know about secure headers, see `OWASP Secure Headers Project <https://owasp.org/www-project-secure-headers/>`_.

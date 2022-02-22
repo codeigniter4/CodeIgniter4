@@ -17,18 +17,15 @@ Creating URI instances
 Creating a URI instance is as simple as creating a new class instance:
 
 .. literalinclude:: uri/001.php
-   :lines: 2-
 
 Alternatively, you can use the ``service()`` function to return an instance for you:
 
 .. literalinclude:: uri/002.php
-   :lines: 2-
 
 When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:
 
 .. literalinclude:: uri/003.php
-   :lines: 2-
 
 The Current URI
 ---------------
@@ -37,7 +34,6 @@ Many times, all you really want is an object representing the current URL of thi
 You can use one of the functions available in the **url_helper**:
 
 .. literalinclude:: uri/004.php
-   :lines: 2-
 
 You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
 This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
@@ -45,7 +41,6 @@ your settings in ``Config\App`` (baseURL, indexPage, and forceGlobalSecureReques
 Assuming that you're in a controller that extends ``CodeIgniter\Controller`` you can get this relative path:
 
 .. literalinclude:: uri/005.php
-   :lines: 2-
 
 ===========
 URI Strings
@@ -55,13 +50,11 @@ Many times, all you really want is to get a string representation of a URI. This
 the URI as a string:
 
 .. literalinclude:: uri/006.php
-   :lines: 2-
 
 If you know the pieces of the URI and just want to ensure it's all formatted correctly, you can generate a string
 using the URI class' static ``createURIString()`` method:
 
 .. literalinclude:: uri/007.php
-   :lines: 2-
 
 .. important:: When ``URI`` is cast to a string, it will attempt to adjust project URLs to the
     settings defined in ``Config\App``. If you need the exact, unaltered string representation
@@ -80,7 +73,6 @@ Scheme
 The scheme is frequently 'http' or 'https', but any scheme is supported, including 'file', 'mailto', etc.
 
 .. literalinclude:: uri/008.php
-   :lines: 2-
 
 Authority
 ---------
@@ -90,19 +82,16 @@ the host and the port number. You can retrieve all of these pieces as one single
 method, or you can manipulate the individual parts.
 
 .. literalinclude:: uri/009.php
-   :lines: 2-
 
 By default, this will not display the password portion since you wouldn't want to show that to anyone. If you want
 to show the password, you can use the ``showPassword()`` method. This URI instance will continue to show that password
 until you turn it off again, so always make sure that you turn it off as soon as you are finished with it:
 
 .. literalinclude:: uri/010.php
-   :lines: 2-
 
 If you do not want to display the port, pass in ``true`` as the only parameter:
 
 .. literalinclude:: uri/011.php
-   :lines: 2-
 
 .. note:: If the current port is the default port for the scheme it will never be displayed.
 
@@ -113,12 +102,10 @@ The userinfo section is simply the username and password that you might see with
 this as part of the Authority, you can also retrieve it yourself:
 
 .. literalinclude:: uri/012.php
-   :lines: 2-
 
 By default, it will not display the password, but you can override that with the ``showPassword()`` method:
 
 .. literalinclude:: uri/013.php
-   :lines: 2-
 
 Host
 ----
@@ -127,7 +114,6 @@ The host portion of the URI is typically the domain name of the URL. This can be
 ``getHost()`` and ``setHost()`` methods:
 
 .. literalinclude:: uri/014.php
-   :lines: 2-
 
 Port
 ----
@@ -135,7 +121,6 @@ Port
 The port is an integer number between 0 and 65535. Each sheme has a default value associated with it.
 
 .. literalinclude:: uri/015.php
-   :lines: 2-
 
 When using the ``setPort()`` method, the port will be checked that it is within the valid range and assigned.
 
@@ -146,7 +131,6 @@ The path are all of the segments within the site itself. As expected, the ``getP
 can be used to manipulate it:
 
 .. literalinclude:: uri/016.php
-   :lines: 2-
 
 .. note:: When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
     characters, and remove dot segments for safety.
@@ -158,21 +142,18 @@ The query variables can be manipulated through the class using simple string rep
 be set as a string currently.
 
 .. literalinclude:: uri/017.php
-   :lines: 2-
 
 .. note:: Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.
 
 You can set query values using an array:
 
 .. literalinclude:: uri/018.php
-   :lines: 2-
 
 The ``setQuery()`` and ``setQueryArray()`` methods overwrite any existing query variables. You can add a value to the
 query variables collection without destroying the existing query variables with the ``addQuery()`` method. The first
 parameter is the name of the variable, and the second parameter is the value:
 
 .. literalinclude:: uri/019.php
-   :lines: 2-
 
 **Filtering Query Values**
 
@@ -180,13 +161,11 @@ You can filter the query values returned by passing an options array to the ``ge
 *only* or an *except* key:
 
 .. literalinclude:: uri/020.php
-   :lines: 2-
 
 This only changes the values returned during this one call. If you need to modify the URI's query values more permanently,
 you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actual object's query variable collection:
 
 .. literalinclude:: uri/021.php
-   :lines: 2-
 
 .. note:: By default ``setQuery()`` and ``setQueryArray()`` methods uses native ``parse_str()`` function to prepare data.
     If you want to use more liberal rules (which allow key names to contain dots), you can use a special method
@@ -199,7 +178,6 @@ Fragments are the portion at the end of the URL, preceded by the pound-sign (#).
 to an on-page anchor. Media URI's can make use of them in various other ways.
 
 .. literalinclude:: uri/022.php
-   :lines: 2-
 
 ============
 URI Segments
@@ -209,22 +187,18 @@ Each section of the path between the slashes is a single segment. The URI class 
 what the values of the segments are. The segments start at 1 being the furthest left of the path.
 
 .. literalinclude:: uri/023.php
-   :lines: 2-
 
 You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is empty string.
 
 .. literalinclude:: uri/024.php
-   :lines: 2-
 
 You can get a count of the total segments:
 
 .. literalinclude:: uri/025.php
-   :lines: 2-
 
 Finally, you can retrieve an array of all of the segments:
 
 .. literalinclude:: uri/026.php
-   :lines: 2-
 
 ===========================
 Disable Throwing Exceptions
@@ -234,4 +208,3 @@ By default, some methods of this class may throw an exception. If you want to di
 that will prevent throwing exceptions.
 
 .. literalinclude:: uri/027.php
-   :lines: 2-

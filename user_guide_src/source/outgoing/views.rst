@@ -38,7 +38,6 @@ Displaying a View
 To load and display a particular view file you will use the following function:
 
 .. literalinclude:: views/001.php
-   :lines: 2-
 
 Where *name* is the name of your view file.
 
@@ -73,7 +72,6 @@ Your view files can also be stored within sub-directories if you prefer that typ
 When doing so you will need to include the directory name loading the view. Example:
 
 .. literalinclude:: views/004.php
-   :lines: 2-
 
 Namespaced Views
 ================
@@ -87,7 +85,6 @@ under the namespace ``Example\Blog``, you could retrieve view files as if they w
 example, you could load the **blog_view.php** file from **example/blog/Views** by prepending the namespace to the view name:
 
 .. literalinclude:: views/005.php
-   :lines: 2-
 
 .. _caching-views:
 
@@ -98,13 +95,11 @@ You can cache a view with the ``view`` command by passing a ``cache`` option wit
 the view for, in the third parameter:
 
 .. literalinclude:: views/006.php
-   :lines: 2-
 
 By default, the view will be cached using the same name as the view file itself. You can customize this by passing
 along ``cache_name`` and the cache ID you wish to use:
 
 .. literalinclude:: views/007.php
-   :lines: 2-
 
 Adding Dynamic Data to the View
 ===============================
@@ -113,7 +108,6 @@ Data is passed from the controller to the view by way of an array in the second 
 Here's an example:
 
 .. literalinclude:: views/008.php
-   :lines: 2-
 
 Let's try it with your controller file. Open it and add this code:
 
@@ -138,7 +132,6 @@ other views, potentially causing issues. If you would prefer the data to persist
 into the `$option` array in the third parameter.
 
 .. literalinclude:: views/010.php
-   :lines: 2-
 
 Additionally, if you would like the default functionality of the view function to be that it does save the data
 between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.

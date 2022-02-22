@@ -21,7 +21,6 @@ your main **app/Config/Paths.php** and set a *full server path* in the
 ``$appDirectory`` variable (at about line 44):
 
 .. literalinclude:: managing_apps/001.php
-   :lines: 2-
 
 You will need to modify two additional files in your project root, so that
 they can find the **Paths** configuration file:
@@ -29,13 +28,11 @@ they can find the **Paths** configuration file:
 - **/spark** runs command line apps; the path is specified on or about line 35:
 
   .. literalinclude:: managing_apps/002.php
-     :lines: 2-
 
 - **/public/index.php** is the front controller for your webapp; the config
   path is specified on or about line 20:
 
   .. literalinclude:: managing_apps/003.php
-     :lines: 2-
 
 Running Multiple Applications with one CodeIgniter Installation
 ===============================================================
@@ -78,4 +75,3 @@ When you use Composer autoloader, fix the ``COMPOSER_PATH`` constant in **app/Co
 of those:
 
 .. literalinclude:: managing_apps/004.php
-   :lines: 2-
