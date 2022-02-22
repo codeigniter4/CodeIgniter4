@@ -1,5 +1,5 @@
 <?php
 
 [
-    'avatar' => // UploadedFile instance
-]
+    'avatar' => '...' // UploadedFile instance
+];

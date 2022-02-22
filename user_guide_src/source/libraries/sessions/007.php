@@ -1,3 +1,3 @@
 <?php
 
-$session->item
+$session->item;

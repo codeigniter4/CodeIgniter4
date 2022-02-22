@@ -1,3 +1,3 @@
 <?php
 
-'default_full'   => 'App\Views\Pagers\foundation_full',
+['default_full'   => 'App\Views\Pagers\foundation_full'];

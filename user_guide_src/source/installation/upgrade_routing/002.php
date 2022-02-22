@@ -11,7 +11,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
     require SYSTEMPATH . 'Config/Routes.php';
 }
 
-...
+// ...
 
 $routes->add('posts/index', 'Posts::index');
 $routes->add('teams/create', 'Teams::create');

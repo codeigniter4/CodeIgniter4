@@ -7,7 +7,7 @@ $data1 = [
     ['title' => 'Second Link', 'link' => '/second'],
 ];
 
-foreach ($data1 as $menuItem),{
+foreach ($data1 as $menuItem){
     $temp .= $parser->setData($menuItem)->renderString($template1);
 }
 

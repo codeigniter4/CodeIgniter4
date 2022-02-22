@@ -7,4 +7,4 @@ $segments = $uri->getSegments();
     0 => 'users',
     1 => '15',
     2 => 'profile'
-]
+];

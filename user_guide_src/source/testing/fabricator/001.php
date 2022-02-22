@@ -1,3 +1,5 @@
 <?php
 
-class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel
+class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel {
+    // ...
+}

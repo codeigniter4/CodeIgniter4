@@ -1,3 +1,3 @@
 <?php
 
-$_SESSION['item']
+$_SESSION['item'];

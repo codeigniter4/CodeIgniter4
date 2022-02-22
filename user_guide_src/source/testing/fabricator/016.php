@@ -6,7 +6,7 @@ array(
     'phone'  => "251-806-2169",
     'avatar' => "http://lorempixel.com/800/400/",
     'login'  => null,
-)
+);
 
 array(
     'first'  => "Bobby",
@@ -14,4 +14,4 @@ array(
     'phone'  => "525-214-2656 x23546",
     'avatar' => "http://lorempixel.com/800/400/",
     'login'  => null,
-)
+);

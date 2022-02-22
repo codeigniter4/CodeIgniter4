@@ -1,5 +1,5 @@
 <?php
 
 if ($result->isRedirect()) {
-    ...
+    // ...
 }

@@ -6,4 +6,4 @@ $errors = $validation->getErrors();
 [
     'field1' => 'error message',
     'field2' => 'error message',
-]
+];

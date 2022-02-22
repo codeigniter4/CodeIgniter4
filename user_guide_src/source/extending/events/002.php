@@ -13,5 +13,5 @@ Events::on('pre_system', 'SomeClass::someMethod');
 // Use a Closure
 Events::on('pre_system', function (...$params)
 {
-    . . .
+    // ...
 });

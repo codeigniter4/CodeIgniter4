@@ -12,3 +12,4 @@ class UserModel
             'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
         ];
     }
+}

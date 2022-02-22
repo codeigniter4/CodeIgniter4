@@ -12,3 +12,4 @@ class UserModel
             'group_id' => rand(1, Fabricator::getCount('groups')),
         ];
     }
+}

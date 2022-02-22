@@ -1,3 +1,3 @@
 <?php
 
-'languageKey' => 'The actual message to be shown.'
+['languageKey' => 'The actual message to be shown.'];

@@ -9,4 +9,4 @@ $timers = $benchmark->getTimers();
         'end'      => 1345678920,
         'duration' => 15.4315, // number of seconds
     ]
-]
+];

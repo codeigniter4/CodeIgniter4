@@ -9,7 +9,7 @@ echo $user->email;
 // Updating
 unset($user->username);
 
-if (! isset($user->username) {
+if (! isset($user->username)) {
     $user->username = 'something new';
 }
 

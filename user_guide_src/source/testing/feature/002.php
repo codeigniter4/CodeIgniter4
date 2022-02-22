@@ -4,7 +4,7 @@
 $result = $this->call('get', '/');
 
 // Submit a form
-$result = $this->call('post', 'contact'), [
+$result = $this->call('post', 'contact', [
     'name'  => 'Fred Flintstone',
     'email' => 'flintyfred@example.com'
 ]);

@@ -7,5 +7,5 @@ foreach ($this->options as $option => $description) {
 }
 
 // Output will be
--n                  Set migration namespace
--r                  override file
+// -n        Set migration namespace
+// -r        override file

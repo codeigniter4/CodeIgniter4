@@ -7,9 +7,13 @@ trait AuthTrait
         $user = $this->createFakeUser();
         $this->logInUser($user);
     }
-...
+    
+    // ...
+}
 
 class AuthenticationFeatureTest
 {
     use AuthTrait;
-...
+
+    // ...
+}

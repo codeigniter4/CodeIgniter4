@@ -1,3 +1,3 @@
 <?php
 
-'default_full'   => 'Pagers/foundation_full',
+['default_full'   => 'Pagers/foundation_full'];

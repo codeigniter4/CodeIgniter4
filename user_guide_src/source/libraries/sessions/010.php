@@ -1,6 +1,6 @@
 <?php
 
-$_SESSION
+$_SESSION;
 
 // or:
 
