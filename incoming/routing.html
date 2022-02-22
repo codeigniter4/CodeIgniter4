@@ -266,48 +266,48 @@
 <h1>URI Routing<a class="headerlink" href="#uri-routing" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#auto-routes-and-defined-routes" id="id5">Auto Routes and Defined Routes</a></p>
+<li><p><a class="reference internal" href="#auto-routes-and-defined-routes" id="id6">Auto Routes and Defined Routes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#auto-routes" id="id6">Auto Routes</a></p></li>
-<li><p><a class="reference internal" href="#defined-routes" id="id7">Defined Routes</a></p></li>
+<li><p><a class="reference internal" href="#auto-routes" id="id7">Auto Routes</a></p></li>
+<li><p><a class="reference internal" href="#defined-routes" id="id8">Defined Routes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#setting-your-own-routing-rules" id="id8">Setting Your Own Routing Rules</a></p>
+<li><p><a class="reference internal" href="#setting-your-own-routing-rules" id="id9">Setting Your Own Routing Rules</a></p>
 <ul>
-<li><p><a class="reference internal" href="#placeholders" id="id9">Placeholders</a></p></li>
-<li><p><a class="reference internal" href="#examples" id="id10">Examples</a></p></li>
-<li><p><a class="reference internal" href="#custom-placeholders" id="id11">Custom Placeholders</a></p></li>
-<li><p><a class="reference internal" href="#regular-expressions" id="id12">Regular Expressions</a></p></li>
-<li><p><a class="reference internal" href="#closures" id="id13">Closures</a></p></li>
-<li><p><a class="reference internal" href="#mapping-multiple-routes" id="id14">Mapping multiple routes</a></p></li>
-<li><p><a class="reference internal" href="#redirecting-routes" id="id15">Redirecting Routes</a></p></li>
-<li><p><a class="reference internal" href="#grouping-routes" id="id16">Grouping Routes</a></p></li>
-<li><p><a class="reference internal" href="#environment-restrictions" id="id17">Environment Restrictions</a></p></li>
-<li><p><a class="reference internal" href="#reverse-routing" id="id18">Reverse Routing</a></p></li>
-<li><p><a class="reference internal" href="#using-named-routes" id="id19">Using Named Routes</a></p></li>
-<li><p><a class="reference internal" href="#routes-with-any-http-verbs" id="id20">Routes with any HTTP verbs</a></p></li>
-<li><p><a class="reference internal" href="#command-line-only-routes" id="id21">Command-Line only Routes</a></p></li>
-<li><p><a class="reference internal" href="#global-options" id="id22">Global Options</a></p></li>
+<li><p><a class="reference internal" href="#placeholders" id="id10">Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id11">Examples</a></p></li>
+<li><p><a class="reference internal" href="#custom-placeholders" id="id12">Custom Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#regular-expressions" id="id13">Regular Expressions</a></p></li>
+<li><p><a class="reference internal" href="#closures" id="id14">Closures</a></p></li>
+<li><p><a class="reference internal" href="#mapping-multiple-routes" id="id15">Mapping multiple routes</a></p></li>
+<li><p><a class="reference internal" href="#redirecting-routes" id="id16">Redirecting Routes</a></p></li>
+<li><p><a class="reference internal" href="#grouping-routes" id="id17">Grouping Routes</a></p></li>
+<li><p><a class="reference internal" href="#environment-restrictions" id="id18">Environment Restrictions</a></p></li>
+<li><p><a class="reference internal" href="#reverse-routing" id="id19">Reverse Routing</a></p></li>
+<li><p><a class="reference internal" href="#using-named-routes" id="id20">Using Named Routes</a></p></li>
+<li><p><a class="reference internal" href="#routes-with-any-http-verbs" id="id21">Routes with any HTTP verbs</a></p></li>
+<li><p><a class="reference internal" href="#command-line-only-routes" id="id22">Command-Line Only Routes</a></p></li>
+<li><p><a class="reference internal" href="#global-options" id="id23">Global Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#routes-configuration-options" id="id23">Routes Configuration Options</a></p>
+<li><p><a class="reference internal" href="#routes-configuration-options" id="id24">Routes Configuration Options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default-namespace" id="id24">Default Namespace</a></p></li>
-<li><p><a class="reference internal" href="#default-controller" id="id25">Default Controller</a></p></li>
-<li><p><a class="reference internal" href="#default-method" id="id26">Default Method</a></p></li>
-<li><p><a class="reference internal" href="#translate-uri-dashes" id="id27">Translate URI Dashes</a></p></li>
-<li><p><a class="reference internal" href="#use-defined-routes-only" id="id28">Use Defined Routes Only</a></p></li>
-<li><p><a class="reference internal" href="#override" id="id29">404 Override</a></p></li>
-<li><p><a class="reference internal" href="#route-processing-by-priority" id="id30">Route processing by priority</a></p></li>
+<li><p><a class="reference internal" href="#default-namespace" id="id25">Default Namespace</a></p></li>
+<li><p><a class="reference internal" href="#default-controller" id="id26">Default Controller</a></p></li>
+<li><p><a class="reference internal" href="#default-method" id="id27">Default Method</a></p></li>
+<li><p><a class="reference internal" href="#translate-uri-dashes" id="id28">Translate URI Dashes</a></p></li>
+<li><p><a class="reference internal" href="#use-defined-routes-only" id="id29">Use Defined Routes Only</a></p></li>
+<li><p><a class="reference internal" href="#override" id="id30">404 Override</a></p></li>
+<li><p><a class="reference internal" href="#route-processing-by-priority" id="id31">Route processing by priority</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-routes" id="id31">Confirming Routes</a></p></li>
+<li><p><a class="reference internal" href="#confirming-routes" id="id32">Confirming Routes</a></p></li>
 </ul>
 </div>
 <section id="auto-routes-and-defined-routes">
-<h2><a class="toc-backref" href="#id5">Auto Routes and Defined Routes</a><a class="headerlink" href="#auto-routes-and-defined-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Auto Routes and Defined Routes</a><a class="headerlink" href="#auto-routes-and-defined-routes" title="Permalink to this headline"></a></h2>
 <section id="auto-routes">
-<h3><a class="toc-backref" href="#id6">Auto Routes</a><a class="headerlink" href="#auto-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Auto Routes</a><a class="headerlink" href="#auto-routes" title="Permalink to this headline"></a></h3>
 <p>Typically there is a one-to-one relationship between a URL string and its corresponding
 controller class/method. The segments in a URI normally follow this pattern:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">id</span><span class="o">/</span>
@@ -326,7 +326,7 @@ the auto-routing feature. See <a class="reference internal" href="#use-defined-r
 </div>
 </section>
 <section id="defined-routes">
-<h3><a class="toc-backref" href="#id7">Defined Routes</a><a class="headerlink" href="#defined-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Defined Routes</a><a class="headerlink" href="#defined-routes" title="Permalink to this headline"></a></h3>
 <p>In some instances, however, you may want to remap this relationship so that a different
 class/method can be called instead of the one corresponding to the URL.</p>
 <p>For example, let’s say you want your URLs to have this prototype:</p>
@@ -342,7 +342,7 @@ We call this “<strong>Defined Routes</strong>”.</p>
 </section>
 </section>
 <section id="setting-your-own-routing-rules">
-<h2><a class="toc-backref" href="#id8">Setting Your Own Routing Rules</a><a class="headerlink" href="#setting-your-own-routing-rules" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Setting Your Own Routing Rules</a><a class="headerlink" href="#setting-your-own-routing-rules" title="Permalink to this headline"></a></h2>
 <p>Routing rules are defined in the <strong>app/Config/Routes.php</strong> file. In it you’ll see that
 it creates an instance of the RouteCollection class (<code class="docutils literal notranslate"><span class="pre">$routes</span></code>) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.</p>
@@ -374,7 +374,7 @@ passed to it, then they would be listed after the method name, separated by forw
 </pre></div>
 </div>
 <section id="placeholders">
-<h3><a class="toc-backref" href="#id9">Placeholders</a><a class="headerlink" href="#placeholders" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Placeholders</a><a class="headerlink" href="#placeholders" title="Permalink to this headline"></a></h3>
 <p>A typical route might look something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
 </pre></div>
@@ -425,7 +425,7 @@ in <a class="reference internal" href="../outgoing/localization.html"><span clas
 </div>
 </section>
 <section id="examples">
-<h3><a class="toc-backref" href="#id10">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
 <p>Here are a few basic routing examples.</p>
 <p>A URL containing the word <strong>journals</strong> in the first segment will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
 and the default method, which is usually <code class="docutils literal notranslate"><span class="pre">index()</span></code>:</p>
@@ -468,7 +468,7 @@ routes. With the examples URLs from above:</p>
 <p>will only match <strong>product/123</strong> and generate 404 errors for other example.</p>
 </section>
 <section id="custom-placeholders">
-<h3><a class="toc-backref" href="#id11">Custom Placeholders</a><a class="headerlink" href="#custom-placeholders" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Custom Placeholders</a><a class="headerlink" href="#custom-placeholders" title="Permalink to this headline"></a></h3>
 <p>You can create your own placeholders that can be used in your routes file to fully customize the experience
 and readability.</p>
 <p>You add new placeholders with the <code class="docutils literal notranslate"><span class="pre">addPlaceholder()</span></code> method. The first parameter is the string to be used as
@@ -480,7 +480,7 @@ This must be called before you add the route:</p>
 </div>
 </section>
 <section id="regular-expressions">
-<h3><a class="toc-backref" href="#id12">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline"></a></h3>
 <p>If you prefer you can use regular expressions to define your routing rules. Any valid regular expression
 is allowed, as are back-references.</p>
 <div class="admonition important">
@@ -508,7 +508,7 @@ redirect them back to the same page after they log in, you may find this example
 </div>
 </section>
 <section id="closures">
-<h3><a class="toc-backref" href="#id13">Closures</a><a class="headerlink" href="#closures" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Closures</a><a class="headerlink" href="#closures" title="Permalink to this headline"></a></h3>
 <p>You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view:</p>
@@ -521,7 +521,7 @@ a simple view:</p>
 </div>
 </section>
 <section id="mapping-multiple-routes">
-<h3><a class="toc-backref" href="#id14">Mapping multiple routes</a><a class="headerlink" href="#mapping-multiple-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Mapping multiple routes</a><a class="headerlink" href="#mapping-multiple-routes" title="Permalink to this headline"></a></h3>
 <p>While the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method is simple to use, it is often handier to work with multiple routes at once, using
 the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method. Instead of calling the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method:</p>
@@ -535,7 +535,7 @@ define an array of routes and then pass it as the first parameter to the <code c
 </div>
 </section>
 <section id="redirecting-routes">
-<h3><a class="toc-backref" href="#id15">Redirecting Routes</a><a class="headerlink" href="#redirecting-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Redirecting Routes</a><a class="headerlink" href="#redirecting-routes" title="Permalink to this headline"></a></h3>
 <p>Any site that lives long enough is bound to have pages that move. You can specify routes that should redirect
 to other routes with the <code class="docutils literal notranslate"><span class="pre">addRedirect()</span></code> method. The first parameter is the URI pattern for the old route. The
 second parameter is either the new URI to redirect to, or the name of a named route. The third parameter is
@@ -553,7 +553,7 @@ redirect and is recommended in most cases:</p>
 controller can be loaded.</p>
 </section>
 <section id="grouping-routes">
-<h3><a class="toc-backref" href="#id16">Grouping Routes</a><a class="headerlink" href="#grouping-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Grouping Routes</a><a class="headerlink" href="#grouping-routes" title="Permalink to this headline"></a></h3>
 <p>You can group your routes under a common name with the <code class="docutils literal notranslate"><span class="pre">group()</span></code> method. The group name becomes a segment that
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area:</p>
@@ -605,7 +605,7 @@ given route config options:</p>
 </div>
 </section>
 <section id="environment-restrictions">
-<h3><a class="toc-backref" href="#id17">Environment Restrictions</a><a class="headerlink" href="#environment-restrictions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Environment Restrictions</a><a class="headerlink" href="#environment-restrictions" title="Permalink to this headline"></a></h3>
 <p>You can create a set of routes that will only be viewable in a certain environment. This allows you to create
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the <code class="docutils literal notranslate"><span class="pre">environment()</span></code> method. The first parameter is the name of the environment. Any
@@ -617,7 +617,7 @@ routes defined within this closure are only accessible from the given environmen
 </div>
 </section>
 <section id="reverse-routing">
-<h3><a class="toc-backref" href="#id18">Reverse Routing</a><a class="headerlink" href="#reverse-routing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Reverse Routing</a><a class="headerlink" href="#reverse-routing" title="Permalink to this headline"></a></h3>
 <p>Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
 to, and have the router lookup the current route to it. This allows route definitions to change without you having
 to update your application code. This is typically used within views to create links.</p>
@@ -635,7 +635,7 @@ should be passed to the route are passed in next:</p>
 </div>
 </section>
 <section id="using-named-routes">
-<h3><a class="toc-backref" href="#id19">Using Named Routes</a><a class="headerlink" href="#using-named-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Using Named Routes</a><a class="headerlink" href="#using-named-routes" title="Permalink to this headline"></a></h3>
 <p>You can name routes to make your application less fragile. This applies a name to a route that can be called
 later, and even if the route definition changes, all of the links in your application built with <code class="docutils literal notranslate"><span class="pre">route_to()</span></code>
 will still work without you having to make any changes. A route is named by passing in the <code class="docutils literal notranslate"><span class="pre">as</span></code> option
@@ -651,7 +651,7 @@ with the name of the route:</p>
 <p>This has the added benefit of making the views more readable, too.</p>
 </section>
 <section id="routes-with-any-http-verbs">
-<h3><a class="toc-backref" href="#id20">Routes with any HTTP verbs</a><a class="headerlink" href="#routes-with-any-http-verbs" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id21">Routes with any HTTP verbs</a><a class="headerlink" href="#routes-with-any-http-verbs" title="Permalink to this headline"></a></h3>
 <p>It is possible to define a route with any HTTP verbs.
 You can use the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
@@ -672,7 +672,7 @@ when trying to find a match.</p>
 </div>
 </section>
 <section id="command-line-only-routes">
-<h3><a class="toc-backref" href="#id21">Command-Line only Routes</a><a class="headerlink" href="#command-line-only-routes" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id22">Command-Line Only Routes</a><a class="headerlink" href="#command-line-only-routes" title="Permalink to this headline"></a></h3>
 <p>You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method will still be
@@ -680,9 +680,14 @@ available from the command line:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Database::migrate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you don’t disable auto-routing and place the command file in <strong>app/Controllers</strong>,
+anyone could access the command with the help of auto-routing via HTTP.</p>
+</div>
 </section>
 <section id="global-options">
-<h3><a class="toc-backref" href="#id22">Global Options</a><a class="headerlink" href="#global-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id23">Global Options</a><a class="headerlink" href="#global-options" title="Permalink to this headline"></a></h3>
 <p>All of the methods for creating a route (add, get, post, <a class="reference internal" href="restful.html"><span class="doc">resource</span></a> etc) can take an array of options that
 can modify the generated routes, or further restrict them. The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array is always the last parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
@@ -700,7 +705,7 @@ can modify the generated routes, or further restrict them. The <code class="docu
 </pre></div>
 </div>
 <section id="applying-filters">
-<span id="id1"></span><h4>Applying Filters<a class="headerlink" href="#applying-filters" title="Permalink to this headline"></a></h4>
+<span id="id2"></span><h4>Applying Filters<a class="headerlink" href="#applying-filters" title="Permalink to this headline"></a></h4>
 <p>You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
 The value for the filter can be a string or an array of strings:</p>
 <ul class="simple">
@@ -742,7 +747,7 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 </div>
 </section>
 <section id="assigning-namespace">
-<span id="id2"></span><h4>Assigning Namespace<a class="headerlink" href="#assigning-namespace" title="Permalink to this headline"></a></h4>
+<span id="id3"></span><h4>Assigning Namespace<a class="headerlink" href="#assigning-namespace" title="Permalink to this headline"></a></h4>
 <p>While a default namespace will be prepended to the generated controllers (see below), you can also specify
 a different namespace to be used in any options array, with the <code class="docutils literal notranslate"><span class="pre">namespace</span></code> option. The value should be the
 namespace you want modified:</p>
@@ -830,11 +835,11 @@ Negative integers will be cast to the absolute value.</p>
 </section>
 </section>
 <section id="routes-configuration-options">
-<span id="id3"></span><h2><a class="toc-backref" href="#id23">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline"></a></h2>
+<span id="id4"></span><h2><a class="toc-backref" href="#id24">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline"></a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application’s needs. These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-namespace">
-<h3><a class="toc-backref" href="#id24">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id25">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline"></a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
 specified by the route. By default, this value is <code class="docutils literal notranslate"><span class="pre">App\Controllers</span></code>.</p>
 <p>If you set the value empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>), it leaves each route to specify the fully namespaced
@@ -861,7 +866,7 @@ then you can change this value to save typing:</p>
 </div>
 </section>
 <section id="default-controller">
-<h3><a class="toc-backref" href="#id25">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id26">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h3>
 <p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
 which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
@@ -874,7 +879,7 @@ in the controllers directory. For example, if the user visits <strong>example.co
 <strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
 </section>
 <section id="default-method">
-<h3><a class="toc-backref" href="#id26">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id27">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h3>
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
@@ -885,7 +890,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 </div>
 </section>
 <section id="translate-uri-dashes">
-<h3><a class="toc-backref" href="#id27">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id28">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
 <p>This option enables you to automatically replace dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
@@ -894,7 +899,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 </div>
 </section>
 <section id="use-defined-routes-only">
-<span id="id4"></span><h3><a class="toc-backref" href="#id28">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
+<span id="id5"></span><h3><a class="toc-backref" href="#id29">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
@@ -908,7 +913,7 @@ requests. If the URI is accessible by the GET method, the CSRF protection will n
 </div>
 </section>
 <section id="override">
-<h3><a class="toc-backref" href="#id29">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id30">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
@@ -924,7 +929,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 </div>
 </section>
 <section id="route-processing-by-priority">
-<h3><a class="toc-backref" href="#id30">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id31">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
 <p>Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route processing queue</span></a>:</p>
@@ -938,7 +943,7 @@ For an example use of lowering the priority see <a class="reference internal" hr
 </section>
 </section>
 <section id="confirming-routes">
-<h2><a class="toc-backref" href="#id31">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id32">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">command</span></a> to display all routes.</p>
 <p id="spark-routes"><strong>routes</strong></p>
 <p>Displays all routes and filters:</p>

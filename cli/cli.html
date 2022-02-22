@@ -351,14 +351,19 @@ scripts even more pleasant, include CLI-only routing, and a library that helps
 you with CLI-only tools.</p>
 <section id="cli-only-routing">
 <h3><a class="toc-backref" href="#id5">CLI-Only Routing</a><a class="headerlink" href="#cli-only-routing" title="Permalink to this headline"></a></h3>
-<p>In your <strong>Routes.php</strong> file you can create routes that are only accessible from
+<p>In your <strong>app/Config/Routes.php</strong> file you can create routes that are only accessible from
 the CLI as easily as you would create any other route. Instead of using the <code class="docutils literal notranslate"><span class="pre">get()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">post()</span></code>, or similar method, you would use the <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. Everything else
 works exactly like a normal route definition:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;tools/message/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools::message/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>For more information, see the <a class="reference internal" href="../incoming/routing.html"><span class="doc">Routes</span></a> page.</p>
+<p>For more information, see the <a class="reference internal" href="../incoming/routing.html#command-line-only-routes"><span class="std std-ref">Routes</span></a> page.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you don’t disable auto-routing and place the command file in <strong>app/Controllers</strong>,
+anyone could access the command with the help of auto-routing via HTTP.</p>
+</div>
 </section>
 <section id="the-cli-library">
 <h3><a class="toc-backref" href="#id6">The CLI Library</a><a class="headerlink" href="#the-cli-library" title="Permalink to this headline"></a></h3>
