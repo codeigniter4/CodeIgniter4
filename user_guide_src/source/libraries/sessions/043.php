@@ -1,4 +1,4 @@
 <?php
 
-public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
-public $sessionSavePath = 'localhost:11211';
+public string $handler  = 'CodeIgniter\Session\Handlers\MemcachedHandler';
+public string $savePath = 'localhost:11211';

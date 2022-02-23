@@ -1,4 +1,4 @@
 <?php
 
-public $sessionDriver   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
-public $sessionSavePath = 'ci_sessions';
+public string $handler   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
+public string $savePath = 'ci_sessions';
