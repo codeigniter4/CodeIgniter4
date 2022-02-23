@@ -14,7 +14,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
 use Config\App;
-use Tests\Support\Config\Services as Services;
+use Tests\Support\Config\Services;
 
 /**
  * @internal

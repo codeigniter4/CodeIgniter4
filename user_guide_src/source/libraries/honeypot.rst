@@ -15,18 +15,10 @@ Enabling Honeypot
 =====================
 
 To enable a Honeypot, changes have to be made to the **app/Config/Filters.php**. Just uncomment honeypot
-from the ``$globals`` array, like...::
+from the ``$globals`` array, like...:
 
-    public $globals = [
-        'before' => [
-            'honeypot'
-            // 'csrf',
-        ],
-        'after' => [
-            'toolbar',
-            'honeypot',
-        ],
-    ];
+.. literalinclude:: honeypot/001.php
+   :lines: 2-
 
 A sample Honeypot filter is bundled, as ``system/Filters/Honeypot.php``.
 If it is not suitable, make your own at ``app/Filters/Honeypot.php``,

@@ -5,13 +5,11 @@ Upgrade Sessions
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Session Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/sessions.html>`_
 - :doc:`Session Library Documentation CodeIgniter 4.X </libraries/sessions>`
-
 
 What has been changed
 =====================
@@ -32,21 +30,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('session');
-
-    $_SESSION['item'];
-    $this->session->item;
-    $this->session->userdata('item');
+.. literalinclude:: upgrade_sessions/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $session = session();
-
-    $_SESSION['item'];
-    $session->get('item');
-    $session->item;
-    session('item');
+.. literalinclude:: upgrade_sessions/002.php
+   :lines: 2-

@@ -1,0 +1,3 @@
+<?php
+
+$uri = service('uri');

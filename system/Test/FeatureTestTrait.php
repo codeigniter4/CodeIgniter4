@@ -184,6 +184,7 @@ trait FeatureTestTrait
         Services::injectMock('filters', Services::filters(null, false));
 
         $response = $this->app
+            ->setContext('web')
             ->setRequest($request)
             ->run($routes, true);
 

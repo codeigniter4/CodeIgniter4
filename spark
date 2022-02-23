@@ -1,6 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 /*
  * --------------------------------------------------------------------
  * CodeIgniter command-line tools
@@ -12,6 +21,11 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
+/**
+ * @var bool
+ *
+ * @deprecated No longer in use. `CodeIgniter` has `$context` property.
+ */
 define('SPARKED', true);
 
 /*
@@ -42,7 +56,9 @@ $paths = new Config\Paths();
 chdir(FCPATH);
 
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-$app       = require realpath($bootstrap) ?: $bootstrap;
+/** @var CodeIgniter\CodeIgniter $app */
+$app = require realpath($bootstrap) ?: $bootstrap;
+$app->setContext('spark');
 
 // Grab our Console
 $console = new CodeIgniter\CLI\Console($app);

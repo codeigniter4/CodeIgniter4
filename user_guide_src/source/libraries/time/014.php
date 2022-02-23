@@ -1,0 +1,3 @@
+<?php
+
+$datetime = Time::toDateTime();

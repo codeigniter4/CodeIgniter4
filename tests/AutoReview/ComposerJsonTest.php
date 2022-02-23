@@ -36,6 +36,32 @@ final class ComposerJsonTest extends TestCase
         );
     }
 
+    public function testFrameworkRequireDevIsTheSameWithDevRequireDev(): void
+    {
+        $devComposer       = $this->getComposerJson(dirname(__DIR__, 2) . '/composer.json');
+        $frameworkComposer = $this->getComposerJson(dirname(__DIR__, 2) . '/admin/framework/composer.json');
+
+        $devRequireDev = $devComposer['require-dev'];
+        $fwRequireDev  = $frameworkComposer['require-dev'];
+
+        foreach ($devRequireDev as $dependency => $expectedVersion) {
+            if (! isset($fwRequireDev[$dependency])) {
+                $this->addToAssertionCount(1);
+
+                continue;
+            }
+
+            $this->assertSame($expectedVersion, $fwRequireDev[$dependency], sprintf(
+                'Framework\'s "%s" dev dependency is expected to have version constraint of "%s", found "%s" instead.' .
+                "\nPlease update the version constraint at %s.",
+                $dependency,
+                $expectedVersion,
+                $fwRequireDev[$dependency],
+                clean_path(dirname(__DIR__, 2) . '/admin/framework/composer.json')
+            ));
+        }
+    }
+
     private function getComposerJson(string $path): array
     {
         try {

@@ -29,9 +29,10 @@ Using Kint
 **d()**
 
 The ``d()`` method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
-allows the script to continue executing::
+allows the script to continue executing:
 
-    d($_SERVER);
+.. literalinclude:: debugging/001.php
+   :lines: 2-
 
 **dd()**
 
@@ -39,9 +40,10 @@ This method is identical to ``d()``, except that it also ``dies()`` and no furth
 
 **trace()**
 
-This provides a backtrace to the current execution point, with Kint's own unique spin::
+This provides a backtrace to the current execution point, with Kint's own unique spin:
 
-    trace();
+.. literalinclude:: debugging/002.php
+   :lines: 2-
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
@@ -74,18 +76,10 @@ Choosing What to Show
 
 CodeIgniter ships with several Collectors that, as the name implies, collect data to display on the toolbar. You
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
-the **app/Config/Toolbar.php** configuration file::
+the **app/Config/Toolbar.php** configuration file:
 
-    public $collectors = [
-        \CodeIgniter\Debug\Toolbar\Collectors\Timers::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Database::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Logs::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Views::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Files::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Routes::class,
-        \CodeIgniter\Debug\Toolbar\Collectors\Events::class,
-    ];
+.. literalinclude:: debugging/003.php
+   :lines: 2-
 
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
@@ -119,24 +113,8 @@ Creating custom collectors is a straightforward task. You create a new class, fu
 can locate it, that extends ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector``. This provides a number of methods
 that you can override, and has four required class properties that you must correctly set depending on how you want
 the Collector to work
-::
 
-    <?php
-
-    namespace MyNamespace;
-
-    use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
-
-    class MyCollector extends BaseCollector
-    {
-        protected $hasTimeline = false;
-
-        protected $hasTabContent = false;
-
-        protected $hasVarData = false;
-
-        protected $title = '';
-    }
+.. literalinclude:: debugging/004.php
 
 **$hasTimeline** should be set to ``true`` for any Collector that wants to display information in the toolbar's
 timeline. If this is true, you will need to implement the ``formatTimelineData()`` method to format and return the
@@ -178,14 +156,10 @@ To provide information to be displayed in the Timeline you must:
 2. Implement the ``formatTimelineData()`` method.
 
 The ``formatTimelineData()`` method must return an array of arrays formatted in a way that the timeline can use
-it to sort it correctly and display the correct information. The inner arrays must include the following information::
+it to sort it correctly and display the correct information. The inner arrays must include the following information:
 
-    $data[] = [
-        'name'      => '',     // Name displayed on the left of the timeline
-        'component' => '',     // Name of the Component listed in the middle of timeline
-        'start'     => 0.00,   // start time, like microtime(true)
-        'duration'  => 0.00,   // duration, like mircrotime(true) - microtime(true)
-    ];
+.. literalinclude:: debugging/005.php
+   :lines: 2-
 
 Providing Vars
 --------------
@@ -196,15 +170,7 @@ To add data to the Vars tab you must:
 2. Implement ``getVarData()`` method.
 
 The ``getVarData()`` method should return an array containing arrays of key/value pairs to display. The name of the
-outer array's key is the name of the section on the Vars tab::
+outer array's key is the name of the section on the Vars tab:
 
-    $data = [
-        'section 1' => [
-            'foo' => 'bar',
-            'bar' => 'baz',
-        ],
-        'section 2' => [
-            'foo' => 'bar',
-            'bar' => 'baz',
-        ],
-     ];
+.. literalinclude:: debugging/006.php
+   :lines: 2-

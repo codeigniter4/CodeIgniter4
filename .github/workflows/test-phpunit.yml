@@ -157,7 +157,7 @@ jobs:
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
       - name: Compute coverage option
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         id: phpunit-coverage-option
         with:
           script: 'return "${{ matrix.php-versions }}" == "8.0" ? "" : "--no-coverage"'

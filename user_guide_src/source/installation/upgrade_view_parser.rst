@@ -5,13 +5,11 @@ Upgrade View Parser
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Template Parser Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/parser.html>`_
 - :doc:`View Parser Documentation CodeIgniter 4.X </outgoing/view_parser>`
-
 
 What has been changed
 =====================
@@ -28,28 +26,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('parser');
-
-    $data = array(
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading'
-    );
-
-    $this->parser
-        ->parse('blog_template', $data);
+.. literalinclude:: upgrade_view_parser/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $parser = service('parser');
-
-    $data = [
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading'
-    ];
-
-    echo $parser->setData($data)
-        ->render('blog_template');
+.. literalinclude:: upgrade_view_parser/002.php
+   :lines: 2-

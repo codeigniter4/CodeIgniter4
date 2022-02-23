@@ -10,51 +10,15 @@ The Test Class
 ==============
 
 In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
-tests must extend ``CIUnitTestCase`` and use the ``DatabaseTestTrait``::
+tests must extend ``CIUnitTestCase`` and use the ``DatabaseTestTrait``:
 
-    <?php
-
-    namespace App\Database;
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class MyTests extends CIUnitTestCase
-    {
-        use DatabaseTestTrait;
-
-        // ...
-    }
+.. literalinclude:: database/001.php
 
 Because special functionality executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
 that you call the parent's methods if you need to use those methods, otherwise you will lose much
-of the functionality described here::
+of the functionality described here:
 
-    <?php
-
-    namespace App\Database;
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class MyTests extends CIUnitTestCase
-    {
-        use DatabaseTestTrait;
-
-        public function setUp()
-        {
-            parent::setUp();
-
-            // Do something here....
-        }
-
-        public function tearDown()
-        {
-            parent::tearDown();
-
-            // Do something here....
-        }
-    }
+.. literalinclude:: database/002.php
 
 Setting Up a Test Database
 ==========================
@@ -79,23 +43,8 @@ Migrations and Seeds
 When running tests, you need to ensure that your database has the correct schema set up and that
 it is in a known state for every test. You can use migrations and seeds to set up your database,
 by adding a couple of class properties to your test.
-::
 
-    <?php
-
-    namespace App\Database;
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class MyTests extends CIUnitTestCase
-    {
-        use DatabaseTestTrait;
-
-        protected $refresh  = true;
-        protected $seed     = 'TestSeeder';
-        protected $basePath = 'path/to/database/files';
-    }
+.. literalinclude:: database/003.php
 
 **$migrate**
 
@@ -159,51 +108,36 @@ must be present within the path specified in ``$basePath``.
 **dontSeeInDatabase($table, $criteria)**
 
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES NOT exist in the database.
-::
 
-    $criteria = [
-        'email'  => 'joe@example.com',
-        'active' => 1,
-    ];
-    $this->dontSeeInDatabase('users', $criteria);
+.. literalinclude:: database/004.php
+   :lines: 2-
 
 **seeInDatabase($table, $criteria)**
 
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES exist in the database.
-::
 
-    $criteria = [
-        'email'  => 'joe@example.com',
-        'active' => 1,
-    ];
-    $this->seeInDatabase('users', $criteria);
+.. literalinclude:: database/005.php
+   :lines: 2-
 
 **grabFromDatabase($table, $column, $criteria)**
 
 Returns the value of ``$column`` from the specified table where the row matches ``$criteria``. If more than one
 row is found, it will only test against the first one.
-::
 
-    $username = $this->grabFromDatabase('users', 'username', ['email' => 'joe@example.com']);
+.. literalinclude:: database/006.php
+   :lines: 2-
 
 **hasInDatabase($table, $data)**
 
 Inserts a new row into the database. This row is removed after the current test runs. ``$data`` is an associative
 array with the data to insert into the table.
-::
 
-    $data = [
-        'email' => 'joe@example.com',
-        'name'  => 'Joe Cool',
-    ];
-    $this->hasInDatabase('users', $data);
+.. literalinclude:: database/007.php
+   :lines: 2-
 
 **seeNumRecords($expected, $table, $criteria)**
 
 Asserts that a number of matching rows are found in the database that match ``$criteria``.
-::
 
-    $criteria = [
-        'active' => 1,
-    ];
-    $this->seeNumRecords(2, 'users', $criteria);
+.. literalinclude:: database/008.php
+   :lines: 2-

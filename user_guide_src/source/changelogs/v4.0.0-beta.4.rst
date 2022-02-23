@@ -17,7 +17,6 @@ New messages:
 
 App changes:
 
-
 Testing changes:
 
 - enhanced database & migration testing in tests/_support
@@ -151,7 +150,6 @@ The list of changed files follows, with PR numbers shown.
         - view_parser #e21823, 32005
     - testing/
         - database #2051, #2053
-
 
 PRs merged:
 -----------

@@ -1,0 +1,5 @@
+<?php
+
+[
+    'avatar' => // UploadedFile instance
+]

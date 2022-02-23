@@ -44,14 +44,16 @@ now CSRF protection works on not only **POST** but also **PUT/PATCH/DELETE** req
 When you use **PUT/PATCH/DELETE** requests, you need to send CSRF token. Or remove the CSRF filter
 for such requests if you don't need CSRF protection for them.
 
-If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**::
+If you want the same behavior as the previous version, set the CSRF filter like the following in **app/Config/Filters.php**:
 
-    public $methods = [
-        'get'  => ['csrf'],
-        'post' => ['csrf'],
-    ];
+.. literalinclude:: upgrade_415/001.php
+   :lines: 2-
 
 Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
+
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
+    because auto-routing permits any HTTP method to access a controller.
+    Accessing the controller with a method you don't expect could bypass the filter.
 
 CURLRequest header change
 -------------------------

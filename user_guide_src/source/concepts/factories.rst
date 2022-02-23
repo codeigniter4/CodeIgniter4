@@ -17,29 +17,26 @@ multiple instances loaded across your app.
 
 Anything can be loaded by Factories, but the best examples are those classes that are used
 to work on or transmit common data. The framework itself uses Factories internally, e.g., to
-make sure the correct configuration is loaded when using the ``Config`` class. 
+make sure the correct configuration is loaded when using the ``Config`` class.
 
 Take a look at ``Models`` as an example. You can access the Factory specific to ``Models``
 by using the magic static method of the Factories class, ``Factories::models()``. Because of
 the common path structure for namespaces and folders, Factories know that the model files
-and classes are found within **Models**, so you can request a model by its shorthand base name::
+and classes are found within **Models**, so you can request a model by its shorthand base name:
 
-    use CodeIgniter\Config\Factories;
+.. literalinclude:: factories/001.php
+   :lines: 2-
 
-    $users = Factories::models('UserModel');
+Or you could also request a specific class:
 
-Or you could also request a specific class::
-
-    $widgets = Factories::models('Some\Namespace\Models\WidgetModel');
+.. literalinclude:: factories/002.php
+   :lines: 2-
 
 Next time you ask for the same class anywhere in your code, ``Factories`` will be sure
-you get back the instance as before::
+you get back the instance as before:
 
-    class SomeOtherClass
-    {
-        $widgets = Factories::models('WidgetModel');
-        // ...
-    }
+.. literalinclude:: factories/003.php
+   :lines: 2-
 
 Factory Parameters
 ==================
@@ -50,10 +47,10 @@ These directives will override the default options configured for each component
 Any more parameters passed at the same time will be forwarded on to the class
 constructor, making it easy to configure your class instance on-the-fly. For example, say
 your app uses a separate database for authentication and you want to be sure that any attempts
-to access user records always go through that connection::
+to access user records always go through that connection:
 
-    $conn  = db_connect('AuthDatabase');
-    $users = Factories::models('UserModel', [], $conn);
+.. literalinclude:: factories/004.php
+   :lines: 2-
 
 Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
 class instance that uses the alternate database connection.
@@ -96,21 +93,9 @@ Configurations
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component. For example,
 if you wanted to ensure that all Filters used by your app were valid framework instances,
-your **Factories.php** file might look like this::
+your **Factories.php** file might look like this:
 
-    <?php
-
-    namespace Config;
-
-    use CodeIgniter\Config\Factory as BaseFactory;
-    use CodeIgniter\Filters\FilterInterface;
-
-    class Factories extends BaseFactory
-    {
-        public $filters = [
-            'instanceOf' => FilterInterface::class,
-        ];
-    }
+.. literalinclude:: factories/005.php
 
 This would prevent conflict of an unrelated third-party module which happened to have an
 unrelated "Filters" path in its namespace.
@@ -120,12 +105,10 @@ setOptions Method
 
 The ``Factories`` class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the ``setOptions()`` method and they will be
-merged with the default values and stored for the next call::
+merged with the default values and stored for the next call:
 
-    Factories::setOptions('filters', [
-        'instanceOf' => FilterInterface::class,
-        'prefersApp' => false,
-    ]);
+.. literalinclude:: factories/006.php
+   :lines: 2-
 
 Parameter Options
 -----------------
@@ -137,7 +120,7 @@ names as keys to each overriding value.
 
 For example, by default ``Factories`` assumes that you want to locate a shared instance of
 a component. By adding a second parameter to the magic static call, you can control whether
-that single call will return a new or shared instance::
+that single call will return a new or shared instance:
 
-    $users = Factories::models('UserModel', ['getShared' => true]); // Default; will always be the same instance
-    $other = Factories::models('UserModel', ['getShared' => false]); // Will always create a new instance
+.. literalinclude:: factories/007.php
+   :lines: 2-

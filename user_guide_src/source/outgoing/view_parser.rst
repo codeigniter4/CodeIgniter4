@@ -43,14 +43,16 @@ representations that allow you to eliminate PHP from your templates
 Using the View Parser Class
 ***************************
 
-The simplest method to load the parser class is through its service::
+The simplest method to load the parser class is through its service:
 
-    $parser = \Config\Services::parser();
+.. literalinclude:: view_parser/001.php
+   :lines: 2-
 
 Alternately, if you are not using the ``Parser`` class as your default renderer, you
-can instantiate it directly::
+can instantiate it directly:
 
-    $parser = new \CodeIgniter\View\Parser();
+.. literalinclude:: view_parser/002.php
+   :lines: 2-
 
 Then you can use any of the three standard rendering methods that it provides:
 ``render(viewpath, options, save)``, ``setVar(name, value, context)`` and
@@ -85,15 +87,10 @@ Parser templates
 ================
 
 You can use the ``render()`` method to parse (or render) simple templates,
-like this::
+like this:
 
-    $data = [
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading',
-    ];
-
-    echo $parser->setData($data)
-                ->render('blog_template');
+.. literalinclude:: view_parser/003.php
+   :lines: 2-
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
@@ -116,12 +113,8 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 -   ``cascadeData`` - true if pseudo-variable settings should be passed on to nested
     substitutions; default is **true**
 
-::
-
-    echo $parser->render('blog_template', [
-        'cache'      => HOUR,
-        'cache_name' => 'something_unique',
-    ]);
+.. literalinclude:: view_parser/004.php
+   :lines: 2-
 
 ***********************
 Substitution Variations
@@ -132,14 +125,10 @@ Substitutions are performed in the same sequence that pseudo-variables were adde
 
 The **simple substitution** performed by the parser is a one-to-one
 replacement of pseudo-variables where the corresponding data parameter
-has either a scalar or string value, as in this example::
+has either a scalar or string value, as in this example:
 
-    $template = '<head><title>{blog_title}</title></head>';
-    $data     = ['blog_title' => 'My ramblings'];
-
-    echo $parser->setData($data)->renderString($template);
-
-    // Result: <head><title>My ramblings</title></head>
+.. literalinclude:: view_parser/005.php
+   :lines: 2-
 
 The ``Parser`` takes substitution a lot further with "variable pairs",
 used for nested substitutions or looping, and with some advanced
@@ -184,22 +173,10 @@ the number of rows in the "blog_entries" element of the parameters array.
 
 Parsing variable pairs is done using the identical code shown above to
 parse single variables, except, you will add a multi-dimensional array
-corresponding to your variable pair data. Consider this example::
+corresponding to your variable pair data. Consider this example:
 
-    $data = [
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading',
-        'blog_entries' => [
-            ['title' => 'Title 1', 'body' => 'Body 1'],
-            ['title' => 'Title 2', 'body' => 'Body 2'],
-            ['title' => 'Title 3', 'body' => 'Body 3'],
-            ['title' => 'Title 4', 'body' => 'Body 4'],
-            ['title' => 'Title 5', 'body' => 'Body 5'],
-        ],
-    ];
-
-    echo $parser->setData($data)
-                ->render('blog_template');
+.. literalinclude:: view_parser/006.php
+   :lines: 2-
 
 The value for the pseudo-variable ``blog_entries`` is a sequential
 array of associative arrays. The outer level does not have keys associated
@@ -207,18 +184,10 @@ with each of the nested "rows".
 
 If your "pair" data is coming from a database result, which is already a
 multi-dimensional array, you can simply use the database ``getResultArray()``
-method::
+method:
 
-    $query = $db->query("SELECT * FROM blog");
-
-    $data = [
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading',
-        'blog_entries' => $query->getResultArray(),
-    ];
-
-    echo $parser->setData($data)
-                ->render('blog_template');
+.. literalinclude:: view_parser/007.php
+   :lines: 2-
 
 If the array you are trying to loop over contains objects instead of arrays,
 the parser will first look for an ``asArray()`` method on the object. If it exists,
@@ -234,19 +203,10 @@ Nested Substitutions
 ====================
 
 A nested substitution happens when the value for a pseudo-variable is
-an associative array of values, like a record from a database::
+an associative array of values, like a record from a database:
 
-    $data = [
-        'blog_title'   => 'My Blog Title',
-        'blog_heading' => 'My Blog Heading',
-        'blog_entry'   => [
-            'title' => 'Title 1',
-            'body'  => 'Body 1',
-        ],
-    ];
-
-    echo $parser->setData($data)
-                ->render('blog_template');
+.. literalinclude:: view_parser/008.php
+   :lines: 2-
 
 The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
@@ -287,32 +247,15 @@ Cascading Data
 With both a nested and a loop substitution, you have the option of cascading
 data pairs into the inner substitution.
 
-The following example is not impacted by cascading::
+The following example is not impacted by cascading:
 
-    $template = '{name} lives in {location}{city} on {planet}{/location}.';
+.. literalinclude:: view_parser/009.php
+   :lines: 2-
 
-    $data = [
-        'name'     => 'George',
-        'location' => ['city' => 'Red City', 'planet' => 'Mars'],
-    ];
+This example gives different results, depending on cascading:
 
-    echo $parser->setData($data)->renderString($template);
-    // Result: George lives in Red City on Mars.
-
-This example gives different results, depending on cascading::
-
-    $template = '{location}{name} lives in {city} on {planet}{/location}.';
-
-    $data = [
-        'name'     => 'George',
-        'location' => ['city' => 'Red City', 'planet' => 'Mars'],
-    ];
-
-    echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
-    // Result: {name} lives in Red City on Mars.
-
-    echo $parser->setData($data)->renderString($template, ['cascadeData'=>true]);
-    // Result: George lives in Red City on Mars.
+.. literalinclude:: view_parser/010.php
+   :lines: 2-
 
 Preventing Parsing
 ==================
@@ -336,11 +279,9 @@ blocks must be closed with an ``endif`` tag::
         <h1>Welcome, Admin!</h1>
     {endif}
 
-This simple block is converted to the following during parsing::
+This simple block is converted to the following during parsing:
 
-    <?php if ($role=='admin'): ?>
-        <h1>Welcome, Admin!</h1>
-    <?php endif ?>
+.. literalinclude:: view_parser/011.php
 
 All variables used within if statements must have been previously set with the same name. Other than that, it is
 treated exactly like a standard PHP conditional, and all standard PHP rules would apply here. You can use any
@@ -470,23 +411,20 @@ Custom Filters
 
 You can easily create your own filters by editing **app/Config/View.php** and adding new entries to the
 ``$filters`` array. Each key is the name of the filter is called by in the view, and its value is any valid PHP
-callable::
+callable:
 
-    public $filters = [
-        'abs'        => '\CodeIgniter\View\Filters::abs',
-        'capitalize' => '\CodeIgniter\View\Filters::capitalize',
-    ];
+.. literalinclude:: view_parser/012.php
+   :lines: 2-
 
 PHP Native functions as Filters
 -------------------------------
 
 You can use native php function as filters by editing **app/Config/View.php** and adding new entries to the
 ``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
-function prefixed with::
+function prefixed with:
 
-    public $filters = [
-        'str_repeat' => '\str_repeat',
-    ];
+.. literalinclude:: view_parser/013.php
+   :lines: 2-
 
 Parser Plugins
 ==============
@@ -541,100 +479,50 @@ Registering a Plugin
 
 At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
 **app/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
-used within the template file. The value is any valid PHP callable, including static class methods, and closures::
+used within the template file. The value is any valid PHP callable, including static class methods, and closures:
 
-    public $plugins = [
-        'foo' => '\Some\Class::methodName',
-        'bar' => function ($str, array $params=[]) {
-            return $str;
-        },
-    ];
+.. literalinclude:: view_parser/014.php
+   :lines: 2-
 
-Any closures that are being used must be defined in the config file's constructor::
+Any closures that are being used must be defined in the config file's constructor:
 
-    class View extends \CodeIgniter\Config\View
-    {
-        public $plugins = [];
-
-        public function __construct()
-        {
-            $this->plugins['bar'] = function (array $params=[]) {
-                return $params[0] ?? '';
-            };
-
-            parent::__construct();
-        }
-    }
+.. literalinclude:: view_parser/015.php
+   :lines: 2-
 
 If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
-the return value from the plugin::
+the return value from the plugin:
 
-    public $plugins = [
-        'foo' => '\Some\Class::methodName'
-    ];
-
-    // Tag is replaced by the return value of Some\Class::methodName static function.
-    {+ foo +}
+.. literalinclude:: view_parser/016.php
+   :lines: 2-
 
 If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of
-the content between its tags::
+the content between its tags:
 
-    public $plugins = [
-        'foo' => ['\Some\Class::methodName']
-    ];
-
-    {+ foo +} inner content {+ /foo +}
+.. literalinclude:: view_parser/017.php
+   :lines: 2-
 
 ***********
 Usage Notes
 ***********
 
 If you include substitution parameters that are not referenced in your
-template, they are ignored::
+template, they are ignored:
 
-    $template = 'Hello, {firstname} {lastname}';
-    $data = [
-        'title'     => 'Mr',
-        'firstname' => 'John',
-        'lastname'  => 'Doe'
-    ];
-    echo $parser->setData($data)
-                ->renderString($template);
-
-    // Result: Hello, John Doe
+.. literalinclude:: view_parser/018.php
+   :lines: 2-
 
 If you do not include a substitution parameter that is referenced in your
-template, the original pseudo-variable is shown in the result::
+template, the original pseudo-variable is shown in the result:
 
-    $template = 'Hello, {firstname} {initials} {lastname}';
-    $data = [
-        'title'     => 'Mr',
-        'firstname' => 'John',
-        'lastname'  => 'Doe',
-    ];
-    echo $parser->setData($data)
-                ->renderString($template);
-
-    // Result: Hello, John {initials} Doe
+.. literalinclude:: view_parser/019.php
+   :lines: 2-
 
 If you provide a string substitution parameter when an array is expected,
 i.e., for a variable pair, the substitution is done for the opening variable
-pair tag, but the closing variable pair tag is not rendered properly::
+pair tag, but the closing variable pair tag is not rendered properly:
 
-    $template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
-    $data = [
-        'degrees'   => 'Mr',
-        'firstname' => 'John',
-        'lastname'  => 'Doe',
-        'titles'    => [
-            ['degree' => 'BSc'],
-            ['degree' => 'PhD'],
-        ],
-    ];
-    echo $parser->setData($data)
-                ->renderString($template);
-
-    // Result: Hello, John Doe (Mr{degree} {/degrees})
+.. literalinclude:: view_parser/020.php
+   :lines: 2-
 
 View Fragments
 ==============
@@ -667,25 +555,10 @@ Result::
     </ul>
 
 An example with the iteration controlled in the controller,
-using a view fragment::
+using a view fragment:
 
-    $temp = '';
-    $template1 = '<li><a href="{link}">{title}</a></li>';
-    $data1 = [
-        ['title' => 'First Link', 'link' => '/first'],
-        ['title' => 'Second Link', 'link' => '/second'],
-    ];
-
-    foreach ($data1 as $menuItem),{
-        $temp .= $parser->setData($menuItem)->renderString($template1);
-    }
-
-    $template2 = '<ul>{menuitems}</ul>';
-    $data = [
-        'menuitems' => $temp,
-    ];
-    echo $parser->setData($data)
-                ->renderString($template2);
+.. literalinclude:: view_parser/021.php
+   :lines: 2-
 
 Result::
 
@@ -708,9 +581,10 @@ Class Reference
         :returns: The rendered text for the chosen view
         :rtype: string
 
-        Builds the output based upon a file name and any data that has already been set::
+        Builds the output based upon a file name and any data that has already been set:
 
-            echo $parser->render('myview');
+        .. literalinclude:: view_parser/022.php
+           :lines: 2-
 
         Options supported:
 
@@ -732,9 +606,10 @@ Class Reference
         :returns: The rendered text for the chosen view
         :rtype: string
 
-        Builds the output based upon a provided template source and any data that has already been set::
+        Builds the output based upon a provided template source and any data that has already been set:
 
-            echo $parser->render('myview');
+        .. literalinclude:: view_parser/023.php
+           :lines: 2-
 
         Options supported, and behavior, as above.
 
@@ -745,9 +620,10 @@ Class Reference
         :returns: The Renderer, for method chaining
         :rtype: CodeIgniter\\View\\RendererInterface.
 
-        Sets several pieces of view data at once::
+        Sets several pieces of view data at once:
 
-            $renderer->setData(['name' => 'George', 'position' => 'Boss']);
+        .. literalinclude:: view_parser/024.php
+           :lines: 2-
 
         Supported escape contexts: html, css, js, url, or attr or raw.
         If 'raw', no escaping will happen.
@@ -760,9 +636,10 @@ Class Reference
         :returns: The Renderer, for method chaining
         :rtype: CodeIgniter\\View\\RendererInterface.
 
-        Sets a single piece of view data::
+        Sets a single piece of view data:
 
-            $renderer->setVar('name','Joe','html');
+        .. literalinclude:: view_parser/025.php
+           :lines: 2-
 
         Supported escape contexts: html, css, js, url, attr or raw.
         If 'raw', no escaping will happen.
@@ -774,6 +651,7 @@ Class Reference
         :returns: The Renderer, for method chaining
         :rtype: CodeIgniter\\View\\RendererInterface.
 
-        Override the substitution field delimiters::
+        Override the substitution field delimiters:
 
-            $renderer->setDelimiters('[',']');
+        .. literalinclude:: view_parser/026.php
+           :lines: 2-

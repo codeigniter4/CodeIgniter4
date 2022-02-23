@@ -5,13 +5,11 @@ Upgrade HTML Tables
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `HTML Table Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/table.html>`_
 - :doc:`HTML Table Documentation CodeIgniter 4.X </outgoing/table>`
-
 
 What has been changed
 =====================
@@ -28,28 +26,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('table');
-
-    $this->table->set_heading('Name', 'Color', 'Size');
-
-    $this->table->add_row('Fred', 'Blue', 'Small');
-    $this->table->add_row('Mary', 'Red', 'Large');
-    $this->table->add_row('John', 'Green', 'Medium');
-
-    echo $this->table->generate();
+.. literalinclude:: upgrade_html_tables/001.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $table = new \CodeIgniter\View\Table();
-
-    $table->setHeading('Name', 'Color', 'Size');
-
-    $table->addRow('Fred', 'Blue', 'Small');
-    $table->addRow('Mary', 'Red', 'Large');
-    $table->addRow('John', 'Green', 'Medium');
-
-    echo $table->generate();
+.. literalinclude:: upgrade_html_tables/002.php
+   :lines: 2-

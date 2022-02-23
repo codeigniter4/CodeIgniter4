@@ -467,7 +467,7 @@ trait ResponseTrait
         }
 
         // HTTP Status
-        header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true, $this->getStatusCode());
+        header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()), true, $this->getStatusCode());
 
         // Send all of our headers
         foreach (array_keys($this->getHeaders()) as $name) {

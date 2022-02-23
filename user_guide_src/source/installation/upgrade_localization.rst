@@ -5,13 +5,11 @@ Upgrade Localization
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Language Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/language.html>`_
 - :doc:`Localization Documentation CodeIgniter 4.X </outgoing/localization>`
-
 
 What has been changed
 =====================
@@ -19,9 +17,10 @@ What has been changed
 
 Upgrade Guide
 =============
-1. Specify the default language in **Config/App.php**::
+1. Specify the default language in **Config/App.php**:
 
-    public $defaultLocale = 'en';
+   .. literalinclude:: upgrade_localization/001.php
+      :lines: 2-
 
 2. Now move your language files to **app/Language/<locale>**.
 3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look like.
@@ -33,34 +32,12 @@ Code Example
 
 CodeIgniter Version 3.x
 ------------------------
-::
 
-    // error.php
-    $lang['error_email_missing']    = 'You must submit an email address';
-    $lang['error_url_missing']      = 'You must submit a URL';
-    $lang['error_username_missing'] = 'You must submit a username';
-
-    ...
-
-    $this->lang->load('error', $lang);
-    echo $this->lang->line('error_email_missing');
+.. literalinclude:: upgrade_localization/002.php
+   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    // Errors.php
-    return [
-        'errorEmailMissing'    => 'You must submit an email address',
-        'errorURLMissing'      => 'You must submit a URL',
-        'errorUsernameMissing' => 'You must submit a username',
-        'nested'               => [
-            'error' => [
-                'message' => 'A specific error message',
-            ],
-        ],
-    ];
-
-    ...
-
-    echo lang('Errors.errorEmailMissing');
+.. literalinclude:: upgrade_localization/003.php
+   :lines: 2-

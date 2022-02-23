@@ -8,13 +8,12 @@ code implementing the ``FilterInterface``.
 **Update FilterInterface declarations**
 
 The method signatures for ``after()`` and ``before()`` must be updated to include ``$arguments``. The function
-definitions should be changed from::
+definitions should be changed from:
 
-    public function before(RequestInterface $request)
-    public function after(RequestInterface $request, ResponseInterface $response)
+.. literalinclude:: upgrade_404/001.php
+   :lines: 2-
 
-to::
+to:
 
-    public function before(RequestInterface $request, $arguments = null)
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-
+.. literalinclude:: upgrade_404/002.php
+   :lines: 2-

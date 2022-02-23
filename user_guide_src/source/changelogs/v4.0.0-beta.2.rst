@@ -153,7 +153,6 @@ The list of changed files follows, with PR numbers shown.
         - ViewTest #1827, #1836
     - ControllerTest #1850
 
-
 - user_guide_src/
     - cli/
         - cli_commands #1777

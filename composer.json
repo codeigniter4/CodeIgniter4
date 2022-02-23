@@ -10,21 +10,21 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^4.0",
+        "kint-php/kint": "^4.1.1",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.4.*",
+        "friendsofphp/php-cs-fixer": "^3.6",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.12.15"
+        "rector/rector": "0.12.16"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"

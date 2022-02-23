@@ -62,7 +62,7 @@ class Cell
     /**
      * Render a cell, returning its body as a string.
      *
-     * @param null $params
+     * @param array|string|null $params
      *
      * @throws ReflectionException
      */
@@ -141,7 +141,7 @@ class Cell
      * If a string, it should be in the format "key1=value key2=value".
      * It will be split and returned as an array.
      *
-     * @param mixed $params
+     * @param array|string|null $params
      *
      * @return array|null
      */

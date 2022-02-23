@@ -1,0 +1,3 @@
+<?php
+
+$defaultGroup = 'test';

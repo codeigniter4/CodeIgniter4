@@ -15,6 +15,8 @@ use CodeIgniter\CodeIgniter;
 
 class MockCodeIgniter extends CodeIgniter
 {
+    protected ?string $context = 'web';
+
     protected function callExit($code)
     {
         // Do not call exit() in testing.

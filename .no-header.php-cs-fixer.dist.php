@@ -30,17 +30,7 @@ $finder = Finder::create()
         __DIR__ . '/admin/starter/builds',
     ]);
 
-$overrides = [
-    'ordered_class_elements' => [
-        'order' => [
-            'use_trait',
-            'constant',
-            'property',
-            'method',
-        ],
-        'sort_algorithm' => 'none',
-    ],
-];
+$overrides = [];
 
 $options = [
     'cacheFile'    => 'build/.no-header.php-cs-fixer.cache',

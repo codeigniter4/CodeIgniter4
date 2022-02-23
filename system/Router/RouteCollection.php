@@ -90,7 +90,7 @@ class RouteCollection implements RouteCollectionInterface
      * Defined placeholders that can be used
      * within the
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $placeholders = [
         'any'      => '.*',
@@ -236,6 +236,18 @@ class RouteCollection implements RouteCollectionInterface
         $this->placeholders = array_merge($this->placeholders, $placeholder);
 
         return $this;
+    }
+
+    /**
+     * For `spark routes`
+     *
+     * @return array<string, string>
+     *
+     * @internal
+     */
+    public function getPlaceholders(): array
+    {
+        return $this->placeholders;
     }
 
     /**
@@ -429,7 +441,7 @@ class RouteCollection implements RouteCollectionInterface
         $collection = [];
 
         if (isset($this->routes[$verb])) {
-            // Keep current verb's routes at the beginning so they're matched
+            // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
             if (isset($this->routes['*'])) {
                 $extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);

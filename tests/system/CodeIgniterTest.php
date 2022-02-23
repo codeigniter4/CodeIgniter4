@@ -94,15 +94,34 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Inject mock router.
         $routes = Services::routes();
         $routes->setAutoRoute(false);
-        $routes->set404Override('Home::index');
+        $routes->set404Override('Tests\Support\Controllers\Hello::index');
         $router = Services::router($routes, Services::request());
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->useSafeOutput(true)->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+        $this->assertStringContainsString('Hello', $output);
+    }
+
+    public function testRun404OverrideControllerReturnsResponse()
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->setAutoRoute(false);
+        $routes->set404Override('Tests\Support\Controllers\Popcorn::pop');
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run($routes);
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('Oops', $output);
     }
 
     public function testRun404OverrideByClosure()
@@ -257,6 +276,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $config->forceGlobalSecureRequests = true;
 
         $codeigniter = new MockCodeIgniter($config);
+        $codeigniter->setContext('web');
 
         $this->getPrivateMethodInvoker($codeigniter, 'getRequestObject')();
         $this->getPrivateMethodInvoker($codeigniter, 'getResponseObject')();

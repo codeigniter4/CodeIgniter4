@@ -5,9 +5,14 @@ Upgrading From a Previous Version
 Please read the upgrade notes corresponding to the version you are
 upgrading from.
 
+.. note:: If you don't know what version of CodeIgniter you are currently running,
+    you can get it from :ref:`the Debug Toolbar <the-debug-toolbar>`,
+    or simply echo the constant ``\CodeIgniter\CodeIgniter::CI_VERSION``.
+
 .. toctree::
     :titlesonly:
 
+    Upgrading from 4.1.8 to 4.2.0 <upgrade_420>
     Upgrading from 4.1.7 to 4.1.8 <upgrade_418>
     Upgrading from 4.1.6 to 4.1.7 <upgrade_417>
     Upgrading from 4.1.5 to 4.1.6 <upgrade_416>

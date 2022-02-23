@@ -439,8 +439,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testIsCLI()
     {
-        // this should be the case in unit testing
-        $this->assertTrue($this->request->isCLI());
+        $this->assertFalse($this->request->isCLI());
     }
 
     public function testIsAJAX()
@@ -677,4 +676,81 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $this->assertSame('apples', $request->getUri()->getPath());
     }
+
+    public function testGetIPAddressNormal()
+    {
+        $expected               = '123.123.123.123';
+        $_SERVER['REMOTE_ADDR'] = $expected;
+        $this->request          = new Request(new App());
+        $this->assertSame($expected, $this->request->getIPAddress());
+        // call a second time to exercise the initial conditional block in getIPAddress()
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxy()
+    {
+        $expected                        = '123.123.123.123';
+        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
+        $config                          = new App();
+        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $this->request                   = new Request($config);
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyInvalid()
+    {
+        $expected                        = '123.456.23.123';
+        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
+        $config                          = new App();
+        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $this->request                   = new Request($config);
+
+        // spoofed address invalid
+        $this->assertSame('10.0.1.200', $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyNotWhitelisted()
+    {
+        $expected                        = '123.456.23.123';
+        $_SERVER['REMOTE_ADDR']          = '10.10.1.200';
+        $config                          = new App();
+        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $this->request                   = new Request($config);
+
+        // spoofed address invalid
+        $this->assertSame('10.10.1.200', $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxySubnet()
+    {
+        $expected                        = '123.123.123.123';
+        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
+        $config                          = new App();
+        $config->proxyIPs                = ['192.168.5.0/24'];
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $this->request                   = new Request($config);
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyOutofSubnet()
+    {
+        $expected                        = '123.123.123.123';
+        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
+        $config                          = new App();
+        $config->proxyIPs                = ['192.168.5.0/28'];
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+        $this->request                   = new Request($config);
+
+        // we should see the original forwarded address
+        $this->assertSame('192.168.5.21', $this->request->getIPAddress());
+    }
+
+    // @TODO getIPAddress should have more testing, to 100% code coverage
 }

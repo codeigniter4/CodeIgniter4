@@ -47,29 +47,14 @@ can find your class, that your new class extends the appropriate interface, and 
 :doc:`Service <../concepts/services>` to load your class in place of the core class.
 
 For example, if you have a new ``App\Libraries\RouteCollection`` class that you would like to use in place of
-the core system class, you would create your class like this::
+the core system class, you would create your class like this:
 
-    <?php
+.. literalinclude:: core_classes/001.php
 
-    namespace App\Libraries;
+Then you would add the ``routes`` service in **app/Config/Services.php** to load your class instead:
 
-    use CodeIgniter\Router\RouteCollectionInterface;
-
-    class RouteCollection implements RouteCollectionInterface
-    {
-        // ...
-    }
-
-Then you would add the ``routes`` service in **app/Config/Services.php** to load your class instead::
-
-    public static function routes(bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('routes');
-        }
-
-        return new \App\Libraries\RouteCollection(static::locator(), config('Modules'));
-    }
+.. literalinclude:: core_classes/002.php
+   :lines: 2-
 
 Extending Core Classes
 ======================
@@ -80,36 +65,13 @@ identical to replacing a class with one exception:
 
 * The class declaration must extend the parent class.
 
-For example, to extend the native RouteCollection class, you would declare your class with::
+For example, to extend the native RouteCollection class, you would declare your class with:
 
-    <?php
+.. literalinclude:: core_classes/003.php
 
-    namespace App\Libraries;
+If you need to use a constructor in your class make sure you extend the parent constructor:
 
-    use CodeIgniter\Router\RouteCollection;
-
-    class RouteCollection extends RouteCollection
-    {
-        // ...
-    }
-
-If you need to use a constructor in your class make sure you extend the parent constructor::
-
-    <?php
-
-    namespace App\Libraries;
-
-    use CodeIgniter\Router\RouteCollection as BaseRouteCollection;
-
-    class RouteCollection extends BaseRouteCollection
-    {
-        public function __construct()
-        {
-            parent::__construct();
-
-            // your code here
-        }
-    }
+.. literalinclude:: core_classes/004.php
 
 **Tip:**  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.

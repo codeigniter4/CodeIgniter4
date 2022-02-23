@@ -58,7 +58,7 @@ class Files extends BaseCollector
         $userFiles = [];
 
         foreach ($rawFiles as $file) {
-            $path = $this->cleanPath($file);
+            $path = clean_path($file);
 
             if (strpos($path, 'SYSTEMPATH') !== false) {
                 $coreFiles[] = [

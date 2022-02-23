@@ -102,4 +102,3 @@ all PHP errors to be rendered to the browser when they occur.
 Conversely, setting the constant to ``production`` will disable all error
 output. Disabling error reporting in production is a
 :doc:`good security practice </concepts/security>`.
-

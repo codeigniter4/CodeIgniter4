@@ -32,22 +32,25 @@ global **system/Helpers** directory.
 Loading a Helper
 ================
 
-Loading a helper file is quite simple using the following method::
+Loading a helper file is quite simple using the following method:
 
-    helper('name');
+.. literalinclude:: helpers/001.php
+   :lines: 2-
 
 Where ``name`` is the file name of the helper, without the "**.php**" file
 extension or the "**_helper**" part.
 
 For example, to load the **Cookie Helper** file, which is named
-**cookie_helper.php**, you would do this::
+**cookie_helper.php**, you would do this:
 
-    helper('cookie');
+.. literalinclude:: helpers/002.php
+   :lines: 2-
 
 If you need to load more than one helper at a time, you can pass
-an array of file names in and all of them will be loaded::
+an array of file names in and all of them will be loaded:
 
-    helper(['cookie', 'date']);
+.. literalinclude:: helpers/003.php
+   :lines: 2-
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -76,9 +79,10 @@ code into its own namespace, ``Example\Blog``. The files exist on our server at
 **/Modules/Blog/**. So, we would put our Helper files for the blog module in
 **/Modules/Blog/Helpers/**. A **blog_helper** file would be at
 **/Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
-use the following command to load the helper for us::
+use the following command to load the helper for us:
 
-    helper('Example\Blog\blog');
+.. literalinclude:: helpers/004.php
+   :lines: 2-
 
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
@@ -90,9 +94,9 @@ Once you've loaded the Helper File containing the function you intend to
 use, you'll call it the way you would a standard PHP function.
 
 For example, to create a link using the ``anchor()`` function in one of
-your view files you would do this::
+your view files you would do this:
 
-    <?= anchor('blog/comments', 'Click Here') ?>
+.. literalinclude:: helpers/005.php
 
 Where ``Click Here`` is the name of the link, and ``blog/comments`` is the
 URI to the controller/method you wish to link to.
@@ -115,29 +119,10 @@ your version. In this case, it's better to simply "extend" the Helper.
 
 For example, to extend the native **Array Helper** you'll create a file
 named **app/Helpers/array_helper.php**, and add or override
-functions::
+functions:
 
-    // any_in_array() is not in the Array Helper, so it defines a new function
-    function any_in_array($needle, $haystack)
-    {
-        $needle = is_array($needle) ? $needle : [$needle];
-
-        foreach ($needle as $item) {
-            if (in_array($item, $haystack, true)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    // random_element() is included in Array Helper, so it overrides the native function
-    function random_element($array)
-    {
-        shuffle($array);
-
-        return array_pop($array);
-    }
+.. literalinclude:: helpers/006.php
+   :lines: 2-
 
 The ``helper()`` method will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers

@@ -11,7 +11,6 @@ Documentations
 - `Model Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
 - :doc:`Model Documentation CodeIgniter 4.X </models/model>`
 
-
 What has been changed
 =====================
 
@@ -41,36 +40,15 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/models**::
+Path: **application/models**:
 
-    <?php
-
-    class User_contact extends CI_Model
-    {
-        public function insert($name, $address, $email)
-        {
-            $this->db->insert('user_contacts', array(
-                'name'    => $name,
-                'address' => $address,
-                'email'   => $email,
-            ));
-        }
-    }
+.. literalinclude:: upgrade_models/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Models**::
+Path: **app/Models**:
 
-    <?php
-
-    namespace App\Models;
-
-    use CodeIgniter\Model;
-
-    class UserContact extends Model
-    {
-        // insert() method already implemented in parent
-    }
+.. literalinclude:: upgrade_models/002.php
 
 To insert data you can just directly call the ``$model->insert()`` method because this method is built-in since CI4.

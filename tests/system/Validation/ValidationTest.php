@@ -633,10 +633,24 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testHasError(): void
     {
-        $data = ['foo' => 'notanumber'];
-        $this->validation->setRules(['foo' => 'is_numeric']);
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => [
+                ['baz' => 'string'],
+                ['baz' => ''],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'foo'       => 'is_numeric',
+            'bar.*.baz' => 'required',
+        ]);
+
         $this->validation->run($data);
         $this->assertTrue($this->validation->hasError('foo'));
+        $this->assertTrue($this->validation->hasError('bar.*.baz'));
+        $this->assertFalse($this->validation->hasError('bar.0.baz'));
+        $this->assertTrue($this->validation->hasError('bar.1.baz'));
     }
 
     public function testSplitRulesTrue(): void
@@ -825,22 +839,42 @@ final class ValidationTest extends CIUnitTestCase
             ],
             'name_user' => [
                 123,
+                'alpha',
                 'xyz098',
+            ],
+            'contacts' => [
+                'friends' => [
+                    ['name' => ''],
+                    ['name' => 'John'],
+                ],
             ],
         ];
 
         $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
 
         $this->validation->setRules([
-            'id_user.*'   => 'numeric',
-            'name_user.*' => 'alpha',
+            'id_user.*'       => 'numeric',
+            'name_user.*'     => 'alpha',
+            'contacts.*.name' => 'required',
         ]);
 
         $this->validation->withRequest($request->withMethod('post'))->run();
         $this->assertSame([
-            'id_user.*'   => 'The id_user.* field must contain only numbers.',
-            'name_user.*' => 'The name_user.* field may only contain alphabetical characters.',
+            'id_user.0'               => 'The id_user.* field must contain only numbers.',
+            'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
+            'name_user.2'             => 'The name_user.* field may only contain alphabetical characters.',
+            'contacts.friends.0.name' => 'The contacts.*.name field is required.',
         ], $this->validation->getErrors());
+
+        $this->assertSame(
+            "The name_user.* field may only contain alphabetical characters.\n"
+            . 'The name_user.* field may only contain alphabetical characters.',
+            $this->validation->getError('name_user.*')
+        );
+        $this->assertSame(
+            'The contacts.*.name field is required.',
+            $this->validation->getError('contacts.*.name')
+        );
     }
 
     public function testRulesForSingleRuleWithSingleValue(): void

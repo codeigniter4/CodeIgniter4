@@ -11,7 +11,6 @@ Documentations
 - `Config Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/config.html>`_
 - :doc:`Configuration Documentation CodeIgniter 4.X </general/configuration>`
 
-
 What has been changed
 =====================
 
@@ -39,28 +38,13 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/config**::
+Path: **application/config**:
 
-    <?php
-
-    defined('BASEPATH') OR exit('No direct script access allowed');
-
-    $siteName  = 'My Great Site';
-    $siteEmail = 'webmaster@example.com';
+.. literalinclude:: upgrade_configuration/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Config**::
+Path: **app/Config**:
 
-   <?php
-
-   namespace Config;
-
-   use CodeIgniter\Config\BaseConfig;
-
-   class CustomClass extends BaseConfig
-   {
-      public $siteName  = 'My Great Site';
-      public $siteEmail = 'webmaster@example.com';
-   }
+.. literalinclude:: upgrade_configuration/002.php

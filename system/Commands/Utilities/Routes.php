@@ -11,9 +11,12 @@
 
 namespace CodeIgniter\Commands\Utilities;
 
+use Closure;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
+use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
+use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use Config\Services;
 
 /**
@@ -43,7 +46,7 @@ class Routes extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Displays all of user-defined routes. Does NOT display auto-detected routes.';
+    protected $description = 'Displays all routes.';
 
     /**
      * the Command's usage
@@ -85,18 +88,24 @@ class Routes extends BaseCommand
             'cli',
         ];
 
-        $tbody = [];
+        $tbody           = [];
+        $uriGenerator    = new SampleURIGenerator();
+        $filterCollector = new FilterCollector();
 
         foreach ($methods as $method) {
             $routes = $collection->getRoutes($method);
 
             foreach ($routes as $route => $handler) {
-                // filter for strings, as callbacks aren't displayable
-                if (is_string($handler)) {
+                if (is_string($handler) || $handler instanceof Closure) {
+                    $sampleUri = $uriGenerator->get($route);
+                    $filters   = $filterCollector->get($method, $sampleUri);
+
                     $tbody[] = [
                         strtoupper($method),
                         $route,
-                        $handler,
+                        is_string($handler) ? $handler : '(Closure)',
+                        implode(' ', array_map('class_basename', $filters['before'])),
+                        implode(' ', array_map('class_basename', $filters['after'])),
                     ];
                 }
             }
@@ -108,13 +117,25 @@ class Routes extends BaseCommand
                 $collection->getDefaultController(),
                 $collection->getDefaultMethod()
             );
-            $tbody = [...$tbody, ...$autoRouteCollector->get()];
+            $autoRoutes = $autoRouteCollector->get();
+
+            foreach ($autoRoutes as &$routes) {
+                // There is no `auto` method, but it is intentional not to get route filters.
+                $filters = $filterCollector->get('auto', $uriGenerator->get($routes[1]));
+
+                $routes[] = implode(' ', array_map('class_basename', $filters['before']));
+                $routes[] = implode(' ', array_map('class_basename', $filters['after']));
+            }
+
+            $tbody = [...$tbody, ...$autoRoutes];
         }
 
         $thead = [
             'Method',
             'Route',
             'Handler',
+            'Before Filters',
+            'After Filters',
         ];
 
         CLI::table($tbody, $thead);

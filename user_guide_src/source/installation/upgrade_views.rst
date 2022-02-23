@@ -34,45 +34,13 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/views**::
+Path: **application/views**:
 
-    <html>
-    <head>
-        <title><?php echo $title; ?></title>
-    </head>
-    <body>
-        <h1><?php echo $heading; ?></h1>
-
-        <h3>My Todo List</h3>
-
-        <ul>
-        <?php foreach ($todo_list as $item): ?>
-            <li><?php echo $item; ?></li>
-        <?php endforeach; ?>
-        </ul>
-
-    </body>
-    </html>
+.. literalinclude:: upgrade_views/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Views**::
+Path: **app/Views**:
 
-    <html>
-    <head>
-        <title><?= esc($title) ?></title>
-    </head>
-    <body>
-        <h1><?= esc($heading) ?></h1>
-
-        <h3>My Todo List</h3>
-
-        <ul>
-        <?php foreach ($todo_list as $item): ?>
-            <li><?= esc($item) ?></li>
-        <?php endforeach ?>
-        </ul>
-
-    </body>
-    </html>
+.. literalinclude:: upgrade_views/002.php

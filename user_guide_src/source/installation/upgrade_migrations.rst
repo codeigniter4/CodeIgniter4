@@ -51,82 +51,16 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/migrations**::
+Path: **application/migrations**:
 
-    <?php
-
-    defined('BASEPATH') OR exit('No direct script access allowed');
-
-    class Migration_Add_blog extends CI_Migration
-    {
-        public function up()
-        {
-            $this->dbforge->add_field(array(
-                'blog_id' => array(
-                    'type'           => 'INT',
-                    'constraint'     => 5,
-                    'unsigned'       => true,
-                    'auto_increment' => true,
-                ),
-                'blog_title' => array(
-                    'type'       => 'VARCHAR',
-                    'constraint' => '100',
-                ),
-                'blog_description' => array(
-                    'type' => 'TEXT',
-                    'null' => true,
-                ),
-            ));
-            $this->dbforge->add_key('blog_id', true);
-            $this->dbforge->create_table('blog');
-        }
-
-        public function down()
-        {
-            $this->dbforge->drop_table('blog');
-        }
-    }
+.. literalinclude:: upgrade_migrations/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Database/Migrations**::
+Path: **app/Database/Migrations**:
 
-    <?php
-
-    namespace App\Database\Migrations;
-
-    use CodeIgniter\Database\Migration;
-
-    class AddBlog extends Migration
-    {
-        public function up()
-        {
-            $this->forge->addField([
-                'blog_id' => [
-                    'type'           => 'INT',
-                    'constraint'     => 5,
-                    'unsigned'       => true,
-                    'auto_increment' => true,
-                ],
-                'blog_title' => [
-                    'type'       => 'VARCHAR',
-                    'constraint' => '100',
-                ],
-                'blog_description' => [
-                    'type' => 'TEXT',
-                    'null' => true,
-                ],
-            ]);
-            $this->forge->addKey('blog_id', true);
-            $this->forge->createTable('blog');
-        }
-
-        public function down()
-        {
-            $this->forge->dropTable('blog');
-        }
-    }
+.. literalinclude:: upgrade_migrations/002.php
 
 Search & Replace
 ================

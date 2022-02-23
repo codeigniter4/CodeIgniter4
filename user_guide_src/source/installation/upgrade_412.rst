@@ -47,26 +47,15 @@ own test cases. Most notably test extensions have moved to Traits to make them e
 pick-and-choose across various test case needs. The ``CIDatabaseTestCase`` and ``FeatureTestCase``
 classes have been deprecated and their methods moved to ``DatabaseTestTrait`` and
 ``FeatureTestTrait`` respectively. Update your test cases to extend the main test case
-and use any traits you need. For example::
+and use any traits you need. For example:
 
-    use CodeIgniter\Test\DatabaseTestCase;
+.. literalinclude:: upgrade_412/001.php
+   :lines: 2-
 
-    class MyDatabaseTest extends DatabaseTestCase
-    {
-        public function testBadRow()
-        {
+... becomes:
 
-... becomes::
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class MyDatabaseTest extends CIUnitTestCase
-    {
-        use DatabaseTestTrait;
-
-        public function testBadRow()
-        {
+.. literalinclude:: upgrade_412/002.php
+   :lines: 2-
 
 Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize
 approach and take advantage of the updated response testing (below).
