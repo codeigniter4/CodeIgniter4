@@ -150,6 +150,8 @@ class App extends BaseConfig
      * - `CodeIgniter\Session\Handlers\RedisHandler`
      *
      * @var string
+     *
+     * @deprecated use \Config\Session::$handler instead
      */
     public $sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler';
 
@@ -161,6 +163,8 @@ class App extends BaseConfig
      * The session cookie name, must contain only [0-9a-z_-] characters
      *
      * @var string
+     *
+     * @deprecated use \Config\Session::$name instead
      */
     public $sessionCookieName = 'ci_session';
 
@@ -173,6 +177,8 @@ class App extends BaseConfig
      * Setting to 0 (zero) means expire when the browser is closed.
      *
      * @var int
+     *
+     * @deprecated use \Config\Session::$lifetime instead
      */
     public $sessionExpiration = 7200;
 
@@ -192,6 +198,8 @@ class App extends BaseConfig
      * IMPORTANT: You are REQUIRED to set a valid save path!
      *
      * @var string
+     *
+     * @deprecated use \Config\Session::$savePath instead
      */
     public $sessionSavePath = WRITEPATH . 'session';
 
@@ -206,6 +214,8 @@ class App extends BaseConfig
      *          your session table's PRIMARY KEY when changing this setting.
      *
      * @var bool
+     *
+     * @deprecated use \Config\Session::$matchIP instead
      */
     public $sessionMatchIP = false;
 
@@ -217,6 +227,8 @@ class App extends BaseConfig
      * How many seconds between CI regenerating the session ID.
      *
      * @var int
+     *
+     * @deprecated use \Config\Session::$ttl instead
      */
     public $sessionTimeToUpdate = 300;
 
@@ -230,6 +242,8 @@ class App extends BaseConfig
      * will be later deleted by the garbage collector.
      *
      * @var bool
+     *
+     * @deprecated use \Config\Session::$destroyOld instead
      */
     public $sessionRegenerateDestroy = false;
 

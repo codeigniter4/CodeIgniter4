@@ -46,6 +46,8 @@ class MemcachedHandler extends BaseHandler
      * Number of seconds until the session ends.
      *
      * @var int
+     *
+     * @deprecated use $this->lifetime instead
      */
     protected $sessionExpiration = 7200;
 
@@ -67,8 +69,6 @@ class MemcachedHandler extends BaseHandler
         if (! empty($this->keyPrefix)) {
             ini_set('memcached.sess_prefix', $this->keyPrefix);
         }
-
-        $this->sessionExpiration = $config->sessionExpiration;
     }
 
     /**
@@ -170,7 +170,7 @@ class MemcachedHandler extends BaseHandler
             $this->memcached->replace($this->lockKey, time(), 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($data))) {
-                if ($this->memcached->set($this->keyPrefix . $id, $data, $this->sessionExpiration)) {
+                if ($this->memcached->set($this->keyPrefix . $id, $data, $this->lifetime)) {
                     $this->fingerprint = $fingerprint;
 
                     return true;
@@ -179,7 +179,7 @@ class MemcachedHandler extends BaseHandler
                 return false;
             }
 
-            return $this->memcached->touch($this->keyPrefix . $id, $this->sessionExpiration);
+            return $this->memcached->touch($this->keyPrefix . $id, $this->lifetime);
         }
 
         return false;

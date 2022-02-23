@@ -13,6 +13,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
@@ -20,13 +21,6 @@ use ReturnTypeWillChange;
  */
 class FileHandler extends BaseHandler
 {
-    /**
-     * Where to save the session files to.
-     *
-     * @var string
-     */
-    protected $savePath;
-
     /**
      * The file handle
      *
@@ -49,13 +43,6 @@ class FileHandler extends BaseHandler
     protected $fileNew;
 
     /**
-     * Whether IP addresses should be matched.
-     *
-     * @var bool
-     */
-    protected $matchIP = false;
-
-    /**
      * Regex of session ID
      *
      * @var string
@@ -66,20 +53,22 @@ class FileHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($config->sessionSavePath)) {
-            $this->savePath = rtrim($config->sessionSavePath, '/\\');
-            ini_set('session.save_path', $config->sessionSavePath);
-        } else {
-            $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
+        $session = config(SessionConfig::class);
 
-            if (! $sessionPath) {
-                $sessionPath = WRITEPATH . 'session';
+        $savePath = $session->savePath ?? $config->sessionSavePath;
+
+        if (! empty($savePath)) {
+            $this->savePath = rtrim($savePath, '/\\');
+            ini_set('session.save_path', $savePath);
+        } else {
+            $savePath = rtrim(ini_get('session.save_path'), '/\\');
+
+            if (! $savePath) {
+                $savePath = WRITEPATH . 'session';
             }
 
-            $this->savePath = $sessionPath;
+            $this->savePath = $savePath;
         }
-
-        $this->matchIP = $config->sessionMatchIP;
 
         $this->configureSessionIDRegex();
     }

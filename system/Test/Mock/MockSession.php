@@ -56,7 +56,7 @@ class MockSession extends Session
      */
     protected function setCookie()
     {
-        $expiration   = $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration;
+        $expiration   = $this->lifetime === 0 ? 0 : time() + $this->lifetime;
         $this->cookie = $this->cookie->withValue(session_id())->withExpires($expiration);
 
         $this->cookies[] = $this->cookie;

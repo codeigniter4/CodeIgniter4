@@ -11,11 +11,13 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
+use Config\Session as SessionConfig;
 
 /**
  * @internal
@@ -40,28 +42,24 @@ final class DatabaseHandlerTest extends CIUnitTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\DatabaseHandler',
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => 'ci_sessions',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'handler'    => DatabaseHandler::class,
+            'name'       => 'ci_session',
+            'lifetime'   => 7200,
+            'savePath'   => 'ci_sessionsx',
+            'matchIP'    => false,
+            'ttl'        => 300,
+            'destoryOld' => false,
         ];
 
-        $config    = array_merge($defaults, $options);
-        $appConfig = new AppConfig();
+        $config = new SessionConfig();
 
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
+        foreach (array_merge($defaults, $options) as $key => $value) {
+            $config->{$key} = $value;
         }
 
-        return new DatabaseHandler($appConfig, '127.0.0.1');
+        Factories::injectMock('config', SessionConfig::class, $config);
+
+        return new DatabaseHandler(new AppConfig(), '127.0.0.1');
     }
 
     public function testOpen()

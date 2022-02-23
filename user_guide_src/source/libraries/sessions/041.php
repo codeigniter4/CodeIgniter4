@@ -1,3 +1,3 @@
 <?php
 
-public $sessionDBGroup = 'groupName';
+public string $DBGroup = 'groupName';

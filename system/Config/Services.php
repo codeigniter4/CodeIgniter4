@@ -584,11 +584,11 @@ class Services extends BaseService
         $config ??= config('App');
         $logger = AppServices::logger();
 
-        $driverName = $config->sessionDriver;
-        $driver     = new $driverName($config, AppServices::request()->getIPAddress());
-        $driver->setLogger($logger);
+        $handlerName = config('Session')->handler ?? $config->sessionDriver;
+        $handler     = new $handlerName($config, AppServices::request()->getIPAddress());
+        $handler->setLogger($logger);
 
-        $session = new Session($driver, $config);
+        $session = new Session($handler, $config);
         $session->setLogger($logger);
 
         if (session_status() === PHP_SESSION_NONE) {

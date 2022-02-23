@@ -15,6 +15,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Config\Database;
+use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
@@ -26,15 +27,15 @@ class DatabaseHandler extends BaseHandler
      * The database group to use for storage.
      *
      * @var string
+     *
+     * @deprecated
      */
     protected $DBGroup;
 
     /**
      * The name of the table to store session info.
-     *
-     * @var string
      */
-    protected $table;
+    protected string $table = 'ci_sessions';
 
     /**
      * The DB Connection instance.
@@ -63,15 +64,18 @@ class DatabaseHandler extends BaseHandler
     public function __construct(AppConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
-        $this->table = $config->sessionSavePath;
+
+        $this->table = $this->savePath ?? $this->table;
 
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
 
-        $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+        $session = config(SessionConfig::class);
 
-        $this->db = Database::connect($this->DBGroup);
+        $DBGroup = $session->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+
+        $this->db = Database::connect($DBGroup);
 
         $driver = strtolower(get_class($this->db));
 

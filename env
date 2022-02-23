@@ -23,14 +23,6 @@
 # app.baseURL = ''
 # app.forceGlobalSecureRequests = false
 
-# app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
-# app.sessionCookieName = 'ci_session'
-# app.sessionExpiration = 7200
-# app.sessionSavePath = null
-# app.sessionMatchIP = false
-# app.sessionTimeToUpdate = 300
-# app.sessionRegenerateDestroy = false
-
 # app.CSPEnabled = false
 
 #--------------------------------------------------------------------
@@ -122,6 +114,18 @@
 # security.regenerate = true
 # security.redirect = true
 # security.samesite = 'Lax'
+
+#--------------------------------------------------------------------
+# SESSION
+#--------------------------------------------------------------------
+
+# session.handler = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.name = 'ci_session'
+# session.lifetime = 7200
+# session.savePath = null
+# session.matchIP = false
+# session.ttl = 300
+# session.destroyOld = false
 
 #--------------------------------------------------------------------
 # LOGGER

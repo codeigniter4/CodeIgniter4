@@ -13,9 +13,11 @@ namespace CodeIgniter\Session;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Session\Handlers\FileHandler;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
@@ -38,9 +40,61 @@ class Session implements SessionInterface
     protected $driver;
 
     /**
+     * The session storage driver to use.
+     */
+    protected string $handler = FileHandler::class;
+
+    /**
+     * The name of the session which is used as cookie name.
+     * It should only contain alphanumeric characters.
+     */
+    protected string $name = 'ci_session';
+
+    /**
+     * The number of SECONDS you want the session to last.
+     * Set to `0` means expire when the browser is closed.
+     */
+    protected int $lifetime = 7200;
+
+    /**
+     * The location to save sessions to and is driver dependent.
+     *
+     * For the 'files' driver, it's a path to a writable directory.
+     * WARNING: Only absolute paths are supported!
+     *
+     * For the 'database' driver, it's a table name.
+     * Please read up the manual for the format with other session drivers.
+     *
+     * IMPORTANT: You are REQUIRED to set a valid save path!
+     */
+    protected string $savePath = WRITEPATH . 'session';
+
+    /**
+     * Whether to match the user's IP address when reading the session data.
+     *
+     * NOTE: If you're using the database driver, don't forget to update
+     *       your session table's PRIMARY KEY when changing this setting.
+     */
+    protected bool $matchIP = false;
+
+    /**
+     * How many seconds between CI regenerating the session ID.
+     */
+    protected int $ttl = 300;
+
+    /**
+     * Whether to destroy session data associated with the old session ID
+     * when auto-regenerating the session ID. When set to FALSE, the data
+     * will be later deleted by the garbage collector.
+     */
+    protected bool $destroyOld = false;
+
+    /**
      * The storage driver to use: files, database, redis, memcached
      *
      * @var string
+     *
+     * @deprecated use $this->handler instead
      */
     protected $sessionDriverName;
 
@@ -48,6 +102,8 @@ class Session implements SessionInterface
      * The session cookie name, must contain only [0-9a-z_-] characters.
      *
      * @var string
+     *
+     * @deprecated use $this->name instead
      */
     protected $sessionCookieName = 'ci_session';
 
@@ -56,6 +112,8 @@ class Session implements SessionInterface
      * Setting it to 0 (zero) means expire when the browser is closed.
      *
      * @var int
+     *
+     * @deprecated use $this->lifetime instead
      */
     protected $sessionExpiration = 7200;
 
@@ -72,6 +130,8 @@ class Session implements SessionInterface
      * IMPORTANT: You are REQUIRED to set a valid save path!
      *
      * @var string
+     *
+     * @deprecated use $this->savePath instead
      */
     protected $sessionSavePath;
 
@@ -82,6 +142,8 @@ class Session implements SessionInterface
      * your session table's PRIMARY KEY when changing this setting.
      *
      * @var bool
+     *
+     * @deprecated use $this->matchIP instead
      */
     protected $sessionMatchIP = false;
 
@@ -89,6 +151,8 @@ class Session implements SessionInterface
      * How many seconds between CI regenerating the session ID.
      *
      * @var int
+     *
+     * @deprecated use $this->ttl instead
      */
     protected $sessionTimeToUpdate = 300;
 
@@ -98,6 +162,8 @@ class Session implements SessionInterface
      * will be later deleted by the garbage collector.
      *
      * @var bool
+     *
+     * @deprecated use $this->destroyOld instead
      */
     protected $sessionRegenerateDestroy = false;
 
@@ -155,13 +221,6 @@ class Session implements SessionInterface
     protected $sidRegexp;
 
     /**
-     * Logger instance to record error messages and warnings.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
      * Constructor.
      *
      * Extract configuration settings and save them here.
@@ -170,13 +229,27 @@ class Session implements SessionInterface
     {
         $this->driver = $driver;
 
-        $this->sessionDriverName        = $config->sessionDriver;
-        $this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
-        $this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;
-        $this->sessionSavePath          = $config->sessionSavePath;
-        $this->sessionMatchIP           = $config->sessionMatchIP ?? $this->sessionMatchIP;
-        $this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
-        $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
+        $session = config(SessionConfig::class);
+
+        // Store Session-related configurations
+        if ($session instanceof SessionConfig) {
+            $this->handler    = $session->handler ?? $this->handler;
+            $this->name       = $session->name ?? $this->name;
+            $this->lifetime   = $session->lifetime ?? $this->lifetime;
+            $this->savePath   = $session->savePath ?? $this->savePath;
+            $this->matchIP    = $session->matchIP ?? $this->matchIP;
+            $this->ttl        = $session->ttl ?? $this->ttl;
+            $this->destroyOld = $session->destroyOld ?? $this->destroyOld;
+        } else {
+            // `Config/SessionConfig.php` is absence
+            $this->sessionDriverName        = $config->sessionDriver ?? $this->handler;
+            $this->sessionCookieName        = $config->sessionCookieName ?? $this->name;
+            $this->sessionExpiration        = $config->sessionExpiration ?? $this->lifetime;
+            $this->sessionSavePath          = $config->sessionSavePath ?? $this->savePath;
+            $this->sessionMatchIP           = $config->sessionMatchIP ?? $this->matchIP;
+            $this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->ttl;
+            $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->destroyOld;
+        }
 
         // DEPRECATED COOKIE MANAGEMENT
         $this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
@@ -184,11 +257,10 @@ class Session implements SessionInterface
         $this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
         $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
 
-        /** @var CookieConfig $cookie */
-        $cookie = config('Cookie');
+        $cookie = config(CookieConfig::class);
 
-        $this->cookie = new Cookie($this->sessionCookieName, '', [
-            'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
+        $this->cookie = new Cookie($this->name, '', [
+            'expires'  => $this->lifetime === 0 ? 0 : time() + $this->lifetime,
             'path'     => $cookie->path ?? $config->cookiePath,
             'domain'   => $cookie->domain ?? $config->cookieDomain,
             'secure'   => $cookie->secure ?? $config->cookieSecure,
@@ -231,32 +303,32 @@ class Session implements SessionInterface
         $this->setSaveHandler();
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
-        if (isset($_COOKIE[$this->sessionCookieName])
-            && (! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->sessionCookieName]))
+        if (isset($_COOKIE[$this->name])
+            && (! is_string($_COOKIE[$this->name]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->name]))
         ) {
-            unset($_COOKIE[$this->sessionCookieName]);
+            unset($_COOKIE[$this->name]);
         }
 
         $this->startSession();
 
         // Is session ID auto-regeneration configured? (ignoring ajax requests)
         if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
-            && ($regenerateTime = $this->sessionTimeToUpdate) > 0
+            && ($regenerateTime = $this->ttl) > 0
         ) {
             if (! isset($_SESSION['__ci_last_regenerate'])) {
                 $_SESSION['__ci_last_regenerate'] = time();
             } elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerateTime)) {
-                $this->regenerate((bool) $this->sessionRegenerateDestroy);
+                $this->regenerate($this->destroyOld);
             }
         }
         // Another work-around ... PHP doesn't seem to send the session cookie
         // unless it is being currently created or regenerated
-        elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id()) {
+        elseif (isset($_COOKIE[$this->name]) && $_COOKIE[$this->name] === session_id()) {
             $this->setCookie();
         }
 
         $this->initVars();
-        $this->logger->info("Session: Class initialized using '" . $this->sessionDriverName . "' driver.");
+        $this->logger->info("Session: Class initialized using '" . $this->handler . "' driver.");
 
         return $this;
     }
@@ -270,11 +342,13 @@ class Session implements SessionInterface
      */
     public function stop()
     {
-        setcookie(
-            $this->sessionCookieName,
-            session_id(),
-            ['expires' => 1, 'path' => $this->cookie->getPath(), 'domain' => $this->cookie->getDomain(), 'secure' => $this->cookie->isSecure(), 'httponly' => true]
-        );
+        setcookie($this->name, session_id(), [
+            'expires'  => 1,
+            'path'     => $this->cookie->getPath(),
+            'domain'   => $this->cookie->getDomain(),
+            'secure'   => $this->cookie->isSecure(),
+            'httponly' => true,
+        ]);
 
         session_regenerate_id(true);
     }
@@ -286,16 +360,16 @@ class Session implements SessionInterface
      */
     protected function configure()
     {
-        if (empty($this->sessionCookieName)) {
-            $this->sessionCookieName = ini_get('session.name');
+        if (empty($this->name)) {
+            $this->name = ini_get('session.name');
         } else {
-            ini_set('session.name', $this->sessionCookieName);
+            ini_set('session.name', $this->name);
         }
 
         $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
 
         $params = [
-            'lifetime' => $this->sessionExpiration,
+            'lifetime' => $this->lifetime,
             'path'     => $this->cookie->getPath(),
             'domain'   => $this->cookie->getDomain(),
             'secure'   => $this->cookie->isSecure(),
@@ -306,14 +380,14 @@ class Session implements SessionInterface
         ini_set('session.cookie_samesite', $sameSite);
         session_set_cookie_params($params);
 
-        if (! isset($this->sessionExpiration)) {
-            $this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
-        } elseif ($this->sessionExpiration > 0) {
-            ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
+        if (! isset($this->lifetime)) {
+            $this->lifetime = (int) ini_get('session.gc_maxlifetime');
+        } elseif ($this->lifetime > 0) {
+            ini_set('session.gc_maxlifetime', (string) $this->lifetime);
         }
 
-        if (! empty($this->sessionSavePath)) {
-            ini_set('session.save_path', $this->sessionSavePath);
+        if (! empty($this->savePath)) {
+            ini_set('session.save_path', $this->savePath);
         }
 
         // Security is king
@@ -903,7 +977,7 @@ class Session implements SessionInterface
      */
     protected function setCookie()
     {
-        $expiration   = $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration;
+        $expiration   = $this->lifetime === 0 ? 0 : time() + $this->lifetime;
         $this->cookie = $this->cookie->withValue(session_id())->withExpires($expiration);
 
         /** @var Response $response */

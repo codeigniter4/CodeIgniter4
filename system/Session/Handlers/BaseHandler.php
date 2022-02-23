@@ -12,6 +12,8 @@
 namespace CodeIgniter\Session\Handlers;
 
 use Config\App as AppConfig;
+use Config\Cookie as CookieConfig;
+use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -40,6 +42,8 @@ abstract class BaseHandler implements SessionHandlerInterface
      * Cookie prefix
      *
      * @var string
+     *
+     * @deprecated
      */
     protected $cookiePrefix = '';
 
@@ -68,15 +72,25 @@ abstract class BaseHandler implements SessionHandlerInterface
      * Cookie name to use
      *
      * @var string
+     *
+     * @deprecated use $this->name instead
      */
     protected $cookieName;
 
     /**
-     * Match IP addresses for cookies?
-     *
-     * @var bool
+     * Cookie name to use
      */
-    protected $matchIP = false;
+    protected string $name;
+
+    /**
+     * Number of seconds until the session ends.
+     */
+    protected int $lifetime = 7200;
+
+    /**
+     * Match IP addresses for cookies?
+     */
+    protected bool $matchIP = false;
 
     /**
      * Current session ID
@@ -102,14 +116,38 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     public function __construct(AppConfig $config, string $ipAddress)
     {
-        $this->cookiePrefix = $config->cookiePrefix;
-        $this->cookieDomain = $config->cookieDomain;
-        $this->cookiePath   = $config->cookiePath;
-        $this->cookieSecure = $config->cookieSecure;
-        $this->cookieName   = $config->sessionCookieName;
-        $this->matchIP      = $config->sessionMatchIP;
-        $this->savePath     = $config->sessionSavePath;
-        $this->ipAddress    = $ipAddress;
+        $session = config(SessionConfig::class);
+
+        // Store Session-related configurations
+        if ($session instanceof SessionConfig) {
+            $this->name     = $session->name ?? $this->name;
+            $this->lifetime = $session->lifetime ?? $this->lifetime;
+            $this->savePath = $session->savePath ?? $this->savePath;
+            $this->matchIP  = $session->matchIP ?? $this->matchIP;
+        } else {
+            // `Config/SessionConfig.php` is absence
+            $this->name     = $config->sessionCookieName ?? $this->name;
+            $this->lifetime = $config->sessionExpiration ?? $this->lifetime;
+            $this->savePath = $config->sessionSavePath ?? $this->savePath;
+            $this->matchIP  = $config->sessionMatchIP ?? $this->matchIP;
+        }
+
+        $cookie = config(CookieConfig::class);
+
+        // Store Cookie-related configurations
+        if ($cookie instanceof CookieConfig) {
+            $this->cookieDomain = $cookie->domain;
+            $this->cookiePath   = $cookie->path;
+            $this->cookieSecure = $cookie->secure;
+        } else {
+            // `Config/CookieConfig.php` is absence
+            $this->cookiePrefix = $config->cookiePrefix;
+            $this->cookiePath   = $config->cookiePath;
+            $this->cookieDomain = $config->cookieDomain;
+            $this->cookieSecure = $config->cookieSecure;
+        }
+
+        $this->ipAddress = $ipAddress;
     }
 
     /**
@@ -118,11 +156,13 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected function destroyCookie(): bool
     {
-        return setcookie(
-            $this->cookieName,
-            '',
-            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true]
-        );
+        return setcookie($this->name, '', [
+            'expires'  => 1,
+            'path'     => $this->cookiePath,
+            'domain'   => $this->cookieDomain,
+            'secure'   => $this->cookieSecure,
+            'httponly' => true,
+        ]);
     }
 
     /**
