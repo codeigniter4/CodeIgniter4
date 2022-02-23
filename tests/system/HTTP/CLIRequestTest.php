@@ -162,6 +162,34 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getOptionString());
     }
 
+    public function testParsingArgs()
+    {
+        $_SERVER['argv'] = [
+            'spark',
+            'command',
+            'param1',
+            'param2',
+            '--opt1',
+            'opt1val',
+            '--opt-2',
+            'opt 2 val',
+            'param3',
+        ];
+
+        // reinstantiate it to force parsing
+        $this->request = new CLIRequest(new App());
+
+        $options = [
+            'command',
+            'param1',
+            'param2',
+            'opt1'  => 'opt1val',
+            'opt-2' => 'opt 2 val',
+            'param3',
+        ];
+        $this->assertSame($options, $this->request->getArgs());
+    }
+
     public function testParsingPath()
     {
         $_SERVER['argv'] = [

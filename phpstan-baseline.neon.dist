@@ -106,11 +106,6 @@ parameters:
 			path: system/CodeIgniter.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getSegments\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:setLocale\\(\\)\\.$#"
 			count: 1
 			path: system/CodeIgniter.php
