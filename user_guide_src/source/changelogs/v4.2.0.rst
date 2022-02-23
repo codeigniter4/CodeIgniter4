@@ -13,7 +13,7 @@ BREAKING
 ********
 
 - The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
-- There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
+
 
 Enhancements
 ************
@@ -28,29 +28,17 @@ Enhancements
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
-- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
-- Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
-    - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
-- Debugbar enhancements
-    - Debug toolbar is now using ``microtime()`` instead of ``time()``.
 
 Changes
 *******
 
 - Update minimal PHP requirement to 7.4.
 - The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.
-- The process of sending cookies has been moved to the ``Response`` class. Now the ``Session`` class doesn't send cookies, set them to the Response.
-- Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See :ref:`validation-getting-all-errors`.
-- ``Validation::getError()`` when using a wildcard will return all found errors matching the mask as a string.
 
 Deprecations
 ************
 
-- ``CodeIgniter\Database\SQLSRV\Connection::getError()`` is deprecated. Use ``CodeIgniter\Database\SQLSRV\Connection::error()`` instead.
-- ``CodeIgniter\Debug\Exceptions::cleanPath()`` and ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` are deprecated. Use the ``clean_path()`` function instead.
-- ``CodeIgniter\Log\Logger::cleanFilenames()`` and ``CodeIgniter\Test\TestLogger::cleanup()`` are both deprecated. Use the ``clean_path()`` function instead.
-- ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
-- The constant ``SPARKED`` in **spark** is deprecated. Use the ``$context`` property in ``CodeIgniter\CodeIgniter`` instead.
+
 
 Bugs Fixed
 **********
