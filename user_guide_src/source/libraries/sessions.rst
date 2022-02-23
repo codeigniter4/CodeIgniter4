@@ -69,7 +69,7 @@ Unless you're developing a website with heavy AJAX usage, you can skip this
 section. If you are, however, and if you're experiencing performance
 issues, then this note is exactly what you're looking for.
 
-Sessions in previous versions of CodeIgniter didn't implement locking,
+Sessions in CodeIgniter v2.x didn't implement locking,
 which meant that two HTTP requests using the same session could run exactly
 at the same time. To use a more appropriate technical term - requests were
 non-blocking.
