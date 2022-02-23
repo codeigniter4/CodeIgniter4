@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database\OCI8;
 
+use CodeIgniter\Database\Forge as BaseForge;
+
 /**
  * Forge for OCI8
  */
-class Forge extends \CodeIgniter\Database\Forge
+class Forge extends BaseForge
 {
     /**
      * DROP INDEX statement
