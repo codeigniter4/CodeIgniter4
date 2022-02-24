@@ -5,20 +5,25 @@ on:
     branches:
       - develop
     paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'spark'
       - composer.json
-      - spark
       - phpunit.xml.dist
-      - '**.php'
       - .github/workflows/test-phpunit.yml
+
   pull_request:
     branches:
       - develop
       - 'v4.*'
     paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'spark'
       - composer.json
-      - spark
       - phpunit.xml.dist
-      - '**.php'
       - .github/workflows/test-phpunit.yml
 
 jobs:

@@ -8,8 +8,8 @@ on:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
       - 'composer.json'
       - 'depfile.yaml'
       - '.github/workflows/test-deptrac.yml'
@@ -18,8 +18,8 @@ on:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
       - 'composer.json'
       - 'depfile.yaml'
       - '.github/workflows/test-deptrac.yml'

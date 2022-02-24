@@ -8,18 +8,19 @@ on:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'public/**.php'
+      - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
+
   push:
     branches:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'public/**.php'
+      - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
 
 jobs:
