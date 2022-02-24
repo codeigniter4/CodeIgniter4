@@ -8,21 +8,24 @@ on:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
-      - phpstan-baseline.neon.dist
+      - '**.neon.dist'
+      - '.github/workflows/test-phpstan.yml'
+
   push:
     branches:
       - 'develop'
       - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
-      - phpstan-baseline.neon.dist
+      - '**.neon.dist'
+      - '.github/workflows/test-phpstan.yml'
 
 jobs:
   build:
