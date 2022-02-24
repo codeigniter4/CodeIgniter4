@@ -298,7 +298,7 @@ class ContentSecurityPolicy
      *
      * Should be called just prior to sending the response to the user agent.
      */
-    public function finalize(ResponseInterface &$response)
+    public function finalize(ResponseInterface $response)
     {
         if ($this->autoNonce === false) {
             return;
@@ -663,7 +663,7 @@ class ContentSecurityPolicy
      * placeholders with actual nonces, that we'll then add to our
      * headers.
      */
-    protected function generateNonces(ResponseInterface &$response)
+    protected function generateNonces(ResponseInterface $response)
     {
         $body = $response->getBody();
 
@@ -695,7 +695,7 @@ class ContentSecurityPolicy
      * Content-Security-Policy and Content-Security-Policy-Report-Only headers
      * with their values to the response object.
      */
-    protected function buildHeaders(ResponseInterface &$response)
+    protected function buildHeaders(ResponseInterface $response)
     {
         /**
          * Ensure both headers are available and arrays...

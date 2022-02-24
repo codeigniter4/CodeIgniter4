@@ -91,7 +91,7 @@ class Query implements QueryInterface
      */
     public $db;
 
-    public function __construct(ConnectionInterface &$db)
+    public function __construct(ConnectionInterface $db)
     {
         $this->db = $db;
     }
