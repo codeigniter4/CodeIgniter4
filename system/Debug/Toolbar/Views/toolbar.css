@@ -39,16 +39,9 @@
   font-size: 16px;
   font-weight: 400; }
   #debug-bar h1 {
-    bottom: 0;
-    display: inline-block;
-    font-size: 14px;
+    display: flex;
     font-weight: normal;
-    margin: 0 16px 0 0;
-    padding: 0;
-    position: absolute;
-    right: 30px;
-    text-align: left;
-    top: 0; }
+    margin: 0 0 0 auto; }
     #debug-bar h1 svg {
       width: 16px;
       margin-right: 5px; }
@@ -135,15 +128,8 @@
     #debug-bar #toolbar-theme a:hover {
       text-decoration: none; }
   #debug-bar #debug-bar-link {
-    bottom: 0;
-    display: inline-block;
-    font-size: 16px;
-    line-height: 36px;
     padding: 6px;
-    position: absolute;
-    right: 10px;
-    top: 0;
-    width: 24px; }
+    display: flex; }
   #debug-bar .ci-label {
     display: inline-flex;
     font-size: 14px; }
@@ -329,7 +315,7 @@
   #debug-bar .ci-label:hover {
     background-color: #DFDFDF; }
   #debug-bar .ci-label .badge {
-    background-color: #5BC0DE;
+    background-color: #DD4814;
     color: #FFFFFF; }
   #debug-bar .tab {
     background-color: #FFFFFF;
@@ -420,8 +406,8 @@
     #debug-bar .ci-label:hover {
       background-color: #252525; }
     #debug-bar .ci-label .badge {
-      background-color: #5BC0DE;
-      color: #DFDFDF; }
+      background-color: #DD4814;
+      color: #FFFFFF; }
     #debug-bar .tab {
       background-color: #252525;
       box-shadow: 0 -1px 4px #434343;
@@ -509,8 +495,8 @@
   #toolbarContainer.dark #debug-bar .ci-label:hover {
     background-color: #252525; }
   #toolbarContainer.dark #debug-bar .ci-label .badge {
-    background-color: #5BC0DE;
-    color: #DFDFDF; }
+    background-color: #DD4814;
+    color: #FFFFFF; }
   #toolbarContainer.dark #debug-bar .tab {
     background-color: #252525;
     box-shadow: 0 -1px 4px #434343;
@@ -602,7 +588,7 @@
   #toolbarContainer.light #debug-bar .ci-label:hover {
     background-color: #DFDFDF; }
   #toolbarContainer.light #debug-bar .ci-label .badge {
-    background-color: #5BC0DE;
+    background-color: #DD4814;
     color: #FFFFFF; }
   #toolbarContainer.light #debug-bar .tab {
     background-color: #FFFFFF;
