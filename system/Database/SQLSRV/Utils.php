@@ -34,7 +34,7 @@ class Utils extends BaseUtils
      */
     protected $optimizeTable = 'ALTER INDEX all ON %s REORGANIZE';
 
-    public function __construct(ConnectionInterface &$db)
+    public function __construct(ConnectionInterface $db)
     {
         parent::__construct($db);
 

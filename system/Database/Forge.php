@@ -179,7 +179,7 @@ class Forge
      */
     public function __construct(BaseConnection $db)
     {
-        $this->db = &$db;
+        $this->db = $db;
     }
 
     /**
