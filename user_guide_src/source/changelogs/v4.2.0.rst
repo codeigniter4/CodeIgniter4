@@ -24,7 +24,7 @@ Enhancements
     - See :ref:`content-security-policy` for details.
 - New View Decorators allow modifying the generated HTML prior to caching.
 - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
-- Added Subqueries in the SELECT section.
+- Added Subqueries in the SELECT section. See :ref:`query-builder-select-subquery`.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.

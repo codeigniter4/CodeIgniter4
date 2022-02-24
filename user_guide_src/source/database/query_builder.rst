@@ -167,6 +167,8 @@ the resulting field.
 .. literalinclude:: query_builder/014.php
    :lines: 2-
 
+.. _query-builder-select-subquery:
+
 **$builder->selectSubquery()**
 
 Adds a subquery to the SELECT section.
