@@ -435,10 +435,9 @@ Or as a labeled style:
    :lines: 2-
 
 If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
-or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively:
+or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
-.. literalinclude:: validation/025.php
-   :lines: 2-
+    'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
 On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
 at least 6 characters.”
