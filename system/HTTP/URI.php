@@ -586,7 +586,10 @@ class URI
         $baseUri = new self($config->baseURL);
 
         // If the hosts matches then assume this should be relative to baseURL
-        if ($this->getHost() === $baseUri->getHost()) {
+        if (
+            substr($this->getScheme(), 0, 4) === 'http'
+            && $this->getHost() === $baseUri->getHost()
+        ) {
             // Check for additional segments
             $basePath = trim($baseUri->getPath(), '/') . '/';
             $trimPath = ltrim($path, '/');
