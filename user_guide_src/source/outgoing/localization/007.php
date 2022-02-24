@@ -1,3 +1,5 @@
 <?php
 
-['languageKey' => 'The actual message to be shown.'];
+return [
+    'languageKey' => 'The actual message to be shown.'
+];
