@@ -1,19 +1,22 @@
 <?php
 
-// The data to test:
-[
-    'contacts' => [
-       'name' => 'Joe Smith',
-        'friends' => [
-            [
-                'name' => 'Fred Flinstone',
-            ],
-            [
-                'name' => 'Wilma',
-            ],
+/*
+    The data to test:
+
+    [
+        'contacts' => [
+           'name' => 'Joe Smith',
+            'friends' => [
+                [
+                    'name' => 'Fred Flinstone',
+                ],
+                [
+                    'name' => 'Wilma',
+                ],
+            ]
         ]
     ]
-];
+*/
 
 // Joe Smith
 $validation->setRules([
