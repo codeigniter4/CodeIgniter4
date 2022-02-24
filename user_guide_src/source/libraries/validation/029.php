@@ -1,5 +1,7 @@
-<?php
-
-if ($validation->hasError('username')) {
-    echo $validation->getError('username');
-}
+<div class="alert alert-danger" role="alert">
+    <ul>
+    <?php foreach ($errors as $error): ?>
+        <li><?= esc($error) ?></li>
+    <?php endforeach ?>
+    </ul>
+</div>

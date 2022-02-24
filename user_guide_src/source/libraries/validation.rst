@@ -453,7 +453,7 @@ To use translated strings from language files, we can simply use the dot syntax.
 Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``.
 We can simply use the language lines defined in this file, like this:
 
-.. literalinclude:: validation/026.php
+.. literalinclude:: validation/025.php
    :lines: 2-
 
 .. _validation-getting-all-errors:
@@ -463,7 +463,7 @@ Getting All Errors
 
 If you need to retrieve all error messages for failed fields, you can use the ``getErrors()`` method:
 
-.. literalinclude:: validation/027.php
+.. literalinclude:: validation/026.php
    :lines: 2-
 
 If no errors exist, an empty array will be returned.
@@ -494,7 +494,7 @@ Getting a Single Error
 You can retrieve the error for a single field with the ``getError()`` method. The only parameter is the field
 name:
 
-.. literalinclude:: validation/028.php
+.. literalinclude:: validation/027.php
    :lines: 2-
 
 If no error exists, an empty string will be returned.
@@ -506,7 +506,7 @@ Check If Error Exists
 
 You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name:
 
-.. literalinclude:: validation/029.php
+.. literalinclude:: validation/028.php
    :lines: 2-
 
 When specifying a field with a wildcard, all errors matching the mask will be checked.::
@@ -533,12 +533,12 @@ The first step is to create custom views. These can be placed anywhere that the 
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
 a new view at **/app/Views/_errors_list.php**:
 
-.. literalinclude:: validation/030.php
+.. literalinclude:: validation/029.php
 
 An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
 the name of the field that had the error, and the value is the error message, like this:
 
-.. literalinclude:: validation/031.php
+.. literalinclude:: validation/030.php
    :lines: 2-
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
@@ -554,7 +554,7 @@ Once you have your views created, you need to let the Validation library know ab
 Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
-.. literalinclude:: validation/032.php
+.. literalinclude:: validation/031.php
    :lines: 2-
 
 Specifying the Template
@@ -576,7 +576,7 @@ Rules are stored within simple, namespaced classes. They can be stored any locat
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
 add the new file to the ``$ruleSets`` array:
 
-.. literalinclude:: validation/033.php
+.. literalinclude:: validation/032.php
    :lines: 2-
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
@@ -585,19 +585,19 @@ shown above. The primary benefit here is that it provides some extra navigation 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
 a boolean true or false value signifying true if it passed the test or false if it did not:
 
-.. literalinclude:: validation/034.php
+.. literalinclude:: validation/033.php
    :lines: 2-
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``$error`` variable by reference in the
 second parameter:
 
-.. literalinclude:: validation/035.php
+.. literalinclude:: validation/034.php
    :lines: 2-
 
 Your new custom rule could now be used just like any other rule:
 
-.. literalinclude:: validation/036.php
+.. literalinclude:: validation/035.php
    :lines: 2-
 
 Allowing Parameters
@@ -607,7 +607,7 @@ If your method needs to work with parameters, the function will need a minimum o
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
 
-.. literalinclude:: validation/037.php
+.. literalinclude:: validation/036.php
    :lines: 2-
 
 Custom errors can be returned as the fourth parameter, just as described above.
@@ -620,7 +620,7 @@ The following is a list of all the native rules that are available to use:
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
-.. literalinclude:: validation/038.php
+.. literalinclude:: validation/037.php
    :lines: 2-
 
 ======================= ========== ============================================= ===================================================
