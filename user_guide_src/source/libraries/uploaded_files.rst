@@ -122,10 +122,11 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 
     <input type="file" name="avatar" />
 
-Which would return a simple array like:
+Which would return a simple array like::
 
-.. literalinclude:: uploaded_files/004.php
-   :lines: 2-
+    [
+        'avatar' => // UploadedFile instance,
+    ];
 
 .. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
 
@@ -133,20 +134,34 @@ If you used an array notation for the name, the input would look something like:
 
     <input type="file" name="my-form[details][avatar]" />
 
-The array returned by ``getFiles()`` would look more like this:
+The array returned by ``getFiles()`` would look more like this::
 
-.. literalinclude:: uploaded_files/005.php
-   :lines: 2-
+    [
+         'my-form' => [
+            'details' => [
+                'avatar' => '...' // UploadedFile instance
+            ],
+        ],
+    ]
+
 
 In some cases, you may specify an array of files to upload::
 
     Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
     Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
 
-In this case, the returned array of files would be more like:
+In this case, the returned array of files would be more like::
 
-.. literalinclude:: uploaded_files/006.php
-   :lines: 2-
+    [
+        'my-form' => [
+            'details' => [
+                'avatar' => [
+                    0 => // UploadedFile instance,
+                    1 => // UploadedFile instance,
+                ],
+            ],
+        ],
+    ]
 
 Single File
 ===========

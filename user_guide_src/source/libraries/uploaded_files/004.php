@@ -1,5 +1,0 @@
-<?php
-
-[
-    'avatar' => '...' // UploadedFile instance
-];
