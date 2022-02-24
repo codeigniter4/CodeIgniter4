@@ -1,7 +1,7 @@
 <?php
 
 /*
-     With a request body of:
+    With a request body of:
     {
         "foo": "bar",
         "fizz": {
