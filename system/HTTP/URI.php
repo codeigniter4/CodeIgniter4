@@ -581,12 +581,34 @@ class URI
         $path   = $this->getPath();
         $scheme = $this->getScheme();
 
+        // If the hosts matches then assume this should be relative to baseURL
+        [$scheme, $path] = $this->changeSchemeAndPath($scheme, $path);
+
+        return static::createURIString(
+            $scheme,
+            $this->getAuthority(),
+            $path, // Absolute URIs should use a "/" for an empty path
+            $this->getQuery(),
+            $this->getFragment()
+        );
+    }
+
+    /**
+     * Change the path (and scheme) assuming URIs with the same host as baseURL
+     * should be relative to the project's configuration.
+     *
+     * @deprecated This method will be deleted.
+     */
+    private function changeSchemeAndPath(string $scheme, string $path): array
+    {
         // Check if this is an internal URI
         $config  = config('App');
         $baseUri = new self($config->baseURL);
 
-        // If the hosts matches then assume this should be relative to baseURL
-        if ($this->getHost() === $baseUri->getHost()) {
+        if (
+            substr($this->getScheme(), 0, 4) === 'http'
+            && $this->getHost() === $baseUri->getHost()
+        ) {
             // Check for additional segments
             $basePath = trim($baseUri->getPath(), '/') . '/';
             $trimPath = ltrim($path, '/');
@@ -601,13 +623,7 @@ class URI
             }
         }
 
-        return static::createURIString(
-            $scheme,
-            $this->getAuthority(),
-            $path, // Absolute URIs should use a "/" for an empty path
-            $this->getQuery(),
-            $this->getFragment()
-        );
+        return [$scheme, $path];
     }
 
     /**
