@@ -3,7 +3,7 @@
 /*
     Response body is this:
 
-    ['foo' => 'bar'];
+    ['foo' => 'bar']
 */
 
 $json = $result->getJSON();
