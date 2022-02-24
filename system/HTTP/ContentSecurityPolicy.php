@@ -671,18 +671,12 @@ class ContentSecurityPolicy
             return;
         }
 
-        // Replace style placeholders with nonces
-        $pattern = '/' . preg_quote($this->styleNonceTag, '/') . '/';
-        $body    = preg_replace_callback($pattern, function () {
-            $nonce = $this->getStyleNonce();
+        // Replace style and script placeholders with nonces
+        $pattern = '/(' . preg_quote($this->styleNonceTag, '/')
+            . '|' . preg_quote($this->scriptNonceTag, '/') . ')/';
 
-            return "nonce=\"{$nonce}\"";
-        }, $body);
-
-        // Replace script placeholders with nonces
-        $pattern = '/' . preg_quote($this->scriptNonceTag, '/') . '/';
-        $body    = preg_replace_callback($pattern, function () {
-            $nonce = $this->getScriptNonce();
+        $body = preg_replace_callback($pattern, function ($match) {
+            $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
         }, $body);
