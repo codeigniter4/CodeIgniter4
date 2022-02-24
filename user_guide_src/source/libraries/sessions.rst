@@ -30,10 +30,9 @@ The ``$config`` parameter is optional - your application configuration.
 If not provided, the services register will instantiate your default
 one.
 
-Once loaded, the Sessions library object will be available using:
+Once loaded, the Sessions library object will be available using::
 
-.. literalinclude:: sessions/002.php
-   :lines: 2-
+    $session
 
 Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
