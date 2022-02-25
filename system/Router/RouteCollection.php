@@ -1231,10 +1231,7 @@ class RouteCollection implements RouteCollectionInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    private function processArrayCallableSyntax(string $from, array $to)
+    private function processArrayCallableSyntax(string $from, array $to): string
     {
         // [classname, method]
         // eg, [Home::class, 'index']
