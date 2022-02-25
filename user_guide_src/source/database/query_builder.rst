@@ -98,6 +98,8 @@ method:
 
 Please read about the ``where()`` method below for more information.
 
+.. _query-builder-select:
+
 Select
 ======
 
@@ -166,8 +168,6 @@ the resulting field.
 
 .. literalinclude:: query_builder/014.php
    :lines: 2-
-
-.. _query-builder-select-subquery:
 
 **$builder->selectSubquery()**
 
