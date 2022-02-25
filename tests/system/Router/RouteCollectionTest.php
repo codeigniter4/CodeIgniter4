@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Tests\Support\Controllers\Hello;
 
 /**
  * @backupGlobals enabled
@@ -55,6 +56,45 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallable()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('home', [Hello::class, 'index']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'home' => '\Tests\Support\Controllers\Hello::index',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallableWithParamsString()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('product/(:num)/(:num)', [[Hello::class, 'index'], '$2/$1']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$2/$1',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallableWithParamsWithoutString()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('product/(:num)/(:num)', [Hello::class, 'index']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$1/$2',
+        ];
         $this->assertSame($expects, $routes);
     }
 
