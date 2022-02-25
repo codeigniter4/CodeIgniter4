@@ -139,7 +139,7 @@ The array returned by ``getFiles()`` would look more like this::
     [
          'my-form' => [
             'details' => [
-                'avatar' => '...' // UploadedFile instance
+                'avatar' => // UploadedFile instance
             ],
         ],
     ]
