@@ -459,11 +459,16 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->response->setBody($body);
         $this->csp->addScriptSrc('cdn.cloudy.com');
 
-        $result = $this->work($body);
+        $result     = $this->work($body);
+        $nonceStyle = array_filter(
+            $this->getPrivateProperty($this->csp, 'styleSrc'),
+            static fn ($value) => strpos($value, 'nonce-') === 0
+        );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('nonce-', $result);
+        $this->assertSame([], $nonceStyle);
     }
 
     public function testBodyScriptNonceCustomScriptTag()
@@ -525,11 +530,16 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->response->setBody($body);
         $this->csp->addStyleSrc('cdn.cloudy.com');
 
-        $result = $this->work($body);
+        $result      = $this->work($body);
+        $nonceScript = array_filter(
+            $this->getPrivateProperty($this->csp, 'scriptSrc'),
+            static fn ($value) => strpos($value, 'nonce-') === 0
+        );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString('nonce-', $result);
+        $this->assertSame([], $nonceScript);
     }
 
     public function testBodyStyleNonceCustomStyleTag()
