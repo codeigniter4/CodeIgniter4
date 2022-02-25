@@ -18,12 +18,10 @@ Example Usage
 The following example shows a common usage pattern within your controllers.
 
 .. literalinclude:: caching/001.php
-   :lines: 2-
 
 You can grab an instance of the cache engine directly through the Services class:
 
 .. literalinclude:: caching/002.php
-   :lines: 2-
 
 =====================
 Configuring the Cache
@@ -87,7 +85,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/003.php
-       :lines: 2-
 
 .. php:method:: remember(string $key, int $ttl, Closure $callback)
 
@@ -115,7 +112,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/004.php
-       :lines: 2-
 
 .. note:: The ``$raw`` parameter is only utilized by Memcache,
     in order to allow usage of ``increment()`` and ``decrement()``.
@@ -132,7 +128,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/005.php
-       :lines: 2-
 
 .. php:method:: deleteMatching($pattern): integer
 
@@ -149,7 +144,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/006.php
-       :lines: 2-
 
     For more information on glob-style syntax, please see
     `Glob (programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
@@ -166,7 +160,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/007.php
-       :lines: 2-
 
 .. php:method:: decrement($key[, $offset = 1]): mixed
 
@@ -180,7 +173,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/008.php
-       :lines: 2-
 
 .. php:method:: clean()
 
@@ -193,7 +185,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/009.php
-       :lines: 2-
 
 .. php:method:: getCacheInfo()
 
@@ -205,7 +196,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/010.php
-       :lines: 2-
 
 .. note:: The information returned and the structure of the data is dependent
     on which adapter is being used.
@@ -222,7 +212,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/011.php
-       :lines: 2-
 
 .. note:: The information returned and the structure of the data is dependent
           on which adapter is being used. Some adapters (File, Memcached, Wincache)
@@ -241,7 +230,6 @@ Class Reference
     Example:
 
     .. literalinclude:: caching/012.php
-       :lines: 2-
 
 *******
 Drivers
@@ -264,7 +252,6 @@ Memcached Caching
 Memcached servers can be specified in the cache configuration file. Available options are:
 
 .. literalinclude:: caching/013.php
-   :lines: 2-
 
 For more information on Memcached, please see
 `https://www.php.net/memcached <https://www.php.net/memcached>`_.
@@ -288,7 +275,6 @@ To use it, you need `Redis server and phpredis PHP extension <https://github.com
 Config options to connect to redis server stored in the cache configuration file. Available options are:
 
 .. literalinclude:: caching/014.php
-   :lines: 2-
 
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.

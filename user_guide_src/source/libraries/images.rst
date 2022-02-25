@@ -25,13 +25,11 @@ Like most other classes in CodeIgniter, the image class is initialized
 in your controller by calling the Services class:
 
 .. literalinclude:: images/001.php
-   :lines: 2-
 
 You can pass the alias for the image library you wish to use into the
 Service function:
 
 .. literalinclude:: images/002.php
-   :lines: 2-
 
 The available Handlers are as follows:
 
@@ -55,7 +53,6 @@ intend to perform, then call one of the available processing functions.
 For example, to create an image thumbnail you'll do this:
 
 .. literalinclude:: images/003.php
-   :lines: 2-
 
 The above code tells the library to look for an image
 called *mypic.jpg* located in the source_image folder, then create a
@@ -70,7 +67,6 @@ is used and passed through each method, applying the results on top of the
 previous results:
 
 .. literalinclude:: images/004.php
-   :lines: 2-
 
 This example would take the same image and first fix any mobile phone orientation issues,
 rotate the image by 90 degrees, and then crop the result into a 100x100 pixel image,
@@ -93,7 +89,6 @@ quality. Values range from 0 to 100 with 90 being the framework default. This pa
 only applies to JPEG images and will be ignored otherwise:
 
 .. literalinclude:: images/005.php
-   :lines: 2-
 
 .. note:: Higher quality will result in larger file sizes. See also https://www.php.net/manual/en/function.imagejpeg.php
 
@@ -101,7 +96,6 @@ If you are only interested in changing the image quality without doing any proce
 You will need to include the image resource or you will end up with an exact copy:
 
 .. literalinclude:: images/006.php
-   :lines: 2-
 
 Processing Methods
 ==================
@@ -123,7 +117,6 @@ the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:
 
 .. literalinclude:: images/007.php
-   :lines: 2-
 
 Cropping Images
 ---------------
@@ -144,7 +137,6 @@ To take a 50x50 pixel square out of the center of an image, you would need to fi
 offset values:
 
 .. literalinclude:: images/008.php
-   :lines: 2-
 
 Converting Images
 -----------------
@@ -156,7 +148,6 @@ The ``convert()`` method changes the library's internal indicator for the desire
 - **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php):
 
   .. literalinclude:: images/009.php
-     :lines: 2-
 
 .. note:: ImageMagick already saves files in the type
     indicated by their extension, ignoring **$imageType**
@@ -181,7 +172,6 @@ The ``fit()`` method aims to help simplify cropping a portion of an image in a "
 This provides a much simpler way to crop that will always maintain the aspect ratio:
 
 .. literalinclude:: images/010.php
-   :lines: 2-
 
 Flattening Images
 -----------------
@@ -199,7 +189,6 @@ The ``flatten()`` method aims to add a background color behind transparent image
 - **$blue** is the blue value of the background.
 
 .. literalinclude:: images/011.php
-   :lines: 2-
 
 Flipping Images
 ---------------
@@ -211,7 +200,6 @@ Images can be flipped along either their horizontal or vertical axis::
 - **$dir** specifies the axis to flip along. Can be either 'vertical' or 'horizontal'.
 
 .. literalinclude:: images/012.php
-   :lines: 2-
 
 Resizing Images
 ---------------
@@ -230,7 +218,6 @@ image to fit the desired dimensions. If $maintainRatio is true, the dimension sp
 while the other dimension will be altered to match the original image's aspect ratio.
 
 .. literalinclude:: images/013.php
-   :lines: 2-
 
 Rotating Images
 ---------------
@@ -259,7 +246,6 @@ The first parameter is the string of text that you wish to display. The second p
 that allow you to specify how the text should be displayed:
 
 .. literalinclude:: images/014.php
-   :lines: 2-
 
 The possible options that are recognized are as follows:
 

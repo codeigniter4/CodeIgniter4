@@ -34,7 +34,6 @@ Upgrade Guide
 3. You have to change the validation rules. The new syntax is to set the rules as array in the controller:
 
    .. literalinclude:: upgrade_validations/001.php
-      :lines: 2-
 
 Code Example
 ============

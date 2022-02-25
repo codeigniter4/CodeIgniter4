@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: filesystem_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -33,7 +32,6 @@ The following functions are available:
     Examples:
 
     .. literalinclude:: filesystem_helper/002.php
-       :lines: 2-
 
     .. note:: Paths are almost always relative to your main index.php file.
 
@@ -42,14 +40,12 @@ The following functions are available:
     parameter (integer). A depth of 1 will only map the top level directory:
 
     .. literalinclude:: filesystem_helper/003.php
-       :lines: 2-
 
     By default, hidden files will not be included in the returned array and
     hidden directories will be skipped. To override this behavior, you may
     set a third parameter to true (boolean):
 
     .. literalinclude:: filesystem_helper/004.php
-       :lines: 2-
 
     Each folder name will be an array index, while its contained files will
     be numerically indexed. Here is an example of a typical array::
@@ -95,7 +91,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/005.php
-       :lines: 2-
 
     You can optionally change the overwrite behavior via the third parameter.
 
@@ -113,12 +108,10 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/006.php
-       :lines: 2-
 
     You can optionally set the write mode via the third parameter:
 
     .. literalinclude:: filesystem_helper/007.php
-       :lines: 2-
 
     The default mode is 'wb'. Please see the `PHP user guide <https://www.php.net/manual/en/function.fopen.php>`_
     for mode options.
@@ -147,7 +140,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/008.php
-       :lines: 2-
 
     If the second parameter is set to true, any directories contained within the supplied
     root path will be deleted as well.
@@ -155,7 +147,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/009.php
-       :lines: 2-
 
     .. note:: The files must be writable or owned by the system in order to be deleted.
 
@@ -175,7 +166,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/010.php
-       :lines: 2-
 
 .. php:function:: get_dir_file_info($source_dir, $top_level_only)
 
@@ -192,7 +182,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: filesystem_helper/011.php
-       :lines: 2-
 
 .. php:function:: get_file_info($file[, $returned_values = ['name', 'server_path', 'size', 'date']])
 
@@ -218,7 +207,6 @@ The following functions are available:
     standard symbolic notation of file permissions.
 
     .. literalinclude:: filesystem_helper/012.php
-       :lines: 2-
 
 .. php:function:: octal_permissions($perms)
 
@@ -230,7 +218,6 @@ The following functions are available:
     a three character octal notation of file permissions.
 
     .. literalinclude:: filesystem_helper/013.php
-       :lines: 2-
 
 .. php:function:: same_file($file1, $file2)
 
@@ -242,7 +229,6 @@ The following functions are available:
     Compares two files to see if they are the same (based on their MD5 hash).
 
     .. literalinclude:: filesystem_helper/014.php
-       :lines: 2-
 
 .. php:function:: set_realpath($path[, $check_existence = false])
 
@@ -258,4 +244,3 @@ The following functions are available:
     Examples:
 
     .. literalinclude:: filesystem_helper/015.php
-       :lines: 2-

@@ -26,19 +26,16 @@ do it manually with the ``setBody`` method. This is usually used in conjunction 
 the response:
 
 .. literalinclude:: response/001.php
-   :lines: 2-
 
 The reason phrase ('OK', 'Created', 'Moved Permanently') will be automatically added, but you can add custom reasons
 as the second parameter of the ``setStatusCode()`` method:
 
 .. literalinclude:: response/002.php
-   :lines: 2-
 
 You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
 ``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted:
 
 .. literalinclude:: response/003.php
-   :lines: 2-
 
 Setting Headers
 ---------------
@@ -50,20 +47,17 @@ Using these functions instead of using the native PHP functions allows you to en
 prematurely, causing errors, and makes testing possible.
 
 .. literalinclude:: response/004.php
-   :lines: 2-
 
 If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.
 
 .. literalinclude:: response/005.php
-   :lines: 2-
 
 Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
 parameter. This is not case-sensitive.
 
 .. literalinclude:: response/006.php
-   :lines: 2-
 
 Force File Download
 ===================
@@ -84,18 +78,15 @@ handler for that type - it can use it.
 Example:
 
 .. literalinclude:: response/007.php
-   :lines: 2-
 
 If you want to download an existing file from your server you'll need to
 pass ``null`` explicitly for the second parameter:
 
 .. literalinclude:: response/008.php
-   :lines: 2-
 
 Use the optional ``setFileName()`` method to change the filename as it is sent to the client's browser:
 
 .. literalinclude:: response/009.php
-   :lines: 2-
 
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
@@ -116,7 +107,6 @@ circumstances are too varied for us to be able to create a good default other th
 to set the Cache values to what you need, through the ``setCache()`` method:
 
 .. literalinclude:: response/010.php
-   :lines: 2-
 
 The ``$options`` array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
 to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for your specific
@@ -152,7 +142,6 @@ By default, support for this is off. To enable support in your application, edit
 **app/Config/App.php**:
 
 .. literalinclude:: response/011.php
-   :lines: 2-
 
 When enabled, the response object will contain an instance of ``CodeIgniter\HTTP\ContentSecurityPolicy``. The
 values set in **app/Config/ContentSecurityPolicy.php** are applied to that instance, and if no changes are
@@ -178,7 +167,6 @@ Examples are shown below, with different combinations of parameters, though all 
 name or an array of them:
 
 .. literalinclude:: response/012.php
-   :lines: 2-
 
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
@@ -188,7 +176,6 @@ for subsequent sources, unless over-ridden. For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
 
 .. literalinclude:: response/013.php
-   :lines: 2-
 
 Inline Content
 --------------
@@ -271,7 +258,6 @@ The methods provided by the parent class that are available are:
         will be thrown:
 
         .. literalinclude:: response/014.php
-           :lines: 2-
 
     .. php:method:: setStatusCode($code[, $reason=''])
 
@@ -283,13 +269,11 @@ The methods provided by the parent class that are available are:
         Sets the HTTP status code that should be sent with this response:
 
         .. literalinclude:: response/015.php
-           :lines: 2-
 
         The reason phrase will be automatically generated based upon the official lists. If you need to set your own
         for a custom status code, you can pass the reason phrase as the second parameter:
 
         .. literalinclude:: response/016.php
-           :lines: 2-
 
     .. php:method:: getReasonPhrase()
 
@@ -299,7 +283,6 @@ The methods provided by the parent class that are available are:
         Returns the current status code for this response. If not status has been set, will return an empty string:
 
         .. literalinclude:: response/017.php
-           :lines: 2-
 
     .. php:method:: setDate($date)
 
@@ -310,7 +293,6 @@ The methods provided by the parent class that are available are:
         Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``:
 
         .. literalinclude:: response/018.php
-           :lines: 2-
 
     .. php:method:: setContentType($mime[, $charset='UTF-8'])
 
@@ -322,13 +304,11 @@ The methods provided by the parent class that are available are:
         Sets the content type this response represents:
 
         .. literalinclude:: response/019.php
-           :lines: 2-
 
         By default, the method sets the character set to ``UTF-8``. If you need to change this, you can
         pass the character set as the second parameter:
 
         .. literalinclude:: response/020.php
-           :lines: 2-
 
     .. php:method:: noCache()
 
@@ -339,7 +319,6 @@ The methods provided by the parent class that are available are:
         of all response messages:
 
         .. literalinclude:: response/021.php
-           :lines: 2-
 
     .. php:method:: setCache($options)
 
@@ -371,7 +350,6 @@ The methods provided by the parent class that are available are:
         instance:
 
         .. literalinclude:: response/022.php
-           :lines: 2-
 
     .. php:method:: send(): Response
 
@@ -405,7 +383,6 @@ The methods provided by the parent class that are available are:
         parameter:
 
         .. literalinclude:: response/023.php
-           :lines: 2-
 
         **Notes**
 
@@ -439,7 +416,6 @@ The methods provided by the parent class that are available are:
         parameters:
 
         .. literalinclude:: response/024.php
-           :lines: 2-
 
     .. php:method:: deleteCookie($name = ''[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
@@ -468,7 +444,6 @@ The methods provided by the parent class that are available are:
         Example:
 
         .. literalinclude:: response/025.php
-           :lines: 2-
 
     .. php:method:: hasCookie($name = ''[, $value = null[, $prefix = '']])
 
@@ -490,7 +465,6 @@ The methods provided by the parent class that are available are:
         Example:
 
         .. literalinclude:: response/026.php
-           :lines: 2-
 
     .. php:method:: getCookie($name = ''[, $prefix = ''])
 
@@ -504,7 +478,6 @@ The methods provided by the parent class that are available are:
         Example:
 
         .. literalinclude:: response/027.php
-           :lines: 2-
 
     .. php:method:: getCookies()
 

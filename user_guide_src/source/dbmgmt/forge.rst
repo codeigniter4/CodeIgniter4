@@ -18,13 +18,11 @@ Initializing the Forge Class
 Load the Forge Class as follows:
 
 .. literalinclude:: forge/001.php
-   :lines: 2-
 
 You can also pass another database group name to the DB Forge loader, in case
 the database you want to manage isn't the default one:
 
 .. literalinclude:: forge/002.php
-   :lines: 2-
 
 In the above example, we're passing the name of a different database group
 to connect to as the first parameter.
@@ -39,13 +37,11 @@ Permits you to create the database specified in the first parameter.
 Returns true/false based on success or failure:
 
 .. literalinclude:: forge/003.php
-   :lines: 2-
 
 An optional second parameter set to true will add ``IF EXISTS`` statement
 or will check if a database exists before create it (depending on DBMS).
 
 .. literalinclude:: forge/004.php
-   :lines: 2-
 
 **$forge->dropDatabase('db_name')**
 
@@ -53,7 +49,6 @@ Permits you to drop the database specified in the first parameter.
 Returns true/false based on success or failure:
 
 .. literalinclude:: forge/005.php
-   :lines: 2-
 
 Creating Databases in the Command Line
 ======================================
@@ -97,7 +92,6 @@ example, INT, VARCHAR, TEXT, etc. Many datatypes (for example VARCHAR)
 also require a ``constraint`` key.
 
 .. literalinclude:: forge/006.php
-   :lines: 2-
 
 Additionally, the following key/values can be used:
 
@@ -111,7 +105,6 @@ Additionally, the following key/values can be used:
 -  ``unique``/true : to generate a unique key for the field definition.
 
 .. literalinclude:: forge/007.php
-   :lines: 2-
 
 After the fields have been defined, they can be added using
 ``$forge->addField($fields)`` followed by a call to the
@@ -128,7 +121,6 @@ If you know exactly how you want a field to be created, you can pass the
 string into the field definitions with ``addField()``:
 
 .. literalinclude:: forge/008.php
-   :lines: 2-
 
 .. note:: Passing raw strings as fields cannot be followed by ``addKey()`` calls on those fields.
 
@@ -142,7 +134,6 @@ id will automatically be assigned as an INT(9) auto_incrementing
 Primary Key.
 
 .. literalinclude:: forge/009.php
-   :lines: 2-
 
 Adding Keys
 ===========
@@ -157,13 +148,11 @@ Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
 
 .. literalinclude:: forge/010.php
-   :lines: 2-
 
 To make code reading more objective it is also possible to add primary
 and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
-   :lines: 2-
 
 .. _adding-foreign-keys:
 
@@ -174,12 +163,10 @@ Foreign Keys help to enforce relationships and actions across your tables. For t
 you may add them directly in forge:
 
 .. literalinclude:: forge/012.php
-   :lines: 2-
 
 You can specify the desired action for the "on delete" and "on update" properties of the constraint:
 
 .. literalinclude:: forge/013.php
-   :lines: 2-
 
 Creating a Table
 ================
@@ -188,18 +175,15 @@ After fields and keys have been declared, you can create a new table
 with
 
 .. literalinclude:: forge/014.php
-   :lines: 2-
 
 An optional second parameter set to true adds an ``IF NOT EXISTS`` clause
 into the definition
 
 .. literalinclude:: forge/015.php
-   :lines: 2-
 
 You could also pass optional table attributes, such as MySQL's ``ENGINE``:
 
 .. literalinclude:: forge/016.php
-   :lines: 2-
 
 .. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes,
     ``createTable()`` will always add them with your configured *charset*
@@ -211,13 +195,11 @@ Dropping a Table
 Execute a ``DROP TABLE`` statement and optionally add an ``IF EXISTS`` clause.
 
 .. literalinclude:: forge/017.php
-   :lines: 2-
 
 A third parameter can be passed to add a ``CASCADE`` option, which might be required for some
 drivers to handle removal of tables with foreign keys.
 
 .. literalinclude:: forge/018.php
-   :lines: 2-
 
 Dropping a Foreign Key
 ======================
@@ -225,7 +207,6 @@ Dropping a Foreign Key
 Execute a DROP FOREIGN KEY.
 
 .. literalinclude:: forge/019.php
-   :lines: 2-
 
 Dropping a Key
 ======================
@@ -233,7 +214,6 @@ Dropping a Key
 Execute a DROP KEY.
 
 .. literalinclude:: forge/020.php
-   :lines: 2-
 
 Renaming a Table
 ================
@@ -241,7 +221,6 @@ Renaming a Table
 Executes a TABLE rename
 
 .. literalinclude:: forge/021.php
-   :lines: 2-
 
 ****************
 Modifying Tables
@@ -257,7 +236,6 @@ accepts the same field array as above, and can be used for an unlimited
 number of additional fields.
 
 .. literalinclude:: forge/022.php
-   :lines: 2-
 
 If you are using MySQL or CUBIRD, then you can take advantage of their
 ``AFTER`` and ``FIRST`` clauses to position the new column.
@@ -265,7 +243,6 @@ If you are using MySQL or CUBIRD, then you can take advantage of their
 Examples:
 
 .. literalinclude:: forge/023.php
-   :lines: 2-
 
 Dropping Columns From a Table
 ==============================
@@ -275,12 +252,10 @@ Dropping Columns From a Table
 Used to remove a column from a table.
 
 .. literalinclude:: forge/024.php
-   :lines: 2-
 
 Used to remove multiple columns from a table.
 
 .. literalinclude:: forge/025.php
-   :lines: 2-
 
 Modifying a Column in a Table
 =============================
@@ -292,7 +267,6 @@ alters an existing column rather than adding a new one. In order to
 change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
-   :lines: 2-
 
 ***************
 Class Reference

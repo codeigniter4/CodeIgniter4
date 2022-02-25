@@ -33,7 +33,6 @@ directory in the main project root::
 Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property:
 
 .. literalinclude:: modules/001.php
-   :lines: 2-
 
 Now that this is set up, we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
 takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
@@ -73,7 +72,6 @@ your classes. All we need to do is provide the list of paths to those files and 
 ``$files`` property of your **app/Config/Autoload.php** file.
 
 .. literalinclude:: modules/002.php
-   :lines: 2-
 
 ==============
 Auto-Discovery
@@ -96,7 +94,6 @@ To make auto-discovery work for our **Blog** namespace, we need to make one smal
 **Acme** needs to be changed to **Acme\\Blog** because each "module" within the namespace needs to be fully defined.
 
 .. literalinclude:: modules/003.php
-   :lines: 2-
 
 Once your module folder path is defined, the discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
 
@@ -122,7 +119,6 @@ If you do not want all of Composer's known directories to be scanned when locati
 by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``:
 
 .. literalinclude:: modules/004.php
-   :lines: 2-
 
 ==================
 Working With Files
@@ -156,7 +152,6 @@ It can be turned off in the **Modules** config file, described above.
 In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use:
 
 .. literalinclude:: modules/005.php
-   :lines: 2-
 
 Controllers
 ===========
@@ -165,12 +160,10 @@ Controllers outside of the main **app/Controllers** directory cannot be automati
 but must be specified within the Routes file itself:
 
 .. literalinclude:: modules/006.php
-   :lines: 2-
 
 To reduce the amount of typing needed here, the **group** routing feature is helpful:
 
 .. literalinclude:: modules/007.php
-   :lines: 2-
 
 Config Files
 ============
@@ -179,7 +172,6 @@ No special change is needed when working with configuration files. These are sti
 with the ``new`` command:
 
 .. literalinclude:: modules/008.php
-   :lines: 2-
 
 Config files are automatically discovered whenever using the **config()** function that is always available.
 
@@ -211,7 +203,6 @@ Helpers will be located automatically from defined namespaces when using the ``h
 is within the namespaces **Helpers** directory:
 
 .. literalinclude:: modules/009.php
-   :lines: 2-
 
 Language Files
 ==============
@@ -225,7 +216,6 @@ Libraries
 Libraries are always instantiated by their fully-qualified class name, so no special access is provided:
 
 .. literalinclude:: modules/010.php
-   :lines: 2-
 
 Models
 ======
@@ -233,7 +223,6 @@ Models
 Models are always instantiated by their fully-qualified class name, so no special access is provided:
 
 .. literalinclude:: modules/011.php
-   :lines: 2-
 
 Views
 =====
@@ -241,4 +230,3 @@ Views
 Views can be loaded using the class namespace as described in the :doc:`views </outgoing/views>` documentation:
 
 .. literalinclude:: modules/012.php
-   :lines: 2-

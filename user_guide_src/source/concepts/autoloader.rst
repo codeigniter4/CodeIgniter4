@@ -40,7 +40,6 @@ etc. The ``psr4`` array in the configuration file allows you to map the namespac
 those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
-   :lines: 2-
 
 The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
 to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
@@ -53,7 +52,6 @@ You may change this namespace by editing the **/app/Config/Constants.php** file 
 new namespace value under the ``APP_NAMESPACE`` setting:
 
 .. literalinclude:: autoloader/002.php
-   :lines: 2-
 
 You will need to modify any existing files that are referencing the current namespace.
 
@@ -69,7 +67,6 @@ by not hitting the file-system with extra ``is_file()`` calls. You can use the c
 third-party libraries that are not namespaced:
 
 .. literalinclude:: autoloader/003.php
-   :lines: 2-
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 

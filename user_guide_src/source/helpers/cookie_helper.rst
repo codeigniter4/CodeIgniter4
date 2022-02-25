@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: cookie_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -68,7 +67,6 @@ The following functions are available:
     values, only the name of the cookie is needed.
 
     .. literalinclude:: cookie_helper/002.php
-       :lines: 2-
 
     This function is otherwise identical to ``set_cookie()``, except that it
     does not have the value and expiration parameters. You can submit an
@@ -76,7 +74,6 @@ The following functions are available:
     parameters.
 
     .. literalinclude:: cookie_helper/003.php
-       :lines: 2-
 
 .. php:function:: has_cookie(string $name[, ?string $value = null[, string $prefix = '']])
 

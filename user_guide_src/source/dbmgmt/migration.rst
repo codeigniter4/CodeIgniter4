@@ -61,7 +61,6 @@ To temporarily bypass the foreign key checks while running migrations, use the `
 ``enableForeignKeyChecks()`` methods on the database connection.
 
 .. literalinclude:: migration/002.php
-   :lines: 2-
 
 Database Groups
 ===============
@@ -90,7 +89,6 @@ For example, assume that we have the following namespaces defined in our Autoloa
 configuration file:
 
 .. literalinclude:: migration/004.php
-   :lines: 2-
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
 **ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
@@ -235,7 +233,6 @@ Class Reference
         Regress can be used to roll back changes to a previous state, batch by batch.
 
         .. literalinclude:: migration/006.php
-           :lines: 2-
 
     .. php:method:: force($path, $namespace, $group)
 
@@ -258,7 +255,6 @@ Class Reference
         Sets the namespace the library should look for migration files:
 
         .. literalinclude:: migration/007.php
-           :lines: 2-
 
     .. php:method:: setGroup($group)
 
@@ -269,4 +265,3 @@ Class Reference
         Sets the group the library should look for migration files:
 
         .. literalinclude:: migration/008.php
-           :lines: 2-

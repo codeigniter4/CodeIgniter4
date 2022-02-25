@@ -26,12 +26,10 @@ The ``start()`` methods takes a single parameter: the name of this timer. You ca
 of the timer. It is only used for you to reference later to know which measurement is which:
 
 .. literalinclude:: benchmark/001.php
-   :lines: 2-
 
 The ``stop()`` method takes the name of the timer that you want to stop as the only parameter, also:
 
 .. literalinclude:: benchmark/002.php
-   :lines: 2-
 
 The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.
 
@@ -39,7 +37,6 @@ Alternatively, you can use the :doc:`global function </general/common_functions>
 and stop timers:
 
 .. literalinclude:: benchmark/003.php
-   :lines: 2-
 
 Viewing Your Benchmark Points
 =============================
@@ -49,13 +46,11 @@ not automatically display them, though. You can retrieve all of your timers by c
 This returns an array of benchmark information, including start, end, and duration:
 
 .. literalinclude:: benchmark/004.php
-   :lines: 2-
 
 You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
 the only parameter. The default value is 4 numbers behind the decimal point:
 
 .. literalinclude:: benchmark/005.php
-   :lines: 2-
 
 The timers are automatically displayed in the :doc:`Debub Toolbar </testing/debugging>`.
 
@@ -67,7 +62,6 @@ the duration of a single timer, in seconds, with the `getElapsedTime()` method. 
 the timer to display. The second is the number of decimal places to display. This defaults to 4:
 
 .. literalinclude:: benchmark/006.php
-   :lines: 2-
 
 ==================
 Using the Iterator
@@ -86,7 +80,6 @@ added to the Iterator class through the `add()` method. The first parameter is a
 this test by. The second parameter is the Closure, itself:
 
 .. literalinclude:: benchmark/007.php
-   :lines: 2-
 
 Running the Tasks
 =================
@@ -96,10 +89,8 @@ By default, it will run each task 1000 times. This is probably sufficient for mo
 to run the tests more times than that, you can pass the number as the first parameter:
 
 .. literalinclude:: benchmark/008.php
-   :lines: 2-
 
 Once it has run, it will return an HTML table with the results of the test. If you don't want the results
 displayed, you can pass in `false` as the second parameter:
 
 .. literalinclude:: benchmark/009.php
-   :lines: 2-

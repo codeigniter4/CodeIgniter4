@@ -29,7 +29,6 @@ Service Accessors
     Examples:
 
     .. literalinclude:: common_functions/001.php
-       :lines: 2-
 
 .. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
 
@@ -121,7 +120,6 @@ Service Accessors
     Example:
 
     .. literalinclude:: common_functions/002.php
-       :lines: 2-
 
 .. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
         need to use this function when not using the form helper.
@@ -148,7 +146,6 @@ Service Accessors
     Example:
 
     .. literalinclude:: common_functions/003.php
-       :lines: 2-
 
 .. php:function:: view ($name [, $data [, $options ]])
 
@@ -175,7 +172,6 @@ Service Accessors
     Example:
 
     .. literalinclude:: common_functions/004.php
-       :lines: 2-
 
     For more details, see the :doc:`Views </outgoing/views>` page.
 
@@ -306,13 +302,11 @@ Miscellaneous Functions
     Returns a RedirectResponse instance allowing you to easily create redirects:
 
     .. literalinclude:: common_functions/005.php
-       :lines: 2-
 
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
     treating it the same as using ``redirect()->route()``:
 
     .. literalinclude:: common_functions/006.php
-       :lines: 2-
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
@@ -327,7 +321,6 @@ Miscellaneous Functions
     Example:
 
     .. literalinclude:: common_functions/007.php
-       :lines: 2-
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -353,7 +346,6 @@ Miscellaneous Functions
     Example:
 
     .. literalinclude:: common_functions/008.php
-       :lines: 2-
 
 .. php:function:: single_service ( $name [, ...$params] )
 

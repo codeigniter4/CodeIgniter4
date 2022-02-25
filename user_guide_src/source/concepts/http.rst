@@ -71,7 +71,6 @@ abstracts them so that you have a consistent, simple interface to them. The :doc
 is an object-oriented representation of the HTTP request. It provides everything you need:
 
 .. literalinclude:: http/001.php
-   :lines: 2-
 
 The request class does a lot of work in the background for you, that you never need to worry about.
 The ``isAJAX()`` and ``isSecure()`` methods check several different methods to determine the correct answer.
@@ -82,6 +81,5 @@ CodeIgniter also provides a :doc:`Response class </outgoing/response>` that is a
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client:
 
 .. literalinclude:: http/002.php
-   :lines: 2-
 
 In addition, the Response class allows you to work the HTTP cache layer for the best performance.

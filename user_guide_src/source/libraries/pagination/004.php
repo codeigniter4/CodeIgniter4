@@ -15,6 +15,8 @@ public function index()
     echo view('users/index', $data);
 }
 
-// In the views:
+?>
+
+<!-- In your view file: -->
 <?= $pager->links('group1') ?>
 <?= $pager->simpleLinks('group2') ?>

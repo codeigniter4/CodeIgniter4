@@ -28,7 +28,6 @@ database connection. This sets the **FROM** portion of the query for you
 and returns a new instance of the Query Builder class:
 
 .. literalinclude:: query_builder/001.php
-   :lines: 2-
 
 The Query Builder is only loaded into memory when you specifically request
 the class, so no resources are used by default.
@@ -48,19 +47,16 @@ Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table:
 
 .. literalinclude:: query_builder/002.php
-   :lines: 2-
 
 The first and second parameters enable you to set a limit and offset
 clause:
 
 .. literalinclude:: query_builder/003.php
-   :lines: 2-
 
 You'll notice that the above method is assigned to a variable named
 $query, which can be used to show the results:
 
 .. literalinclude:: query_builder/004.php
-   :lines: 2-
 
 Please visit the :doc:`getResult*() method <results>` page for a full
 discussion regarding result generation.
@@ -73,13 +69,11 @@ the query. This method simply returns the SQL query as a string.
 Example:
 
 .. literalinclude:: query_builder/005.php
-   :lines: 2-
 
 The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be reset, just like when using ``$builder->get()``):
 
 .. literalinclude:: query_builder/006.php
-   :lines: 2-
 
 The key thing to notice in the above example is that the second query did not
 utilize ``$builder->from()`` and did not pass a table name into the first
@@ -94,7 +88,6 @@ Identical to the ``get()`` method except that it permits you to add a
 method:
 
 .. literalinclude:: query_builder/007.php
-   :lines: 2-
 
 Please read about the ``where()`` method below for more information.
 
@@ -106,7 +99,6 @@ Select
 Permits you to write the **SELECT** portion of your query:
 
 .. literalinclude:: query_builder/008.php
-   :lines: 2-
 
 .. note:: If you are selecting all (``*``) from a table you do not need to
     use this method. When omitted, CodeIgniter assumes that you wish
@@ -118,7 +110,6 @@ This is useful if you need a compound select statement where automatic
 escaping of fields may break them.
 
 .. literalinclude:: query_builder/009.php
-   :lines: 2-
 
 **$builder->selectMax()**
 
@@ -126,7 +117,6 @@ Writes a **SELECT MAX(field)** portion for your query. You can optionally
 include a second parameter to rename the resulting field.
 
 .. literalinclude:: query_builder/010.php
-   :lines: 2-
 
 **$builder->selectMin()**
 
@@ -135,7 +125,6 @@ Writes a **SELECT MIN(field)** portion for your query. As with
 the resulting field.
 
 .. literalinclude:: query_builder/011.php
-   :lines: 2-
 
 **$builder->selectAvg()**
 
@@ -144,7 +133,6 @@ Writes a **SELECT AVG(field)** portion for your query. As with
 the resulting field.
 
 .. literalinclude:: query_builder/012.php
-   :lines: 2-
 
 **$builder->selectSum()**
 
@@ -153,7 +141,6 @@ Writes a **SELECT SUM(field)** portion for your query. As with
 the resulting field.
 
 .. literalinclude:: query_builder/013.php
-   :lines: 2-
 
 **$builder->selectCount()**
 
@@ -165,7 +152,6 @@ the resulting field.
         counting results generally see ``countAll()`` or ``countAllResults()``.
 
 .. literalinclude:: query_builder/014.php
-   :lines: 2-
 
 From
 ====
@@ -175,7 +161,6 @@ From
 Permits you to write the **FROM** portion of your query:
 
 .. literalinclude:: query_builder/015.php
-   :lines: 2-
 
 .. note:: As shown earlier, the **FROM** portion of your query can be specified
     in the ``$db->table()`` method. Additional calls to ``from()`` will add more tables
@@ -193,12 +178,10 @@ Permits you to write part of a **FROM** query as a subquery.
 This is where we add a subquery to an existing table:
 
 .. literalinclude:: query_builder/016.php
-   :lines: 2-
 
 Use the ``$db->newQuery()`` method to make a subquery the main table:
 
 .. literalinclude:: query_builder/017.php
-   :lines: 2-
 
 Join
 ====
@@ -208,7 +191,6 @@ Join
 Permits you to write the **JOIN** portion of your query:
 
 .. literalinclude:: query_builder/018.php
-   :lines: 2-
 
 Multiple method calls can be made if you need several joins in one
 query.
@@ -218,7 +200,6 @@ parameter of the method. Options are: ``left``, ``right``, ``outer``, ``inner``,
 outer``, and ``right outer``.
 
 .. literalinclude:: query_builder/019.php
-   :lines: 2-
 
 *************************
 Looking for Specific Data
@@ -238,7 +219,6 @@ methods:
 #. **Simple key/value method:**
 
     .. literalinclude:: query_builder/020.php
-       :lines: 2-
 
     Notice that the equal sign is added for you.
 
@@ -246,7 +226,6 @@ methods:
     **AND** between them:
 
     .. literalinclude:: query_builder/021.php
-       :lines: 2-
 
 #. **Custom key/value method:**
 
@@ -254,37 +233,31 @@ methods:
     control the comparison:
 
     .. literalinclude:: query_builder/022.php
-       :lines: 2-
 
 #. **Associative array method:**
 
     .. literalinclude:: query_builder/023.php
-       :lines: 2-
 
     You can include your own operators using this method as well:
 
     .. literalinclude:: query_builder/024.php
-       :lines: 2-
 
 #. **Custom string:**
 
     You can write your own clauses manually:
 
     .. literalinclude:: query_builder/025.php
-       :lines: 2-
 
     .. warning:: If you are using user-supplied data within the string, you MUST escape the
         data manually. Failure to do so could result in SQL injections.
 
         .. literalinclude:: query_builder/026.php
-           :lines: 2-
 
 .. _query-builder-where-subquery:
 
 5. **Subqueries:**
 
     .. literalinclude:: query_builder/027.php
-       :lines: 2-
 
 **$builder->orWhere()**
 
@@ -292,7 +265,6 @@ This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/028.php
-   :lines: 2-
 
 **$builder->whereIn()**
 
@@ -300,12 +272,10 @@ Generates a **WHERE** field IN ('item', 'item') SQL query joined with **AND** if
 appropriate:
 
 .. literalinclude:: query_builder/029.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/030.php
-   :lines: 2-
 
 **$builder->orWhereIn()**
 
@@ -313,12 +283,10 @@ Generates a **WHERE field IN ('item', 'item')** SQL query joined with **OR** if
 appropriate:
 
 .. literalinclude:: query_builder/031.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/032.php
-   :lines: 2-
 
 **$builder->whereNotIn()**
 
@@ -326,12 +294,10 @@ Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with
 **AND** if appropriate:
 
 .. literalinclude:: query_builder/033.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/034.php
-   :lines: 2-
 
 **$builder->orWhereNotIn()**
 
@@ -339,12 +305,10 @@ Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with **OR**
 if appropriate:
 
 .. literalinclude:: query_builder/035.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/036.php
-   :lines: 2-
 
 ************************
 Looking for Similar Data
@@ -365,25 +329,21 @@ searches.
 #. **Simple key/value method:**
 
     .. literalinclude:: query_builder/037.php
-       :lines: 2-
 
     If you use multiple method calls they will be chained together with
     **AND** between them:
 
     .. literalinclude:: query_builder/038.php
-       :lines: 2-
 
     If you want to control where the wildcard (**%**) is placed, you can use
     an optional third argument. Your options are ``before``, ``after`` and
     ``both`` (which is the default).
 
     .. literalinclude:: query_builder/039.php
-       :lines: 2-
 
 #. **Associative array method:**
 
        .. literalinclude:: query_builder/040.php
-          :lines: 2-
 
 **$builder->orLike()**
 
@@ -391,7 +351,6 @@ This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/041.php
-   :lines: 2-
 
 **$builder->notLike()**
 
@@ -399,7 +358,6 @@ This method is identical to ``like()``, except that it generates
 **NOT LIKE** statements:
 
 .. literalinclude:: query_builder/042.php
-   :lines: 2-
 
 **$builder->orNotLike()**
 
@@ -407,26 +365,22 @@ This method is identical to ``notLike()``, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/043.php
-   :lines: 2-
 
 **$builder->groupBy()**
 
 Permits you to write the **GROUP BY** portion of your query:
 
 .. literalinclude:: query_builder/044.php
-   :lines: 2-
 
 You can also pass an array of multiple values as well:
 
 .. literalinclude:: query_builder/045.php
-   :lines: 2-
 
 **$builder->distinct()**
 
 Adds the **DISTINCT** keyword to a query
 
 .. literalinclude:: query_builder/046.php
-   :lines: 2-
 
 **$builder->having()**
 
@@ -434,19 +388,16 @@ Permits you to write the **HAVING** portion of your query. There are 2
 possible syntaxes, 1 argument or 2:
 
 .. literalinclude:: query_builder/047.php
-   :lines: 2-
 
 You can also pass an array of multiple values as well:
 
 .. literalinclude:: query_builder/048.php
-   :lines: 2-
 
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to ``false``.
 
 .. literalinclude:: query_builder/049.php
-   :lines: 2-
 
 **$builder->orHaving()**
 
@@ -458,12 +409,10 @@ Generates a **HAVING field IN ('item', 'item')** SQL query joined with **AND** i
 appropriate:
 
 .. literalinclude:: query_builder/050.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/051.php
-   :lines: 2-
 
 **$builder->orHavingIn()**
 
@@ -471,12 +420,10 @@ Generates a **HAVING field IN ('item', 'item')** SQL query joined with **OR** if
 appropriate
 
 .. literalinclude:: query_builder/052.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/053.php
-   :lines: 2-
 
 **$builder->havingNotIn()**
 
@@ -484,12 +431,10 @@ Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with
 **AND** if appropriate
 
 .. literalinclude:: query_builder/054.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/055.php
-   :lines: 2-
 
 **$builder->orHavingNotIn()**
 
@@ -497,12 +442,10 @@ Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with **OR*
 if appropriate
 
 .. literalinclude:: query_builder/056.php
-   :lines: 2-
 
 You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/057.php
-   :lines: 2-
 
 **$builder->havingLike()**
 
@@ -519,25 +462,21 @@ searches.
 #. **Simple key/value method:**
 
     .. literalinclude:: query_builder/058.php
-       :lines: 2-
 
     If you use multiple method calls they will be chained together with
     **AND** between them:
 
     .. literalinclude:: query_builder/059.php
-       :lines: 2-
 
     If you want to control where the wildcard (**%**) is placed, you can use
     an optional third argument. Your options are ``before``, ``after`` and
     ``both`` (which is the default).
 
     .. literalinclude:: query_builder/060.php
-       :lines: 2-
 
 #. **Associative array method:**
 
        .. literalinclude:: query_builder/061.php
-          :lines: 2-
 
 **$builder->orHavingLike()**
 
@@ -545,7 +484,6 @@ This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/062.php
-   :lines: 2-
 
 **$builder->notHavingLike()**
 
@@ -553,7 +491,6 @@ This method is identical to ``havingLike()``, except that it generates
 **NOT LIKE** statements:
 
 .. literalinclude:: query_builder/063.php
-   :lines: 2-
 
 **$builder->orNotHavingLike()**
 
@@ -561,7 +498,6 @@ This method is identical to ``notHavingLike()``, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/064.php
-   :lines: 2-
 
 ****************
 Ordering Results
@@ -577,23 +513,19 @@ The second parameter lets you set the direction of the result.
 Options are ``ASC``, ``DESC`` AND ``RANDOM``.
 
 .. literalinclude:: query_builder/065.php
-   :lines: 2-
 
 You can also pass your own string in the first parameter:
 
 .. literalinclude:: query_builder/066.php
-   :lines: 2-
 
 Or multiple method calls can be made if you need multiple fields.
 
 .. literalinclude:: query_builder/067.php
-   :lines: 2-
 
 If you choose the ``RANDOM`` direction option, then the first parameters will
 be ignored, unless you specify a numeric seed value.
 
 .. literalinclude:: query_builder/068.php
-   :lines: 2-
 
 ****************************
 Limiting or Counting Results
@@ -604,12 +536,10 @@ Limiting or Counting Results
 Lets you limit the number of rows you would like returned by the query:
 
 .. literalinclude:: query_builder/069.php
-   :lines: 2-
 
 The second parameter lets you set a result offset.
 
 .. literalinclude:: query_builder/070.php
-   :lines: 2-
 
 **$builder->countAllResults()**
 
@@ -618,14 +548,12 @@ Builder query. Queries will accept Query Builder restrictors such as
 ``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example:
 
 .. literalinclude:: query_builder/071.php
-   :lines: 2-
 
 However, this method also resets any field values that you may have passed
 to ``select()``. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
 .. literalinclude:: query_builder/072.php
-   :lines: 2-
 
 **$builder->countAll()**
 
@@ -633,7 +561,6 @@ Permits you to determine the number of rows in a particular table.
 Example:
 
 .. literalinclude:: query_builder/073.php
-   :lines: 2-
 
 As is in ``countAllResult()`` method, this method resets any field values that you may have passed
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
@@ -647,7 +574,6 @@ Query grouping allows you to create groups of **WHERE** clauses by enclosing the
 you to create queries with complex **WHERE** clauses. Nested groups are supported. Example:
 
 .. literalinclude:: query_builder/074.php
-   :lines: 2-
 
 .. note:: Groups need to be balanced, make sure every ``groupStart()`` is matched by a ``groupEnd()``.
 
@@ -702,14 +628,12 @@ query. You can either pass an **array** or an **object** to the
 method. Here is an example using an array:
 
 .. literalinclude:: query_builder/075.php
-   :lines: 2-
 
 The first parameter is an associative array of values.
 
 Here is an example using an object:
 
 .. literalinclude:: query_builder/076.php
-   :lines: 2-
 
 The first parameter is an object.
 
@@ -722,7 +646,6 @@ query. So if an entry with the same primary key already exists, the query won't 
 You can optionally pass an **boolean** to the method. Here is an example using the array of the above example:
 
 .. literalinclude:: query_builder/077.php
-   :lines: 2-
 
 **$builder->getCompiledInsert()**
 
@@ -732,13 +655,11 @@ Compiles the insertion query just like ``$builder->insert()`` but does not
 Example:
 
 .. literalinclude:: query_builder/078.php
-   :lines: 2-
 
 The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be--just like ``$builder->insert()``):
 
 .. literalinclude:: query_builder/079.php
-   :lines: 2-
 
 The reason the second query worked is that the query has not been executed
 using ``$builder->insert()`` which resets values or reset directly using
@@ -753,7 +674,6 @@ query. You can either pass an **array** or an **object** to the
 method. Here is an example using an array:
 
 .. literalinclude:: query_builder/080.php
-   :lines: 2-
 
 The first parameter is an associative array of values.
 
@@ -775,7 +695,6 @@ logics with different combinations of  ``select()``, ``update()``,
 Example:
 
 .. literalinclude:: query_builder/081.php
-   :lines: 2-
 
 In the above example, if we assume that the ``title`` field is our primary
 key, then if a row containing ``My title`` as the ``title`` value, that row
@@ -792,13 +711,11 @@ This method enables you to set values for inserts or updates.
 or update() methods:**
 
 .. literalinclude:: query_builder/082.php
-   :lines: 2-
 
 If you use multiple method called they will be assembled properly
 based on whether you are doing an insert or an update:
 
 .. literalinclude:: query_builder/083.php
-   :lines: 2-
 
 ``set()`` will also accept an optional third parameter (``$escape``), that
 will prevent data from being escaped if set to ``false``. To illustrate the
@@ -806,17 +723,14 @@ difference, here is ``set()`` used both with and without the escape
 parameter.
 
 .. literalinclude:: query_builder/084.php
-   :lines: 2-
 
 You can also pass an associative array to this method:
 
 .. literalinclude:: query_builder/085.php
-   :lines: 2-
 
 Or an object:
 
 .. literalinclude:: query_builder/086.php
-   :lines: 2-
 
 **$builder->update()**
 
@@ -825,12 +739,10 @@ supply. You can pass an **array** or an **object** to the method. Here
 is an example using an array:
 
 .. literalinclude:: query_builder/087.php
-   :lines: 2-
 
 Or you can supply an object:
 
 .. literalinclude:: query_builder/088.php
-   :lines: 2-
 
 .. note:: All values are escaped automatically producing safer queries.
 
@@ -839,12 +751,10 @@ to set the **WHERE** clause. You can optionally pass this information
 directly into the ``update()`` method as a string:
 
 .. literalinclude:: query_builder/089.php
-   :lines: 2-
 
 Or as an array:
 
 .. literalinclude:: query_builder/090.php
-   :lines: 2-
 
 You may also use the ``$builder->set()`` method described above when
 performing updates.
@@ -856,7 +766,6 @@ You can either pass an **array** or an **object** to the method.
 Here is an example using an array:
 
 .. literalinclude:: query_builder/091.php
-   :lines: 2-
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
@@ -884,14 +793,12 @@ Deleting Data
 Generates a **DELETE** SQL string and runs the query.
 
 .. literalinclude:: query_builder/092.php
-   :lines: 2-
 
 The first parameter is the where clause.
 You can also use the ``where()`` or ``or_where()`` methods instead of passing
 the data to the first parameter of the method:
 
 .. literalinclude:: query_builder/093.php
-   :lines: 2-
 
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
@@ -902,14 +809,12 @@ Generates a **DELETE** SQL string and runs the
 query:
 
 .. literalinclude:: query_builder/094.php
-   :lines: 2-
 
 **$builder->truncate()**
 
 Generates a **TRUNCATE** SQL string and runs the query.
 
 .. literalinclude:: query_builder/095.php
-   :lines: 2-
 
 .. note:: If the TRUNCATE command isn't available, ``truncate()`` will
     execute as "DELETE FROM table".
@@ -929,7 +834,6 @@ Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:
 
 .. literalinclude:: query_builder/096.php
-   :lines: 2-
 
 .. _ar-caching:
 
@@ -947,7 +851,6 @@ This is useful in situations where you are using Query Builder to generate SQL
 run the query:
 
 .. literalinclude:: query_builder/097.php
-   :lines: 2-
 
 ***************
 Class Reference

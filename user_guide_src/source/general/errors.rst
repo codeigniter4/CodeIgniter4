@@ -21,12 +21,10 @@ Exceptions are simply events that happen when the exception is "thrown". This ha
 execution is then sent to the error handler which displays the appropriate error page:
 
 .. literalinclude:: errors/001.php
-   :lines: 2-
 
 If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block:
 
 .. literalinclude:: errors/002.php
-   :lines: 2-
 
 If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
 the scripts dies, echoing the error message that the ``UserModel`` defined.
@@ -36,13 +34,11 @@ a ``UnknownFileException``, we can specify that in the catch parameter. Any othe
 not child classes of the caught exception will be passed on to the error handler:
 
 .. literalinclude:: errors/003.php
-   :lines: 2-
 
 This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block:
 
 .. literalinclude:: errors/004.php
-   :lines: 2-
 
 Configuration
 =============
@@ -60,12 +56,10 @@ By default, all Exceptions other than 404 - Page Not Found exceptions are logged
 by setting the ``$log`` value of **app/Config/Exceptions.php**:
 
 .. literalinclude:: errors/005.php
-   :lines: 2-
 
 To ignore logging on other status codes, you can set the status code to ignore in the same file:
 
 .. literalinclude:: errors/006.php
-   :lines: 2-
 
 .. note:: It is possible that logging still will not happen for exceptions if your current Log settings
     are not set up to log **critical** errors, which all exceptions are logged as.
@@ -84,7 +78,6 @@ If, in **app/Config/Routes.php**, you have specified a 404 Override, that will b
 404 page:
 
 .. literalinclude:: errors/007.php
-   :lines: 2-
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
 
@@ -95,7 +88,6 @@ This exception should be used when the values from the configuration class are i
 is not the right type, etc:
 
 .. literalinclude:: errors/008.php
-   :lines: 2-
 
 This provides an HTTP status code of 500 and an exit code of 3.
 
@@ -106,7 +98,6 @@ This exception is thrown for database errors, such as when the database connecti
 or when it is temporarily lost:
 
 .. literalinclude:: errors/009.php
-   :lines: 2-
 
 This provides an HTTP status code of 500 and an exit code of 8.
 
@@ -117,10 +108,8 @@ This exception is a special case allowing for overriding of all other response r
 forcing a redirect to a specific route or URL:
 
 .. literalinclude:: errors/010.php
-   :lines: 2-
 
 ``$route`` may be a named route, relative URI, or a complete URL. You can also supply a
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
-   :lines: 2-

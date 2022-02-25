@@ -16,7 +16,6 @@ Regular Queries
 To submit a query, use the **query** function:
 
 .. literalinclude:: queries/001.php
-   :lines: 2-
 
 The ``query()`` function returns a database result **object** when "read"
 type queries are run which you can use to :doc:`show your
@@ -26,7 +25,6 @@ data you will typically assign the query to your own variable, like
 this:
 
 .. literalinclude:: queries/002.php
-   :lines: 2-
 
 .. note:: If you are using OCI8 Driver, SQL statements should not end with a semi-colon (``;``).
     PL/SQL statements should end with a semi-colon (``;``).
@@ -47,7 +45,6 @@ should be used for) and a resource/object on success for queries with
 fetchable results.
 
 .. literalinclude:: queries/003.php
-   :lines: 2-
 
 .. note:: PostgreSQL's ``pg_exec()`` function (for example) always
     returns a resource on success even for write type queries.
@@ -62,18 +59,15 @@ a table name for use in a native SQL query for example, then you can use
 the following:
 
 .. literalinclude:: queries/004.php
-   :lines: 2-
 
 If for any reason you would like to change the prefix programmatically
 without needing to create a new connection you can use this method:
 
 .. literalinclude:: queries/005.php
-   :lines: 2-
 
 You can get the current prefix any time with this method:
 
 .. literalinclude:: queries/006.php
-   :lines: 2-
 
 **********************
 Protecting identifiers
@@ -85,7 +79,6 @@ automatically protected**, but if you need to manually protect an
 identifier you can use:
 
 .. literalinclude:: queries/007.php
-   :lines: 2-
 
 .. important:: Although the Query Builder will try its best to properly
     quote any field and table names that you feed it. Note that it
@@ -97,7 +90,6 @@ have a prefix specified in your database config file. To enable the
 prefixing set true (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
-   :lines: 2-
 
 ****************
 Escaping Queries
@@ -112,21 +104,18 @@ this:
    single quotes around the data so you don't have to:
 
    .. literalinclude:: queries/009.php
-      :lines: 2-
 
 #. **$db->escapeString()** This function escapes the data passed to
    it, regardless of type. Most of the time you'll use the above
    function rather than this one. Use the function like this:
 
    .. literalinclude:: queries/010.php
-      :lines: 2-
 
 #. **$db->escapeLikeString()** This method should be used when
    strings are to be used in LIKE conditions so that LIKE wildcards
    ('%', '\_') in the string are also properly escaped.
 
 .. literalinclude:: queries/011.php
-   :lines: 2-
 
 .. important:: The ``escapeLikeString()`` method uses '!' (exclamation mark)
     to escape special characters for *LIKE* conditions. Because this
@@ -142,7 +131,6 @@ Bindings enable you to simplify your query syntax by letting the system
 put the queries together for you. Consider the following example:
 
 .. literalinclude:: queries/012.php
-   :lines: 2-
 
 The question marks in the query are automatically replaced with the
 values in the array in the second parameter of the query function.
@@ -150,7 +138,6 @@ values in the array in the second parameter of the query function.
 Binding also work with arrays, which will be transformed to IN sets:
 
 .. literalinclude:: queries/013.php
-   :lines: 2-
 
 The resulting query will be::
 
@@ -168,7 +155,6 @@ you can name the bindings, allowing the keys of the values passed in to match
 placeholders in the query:
 
 .. literalinclude:: queries/014.php
-   :lines: 2-
 
 .. note:: Each name in the query MUST be surrounded by colons.
 
@@ -183,7 +169,6 @@ will return an array containing its code and message. Here's a quick
 example:
 
 .. literalinclude:: queries/015.php
-   :lines: 2-
 
 ****************
 Prepared Queries
@@ -207,19 +192,16 @@ run a query. The query is not actually run, and the values don't matter since th
 as placeholders. This returns a PreparedQuery object:
 
 .. literalinclude:: queries/016.php
-   :lines: 2-
 
 If you don't want to use the Query Builder you can create the Query object manually using question marks for
 value placeholders:
 
 .. literalinclude:: queries/017.php
-   :lines: 2-
 
 If the database requires an array of options passed to it during the prepare statement phase you can pass that
 array through in the second parameter:
 
 .. literalinclude:: queries/018.php
-   :lines: 2-
 
 Executing the Query
 ===================
@@ -230,7 +212,6 @@ placeholders in the query. They must also be passed in the same order as the pla
 query:
 
 .. literalinclude:: queries/019.php
-   :lines: 2-
 
 This returns a standard :doc:`result set </database/results>`.
 
@@ -245,7 +226,6 @@ While PHP does a pretty good job of closing all open statements with the databas
 close out the prepared statement when you're done with it:
 
 .. literalinclude:: queries/020.php
-   :lines: 2-
 
 **getQueryString()**
 
@@ -275,7 +255,6 @@ When you just need to retrieve the last Query object, use the
 getLastQuery() method:
 
 .. literalinclude:: queries/021.php
-   :lines: 2-
 
 The Query Class
 ===============
@@ -290,12 +269,10 @@ Returns the final query after all processing has happened. This is the exact
 query that was sent to the database:
 
 .. literalinclude:: queries/022.php
-   :lines: 2-
 
 This same value can be retrieved by casting the Query object to a string:
 
 .. literalinclude:: queries/023.php
-   :lines: 2-
 
 **getOriginalQuery()**
 
@@ -303,7 +280,6 @@ Returns the raw SQL that was passed into the object. This will not have any
 binds in it, or prefixes swapped out, etc:
 
 .. literalinclude:: queries/024.php
-   :lines: 2-
 
 **hasError()**
 
@@ -311,7 +287,6 @@ If an error was encountered during the execution of this query this method
 will return true:
 
 .. literalinclude:: queries/025.php
-   :lines: 2-
 
 **isWriteType()**
 
@@ -319,7 +294,6 @@ Returns true if the query was determined to be a write-type query (i.e.,
 INSERT, UPDATE, DELETE, etc):
 
 .. literalinclude:: queries/026.php
-   :lines: 2-
 
 **swapPrefix()**
 
@@ -328,18 +302,15 @@ parameter is the original prefix that you want replaced, and the second
 parameter is the value you want it replaced with:
 
 .. literalinclude:: queries/027.php
-   :lines: 2-
 
 **getStartTime()**
 
 Gets the time the query was executed in seconds with microseconds:
 
 .. literalinclude:: queries/028.php
-   :lines: 2-
 
 **getDuration()**
 
 Returns a float with the duration of the query in seconds with microseconds:
 
 .. literalinclude:: queries/029.php
-   :lines: 2-

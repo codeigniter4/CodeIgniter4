@@ -17,7 +17,6 @@ Like all services in CodeIgniter, it can be loaded via ``Config\Services``, thou
 to load it manually:
 
 .. literalinclude:: typography/001.php
-   :lines: 2-
 
 **************************
 Available static functions
@@ -38,7 +37,6 @@ The following functions are available:
     Usage example:
 
     .. literalinclude:: typography/002.php
-       :lines: 2-
 
     .. note:: Typographic formatting can be processor intensive, particularly if
         you have a lot of content being formatted. If you choose to use this
@@ -58,7 +56,6 @@ The following functions are available:
     Usage example:
 
     .. literalinclude:: typography/003.php
-       :lines: 2-
 
 .. php:function:: nl2brExceptPre($str)
 
@@ -73,4 +70,3 @@ The following functions are available:
     Usage example:
 
     .. literalinclude:: typography/004.php
-       :lines: 2-

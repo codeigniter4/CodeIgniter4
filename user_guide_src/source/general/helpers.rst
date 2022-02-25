@@ -35,7 +35,6 @@ Loading a Helper
 Loading a helper file is quite simple using the following method:
 
 .. literalinclude:: helpers/001.php
-   :lines: 2-
 
 Where ``name`` is the file name of the helper, without the "**.php**" file
 extension or the "**_helper**" part.
@@ -44,13 +43,11 @@ For example, to load the **Cookie Helper** file, which is named
 **cookie_helper.php**, you would do this:
 
 .. literalinclude:: helpers/002.php
-   :lines: 2-
 
 If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:
 
 .. literalinclude:: helpers/003.php
-   :lines: 2-
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -82,7 +79,6 @@ code into its own namespace, ``Example\Blog``. The files exist on our server at
 use the following command to load the helper for us:
 
 .. literalinclude:: helpers/004.php
-   :lines: 2-
 
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
@@ -122,7 +118,6 @@ named **app/Helpers/array_helper.php**, and add or override
 functions:
 
 .. literalinclude:: helpers/006.php
-   :lines: 2-
 
 The ``helper()`` method will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers

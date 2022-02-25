@@ -19,7 +19,6 @@ This method returns the query result as an array of **objects**, or
 loop, like this:
 
 .. literalinclude:: results/001.php
-   :lines: 2-
 
 The above method is an alias of ``getResultObject()``.
 
@@ -27,7 +26,6 @@ You can pass in the string 'array' if you wish to get your results
 as an array of arrays:
 
 .. literalinclude:: results/002.php
-   :lines: 2-
 
 The above usage is an alias of ``getResultArray()``.
 
@@ -35,7 +33,6 @@ You can also pass a string to ``getResult()`` which represents a class to
 instantiate for each result object
 
 .. literalinclude:: results/003.php
-   :lines: 2-
 
 The above method is an alias of ``getCustomResultObject()``.
 
@@ -46,7 +43,6 @@ array when no result is produced. Typically you'll use this in a foreach
 loop, like this:
 
 .. literalinclude:: results/004.php
-   :lines: 2-
 
 ***********
 Result Rows
@@ -59,19 +55,16 @@ one row, it returns only the first row. The result is returned as an
 **object**. Here's a usage example:
 
 .. literalinclude:: results/005.php
-   :lines: 2-
 
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter:
 
 .. literalinclude:: results/006.php
-   :lines: 2-
 
 You can also add a second String parameter, which is the name of a class
 to instantiate the row with:
 
 .. literalinclude:: results/007.php
-   :lines: 2-
 
 **getRowArray()**
 
@@ -79,13 +72,11 @@ Identical to the above ``row()`` method, except it returns an array.
 Example:
 
 .. literalinclude:: results/008.php
-   :lines: 2-
 
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter:
 
 .. literalinclude:: results/009.php
-   :lines: 2-
 
 In addition, you can walk forward/backwards/first/last through your
 results using these variations:
@@ -114,7 +105,6 @@ result in memory as ``row()`` does. If your query has more than one row,
 it returns the current row and moves the internal data pointer ahead.
 
 .. literalinclude:: results/010.php
-   :lines: 2-
 
 For use with MySQLi you may set MySQLi's result mode to
 ``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not
@@ -123,7 +113,6 @@ such as writing large queries to csv. If you change the result mode
 be aware of the tradeoffs associated with it.
 
 .. literalinclude:: results/011.php
-   :lines: 2-
 
 .. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same
     connection will result in error until all records have been fetched or
@@ -136,7 +125,6 @@ You can optionally pass 'object' (default) or 'array' in order to specify
 the returned value's type:
 
 .. literalinclude:: results/012.php
-   :lines: 2-
 
 *********************
 Custom Result Objects
@@ -152,7 +140,6 @@ then you should provide a ``__set()`` method to allow them to be set.
 Example:
 
 .. literalinclude:: results/013.php
-   :lines: 2-
 
 In addition to the two methods listed below, the following methods also can
 take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
@@ -166,7 +153,6 @@ The only parameter is the name of the class to instantiate.
 Example:
 
 .. literalinclude:: results/014.php
-   :lines: 2-
 
 **getCustomRowObject()**
 
@@ -176,14 +162,12 @@ number of the results. The second parameter is the class name to instantiate.
 Example:
 
 .. literalinclude:: results/015.php
-   :lines: 2-
 
 You can also use the ``getRow()`` method in exactly the same way.
 
 Example:
 
 .. literalinclude:: results/016.php
-   :lines: 2-
 
 *********************
 Result Helper Methods
@@ -195,7 +179,6 @@ The number of FIELDS (columns) returned by the query. Make sure to call
 the method using your query result object:
 
 .. literalinclude:: results/017.php
-   :lines: 2-
 
 **getFieldNames()**
 
@@ -203,7 +186,6 @@ Returns an array with the names of the FIELDS (columns) returned by the query.
 Make sure to call the method using your query result object:
 
 .. literalinclude:: results/018.php
-   :lines: 2-
 
 **getNumRows()**
 
@@ -211,7 +193,6 @@ The number of records returned by the query. Make sure to call
 the method using your query result object:
 
 .. literalinclude:: results/019.php
-   :lines: 2-
 
 .. note:: Because SQLite3 lacks an efficient method returning a record count,
     CodeIgniter will fetch and buffer the query result records internally and
@@ -228,7 +209,6 @@ result has been generated in order to cut down on memory consumption.
 Example:
 
 .. literalinclude:: results/020.php
-   :lines: 2-
 
 **dataSeek()**
 
@@ -239,7 +219,6 @@ It accepts a positive integer value, which defaults to 0 and returns
 true on success or false on failure.
 
 .. literalinclude:: results/021.php
-   :lines: 2-
 
 .. note:: Not all database drivers support this feature and will return false.
     Most notably - you won't be able to use it with PDO.

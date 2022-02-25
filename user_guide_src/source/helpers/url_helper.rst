@@ -39,7 +39,6 @@ The following functions are available:
     array. Here is a string example:
 
     .. literalinclude:: url_helper/001.php
-       :lines: 2-
 
     The above example would return something like:
     *http://example.com/index.php/news/local/123*
@@ -47,7 +46,6 @@ The following functions are available:
     Here is an example of segments passed as an array:
 
     .. literalinclude:: url_helper/002.php
-       :lines: 2-
 
     You may find the alternate configuration useful if generating URLs for a
     different site than yours, which contains different configuration preferences.
@@ -63,7 +61,6 @@ The following functions are available:
     Returns your site base URL, as specified in your config file. Example:
 
     .. literalinclude:: url_helper/003.php
-       :lines: 2-
 
     This function returns the same thing as :php:func:`site_url()`, without
     the *indexPage* being appended.
@@ -72,7 +69,6 @@ The following functions are available:
     an array. Here is a string example:
 
     .. literalinclude:: url_helper/004.php
-       :lines: 2-
 
     The above example would return something like:
     *http://example.com/blog/post/123*
@@ -81,7 +77,6 @@ The following functions are available:
     string to a file, such as an image or stylesheet. For example:
 
     .. literalinclude:: url_helper/005.php
-       :lines: 2-
 
     This would give you something like:
     *http://example.com/images/icons/edit.png*
@@ -99,7 +94,6 @@ The following functions are available:
     .. note:: Calling this function is the same as doing this:
 
         .. literalinclude:: url_helper/006.php
-           :lines: 2-
 
 .. important:: Prior to **4.1.2** this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
 
@@ -148,7 +142,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: url_helper/007.php
-       :lines: 2-
 
     As with :php:func:`site_url()`, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating URLs for a
@@ -185,7 +178,6 @@ The following functions are available:
     Here are some examples:
 
     .. literalinclude:: url_helper/008.php
-       :lines: 2-
 
     As above, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating links for a
@@ -212,7 +204,6 @@ The following functions are available:
     Here is an example with attributes:
 
     .. literalinclude:: url_helper/009.php
-       :lines: 2-
 
     As above, you may specify an alternate configuration.
     You may find the alternate configuration useful if generating links for a
@@ -225,7 +216,6 @@ The following functions are available:
         third parameter:
 
         .. literalinclude:: url_helper/010.php
-           :lines: 2-
 
     .. note:: The **window_name** is not really an attribute, but an argument to
         the JavaScript `window.open() <https://www.w3schools.com/jsref/met_win_open.asp>`_
@@ -247,13 +237,11 @@ The following functions are available:
     Creates a standard HTML e-mail link. Usage example:
 
     .. literalinclude:: url_helper/011.php
-       :lines: 2-
 
     As with the :php:func:`anchor()` tab above, you can set attributes using the
     third parameter:
 
     .. literalinclude:: url_helper/012.php
-       :lines: 2-
 
     .. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
 
@@ -281,7 +269,6 @@ The following functions are available:
     links. Example:
 
     .. literalinclude:: url_helper/013.php
-       :lines: 2-
 
     The second parameter determines whether URLs and e-mails are converted or
     just one or the other. The default behavior is both if the parameter is not
@@ -291,18 +278,15 @@ The following functions are available:
     Converts only URLs:
 
     .. literalinclude:: url_helper/014.php
-       :lines: 2-
 
     Converts only e-mail addresses:
 
     .. literalinclude:: url_helper/015.php
-       :lines: 2-
 
     The third parameter determines whether links are shown in a new window.
     The value can be true or false (boolean):
 
     .. literalinclude:: url_helper/016.php
-       :lines: 2-
 
     .. note:: The only URLs recognized are those that start with "www." or with "://".
 
@@ -319,7 +303,6 @@ The following functions are available:
     title of your entries in the URL. Example:
 
     .. literalinclude:: url_helper/017.php
-       :lines: 2-
 
     The second parameter determines the word delimiter. By default dashes
     are used. Preferred options are: **-** (dash) or **_** (underscore).
@@ -327,7 +310,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: url_helper/018.php
-       :lines: 2-
 
     The third parameter determines whether or not lowercase characters are
     forced. By default they are not. Options are boolean true/false.
@@ -335,7 +317,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: url_helper/019.php
-       :lines: 2-
 
 .. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = false]])
 
@@ -361,7 +342,6 @@ The following functions are available:
     Pass the URL string to the function like this:
 
     .. literalinclude:: url_helper/020.php
-       :lines: 2-
 
 .. php:function:: url_to($controller[, ...$args])
 
@@ -373,13 +353,11 @@ The following functions are available:
     Builds an absolute URL to a controller method in your app. Example:
 
     .. literalinclude:: url_helper/021.php
-       :lines: 2-
 
     You can also add arguments to the route.
     Here is an example:
 
     .. literalinclude:: url_helper/022.php
-       :lines: 2-
 
     The above example would return something like:
     *http://example.com/page/home*
@@ -395,13 +373,11 @@ The following functions are available:
     Compares the current URL's path against the given path to see if they match. Example:
 
     .. literalinclude:: url_helper/023.php
-       :lines: 2-
 
     This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
     any other applicable characters in the URL:
 
     .. literalinclude:: url_helper/024.php
-       :lines: 2-
 
     This would match any of the following:
 

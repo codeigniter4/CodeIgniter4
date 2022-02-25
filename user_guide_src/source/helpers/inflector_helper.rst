@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: inflector_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -31,7 +30,6 @@ The following functions are available:
     Changes a plural word to singular. Example:
 
     .. literalinclude:: inflector_helper/002.php
-       :lines: 2-
 
 .. php:function:: plural($string)
 
@@ -42,7 +40,6 @@ The following functions are available:
     Changes a singular word to plural. Example:
 
     .. literalinclude:: inflector_helper/003.php
-       :lines: 2-
 
 .. php:function:: counted($count, $string)
 
@@ -54,7 +51,6 @@ The following functions are available:
     Changes a word and its count to a phrase. Example:
 
     .. literalinclude:: inflector_helper/004.php
-       :lines: 2-
 
 .. php:function:: camelize($string)
 
@@ -66,7 +62,6 @@ The following functions are available:
     case. Example:
 
     .. literalinclude:: inflector_helper/005.php
-       :lines: 2-
 
 .. php:function:: pascalize($string)
 
@@ -78,7 +73,6 @@ The following functions are available:
     case, which is camel case with the first letter capitalized. Example:
 
     .. literalinclude:: inflector_helper/006.php
-       :lines: 2-
 
 .. php:function:: underscore($string)
 
@@ -90,7 +84,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: inflector_helper/007.php
-       :lines: 2-
 
 .. php:function:: humanize($string[, $separator = '_'])
 
@@ -105,12 +98,10 @@ The following functions are available:
     Example:
 
     .. literalinclude:: inflector_helper/008.php
-       :lines: 2-
 
     To use dashes instead of underscores:
 
     .. literalinclude:: inflector_helper/009.php
-       :lines: 2-
 
 .. php:function:: is_pluralizable($word)
 
@@ -121,7 +112,6 @@ The following functions are available:
     Checks if the given word has a plural version. Example:
 
     .. literalinclude:: inflector_helper/010.php
-       :lines: 2-
 
 .. php:function:: dasherize($string)
 
@@ -132,7 +122,6 @@ The following functions are available:
     Replaces underscores with dashes in the string. Example:
 
     .. literalinclude:: inflector_helper/011.php
-       :lines: 2-
 
 .. php:function:: ordinal($integer)
 
@@ -145,7 +134,6 @@ The following functions are available:
     1st, 2nd, 3rd, 4th. Example:
 
     .. literalinclude:: inflector_helper/012.php
-       :lines: 2-
 
 .. php:function:: ordinalize($integer)
 
@@ -158,4 +146,3 @@ The following functions are available:
     Example:
 
     .. literalinclude:: inflector_helper/013.php
-       :lines: 2-

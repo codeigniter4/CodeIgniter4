@@ -14,7 +14,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: security_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -45,7 +44,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: security_helper/002.php
-       :lines: 2-
 
 .. php:function:: encode_php_tags($str)
 
@@ -58,4 +56,3 @@ The following functions are available:
     Example:
 
     .. literalinclude:: security_helper/003.php
-       :lines: 2-

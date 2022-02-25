@@ -46,13 +46,11 @@ Using the View Parser Class
 The simplest method to load the parser class is through its service:
 
 .. literalinclude:: view_parser/001.php
-   :lines: 2-
 
 Alternately, if you are not using the ``Parser`` class as your default renderer, you
 can instantiate it directly:
 
 .. literalinclude:: view_parser/002.php
-   :lines: 2-
 
 Then you can use any of the three standard rendering methods that it provides:
 ``render(viewpath, options, save)``, ``setVar(name, value, context)`` and
@@ -90,7 +88,6 @@ You can use the ``render()`` method to parse (or render) simple templates,
 like this:
 
 .. literalinclude:: view_parser/003.php
-   :lines: 2-
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
@@ -114,7 +111,6 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
     substitutions; default is **true**
 
 .. literalinclude:: view_parser/004.php
-   :lines: 2-
 
 ***********************
 Substitution Variations
@@ -128,7 +124,6 @@ replacement of pseudo-variables where the corresponding data parameter
 has either a scalar or string value, as in this example:
 
 .. literalinclude:: view_parser/005.php
-   :lines: 2-
 
 The ``Parser`` takes substitution a lot further with "variable pairs",
 used for nested substitutions or looping, and with some advanced
@@ -176,7 +171,6 @@ parse single variables, except, you will add a multi-dimensional array
 corresponding to your variable pair data. Consider this example:
 
 .. literalinclude:: view_parser/006.php
-   :lines: 2-
 
 The value for the pseudo-variable ``blog_entries`` is a sequential
 array of associative arrays. The outer level does not have keys associated
@@ -187,7 +181,6 @@ multi-dimensional array, you can simply use the database ``getResultArray()``
 method:
 
 .. literalinclude:: view_parser/007.php
-   :lines: 2-
 
 If the array you are trying to loop over contains objects instead of arrays,
 the parser will first look for an ``asArray()`` method on the object. If it exists,
@@ -206,7 +199,6 @@ A nested substitution happens when the value for a pseudo-variable is
 an associative array of values, like a record from a database:
 
 .. literalinclude:: view_parser/008.php
-   :lines: 2-
 
 The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
@@ -250,12 +242,10 @@ data pairs into the inner substitution.
 The following example is not impacted by cascading:
 
 .. literalinclude:: view_parser/009.php
-   :lines: 2-
 
 This example gives different results, depending on cascading:
 
 .. literalinclude:: view_parser/010.php
-   :lines: 2-
 
 Preventing Parsing
 ==================
@@ -414,7 +404,6 @@ You can easily create your own filters by editing **app/Config/View.php** and ad
 callable:
 
 .. literalinclude:: view_parser/012.php
-   :lines: 2-
 
 PHP Native functions as Filters
 -------------------------------
@@ -424,7 +413,6 @@ You can use native php function as filters by editing **app/Config/View.php** an
 function prefixed with:
 
 .. literalinclude:: view_parser/013.php
-   :lines: 2-
 
 Parser Plugins
 ==============
@@ -482,24 +470,20 @@ At its simplest, all you need to do to register a new plugin and make it ready f
 used within the template file. The value is any valid PHP callable, including static class methods, and closures:
 
 .. literalinclude:: view_parser/014.php
-   :lines: 2-
 
 Any closures that are being used must be defined in the config file's constructor:
 
 .. literalinclude:: view_parser/015.php
-   :lines: 2-
 
 If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
 the return value from the plugin:
 
 .. literalinclude:: view_parser/016.php
-   :lines: 2-
 
 If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of
 the content between its tags:
 
 .. literalinclude:: view_parser/017.php
-   :lines: 2-
 
 ***********
 Usage Notes
@@ -509,20 +493,17 @@ If you include substitution parameters that are not referenced in your
 template, they are ignored:
 
 .. literalinclude:: view_parser/018.php
-   :lines: 2-
 
 If you do not include a substitution parameter that is referenced in your
 template, the original pseudo-variable is shown in the result:
 
 .. literalinclude:: view_parser/019.php
-   :lines: 2-
 
 If you provide a string substitution parameter when an array is expected,
 i.e., for a variable pair, the substitution is done for the opening variable
 pair tag, but the closing variable pair tag is not rendered properly:
 
 .. literalinclude:: view_parser/020.php
-   :lines: 2-
 
 View Fragments
 ==============
@@ -558,7 +539,6 @@ An example with the iteration controlled in the controller,
 using a view fragment:
 
 .. literalinclude:: view_parser/021.php
-   :lines: 2-
 
 Result::
 
@@ -584,7 +564,6 @@ Class Reference
         Builds the output based upon a file name and any data that has already been set:
 
         .. literalinclude:: view_parser/022.php
-           :lines: 2-
 
         Options supported:
 
@@ -609,7 +588,6 @@ Class Reference
         Builds the output based upon a provided template source and any data that has already been set:
 
         .. literalinclude:: view_parser/023.php
-           :lines: 2-
 
         Options supported, and behavior, as above.
 
@@ -623,7 +601,6 @@ Class Reference
         Sets several pieces of view data at once:
 
         .. literalinclude:: view_parser/024.php
-           :lines: 2-
 
         Supported escape contexts: html, css, js, url, or attr or raw.
         If 'raw', no escaping will happen.
@@ -639,7 +616,6 @@ Class Reference
         Sets a single piece of view data:
 
         .. literalinclude:: view_parser/025.php
-           :lines: 2-
 
         Supported escape contexts: html, css, js, url, attr or raw.
         If 'raw', no escaping will happen.
@@ -654,4 +630,3 @@ Class Reference
         Override the substitution field delimiters:
 
         .. literalinclude:: view_parser/026.php
-           :lines: 2-

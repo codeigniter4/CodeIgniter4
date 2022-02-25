@@ -23,4 +23,3 @@ in STDOUT, or logging to a file, or even creating tools to do automatic query an
 potentially missing indexes, slow queries, etc. An example usage might be:
 
 .. literalinclude:: events/001.php
-   :lines: 2-

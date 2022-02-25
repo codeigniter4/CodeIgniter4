@@ -17,7 +17,6 @@ A quick example will probably make things clearer, so imagine that you need to p
 of the Timer class. The simplest method would simply be to create a new instance of that class:
 
 .. literalinclude:: services/001.php
-   :lines: 2-
 
 And this works great. Until you decide that you want to use a different timer class in its place.
 Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
@@ -32,7 +31,6 @@ to use as a service. The method typically returns a shared instance of that clas
 it might have into it. Then, we would replace our timer creation code with code that calls this new class:
 
 .. literalinclude:: services/002.php
-   :lines: 2-
 
 When you need to change the implementation used, you can modify the services configuration file, and
 the change happens automatically throughout your application without you having to do anything. Now
@@ -52,18 +50,15 @@ file always returns a SHARED instance of the class, so calling the function mult
 always return the same instance:
 
 .. literalinclude:: services/003.php
-   :lines: 2-
 
 If the creation method requires additional parameters, they can be passed after the service name:
 
 .. literalinclude:: services/004.php
-   :lines: 2-
 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class:
 
 .. literalinclude:: services/005.php
-   :lines: 2-
 
 Defining Services
 =================
@@ -79,13 +74,11 @@ want to create a replacement that provides a different way to create routes, you
 create a new class that implements the ``RouterCollectionInterface``:
 
 .. literalinclude:: services/006.php
-   :lines: 2-
 
 Finally, modify **/app/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\Router\RouterCollection``:
 
 .. literalinclude:: services/007.php
-   :lines: 2-
 
 Allowing Parameters
 -------------------
@@ -99,13 +92,11 @@ changing that path, though, if their needs require it. So the class accepts the 
 as a constructor parameter. The service method looks like this:
 
 .. literalinclude:: services/008.php
-   :lines: 2-
 
 This sets the default path in the constructor method, but allows for easily changing
 the path it uses:
 
 .. literalinclude:: services/009.php
-   :lines: 2-
 
 Shared Classes
 -----------------
@@ -117,7 +108,6 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 ``$getShared = true`` value as the last parameter. You should stick to the method also:
 
 .. literalinclude:: services/010.php
-   :lines: 2-
 
 Service Discovery
 -----------------
@@ -142,6 +132,5 @@ Now you can use this file as described above. When you want to grab the posts se
 would simply use the framework's ``Config\Services`` class to grab your service:
 
 .. literalinclude:: services/012.php
-   :lines: 2-
 
 .. note:: If multiple Services files have the same method name, the first one found will be the instance returned.

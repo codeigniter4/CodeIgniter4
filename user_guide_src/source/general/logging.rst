@@ -11,7 +11,6 @@ the "level" of the error in the first parameter, indicating what type of message
 The second parameter is the message itself:
 
 .. literalinclude:: logging/001.php
-   :lines: 2-
 
 There are eight different log levels, matching to the `RFC 5424 <https://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
@@ -47,7 +46,6 @@ a level of 5 or less (which includes runtime errors, system errors, etc) would b
 would be ignored:
 
 .. literalinclude:: logging/002.php
-   :lines: 2-
 
 A complete list of levels and their corresponding threshold value is in the configuration file for your reference.
 
@@ -55,7 +53,6 @@ You can pick and choose the specific levels that you would like logged by assign
 to the threshold value:
 
 .. literalinclude:: logging/003.php
-   :lines: 2-
 
 Using Multiple Log Handlers
 ---------------------------
@@ -78,7 +75,6 @@ Each handler's section will have one property in common: ``handles``, which is a
 *names* that the handler will log information for.
 
 .. literalinclude:: logging/004.php
-   :lines: 2-
 
 Modifying the Message With Context
 ==================================
@@ -90,14 +86,12 @@ you must provide an array of placeholder names (without the braces) and their va
 into the message string:
 
 .. literalinclude:: logging/005.php
-   :lines: 2-
 
 If you want to log an Exception or an Error, you can use the key of 'exception', and the value being the
 Exception or Error itself. A string will be generated from that object containing the error message, the
 file name and line number. You must still provide the exception placeholder in the message:
 
 .. literalinclude:: logging/006.php
-   :lines: 2-
 
 Several core placeholders exist that will be automatically expanded for you based on the current page request:
 

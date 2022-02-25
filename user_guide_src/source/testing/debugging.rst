@@ -32,7 +32,6 @@ The ``d()`` method dumps all of the data it knows about the contents passed as t
 allows the script to continue executing:
 
 .. literalinclude:: debugging/001.php
-   :lines: 2-
 
 **dd()**
 
@@ -43,7 +42,6 @@ This method is identical to ``d()``, except that it also ``dies()`` and no furth
 This provides a backtrace to the current execution point, with Kint's own unique spin:
 
 .. literalinclude:: debugging/002.php
-   :lines: 2-
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
@@ -79,7 +77,6 @@ can easily make your own to customize the toolbar. To determine which collectors
 the **app/Config/Toolbar.php** configuration file:
 
 .. literalinclude:: debugging/003.php
-   :lines: 2-
 
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
@@ -159,7 +156,6 @@ The ``formatTimelineData()`` method must return an array of arrays formatted in 
 it to sort it correctly and display the correct information. The inner arrays must include the following information:
 
 .. literalinclude:: debugging/005.php
-   :lines: 2-
 
 Providing Vars
 --------------
@@ -173,4 +169,3 @@ The ``getVarData()`` method should return an array containing arrays of key/valu
 outer array's key is the name of the section on the Vars tab:
 
 .. literalinclude:: debugging/006.php
-   :lines: 2-

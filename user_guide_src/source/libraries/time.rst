@@ -22,7 +22,6 @@ like any other class. When you do it this way, you can pass in a string represen
 be any string that PHP's strtotime function can parse:
 
 .. literalinclude:: time/001.php
-   :lines: 2-
 
 You can pass in strings representing the timezone and the locale in the second and parameters, respectively. Timezones
 can be any supported by PHP's `DateTimeZone <https://www.php.net/manual/en/timezones.php>`__ class. The locale can be
@@ -30,7 +29,6 @@ any supported by PHP's `Locale <https://www.php.net/manual/en/class.locale.php>`
 provided, the application defaults will be used.
 
 .. literalinclude:: time/002.php
-   :lines: 2-
 
 now()
 -----
@@ -40,7 +38,6 @@ that returns a new instance set to the current time. You can pass in strings rep
 in the second and parameters, respectively. If no locale or timezone is provided, the application defaults will be used.
 
 .. literalinclude:: time/003.php
-   :lines: 2-
 
 parse()
 -------
@@ -49,7 +46,6 @@ This helper method is a static version of the default constructor. It takes a st
 constructor as the first parameter, a timezone as the second parameter, and the locale as the third parameter:
 
 .. literalinclude:: time/004.php
-   :lines: 2-
 
 today()
 -------
@@ -58,7 +54,6 @@ Returns a new instance with the date set to the current date, and the time set t
 for the timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/005.php
-   :lines: 2-
 
 yesterday()
 -----------
@@ -67,7 +62,6 @@ Returns a new instance with the date set to the yesterday's date and the time se
 for the timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/006.php
-   :lines: 2-
 
 tomorrow()
 -----------
@@ -76,7 +70,6 @@ Returns a new instance with the date set to tomorrow's date and the time set to 
 for the timezone and locale in the first and second parameters:
 
 .. literalinclude:: time/007.php
-   :lines: 2-
 
 createFromDate()
 ----------------
@@ -86,7 +79,6 @@ are not provided, it will use the current value to fill it in. Accepts strings f
 fourth and fifth parameters:
 
 .. literalinclude:: time/008.php
-   :lines: 2-
 
 createFromTime()
 ----------------
@@ -96,7 +88,6 @@ current day for the date portion of the Time instance. Accepts strings for the t
 fourth and fifth parameters:
 
 .. literalinclude:: time/009.php
-   :lines: 2-
 
 create()
 --------
@@ -106,7 +97,6 @@ as separate parameters. Any value not provided will use the current date and tim
 timezone and locale in the fourth and fifth parameters:
 
 .. literalinclude:: time/010.php
-   :lines: 2-
 
 createFromFormat()
 ------------------
@@ -115,7 +105,6 @@ This is a replacement for DateTime's method of the same name. This allows the ti
 and returns a ``Time`` instance, instead of DateTime:
 
 .. literalinclude:: time/011.php
-   :lines: 2-
 
 createFromTimestamp()
 ---------------------
@@ -123,7 +112,6 @@ createFromTimestamp()
 This method takes a UNIX timestamp and, optionally, the timezone and locale, to create a new Time instance:
 
 .. literalinclude:: time/012.php
-   :lines: 2-
 
 createFromInstance()
 --------------------
@@ -133,7 +121,6 @@ to a Time instance, optionally setting the locale. The timezone will be automati
 instance passed in:
 
 .. literalinclude:: time/013.php
-   :lines: 2-
 
 toDateTime()
 ------------
@@ -143,7 +130,6 @@ instance into a DateTime instance. This preserves the timezone setting, but lose
 not aware of locales:
 
 .. literalinclude:: time/014.php
-   :lines: 2-
 
 ====================
 Displaying the Value
@@ -161,7 +147,6 @@ you must use values acceptable to the `IntlDateFormatter <https://www.php.net/ma
 A full listing of values can be found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
 
 .. literalinclude:: time/015.php
-   :lines: 2-
 
 toDateTimeString()
 ------------------
@@ -170,7 +155,6 @@ This is the first of three helper methods to work with the IntlDateFormatter wit
 This will return a string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s):
 
 .. literalinclude:: time/016.php
-   :lines: 2-
 
 toDateString()
 --------------
@@ -178,7 +162,6 @@ toDateString()
 Displays just the date portion of the Time:
 
 .. literalinclude:: time/017.php
-   :lines: 2-
 
 toTimeString()
 --------------
@@ -186,7 +169,6 @@ toTimeString()
 Displays just the time portion of the value:
 
 .. literalinclude:: time/018.php
-   :lines: 2-
 
 humanize()
 ----------
@@ -196,7 +178,6 @@ human readable format that is geared towards being easily understood. It can cre
 'in 1 month', etc:
 
 .. literalinclude:: time/019.php
-   :lines: 2-
 
 The exact time displayed is determined in the following manner:
 
@@ -232,12 +213,10 @@ Getters
 The following basic getters exist:
 
 .. literalinclude:: time/020.php
-   :lines: 2-
 
 In addition to these, a number of methods exist to provide additional information about the date:
 
 .. literalinclude:: time/021.php
-   :lines: 2-
 
 getAge()
 --------
@@ -246,7 +225,6 @@ Returns the age, in years, of between the Time's instance and the current time. 
 the age of someone based on their birthday:
 
 .. literalinclude:: time/022.php
-   :lines: 2-
 
 getDST()
 --------
@@ -254,7 +232,6 @@ getDST()
 Returns boolean true/false based on whether the Time instance is currently observing Daylight Savings Time:
 
 .. literalinclude:: time/023.php
-   :lines: 2-
 
 getLocal()
 ----------
@@ -262,7 +239,6 @@ getLocal()
 Returns boolean true if the Time instance is in the same timezone as the application is currently running in:
 
 .. literalinclude:: time/024.php
-   :lines: 2-
 
 getUtc()
 --------
@@ -270,7 +246,6 @@ getUtc()
 Returns boolean true if the Time instance is in UTC time:
 
 .. literalinclude:: time/025.php
-   :lines: 2-
 
 getTimezone()
 -------------
@@ -279,7 +254,6 @@ Returns a new `DateTimeZone <https://www.php.net/manual/en/class.datetimezone.ph
 instance:
 
 .. literalinclude:: time/026.php
-   :lines: 2-
 
 getTimezoneName()
 -----------------
@@ -287,7 +261,6 @@ getTimezoneName()
 Returns the full `timezone string <https://www.php.net/manual/en/timezones.php>`__ of the Time instance:
 
 .. literalinclude:: time/027.php
-   :lines: 2-
 
 Setters
 =======
@@ -300,7 +273,6 @@ thrown.
 .. note:: All setters will throw an InvalidArgumentException if the value is out of range.
 
 .. literalinclude:: time/028.php
-   :lines: 2-
 
 setTimezone()
 -------------
@@ -308,7 +280,6 @@ setTimezone()
 Converts the time from it's current timezone into the new one:
 
 .. literalinclude:: time/029.php
-   :lines: 2-
 
 setTimestamp()
 --------------
@@ -316,7 +287,6 @@ setTimestamp()
 Returns a new instance with the date set to the new timestamp:
 
 .. literalinclude:: time/030.php
-   :lines: 2-
 
 Modifying the Value
 ===================
@@ -325,7 +295,6 @@ The following methods allow you to modify the date by adding or subtracting valu
 modify the existing Time instance, but will return a new instance.
 
 .. literalinclude:: time/031.php
-   :lines: 2-
 
 Comparing Two Times
 ===================
@@ -341,14 +310,12 @@ same moment in time, and are not required to be in the same timezone, as both ti
 that way:
 
 .. literalinclude:: time/032.php
-   :lines: 2-
 
 The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
 a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
 a timezone string in as the second parameter. If no timezone is given, the system default will be used:
 
 .. literalinclude:: time/033.php
-   :lines: 2-
 
 sameAs()
 --------
@@ -357,7 +324,6 @@ This is identical to the ``equals()`` method, except that it only returns true w
 all identical:
 
 .. literalinclude:: time/034.php
-   :lines: 2-
 
 isBefore()
 ----------
@@ -366,14 +332,12 @@ Checks if the passed in time is before the current instance. The comparison is d
 both times:
 
 .. literalinclude:: time/035.php
-   :lines: 2-
 
 The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
 a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
 a timezone string in as the second parameter. If no timezone is given, the system default will be used:
 
 .. literalinclude:: time/036.php
-   :lines: 2-
 
 isAfter()
 ---------
@@ -381,7 +345,6 @@ isAfter()
 Works exactly the same as ``isBefore()`` except checks if the time is after the time passed in:
 
 .. literalinclude:: time/037.php
-   :lines: 2-
 
 Viewing Differences
 ===================
@@ -391,19 +354,16 @@ instance. The first parameter is either a Time instance, a DateTime instance, or
 a string is passed in the first parameter, the second parameter can be a timezone string:
 
 .. literalinclude:: time/038.php
-   :lines: 2-
 
 Once you have the TimeDifference instance, you have several methods you can use to find information about the difference
 between the two times. The value returned will be negative if it was in the past, or positive if in the future from
 the original time:
 
 .. literalinclude:: time/039.php
-   :lines: 2-
 
 You can use either ``getX()`` methods, or access the calculate values as if they were properties:
 
 .. literalinclude:: time/040.php
-   :lines: 2-
 
 humanize()
 ----------
@@ -413,7 +373,6 @@ human readable format that is geared towards being easily understood. It can cre
 'in 1 month', etc. The biggest differences are in how very recent dates are handled:
 
 .. literalinclude:: time/041.php
-   :lines: 2-
 
 The exact time displayed is determined in the following manner:
 

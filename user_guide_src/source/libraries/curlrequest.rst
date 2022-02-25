@@ -33,7 +33,6 @@ this behavior may cause an error request with unnecessary headers.
 You can change the behavior by editing the following config parameter value in **app/Config/CURLRequest.php** to ``false``:
 
 .. literalinclude:: curlrequest/001.php
-   :lines: 2-
 
 *******************
 Loading the Library
@@ -44,13 +43,11 @@ The library can be loaded either manually or through the :doc:`Services class </
 To load with the Services class call the ``curlrequest()`` method:
 
 .. literalinclude:: curlrequest/002.php
-   :lines: 2-
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document:
 
 .. literalinclude:: curlrequest/003.php
-   :lines: 2-
 
 .. note:: When ``$shareOptions`` is false, the default options passed to the class constructor will be used for all requests. Other options will be reset after sending a request.
 
@@ -59,7 +56,6 @@ instance of the ``Config\App`` class. The second parameter is a URI instance. Th
 parameter is a Response object. The fourth parameter is the optional default ``$options`` array:
 
 .. literalinclude:: curlrequest/004.php
-   :lines: 2-
 
 ************************
 Working with the Library
@@ -76,7 +72,6 @@ Most communication is done through the ``request()`` method, which fires off the
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.
 
 .. literalinclude:: curlrequest/005.php
-   :lines: 2-
 
 .. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.
 
@@ -84,13 +79,11 @@ Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all 
 available to you:
 
 .. literalinclude:: curlrequest/006.php
-   :lines: 2-
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
 each take the URL as the first parameter and an array of options as the second:
 
 .. literalinclude:: curlrequest/007.php
-   :lines: 2-
 
 Base URI
 --------
@@ -100,7 +93,6 @@ set a base URI, and then make all requests with that client using relative URLs.
 when working with APIs:
 
 .. literalinclude:: curlrequest/008.php
-   :lines: 2-
 
 When a relative URI is provided to the ``request()`` method or any of the shortcut methods, it will be combined
 with the baseURI according to the rules described by
@@ -127,23 +119,19 @@ methods. The most commonly used methods let you determine the response itself.
 You can get the status code and reason phrase of the response:
 
 .. literalinclude:: curlrequest/009.php
-   :lines: 2-
 
 You can retrieve headers from the response:
 
 .. literalinclude:: curlrequest/010.php
-   :lines: 2-
 
 The body can be retrieved using the ``getBody()`` method:
 
 .. literalinclude:: curlrequest/011.php
-   :lines: 2-
 
 The body is the raw body provided by the remote server. If the content type requires formatting, you will need
 to ensure that your script handles that:
 
 .. literalinclude:: curlrequest/012.php
-   :lines: 2-
 
 ***************
 Request Options
@@ -161,17 +149,14 @@ allows you to modify how that works.
 If you set the value to ``false``, then it will not follow any redirects at all:
 
 .. literalinclude:: curlrequest/013.php
-   :lines: 2-
 
 Setting it to ``true`` will apply the default settings to the request:
 
 .. literalinclude:: curlrequest/014.php
-   :lines: 2-
 
 You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults:
 
 .. literalinclude:: curlrequest/015.php
-   :lines: 2-
 
 .. note:: Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
 
@@ -185,7 +170,6 @@ array where the first element is the username, and the second is the password. T
 the type of authentication to use, either ``basic`` or ``digest``:
 
 .. literalinclude:: curlrequest/016.php
-   :lines: 2-
 
 body
 ====
@@ -194,13 +178,11 @@ There are two ways to set the body of the request for request types that support
 The first way is to use the ``setBody()`` method:
 
 .. literalinclude:: curlrequest/017.php
-   :lines: 2-
 
 The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
 and functions the exact same way as the previous example. The value must be a string:
 
 .. literalinclude:: curlrequest/018.php
-   :lines: 2-
 
 cert
 ====
@@ -210,7 +192,6 @@ file as the ``cert`` option. If a password is required, set the value to an arra
 as the path to the certificate, and the second as the password:
 
 .. literalinclude:: curlrequest/019.php
-   :lines: 2-
 
 connect_timeout
 ===============
@@ -220,7 +201,6 @@ modify this value, you can do so by passing the amount of time in seconds with t
 You can pass 0 to wait indefinitely:
 
 .. literalinclude:: curlrequest/020.php
-   :lines: 2-
 
 cookie
 ======
@@ -230,7 +210,6 @@ to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEF
 An example:
 
 .. literalinclude:: curlrequest/021.php
-   :lines: 2-
 
 debug
 =====
@@ -245,7 +224,6 @@ the server's error log.
 You can pass a filename as the value for debug to have the output written to a file:
 
 .. literalinclude:: curlrequest/022.php
-   :lines: 2-
 
 delay
 =====
@@ -253,7 +231,6 @@ delay
 Allows you to pause a number of milliseconds before sending the request:
 
 .. literalinclude:: curlrequest/023.php
-   :lines: 2-
 
 form_params
 ===========
@@ -263,7 +240,6 @@ the ``form_params`` option. This will set the ``Content-Type`` header to ``appli
 if it's not already set:
 
 .. literalinclude:: curlrequest/024.php
-   :lines: 2-
 
 .. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
@@ -279,7 +255,6 @@ array of headers in as an option. Each key is the name of a header, and each val
 representing the header field values:
 
 .. literalinclude:: curlrequest/025.php
-   :lines: 2-
 
 If headers are passed into the constructor they are treated as default values that will be overridden later by any
 further headers arrays or calls to ``setHeader()``.
@@ -291,7 +266,6 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
 ``http_errors`` to ``false`` to return the content instead:
 
 .. literalinclude:: curlrequest/026.php
-   :lines: 2-
 
 json
 ====
@@ -301,7 +275,6 @@ of ``application/json`` is added, overwriting any Content-Type that might be alr
 this option can be any value that ``json_encode()`` accepts:
 
 .. literalinclude:: curlrequest/027.php
-   :lines: 2-
 
 .. note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
@@ -316,7 +289,6 @@ of POST data to send. For safer usage, the legacy method of uploading files by p
 has been disabled. Any files that you want to send must be passed as instances of CURLFile:
 
 .. literalinclude:: curlrequest/028.php
-   :lines: 2-
 
 .. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
@@ -328,7 +300,6 @@ query
 You can pass along data to send as query string variables by passing an associative array as the ``query`` option:
 
 .. literalinclude:: curlrequest/029.php
-   :lines: 2-
 
 timeout
 =======
@@ -337,7 +308,6 @@ By default, cURL functions are allowed to run as long as they take, with no time
 option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:
 
 .. literalinclude:: curlrequest/030.php
-   :lines: 2-
 
 user_agent
 ==========
@@ -345,7 +315,6 @@ user_agent
 Allows specifying the User Agent for requests:
 
 .. literalinclude:: curlrequest/031.php
-   :lines: 2-
 
 verify
 ======
@@ -357,7 +326,6 @@ to a string that contains the path to a CA bundle to enable verification with a 
 is true:
 
 .. literalinclude:: curlrequest/032.php
-   :lines: 2-
 
 version
 =======
@@ -366,4 +334,3 @@ To set the HTTP protocol to use, you can pass a string or float with the version
 or 1.1, 2.0 is currently unsupported.):
 
 .. literalinclude:: curlrequest/033.php
-   :lines: 2-

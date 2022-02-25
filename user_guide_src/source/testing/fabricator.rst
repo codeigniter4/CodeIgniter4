@@ -17,7 +17,6 @@ Supported Models
 You may use your own custom models by ensuring they implement ``CodeIgniter\Test\Interfaces\FabricatorModel``:
 
 .. literalinclude:: fabricator/001.php
-   :lines: 2-
 
 .. note:: In addition to methods, the interface outlines some necessary properties for the target model. Please see the interface code for details.
 
@@ -27,12 +26,10 @@ Loading Fabricators
 At its most basic a fabricator takes the model to act on:
 
 .. literalinclude:: fabricator/002.php
-   :lines: 2-
 
 The parameter can be a string specifying the name of the model, or an instance of the model itself:
 
 .. literalinclude:: fabricator/003.php
-   :lines: 2-
 
 Defining Formatters
 ===================
@@ -44,7 +41,6 @@ correspond with common formatters, or if you don't care much about the content o
 of the time you will want to specify the formatters to use as the second parameter to the constructor:
 
 .. literalinclude:: fabricator/004.php
-   :lines: 2-
 
 You can also change the formatters after a fabricator is initialized by using the ``setFormatters()`` method.
 
@@ -55,7 +51,6 @@ to further limit the scope of random data. A fabricator will check its represent
 method where you can define exactly what the faked data should look like:
 
 .. literalinclude:: fabricator/005.php
-   :lines: 2-
 
 Notice in this example how the first three values are equivalent to the formatters from before. However for ``avatar``
 we have requested an image size other than the default and ``login`` uses a conditional based on app configuration,
@@ -64,7 +59,6 @@ You may want to keep your test data separate from your production models, so it 
 a child class in your test support folder:
 
 .. literalinclude:: fabricator/006.php
-   :lines: 2-
 
 Localization
 ============
@@ -73,7 +67,6 @@ Faker supports a lot of different locales. Check their documentation to determin
 support your locale. Specify a locale in the third parameter while initiating a fabricator:
 
 .. literalinclude:: fabricator/007.php
-   :lines: 2-
 
 If no locale is specified it will use the one defined in **app/Config/App.php** as ``defaultLocale``.
 You can check the locale of an existing fabricator using its ``getLocale()`` method.
@@ -84,23 +77,19 @@ Faking the Data
 Once you have a properly-initialized fabricator it is easy to generate test data with the ``make()`` command:
 
 .. literalinclude:: fabricator/008.php
-   :lines: 2-
 
 You might get back something like this:
 
 .. literalinclude:: fabricator/009.php
-   :lines: 2-
 
 You can also get a lot of them back by supplying a count:
 
 .. literalinclude:: fabricator/010.php
-   :lines: 2-
 
 The return type of ``make()`` mimics what is defined in the representative model, but you can
 force a type using the methods directly:
 
 .. literalinclude:: fabricator/011.php
-   :lines: 2-
 
 The return from ``make()`` is ready to be used in tests or inserted into the database. Alternatively
 ``Fabricator`` includes the ``create()`` command to insert it for you, and return the result. Due
@@ -108,19 +97,16 @@ to model callbacks, database formatting, and special keys like primary and times
 from ``create()`` can differ from ``make()``. You might get back something like this:
 
 .. literalinclude:: fabricator/012.php
-   :lines: 2-
 
 Similar to ``make()`` you can supply a count to insert and return an array of objects:
 
 .. literalinclude:: fabricator/013.php
-   :lines: 2-
 
 Finally, there may be times you want to test with the full database object but you are not actually
 using a database. ``create()`` takes a second parameter to allowing mocking the object, returning
 the object with extra database fields above without actually touching the database:
 
 .. literalinclude:: fabricator/014.php
-   :lines: 2-
 
 Specifying Test Data
 ====================
@@ -130,23 +116,19 @@ compromising your formatters configuration. Rather then creating a new fabricato
 you can use ``setOverrides()`` to specify the value for any fields:
 
 .. literalinclude:: fabricator/015.php
-   :lines: 2-
 
 Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field:
 
 .. literalinclude:: fabricator/016.php
-   :lines: 2-
 
 ``setOverrides()`` can take a second parameter to indicate whether this should be a persistent
 override or only for a single action:
 
 .. literalinclude:: fabricator/017.php
-   :lines: 2-
 
 Notice after the first return the fabricator stops using the overrides:
 
 .. literalinclude:: fabricator/018.php
-   :lines: 2-
 
 If no second parameter is supplied then passed values will persist by default.
 
@@ -157,12 +139,10 @@ Often all you will need is a one-and-done fake object for testing. The Test Help
 the ``fake($model, $overrides, $persist = true)`` function to do just this:
 
 .. literalinclude:: fabricator/019.php
-   :lines: 2-
 
 This is equivalent to:
 
 .. literalinclude:: fabricator/020.php
-   :lines: 2-
 
 If you just need a fake object without saving it to the database you can pass false into the persist parameter.
 
@@ -179,7 +159,6 @@ Now you want to create fake users but don't want to assign them to a non-existan
 Your model's fake method could look like this:
 
 .. literalinclude:: fabricator/021.php
-   :lines: 2-
 
 Now creating a new user will ensure it is a part of a valid group: ``$user = fake(UserModel::class);``
 

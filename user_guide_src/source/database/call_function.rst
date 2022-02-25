@@ -16,7 +16,6 @@ function, which is **not** natively supported by CodeIgniter. You could
 do so like this:
 
 .. literalinclude:: call_function/001.php
-   :lines: 2-
 
 You must supply the name of the function, **without** the mysql\_
 prefix, in the first parameter. The prefix is added automatically based
@@ -29,15 +28,12 @@ Any parameters needed by the function you are calling will be added to
 the second parameter.
 
 .. literalinclude:: call_function/002.php
-   :lines: 2-
 
 Often, you will either need to supply a database connection ID or a
 database result ID. The connection ID can be accessed using:
 
 .. literalinclude:: call_function/003.php
-   :lines: 2-
 
 The result ID can be accessed from within your result object, like this:
 
 .. literalinclude:: call_function/004.php
-   :lines: 2-

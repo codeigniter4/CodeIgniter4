@@ -7,7 +7,10 @@ if (! $model->save($user)) {
     return redirect()->back()->withInput();
 }
 
-// In the view
+?>
+
+<!-- In your view file: -->
 <input type="email" name="email" value="<?= old('email') ?>">
-// Or with arrays
+
+<!-- Or with arrays: -->
 <input type="email" name="user[email]" value="<?= old('user.email') ?>">

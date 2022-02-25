@@ -74,7 +74,6 @@ class so that it can inherit all its methods.
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/005.php
-       :lines: 2-
 
 Methods
 =======
@@ -127,14 +126,12 @@ To specify a default controller open your **app/Config/Routes.php**
 file and set this variable:
 
 .. literalinclude:: controllers/008.php
-   :lines: 2-
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
 A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
 
 .. literalinclude:: controllers/009.php
-   :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
@@ -152,7 +149,6 @@ method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the ``_remap()`` method:
 
 .. literalinclude:: controllers/010.php
-   :lines: 2-
 
 .. important:: If your controller contains a method named ``_remap()``,
     it will **always** get called regardless of what your URI contains. It
@@ -163,7 +159,6 @@ The overridden method call (typically the second segment of the URI) will
 be passed as a parameter to the ``_remap()`` method:
 
 .. literalinclude:: controllers/011.php
-   :lines: 2-
 
 Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
 to emulate CodeIgniter's default behavior.
@@ -171,7 +166,6 @@ to emulate CodeIgniter's default behavior.
 Example:
 
 .. literalinclude:: controllers/012.php
-   :lines: 2-
 
 Private methods
 ===============
@@ -182,7 +176,6 @@ That will prevent it from being served by a URL request. For example,
 if you were to define a method like this for the ``Helloworld`` controller:
 
 .. literalinclude:: controllers/013.php
-   :lines: 2-
 
 then trying to access it using the following URL will not work::
 
@@ -247,14 +240,12 @@ A convenience method for forcing a method to be accessed via HTTPS is available 
 controllers:
 
 .. literalinclude:: controllers/014.php
-   :lines: 2-
 
 By default, and in modern browsers that support the HTTP Strict Transport Security header, this
 call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
 modify this by passing the duration (in seconds) as the first parameter:
 
 .. literalinclude:: controllers/015.php
-   :lines: 2-
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
 
@@ -266,7 +257,6 @@ these helper files will be automatically loaded into memory so that you can use 
 inside the controller:
 
 .. literalinclude:: controllers/016.php
-   :lines: 2-
 
 .. _controllers-validating-data:
 
@@ -285,13 +275,11 @@ The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/017.php
-   :lines: 2-
 
 If you find it simpler to keep the rules in the configuration file, you can replace
 the ``$rules`` array with the name of the group as defined in ``Config\Validation.php``:
 
 .. literalinclude:: controllers/018.php
-   :lines: 2-
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
 
@@ -303,7 +291,6 @@ In that case, you can use the ``$this->validateData()`` method.
 The method accepts an array of data to validate in the first parameter:
 
 .. literalinclude:: controllers/019.php
-   :lines: 2-
 
 That's it!
 ==========

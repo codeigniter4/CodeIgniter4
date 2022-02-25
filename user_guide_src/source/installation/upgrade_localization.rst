@@ -20,7 +20,6 @@ Upgrade Guide
 1. Specify the default language in **Config/App.php**:
 
    .. literalinclude:: upgrade_localization/001.php
-      :lines: 2-
 
 2. Now move your language files to **app/Language/<locale>**.
 3. After that you have to change the syntax within the language files. Below in the Code Example you will see how the language array within the file should look like.
@@ -34,10 +33,8 @@ CodeIgniter Version 3.x
 ------------------------
 
 .. literalinclude:: upgrade_localization/002.php
-   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------
 
 .. literalinclude:: upgrade_localization/003.php
-   :lines: 2-

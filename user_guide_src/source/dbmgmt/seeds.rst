@@ -26,7 +26,6 @@ You can also use a fully-qualified class name in the **call()** method, allowing
 anywhere the autoloader can find them. This is great for more modular code bases:
 
 .. literalinclude:: seeds/003.php
-   :lines: 2-
 
 Using Seeders
 =============
@@ -34,7 +33,6 @@ Using Seeders
 You can grab a copy of the main seeder through the database config class:
 
 .. literalinclude:: seeds/004.php
-   :lines: 2-
 
 Command Line Seeding
 --------------------

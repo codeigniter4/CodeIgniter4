@@ -41,7 +41,6 @@ Submit the table name in the first parameter. This is part of Query Builder.
 Example:
 
 .. literalinclude:: helpers/001.php
-   :lines: 2-
 
 **$db->countAllResults()**
 
@@ -50,7 +49,6 @@ Submit the table name in the first parameter. This is part of Query Builder.
 Example:
 
 .. literalinclude:: helpers/002.php
-   :lines: 2-
 
 **$db->getPlatform()**
 
@@ -58,11 +56,9 @@ Outputs the database platform you are running (MySQL, MS SQL, Postgres,
 etc...):
 
 .. literalinclude:: helpers/003.php
-   :lines: 2-
 
 **$db->getVersion()**
 
 Outputs the database version you are running:
 
 .. literalinclude:: helpers/004.php
-   :lines: 2-
